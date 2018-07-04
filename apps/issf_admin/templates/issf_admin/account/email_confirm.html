@@ -1,0 +1,37 @@
+{% extends "issf_base/base.html" %}
+
+{% load url from future %}
+{% load foundation %}
+{% load account %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
+
+
+{% block body %}
+    <div class="text-center">
+        <h1>{% trans "Confirm E-mail Address" %}</h1>
+    </div>    
+
+    <div class="row">
+        {% if confirmation %}    
+            <div class="small-6 small-centered columns">
+                {% user_display confirmation.email_address.user as user_display %}
+                        
+                <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{email}}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
+
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                    {% csrf_token %}
+                    <button type="submit" class="right">{% trans 'Confirm' %}</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="small-6 small-centered columns">
+                {% url 'account_email' as email_url %}
+
+                <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url}}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
+            </div>        
+        {% endif %}
+    </div> 
+
+{% endblock body %}

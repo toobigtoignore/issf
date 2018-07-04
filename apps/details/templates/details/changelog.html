@@ -1,0 +1,45 @@
+<!-- This is the changelog page for ISSF. The newest updates to the system are shown on this page. -->
+
+{% extends "issf_base/base.html" %}
+
+{% load url from future %}
+{% load staticfiles %}
+{% load foundation %}
+{% load i18n %}
+
+{% block additional_css_scripts %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock %}
+
+{% block title %}
+    ISSF Changelog
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="large-12 columns page-title2">
+            <!-- page title ------->
+            <h1>ISSF Changelog</h1>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="large-12 columns accountFormContainer">
+            <form>
+                {% csrf_token %}
+                <ul style="list-style: disc; padding-left:10px;">
+                    {% for version in site_versions %}
+                        {% ifchanged version %}
+                            <li>{{ version.major_version }}.{{ version.minor_version }}.{{ version.revision }} ({{ version.release_date }})</li>
+                        {% endifchanged %}
+                        {% for change in version.change_set.all %}
+                            <ul style="list-style: square; padding-left: 10px;">
+                                <li>{{ change.change_desc }}</li>
+                            </ul>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+{% endblock body %}

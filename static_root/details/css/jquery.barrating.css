@@ -1,0 +1,199 @@
+html, body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    background: #f7f7f7;
+    padding: 0;
+    margin: 0;
+    color: #646464;
+}
+
+#wrapper {
+    width: 750px;
+    margin: auto;
+}
+
+#content {
+    position: relative;
+    background-color: white;
+    width: 590px;
+    margin: 30px auto 30px auto;
+    padding: 30px 60px 60px 60px;
+    border: 1px solid #d2d2d2;
+}
+
+header {
+    text-align: center;
+}
+
+header blockquote {
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.4;
+    padding: 0 10px 0 10px;
+    margin: 25px 15px 40px 15px;
+}
+
+h1, h2 {
+    color: #333333;
+    font-weight: 700;
+}
+
+h1 {
+    padding: 0 100px 0 100px;
+    font-size: 52px;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #b7b7b7;
+}
+
+label {
+    display: block;
+    clear: both;
+    margin: 20px 0 20px 0;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #59a6d6;
+    outline: none;
+}
+
+a:hover {
+    color: #646464;
+}
+
+:focus {
+    -moz-outline-style: none;
+}
+
+.github img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+}
+
+/* BUTTONS */
+/* http://hellohappy.org/css3-buttons/ */
+
+.buttons {
+    margin: 0 auto 40px auto;
+    width: 345px;
+}
+
+.buttons button {
+    margin: 0 10px 0 10px;
+}
+
+button.blue-pill {
+    background-color: #a5b8da;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7bc0eb), color-stop(100%, #59a6d6));
+    background-image: -webkit-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: -moz-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: -ms-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: -o-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: linear-gradient(top, #7bc0eb, #59a6d6);
+    border-top: 1px solid #758fba;
+    border-right: 1px solid #6c84ab;
+    border-bottom: 1px solid #5c6f91;
+    border-left: 1px solid #6c84ab;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    border-radius: 18px;
+    -webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+    -moz-box-shadow: inset 0 1px 0 0 #aec3e5;
+    box-shadow: inset 0 1px 0 0 #aec3e5;
+    color: #fff;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 8px 0;
+    text-align: center;
+    text-shadow: 0 -1px 1px #4f768e;
+    text-transform: uppercase;
+    width: 150px;
+}
+
+button.blue-pill:hover {
+    background-color: #9badcc;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #71b1da), color-stop(100%, #478dba));
+    background-image: -webkit-linear-gradient(top, #71b1da, #478dba);
+    background-image: -moz-linear-gradient(top, #71b1da, #478dba);
+    background-image: -ms-linear-gradient(top, #71b1da, #478dba);
+    background-image: -o-linear-gradient(top, #71b1da, #478dba);
+    background-image: linear-gradient(top, #71b1da, #478dba);
+    border-top: 1px solid #4f768e;
+    border-right: 1px solid #4f768e;
+    border-bottom: 1px solid #4f768e;
+    border-left: 1px solid #4f768e;
+    cursor: pointer;
+}
+
+button.blue-pill:active {
+    border: 1px solid #4f768e;
+    -webkit-box-shadow: inset 0 0 8px 2px #5285a5, 0 1px 0 0 #eeeeee;
+    -moz-box-shadow: inset 0 0 8px 2px #5285a5, 0 1px 0 0 #eeeeee;
+    box-shadow: inset 0 0 8px 2px #5285a5, 0 1px 0 0 #eeeeee;
+}
+
+button.blue-pill.deactivated {
+    opacity: .4;
+}
+
+button.blue-pill.deactivated:hover {
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7bc0eb), color-stop(100%, #59a6d6));
+    background-image: -webkit-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: -moz-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: -ms-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: -o-linear-gradient(top, #7bc0eb, #59a6d6);
+    background-image: linear-gradient(top, #7bc0eb, #59a6d6);
+    border-top: 1px solid #758fba;
+    border-right: 1px solid #6c84ab;
+    border-bottom: 1px solid #5c6f91;
+    border-left: 1px solid #6c84ab;
+    cursor: auto;
+}
+
+
+/******* EXAMPLE F *******/
+
+.rating-f .br-widget {
+    height: 24px;
+}
+
+.rating-f .br-widget a {
+    background: url('../img/star.png');
+    width: 24px;
+    height: 24px;
+    display: block;
+    float: left;
+}
+
+.rating-f .br-widget a:hover,
+.rating-f .br-widget a.br-active,
+.rating-f .br-widget a.br-selected {
+    background-position: 0 24px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio : 1.5),
+(min-resolution: 192dpi) {
+    .rating-f .br-widget a {
+        background: url('../img/star@2x.png');
+        background-size: 24px 48px;
+    }
+}

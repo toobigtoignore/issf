@@ -1,0 +1,36 @@
+{% extends "issf_base/base.html" %}
+
+{% load url from future %}
+{% load staticfiles %}
+{% load foundation %}
+{% load i18n %}
+
+{% block body %}
+    <title>{% block title %}ISSF: Sign up{% endblock %}</title>
+    <div class="row">
+        <div class="large-12 columns page-title2">
+            <h1>{% trans "Sign up" %}</h1>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="large-12 columns accountFormContainer">
+            &nbsp;
+            <div class="form-signin">
+                <form method="post" action="." role="form">
+                    {% csrf_token %}
+                    {{ form }}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <div class="button-bar large-12 right">
+                        <button class="medium bt-submit" type="submit" value="{% trans 'Submit' %}">{% trans "Sign up" %}</button>
+                    </div>
+                </form>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+{% endblock body %}
+
+

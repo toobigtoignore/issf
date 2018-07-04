@@ -1,0 +1,261 @@
+#report-container {
+
+}
+
+#report-map {
+    /*margin-top:10px;
+    height: 150px;
+    min-height: 200px !important;
+    border: #008CBA 3px solid;*/
+    height: 525px;
+}
+
+#report-content {
+    margin-top: 10px;
+}
+
+#report-content #export-pdf {
+    margin-bottom: 50px !important;
+}
+
+#export-pdf .button {
+    margin: 0px;
+}
+
+.fi-page-pdf {
+    font-size: 18px;
+    margin-right: 5px;
+    padding: 0;
+}
+
+.fi-page-edit {
+    color: white;
+    float: left;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#report-content #details-content .section .section-title {
+    background-color: #008CBA;
+}
+
+#report-content #details-content .section {
+    margin-bottom: 30px;
+}
+
+#report-container #report-content h4 {
+    color: white;
+    margin-left: 5px;
+}
+
+.fi-page-edit {
+    color: white;
+    float: right;
+}
+
+.reveal-modal {
+    /* z-index:999; */
+}
+
+#arrow-contribute {
+    background: url("/static/details/img/ArrowRight.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    width: 51px;
+    height: 57px;
+    float: right;
+    margin-right: 35%;
+}
+
+#btnContribute {
+    margin-top: 30px;
+    margin-right: 15px;
+}
+
+label {
+    display: inline;
+}
+
+.helptext {
+    display: block;
+}
+
+table {
+    width: 100%;
+}
+
+#relatedTweets {
+    color: white;
+    vertical-align: top;
+}
+
+#relatedTweets:hover {
+    text-decoration: underline;
+}
+
+.page-title span {
+    float: right;
+    display: inline;
+}
+
+.infobox table {
+    background-color: transparent;
+    border: 0px;
+}
+
+.infobox table tr {
+    background-color: transparent;
+    border-bottom: 2px solid #D5D5D5;
+}
+
+.infobox table tr strong {
+    color: #294D73;
+    font-size: 0.9375rem;
+}
+
+.mapbox #report-map {
+    width: 100%;
+    height: 320px;
+    border: 0px;
+    border-radius: 8px;
+}
+
+.report form:not(.deleteForm) {
+    display: none;
+}
+
+/*form label {*/
+/*color:;*/
+/*}*/
+
+div.FormSet {
+    margin: 0px;
+    padding: 0px;
+}
+
+div.data-dates {
+    font-size: 0.85em;
+    padding-top: 5px;
+}
+
+div.data-dates input {
+    width: 10%;
+    display: inline-block;
+    margin-bottom: 5px;
+    margin-left: 5px;
+
+}
+
+/*div.data-dates input:not(:first-child) {*/
+/*margin-left: 8px;*/
+/*}*/
+
+/*
+Styling for the profile required attributes table displayed in edit mode.
+Had to use !important tags here because some other CSS was overriding the element.style somehow.
+Couldn't find the CSS file so had to resort to desperate measures.
+*/
+
+.profile-attributes-table {
+    display: inline-table !important;
+    border: none;
+    margin: 0px;
+    background: none !important;
+}
+
+.profile-attributes-table tr {
+    background: none !important;
+}
+
+.profile-attributes-table tr td {
+    padding: 5px;
+}
+
+.profile-attributes-table tr.profile-label-row:not(:first-child) {
+    border-top: 1px solid #FFD132;
+    width: 92%;
+}
+
+.profile-attributes-table td.value-type {
+    width: inherit;
+}
+
+.scope-icon {
+    background-color: rgba(255, 255, 0, 0);
+    /*-webkit-box-shadow:inset 0 0 8px 5px rgb(249,255,0);*/
+    /*box-shadow:inset 0 0 8px 5px rgb(249,255,0);*/
+    /*border: 2px solid rgb(249, 0, 0);*/
+    /*border-radius: 4px;*/
+}
+
+#details-loading-overlay {
+    background-color: rgba(255, 255, 255, 0.8);
+    background-image: url('../img/loading.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+div.percent-box {
+    display: block;
+    overflow: hidden;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 1.7em;
+    color: #000000;
+    width: 60%;
+    border-radius: 8px;
+}
+
+div.faq-container p {
+    line-height: 1.2rem;
+}
+
+.videos-container td:nth-child(odd) {
+    padding: 0 1px 0 0;
+}
+
+.videos-container td:nth-child(even) {
+    padding: 0;
+}
+
+.videos-container table {
+    width: 1010px;
+    background: none;
+    border: none;
+}
+
+.videos-container tr {
+    background: none !important;
+
+}
+
+.videos-container td {
+    width: 500px;
+    line-height: 0.8rem;
+
+}
+
+.videos-container iframe {
+    width: 100%;
+    padding-right: 5px;
+}
+
+/*.videos-container iframe:nth-child(even) {*/
+/*width: 100%;*/
+/*margin-right: 10px;*/
+/*}*/

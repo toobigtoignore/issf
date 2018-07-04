@@ -1,0 +1,25 @@
+{% extends 'issf_base/base.html' %}
+{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block title %}
+    Tips Archive
+{% endblock %}
+
+{% block body %}
+    <section class="content-section report">
+        <div class="row">
+            <div class="large-9 columns">
+                <h4>Tips Archive</h4>
+                <ul>
+                    {% for fact in facts %}
+                        <li>{{ fact.fact }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+{% endblock %}

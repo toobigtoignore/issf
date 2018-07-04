@@ -1,0 +1,37 @@
+{% extends "issf_base/base.html" %}
+
+{% load url from future %}
+{% load staticfiles %}
+{% load foundation %}
+{% load i18n %}
+
+{% block additional_css_scripts %}
+<link rel="stylesheet" href="{% static " details/css/details.css" %}">
+{% endblock %}
+
+{% block title %}
+Country Records for {{country_name}}
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="large-12 columns page-title2">
+        <!-- page title ------->
+        <h1>ISSF Records for {{country_name}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <ul>
+            {% for record in records %}
+            <li>
+                <a href="https://issfcloud.toobigtoignore.net/details/{{record.url}}/{{record.issf_core_id}}">
+                    {%autoescape off %} {{record.record_type}}: {{ record.title }} {% endautoescape %}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<p>&nbsp;</p>
+{% endblock body %}

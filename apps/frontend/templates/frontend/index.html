@@ -1,0 +1,2327 @@
+{% extends 'issf_base/base.html' %}
+
+{% load leaflet_tags %}
+{% load staticfiles %}
+{% load render_table from django_tables2 %}
+{% load eztables %}
+{% load js %}
+{% load humanize %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'issf_base/DataTables-1.10.2/media/css/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/frontend.css' %}">
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'issf_base/rateit/rateit.css' %}">#}
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    <section id="info-section">
+        <div class="row">
+            <div class="large-12 columns">
+                <ul class="tabs" data-tab>
+                    <li class="tab-title active">
+                        <a class="tomap" href="#tab-map">Map</a>
+                    </li>
+                    <li class="tab-title">
+                        <a class="totable" href="#tab-table">Table</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-12 columns main-wrapper" id="info-map">
+                <div id="map-loading-overlay"></div>
+                <div class="info-ctn tabs-content">
+                    <div class="map-holder content active" id="tab-map">
+                        <div class="headline"></div>
+                        {% leaflet_map "map" callback="window.map_init_basic" %}
+                    </div>
+                    <div class="table-holder content" id="tab-table">
+                        <div class="headline"></div>
+                        <div>
+                            <table id="record-table-result" class="display compact stripe">
+                                <thead>
+                                    <tr>
+                                        <th width="180px">Record Type</th>
+                                        <th width="600px">Content Summary</th>
+                                        <th width="150px">Edited Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <nav class="map-icons">
+                    <a id="toexpand">
+                        <div class="pop">
+                            <h4>Dataset Filters</h4>
+
+                            <p>click icon to hide/show dataset; hover icon to popup dataset description; click here to
+                                show dataset names
+                            </p>
+                        </div>
+                    </a>
+                    <a id="who" tabindex="0">
+                        <h3>Who's Who in SSF</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p>Information about small-scale fisheries people.</p>
+                            <p>
+                                <strong>{{ num_who_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a id="sota" tabindex="1">
+                        <h3>State-of-the-Art in SSF Research</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p>Existing published information about small-scale fisheries</p>
+                            <p>
+                                <strong>{{ num_sota_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a id="profile" tabindex="2">
+                        <h3>SSF Profile</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p>Information about a specific small-scale fishery</p>
+                            <p>
+                                <strong>{{ num_profile_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a id="organize" tabindex="3">
+                        <h3>SSF Organization</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p>Organizations directly involved in small-scale fisheries</p>
+                            <p>
+                                <strong>{{ num_org_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a id="case" tabindex="4">
+                        <h3>Case Studies</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p>Examples of issues/challenges affecting small-scale fisheries</p>
+                            <p>
+                                <strong>{{ num_case_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a id="capacity" tabindex="5">
+                        <h3>Capacity Development</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p> What capacity needs to be developed for small-scale
+                                fisheries
+                            </p>
+                            <p>
+                                <strong>{{ num_cap_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a id="expe" tabindex="6">
+                        <h3>Experiences</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p style="color: #FFFFFF;">Stories, lessons and knowledge about small-scale fisheries</p>
+                            <p style="color: #FFFFFF;">
+                                <strong>{{ num_expe_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a id="guidelines" tabindex="7">
+                        <h3>SSF Guidelines</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p style="color: #FFFFFF;">Tracking of the SSF Guidelines implementation worldwide
+                            </p>
+                            <p style="color: #FFFFFF;">
+                                <strong>{{ num_guide_records }} records.</strong>
+                            </p>
+                        </div>
+                    </a>
+                    <a class="disable" id="no-hover" tabindex="8" style="border-bottom: 0;">
+                        <h3></h3>
+                        <span></span>
+
+                        {#                        <div class="pop">#}
+                        {#                            <p style="color: #FFFFFF;">Thematic maps of SSF statistics for different countries.</p>#}
+                        {#                        </div>#}
+                    </a>
+                    <a class="disable" id="no-hover" tabindex="9" style="border-bottom: 0;">
+                        <h3></h3>
+                        <span></span>
+
+                        {#                        <div class="pop">#}
+                        {#                            <p>Coming soon</p>#}
+                        {#                        </div>#}
+                    </a>
+                    <a class="disable" id="no-hover" tabindex="10" style="border-bottom: 0;">
+                        <h3></h3>
+                        <span></span>
+
+                        {#                        <div class="pop">#}
+                        {#                            <p>Coming soon</p>#}
+                        {#                        </div>#}
+                    </a>
+                    <a id="all" tabindex="11">
+                        <h3>Show/Hide All</h3>
+                        <span></span>
+
+                        <div class="pop">
+                            <p>Show or hide all available datasets</p>
+                        </div>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="advance-search" class="quick">
+        <a id="tosearch">
+            <h5>Advanced Search</h5>
+        </a>
+        <div class="row">
+            <form id="home-search-form">
+                {% csrf_token %}
+                <div class="large-12 columns main-wrapper">
+                    <div class="search-wrapper">
+                        <div class="row row-fit" id="quick-search">
+                            <div class="large-9 left">
+                                <input id="q-search" name="q-search" type="text">
+                            </div>
+                            <div class="large-3 right BtnCol">
+                                <button class="medium radius issf-scroll-button" id="quick-search-button"
+                                        scrollto="#info-map" onclick="quickSearch()">
+                                    Search
+                                </button>
+                                <div id="exportModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle"
+                                     aria-hidden="true" role="dialog" style="width:60%; margin-left: -30%;">
+                                    <h3 id="modalTitle">Export Data</h3>
+                                    <p>ISSF is an online collaborative database, developed and administered by TBTI. As
+                                        a crowdsourcing
+
+                                        platform, ISSF data have been uploaded by individuals but have not been verified
+                                        by TBTI or SSF experts.
+
+                                        Caution should be exercised when using data. The ownership and responsibility
+                                        for the information
+
+                                        provided belongs to the contributors.
+                                        <br>
+                                        <br>
+                                        When using ISSF content, please provide
+                                        appropriate citation,
+
+                                        following the format described in the README file.
+                                    </p>
+                                    <a href="#" class="button radius" onclick="exportData();">
+                                        I agree
+                                    </a>
+                                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-fit" id="term-search">
+                            <div class="search-term">
+                                <p id="searchTerms" class="EmptyContainer">
+                                </p>
+                            </div>
+                        </div>
+                        <div id="full-search">
+                            <div class="row row-fit">
+                                <ul id="search-tabs" class="tabs" data-tab>
+                                    <li class="tab-title active">
+                                        <a href="#panel-basic">Basic</a>
+                                    </li>
+                                    <li class="tab-title">
+                                        <a href="#panel-theme">Themes/Issues</a>
+                                    </li>
+                                    <li class="tab-title">
+                                        <a href="#panel-character">Characteristics</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tabs-content">
+                                <div class="content active" id="panel-basic">
+                                    {{ searchForm }}
+                                </div>
+                                <!-- #panel-basic -->
+
+                                <!--- Themes and Issues Tab ---->
+                                <div class="content" id="panel-theme">
+                                    <div class="TITab FormSet FormSetGrowable advancedSearchPanelTab">
+                                        {{ selected_themes_issues_formset.management_form }}
+                                        <table style="width:100%; background-color: inherit; border: none;"
+                                               class="advancedSearchPanelTabTable">
+                                            <tr style="background-color: inherit;">
+                                                <td>
+                                                    <label>Theme/Issue</label>
+                                                </td>
+                                                <td>
+                                                    <label>Value</label>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            {% for form in selected_themes_issues_formset %}
+                                                <tr style="background-color: inherit;">
+                                                    <td id="ti-attr" style="width:40%;">
+                                                        {{ form.theme_issue }}
+                                                    </td>
+                                                    <td id="ti-attr-val" style="width: 40%;">
+                                                        {{ form.theme_issue_value }}
+                                                    </td>
+                                                    <td style="width: 20%;">
+                                                        <button class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
+                                                                type="button">Remove
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--- Characteristics Tab ---->
+                                <div class="content" id="panel-character">
+                                    <div class="FormSet FormSetGrowable advancedSearchPanelTab">
+                                        {{ selected_attributes_formset.management_form }}
+                                        <table class="advancedSearchPanelTabTable"
+                                               style="width:100%; background-color: inherit; border: none;">
+                                            <tr style="background-color: inherit;">
+                                                <td>
+                                                    <label>Characteristic</label>
+                                                </td>
+                                                <td>
+                                                    <label>Value</label>
+                                                </td>
+                                            </tr>
+                                            {% for form in selected_attributes_formset %}
+                                                <tr style="background-color: inherit;">
+                                                    <td id="char-attr" style="width: 40%;">
+                                                        {{ form.attribute }}
+                                                    </td>
+                                                    <td id="char-attr-val" style="width: 40%;">
+                                                        {{ form.attribute_value }}
+                                                    </td>
+                                                    <td style="width: 20%;">
+                                                        <button class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
+                                                                type="button">Remove
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- #panel-character -->
+                            </div>
+                            <div class="large-12 btn-container">
+                                <button class="medium radius issf-scroll-button" id="default" scrollto="#info-map"
+                                        type="submit">Search
+                                </button>
+                                <div class="BtnCol" style="display:inline;">
+                                </div>
+                                </span>
+                                <button class="medium radius reset-button" type="reset" value="Reset">Reset
+                                </button>
+                            </div>
+                        </div>
+                        <!--- end of #full-search --->
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <input id="newload" type="text" style="display:none"/>
+    <input id="filterbuttondata" type="text" style="display:none"/>
+    <textarea id="hiddenmapdata" initial="true" style="display:none"></textarea>
+    <textarea id="hiddentabledata" style="display:none"></textarea>
+
+    <section id="contribute-panel">
+        <div class="row">
+            <div class="col-580 left">
+
+                <a id="join" href="{% url 'contribute' %}">
+                    <h2>Start
+                        <span>contributing</span>
+                        <br/>
+                        <small>and join the movement</small>
+                    </h2>
+                </a>
+                <p style="margin-bottom: 0.8rem; font-size: 1.2rem; font-weight: bold;">What is the Information System
+                    on Small-scale Fisheries?
+                </p>
+                <iframe height="315" src="https://www.youtube.com/embed/vTipjN5Fjs0" frameborder="0"
+                        allowfullscreen style="width:inherit; margin-bottom: 14px;"></iframe>
+
+                <div class="col-280 left">
+                    {#                    <div id="top-contributors" class="box box-contribute">#}
+                    {#                        <header><h2>Top Contributors</h2></header>#}
+                    {#                        <div class="body-contribute">#}
+                    {#                            <ul>#}
+                    {#                                {% for top_contributor in top_contributors %}#}
+                    {#                                    <li>#}
+                    {#                                        <strong>{{ top_contributor.contribution_count }}</strong>#}
+                    {##}
+                    {#                                        <p>{{ top_contributor.contributor }}</p>#}
+                    {#                                    </li>#}
+                    {#                                {% endfor %}#}
+                    {#                            <li><span class="icon scientist-natural"></span>#}
+                    {#                                <p><strong>Name Lastname</strong><br />#}
+                    {#                                    Natural Scientist<br />#}
+                    {#                                    <a href="">[more...]</a>#}
+                    {#                                </p>#}
+                    {#                            </li>#}
+                    {#                            </ul>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+
+                    <!-- Recent contributions by dataset -->
+                    <div id="recent-contributions" class="box box-contribute">
+                        <header>
+                            <h2>Recent Contributions by Type</h2>
+                        </header>
+                        <div class="body-contribute">
+                            <ul>
+                                {% for contribution in contributions_by_record_type %}
+                                    <li>
+                                        {% if contribution.core_record_type == "Who's Who in SSF" %}
+                                            <span class="icon cont-who"></span>
+                                            <p>
+                                                <strong> Who's Who:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% elif contribution.core_record_type == "State-of-the-Art in SSF Research" %}
+                                            <span class="icon cont-sota"></span>
+                                            <p>
+                                                <strong>State-of-the-Art:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% elif contribution.core_record_type == "SSF Profile" %}
+                                            <span class="icon cont-profile"></span>
+                                            <p>
+                                                <strong>Profile:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% elif contribution.core_record_type == "SSF Organization" %}
+                                            <span class="icon cont-organize"></span>
+                                            <p>
+                                                <strong>Organization:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% elif contribution.core_record_type == "SSF Guidelines" %}
+                                            <span class="icon cont-guidelines"></span>
+                                            <p>
+                                                <strong>Guidelines:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% elif contribution.core_record_type == "Capacity Development" %}
+                                            <span class="icon cont-capacity"></span>
+                                            <p>
+                                                <strong>Capacity Developmet:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% elif contribution.core_record_type == "SSF Experiences" %}
+                                            <span class="icon cont-expe"></span>
+                                            <p>
+                                                <strong>Experience:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% elif contribution.core_record_type == "Case Study" %}
+                                            <span class="icon cont-case"></span>
+                                            <p>
+                                                <strong>Case Study:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Recent contributions by geog. scope country -->
+                    <div id="recent-contributions" class="box box-contribute">
+                        <header>
+                            <h2>Recent Contributions by Country</h2>
+                        </header>
+                        <div class="body-contribute">
+                            <ul style="font-size: 0.875rem;">
+                                {% for contribution in contributions_by_country %}
+                                    <li>
+                                        <strong>{{ contribution.short_name }}:</strong>
+                                        {{ contribution.contribution_count }} contributions
+                                    </li>
+                                {% endfor %}
+                                <li>
+                                    <strong>Countries with one contribution:</strong>
+                                    {{ other_countries.count }}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p></p>
+
+                    {#                    <div id="top-rated-capacity-needs" class="box box-contribute box-capacity">#}
+                    {#                        <header><h2>Top-rated Capacity Needs</h2></header>#}
+                    {#                        <div class="body-contribute">#}
+                    {#                            <ul>#}
+                    {#                                {% for top_rated_capacity_need in top_rated_capacity_needs %}#}
+                    {#                                    <li>#}
+                    {#                                        <div class="rateit" data-rateit-value="{{ top_rated_capacity_need.avg_rating }}"#}
+                    {#                                             data-rateit-ispreset="true" data-rateit-readonly="true"></div>#}
+                    {#                                        <p>#}
+                    {#                                            <a href="{% url 'capacity-details' top_rated_capacity_need.issf_core_id %}">{{ top_rated_capacity_need.capacity_need_title }}</a>#}
+                    {#                                        </p>#}
+                    {#                                    </li>#}
+                    {#                                {% endfor %}#}
+                    {#                            </ul>#}
+                    {#                            <p></p>#}
+                    {#                            <button class="medium radius blueOrangeButton" id="helpRate" type="button">Help Rate#}
+                    {#                            </button>#}
+                    {#                            <!--button id="helpRate" class="medium radius" type="button">Help Rate</button-->#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                </div>
+                <div class="col-280 right">
+                    <div id="recent-contributions" class="box box-contribute">
+                        <header>
+                            <h2>Most Recent Contributions</h2>
+                        </header>
+                        <div class="body-contribute">
+                            <ul>
+                                {# already escaped in view #}
+                                {% autoescape off %}
+                                    {% for recent_contribution in recent_contributions %}
+                                        <li>
+                                            {% if recent_contribution.core_record_type == "Who's Who in SSF" %}
+                                                <span class="icon cont-who"></span>
+                                                <p>
+                                                    <a href="{% url 'who-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% elif recent_contribution.core_record_type == "State-of-the-Art in SSF Research" %}
+                                                <span class="icon cont-sota"></span>
+                                                <p>
+                                                    <a href="{% url 'sota-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% elif recent_contribution.core_record_type == "Capacity Development" %}
+                                                <span class="icon cont-capacity"></span>
+                                                <p>
+                                                    <a href="{% url 'capacity-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% elif recent_contribution.core_record_type == "SSF Organization" %}
+                                                <span class="icon cont-organize"></span>
+                                                <p>
+                                                    <a href="{% url 'organization-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% elif recent_contribution.core_record_type == "SSF Profile" %}
+                                                <span class="icon cont-profile"></span>
+                                                <p>
+                                                    <a href="{% url 'profile-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% elif recent_contribution.core_record_type == "SSF Guidelines" %}
+                                                <span class="icon cont-guidelines"></span>
+                                                <p>
+                                                    <a href="{% url 'guidelines-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% elif recent_contribution.core_record_type == "SSF Experiences" %}
+                                                <span class="icon cont-expe"></span>
+                                                <p>
+                                                    <a href="{% url 'experiences-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% elif recent_contribution.core_record_type == "Case Study" %}
+                                                <span class="icon cont-case"></span>
+                                                <p>
+                                                    <a href="{% url 'case-studies-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                {% endautoescape %}
+                                {#                            <li><span class="icon cont-governance"></span>#}
+                                {#                                <p><strong>Contribution Title</strong><br />#}
+                                {#                                    Governance test<br />#}
+                                {#                                    <a href="">[more...]</a>#}
+                                {#                                </p>#}
+                                {#                            </li>#}
+                            </ul>
+
+                        </div>
+
+                    </div>
+                    <a class="twitter-timeline" href="https://twitter.com/hashtag/tbtiissf"
+                       data-widget-id="654732495926112256" style="height: 505px;">#tbtiissf Tweets
+                    </a>
+                </div>
+                <div>
+
+
+                </div>
+            </div>
+            <div class="col-360 right">
+                <div class="box box-info welcome">
+                    <header>
+                        <h2>Welcome</h2>
+                    </header>
+                    <div class="body-contribute">
+
+                        <p align="center">ISSF is a global collaborative online database
+
+                            providing information on small-scale fisheries (SSF)
+
+                            to help enhance knowledge about this sector and
+
+                            their overall contributions.
+                        </p>
+                        <div style="height:50px; padding-left: 10px;">
+                            <div style="background-image: url({% static 'issf_base/img/icon-who.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            </div>
+                            <div style="background-image: url({% static 'issf_base/img/icon-sota.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            </div>
+                            <div style="background-image: url({% static 'issf_base/img/icon-profile.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            </div>
+                            <div style="background-image: url({% static 'issf_base/img/icon-organize.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            </div>
+                            <div style="background-image: url({% static 'issf_base/img/icon-guidelines.png' %}); background-position: right center; float: left; height:48px; width:60px;">
+                            </div>
+                        </div>
+                        <h6 style="margin-top: 20px;">What can you do with ISSF?</h6>
+                        <ul style="margin-left: 25px; margin-bottom: 10px;">
+                            <li>
+                                <strong>Learn</strong>
+                                about SSF around the world
+                            </li>
+                            <li>
+                                <strong>Search,</strong>
+                                discover, and export data
+                            </li>
+                            <li>
+                                <strong>Share</strong>
+                                information about yourself, your research and SSF organizations
+                            </li>
+                            <li>
+                                <strong>Contribute</strong>
+                                by creating a profile for SSF that you
+                                know,
+                                <a href="{% url 'contribute' %}">online,</a>
+                                or using a template (available in
+                                <a href="{% url 'template-pdf' 'english' %}"
+                                   target="_blank">
+                                    <span>
+                                         English,
+                                    </span>
+                                </a>
+                                <a href="{% url 'template-pdf' 'french' %}"
+                                   target="_blank">
+                                    <span>
+                                         French,
+                                    </span>
+                                </a>
+                                <a href="{% url 'template-pdf' 'spanish' %}"
+                                   target="_blank">
+                                    <span>
+                                         Spanish,
+                                    </span>
+                                </a>
+                                or
+                                <a href="{% url 'template-pdf' 'portuguese' %}" target="_blank">
+                                    <span>Portuguese</span>
+                                </a>
+                                )
+                                {#                                <br>#}
+                                {#                                <a href="{% url 'brazil-pdf' %}"#}
+                                {#                                   target="_blank">#}
+                                {#                                    <span>#}
+                                {#                                        Click here#}
+                                {#                                    </span>#}
+                                {#                                </a>#}
+                                {#                                for an example of a completed SSF profile: Pontal do Parana, Brazil.#}
+                            </li>
+                            <li>
+                                <strong>Explore</strong>
+                                SSF characteristics through charts, tables, and infographics with
+                                <a href="{% url 'report' 'profile' 2288 %}" target="_blank">SSF Profile Reports</a>
+                            </li>
+                            <li>
+                                <strong>Visualize</strong>
+                                and compare SSF Profiles around the world using the
+                                <a href="http://demo.vista.cs.uregina.ca/gcpc-ssf/" target="_blank">GCPC tool</a>
+                            </li>
+                        </ul>
+                        <div align="center">
+                            <p style="text-decoration: underline; margin-bottom: 0;">Need help with ISSF?</p>
+                            <p style="margin-top: 0;">See our
+                                <a
+                                        href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-basic-tutorial-1.0.1.pdf"
+                                        target="_blank">
+                                    basic
+                                </a>
+                                or
+                                <a
+                                        href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-advanced-tutorial-1.0.1.pdf"
+                                        target="_blank">
+                                    advanced
+                                </a>
+                                tutorials.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-info who">
+                    <header>
+                        <span></span>
+
+                        <h2>Who's Who</h2>
+                    </header>
+                    <p>
+                        <strong>{{ who_feature.name }}</strong>
+                    </p>
+                    {% if who_feature.img_url %}
+                        <img src="{{ who_feature.img_url }}" style="height:200px;">
+                    {% endif %}
+                    <br/>
+                    {% if who_feature.ssf_person %}
+                        <strong>
+                            <a href="{% url 'who-details' who_feature.ssf_person.issf_core_id %}">Who's Who in SSF
+                                Profile
+                            </a>
+                        </strong>
+                    {% endif %}
+                    <br/>
+                    {% if who_feature.about %}
+                        {{ who_feature.about }}
+                    {% endif %}
+                    <br/>
+                    {% if who_feature.ssf_knowledge %}
+                        <strong>Select publication:</strong>
+                        <a href="{% url 'sota-details' who_feature.ssf_knowledge.issf_core_id %}">{{ who_feature.ssf_knowledge.level1_title }}: {{ who_feature.ssf_knowledge.level2_title }}
+                        </a>
+                    {% endif %}
+                </div>
+                {#                <div class="box box-info who">#}
+                {#                    <header>#}
+                {#                        <span></span>#}
+                {##}
+                {#                        <h2>Who's Who</h2>#}
+                {#                    </header>#}
+                {#                    <p>#}
+                {#                        <strong>Tek Gurung</strong>#}
+                {#                    </p>#}
+                {#                    <img src="{% static 'frontend/img/tek 4 photo.jpg' %}" style="height:200px;">#}
+                {#                    <br/>#}
+                {#                    <strong>#}
+                {#                        <a href="{% url 'who-details' 2311 %}">Who's Who in SSF Profile</a>#}
+                {#                    </strong>#}
+                {#                    <br/>#}
+                {#                    Tek is working to promote sustainable small scale fisheries and aquaculture in Nepal by developing#}
+                {#                    sound policies, research design, and action research in favor of small holder artisan fisheries,#}
+                {#                    environment, and fishers.#}
+                {#                    <br/>#}
+                {#                    <strong>Select publication:</strong>#}
+                {#                    <a href="{% url 'sota-details' 1828 %}">Human–Marine Nature Interactions: What Kind of Valuing?#}
+                {#                        Towards an Integrative Modelling Approach#}
+                {#                    </a>#}
+                {#                </div>#}
+                <div class="box box-info glance">
+                    <header>
+                        <h2>At-a-Glance</h2>
+                    </header>
+                    <p>
+                        <strong>State-of-the-Art Regional Reports</strong>
+                    </p>
+
+                    <div id="regional"></div>
+                </div>
+                {#                <div class="box box-info who">#}
+                {#                    <header><span></span> <h2>Who's Who</h2></header>#}
+                {#                    <p><strong>Professor Svein Jentoft</strong></p>#}
+                {#                    <img class="imgleft" src="http://www0.nfh.uit.no/images/sveinjentoft0.jpg">#}
+                {#                    <strong><a href="{% url 'who-details' 1275 %}">Who's Who Profile</a></strong><br/><br/>#}
+                {#                    <strong>Select publication:</strong>#}
+                {#                    <a href="{% url 'sota-details' 726 %}">Why comply? Attitudes towards harvest regulations among Swedish fishers</a>#}
+                {#                </div>#}
+            </div>
+        </div>
+    </section>
+    <div id="images"></div>
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js plugins="cluster,navbar,binggeocoder" %}{% django_js jquery=false i18n=false %}
+
+    {#    <script src="{% static 'issf_base/rateit/jquery.rateit.min.js' %}"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.7/js/jquery.dataTables.min.js"></script>
+    <!--script src="{% static 'frontend/js/index.js' %}"></script-->
+
+    <!-- Note that the chorodata.geojson file needs to be prefaced with "var choroData = " in order for it to work-->
+    <script src="{% static 'frontend/js/chorodata.geojson' %}"></script>
+    <script src="https://d3js.org/d3-array.v1.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
+    <script src="https://d3js.org/d3-format.v1.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+
+    <script type="text/javascript">
+
+        var mapDataTokenSeperator = "~~^~~%|%~~^~~";
+
+        console.log("#newload: " + $('#newload').val());
+        if (localStorage.getItem("filterButtonCache")) {
+            console.log("#filter button cache: " + localStorage.getItem("filterButtonCache"));
+        }
+        if (localStorage.getItem("mapDataCache")) {
+            console.log("#map data cache: " + localStorage.getItem("mapDataCache").length);
+        }
+        if (localStorage.getItem("tableDataCache")) {
+            console.log("#table data cache: " + localStorage.getItem("tableDataCache").length);
+        }
+        if (localStorage.getItem("activetab")) {
+            console.log("#Active Tab: " + localStorage.getItem("activetab"));
+        }
+        if (localStorage.getItem("mapzoom")) {
+            console.log("#Map zoom: " + localStorage.getItem("mapzoom"));
+        }
+        if (localStorage.getItem("mapcenter")) {
+            console.log("#Map center: " + localStorage.getItem("mapcenter"));
+        }
+        if (localStorage.getItem("tablepage")) {
+            console.log("#Table Page: " + localStorage.getItem("tablepage"));
+        }
+        if (localStorage.getItem("tableorder")) {
+            console.log("#Table Order: " + localStorage.getItem("tableorder"));
+        }
+        if (localStorage.getItem("recordPerPage")) {
+            console.log("#Table Record Per Page: " + localStorage.getItem("recordPerPage"));
+        }
+
+
+        /*************** Page State **************/
+        var GlobalNewLoad = false;
+        var GlobalMapChangeFlag = false;
+
+        if ($("#newload").val().length > 0) {
+            console.log('User returned to page using backspace');
+        } else {
+            $('#newload').val(1);
+            GlobalNewLoad = true;
+            console.log('Fresh page load');
+
+
+            //localStorage.removeItem("lastselectedlayer");
+        }
+
+        // caches the filter button states in case user comes back using back button
+        function SaveFilterButtonStatus() {
+            var indices = "";
+            $('.map-icons>a').each(function () {
+                if ($(this).hasClass('on')) {
+                    indices = indices + $(this).index() + ",";
+                }
+            });
+            if (indices.length > 0) {
+                indices = indices.substr(0, indices.length - 1);
+            }
+            if (typeof(window.localStorage) !== "undefined") {
+                localStorage.setItem("filterButtonCache", indices);
+            }
+            console.log("filter button indices: " + localStorage.getItem("filterButtonCache"));
+        }
+
+        $(document).ready(function () {
+
+            //SAVE PAGE STATE
+            window.onbeforeunload = function () {
+                localStorage.setItem('activetab', $('.tabs>li.active>a').attr('href'));
+
+
+                if (GlobalMapHandle) {
+                    var mapzoom = GlobalMapHandle.getZoom();
+                    var mapcenter = JSON.stringify(GlobalMapHandle.getCenter());
+
+                    localStorage.setItem('mapzoom', mapzoom);
+                    localStorage.setItem('mapcenter', mapcenter);
+
+                }
+
+                GlobalTableHandle.order([3, 'desc']);
+
+                if (GlobalTableHandle) {
+                    var tableorder = JSON.stringify(GlobalTableHandle.order());
+                    var tablepage = GlobalTableHandle.page();
+                    var recordPerPage = GlobalTableHandle.page.len();
+                    localStorage.setItem('tableorder', tableorder);
+                    localStorage.setItem('tablepage', tablepage);
+                    localStorage.setItem('recordPerPage', recordPerPage);
+                    console.log(localStorage.getItem('tableorder'));
+                    console.log(localStorage.getItem('tablepage'));
+                    console.log(localStorage.getItem('recordPerPage'));
+                }
+
+                //console.log("onbeforeunload");
+                //return "wait";
+            };
+
+            //-----------RESTORE PAGE STATE-----------
+
+            //restore tab
+            if (localStorage.getItem("activetab") && !GlobalNewLoad) {
+                $('.tabs>li>a[href="' + localStorage.getItem("activetab") + '"]').click();
+            }
+            //restoration of mapzoom/mapcenter is perform at the end of loadData() -> map loading
+            //restoration of table order/page is perform at the end of loadData() -> table loading
+
+
+            //-------------- Initialize Perfect Scroll bar on Advanced Search content containers.
+            /*
+             $('#advance-search  div.content').each(function(){
+             $(this).perfectScrollbar();
+             });
+             */
+
+            //-------- Prepare Attribute Values dynamically fill select on search form ---------
+            var HomepageAdvancedSearchCharacteriscticsAttributeValueCollection = function () {
+                this.attributeValueID = [];
+                this.attributeID = [];
+                this.valueLabel = [];
+                this.valueOrder = [];
+            };
+
+            window.attributeValues = new HomepageAdvancedSearchCharacteriscticsAttributeValueCollection();
+
+            {% for attribute_value in attribute_values %}
+                attributeValues.attributeValueID.push({{ attribute_value.attribute_value_id }});
+                attributeValues.attributeID.push({{ attribute_value.attribute.attribute_id }});
+                attributeValues.valueLabel.push("{{ attribute_value.value_label }}");
+                attributeValues.valueOrder.push({{ attribute_value.value_order }});
+            {% endfor %}
+
+
+            //Home Page advanced search -> characteristics -> select on change handler
+            var $select = $('.advancedSearchPanelTab #char-attr select');
+            var attrVals = $('.advancedSearchPanelTab #char-attr-val select');
+
+            $select.on('change', function () {
+                var val = $(this).val(); //$('.advancedSearchPanelTab #char-attr select option:selected').attr("value");
+                attrVals.empty();
+                attributeValues.attributeID.forEach(function (value, i) {
+                    if (value == val) {
+                        attrVals.append($('<option></option>').attr("value", (attributeValues.attributeValueID[i])).text(attributeValues.valueLabel[i]));
+                    }
+                });
+            });
+
+            //--------------------------------------------------------------------------------
+
+            var HomepageAdvancedSearchThemeIssueValueCollection = function () {
+                this.themeissueValueID = [];
+                this.themeissueID = [];
+                this.themeissueLabel = [];
+                this.themeissueOrder = [];
+            };
+
+            window.themeissueValues = new HomepageAdvancedSearchThemeIssueValueCollection();
+
+            {% for theme_issue_value in theme_issue_values %}
+                themeissueValues.themeissueValueID.push({{ theme_issue_value.theme_issue_value_id }});
+                themeissueValues.themeissueID.push({{ theme_issue_value.theme_issue.theme_issue_id }});
+                themeissueValues.themeissueLabel.push("{{ theme_issue_value.theme_issue_label }}");
+                themeissueValues.themeissueOrder.push({{ theme_issue_value.label_order }});
+            {% endfor %}
+
+
+            //Home Page advanced search -> themes/issues -> select on change handler
+            var $tiSelect = $('.advancedSearchPanelTab #ti-attr select');
+            var tiVals = $('.advancedSearchPanelTab #ti-attr-val select');
+
+            $tiSelect.on('change', function () {
+                var val = $(this).val();
+                tiVals.empty();
+                themeissueValues.themeissueID.forEach(function (value, i) {
+                    if (value == val) {
+                        tiVals.append($('<option></option>').attr("value", (themeissueValues.themeissueValueID[i])).text(themeissueValues.themeissueLabel[i]));
+                    }
+                });
+            });
+
+            // reset themes/issues and attributes in advanced search panel
+            $('.reset-button').on('click', function () {
+                tiVals.empty();
+                attrVals.empty();
+            });
+        });
+
+        /*************** Map/Data Filter Buttons **************/
+        // Update Sept05
+        $(window).load(is.verticalResize);
+
+        // Update Sept05
+        /*
+         $(window).resize(function(){
+         var h = $(window).height()-20;
+         is.verticalResize(h);
+         if(h<672){ is.toMap(144); }
+         });
+         */
+
+        $('.content-section .bt-prev').addClass('disable');
+
+        $('.map-icons a:not(#toexpand)').each(function () {
+            var tt = $(this).find('h3').html(),
+                title = tt.replace('<br>', ' ');
+            $(this).find('.pop').prepend('<h4>' + title + '</h4>');
+        });
+
+        $('.map-icons a').on('mouseenter', function () {
+            if (!$('.map-icons').hasClass('on')) {
+                $(this).find('.pop').show().css({opacity: 0}).animate({right: 66, opacity: 1}, 300);
+            }
+        });
+        $('.map-icons a').on('mouseleave', function () {
+            if (!$('.map-icons').hasClass('on')) {
+                $(this).find('.pop').animate({right: 52, opacity: 0}, 100, function () {
+                    $(this).removeAttr('style');
+                });
+            }
+        });
+        // Update Sept05
+        //-----------------------------------------
+        //Icon filter button click listener
+        //-----------------------------------------
+        $('.map-icons a:not(#toexpand,.disable)').on('click', function () {
+            {#            function choroFilter(toggle) {#}
+            {#                if (toggle == 'off' && geojson._map) {#}
+            {#                    map.removeLayer(geojson);#}
+            {#                    map.removeControl(choroControl);#}
+            {#                    map.removeControl(legend);#}
+            {#                } else {#}
+            {#                    extloadChoropleth();#}
+            {##}
+            {#                }#}
+            {#            }#}
+
+            var icon = $(this).attr('id');
+            {#            var choroFilterButton = $('.map-icons a#choropleth');#}
+            if ($(this).hasClass('on')) {
+                $(this).removeClass('on');
+                $('#all').removeClass('on');
+                if (icon == 'all') {
+                    {#                    if (choroFilterButton.hasClass('on')) {#}
+                    {#                        choroFilter("off");#}
+                    {#                    }#}
+                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                }
+            } else {
+                $(this).addClass('on');
+                if (icon == 'all') {
+                    {#                    if (!choroFilterButton.hasClass('on')) {#}
+                    {#                        choroFilter();#}
+                    {#                    }#}
+                    $('.map-icons a:not(#toexpand,.disable)').addClass('on');
+                }
+            }
+            {#            if (icon == 'choropleth') {#}
+            {#                if ($(this).hasClass('on')) {#}
+            {#                    choroFilter();#}
+            {#                } else {#}
+            {#                    choroFilter("off");#}
+            {#                }#}
+            {##}
+            {#            }#}
+            loadData2();
+            SaveFilterButtonStatus();
+        });
+
+        $('#toexpand').on('click', function () {
+            if ($(this).hasClass('on')) {
+                $('.map-icons').animate({width: 52}, 200, function () {
+                    $('#toexpand,.map-icons').removeClass('on');
+                });
+                $('.map-icons h3').fadeOut(200);
+            } else {
+                // Update Sept05 - If you want more space for longer text you can change 200 to more number
+                $('.map-icons').animate({width: 200}, 300, function () {
+                    $('#toexpand,.map-icons').addClass('on');
+                });
+                $('.map-icons h3').fadeIn(300, function () {
+                    var hi = $(this).height();
+                    $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
+                });
+                $('.map-icons .pop').fadeOut(50);
+            }
+            setTimeout(function () {
+                $('.map-icons').animate({width: 52}, 300, function () {
+                    $('#toexpand,.map-icons').removeClass('on');
+                });
+                $('.map-icons h3').fadeOut(300);
+            }, 10000);
+        });
+        $('.map-icons a:not(a#no-hover):not(#toexpand)').mouseover(function () {
+            $('<div class="btn_popup">Click to show/hide</div>').appendTo('body');
+        })
+            .mouseleave(function () {
+                $('.btn_popup').remove();
+            })
+            .mousemove(function (e) {
+                var mouseX = e.pageX, //X coordinates of mouse
+                    mouseY = e.pageY; //Y coordinates of mouse
+                $('.btn_popup').css({top: mouseY - 28, left: mouseX + 4});
+            });
+        $('#tosearch').on('click', function () {
+            if ($(this).hasClass('on')) {
+                $('#advance-search #full-search').stop().slideUp(300, function () {
+                    $('#tosearch').removeClass('on');
+                });
+                $('#advance-search').addClass('quick');
+                $('#advance-search #quick-search').stop().slideDown(100);
+                $('#tosearch').animate({bottom: -29}, 50);    //original bottom value was -42.  Ji.
+            } else {
+                $('#advance-search #full-search').stop().slideDown(500, function () {
+                    $('#tosearch').addClass('on');
+                });
+                $('#advance-search').removeClass('quick');
+                $('#advance-search #quick-search').stop().slideUp(200);
+                $('#tosearch').animate({bottom: -30}, 50);
+            }
+            //loadData2();	//refresh map/table
+        });
+
+        $('#q-search').on('focusout', function () {
+            var keywords = $('#q-search').val();
+            $('#home-search-form')[0].reset();
+            $('#q-search').val(keywords);
+            $('#id_keywords').val($('#q-search').val());
+        });
+
+        $('#id_keywords').on('focusout', function () {
+            $('#q-search').val($('#id_keywords').val());
+        });
+
+
+        $('.accordion a').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var that = $(this),
+                parent = $(this).parent(),
+                content = parent.find('.content');
+            if (parent.hasClass('active')) {
+                content.slideUp('200', function () {
+                    parent.removeClass('active');
+                });
+            } else {
+                content.slideDown('300', function () {
+                    parent.addClass('active');
+                });
+            }
+        });
+        $(':input[required]').each(function () {
+            var idd = $(this).attr('id');
+            $('label[for="' + idd + '"]').append('<sup>*</sup>');
+        });
+        $('.bt-prev').click(function () {
+            $('.tabs .active').prev().find('a').trigger('click');
+            is.visibleCheck();
+        });
+        $('.bt-next').click(function () {
+            $('.tabs .active').next().find('a').trigger('click');
+            is.visibleCheck();
+        });
+
+        // Update Sept05
+        $('nav .tab-title').hover(function () {
+            $(this).find('.pop').css({'display': 'block', opacity: 0}).animate({bottom: '120%', opacity: 1}, 200);
+        }, function () {
+            $(this).find('.pop').animate({bottom: '103%', opacity: 0}, 100, function () {
+                $(this).hide();
+            });
+        });
+
+        //turn on all filters
+        if (GlobalNewLoad) {
+            console.log('loading default filter buttons');
+            $('nav.map-icons a:nth-child(2)').addClass('on'); //who
+            $('nav.map-icons a:nth-child(3)').addClass('on'); //sota
+            $('nav.map-icons a:nth-child(4)').addClass('on'); //profile
+            $('nav.map-icons a:nth-child(5)').addClass('on'); //orgs
+            $('nav.map-icons a:nth-child(6)').addClass('on'); //case studies
+            $('nav.map-icons a:nth-child(7)').addClass('on'); //capacity
+            $('nav.map-icons a:nth-child(8)').addClass('on'); //experiences
+            $('nav.map-icons a:nth-child(9)').addClass('on'); //guidelines
+            $('nav.map-icons a:nth-child(10)').addClass('on'); //choropleth layer
+            $('nav.map-icons a:last-child').addClass('on'); //toggle all
+            SaveFilterButtonStatus();
+        } else {
+            console.log('loading saved filter buttons');
+            var indexOfFiltersToTurnOn = localStorage.getItem("filterButtonCache").split(',');
+            for (var i = 0; i < indexOfFiltersToTurnOn.length; i++) {
+                var index = indexOfFiltersToTurnOn[i];
+                $($('.map-icons a')[index]).addClass('on');
+            }
+        }
+
+
+        /********************************* Leaflet ***************************/
+        $(".tabs>li").click(function () {
+            if (GlobalMapHandle) {
+                L.Util.requestAnimFrame(GlobalMapHandle.invalidateSize, GlobalMapHandle, !1, GlobalMapHandle._container);
+            }
+        });
+
+
+        var markers = L.markerClusterGroup({
+            // map markers dynamically set via ajax
+            spiderfyDistanceMultiplier: 2,
+            maxClusterRadius: 30,
+            //disableClusteringAtZoom: 10,
+            iconCreateFunction: function (cluster) {
+                var childCount = cluster.getChildCount();
+                return new L.DivIcon({
+                    html: '<div><span>' + childCount + '</span></div>',
+                    className: 'marker-cluster marker-cluster-large',
+                    iconSize: [32, 32]
+                });
+            }
+        });
+
+        // prepare everything in map except markers
+        var GlobalMapHandle = null;
+        var GlobalTableHandle = null;
+        console.log("preparing");
+
+        var geojson, choroControl, legend, extloadChoropleth;
+
+        var min = Number.MAX_SAFE_INTEGER;
+        var max = Number.MIN_SAFE_INTEGER;
+
+        //flag used to check if the DOM is ready
+        var isReady = false;
+        $(window).load(function () {
+            isReady = true;
+        });
+
+        function map_init_basic(map, options) {
+            GlobalMapHandle = map;
+
+            //Showing Loading Overlay on map init.
+            $("#map-loading-overlay").show();
+
+            map.setMaxBounds(null);
+
+
+            // remove default layers
+            map.eachLayer(function (Layer) {
+                map.removeLayer(Layer)
+            });
+
+            // add history control
+            new L.control.navbar().addTo(map);
+
+            // custom TileLayer required for Bing
+            var BingLayer = L.TileLayer.extend({
+                getTileUrl: function (tilePoint) {
+                    this._adjustTilePoint(tilePoint);
+                    return L.Util.template(this._url, {
+                        s: this._getSubdomain(tilePoint),
+                        q: this._quadKey(tilePoint.x, tilePoint.y, this._getZoomForUrl())
+                    });
+                },
+                _quadKey: function (x, y, z) {
+                    var quadKey = [];
+                    for (var i = z; i > 0; i--) {
+                        var digit = '0';
+                        var mask = 1 << (i - 1);
+                        if ((x & mask) != 0) {
+                            digit++;
+                        }
+                        if ((y & mask) != 0) {
+                            digit++;
+                            digit++;
+                        }
+                        quadKey.push(digit);
+                    }
+                    return quadKey.join('');
+                }
+            });
+
+            // setup basemaps
+
+            var mqAttr = 'basemap data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>, ' +
+                'basemap &copy; <a href="http://mapquest.com" target="_blank">MapQuest</a>';
+            var mqUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
+            var mqOSM = L.tileLayer(mqUrl, {attribution: mqAttr, noWrap: true});
+            //mqOSM.addTo(map);
+            var mbAttr = 'basemap data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>, ' +
+                'basemap &copy; <a href="http://mapbox.com" target="_blank">Mapbox</a>';
+            var mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
+
+            // uncomment this line and any that use mbCustom to add the custom basemap
+            {#            var mbUrl2 = 'https://api.tiles.mapbox.com/v4/rdeville.1lae5yre/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmRldmlsbGUiLCJhIjoic1JHaFIxRSJ9.A6XbI9ROeZMMKs5noaUnLg';#}
+            {#            var mbGrayscale = L.tileLayer(mbUrl, {id: 'examples.map-20v6611k', attribution: mbAttr, noWrap: true});#}
+
+
+            {#            var choroLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/rdeville.1lae5yre/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmRldmlsbGUiLCJhIjoic1JHaFIxRSJ9.A6XbI9ROeZMMKs5noaUnLg', {#}
+            {#                id: 'mapbox.light',#}
+            {#                attribution: mbAttr#}
+            {#            });#}
+
+            {#            var mbNaturalEarth = L.tileLayer(mbUrl, {#}
+            {#                id: 'mapbox.natural-earth-hypso-bathy',#}
+            {#                attribution: mbAttr,#}
+            {#                noWrap: true#}
+            {#            });/#}
+
+            {#            var mbCustom = L.tileLayer(mbUrl2, {id: 'custom_mapbox', attribution: mbAttr, noWrap: true});#}
+            var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttr = 'basemap data &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, ' +
+                'basemap &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>';
+            var osm = L.tileLayer(osmUrl, {attribution: osmAttr, noWrap: false});
+            var esriAttr = 'basemap &copy; <a href="http://esri.com" target="_blank">Esri</a>';
+            var esriUrl = 'http://services.arcgisonline.com/ArcGIS/rest/services/{id}/MapServer/tile/{z}/{y}/{x}';
+            var esriImagery = L.tileLayer(esriUrl, {id: 'World_Imagery', attribution: esriAttr, noWrap: true});
+            var esriStreet = L.tileLayer(esriUrl, {id: 'World_Street_Map', attribution: esriAttr, noWrap: true});
+            var choroBase = L.tileLayer(esriUrl, {id: 'World_Street_Map', attribution: esriAttr, noWrap: true});
+            var esriOcean = L.tileLayer(esriUrl, {id: 'Ocean_Basemap', attribution: esriAttr, noWrap: true});
+            var esriNatGeo = L.tileLayer(esriUrl, {id: 'NatGeo_World_Map', attribution: esriAttr, noWrap: true});
+            var bingKey = 'Al1mXkJObbAqh8s8TkCwTnIYZOemobAiJZSVaPklNXPS_ErYDtPButHlPDJrznFf';
+            var bingAttr = 'basemap &copy; <a href="http://bing.com/maps" target="_blank">Bing Maps</a>';
+            var bingAerialUrl = 'http://t{s}.tiles.virtualearth.net/tiles/a{q}.jpeg?g=1398&key=' + bingKey;
+            var bingRoadsUrl = 'http://t{s}.tiles.virtualearth.net/tiles/r{q}.jpeg?g=1398&key=' + bingKey;
+            var bingAerial = new BingLayer(bingAerialUrl, {
+                subdomains: ['0', '1', '2', '3', '4'],
+                attribution: bingAttr,
+                noWrap: true
+            });
+            var bingRoads = new BingLayer(bingRoadsUrl, {
+                subdomains: ['0', '1', '2', '3', '4'],
+                attribution: bingAttr,
+                noWrap: true
+            });
+            var baseLayers = {
+                {#                "MapQuest OSM": mqOSM,#}
+                {#                "Mapbox Grayscale": mbGrayscale,#}
+                {#                "Mapbox Natural Earth": mbNaturalEarth,#}
+                {#                "Custom Mapbox": mbCustom,#}
+                "OpenStreetMap": osm,
+                "Esri Imagery": esriImagery,
+                "Esri Street": esriStreet,
+                "Esri Ocean": esriOcean,
+                "Esri National Geographic": esriNatGeo,
+                "Bing Aerial": bingAerial,
+                "Bing Roads": bingRoads,
+                {#                "Country Statistics": choroBase#}
+            };
+
+
+            function getColor(d) {
+                var quarts = quantScale.quantiles();
+                var l = quarts.length - 1;
+                if (d >= 0 && d !== null) {
+                    if (d === quantScale(quarts[l])) {
+                        return '#fe9929';
+                    }
+                    else if (quantScale(quarts[l - 1]) <= d && d < quantScale(quarts[l])) {
+                        return '#f9bb3e';
+                    }
+                    else if (quantScale(quarts[l - 2]) <= d && d < quantScale(quarts[l - 1])) {
+                        return '#ffda6b';
+                    }
+                    else if (quantScale(quarts[l - 3]) <= d && d < quantScale(quarts[l - 2])) {
+                        return '#fcf09c';
+                    }
+                        {#                    else if (quantScale(quarts[l - 4]) <= d && d < quantScale(quarts[l - 3])) {#}
+                        {#                        return '#fc9272';#}
+                        {#                    }#}
+                        {#                    else if (quantScale(quarts[l - 5]) <= d && d < quantScale(quarts[l - 4])) {#}
+                        {#                        return '#fcbba1';#}
+                        {#                    }#}
+                        {#                    else if (quantScale(quarts[l - 6]) <= d && d < quantScale(quarts[l - 5])) {#}
+                        {#                        return '#fee0d2';#}
+                        {#                    }#}
+                    else if (d < quantScale(quarts[l - 3])) {
+                        return '#ffffe5';
+                    }
+                    else {
+                        return '#ffffff';
+                    }
+                } else {
+                    return '#d6d6d6';
+                }
+            }
+
+            {#            function calcMinMax(feature) {#}
+            {#                var prop_val = feature.properties[localStorage.getItem("choroProp")];#}
+            {#                if (prop_val) {#}
+            {#                    if (prop_val <= min) {#}
+            {#                        min = prop_val;#}
+            {#                    }#}
+            {#                    if (prop_val >= max) {#}
+            {#                        max = prop_val;#}
+            {#                    }#}
+            {#                }#}
+            {#            }#}
+
+            var quantScale;
+
+            function style(feature) {
+                var choroProp = localStorage.getItem('choroProp');
+
+                if (!choroProp) {
+                    choroProp = "SubMap2_SSF_2";
+                }
+
+                var featProp = feature.properties[choroProp];
+                var colourVal;
+                if (featProp !== null) {
+                    colourVal = quantScale(featProp);
+
+                    if (colourVal < 0) {
+                        colourVal = 0;
+                    }
+                }
+                else {
+                    colourVal = null;
+                }
+
+                return {
+                    fillColor: getColor(colourVal),
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '',
+                    fillOpacity: 0.7
+                };
+            }
+
+            function highlightFeature(e) {
+                var layer = e.target;
+
+                layer.setStyle({
+                    weight: 5,
+                    color: '#666',
+                    dashArray: '',
+                    fillOpacity: 0.7,
+                    opacity: 0.7
+                });
+
+                if (!L.Browser.ie && !L.Browser.opera) {
+                    layer.bringToFront();
+                }
+
+                choroControl.update(layer.feature.properties);
+            }
+
+            function resetHighlight(e) {
+                {#                geojson.resetStyle(e.target);#}
+                geojson.setStyle(style);
+                choroControl.update(layer.feature.properties);
+            }
+
+            function zoomToFeature(e) {
+                map.fitBounds(e.target.getBounds());
+            }
+
+            var prop_vals = [];
+
+            function onEachFeature(feature, layer) {
+                {#                calcMinMax(feature);#}
+
+                prop_vals.push(feature.properties[localStorage.getItem("choroProp")]);
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+                    click: zoomToFeature
+                });
+            }
+
+            //custom info popup for choropleth layer
+            choroControl = L.control();
+
+            choroControl.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'choroControl'); // create a div with a class "info"
+                this.update();
+                return this._div;
+            };
+
+            function numberCommas(x, sep, grp) {
+                if (x.length > 3) {
+                    var sx = ('' + x).split('.'), s = '', i, j;
+                    sep || (sep = ','); // default seperator
+                    grp || grp === 0 || (grp = 3); // default grouping
+                    i = sx[0].length;
+                    while (i > grp) {
+                        j = i - grp;
+                        s = sep + sx[0].slice(j, i) + s;
+                        i = j;
+                    }
+                    s = sx[0].slice(0, i) + s;
+                    sx[0] = s;
+                    return sx.join('.');
+                } else {
+                    return x;
+                }
+            }
+
+            // method used to update the control based on feature properties passed
+            choroControl.update = function (props) {
+                this._div.innerHTML = (props ? '<h5><b>' + props.name + '</b></h5>' + localStorage.getItem('choroPropTitle') + ': ' + numberCommas(props[localStorage.getItem("choroProp")]) : 'Hover over a country');
+            };
+
+            //legend for choropleth layer
+            legend = L.control({position: 'bottomleft'});
+
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend');
+                var grades = [];
+                {#                var ticks = linScale.ticks(8);#}
+                {#                console.log(ticks);#}
+                {#                for (var n = 0; n < ticks.length - 1; n++) {#}
+                {#                    grades.push(ticks[n]);#}
+                {#                }#}
+                {#                console.log('GRADES', grades);#}
+                labels = [];
+
+                div.style.maxWidth = '60%';
+                div.style.fontSize = '10pt';
+                var choroSelect = '<select id="choroProps">';
+                // get any layer from geojson since all have the same properites
+                var layer = geojson.getLayers()[0];
+                var props = Object.keys(layer.feature.properties);
+                var optionTitle, optionUnits, optionVal;
+                for (var i = 0; i < props.length; i++) {
+                    if (props[i].includes("SSF_")) {
+                        optionTitle = layer.feature.properties[props[i]];
+                        optionVal = layer.feature.properties[props[i + 1]];
+                        optionUnits = layer.feature.properties[props[i + 2]];
+                        choroSelect += '<option id="' + optionVal + '" value="' + props[i + 1] + '" ';
+                        if (props[i + 1] === localStorage.getItem("choroProp")) { //set selected option to current choropleth property
+                            choroSelect += 'selected="selected"'
+                        }
+                        choroSelect += '>' + optionTitle + ' (' + optionUnits + ')' + '</option>';
+                        i += 2;
+                    }
+                }
+                choroSelect += '</select>';
+                div.innerHTML += choroSelect;
+
+                div.innerHTML += '<i style="background: #d6d6d6"></i> No data</br>';
+                // loop through our density intervals and generate a label with a colored square for each interval
+                {#                var rng = quantScale.range().slice(0, quantScale.range().length - 1);#}
+                var quantiles = quantScale.quantiles();
+                if (quantiles[0]) {
+                    quantiles.unshift(0);
+                }
+                console.log(quantiles);
+                for (var i = 0; i < quantiles.length; i++) {
+
+                    div.innerHTML +=
+                        '<i style="background:' + getColor(quantScale(quantiles[i])) + '"></i> ' +
+                        Math.round(quantiles[i]) + (Math.round(quantiles[i + 1]) >= 0 ? '&ndash;' + Math.round(quantiles[i + 1]) + '<br>' : '+');
+
+                }
+
+
+                var stop = L.DomEvent.stopPropagation;
+                L.DomEvent
+                    .on(div, 'click', stop)
+                    .on(div, 'mousedown', stop);
+
+                return div;
+            };
+
+            lastSelectedLayer = localStorage.getItem("lastselectedlayer");
+            //lastSelectedLayer = null;
+            if (lastSelectedLayer === null) {
+                osm.addTo(map);
+            }
+            console.log("layer: " + lastSelectedLayer);
+
+            //make sure lastSelectedLayer exists and loop through
+            // list of all baselayers and apply the one that matches it
+            if (typeof lastSelectedLayer !== "undefined") {
+                for (layer in baseLayers) {
+                    if (lastSelectedLayer === layer) {
+                        baseLayers[lastSelectedLayer].addTo(map);
+                        if (lastSelectedLayer === "Country Statistics") {
+                            loadChoropleth();
+                        }
+                    }
+                }
+            }
+
+            var options = {
+                text: 'Locate placename using Bing',
+                position: 'bottomright'
+            };
+
+            new L.Control.BingGeocoder(bingKey, options).addTo(map);
+
+            var mrUrl = 'http://geo.vliz.be/geoserver/MarineRegions/wms';
+
+            // setup overlay layers
+            var mrAttr = 'marine regions &copy; <a href="http://Marineregions.org" target="_blank">Marineregions.org</a>';
+            var mrEEZ = L.tileLayer.wms(mrUrl, {
+                layers: 'MarineRegions:eez',
+                attribution: mrAttr,
+                format: 'image/png',
+                transparent: true,
+                noWrap: true
+            });
+            var mrLME = L.tileLayer.wms(mrUrl, {
+                layers: 'MarineRegions:lme',
+                attribution: mrAttr,
+                format: 'image/png',
+                transparent: true,
+                noWrap: true
+            });
+            var mrFAO = L.tileLayer.wms(mrUrl, {
+                layers: 'MarineRegions:fao',
+                attribution: mrAttr,
+                format: 'image/png',
+                transparent: true,
+                noWrap: true
+            });
+            var overlayLayers = {
+                "Exclusive Economic Zones": mrEEZ,
+                "Large Marine Ecosystems": mrLME,
+                "FAO Fishing Areas": mrFAO
+            };
+
+            var choroToggle = L.control({position: 'bottomright'});
+            choroToggle.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'choroToggle');
+                div.title = 'Toggle country statistics overlay';
+                div.style.background = '#f8f8f9';
+                div.style.backgroundImage = 'url("static/issf_base/img/icon-data.png")';
+                div.style.backgroundPosition = '92.5% 50%';
+                div.style.backgroundRepeat = 'no-repeat';
+                div.style.boxShadow = '0 1px 7px #999';
+                div.style.borderRadius = '8px';
+                div.style.width = '36px';
+                div.style.height = '36px';
+
+                L.DomEvent.on(div, 'mouseover', function () {
+                    div.style.cursor = 'pointer';
+                });
+                L.DomEvent.on(div, 'click', toggleChoropleth);
+
+                function toggleChoropleth() {
+                    if (geojson && geojson._map) {
+                        map.removeLayer(geojson);
+                        map.removeControl(choroControl);
+                        map.removeControl(legend);
+
+                        $('.map-icons a:not(#toexpand)').addClass('on');
+                        loadData2();
+                    } else {
+                        loadChoropleth();
+                    }
+                }
+
+                return div;
+            };
+            choroToggle.addTo(map);
+
+            // add basemaps and overlays
+            L.control.layers(baseLayers, overlayLayers, {position: 'bottomright'}).addTo(map);
+
+            // add empty markers group layer
+            map.addLayer(markers);
+
+            //detects if user manually changed the baselayer and saves it
+            //to be restored if the page is opened again
+            map.on('baselayerchange', function (e) {
+                lastSelectedLayer = e.name;
+                localStorage.setItem("lastselectedlayer", lastSelectedLayer);
+                console.log("Layer change: " + lastSelectedLayer);
+
+                //user selected choropleth layer
+                if (e.name === "Country Statistics") {
+                    loadChoropleth();
+                } else {
+                    map.removeLayer(geojson);
+                    map.removeControl(choroControl);
+                    map.removeControl(legend);
+                    $('.map-icons a:not(#toexpand)').addClass('on');
+                    loadData2();
+                }
+            });
+
+            {# This flag is needed to check if LoadChoropleth was loaded internally. #}
+            var initialLoad = true;
+
+            function loadChoropleth() {
+                if (isReady) {
+                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    loadData2();
+                    if (geojson) {
+                        map.removeLayer(geojson);
+                    }
+                    geojson = L.geoJson(choroData, {onEachFeature: onEachFeature});
+                    quantScale = d3.scaleQuantile().domain(prop_vals).range([0, 20, 40, 60, 80]);
+                    console.log(quantScale.domain());
+                    prop_vals = [];
+                    geojson.setStyle(style);
+                    geojson.addTo(map);
+
+                    if (($('div.info.legend').length)) {
+                        map.removeControl(choroControl);
+                        map.removeControl(legend);
+                    }
+                    choroControl.addTo(map);
+                    legend.addTo(map);
+                    $('#choroProps').on('change', function () {
+                        localStorage.setItem('choroProp', $(this).children(':selected').attr('value'));
+                        localStorage.setItem('choroPropTitle', $(this).children(':selected').text());
+                        max = min = 0;
+                        initialLoad = false;
+                        loadChoropleth();
+                    });
+                    {#Function called externally, need to reload to set choropleth property data. It's not pretty, but it works.#}
+                    if (initialLoad) {
+                        $('#choroProps').change();
+                    }
+                }
+            }
+
+
+            // add transparent tooltip markers for key geographic scopes
+            // they are rounded red squares, definitely could be a more visually-pleasing design
+            var scopeIcon = new L.DivIcon({
+                className: 'scope-icon', iconSize: [32, 32],
+                opacity: 0
+            });
+            L.marker([-10, -10], {
+                icon: scopeIcon, title: 'Global scope', zIndexOffset: 1000,
+                clickable: true
+            }).addTo(map);
+            L.marker([-40, 65], {
+                icon: scopeIcon, title: 'Geographic scope not specific',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+            L.marker([23, 23], {
+                icon: scopeIcon, title: 'Regional scope - Africa',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+            L.marker([45, 90], {
+                icon: scopeIcon, title: 'Regional scope - Asia',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+            L.marker([16, -77], {
+                icon: scopeIcon, title: 'Regional scope - Caribbean',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+            L.marker([50, 15], {
+                icon: scopeIcon, title: 'Regional scope - Europe',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+            L.marker([-21, -55], {
+                icon: scopeIcon, title: 'Regional scope - Latin America',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+            L.marker([49, -111], {
+                icon: scopeIcon, title: 'Regional scope - North America',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+            L.marker([-18, 154], {
+                icon: scopeIcon, title: 'Regional scope - Oceania',
+                zIndexOffset: 1000, clickable: true
+            }).addTo(map);
+
+
+            //
+            //The condition for restoring zoom/pan after user has hit "back" button to return to page are: cached mapzoom, cached mapcenter
+            //
+            map.on('move', function () {
+                localStorage.removeItem("mapcenter");
+                localStorage.removeItem("mapzoom");
+                //console.log("on move");
+            });
+
+
+            // make ajax call to get data
+            if (GlobalNewLoad) {
+                console.log("[Fresh Load]");
+
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'frontend-data' %}",
+                    dataType: "json",
+                    data: null,
+                    success: loadData
+                });
+            } else {
+                console.log("[Back Load]");
+                var tempJsonData = {};
+                tempJsonData.success = 'true';
+                tempJsonData.mapData = [];
+                tempJsonData.data = [];
+
+                //restore map data
+                var md = localStorage.getItem("mapDataCache");
+                //console.log("################");
+                //console.log(md);
+                var mdtokens = md.split(mapDataTokenSeperator);
+                for (var i = 0; i < mdtokens.length; i++) {
+                    //console.log('['+i+'] ' + mdtokens[i]);
+                    try {
+                        tempJsonData.mapData.push(JSON.parse(mdtokens[i]));
+                    } catch (err) {
+                        console.log("Error: " + err.message + " @ restore map data loop -> i=" + i);
+                    }
+
+                }
+
+                //restore table data
+                var td = localStorage.getItem("tableDataCache");
+                //console.log("################");
+                //console.log(td);
+                var tdtokens = td.split(mapDataTokenSeperator);
+                for (var j = 0; j < tdtokens.length; j++) {
+                    //console.log('['+j+'] ' + tdtokens[j])
+                    try {
+                        tempJsonData.data.push(JSON.parse(tdtokens[j]));
+                    } catch (err) {
+                        console.log("Error: " + err.message + " @ restore table data loop -> j=" + j);
+                    }
+                }
+
+                //restore search data
+                tempJsonData.searchTerms = localStorage.getItem('searchTerms');
+
+                loadData(tempJsonData);
+            }
+        }
+
+        // page init function
+        //$(document).ready(function(){
+        // setup table and options, but don't fill
+        var table = $('#record-table-result').dataTable({
+            //"scrollY": "525px",
+            //"scrollCollapse": true,
+            "columnDefs": [{"visible": false, "targets": 3}],
+            "paging": true,
+            "autoWidth": false,
+            "filter": false,
+            "order": [[2, "desc"]],
+            "deferRender": true,
+            //"ajax": "{% url 'frontend-data' %}",
+            //"serverSide": true,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "language": {
+                "search": "Filter within results:",
+                "lengthMenu": "Show _MENU_ records",
+                "info": "Showing _START_ to _END_ of _TOTAL_ records",
+                "infoEmpty": "Showing 0 to 0 of 0 records",
+                "infoFiltered": "(filtered from _MAX_ total records)"
+            }
+        });
+
+        var search = false;
+
+        // If user is not signed in then disable button and have tooltip asking them to login.
+        // Have to "fake-disable" the button with onclick="return false because the tooltip will
+        // not appear if it is actually disabled.
+        $('div.BtnCol').append('<span data-tooltip aria-haspopup="true" class="has-tip exp-tip" title="Please login to use the export feature." style="border:none;"><button class="medium radius exportButton" onclick="return false;">Export Data</button></span>');
+
+        {% if user.is_authenticated %}
+            $('span.exp-tip').prop('title', "Export selected data in CSV format.");
+            $('button.exportButton').attr('data-reveal-id', "exportModal");
+        {% endif %}
+
+        // load clickable map image in dashboard panel
+        $('#regional').load('/static/frontend/img/worldmap.svg', svgLoaded);
+
+        // necessary?
+        $('.totable').on('click', function () {
+            $('.dataTables_scrollHeadInner, .dataTables_scrollHeadInner table').width('100%');
+
+        });
+
+        function quickSearch() {
+            var keywords = $('#q-search').val();
+            $('#home-search-form')[0].reset();
+            $('#q-search').val(keywords);
+            $('#id_keywords').val($('#q-search').val());
+
+            $('#default').trigger('click');
+        }
+
+        $('#home-search-form').keydown(function (e) {
+            if (e.keyCode === 13) {
+                if ($('#q-search').is(":focus")) {
+                    $('#q-search').trigger("focusout");
+                }
+                else if ($('#id_keywords').is(":focus")) {
+                    $('#id_keywords').trigger("focusout");
+                }
+                $('#default').trigger("click");
+                return false;
+            }
+        });
+
+        // search submit
+        $('#home-search-form').submit(function (e) {
+            //Showing Loading Overlay
+            $("#map-loading-overlay").show();
+            e.preventDefault();
+
+            var form = $(this);
+
+            search = true;
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'frontend-data' %}",
+                dataType: "json",
+                data: form.serialize(),
+                success: loadData
+            });
+        });
+
+        //});
+
+        var GlobalJsonData = null;
+        //Trampoline function to loadData.
+        //this function is to be called whenever there is a click on filter buttons
+        function loadData2() {
+            console.log('loaddata2');
+            loadData(GlobalJsonData);
+        }
+
+        // Holds the core ids of the records currently in the table
+        var currentRecords = [];
+
+        // ajax callback function
+        function loadData(jsonData) {
+
+            //Check for and Back up the jsonData
+            if (jsonData == null || typeof jsonData == 'undefined') {
+                return;
+            }
+            GlobalJsonData = jsonData;
+            //$('#hiddenmapdata').text(JSON.stringify(jsonData.mapData));
+            //$('#hiddentabledata').text(JSON.stringify(jsonData.data));
+
+
+            //Get the list of filters
+            var activeFilters = [];
+            var filterTitle;
+            $('nav.map-icons a').each(function () {
+                if ($(this).hasClass('on')) {
+                    filterTitle = $(this).children('h3').text();
+                    if (filterTitle == "Experiences") {
+                        filterTitle = "SSF Experiences";
+                    }
+                    if (filterTitle == "Case Studies") {
+                        filterTitle = "Case Study";
+                    }
+                    activeFilters.push(filterTitle);
+                    //console.log($(this).children('h3').text());
+                }
+            });
+            //console.log("-------");
+
+            if (jsonData.success == 'false') {
+                $('#searchTerms').html(jsonData.msg);
+                $('#searchTerms').addClass('error');
+            }
+            else {
+                //----------------------
+                //----- update map------
+                //----------------------
+
+                markers.clearLayers();
+                map = markers._map;
+                map.removeLayer(markers);
+
+                var mapDataSource = jsonData.mapData;
+                //console.log("jsonData.mapData length: "+mapDataSource.length);
+                //console.log("jsonData.mapData length: "+jsonData.mapData);
+
+                var hiddenmapdata = "";
+
+                var whoIcon = L.icon({
+                    iconUrl: '{% static "img/icon-who.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+                var orgIcon = L.icon({
+                    iconUrl: '{% static "img/icon-organizations.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+                var sotaIcon = L.icon({
+                    iconUrl: '{% static "img/icon-sota.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+                var capacityIcon = L.icon({
+                    iconUrl: '{% static "img/icon-capacity.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+                var profileIcon = L.icon({
+                    iconUrl: '{% static "img/icon-profile.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+                var guidelinesIcon = L.icon({
+                    iconUrl: '{% static "img/icon-guidelines.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+                var experiencesIcon = L.icon({
+                    iconUrl: '{% static "img/icon-experiences.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+                var casestudiesIcon = L.icon({
+                    iconUrl: '{% static "img/icon-casestudies.png" %}',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, 0]
+                });
+
+                currentRecords = [];
+
+                for (newRow in mapDataSource) {
+
+                    //save the data to #hiddenmapdata
+
+                    if (typeof JSON.stringify(mapDataSource[newRow]) == "undefined") {
+                        //for some RIDICULOUS REASON the final element in the
+                        //jsonData.mapData and jsonData.data array are always
+                        //a function... WTH!!! how can it be a function???
+
+                        //running JSON.stringify( function ) yields a result of type undefined
+                        //and this will screw up the data that we are processing.
+
+                        //By observation, the function always appears at the end of array
+                        //It could have potentially be added on by the Django framework.
+                        break;
+                    }
+                    var hiddenmapdata = hiddenmapdata + JSON.stringify(mapDataSource[newRow]) + mapDataTokenSeperator;
+
+
+                    var mrk;
+
+
+                    for (var i = 0; i < activeFilters.length; i++) {
+                        var currentIcon;
+                        var row = mapDataSource[newRow];
+                        if (row[0] == "Who's Who in SSF") {
+                            currentIcon = whoIcon;
+                        }
+                        else if (row[0] == "State-of-the-Art in SSF Research") {
+                            currentIcon = sotaIcon;
+                        }
+                        else if (row[0] == "SSF Organization") {
+                            currentIcon = orgIcon;
+                        }
+                        else if (row[0] == "Capacity Development") {
+                            currentIcon = capacityIcon;
+                        }
+                        else if (row[0] == "SSF Profile") {
+                            currentIcon = profileIcon;
+                        }
+                        else if (row[0] == "SSF Guidelines") {
+                            currentIcon = guidelinesIcon;
+                        }
+                        else if (row[0] == "SSF Experiences") {
+                            currentIcon = experiencesIcon;
+                        }
+                        else if (row[0] == "Case Study") {
+                            currentIcon = casestudiesIcon;
+                        }
+                        if (row[0] == activeFilters[i]) {
+                            mrk = L.marker([row[5], row[4]], {icon: currentIcon});
+                            mrk.bindPopup('<b>Record type:</b> ' + row[0] +
+                                '<br><b>Geographic scope:</b> ' + row[1] +
+                                '<br><br>' + row[2] +
+                                '<br><br>' + row[3]);
+                            markers.addLayer(mrk);
+                            var urlString = row[3].split('/');
+                            currentRecords.push(row[0] + '&' + urlString[3]);
+                        }
+                    }
+                }
+
+                //remove the trailing mapDataTokenSeperator from hiddenmapdata
+                if (hiddenmapdata.length > 0) {
+                    hiddenmapdata = hiddenmapdata.substring(0, hiddenmapdata.length - mapDataTokenSeperator.length);
+                }
+
+                localStorage.setItem("mapDataCache", hiddenmapdata);
+                var mapdatalength = localStorage.getItem("mapDataCache").split(mapDataTokenSeperator).length;
+                //console.log('mapdatalength: ' + mapdatalength);
+
+                map.addLayer(markers);
+
+                //----------------------
+                //----update table------
+                //----------------------
+                var table = $('#record-table-result').DataTable({
+                    "retrieve": true
+                });
+                table.clear();
+                //Order by relevance after performing a search
+                if (search) {
+                    table.order([3, 'desc']);
+                } else {
+                    table.order([2, 'desc']);
+                }
+                GlobalTableHandle = table;
+
+                //loops through map data and uses the dupe object to identify and remove any duplicate record entries
+                var dupe = {};
+                var tableDataSource = mapDataSource;
+                for (var i = 0; i < tableDataSource.length; i++) {
+                    //the summary of the record that appears in the table, used to determine duplicates
+                    var tableItem = tableDataSource[i];
+                    var summary = tableItem[2];
+                    if (dupe[summary]) {
+                        tableDataSource.splice(i, 1);
+                        i--
+                    } else {
+                        dupe[summary] = true;
+                    }
+                }
+
+                for (newRow in tableDataSource) {
+
+                    if (typeof JSON.stringify(tableDataSource[newRow]) == "undefined") {
+                        //for some RIDICULOUS REASON the final element in the
+                        //jsonData.mapData and jsonData.data array are always
+                        //a function... WTH!!! how can it be a function???
+
+                        //running JSON.stringify( function ) yields a result of type undefined
+                        //and this will screw up the data that we are processing.
+
+                        //By observation, the function always appears at the end of array
+                        //It could have potentially be added on by the Django framework.
+                        break;
+                    }
+
+                    for (var i = 0; i < activeFilters.length; i++) {
+                        if (tableDataSource[newRow][0] == activeFilters[i]) {
+                            var url = tableDataSource[newRow][3];
+                            url = url.split('"');
+                            var summary = '<a href="' + url[1] + '">' + tableDataSource[newRow][2] + '</a>';
+                            // retrieve table data from map data to reduce amount of data transferred
+                            table.row.add([tableDataSource[newRow][0], summary, tableDataSource[newRow][6], tableDataSource[newRow][7]]);
+                        }
+                    }
+                }
+
+                //remove trailing mapDataTokenSeperator from hiddentabledata
+                if (hiddentabledata.length > 0) {
+                    hiddentabledata = hiddentabledata.substring(0, hiddentabledata.length - mapDataTokenSeperator.length);
+                }
+                localStorage.setItem("tableDataCache", hiddentabledata);
+                var tabledatalength = localStorage.getItem("tableDataCache").split(mapDataTokenSeperator).length;
+                //console.log('tabledatalength: ' + tabledatalength);
+
+                table.draw();
+
+
+                //update Search terms
+                var searchterms = jsonData.searchTerms;
+                localStorage.setItem('searchTerms', searchterms);
+                console.log("Search terms: " + searchterms);
+                $('#searchTerms').html("");
+                if (searchterms !== null && searchterms !== "null" && searchterms !== "undefined" && typeof searchterms !== "undefined") {
+                    console.log(typeof searchterms);
+                    $('#searchTerms').html("<strong>Current Search Terms:</strong> " + searchterms + " " + tableDataSource.length + " records)");
+                }
+
+                {# hack: if you do this without a pause, it can cause map freeze because it not initialized! #}
+                setTimeout(function () {
+                    //restore map zoom and center if NOT new page load
+                    if (localStorage.getItem("mapcenter") && localStorage.getItem("mapzoom") && !GlobalNewLoad && !GlobalMapChangeFlag) {
+                        map.setView(JSON.parse(localStorage.getItem("mapcenter")), localStorage.getItem("mapzoom"));
+
+                    }
+                }, 2000);
+                //restore table page and order if NOT new page load
+                if (localStorage.getItem("tableorder") && localStorage.getItem("tablepage") && localStorage.getItem("recordPerPage") && !GlobalNewLoad) {
+                    table.order(JSON.parse(localStorage.getItem("tableorder"))).page.len(parseInt(localStorage.getItem("recordPerPage"))).page(parseInt(localStorage.getItem("tablepage"))).draw(false);
+                }
+
+                //Hide Loading Overlay
+                $("#map-loading-overlay").hide();
+            }
+            exportCallBack = true;
+        }
+
+        var buttonClicked;
+        // exportCallback gets set to true at the end of the loadData call if the export button was
+        // clicked so it will wait until loadData finishes before letting the user export the data.
+        // this is basically for impatient  users who like to rapidly click buttons without knowing what they do.
+        var exportCallBack = false;
+
+        function exportData() {
+
+            $('#exportModal').foundation('reveal', 'close');
+            buttonClicked = "export";
+
+            if (exportCallBack) {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'data-export' %}",
+                    dataType: "json",
+                    data: {'ids': currentRecords},
+                    complete: function () {
+                        window.location.replace("{% url 'data-export' %}");
+                    }
+                });
+                exportCallBack = true;
+            }
+        }
+
+        // behaviour for clickable map in dashboard panel
+        function svgLoaded() {
+            $('#regional g').click(function () {
+                var gid = $(this).attr('id');
+                // replace PDF URL under this line
+                if (gid == 'latin_america') {
+                    window.open('http://toobigtoignore.net/wp-content/uploads/2014/09/latin.america.poster.final_.pdf');
+                }
+                else if (gid == 'africa') {
+                    window.open('http://toobigtoignore.net/wp-content/uploads/2014/09/africa.poster.final_.pdf');
+                }
+                else if (gid == 'europe') {
+                    window.open('http://toobigtoignore.net/wp-content/uploads/2014/09/europe.poster.final_.pdf');
+                }
+                else if (gid == 'north_america') {
+                    window.open('http://toobigtoignore.net/wp-content/uploads/2014/09/north.america.poster.final_.pdf');
+                }
+                else if (gid == 'asia_oceania') {
+                    window.open('http://toobigtoignore.net/wp-content/uploads/2014/09/asia.oceania.poster.final_.pdf');
+                }
+            });
+            $('#regional g').mouseover(function (e) {
+                var region = $(this).attr('id'),
+                    rgname = region.replace('_', ' ');
+                $('<div class="info_popup">' + rgname + '</div>').appendTo('body');
+            })
+                .mouseleave(function () {
+                    $('.info_popup').remove();
+                })
+                .mousemove(function (e) {
+                    var mouseX = e.pageX, //X coordinates of mouse
+                        mouseY = e.pageY; //Y coordinates of mouse
+                    $('.info_popup').css({top: mouseY - 30, left: mouseX - ($('.info_popup').width() / 2)});
+                });
+        }
+
+        //custom jquery plugin function
+        //check for the nearest sibling element / cluster icon)
+        //
+        //@param: a jquery object
+        $.fn.getNearestSibling = function (filter) {
+            var primaryPosition = this.position();
+            console.log(this.position());
+            var $siblings = $(this).siblings(filter);
+            if ($siblings.length == 0) {
+                return null;
+            } else {
+                var $nearestSibling = null;
+                $siblings.each(function () {
+                    if ($nearestSibling == null) {
+                        $nearestSibling = $(this);
+                    } else {
+                        var distanceFromNearestSibling = getDistanceBetweenPositions(primaryPosition, $nearestSibling.position());
+                        var distanceFromCurrentSibling = getDistanceBetweenPositions(primaryPosition, $(this).position());
+                        if (distanceFromCurrentSibling < distanceFromNearestSibling) {
+                            $nearestSibling = $(this);
+                        }
+                    }
+
+                });
+                return $nearestSibling;
+            }
+        };
+
+        var getDistanceBetweenPositions = function (pos1, pos2) {
+            return Math.sqrt(Math.pow(pos1.left - pos2.left, 2) + Math.pow(pos1.top - pos2.top, 2));
+        };
+
+        //------------------------------------------------------------------------
+        //Pass clicks on scope-icon through to its overlapped cluster/marker icon
+        //------------------------------------------------------------------------
+        $(document).on('click', function (evt) {
+            //check if the element being clicked is a scope-icon
+            if ($(evt.target).hasClass('scope-icon')) {
+                $(evt.target).getNearestSibling('').click();
+            }
+        });
+
+        /*************** JQuery Date Picker Initialization **************/
+        //Initialize date pickers
+        $('input[id*="date"]').each(function () {
+            $(this).datepicker()
+        });
+
+        //Initialize accordions
+        $('div[id*="accordion"]').each(function () {
+            $(this).accordion({active: 0, animate: 200});
+        });
+
+        $('#advanced-search-tab-container').tabs();
+
+        //------onclick page scroll-----
+        $('.issf-scroll-button').on("click", function (e) {
+            var scrollTo = $(this).attr('scrollto');
+            console.log(scrollTo);
+            if ($(scrollTo).length > 0) {
+                $('html, body').animate({
+                    scrollTop: $(scrollTo).offset().top
+                }, 1000);
+            }
+        });
+
+        //dummy tests
+        $(document).on('mouseover', function (evt) {
+            //console.log($(evt.target).attr('class'));
+            if ($(evt.target).hasClass('leaflet-marker-icon') && $(evt.target).hasClass('scope-icon')) {
+                console.log('offset: ' + $(evt.target).offset().left + "," + $(evt.target).offset().top);
+            }
+        });
+
+        //-------------- Help Rate ------------
+        $('#helpRate').click(function (e) {
+            e.preventDefault();
+            window.location.replace('/details/capacity-need-rating/0/');
+        });
+
+    </script>
+    <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=r6zHiLKHtnlqqDuyu2YBfU2JxAnowqE5"></script>
+
+
+{% endblock additional_js_scripts %}

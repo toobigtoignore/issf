@@ -1,0 +1,77 @@
+{% extends 'issf_base/base.html' %}
+{% load leaflet_tags %}
+{% load js %}
+{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    <section class="content-section report">
+        <div class="row" id="main">
+            <div class="large-12 columns">
+                <dl class="accordion" data-accordion>
+                    <dd class="accordion-navigation active">
+                        {% if editor %}
+                            <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
+                                <h6>Step 2. Please indicate the geographic scope of the record.</h6>
+
+                                <p class="alert">
+                                    <label>*</label>
+                                    indicates required fields
+                                </p>
+                                {% csrf_token %}
+                                <div class="FormSet FormSetToggler">
+                                    {{ geographic_scope_form }}
+                                </div>
+                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                    {{ local_area_form }}
+                                </div>
+                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                    {{ subnation_form }}
+                                </div>
+                                {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
+                                <div class="FormSet FormSetTogglable">
+                                    {{ nation_form }}
+                                </div>
+                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                    {{ region_form }}
+                                </div>
+
+                                <input id="issf_core_id" type="hidden"
+                                       value="{{ core_instance.issf_core_id }}"
+                                       name="issf_core_id">
+
+                                <div class="button-bar">
+                                    <button class="medium radius submit bt-submit">Submit
+                                    </button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <h2>You do not have the proper permission to edit this record.</h2>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}{% django_js jquery=false %}
+
+    {% js "details/js/map-setup.js" %}
+    {% js "details/js/error-handling.js" %}
+
+    <script type="text/javascript">
+        // all the map initialization functionality is handled by this function call.
+        // the function can be found in map-setup.js
+        map_handler();
+
+        // this function handles all form errors; both field- and form-level.
+        // it can be found in error-handling.js
+        error_handler();
+    </script>
+{% endblock %}

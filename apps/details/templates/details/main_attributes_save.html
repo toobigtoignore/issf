@@ -1,0 +1,145 @@
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js %}{% load staticfiles %}{% load profile_attributes %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    <section class="content-section report">
+        <div class="row" id="main">
+            <div class="large-9 columns">
+                <dl class="accordion" data-accordion>
+                    <dd class="accordion-navigation active">
+                        {% if editor %}
+                            <form class="accordionFormsetGrowable" action="{% url 'profile-main-attributes' %}"
+                                  method="post" style="display: block">
+
+                                <h6>Please provide values for the characteristics below.
+                                    <br>
+                                    If you have a range of values, please enter an average that best represents the range and specify the exact range for the question in the comments box below.
+                                </h6>
+                                {% csrf_token %}
+
+                                <div class="FormSet">
+
+                                    <!- Layout for Main Characteristics section's editor.
+                                    Had to implement manually because crispy_forms wouldn't
+                                    work.-->
+                                    <table class="profile-attributes-table">
+
+                                        <!-- Loop through every form in the formset and individually put fields into
+                                        <td> tags. lookup_attribute_type is a custom template filter which can be
+                                        found in details/templatetags/profile_attributes.py-->
+                                        {% for form in main_attributes_formset.forms %}
+                                            {% with  label=form.attribute.value|lookup_attribute_label %}
+                                                {% ifchanged label %}
+                                                    <tr class="profile-label-row">
+                                                        <td>
+                                                                <span>
+                                                                    <strong>
+                                                                        {{ label }}
+                                                                        {% if  form.attribute.value|lookup_attribute_type == "Qualitative" %}
+                                                                            (select ALL that apply)
+                                                                        {% elif form.attribute.value|lookup_attribute_type == "Ordinal" %}
+                                                                            (select ONE that best applies)
+                                                                        {% endif %}
+                                                                    </strong>
+                                                                </span>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                {% endifchanged %}
+
+                                                <tr class="profile-attributes-row">
+                                                    <td id="value-type"
+                                                        data-attr-type="{{ form.attribute.value|lookup_attribute_type }}">
+                                                        <!-- Only one of the fields "value" and "attribute_value may
+                                                        be displayed at at time, depending on the type of data
+                                                        applicable to the selected attribute. Value is a numeric
+                                                        field which should be displayed if the type of
+                                                        the selected attribute is Quantitative (numeric). If it is
+                                                        Qualitative/Ordinal (categorical) then the dropdown list
+                                                        attribute_value is displayed instead.-->
+                                                        {% ifequal form.attribute.value|lookup_attribute_type "Quantitative" %}
+                                                            {{ form.attribute.value|lookup_max_min:form.value }}
+                                                            <div style="display:none">{{ form.attribute_value }}</div>
+                                                        {% else %}
+                                                            {{ form.attribute_value }}
+                                                            <div style="display:none">{{ form.value }}</div>
+                                                        {% endifequal %}
+
+                                                        {% if form.attribute.value|lookup_additional_field_type == "Integer" %}
+                                                            <div style="margin-top:5px;">{{ form.additional }}</div>
+                                                        {% elif form.attribute.value|lookup_additional_field_type %}
+                                                            <br>
+                                                            <div style="margin-top:5px;">{{ form.additional_value }}</div>
+                                                        {% endif %}
+                                                    </td>
+
+                                                    {{ form.other_value }}
+
+                                                    <td>
+                                                    </td>
+
+                                                    <!-- These fields must be on the page, but hidden, in order to
+                                                    satisfy Django and the database.-->
+                                                    {{ form.attribute }}
+                                                    {{ form.row_number }}
+                                                    {{ form.selected_attribute_id }}
+                                                    {{ form.issf_core }}
+
+                                                    <div class="deleteCheckBoxContainer">
+                                                        {{ form.DELETE }}
+                                                    </div>
+
+                                                    <div style="display:none">{{ form.additional_value }}</div>
+                                                </tr>
+                                            {% endwith %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+
+                                {{ main_attributes_formset.management_form }}
+                                <input id="issf_core_id" type="hidden"
+                                       value="{{ core_instance.issf_core_id }}"
+                                       name="issf_core_id">
+                                {{ profile_form.sources.label_tag }}{{ profile_form.sources }}
+                                {{ profile_form.comments.label_tag }}{{ profile_form.comments }}
+
+                                <div style="display: none;">
+                                    {{ profile_form.ssf_name }}
+                                    {{ profile_form.ssf_defined }}
+                                    {{ profile_form.ssf_definition }}
+                                    {{ profile_form.data_year }}
+                                    {{ profile_form.contributor }}
+                                    {{ profile_form.editor }}
+                                </div>
+
+                                <div class="button-bar">
+                                    <button class="medium radius submit bt-submit">Submit
+                                    </button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <h2>You do not have the proper permission to edit this record.</h2>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}{% django_js jquery=false %}
+
+    {% js "details/js/error-handling.js" %}
+
+    <script type="text/javascript">
+        // this function handles all form errors; both field- and form-level.
+        // it can be found in error-handling.js
+        error_handler();
+    </script>
+{% endblock %}

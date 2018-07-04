@@ -1,0 +1,62 @@
+#Generic
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+*.pyc
+/apps/issf_base/static/issf_base/issf-js/chorodataold.geojson
+/tabledata.zip
+.idea/
+.env
+
+data/postgres/misc
+data/postgres/sessions
+data/postgres/logs
+data/postgres/storage
+data/postgres/*.pgsql
+
+# Testing
+.pytest_cache/
+scripts/chromedriver
+scripts/geckodriver
+
+# Django application  specific
+apps/details/__pycache__/
+apps/details/templatetags/__pycache__/
+apps/frontend/__pycache__/
+apps/issf_admin/__pycache__/
+apps/issf_base/__pycache__/
+issf_prod/__pycache__/
+
+# npm
+node_modules
+
+# CSV Files
+attribute_values.csv
+main_attributes.csv
+authors.csv
+capacity.csv
+case_studies.csv
+characteristics.csv
+common_attributes.csv
+experiences.csv
+geog_scope_local.csv
+geog_scope_national.csv
+geog_scope_regional.csv
+geog_scope_subnational.csv
+guidelines.csv
+organization.csv
+profile.csv
+profile_data.zip
+species.csv
+state_of_the_art.csv
+static/
+themes_issues.csv
+whos_who.csv
+
+# Legacy
+issf_prod/settings/__pycache__/
+issf_prod/settings/debug.py
+issf_prod/settings/prod.py
+issf_prod/settings/secret.py

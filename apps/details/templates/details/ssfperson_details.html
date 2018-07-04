@@ -1,0 +1,774 @@
+{% extends 'issf_base/base.html' %}
+{% load leaflet_tags %}
+{% load js %}
+{% load staticfiles %}
+{% load profile_attributes %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    {% autoescape off %}
+        <div id="details-loading-overlay"></div>
+        <title>{% block title %}ISSF: Who's Who in SSF -
+            {{ person_instance.contributor.first_name }} {{ person_instance.contributor.initials }}
+            {{ person_instance.contributor.last_name }}{% endblock %}</title>
+        <section class="content-section report" id="content-who">
+            <div class="row" id="main">
+                <div class="large-12 columns page-title">
+            <span>
+                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                    class="twitter-share-button"
+                    data-lang="en"
+                    data-size="large">
+                 </a>
+            </span>
+
+                    <h1>Who's Who in SSF</h1>
+
+                    <div class="basic-info">
+                        <strong>{{ person_instance.contributor.first_name }} {{ person_instance.contributor.initials }} {{ person_instance.contributor.last_name }}
+                            |
+                        </strong>
+                        {{ person_instance.affiliation }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-9 columns">
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation active">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel1">
+                                Details
+                            </a>
+
+                            <div id="panel1" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Name</strong>
+                                        </td>
+                                        <td>{{ person_instance.contributor.first_name }} {{ person_instance.contributor.initials }} {{ person_instance.contributor.last_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Email</strong>
+                                        </td>
+                                        <td>
+                                            <a href="mailto:{{ person_instance.contributor.email }}">{{ person_instance.contributor.email }}</a>
+                                        </td>
+                                    </tr>
+                                    {% if person_instance.contributor.country %}
+                                        <tr>
+                                            <td>
+                                                <strong>Country of residence</strong>
+                                            </td>
+                                            <td>{{ person_instance.contributor.country }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.affiliation %}
+                                        <tr>
+                                            <td>
+                                                <strong>Primary institutional/organizational affiliation</strong>
+                                            </td>
+                                            <td>{{ person_instance.affiliation }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.address1 %}
+                                        <tr>
+                                            <td>
+                                                <strong>Address</strong>
+                                            </td>
+                                            <td>{{ person_instance.address1 }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.address2 %}
+                                        <tr>
+                                            <td>
+                                                <strong>Address</strong>
+                                            </td>
+                                            <td>{{ person_instance.address2 }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.city_town %}
+                                        <tr>
+                                            <td>
+                                                <strong>City/town</strong>
+                                            </td>
+                                            <td>{{ person_instance.city_town }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.prov_state %}
+                                        <tr>
+                                            <td>
+                                                <strong>Province/state</strong>
+                                            </td>
+                                            <td>{{ person_instance.prov_state }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.postal_code %}
+                                        <tr>
+                                            <td>
+                                                <strong>Postal code</strong>
+                                            </td>
+                                            <td>{{ person_instance.postal_code }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.country %}
+                                        <tr>
+                                            <td>
+                                                <strong>Country</strong>
+                                            </td>
+                                            <td>{{ person_instance.country }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% for org in person_instance.organizations.all %}
+                                        <tr>
+                                            <td>{% ifchanged person_instance %}
+                                                <strong>
+                                                    SSF Organization/Network/Association
+                                                    memberships
+                                                </strong>{% endifchanged %}</td>
+                                            <td>
+                                                <a href="{% url 'organization-details' org.issf_core_id %}">{{ org.organization_name }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>
+                                            <strong>Contributor</strong>
+                                        </td>
+                                        <td>
+                                            <a href="mailto:{{ core_instance.contributor.email }}"
+                                               target="_blank">{{ core_instance.contributor }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contribution date</strong>
+                                        </td>
+                                        <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    </tr>
+                                    {#                                <tr>#}
+                                    {#                                    <td>#}
+                                    {#                                        <strong>Editor</strong>#}
+                                    {#                                    </td>#}
+                                    {#                                    <td>#}
+                                    {#                                        <a href="mailto:{{ core_instance.editor.email }}"#}
+                                    {#                                           target="_blank">{{ core_instance.editor }}</a>#}
+                                    {#                                    </td>#}
+                                    {#                                </tr>#}
+                                    {#                                <tr>#}
+                                    {#                                    <td>#}
+                                    {#                                        <strong>Edited date</strong>#}
+                                    {#                                    </td>#}
+                                    {#                                    <td>{{ core_instance.edited_date|date:"SHORT_DATE_FORMAT" }}</td>#}
+                                    {#                                </tr>#}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'who-basic' %}" method="post">
+                                        <h6>Please provide your basic details. Name, email and country of residence are
+                                            provided on the
+                                            <a href="{% url 'update-profile' %}">User Profile</a>
+                                            form.
+                                            Additional details, including researcher information, can be provided in
+                                            the sections below.
+                                        </h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet">
+                                            {#                                    <label for="id_organization">Affiliated organization (select from the list, or type a new value to add a new organization record that you can edit):</label>#}
+                                            {#                                    <input id="id_org_autocomplete" for="id_organization" type="text">#}
+                                            {#                                    {{ person_form.organization }}#}
+                                            {{ profile_form.username }}
+                                            {{ profile_form.email }}
+                                            <label>*First Name:</label>
+                                            {{ profile_form.first_name }}
+                                            <label>Middle inital(s):</label>
+                                            {{ profile_form.initials }}
+                                            <label>*Last Name:</label>
+                                            {{ profile_form.last_name }}
+                                            {{ person_form.img_url.label_tag }}{{ person_form.img_url }}
+                                            <label for="id_affiliation">Primary institutional/organizational
+                                                affiliation:
+                                            </label>
+                                            {{ person_form.affiliation }}
+                                            <label for="id_address1">Address line 1:</label>
+                                            {{ person_form.address1 }}
+                                            <label for="id_address2">Address line 2:</label>
+                                            {{ person_form.address2 }}
+                                            <label for="id_city_town">City/town:</label>
+                                            {{ person_form.city_town }}
+                                            <label for="id_prov_state">Province/state:</label>
+                                            {{ person_form.prov_state }}
+                                            <label for="id_postal_code">Postal code:</label>
+                                            {{ person_form.postal_code }}
+                                            <label for="id_country">Country:</label>
+                                            {% if profile_form.country %}
+                                                {{ profile_form.country }}
+                                            {% else %}
+                                                {{ person_form.country }}
+                                            {% endif %}
+                                            <button class="medium radius blueOrangeButton" id="getAddress">Locate
+                                                Address
+                                                using Bing
+                                            </button>
+                                            <br/>
+                                            <label for="id_person_point">Address location (use the draw, edit and
+                                                delete
+                                                controls to set/modify; if you don't specify a location here, you will
+                                                be
+                                                mapped based on your country of residence):
+                                            </label>
+                                            {{ person_form.person_point }}
+                                            <label for="id_url">Please include a link to your homepage or online
+                                                profile
+                                                (Google Scholar, LinkedIn, etc.):
+                                            </label>
+                                            {{ person_form.url }}
+                                            <label for="id_organizations">Select all SSF
+                                                Organizations/Networks/Associations
+                                                that you are a member of (use
+                                                <a
+                                                        href="/details/contribute/who">Contribute
+                                                </a>
+                                                to add):
+                                            </label>
+                                            {{ person_form.organizations }}
+                                            Hold down "Control", or "Command" on a Mac, to select more than one.
+                                            {{ person_form.contributor }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ person_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel4">Geographic scope</a>
+
+                            <div id="panel4" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% if core_instance.geographic_scope_type == 'Regional' %}
+                                        {% for gsregion in geographic_scope_region %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gsregion.region.region_name }}
+                                                    {% if gsregion.region.region_name == 'Other' %}:
+                                                        {{ gsregion.region_name_other }}{% endif %}</td>
+                                                <td>{% for gsregioncountry in gsregion.countries.all %}
+                                                    {{ gsregioncountry.short_name }}, {% endfor %}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'National' %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                            </td>
+                                            {#                                        <td>{% for gsnation in geographic_scope_nation %}{{ gsnation.country.short_name }}, {% endfor %}</td>#}
+                                            <td>{% for country in core_instance.countries.all %}
+                                                {{ country.short_name }}
+                                                , {% endfor %}</td>
+                                        </tr>
+                                    {% elif core_instance.geographic_scope_type == 'Sub-national' %}
+                                        {% for gssubnation in geographic_scope_subnation %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gssubnation.subnation_name }}</td>
+                                                <td>{% if gssubnation.subnation_type == 'Other' %}
+                                                    {{ gssubnation.subnation_type_other }}{% else %}
+                                                    {{ gssubnation.subnation_type }}{% endif %}</td>
+                                                <td>{{ gssubnation.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'Local' %}
+                                        {% for gslocal in geographic_scope_local_area %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gslocal.local_area_name }}
+                                                    {% if gslocal.local_area_alternate_name|length > 0 %} (
+                                                        {{ gslocal.local_area_alternate_name }}){% endif %}</td>
+                                                <td>{% if gslocal.local_area_setting == 'Other' %}
+                                                    {{ gslocal.local_area_setting_other }}{% else %}
+                                                    {{ gslocal.local_area_setting }}{% endif %}</td>
+                                                <td>{{ gslocal.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>{{ core_instance.geographic_scope_type }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'geographic-scope' %}" method="post">
+                                        <h6>Please indicate the geographic scope of your SSF activities</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetToggler">
+                                            {{ geographic_scope_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ local_area_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ subnation_form }}
+                                        </div>
+                                        {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
+                                        <div class="FormSet FormSetTogglable">
+                                            {{ nation_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ region_form }}
+                                        </div>
+
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel1b">Map</a>
+                            <div id="panel1" class="content">
+                                {% leaflet_map "report-map" callback="window.map_init_basic" %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel1c">Researcher information</a>
+
+                            <div id="panel1c" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Researcher</strong>
+                                        </td>
+                                        <td>{{ person_instance.is_researcher|yesno:'Yes,No' }}</td>
+                                    </tr>
+                                    {% if person_instance.number_publications %}
+                                        <tr>
+                                            <td>
+                                                <strong>Number of publications in the last 10 years</strong>
+                                            </td>
+                                            <td>{{ person_instance.number_publications }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.education_level %}
+                                        <tr>
+                                            <td>
+                                                <strong>Highest level of education</strong>
+                                            </td>
+                                            <td>{% if person_instance.education_level == 'Other' %}
+                                                {{ person_instance.other_education_level }}{% else %}
+                                                {{ person_instance.education_level }}{% endif %}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {#                            <tr><td><strong>TBTI member</strong></td> <td>{{ person_instance.is_tbti_member|yesno:'Yes,No' }}</td></tr>#}
+                                    {#                            {% if person_instance.memberships %}#}
+                                    {#                                <tr><td><strong>Other professional association/network memberships</strong></td> <td>{{ person_instance.memberships }}</td></tr>#}
+                                    {#                            {% endif %}#}
+                                    {% if person_instance.research_method != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Research method(s)/approach(es) commonly applied</strong>
+                                            </td>
+                                            <td>{{ person_instance.research_method|linebreaks }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if person_instance.issues_addressed != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Issues addressed</strong>
+                                            </td>
+                                            <td>{{ person_instance.issues_addressed|linebreaks }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'who-researcher' %}" method="post">
+                                        <h6>Please provide your researcher information, if applicable.</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet">
+                                            {{ person_researcher_form.core_record_type }}
+                                            <label for="id_is_researcher">Are you a SSF researcher?</label>
+                                            {{ person_researcher_form.is_researcher }}
+                                            <label for="id_number_publications">Number of publications in the last 10
+                                                years:
+                                            </label>
+                                            {{ person_researcher_form.number_publications }}
+                                            <label for="id_education_level">Highest level of education:</label>
+                                            {{ person_researcher_form.education_level }}
+                                            <label for="id_other_education_level">Other level of education:</label>
+                                            {{ person_researcher_form.other_education_level }}
+                                            {#                                    <label for="id_is_tbti_member">TBTI member?</label>#}
+                                            {#                                    {{ person_researcher_form.is_tbti_member }}#}
+                                            {#                                    <label for="id_memberships">Other professional association/network memberships:</label>#}
+                                            {#                                    {{ person_form.memberships }}#}
+                                            <label for="id_research_method">Research method(s) or approach(es) most
+                                                commonly
+                                                applied (e.g. ethnographic, survey, etc.):
+                                            </label>
+                                            {{ person_researcher_form.research_method }}
+                                            <label for="id_issues_addressed">List up three main issues your research
+                                                aims to
+                                                address:
+                                            </label>
+                                            {{ person_researcher_form.issues_addressed }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ person_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel2">Themes/Issues</a>
+
+                            <div id="panel2" class="content">
+                                <table>
+                                    {% for common_ti in common_themes_issues %}
+                                        <tr>
+                                            {% ifchanged common_ti.theme_issue.theme_issue_category %}
+                                                <td>
+                                                    <strong>
+                                                        {{ common_ti.theme_issue.theme_issue_category }}
+                                                    </strong>
+                                                </td>
+                                            {% else %}
+                                                <td></td>
+                                            {% endifchanged %}
+                                            <td>
+                                                {% if common_ti.theme_issue_value.theme_issue_label == "Other" %}
+                                                    {{ common_ti.theme_issue_value }}: {{ common_ti.other_theme_issue }}
+                                                {% else %}
+                                                    {% if common_ti.theme_issue_value %}
+                                                        {{ common_ti.theme_issue_value }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form class="accordionFormsetGrowable" action="{% url 'common-themes-issues' %}"
+                                          method="post">
+
+                                        <h6>Please select values for the themes/issues below</h6>
+
+                                        {% csrf_token %}
+
+                                        <div class="FormSet">
+                                            <!- Layout for Themes/Issues' section's editor.
+                                            Had to implement manually because crispy_forms wouldn't
+                                            work.-->
+                                            <table class="profile-attributes-table">
+                                                {% for form in common_themes_issues_formset.forms %}
+                                                    {% with  label=form.theme_issue.value|lookup_theme_issue_label %}
+                                                        {% ifchanged label %}
+                                                            <tr class="profile-label-row">
+                                                                <td>
+                                                                <span>
+                                                                    <strong>
+                                                                        {{ label }} (select ALL that
+                                                                        apply)
+                                                                    </strong>
+                                                                </span>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        {% endifchanged %}
+
+                                                        <tr class="profile-attributes-row">
+                                                            <td id="value-type"
+                                                                data-attr-type="Qualitative">
+                                                                {{ form.theme_issue_value }}
+                                                            </td>
+
+                                                            {{ form.other_theme_issue }}
+
+                                                            <td>
+                                                            </td>
+
+                                                            <!-- These fields must be on the page, but hidden, in order to
+                                                            satisfy Django and the database.-->
+                                                            {{ form.theme_issue }}
+                                                            {{ form.row_number }}
+                                                            {{ form.selected_theme_issue_id }}
+                                                            {{ form.issf_core }}
+
+                                                            <div class="deleteCheckBoxContainer">
+                                                                {{ form.DELETE }}
+                                                            </div>
+                                                        </tr>
+                                                    {% endwith %}
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+
+                                        {{ common_themes_issues_formset.management_form }}
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel6">Species</a>
+
+                            <div id="panel6" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% for specie in species %}
+                                        <tr>
+                                            <td>
+                                                {% if specie.species_common %}
+                                                    <strong>Common species name:</strong> {{ specie.species_common }}
+                                                    &nbsp;
+                                                    &nbsp;
+                                                {% endif %}
+                                                {% if  specie.species_scientific %}
+                                                    <strong>Scientific/Latin species name:</strong>
+                                                    {{ specie.species_scientific }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'species' %}" method="post">
+                                        <h6>Please indicate the key species in your SSF activities</h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ species_form }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel7">External links</a>
+
+                            <div id="panel7" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% for external_link in external_links %}
+                                        <tr>
+                                            <td>{{ external_link.link_type }}</td>
+                                            <td>
+                                                <a href="{{ external_link.link_address }}"
+                                                   target="_blank">{{ external_link.link_address }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'external-links' %}" method="post">
+                                        <h6>Please provide links to related material on the internet</h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ external_links_form }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="large-3 columns">
+                    {% if person_instance.img_url %}
+                        <div style="margin-bottom: 30px;">
+                            <img height="400" width="400" src="{{ person_instance.img_url }}"
+                                 style="border: solid 5px #FFF; -moz-box-shadow: 5px 5px 0px #999; -webkit-box-shadow: 5px 5px 0px #999; box-shadow: 5px 5px 0px #999;;">
+                        </div>
+                    {% endif %}
+                    {#            domain hard-coded because request.get_host broke under https #}
+                    <div class="fb-comments"
+                         data-href="https://dory.creait.mun.ca{% url 'who-details' issf_core_id=core_instance.issf_core_id %}"
+                         data-width="220" data-numposts="3" data-colorscheme="light">
+                    </div>
+                </div>
+                {% if editor %}
+                    <a href="#" data-reveal-id="deleteModal" class="button radius"
+                       style="background-color: #525252; position: absolute; right:5px; bottom:-10px;">
+                        Delete Record
+                    </a>
+                    <div id="deleteModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle"
+                         aria-hidden="true"
+                         role="dialog">
+                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
+                            <div class="row">
+                                <div class="large-5 columns">
+                                    <p>WARNING</p>
+
+                                    <p>Are you sure you want to
+                                        <b style="color:red;">PERMANENTLY</b>
+                                        delete this record?
+                                        <br>
+                                        Once deleted, the record content cannot be recovered.
+                                    </p>
+
+                                    <button class="button radius" style="background-color: #B70000; margin-right:10px;"
+                                            type="submit">DELETE
+                                    </button>
+                                    <a href="#" class="button radius close-reveal-modal"
+                                       style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color: white;">
+                                        CANCEL
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    {% endautoescape %}
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}{% django_js jquery=false %}
+
+    {% js "details/js/map-setup.js" %}
+    {% js "details/js/error-handling.js" %}
+    {% js "details/js/page-functions.js" %}
+
+    <script type="text/javascript">
+
+        /********** Organization Autocomplete ***********/
+        {#        var idToHide = $('#id_org_autocomplete').attr('for');#}
+        {#        $('#'+idToHide).hide();#}
+        {#        var defaultOrg = $('#'+idToHide+'>option:selected').val();#}
+        {#        if(defaultOrg){#}
+        {#            $('#id_org_autocomplete').val($('#'+idToHide+'>option:selected').text());#}
+        {#        }#}
+        {#        $('#'+idToHide).children().removeAttr('selected');#}
+        {#        var availableSelection = [];#}
+        {#        $('#'+idToHide).children('option').each(function(){#}
+        {#            availableSelection.push($(this).text());#}
+        {#        });#}
+        {#        $('#id_org_autocomplete').autocomplete({#}
+        {#                source:availableSelection, #}
+        {#                minLength: 0#}
+        {#            });#}
+        {#        $('#id_org_autocomplete').on( "focus", function( event, ui ) {#}
+        {#            $(this).trigger(jQuery.Event("keydown"));#}
+        {#        });#}
+
+        /************** leaflet ****************/
+
+        // this function serves as a junction between the Leaflet map and
+        // the initialization functionality in map_init_basic_ext() can be found in map-setup.js
+        function map_init_basic(map, options) {
+            var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
+            var whoIcon = L.icon({
+                iconUrl: '{% static "img/icon-who.png" %}',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, 0]
+            });
+
+            map_init_basic_ext(map, options, dataurl, whoIcon);
+        }
+
+        // all the map initialization functionality is handled by this function call.
+        // the function can be found in map-setup.js
+        map_handler();
+
+        // this function handles all form errors; both field- and form-level.
+        // it can be found in error-handling.js
+        error_handler();
+
+        //-------------- Get Address ------------
+        $('#getAddress').click(function (e) {
+            e.preventDefault();
+
+            var address = {};
+            address.issf_core_id = $('#issf_core_id').val();
+            address.address1 = $('#id_address1').val();
+            address.address2 = $('#id_address2').val();
+            address.city_town = $('#id_city_town').val();
+            address.prov_state = $('#id_prov_state').val();
+            address.postal_code = $('#id_postal_code').val();
+            address.country = $('#id_country').val();
+
+            var url = "{% url 'geocode-address' %}";
+
+            //lookup address using Bing's geocoding service, all functionality is handled in this getAddress() call
+            getAddress(address, "#id_person_point", "id_person_point_map", url);
+        });
+    </script>
+{% endblock additional_js_scripts %}

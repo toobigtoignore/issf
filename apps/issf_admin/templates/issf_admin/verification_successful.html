@@ -1,0 +1,30 @@
+{% extends "issf_base/base.html" %}
+
+{% load i18n %}
+
+{% block body %}
+    <title>{% block title %}ISSF: Public Information Policy{% endblock %}</title>
+    <div class="row">
+        <div class="large-12 columns page-title2">
+            <h1>{% trans "ISSF Public Information Policy" %}</h1>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="large-12 columns accountFormContainer">
+            &nbsp;
+            <p>Thank you for registering as a user of the Information System on Small-scale Fisheries (ISSF).<br/>
+                Registered users are eligible to contribute information to ISSF.<br/>
+                All contributed information is publicly available and your user profile, including your email, is
+                attached to your contributions.<br/><br/>
+                If you are using an assigned password, please <a href="{% url 'custom-password-change' %}">Change
+                    Password</a> now.<br/><br/>
+                Then, please update your <a href="{% url 'update-profile' %}">User Profile</a>.<br/><br/>
+                After that, please explore <a href="{% url 'index' %}">existing data</a> and <a
+                        href="{% url 'contribute' %}">Contribute</a>.
+            </p>
+
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+{% endblock body %}
