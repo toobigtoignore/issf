@@ -1,0 +1,23 @@
+{% extends "issf_base/base.html" %}
+
+{% load i18n %}
+
+{% block body %}
+<title>{% block title %}ISSF: Verify Your E-mail Address{% endblock %}</title>
+    <div class="row">
+        <div class="large-12 columns page-title2">
+            <h1>{% trans "Verify Your E-mail Address" %}</h1>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="large-12 columns accountFormContainer">
+            &nbsp;
+            {% if user.is_authenticated %}
+                {% include "account/snippets/already_logged_in.html" %}
+            {% endif %}
+            <p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize the sign up process. <br/>Please contact us if you do not receive it within a few minutes.{% endblocktrans %}</p>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+</div>
+{% endblock body %}

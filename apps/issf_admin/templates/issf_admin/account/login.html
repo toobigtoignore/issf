@@ -1,0 +1,64 @@
+{% extends "issf_base/base.html" %}
+
+{% load url from future %}
+{% load staticfiles %}
+{% load foundation %}
+{% load i18n %}
+
+{% block additional_css_scripts %}
+<link rel="stylesheet" href="{% static 'issf_admin/css/issf_admin.css'%}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+<title>{% block title %}ISSF: Login{% endblock %}</title>
+
+<div class="row">
+    <div class="large-12 columns page-title2" id="contribute-title">
+        <h1>{% trans "Login" %}</h1>
+    </div>
+</div>
+{% if socialaccount.providers  %}
+  <div class="small-6 small-centered columns">
+    <p>{% blocktrans with site.name as site_name %}Please login with one
+    of your existing third party accounts.<br /> Or, <a href="{{ signup_url }}">sign up</a>
+    for a {{site_name}} account and login below:{% endblocktrans %}</p>
+
+    <div class="socialaccount_ballot">
+      <ul class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </ul>
+      <div class="login-or">{% trans 'or' %}</div>
+    </div>
+  </div>
+  {% include "socialaccount/snippets/login_extra.html" %}
+{% else %}
+
+  <div class="text-center">
+    <p>{% blocktrans %}If you have not created an account yet, then please
+    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+  </div>
+{% endif %}
+
+
+<div class="row ">
+    <div class="large-12 columns accountFormContainer">
+        <form method="post" action="." role="form" >
+            &nbsp;
+            {% csrf_token %}
+            {{ form }}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}       
+            <br />
+            <div class="row">
+                <div class="button-bar large-12">
+                    <button class="medium bt-submit" type="submit" value="{% trans 'Register' %}">{% trans "Login" %}</button>
+                    <a class="" style="margin-right:5px;" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+         </form>
+    </div>
+</div>
+<p>&nbsp;</p>
+{% endblock body %}

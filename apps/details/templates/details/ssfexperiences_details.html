@@ -1,0 +1,338 @@
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js %}{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    {% autoescape off %}
+        <div id="details-loading-overlay"></div>
+        <title>{% block title %}ISSF: Experiences -
+            {{ experiences_instance.title }}{% endblock %}</title>
+        <section class="content-section report" id="content-experience">
+            <div class="row" id="main">
+                <div class="large-12 columns page-title">
+            <span>
+                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                    class="twitter-share-button"
+                    data-lang="en"
+                    data-size="large">
+                 </a>
+            </span>
+
+                    <h1>Experiences</h1>
+
+                    <div class="basic-info">
+                        <strong>{{ experiences_instance.name }}</strong>
+                        | {{ experiences_instance.title }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-9 columns">
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation active">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel1">
+                                Details
+                            </a>
+
+                            <div id="panel1" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Presenter name</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Video title</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contributor</strong>
+                                        </td>
+                                        <td>
+                                            {% if who_page %}
+                                                <a href="{% url 'who-details' who_page.issf_core_id %}">{{ core_instance.contributor }}</a>
+                                            {% else %}
+                                                <a href="mailto:{{ core_instance.contributor.email }}"
+                                                   target="_blank">{{ core_instance.contributor }}</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contribution date</strong>
+                                        </td>
+                                        <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    </tr>
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'experiences-basic' %}" method="post">
+                                        <h6>Please provide details of the video subject's experiences.
+                                        </h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet">
+                                            {{ experiences_form }}
+                                        </div>
+                                        <div style="display: none">
+                                            {{ experiences_form.editor }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ experiences_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        {% if video_id or vimeo_video_id %}
+                            <dd class="accordion-navigation active">
+                                <a class="accordion-nav" href="#panel1x">Video</a>
+
+                                <div id="panel1x" class="content" align="center"
+                                     style="padding-left: 0; padding-right: 0;">
+                                    {% if video_id %}
+                                        <iframe width="700" height="400"
+                                                src="https://www.youtube.com/embed/{{ video_id }}"
+                                                frameborder="0" allowfullscreen></iframe>
+                                    {% endif %}
+                                    {% if vimeo_video_id %}
+                                        <iframe src="https://player.vimeo.com/video/{{ vimeo_video_id }}" width="700"
+                                                height="400"
+                                                frameborder="0" webkitallowfullscreen mozallowfullscreen
+                                                allowfullscreen></iframe>
+                                    {% endif %}
+                                </div>
+                            </dd>
+                        {% endif %}
+                        <dd class="accordion-navigation active">
+                            <a class="accordion-nav" href="#panel1z">Description</a>
+
+                            <div id="panel1z" class="content" style="padding-left: 0; padding-right: 0;">
+                                <p style="background-color: white; white-space: pre-line;">{{ experiences_instance.description }}</p>
+                            </div>
+                        </dd>
+                        {% if experiences_instance.img_url %}
+                            <dd class="accordion-navigation active">
+                                <a class="accordion-nav" href="#panel1t">Image</a>
+
+                                <div id="panel1t" class="content" align="center"
+                                     style="padding-left: 0; padding-right: 0;">
+                                    {% if experiences_instance.img_url %}
+                                        <img src="{{ experiences_instance.img_url }}">
+                                    {% endif %}
+                                </div>
+                            </dd>
+                        {% endif %}
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel4">Geographic scope</a>
+
+                            <div id="panel4" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% if core_instance.geographic_scope_type == 'Regional' %}
+                                        {% for gsregion in geographic_scope_region %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}
+                                                    </strong>{% endifchanged %}</td>
+                                                <td>{{ gsregion.region.region_name }}
+                                                    {% if gsregion.region.region_name == 'Other' %}
+                                                        :
+                                                        {{ gsregion.region_name_other }}{% endif %}</td>
+                                                <td>{% for gsregioncountry in gsregion.countries.all %}
+                                                    {{ gsregioncountry.short_name }}, {% endfor %}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'National' %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                            </td>
+                                            {#                                        <td>{% for gsnation in geographic_scope_nation %}{{ gsnation.country.short_name }}, {% endfor %}</td>#}
+                                            <td>{% for country in core_instance.countries.all %}
+                                                {{ country.short_name }}, {% endfor %}</td>
+                                        </tr>
+                                    {% elif core_instance.geographic_scope_type == 'Sub-national' %}
+                                        {% for gssubnation in geographic_scope_subnation %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}
+                                                    </strong>{% endifchanged %}</td>
+                                                <td>{{ gssubnation.subnation_name }}</td>
+                                                <td>{% if gssubnation.subnation_type == 'Other' %}
+                                                    {{ gssubnation.subnation_type_other }}{% else %}
+                                                    {{ gssubnation.subnation_type }}{% endif %}</td>
+                                                <td>{{ gssubnation.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'Local' %}
+                                        {% for gslocal in geographic_scope_local_area %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}
+                                                    </strong>{% endifchanged %}</td>
+                                                <td>{{ gslocal.local_area_name }}
+                                                    {% if gslocal.local_area_alternate_name|length > 0 %}
+                                                        ({{ gslocal.local_area_alternate_name }}
+                                                        ){% endif %}</td>
+                                                <td>{% if gslocal.local_area_setting == 'Other' %}
+                                                    {{ gslocal.local_area_setting_other }}{% else %}
+                                                    {{ gslocal.local_area_setting }}{% endif %}</td>
+                                                <td>{{ gslocal.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>{{ core_instance.geographic_scope_type }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'geographic-scope' %}" method="post">
+                                        <h6>Please indicate the geographic scope of the experiences.
+                                        </h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetToggler">
+                                            {{ geographic_scope_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ local_area_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ subnation_form }}
+                                        </div>
+                                        {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
+                                        <div class="FormSet FormSetTogglable">
+                                            {{ nation_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ region_form }}
+                                        </div>
+
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel1b">Map</a>
+
+                            <div id="panel1" class="content">
+                                {% leaflet_map "report-map" callback="window.map_init_basic" %}
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="large-3 columns">
+                    {#            domain hard-coded because request.get_host broke under https #}
+                    <div class="fb-comments"
+                         data-href="https://dory.creait.mun.ca{% url 'experiences-details' issf_core_id=core_instance.issf_core_id %}"
+                         data-width="220" data-numposts="3" data-colorscheme="light"></div>
+                </div>
+                {% if editor %}
+                    <a href="#" data-reveal-id="deleteModal" class="button radius"
+                       style="background-color: #525252; position: absolute; right:5px; bottom:-10px;">
+                        Delete Record
+                    </a>
+                    <div id="deleteModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle"
+                         aria-hidden="true"
+                         role="dialog">
+                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
+                            <div class="row">
+                                <div class="large-5 columns">
+                                    <p>WARNING</p>
+
+                                    <p>Are you sure you want to
+                                        <b style="color:red;">PERMANENTLY</b>
+                                        delete this record?
+                                        <br>
+                                        Once deleted, the record content cannot be recovered.
+                                    </p>
+
+                                    <button class="button radius" style="background-color: #B70000; margin-right:10px;"
+                                            type="submit">DELETE
+                                    </button>
+                                    <a href="#" class="button radius close-reveal-modal"
+                                       style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color: white;">
+                                        CANCEL
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    {% endautoescape %}
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}{% django_js jquery=false %}
+
+    {% js "details/js/map-setup.js" %}
+    {% js "details/js/error-handling.js" %}
+    {% js "details/js/page-functions.js" %}
+
+    <script type="text/javascript">
+
+        // this function serves as a junction between the Leaflet map and
+        // the initialization functionality in map_init_basic_ext() can be found in map-setup.js
+        function map_init_basic(map, options) {
+
+            var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
+            var experienceIcon = L.icon({
+                iconUrl: '{% static "img/icon-experiences.png" %}',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, 0]
+            });
+
+            map_init_basic_ext(map, options, dataurl, experienceIcon);
+        }
+
+        // all the map initialization functionality is handled by this function call.
+        // the function can be found in map-setup.js
+        map_handler();
+
+        // this function handles all form errors; both field- and form-level.
+        // it can be found in error-handling.js
+        error_handler();
+
+    </script>
+{% endblock additional_js_scripts %}

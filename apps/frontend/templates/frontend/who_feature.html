@@ -1,0 +1,25 @@
+{% extends 'issf_base/base.html' %}
+{% load js %}
+{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    <section class="content-section report">
+        <div class="row">
+            <h4>New Who's Who Feature</h4>
+            <h5>NOTE: Once this is changed, the previous Who's Who feature will be erased!</h5>
+            <div class="large-9 columns">
+                <form style="display:initial;" action="{% url 'who-feature' %}" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <div class="button-bar" style="margin-top: 10px; margin-bottom: 10px;">
+                        <button class="medium radius submit bt-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

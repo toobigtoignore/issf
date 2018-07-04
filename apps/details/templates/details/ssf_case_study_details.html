@@ -1,0 +1,410 @@
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js %}{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+
+    <style>
+        .case-study-table {
+            table-layout: fixed;
+        }
+
+        .case-study-table td:nth-child(2) {
+            white-space: pre-line;
+            overflow-wrap: break-word;
+            width: 70%;
+        }
+    </style>
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    {% autoescape off %}
+        <div id="details-loading-overlay"></div>
+        <title>{% block title %}ISSF: Case Study -
+            {{ case_studies_instance.name }}{% endblock %}</title>
+        <section class="content-section report" id="content-case">
+            <div class="row" id="main">
+                <div class="large-12 columns page-title">
+            <span>
+                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                    class="twitter-share-button"
+                    data-lang="en"
+                    data-size="large">
+                 </a>
+            </span>
+
+                    <h1>Case Studies</h1>
+
+                    <div class="basic-info">
+                        <strong> {{ case_studies_instance.name }}</strong>
+                        | {{ case_studies_instance.role }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-9 columns">
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation active">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel1">
+                                Details
+                            </a>
+
+                            <div id="panel1" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Case study name</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Your role in the case study</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.role }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contributor</strong>
+                                        </td>
+                                        <td>
+                                            {% if who_page %}
+                                                <a href="{% url 'who-details' who_page.issf_core_id %}">{{ core_instance.contributor }}</a>
+                                            {% else %}
+                                                <a href="mailto:{{ core_instance.contributor.email }}"
+                                                   target="_blank">{{ core_instance.contributor }}</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contribution date</strong>
+                                        </td>
+                                        <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    </tr>
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'case-studies-basic' %}" method="post">
+                                        <h6>Please provide details of the case study.
+                                        </h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet">
+                                            {{ case_study_form }}
+                                        </div>
+                                        <div style="display: none">
+                                            {{ case_study_form.editor }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ case_studies_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel4">Geographic scope</a>
+
+                            <div id="panel4" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% if core_instance.geographic_scope_type == 'Regional' %}
+                                        {% for gsregion in geographic_scope_region %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}
+                                                    </strong>{% endifchanged %}</td>
+                                                <td>{{ gsregion.region.region_name }}
+                                                    {% if gsregion.region.region_name == 'Other' %}
+                                                        :
+                                                        {{ gsregion.region_name_other }}{% endif %}</td>
+                                                <td>{% for gsregioncountry in gsregion.countries.all %}
+                                                    {{ gsregioncountry.short_name }}, {% endfor %}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'National' %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                            </td>
+                                            {#                                        <td>{% for gsnation in geographic_scope_nation %}{{ gsnation.country.short_name }}, {% endfor %}</td>#}
+                                            <td>{% for country in core_instance.countries.all %}
+                                                {{ country.short_name }}, {% endfor %}</td>
+                                        </tr>
+                                    {% elif core_instance.geographic_scope_type == 'Sub-national' %}
+                                        {% for gssubnation in geographic_scope_subnation %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}
+                                                    </strong>{% endifchanged %}</td>
+                                                <td>{{ gssubnation.subnation_name }}</td>
+                                                <td>{% if gssubnation.subnation_type == 'Other' %}
+                                                    {{ gssubnation.subnation_type_other }}{% else %}
+                                                    {{ gssubnation.subnation_type }}{% endif %}</td>
+                                                <td>{{ gssubnation.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'Local' %}
+                                        {% for gslocal in geographic_scope_local_area %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}
+                                                    </strong>{% endifchanged %}</td>
+                                                <td>{{ gslocal.local_area_name }}
+                                                    {% if gslocal.local_area_alternate_name|length > 0 %}
+                                                        ({{ gslocal.local_area_alternate_name }}
+                                                        ){% endif %}</td>
+                                                <td>{% if gslocal.local_area_setting == 'Other' %}
+                                                    {{ gslocal.local_area_setting_other }}{% else %}
+                                                    {{ gslocal.local_area_setting }}{% endif %}</td>
+                                                <td>{{ gslocal.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>{{ core_instance.geographic_scope_type }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'geographic-scope' %}" method="post">
+                                        <h6>Please indicate the geographic scope of the experiences.
+                                        </h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetToggler">
+                                            {{ geographic_scope_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ local_area_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ subnation_form }}
+                                        </div>
+                                        {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
+                                        <div class="FormSet FormSetTogglable">
+                                            {{ nation_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ region_form }}
+                                        </div>
+
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel1b">Map</a>
+
+                            <div id="panel1b" class="content">
+                                {% leaflet_map "report-map" callback="window.map_init_basic" %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel1c">Case study description</a>
+
+                            <div id="panel1c" class="content">
+                                <table class="case-study-table">
+                                    <tr>
+                                        <td>
+                                            <strong>Background and context</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.background_context }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Area description</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.description_area }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Fishery description</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.description_fishery }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Issues description</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.description_issues }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Stakeholders involved</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.stakeholders }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel1c">Case study solution</a>
+
+                            <div id="panel1c" class="content">
+                                <table class="case-study-table">
+                                    <tr>
+                                        <td>
+                                            <strong>Key activities/innovation</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.activities_innovation }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Issues addressed?/Remaining challenges</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.issues_challenges }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Was the transdisciplinary perspective applied?</strong>
+                                        </td>
+                                        <td>{{ case_studies_instance.transdisciplinary }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel7">External links</a>
+
+                            <div id="panel7" class="content">
+                                <table>
+                                    {% for external_link in external_links %}
+                                        <tr>
+                                            <td>{{ external_link.link_type }}</td>
+                                            <td>
+                                                <a href="{{ external_link.link_address }}"
+                                                   target="_blank">{{ external_link.link_address }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+
+                                {% if editor %}
+                                    <form action="{% url 'external-links' %}" method="post">
+                                        <h6>Please provide links to related material on the internet</h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ external_links_form }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="large-3 columns">
+                    {#            domain hard-coded because request.get_host broke under https #}
+                    <div class="fb-comments"
+                         data-href="https://dory.creait.mun.ca{% url 'experiences-details' issf_core_id=core_instance.issf_core_id %}"
+                         data-width="220" data-numposts="3" data-colorscheme="light"></div>
+                </div>
+                {% if editor %}
+                    <a href="#" data-reveal-id="deleteModal" class="button radius"
+                       style="background-color: #525252; position: absolute; right:5px; bottom:-10px;">
+                        Delete Record
+                    </a>
+                    <div id="deleteModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle"
+                         aria-hidden="true"
+                         role="dialog">
+                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
+                            <div class="row">
+                                <div class="large-5 columns">
+                                    <p>WARNING</p>
+
+                                    <p>Are you sure you want to
+                                        <b style="color:red;">PERMANENTLY</b>
+                                        delete this record?
+                                        <br>
+                                        Once deleted, the record content cannot be recovered.
+                                    </p>
+
+                                    <button class="button radius" style="background-color: #B70000; margin-right:10px;"
+                                            type="submit">DELETE
+                                    </button>
+                                    <a href="#" class="button radius close-reveal-modal"
+                                       style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color: white;">
+                                        CANCEL
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    {% endautoescape %}
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}{% django_js jquery=false %}
+
+    {% js "details/js/map-setup.js" %}
+    {% js "details/js/error-handling.js" %}
+    {% js "details/js/page-functions.js" %}
+
+    <script type="text/javascript">
+
+        // this function serves as a junction between the Leaflet map and
+        // the initialization functionality in map_init_basic_ext() can be found in map-setup.js
+        function map_init_basic(map, options) {
+
+            var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
+            var casestudiesIcon = L.icon({
+                iconUrl: '{% static "img/icon-casestudies.png" %}',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, 0]
+            });
+
+            map_init_basic_ext(map, options, dataurl, casestudiesIcon);
+        }
+
+        // all the map initialization functionality is handled by this function call.
+        // the function can be found in map-setup.js
+        map_handler();
+
+        // this function handles all form errors; both field- and form-level.
+        // it can be found in error-handling.js
+        error_handler();
+
+    </script>
+{% endblock additional_js_scripts %}

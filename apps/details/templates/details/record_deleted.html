@@ -1,0 +1,13 @@
+{% extends 'issf_base/base.html' %}{% load js %}{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    <div class="row" id="main">
+        <div class="large-12 columns">
+            <h3>The record was successfully deleted.</h3>
+        </div>
+    </div>
+{% endblock %}

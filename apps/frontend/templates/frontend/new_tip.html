@@ -1,0 +1,46 @@
+{% extends 'issf_base/base.html' %}
+{% load js %}
+{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    <section class="content-section report">
+        <div class="row">
+            <h4>New Tip</h4>
+            <div class="large-9 columns">
+                If you don't receive an error then the tip was successfully added.
+                <br>
+                But double check the tip archive page
+                to be sure.
+                <br>
+                <form style="display:initial;" action="{% url 'new-tip' %}" method="post">
+                    {% csrf_token %}
+                    {{ tip_form }}
+                    <div class="button-bar" style="margin-top: 10px; margin-bottom: 10px;">
+                        <button class="medium radius submit bt-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <h4>New FAQ</h4>
+            <div class="large-9 columns">
+                If you don't receive an error then the FAQ was successfully added.
+                <br>
+                But double check the FAQ page
+                to be sure.
+                <br>
+                <form style="display:initial;" action="{% url 'new-faq' %}" method="post">
+                    {% csrf_token %}
+                    {{ faq_form }}
+                    <div class="button-bar" style="margin-top: 10px; margin-bottom: 10px;">
+                        <button class="medium radius submit bt-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

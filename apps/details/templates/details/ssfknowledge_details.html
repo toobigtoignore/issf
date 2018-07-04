@@ -1,0 +1,989 @@
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js %}{% load staticfiles %}
+{% load profile_attributes %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    {% autoescape off %}
+        <div id="details-loading-overlay"></div>
+        <title>{% block title %}ISSF: State-of-the-Art in SSF Research -
+            {{ knowledge_instance.level1_title }}{% if knowledge_instance.level2_title %};
+                {{ knowledge_instance.level2_title }}{% endif %}{% endblock %}</title>
+        <section class="content-section report" id="content-sota">
+            <div class="row" id="main">
+                <div class="large-12 columns page-title">
+            <span>
+                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                    class="twitter-share-button"
+                    data-lang="en"
+                    data-size="large">
+                 </a>
+            </span>
+
+                    <h1>State-of-the-Art in SSF Research</h1>
+
+                    <div class="basic-info">
+                        <b>{{ authors.0.author_name }}</b>
+                        | {{ knowledge_instance.level1_title }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-9 columns">
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation active">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel1">
+                                {#                        {% if knowledge_instance.level2_title %}{{ knowledge_instance.level2_title }}{% else %}{{ knowledge_instance.level1_title }}{% endif %}<br>#}
+                                Details
+                            </a>
+
+                            <div id="panel1" class="content">
+                                {#                            {% autoescape off %}#}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Author(s)</strong>
+                                        </td>
+                                        <td>{% for author in authors %}{{ author.author_name }}, {% endfor %}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Journal/book/report/newsletter/conference title</strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.level1_title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Article/chapter/item title (if applicable)</strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.level2_title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Year</strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.year }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Publication type</strong>
+                                        </td>
+                                        <td>{% if knowledge_instance.publication_type.publication_type_id == 9 %}
+                                            {{ knowledge_instance.other_publication_type }}{% else %}
+                                            {{ knowledge_instance.publication_type }}{% endif %}</td>
+                                    </tr>
+
+                                    {% if knowledge_instance.nonenglish_language %}
+                                        <tr>
+                                            <td>
+                                                <strong>Original publication language</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.nonenglish_language }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Title in original language</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.nonenglish_title }}</td>
+                                        </tr>
+                                    {% endif %}
+
+                                    <tr>
+                                        <td>
+                                            <strong>Contributor</strong>
+                                        </td>
+                                        <td>
+                                            {% if who_page %}
+                                                <a href="{% url 'who-details' who_page.issf_core_id %}">{{ core_instance.contributor }}</a>
+                                            {% else %}
+                                                <a href="mailto:{{ core_instance.contributor.email }}"
+                                                   target="_blank">{{ core_instance.contributor }}</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contribution date</strong>
+                                        </td>
+                                        <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    </tr>
+                                    {#                                <tr>#}
+                                    {#                                    <td>#}
+                                    {#                                        <strong>Editor</strong>#}
+                                    {#                                    </td>#}
+                                    {#                                    <td>#}
+                                    {#                                        <a href="mailto:{{ core_instance.editor.email }}"#}
+                                    {#                                           target="_blank">{{ core_instance.editor }}</a>#}
+                                    {#                                    </td>#}
+                                    {#                                </tr>#}
+                                    {#                                <tr>#}
+                                    {#                                    <td>#}
+                                    {#                                        <strong>Edited date</strong>#}
+                                    {#                                    </td>#}
+                                    {#                                    <td>{{ core_instance.edited_date|date:"SHORT_DATE_FORMAT" }}</td>#}
+                                    {#                                </tr>#}
+                                </table>
+                                {#                            {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'sota-basic' %}" method="post">
+                                        <h6>Please provide basic details of the publication</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet">
+                                            {{ knowledge_form }}
+                                        </div>
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ knowledge_authors_form }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ knowledge_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel4">Geographic scope</a>
+
+                            <div id="panel4" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% if core_instance.geographic_scope_type == 'Regional' %}
+                                        {% for gsregion in geographic_scope_region %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gsregion.region.region_name }}
+                                                    {% if gsregion.region.region_name == 'Other' %}:
+                                                        {{ gsregion.region_name_other }}{% endif %}</td>
+                                                <td>{% for gsregioncountry in gsregion.countries.all %}
+                                                    {{ gsregioncountry.short_name }}, {% endfor %}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'National' %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                            </td>
+                                            {#                                        <td>{% for gsnation in geographic_scope_nation %}{{ gsnation.country.short_name }}, {% endfor %}</td>#}
+                                            <td>{% for country in core_instance.countries.all %}
+                                                {{ country.short_name }}
+                                                , {% endfor %}</td>
+                                        </tr>
+                                    {% elif core_instance.geographic_scope_type == 'Sub-national' %}
+                                        {% for gssubnation in geographic_scope_subnation %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gssubnation.subnation_name }}</td>
+                                                <td>{% if gssubnation.subnation_type == 'Other' %}
+                                                    {{ gssubnation.subnation_type_other }}{% else %}
+                                                    {{ gssubnation.subnation_type }}{% endif %}</td>
+                                                <td>{{ gssubnation.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'Local' %}
+                                        {% for gslocal in geographic_scope_local_area %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gslocal.local_area_name }}
+                                                    {% if gslocal.local_area_alternate_name|length > 0 %} (
+                                                        {{ gslocal.local_area_alternate_name }}){% endif %}</td>
+                                                <td>{% if gslocal.local_area_setting == 'Other' %}
+                                                    {{ gslocal.local_area_setting_other }}{% else %}
+                                                    {{ gslocal.local_area_setting }}{% endif %}</td>
+                                                <td>{{ gslocal.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>{{ core_instance.geographic_scope_type }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'geographic-scope' %}" method="post">
+                                        <h6>Please indicate the geographic scope of the publication</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetToggler">
+                                            {{ geographic_scope_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ local_area_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ subnation_form }}
+                                        </div>
+                                        {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
+                                        <div class="FormSet FormSetTogglable">
+                                            {{ nation_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ region_form }}
+                                        </div>
+
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel1b">Map</a>
+
+                            <div id="panel1b" class="content">
+                                {% leaflet_map "report-map" callback="window.map_init_basic" %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel2">Themes/Issues</a>
+
+                            <div id="panel2" class="content">
+                                <table>
+                                    {% for common_ti in common_themes_issues %}
+                                        <tr>
+                                            {% ifchanged common_ti.theme_issue.theme_issue_category %}
+                                                <td>
+                                                    <strong>
+                                                        {{ common_ti.theme_issue.theme_issue_category }}
+                                                    </strong>
+                                                </td>
+                                            {% else %}
+                                                <td></td>
+                                            {% endifchanged %}
+                                            <td>
+                                                {% if common_ti.theme_issue_value.theme_issue_label == "Other" %}
+                                                    {{ common_ti.theme_issue_value }}: {{ common_ti.other_theme_issue }}
+                                                {% else %}
+                                                    {% if common_ti.theme_issue_value %}
+                                                        {{ common_ti.theme_issue_value }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form class="accordionFormsetGrowable" action="{% url 'common-themes-issues' %}"
+                                          method="post">
+
+                                        <h6>Please select values for the themes/issues below</h6>
+
+                                        {% csrf_token %}
+
+                                        <div class="FormSet">
+                                            <!- Layout for Themes/Issues' section's editor.
+                                            Had to implement manually because crispy_forms wouldn't
+                                            work.-->
+                                            <table class="profile-attributes-table">
+                                                {% for form in common_themes_issues_formset.forms %}
+                                                    {% with  label=form.theme_issue.value|lookup_theme_issue_label %}
+                                                        {% ifchanged label %}
+                                                            <tr class="profile-label-row">
+                                                                <td>
+                                                                <span>
+                                                                    <strong>
+                                                                        {{ label }} (select ALL that
+                                                                        apply)
+                                                                    </strong>
+                                                                </span>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        {% endifchanged %}
+
+                                                        <tr class="profile-attributes-row">
+                                                            <td id="value-type"
+                                                                data-attr-type="Qualitative">
+                                                                {{ form.theme_issue_value }}
+                                                            </td>
+
+                                                            {{ form.other_theme_issue }}
+
+                                                            <td>
+                                                            </td>
+
+                                                            <!-- These fields must be on the page, but hidden, in order to
+                                                            satisfy Django and the database.-->
+                                                            {{ form.theme_issue }}
+                                                            {{ form.row_number }}
+                                                            {{ form.selected_theme_issue_id }}
+                                                            {{ form.issf_core }}
+
+                                                            <div class="deleteCheckBoxContainer">
+                                                                {{ form.DELETE }}
+                                                            </div>
+                                                        </tr>
+                                                    {% endwith %}
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+
+                                        {{ common_themes_issues_formset.management_form }}
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel3">Characteristics</a>
+
+                            <div id="panel3" class="content">
+                                {#                            {% autoescape off %}#}
+                                <table>
+                                    {% for common_attr in common_attributes %}
+                                        <tr>
+                                            {% ifchanged common_attr.attribute.attribute_label %}
+                                                <td>
+                                                    <strong>
+                                                        {{ common_attr.attribute.attribute_label }}
+                                                    </strong>
+                                                </td>
+                                            {% else %}
+                                                <td></td>
+                                            {% endifchanged %}
+                                            <td>
+                                                {% if common_attr.attribute_value.value_label == "Other" %}
+                                                    {{ common_attr.attribute_value }}: {{ common_attr.other_value }}
+                                                {% else %}
+                                                    {% if common_attr.attribute_value %}
+                                                        {{ common_attr.attribute_value }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {#                            {% endautoescape %}#}
+                                {% if editor %}
+                                    <form class="accordionFormsetGrowable" action="{% url 'common-attributes' %}"
+                                          method="post">
+
+                                        <h6>Please select values for the characteristics below</h6>
+
+                                        {% csrf_token %}
+
+                                        <div class="FormSet">
+                                            <!-- Layout for Main Characteristics section's editor. -->
+                                            <table class="profile-attributes-table">
+                                                {% for form in common_attributes_formset.forms %}
+                                                    {% with  label=form.attribute.value|lookup_attribute_noquestion %}
+                                                        {% ifchanged label %}
+                                                            <tr class="profile-label-row">
+                                                                <td>
+                                                                <span>
+                                                                    <strong>
+                                                                        {{ label }} (select ALL that
+                                                                        apply)
+                                                                    </strong>
+                                                                </span>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        {% endifchanged %}
+
+                                                        <tr class="profile-attributes-row">
+                                                            <td id="value-type"
+                                                                data-attr-type="Qualitative">
+                                                                {{ form.attribute_value }}
+                                                            </td>
+
+                                                            {{ form.other_value }}
+
+                                                            <td>
+                                                            </td>
+
+                                                            <!-- These fields must be on the page, but hidden, in order to
+                                                            satisfy Django and the database.-->
+                                                            {{ form.attribute }}
+                                                            {{ form.row_number }}
+                                                            {{ form.selected_attribute_id }}
+                                                            {{ form.issf_core }}
+
+                                                            <div class="deleteCheckBoxContainer">
+                                                                {{ form.DELETE }}
+                                                            </div>
+                                                        </tr>
+                                                    {% endwith %}
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+
+                                        {{ common_attributes_formset.management_form }}
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                    {#                                <form action="{% url 'common-attributes' %}" method="post">#}
+                                    {#                                    <h6>Please indicate the attributes of the small-scale fishery#}
+                                    {#                                        in the publication</h6>#}
+                                    {#                                    {% csrf_token %}#}
+                                    {#                                    <div class="FormSet">#}
+                                    {#                                        {{ common_attributes_formset }}#}
+                                    {#                                    </div>#}
+                                    {#                                    <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"#}
+                                    {#                                           name="issf_core_id">#}
+                                    {##}
+                                    {#                                    <div class="button-bar">#}
+                                    {#                                        <button class="medium radius submit bt-submit">Submit</button>#}
+                                    {#                                    </div>#}
+                                    {#                                </form>#}
+                                {% endif %}
+                                {#                            {% if editor %}#}
+                                {#                                <form action="{% url 'characteristics' %}" method="post">#}
+                                {#                                    <h6>Please indicate the key characteristics of the small-scale fishery in the#}
+                                {#                                        publication</h6>#}
+                                {##}
+                                {#                                    <p class="alert">#}
+                                {#                                        <label>*</label>#}
+                                {#                                        indicates required fields#}
+                                {#                                    </p>#}
+                                {#                                    {% csrf_token %}#}
+                                {#                                    <div class="FormSet">#}
+                                {#                                        {{ characteristics_form }}#}
+                                {#                                    </div>#}
+                                {#                                    <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"#}
+                                {#                                           name="issf_core_id">#}
+                                {##}
+                                {#                                    <div class="button-bar">#}
+                                {#                                        <button class="medium radius submit bt-submit">Submit</button>#}
+                                {#                                    </div>#}
+                                {#                                </form>#}
+                                {#                            {% endif %}#}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel5">Additional details</a>
+
+                            <div id="panel5" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Demographic factors</strong>
+                                        </td>
+                                        <td>
+                                            {% if knowledge_instance.demographics_na %}not applicable, {% endif %}
+                                            {% if knowledge_instance.demographics_age %}age, {% endif %}
+                                            {% if knowledge_instance.demographics_education %}education, {% endif %}
+                                            {% if knowledge_instance.demographics_ethnicity %}ethnicity, {% endif %}
+                                            {% if knowledge_instance.demographics_gender %}gender, {% endif %}
+                                            {% if knowledge_instance.demographics_health %}health, {% endif %}
+                                            {% if knowledge_instance.demographics_income %}income, {% endif %}
+                                            {% if knowledge_instance.demographics_religion %}religion, {% endif %}
+                                            {% if knowledge_instance.demographics_unspecified %}unspecified, {% endif %}
+                                            {% if knowledge_instance.demographics_other %}
+                                                {{ knowledge_instance.demographics_other_text }}{% endif %}
+                                        </td>
+                                    </tr>
+                                    {% if knowledge_instance.demographic_details != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Demographic details</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.demographic_details }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>
+                                            <strong>Employment status of fishers</strong>
+                                        </td>
+                                        <td>
+                                            {% if knowledge_instance.employment_na %}not applicable, {% endif %}
+                                            {% if knowledge_instance.employment_full_time %}full-time, {% endif %}
+                                            {% if knowledge_instance.employment_part_time %}part-time, {% endif %}
+                                            {% if knowledge_instance.employment_unspecified %}unspecified, {% endif %}
+                                            {% if knowledge_instance.employment_seasonal %}seasonal, {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% if knowledge_instance.employment_details != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Employment details</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.employment_details }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>
+                                            <strong>Stage(s) of fishery chain addressed</strong>
+                                        </td>
+                                        <td>
+                                            {% if knowledge_instance.stage_na %}not applicable, {% endif %}
+                                            {% if knowledge_instance.stage_pre_harvest %}pre-harvest, {% endif %}
+                                            {% if knowledge_instance.stage_harvest %}harvest, {% endif %}
+                                            {% if knowledge_instance.stage_post_harvest %}post-harvest, {% endif %}
+                                            {% if knowledge_instance.stage_unspecified %}unspecified, {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>SSF defined</strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.ssf_defined }}</td>
+                                    </tr>
+                                    {% if knowledge_instance.ssf_definition != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>SSF definition</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.ssf_definition }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>
+                                            <strong>Large-scale Fisheries considered</strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.lsf_considered|yesno:'Yes,No' }}</td>
+                                    </tr>
+                                    {% if knowledge_instance.research_method != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Research method</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.research_method }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>
+                                            <strong>Overall aim/purpose or research question</strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.aim_purpose_question }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Solutions offered</strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.solutions_offered|yesno:'Yes,No' }}</td>
+                                    </tr>
+                                    {% if knowledge_instance.solution_details != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Solution details</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.solution_details }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>
+                                            <strong>Explicit research implications and/or policy recommendations
+                                            </strong>
+                                        </td>
+                                        <td>{{ knowledge_instance.explicit_implications_recommendations|yesno:'Yes,No' }}</td>
+                                    </tr>
+                                    {% if knowledge_instance.implication_details != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Implication/recommendation details</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.implication_details }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if knowledge_instance.comments != '' %}
+                                        <tr>
+                                            <td>
+                                                <strong>Additional details/comments</strong>
+                                            </td>
+                                            <td>{{ knowledge_instance.comments }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'sota-other' %}" method="post">
+                                        <h6>Please provide additional details about the publication</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+
+                                        <div class="FormSet">
+                                            {{ knowledge_other_details_form.core_record_type }}
+                                            <label>Demographic factors (check all that apply):</label>
+                                            <ul>
+                                                <li>{{ knowledge_other_details_form.demographics_na }}
+                                                    <label
+                                                            for="demographics_na">Not applicable
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_age }}
+                                                    <label
+                                                            for="demographics_age">Age
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_education }}
+                                                    <label
+                                                            for="demographics_education">Education
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_ethnicity }}
+                                                    <label
+                                                            for="demographics_ethnicity">Ethnicity
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_gender }}
+                                                    <label
+                                                            for="demographics_gender">Gender
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_health }}
+                                                    <label
+                                                            for="demographics_health">Health
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_income }}
+                                                    <label
+                                                            for="demographics_income">Income
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_religion }}
+                                                    <label
+                                                            for="demographics_religion">Religion
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_unspecified }}
+                                                    <label
+                                                            for="demographics_unspecified">Unspecified
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.demographics_other }}
+                                                    <label
+                                                            for="demographics_other">Other
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                            <label for="id_demographics_other_text">Other demographic factor:</label>
+                                            {{ knowledge_other_details_form.demographics_other_text }}
+                                            <label for="id_demographic_details">Demographic details (if applicable):
+                                            </label>
+                                            {{ knowledge_other_details_form.demographic_details }}
+
+                                            <label>Employment status of fishers (check all that apply):</label>
+                                            <ul>
+                                                <li>{{ knowledge_other_details_form.employment_na }}
+                                                    <label
+                                                            for="employment_na">Not applicable
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.employment_full_time }}
+                                                    <label
+                                                            for="employment_full_time">Full-time
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.employment_part_time }}
+                                                    <label
+                                                            for="demographics_education">Part-time
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.employment_seasonal }}
+                                                    <label
+                                                            for="employment_seasonal">Seasonal
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.employment_unspecified }}
+                                                    <label
+                                                            for="employment_unspecified">Unspecified
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                            <label for="id_employment_details">Employment details (if applicable)
+                                            </label>
+                                            {{ knowledge_other_details_form.employment_details }}
+
+                                            <label>Stage(s) of fishery chain addressed (check all that apply):</label>
+                                            <ul>
+                                                <li>{{ knowledge_other_details_form.stage_na }}
+                                                    <label for="stage_na">Not
+                                                        applicable
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.stage_pre_harvest }}
+                                                    <label
+                                                            for="stage_pre_harvest">Pre-harvest
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.stage_harvest }}
+                                                    <label
+                                                            for="stage_harvest">Harvest
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.stage_post_harvest }}
+                                                    <label
+                                                            for="stage_post_harvest">Post-harvest
+                                                    </label>
+                                                </li>
+                                                <li>{{ knowledge_other_details_form.stage_unspecified }}
+                                                    <label
+                                                            for="stage_unspecified">Unspecified
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+                                            <label for="id_ssf_defined">*Are small-scale fisheries defined?</label>
+                                            {{ knowledge_other_details_form.ssf_defined }}
+                                            <label for="id_ssf_definition">Provide definition of small-scale fisheries
+                                                (if
+                                                applicable):
+                                            </label>
+                                            {{ knowledge_other_details_form.ssf_definition }}
+                                            <label for="id_lsf_considered">*Are large-scale fisheries also
+                                                considered?
+                                            </label>
+                                            {{ knowledge_other_details_form.lsf_considered }}
+                                            <label for="id_research_method">Research method(s) or approach(es) applied
+                                                in
+                                                the study (e.g. ethnographic, survey, etc.):
+                                            </label>
+                                            {{ knowledge_other_details_form.research_method }}
+
+                                            <label for="id_aim_purpose_question">*What is the overall aim(s)/purpose or
+                                                research question addressed in the study?
+                                            </label>
+                                            {{ knowledge_other_details_form.aim_purpose_question }}
+                                            <label for="id_solutions_offered">*Does the study offer solutions to the
+                                                above
+                                                issues (select one)? (Please note: Solutions are regarded as central
+                                                topics
+                                                that were elaborated or justified throughout the article in repsonse to
+                                                certain issues, rather than recommendations tacked on at the end of the
+                                                article):
+                                            </label>
+                                            {{ knowledge_other_details_form.solutions_offered }}
+                                            <label for="id_solution_details">Please provide details about the solutions
+                                                identified in the study (if applicable):
+                                            </label>
+                                            {{ knowledge_other_details_form.solution_details }}
+                                            <label for="id_explicit_implications_recommendations">*Are research
+                                                implications
+                                                and/or policy recommendations made explicit:
+                                            </label>
+                                            {{ knowledge_other_details_form.explicit_implications_recommendations }}
+                                            <label for="id_implication_details">Please provide details about the
+                                                research
+                                                implications identified in the study (if applicable):
+                                            </label>
+                                            {{ knowledge_other_details_form.implication_details }}
+                                            <label for="id_comments">Additional details/comments:</label>
+                                            {{ knowledge_other_details_form.comments }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel6">Species</a>
+
+                            <div id="panel6" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% for specie in species %}
+                                        <tr>
+                                            <td>
+                                                {% if specie.species_common %}
+                                                    <strong>Common species name:</strong> {{ specie.species_common }}
+                                                    &nbsp;
+                                                    &nbsp;
+                                                {% endif %}
+                                                {% if  specie.species_scientific %}
+                                                    <strong>Scientific/Latin species name:</strong>
+                                                    {{ specie.species_scientific }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'species' %}" method="post">
+                                        <h6>Indicate the key species for the small-scale fishery in the
+                                            publication
+                                        </h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ species_form }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel7">External links</a>
+
+                            <div id="panel7" class="content">
+                                {#                        {% autoescape off %}#}
+                                <table>
+                                    {% for external_link in external_links %}
+                                        <tr>
+                                            <td>{{ external_link.link_type }}</td>
+                                            <td>
+                                                <a href="{{ external_link.link_address }}"
+                                                   target="_blank">{{ external_link.link_address }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {#                        {% endautoescape %}#}
+                                {% if editor %}
+                                    <form action="{% url 'external-links' %}" method="post">
+                                        <h6>Please provide links to related material on the internet</h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ external_links_form }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="large-3 columns">
+                    {#            domain hard-coded because request.get_host broke under https #}
+                    <div class="fb-comments"
+                         data-href="https://dory.creait.mun.ca{% url 'sota-details' issf_core_id=core_instance.issf_core_id %}"
+                         data-width="220" data-numposts="3" data-colorscheme="light"></div>
+                </div>
+                {% if editor %}
+                    <a href="#" data-reveal-id="deleteModal" class="button radius"
+                       style="background-color: #525252; position: absolute; right:5px; bottom:-10px;">
+                        Delete Record
+                    </a>
+                    <div id="deleteModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle"
+                         aria-hidden="true"
+                         role="dialog">
+                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
+                            <div class="row">
+                                <div class="large-5 columns">
+                                    <p>WARNING</p>
+
+                                    <p>Are you sure you want to
+                                        <b style="color:red;">PERMANENTLY</b>
+                                        delete this record?
+                                        <br>
+                                        Once deleted, the record content cannot be recovered.
+                                    </p>
+
+                                    <button class="button radius" style="background-color: #B70000; margin-right:10px;"
+                                            type="submit">DELETE
+                                    </button>
+                                    <a href="#" class="button radius close-reveal-modal"
+                                       style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color: white;">
+                                        CANCEL
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    {% endautoescape %}
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}{% django_js jquery=false %}
+
+    {% js "details/js/map-setup.js" %}
+    {% js "details/js/error-handling.js" %}
+    {% js "details/js/page-functions.js" %}
+
+    <script type="text/javascript">
+
+        // this function serves as a junction between the Leaflet map and
+        // the initialization functionality in map_init_basic_ext() can be found in map-setup.js
+        function map_init_basic(map, options) {
+
+
+            var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
+            var sotaIcon = L.icon({
+                iconUrl: '{% static "img/icon-sota.png" %}',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, 0]
+            });
+
+            map_init_basic_ext(map, options, dataurl, sotaIcon);
+        }
+
+        // all the map initialization functionality is handled by this function call.
+        // the function can be found in map-setup.js
+        map_handler();
+
+        // this function handles all form errors; both field- and form-level.
+        // it can be found in error-handling.js
+        error_handler();
+
+    </script>
+{% endblock additional_js_scripts %}

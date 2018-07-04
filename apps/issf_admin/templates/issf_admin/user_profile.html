@@ -1,0 +1,43 @@
+{% extends "issf_base/base.html" %}{% load js %}{% load staticfiles %}
+
+{% load url from future %}
+{% load staticfiles %}
+{% load foundation %}
+{% load i18n %}
+
+{% block body %}
+    <title>{% block title %}ISSF: User Profile{% endblock %}</title>
+    <div class="row">
+        <div class="large-12 columns page-title2">
+            <!-- page title ------->
+            <h1>User Profile for {{ userName }}</h1>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="large-12 columns accountFormContainer">
+            &nbsp;
+
+            <!-- begin form --->
+            <form method="post" action="{% url 'update-profile' %}" role="form">
+                {% csrf_token %}
+                {{ userForm }}
+                <div class="button-bar large-12 right">
+                    <button class="medium bt-submit" value="{% trans 'Submit' %}">{% trans "Submit" %}</button>
+                </div>
+            </form>
+            <!-- end form --->
+
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% django_js jquery=false %}
+    <script src={% static "details/js/error-handling.js" %}></script>
+    <script>
+        error_handler();
+    </script>
+{% endblock %}
+

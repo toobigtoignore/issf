@@ -1,0 +1,23 @@
+{% extends "issf_base/base.html" %}
+
+{% load i18n %}
+
+{% block body %}
+    <title>{% block title %}ISSF: User Profile Saved{% endblock %}</title>
+    <div class="row">
+        <div class="large-12 columns page-title2">
+            <h1>{% trans "User Profile Saved" %}</h1>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="large-12 columns accountFormContainer">
+            &nbsp;
+            <p>Thank you for updating your User Profile.<br/>
+                Please update your Who's Who in SSF record on the <a href="{% url 'contribute' %}">Contribute</a> page.
+            </p>
+
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+{% endblock body %}

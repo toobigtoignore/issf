@@ -1,0 +1,758 @@
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js %}{% load staticfiles %}
+{% load crispy_forms_tags %}{% load profile_attributes %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    {% autoescape off %}
+        <div id="details-loading-overlay"></div>
+        <title>
+            {% block title %}
+                ISSF: Small-scale Fishery Profile - {{ profile_instance.ssf_name }}
+            {% endblock %}
+        </title>
+        <section class="content-section report" id="content-profile">
+            <div class="row" id="main">
+                <div class="large-12 columns page-title">
+            <span>
+                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                    class="twitter-share-button"
+                    data-lang="en"
+                    data-size="large">
+                 </a>
+            </span>
+
+                    <h1>SSF Profile</h1>
+
+                    <div class="basic-info">
+                        <strong>{{ profile_instance.ssf_name }}</strong>
+                        | {{ profile_instance.data_year }}
+                        {% if profile_instance.data_end_year %}
+                            - {{ profile_instance.data_end_year }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-9 columns">
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation active">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>
+                            {% endif %}
+                            <a class="accordion-nav" href="#panel1">Background</a>
+
+                            <div id="panel1" class="content">
+                                <!-- All names and labels are tentative!-->
+                                <table>
+                                    <tr>
+                                        <td width="45%">
+                                            <strong>Fishery name</strong>
+                                        </td>
+                                        <td>{{ profile_instance.ssf_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="45%">
+                                            <strong>SSF Defined?</strong>
+                                        </td>
+                                        <td>{{ profile_instance.ssf_defined }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="45%">
+                                            <strong>SSF Definition (if applicable)</strong>
+                                        </td>
+                                        <td>{{ profile_instance.ssf_definition }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Data time frame</strong>
+                                        </td>
+                                        <td>
+                                            {{ profile_instance.data_year }}
+                                            {% if profile_instance.data_end_year %}
+                                                - {{ profile_instance.data_end_year }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contributor</strong>
+                                        </td>
+                                        <td>
+                                            {% if who_page %}
+                                                <a href="{% url 'who-details' who_page.issf_core_id %}">{{ core_instance.contributor }}</a>
+                                            {% else %}
+                                                <a href="mailto:{{ core_instance.contributor.email }}"
+                                                   target="_blank">{{ core_instance.contributor }}</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contribution date</strong>
+                                        </td>
+                                        <td>
+                                            {{ profile_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}
+                                        </td>
+                                    </tr>
+                                    {#                                <tr>#}
+                                    {#                                    <td>#}
+                                    {#                                        <strong>Editor</strong>#}
+                                    {#                                    </td>#}
+                                    {#                                    <td>#}
+                                    {#                                        <a href="mailto:{{ profile_instance.editor.email }}"#}
+                                    {#                                           target="_blank">{{ profile_instance.editor }}</a>#}
+                                    {#                                    </td>#}
+                                    {#                                </tr>#}
+                                    {#                                <tr>#}
+                                    {#                                    <td>#}
+                                    {#                                        <strong>Edited date</strong>#}
+                                    {#                                    </td>#}
+                                    {#                                    <td>#}
+                                    {#                                        {{ profile_instance.edited_date|date:"SHORT_DATE_FORMAT" }}#}
+                                    {#                                    </td>#}
+                                    {#                                </tr>#}
+                                </table>
+
+                                {% if editor %}
+                                    {#                                <form class="photo_form" action="{% url 'photo-save' %}" method="post"#}
+                                    {#                                      enctype="multipart/form-data">#}
+                                    {#                                    {% csrf_token %}#}
+                                    {#                                    {{ photo_form }}#}
+                                    {#                                    <input id="issf_core_id" type="hidden"#}
+                                    {#                                           value="{{ profile_instance.issf_core_id }}"#}
+                                    {#                                           name="issf_core_id">#}
+                                    {#                                    <button type="submit">SUBMIT</button>#}
+                                    {#                                </form>#}
+                                    <form action="{% url 'profile-basic' %}" method="post">
+                                        <h6>Please provide basic details of the profile</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+
+                                        <div class="FormSet">
+                                            {{ profile_form.ssf_name.label_tag }}{{ profile_form.ssf_name }}
+                                            <div class="data-dates">
+                                                <label for="id_data_year">2B. *Time frame begin year:</label>
+                                                {{ profile_form.data_year }}
+                                                <label for="id_data_end_year"
+                                                       style="padding-left: 5px;">Time frame end year:
+                                                </label>
+                                                {{ profile_form.data_end_year }}
+                                            </div>
+                                            {{ profile_form.ssf_defined.label_tag }}{{ profile_form.ssf_defined }}
+                                            {{ profile_form.ssf_definition.label_tag }}{{ profile_form.ssf_definition }}
+                                            {{ profile_form.img_url.label_tag }}{{ profile_form.img_url }}
+                                            {{ profile_form.contributor.label_tag }}{{ profile_form.contributor }}
+                                        </div>
+
+                                        <div style="display: none">
+                                            {{ profile_form.sources }}
+                                            {{ profile_form.comments }}
+                                            {{ profile_form.editor }}
+                                        </div>
+
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ profile_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>
+                            {% endif %}
+                            <a class="accordion-nav" href="#panel3">Geographic Scope</a>
+
+                            <div id="panel3" class="content">
+                                <table>
+                                    {% if core_instance.geographic_scope_type == 'Regional' %}
+                                        {% for gsregion in geographic_scope_region %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gsregion.region.region_name }}
+                                                    {% if gsregion.region.region_name == 'Other' %}:
+                                                        {{ gsregion.region_name_other }}{% endif %}</td>
+                                                <td>{% for gsregioncountry in gsregion.countries.all %}
+                                                    {{ gsregioncountry.short_name }}, {% endfor %}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'National' %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                            </td>
+                                            <td>{% for country in core_instance.countries.all %}
+                                                {{ country.short_name }}
+                                                , {% endfor %}</td>
+                                        </tr>
+                                    {% elif core_instance.geographic_scope_type == 'Sub-national' %}
+                                        {% for gssubnation in geographic_scope_subnation %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gssubnation.subnation_name }}</td>
+                                                <td>{% if gssubnation.subnation_type == 'Other' %}
+                                                    {{ gssubnation.subnation_type_other }}{% else %}
+                                                    {{ gssubnation.subnation_type }}{% endif %}</td>
+                                                <td>{{ gssubnation.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'Local' %}
+                                        {% for gslocal in geographic_scope_local_area %}
+                                            <tr>
+                                                <td>{% ifchanged core_instance.geographic_scope_type %}
+                                                    <strong>{{ core_instance.geographic_scope_type }}</strong>{% endifchanged %}
+                                                </td>
+                                                <td>{{ gslocal.local_area_name }}
+                                                    {% if gslocal.local_area_alternate_name|length > 0 %} (
+                                                        {{ gslocal.local_area_alternate_name }}){% endif %}</td>
+                                                <td>{% if gslocal.local_area_setting == 'Other' %}
+                                                    {{ gslocal.local_area_setting_other }}{% else %}
+                                                    {{ gslocal.local_area_setting }}{% endif %}</td>
+                                                <td>{{ gslocal.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>{{ core_instance.geographic_scope_type }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {% if editor %}
+                                    <form action="{% url 'geographic-scope' %}" method="post">
+                                        <h6>Please indicate the geographic scope of the profile</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetToggler">
+                                            {{ geographic_scope_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ local_area_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ subnation_form }}
+                                        </div>
+                                        {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
+                                        <div class="FormSet FormSetTogglable">
+                                            {{ nation_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ region_form }}
+                                        </div>
+
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel2">Map</a>
+
+                            <div id="panel2" class="content">
+                                {% leaflet_map "report-map" callback="window.map_init_basic" %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>
+                            {% endif %}
+                            <a class="accordion-nav" href="#panel4">Main Characteristics</a>
+
+                            <div id="panel4" class="content">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Name</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Value</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Units</strong>
+                                        </td>
+                                    </tr>
+                                    {% for main_attr in main_attributes %}
+                                        <tr>
+                                            {% ifchanged main_attr.attribute.attribute_label %}
+                                                <td>{{ main_attr.attribute.attribute_label }}</td>
+                                            {% else %}
+                                                <td></td>
+                                            {% endifchanged %}
+                                            <td>
+                                                {% if main_attr.attribute.attribute_type == "Quantitative" %}
+                                                    {% if main_attr.value %}
+                                                        {{ main_attr.value }}
+                                                    {% endif %}
+                                                {% else %}
+
+                                                    {% if main_attr.attribute_value.value_label == "Other" %}
+                                                        {{ main_attr.attribute_value }}: {{ main_attr.other_value }}
+                                                    {% else %}
+                                                        {% if  main_attr.attribute_value %}
+                                                            {{ main_attr.attribute_value }}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endif %}
+                                                {% if main_attr.attribute.additional_field and main_attr.additional %}
+                                                    {% if main_attr.attribute.additional_field_type == "Integer" %}
+                                                        - {{ main_attr.additional }}
+                                                        {{ main_attr.attribute.additional_field }}
+                                                    {% else %}
+                                                        - {{ main_attr.attribute.additional_field }}
+                                                        {{ main_attr.additional_value }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {{ main_attr.attribute.units_label }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Sources</strong>
+                                        </td>
+                                        <!-- max-width: 100% keeps the Sources and Comments cells from overflowing the main content area.-->
+                                        <td style="max-width: 100%">{{ profile_instance.sources|linebreaks }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Comments</strong>
+                                        </td>
+                                        <td style="max-width: 100%">{{ profile_instance.comments }}</td>
+                                    </tr>
+                                </table>
+                                {% if editor %}
+
+                                    <form class="accordionFormsetGrowable" action="{% url 'profile-main-attributes' %}"
+                                          method="post">
+
+                                        <h6>Please provide values for the characteristics below.
+                                            <br>
+                                            If you have a range of values, please enter an average that best represents
+                                            the
+                                            range and specify the exact range for the question in the comments box
+                                            below.
+                                        </h6>
+                                        {% csrf_token %}
+
+                                        <div class="FormSet">
+
+                                            <!- Layout for Main Characteristics section's editor.
+                                            Had to implement manually because crispy_forms wouldn't
+                                            work.-->
+                                            <table class="profile-attributes-table">
+
+                                                <!-- Loop through every form in the formset and individually put fields into
+                                                <td> tags. lookup_attribute_type is a custom template filter which can be
+                                                found in details/templatetags/profile_attributes.py-->
+                                                {% for form in main_attributes_formset.forms %}
+                                                    {% with  label=form.attribute.value|lookup_attribute_label %}
+                                                        {% ifchanged label %}
+                                                            <tr class="profile-label-row">
+                                                                <td>
+                                                                <span>
+                                                                    <strong>
+                                                                        {{ label }}
+                                                                        {% if  form.attribute.value|lookup_attribute_type == "Qualitative" %}
+                                                                            (select ALL that apply)
+                                                                        {% elif form.attribute.value|lookup_attribute_type == "Ordinal" %}
+                                                                            (select ONE that best applies)
+                                                                        {% endif %}
+                                                                    </strong>
+                                                                </span>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        {% endifchanged %}
+
+                                                        <tr class="profile-attributes-row">
+                                                            <td id="value-type"
+                                                                data-attr-type="{{ form.attribute.value|lookup_attribute_type }}">
+                                                                <!-- Only one of the fields "value" and "attribute_value may
+                                                                be displayed at at time, depending on the type of data
+                                                                applicable to the selected attribute. Value is a numeric
+                                                                field which should be displayed if the type of
+                                                                the selected attribute is Quantitative (numeric). If it is
+                                                                Qualitative/Ordinal (categorical) then the dropdown list
+                                                                attribute_value is displayed instead.-->
+                                                                {% ifequal form.attribute.value|lookup_attribute_type "Quantitative" %}
+                                                                    {{ form.attribute.value|lookup_max_min:form.value }}
+                                                                    <div style="display:none">{{ form.attribute_value }}</div>
+                                                                {% else %}
+                                                                    {{ form.attribute_value }}
+                                                                    <div style="display:none">{{ form.value }}</div>
+                                                                {% endifequal %}
+
+                                                                {% if form.attribute.value|lookup_additional_field_type == "Integer" %}
+                                                                    <div style="margin-top:5px;">{{ form.additional }}</div>
+                                                                {% elif form.attribute.value|lookup_additional_field_type %}
+                                                                    <br>
+                                                                    <div style="margin-top:5px;">{{ form.additional_value }}</div>
+                                                                {% endif %}
+                                                            </td>
+
+                                                            {{ form.other_value }}
+
+                                                            <td>
+                                                            </td>
+
+                                                            <!-- These fields must be on the page, but hidden, in order to
+                                                            satisfy Django and the database.-->
+                                                            {{ form.attribute }}
+                                                            {{ form.row_number }}
+                                                            {{ form.selected_attribute_id }}
+                                                            {{ form.issf_core }}
+
+                                                            <div class="deleteCheckBoxContainer">
+                                                                {{ form.DELETE }}
+                                                            </div>
+
+                                                            <div style="display:none">{{ form.additional_value }}</div>
+                                                        </tr>
+                                                    {% endwith %}
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+
+                                        {{ main_attributes_formset.management_form }}
+                                        <input id="issf_core_id" type="hidden"
+                                               value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+                                        {{ profile_form.sources.label_tag }}{{ profile_form.sources }}
+                                        {{ profile_form.comments.label_tag }}{{ profile_form.comments }}
+
+                                        <div style="display: none;">
+                                            {{ profile_form.ssf_name }}
+                                            {{ profile_form.ssf_defined }}
+                                            {{ profile_form.ssf_definition }}
+                                            {{ profile_form.data_year }}
+                                            {{ profile_form.contributor }}
+                                            {{ profile_form.editor }}
+                                        </div>
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>
+                            {% endif %}
+                            <a class="accordion-nav" href="#panel5">Species</a>
+
+                            <div id="panel1" class="content">
+                                <table>
+                                    {% for specie in species_landings %}
+                                        <tr>
+                                            <td>
+                                                {% if specie.species_common %}
+                                                    <strong>Common species name:</strong> {{ specie.species_common }}
+                                                    &nbsp;
+                                                    &nbsp;
+                                                {% endif %}
+                                                {% if  specie.species_scientific %}
+                                                    <strong>Scientific/Latin species name:</strong>
+                                                    {{ specie.species_scientific }} &nbsp;&nbsp;
+                                                {% endif %}
+                                                <strong>Landings (t):</strong>
+                                                {{ specie.landings }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+
+                                {% if editor %}
+                                    <form action="{% url 'species-landings' %}"
+                                          method="post">
+                                        <h6>9. Indicate the key species for the profile</h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ species_landings_formset }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel6">Organizations</a>
+
+                            <div id="panel7" class="content">
+                                <table>
+                                    {% for profile_organization in profile_organizations %}
+                                        <tr>
+                                            {% if profile_organization.ssforganization %}
+                                                <td>
+                                                    <a href="
+                                            {% url 'organization-details' profile_organization.ssforganization.issf_core_id %}"
+                                                       target="_blank">{{ profile_organization.ssforganization }}</a>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                            {% else %}
+                                                <td>
+                                                    {{ profile_organization.organization_name }}
+                                                </td>
+                                                <td>
+                                                    Type:
+                                                    {{ profile_organization.organization_type }}</td>
+                                                <td>
+                                                    Scope:
+                                                    {{ profile_organization.geographic_scope }}</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {% if editor %}
+                                    <form action="{% url 'profile-organizations' %}" method="post">
+                                        <h6>19. Please select or provide relevant organizations
+                                            involved in SSF governance in the location.
+                                        </h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ profile_organization_formset }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">edit</button>{% endif %}
+                            <a class="accordion-nav" href="#panel7">External links</a>
+
+                            <div id="panel7" class="content">
+                                <table>
+                                    {% for external_link in external_links %}
+                                        <tr>
+                                            <td>{{ external_link.link_type }}</td>
+                                            <td>
+                                                <a href="{{ external_link.link_address }}"
+                                                   target="_blank">{{ external_link.link_address }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+
+                                {% if editor %}
+                                    <form action="{% url 'external-links' %}" method="post">
+                                        <h6>Please provide links to related material on the internet</h6>
+                                        {% csrf_token %}
+                                        <div class="FormSet FormSetGrowable">
+                                            {{ external_links_form }}
+                                        </div>
+                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
+                                               name="issf_core_id">
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="large-3 columns">
+                    {% if profile_instance.img_url %}
+                        <div style="margin-bottom: 30px;">
+                            <img height="400" width="400" src="{{ profile_instance.img_url }}"
+                                 style="border: solid 5px #FFF; -moz-box-shadow: 5px 5px 0px #999; -webkit-box-shadow: 5px 5px 0px #999; box-shadow: 5px 5px 0px #999;;">
+                        </div>
+                    {% endif %}
+                    <div class="percent-box"
+                         style="background-color: {{ pct_colour }}; margin-bottom: 20px; width:145px; margin-left: 42px;">
+                        <div title="If you think this value is incorrect try resubmitting the Main Characteristics and refresh the page."
+                             class="pct-text">{{ profile_instance.percent }}% completed
+                        </div>
+                    </div>
+
+                    <a id="report-btn"
+                       href="/details/report/profile/{{ profile_instance.issf_core_id }}"
+                       class="button radius {% if profile_instance.percent < 70 %}disabled-link has-tip{% endif %}"
+                       {% if profile_instance.percent < 70 %}data-tooltip aria-haspopup='true'
+                       title='Profiles must be at least 70% complete to generate a report.'{% endif %}
+                       style="margin-left: 42px; width:145px;">Generate
+                        Report
+                    </a>
+                    <a target="_blank" href="http://demo.vista.cs.uregina.ca/gcpc-ssf/" class="button radius"
+                       style="margin-left: 42px; width:145px;">
+                        Compare Profiles
+                    </a>
+
+                    <ul style="font-size: 0.85rem;">
+                        <li>
+                            Download a 'fillable' PDF form in
+                            <a href="{% url 'template-pdf' 'english' %}"
+                               target="_blank">
+                                    <span>
+                                         English,
+                                    </span>
+                            </a>
+                            <a href="{% url 'template-pdf' 'french' %}"
+                               target="_blank">
+                                    <span>
+                                         French,
+                                    </span>
+                            </a>
+                            <a href="{% url 'template-pdf' 'spanish' %}"
+                               target="_blank">
+                                    <span>
+                                         Spanish,
+                                    </span>
+                            </a>
+                            or
+                            <a href="{% url 'template-pdf' 'portuguese' %}"
+                               target="_blank">
+                                    <span>
+                                         Portuguese
+                                    </span>
+                            </a>
+                            to see what information is required in an SSF Profile and to
+                            complete the form offline.
+                        </li>
+                        <li>
+                            <a href="{% url 'brazil-pdf' %}"
+                               target="_blank">
+                    <span>
+                        Click here for an example of an SSF profile: Pontal do Parana, Brazil.
+                    </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="fb-comments"
+                         data-href="https://dory.creait.mun.ca{% url 'profile-details' issf_core_id=core_instance.issf_core_id %}"
+                         data-width="220" data-numposts="3" data-colorscheme="light"></div>
+                </div>
+            </div>
+
+            {% if editor %}
+                <div class="row" style="margin-top: 30px;">
+                    <a href="#" data-reveal-id="deleteModal" class="button radius"
+                       style="background-color: #525252; position: absolute; right:5px; bottom:-10px;">
+                        Delete Record
+                    </a>
+                    <div id="deleteModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle"
+                         aria-hidden="true"
+                         role="dialog">
+                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
+                            <div class="row">
+                                <div class="large-5 columns">
+                                    <p>
+                                        <strong>WARNING</strong>
+                                    </p>
+
+                                    <p>Are you sure you want to
+                                        <b style="color:red;">PERMANENTLY</b>
+                                        delete this record?
+                                        <br>
+                                        Once deleted, the record content cannot be recovered.
+                                    </p>
+
+                                    <button class="button radius" style="background-color: #B70000; margin-right:10px;"
+                                            type="submit">DELETE
+                                    </button>
+                                    <a href="#" class="button radius close-reveal-modal"
+                                       style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color:white;">
+                                        CANCEL
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    {% endautoescape %}
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}{% django_js jquery=false %}
+
+    {% js "details/js/map-setup.js" %}
+    {% js "details/js/error-handling.js" %}
+    {% js "details/js/page-functions.js" %}
+
+    <script type="text/javascript">
+        $('#report-btn').on('click', function (event) {
+            if ($(this).hasClass('disabled-link')) {
+                event.preventDefault();
+                return false;
+            }
+            window.open(this.href, '_blank');
+            return false;
+        });
+
+        $('#details-loading-overlay').show();
+
+        function map_init_basic(map, options) {
+
+
+            var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
+            var profileIcon = L.icon({
+                iconUrl: '{% static "img/icon-profile.png" %}',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, 0]
+            });
+
+            map_init_basic_ext(map, options, dataurl, profileIcon);
+        }
+
+        // all the map initialization functionality is handled by this function call.
+        // the function can be found in map-setup.js
+        map_handler();
+
+        // this function handles all form errors; both field- and form-level.
+        // it can be found in error-handling.js
+        error_handler();
+
+    </script>
+{% endblock additional_js_scripts %}

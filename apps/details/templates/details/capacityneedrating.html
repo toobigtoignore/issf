@@ -1,0 +1,175 @@
+{% extends 'issf_base/base.html' %}{% load js %}{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+    {#	<link rel="stylesheet" href="{% static "details/css/jquery.barrating.css" %}">#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'issf_base/rateit/rateit.css' %}">#}
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    <title>{% block title %}ISSF: Capacity Development Need Rating{% endblock %}</title>
+    <div class="row">
+        <div class="large-12 columns page-title2">
+            <h1>Capacity Development Need Rating</h1>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="large-12 columns accountFormContainer">
+            &nbsp;
+            <h6>* select between 1 and 5 stars, where 5 is a higher rating</h6>
+
+            <form action="{% url 'capacity-need-rating' prev_capacity_need_id=capacity_need_instance.issf_core_id %}"
+                  method="post">
+                {% csrf_token %}
+                <label>Category:</label>
+
+                <p>{{ capacity_need_instance.capacity_need_category }}</p>
+                <label>Short title:</label>
+
+                <p>
+                    <a href="{% url 'capacity-details' issf_core_id=capacity_need_instance.issf_core_id %}">{{ capacity_need_instance.capacity_need_title }}</a>
+                </p>
+                <label>Description:</label>
+
+                <p>{{ capacity_need_instance.capacity_need_description }}</p>
+
+                <p><label for="id_rating">*Your rating:</label></p>
+                {{ capacity_need_rating_form.rating }}
+                <div class="rateit" data-rateit-backingfld="#id_rating"
+                     data-rateit-resetable="false"></div>
+                {{ capacity_need_rating_form.capacity_need }}
+                {{ capacity_need_rating_form.rater }}
+                <input id="capacity_need_rating_id" type="hidden"
+                       value="{{ capacity_need_rating_id }}"
+                       name="capacity_need_rating_id">
+
+                <p></p>
+                <button class="medium radius blueOrangeButton left" type="submit">Save rating and
+                    rate another...
+                </button>
+            </form>
+        </div>
+    </div>
+    &nbsp;
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% django_js jquery=false %}
+
+{#    <script src="{% static 'issf_base/rateit/jquery.rateit.min.js' %}"></script>#}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: form.attr('action'),
+                    dataType: "json",
+                    data: $(this).serialize(),
+                    success: function (jsonData) {
+                        console.log(jsonData);
+                        if (jsonData.success == 'false') {
+                            //Turn off the submit state on submission failure
+                            //because if submit fails, then the page should not be in "submit" state
+                            //if submission clears, the page will refresh.
+
+                            form.find('input:submit').attr('data-submit', 'off');
+                            form.find('button.bt-submit').attr('data-submit', 'off');
+                            form.find('button.submit').attr('data-submit', 'off');
+                            //HJExtention.TurnOffSubmitStateOnAllFormSubmitButtons();
+
+
+                            var formLevelError = false;
+                            console.log("Error count:" + jsonData.errors);
+                            //Case: submission unsuccessful but error msg has been returned
+                            for (error in jsonData.errors) {
+                                if (!jQuery.isEmptyObject(jsonData.errors[error])) {
+                                    /*
+                                     var inputFound = false;
+                                     form.find(":input[type!='hidden']").each(function(){
+                                     if(error === this.name){
+                                     var label = $('label[for="'+ this.id +'"]');
+                                     //label.find("span:first").text();
+                                     label.html( label.html() + ' <span class="error">' + jsonData.errors[error][0] + '</span>');
+                                     inputFound = true;
+                                     }
+                                     });
+                                     if( !inputFound && (error === "__all__" || error === "__ALL__") ){
+                                     form.prepend(' <span class="error" id="toperror">' + jsonData.errors[error][0] + '</span>');
+                                     formLevelError = true;
+                                     } else {
+                                     //if( jsonData.errors[error] instanceof Array)
+                                     for( prop in jsonData.errors[error]){
+                                     console.log(prop + " " + jsonData.errors[error][prop]);
+                                     form.prepend(' <span class="error" id="toperror">'+prop+':'+jsonData.errors[error][prop]+'</span>');
+                                     formLevelError = true;
+                                     console.log ("Unhandled form error: ["+ error +"]");
+                                     }
+                                     }
+                                     */
+                                    var inputFound = false;
+                                    var isArray = jsonData.errors[error] instanceof Array;
+                                    //console.log( "is Array: "  + isArray );
+                                    //console.log( "error: "  + error );
+                                    //console.log( JSON.stringify(jsonData.errors[error]) );
+
+                                    //if error is isArray, there is only ONE error returned
+                                    if (isArray) {
+                                        form.find(":input[type!='hidden']").each(function () {
+                                            if (this.name.indexOf(error) >= 0) {
+                                                var label = $('label[for="' + this.id + '"]');
+                                                label.html(label.html() + ' <span class="error">' + jsonData.errors[error][0] + '</span>');
+                                                inputFound = true;
+                                            }
+                                        });
+                                    } else {
+                                        //An array of {error:[msg]} has been returned
+                                        for (prop in jsonData.errors[error]) {
+                                            //the reason for a loop is to get all prop of the object. but i know there is only 1 prop.
+                                            var label = $('label[for*="' + prop + '"]').first();
+                                            form.prepend(' <span class="error" id="toperror">' + label.text() + ' ' + jsonData.errors[error][prop] + '</span>');
+                                            //label.html( label.html() + ' <span class="error">' + jsonData.errors[error][prop] + '</span>');
+                                            inputFound = true;
+                                            formLevelError = true;
+                                        }
+                                    }
+
+                                    if (!inputFound && (error === "__all__" || error === "__ALL__")) {
+                                        form.prepend(' <span class="error" id="toperror">' + jsonData.errors[error][0] + '</span>');
+                                        formLevelError = true;
+                                    }
+                                }
+                            }
+
+                            //Case: submission unsuccessful but no error msg returned
+                            if (jQuery.isEmptyObject(jsonData.errors)) {
+                                form.prepend(' <span class="error" id="toperror"> The server had trouble processing your submission. If this issue persists, please <strong>contact ISSF support</strong>. </span>');
+                                formLevelError = true;
+                            }
+
+                            //scroll to error only if form isn't inside a modal
+                            if (!form.parent().hasClass('reveal-modal')) {
+                                var errorOffset;
+                                if (formLevelError) {
+                                    errorOffset = form.offset().top;
+                                } else {
+                                    errorOffset = form.find(".error:first").position().top + 10;
+                                }
+                                $('html, body').animate({
+                                    //scrollTop: form.find(".error:first").position().top+10
+                                    scrollTop: errorOffset
+                                }, 500);
+                            }
+                        }
+                        else {
+                            var redirectURL = Django.url('capacity-need-rating', {{ capacity_need_instance.issf_core_id }});
+                            window.location.replace(redirectURL);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock additional_js_scripts %}
