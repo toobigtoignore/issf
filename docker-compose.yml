@@ -1,7 +1,6 @@
 # ISSF - Information System on Small Scale Fisheries
 # Author: Joshua Murphy
 # Date: February 2nd, 2018
-# Licensed under the GNU GPL v3.
 # https://github.com/toobigtoignore/issf
 
 # Docker Compose file to orchestrate the containers needed to run ISSF

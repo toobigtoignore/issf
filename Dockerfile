@@ -1,7 +1,6 @@
 # ISSF - Information System on Small Scale Fisheries
 # Author: Joshua Murphy
 # Date: February 2nd, 2018
-# Licensed under the GNU GPL v3.
 # https://github.com/toobigtoignore/issf
 
 # Docker file to build the ISSF software inside a Docker container 
@@ -29,4 +28,4 @@ RUN pip install -r requirements.txt
 #RUN wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip
 
 
-MAINTAINER Joshua Murphy tbti@mun.ca
+MAINTAINER Joshua Murphy  
