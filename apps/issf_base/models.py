@@ -685,10 +685,6 @@ class SSFExperiences(models.Model):
     editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', 
             on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Experiences')
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # model-specific fields

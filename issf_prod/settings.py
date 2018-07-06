@@ -28,6 +28,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    'django_js_reverse',
     # Django 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,7 +44,6 @@ INSTALLED_APPS = (
     'crispy_forms_foundation',
     'django_tables2',
     #'djangojs',
-    'django_js_reverse',
     'djgeojson',
     'eztables',
     'foundationform',
@@ -63,7 +63,7 @@ INSTALLED_APPS = (
     'details.templatetags'
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -86,7 +86,8 @@ print("BASE_DIR: " + BASE_DIR)
 print("APPS: " + APPS_DIR)
 print("*****************************")
 
-CRISPY_TEMPLATE_PACK = 'foundation-5'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+TEMPLATE_DEBUG= True
 TEMPLATES = [
     {'BACKEND': 'django.template.backends.django.DjangoTemplates',
      'DIRS': [

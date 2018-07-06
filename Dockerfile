@@ -26,6 +26,6 @@ ADD requirements.txt /issf
 WORKDIR /issf
 RUN pip install -r requirements.txt
 #RUN wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip
-
+RUN export PATH=/usr/local/lib/python3.7/site-packages:$PATH
 
 MAINTAINER Joshua Murphy  

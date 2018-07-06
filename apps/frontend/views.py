@@ -20,12 +20,9 @@ from issf_base.models import CommonAttributeView, Attribute, AdditionalValue, Wh
 from issf_base.models import ISSFCoreMapPointUnique
 from issf_base.models import Theme_Issue_Value
 
-# from issf_base.models import Characteristic_Value
 from issf_base.models import Country
 from issf_admin.models import UserProfile
-# from issf_base.models import TopContributors
 from issf_base.models import RecentContributions
-# from issf_base.models import TopRatedCapacityNeeds
 from issf_base.models import ContributionsByRecordType
 from issf_base.models import ContributionsByCountry
 from issf_base.models import ContributionsByGeographicScope
@@ -43,18 +40,6 @@ from issf_base.models import GeographicScopeLocalArea
 from issf_base.models import GeographicScopeSubnation
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
-# from frontend.forms import EconomicThemesIssuesForm
-# from frontend.forms import EcologicalThemesIssuesForm
-# from frontend.forms import SocialCulturalThemesIssuesForm
-# from frontend.forms import GovernanceThemesIssuesForm
-# from frontend.forms import SsftermCharacteristicsForm
-# from frontend.forms import FisherytypeCharacteristicsForm
-# from frontend.forms import GeartypeCharacteristicsForm
-# from frontend.forms import EcosystemHighlevelCharacteristicsForm
-# from frontend.forms import EcosystemDetailedCharacteristicsForm
-# from frontend.forms import MarketCharacteristicsForm
-# from frontend.forms import GovernanceCharacteristicsForm
-# from frontend.forms import ManagementCharacteristicsForm
 from frontend.forms import SelectedAttributesFormSet
 from frontend.forms import SelectedThemesIssuesFormSet
 
