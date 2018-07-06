@@ -8,13 +8,13 @@
 
 -- The unique key constraints for social accounts make it a pain to obscure.
 
-ALTER TABLE "socialaccount_socialtoken" DROP CONSTRAINT "socialaccount_socialtoken_app_id_fkey";
-ALTER TABLE "socialaccount_socialapp_sites" DROP CONSTRAINT "socialapp_id_refs_id_e7a43014";
-ALTER TABLE "socialaccount_socialapp_sites" DROP CONSTRAINT "socialaccount_socialapp_sites_site_id_fkey";
-ALTER TABLE "socialaccount_socialapp_sites" DROP CONSTRAINT "socialaccount_socialapp_sites_socialapp_id_site_id_key";
-ALTER TABLE "socialaccount_socialapp" DROP CONSTRAINT "socialaccount_socialapp_pkey";
-ALTER TABLE "django_session" DROP CONSTRAINT "django_session_pkey";
-ALTER TABLE "ssf_organization" DROP CONSTRAINT "ssf_organization_country_id_fkey";
+--ALTER TABLE "socialaccount_socialtoken" DROP CONSTRAINT "socialaccount_socialtoken_app_id_fkey";
+--ALTER TABLE "socialaccount_socialapp_sites" DROP CONSTRAINT "socialapp_id_refs_id_e7a43014";
+--ALTER TABLE "socialaccount_socialapp_sites" DROP CONSTRAINT "socialaccount_socialapp_sites_site_id_fkey";
+--ALTER TABLE "socialaccount_socialapp_sites" DROP CONSTRAINT "socialaccount_socialapp_sites_socialapp_id_site_id_key";
+--ALTER TABLE "socialaccount_socialapp" DROP CONSTRAINT "socialaccount_socialapp_pkey";
+--ALTER TABLE "django_session" DROP CONSTRAINT "django_session_pkey";
+--ALTER TABLE "ssf_organization" DROP CONSTRAINT "ssf_organization_country_id_fkey";
 
 UPDATE socialaccount_socialapp SET
   client_id = '1',
