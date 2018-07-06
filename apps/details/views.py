@@ -223,7 +223,8 @@ def sota_details(request, issf_core_id):
 def who_details(request, issf_core_id):
     # person and related instances
     profile_form = None
-    if request.user.is_authenticated():
+    # Bool object not callable
+    if request.user.is_authenticated:
         profile_form = ProfileForm(instance=request.user)
     person_instance = SSFPerson.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)

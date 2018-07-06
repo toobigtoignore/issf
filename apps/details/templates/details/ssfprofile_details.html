@@ -1,4 +1,4 @@
-{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js %}{% load staticfiles %}
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js_reverse %}{% load staticfiles %}
 {% load crispy_forms_tags %}{% load profile_attributes %}
 
 {% block additional_css_scripts %}
@@ -714,11 +714,13 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js %}{% django_js jquery=false %}
+    {% leaflet_js %}
 
-    {% js "details/js/map-setup.js" %}
-    {% js "details/js/error-handling.js" %}
-    {% js "details/js/page-functions.js" %}
+    <!-- We shouldn't need this in every single SSF type.
+        Flag for refactor -->    
+    <script src="{% static 'details/js/map-setup.js' %}">
+    <script src="{% static 'details/js/error-handling.js' %}">
+    <script src="{% static 'details/js/page-functions.js' %}">
 
     <script type="text/javascript">
         $('#report-btn').on('click', function (event) {
