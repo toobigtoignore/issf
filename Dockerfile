@@ -21,8 +21,12 @@ RUN apt-get -y install dialog apt-utils realpath coreutils libgeos-dev \
 
 RUN mkdir /issf/
 ADD requirements.txt /issf
+ADD package.json  /issf
+ADD package-lock.json  /issf
+
 WORKDIR /issf
-RUN npm -v && npm install npm --global 
+RUN npm install npm --global 
+RUN npm install
 RUN pip install -r requirements.txt
 #RUN wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip
 RUN export PATH=/usr/local/lib/python3.7/site-packages:$PATH

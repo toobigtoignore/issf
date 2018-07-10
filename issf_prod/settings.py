@@ -126,9 +126,10 @@ LEAFLET_CONFIG = {
     'PLUGINS': {
         'forms': {'auto-include': True, },
         'cluster': {
-            'css': ['issf_base/leaflet-markercluster/css/MarkerCluster.css',
-                    'issf_base/leaflet-markercluster/css/MarkerCluster.Default.css'],
-            'js': 'issf_base/leaflet-markercluster/js/leaflet.markercluster.js',
+            'css': ['leaflet.markercluster/dist/MarkerCluster.css',
+                    'leaflet.markercluster/dist//MarkerCluster.Default.css'],
+            'js':
+            'issf_base/leaflet-markercluster/js/leaflet.markercluster.js',
             'auto-include': True,
         },
         'navbar': {
