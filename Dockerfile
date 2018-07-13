@@ -14,8 +14,6 @@ RUN apt-get -y install dialog apt-utils realpath coreutils libgeos-dev \
     gdal-bin binutils libproj-dev build-essential python-sphinx pylint nodejs \
     libxss1 libappindicator1 wget
 
-RUN npm -v && npm install npm --global 
-
 #RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 #RUN dpkg -i google-chrome*.deb
 #RUN apt-get install -f 
@@ -23,7 +21,12 @@ RUN npm -v && npm install npm --global
 
 RUN mkdir /issf/
 ADD requirements.txt /issf
+ADD package.json  /issf
+ADD package-lock.json  /issf
+
 WORKDIR /issf
+RUN npm install npm --global 
+RUN npm install
 RUN pip install -r requirements.txt
 #RUN wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip
 RUN export PATH=/usr/local/lib/python3.7/site-packages:$PATH
