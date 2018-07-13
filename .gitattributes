@@ -1,7 +1,5 @@
 *.html linguist-detectable=false
-*.css  linguist-detectable=false
 *.rst  linguist-detectable=false
 *.md   linguist-detectable=false
-*.js   linguist-detectable=false
 
 templates/* linguist-vendored
