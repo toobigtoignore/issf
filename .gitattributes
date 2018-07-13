@@ -2,8 +2,6 @@
 *.css  linguist-detectable=false
 *.rst  linguist-detectable=false
 *.md   linguist-detectable=false
-*.json linguist-detectable=true
-*.yml  linguist-detectable=true
-*.sql  linguist-detectable=true
+*.js   linguist-detectable=false
 
 templates/* linguist-vendored
