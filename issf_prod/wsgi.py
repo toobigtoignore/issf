@@ -9,15 +9,15 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 
 import os, sys
 
-activate_this = os.path.expanduser("/home/projects/issf/bin/activate_this.py")
+activate_this = os.path.expanduser("/issf/bin/activate_this.py")
 # execfile(activate_this, dict(__file__=activate_this))
 
 with open(activate_this) as f:
     code = compile(f.read(), activate_this, 'exec')
     exec(code, dict(__file__=activate_this))
 
-sys.path.append('/home/projects/issf/issf_prod/')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "issf_prod.settings.settings_prod")
+sys.path.append('/issf/issf_prod/')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "issf_prod.settings")
 
 from django.core.wsgi import get_wsgi_application
 
