@@ -6,5 +6,10 @@
 
 docker-compose up -d db 
 ./scripts/wait-for-it.sh --strict localhost:5432 -- echo "Waiting 60 seconds
-for postgres..." && sleep 60 && ./scripts/postgres_setup.sh
-docker-compose up -d
+for Postgres container..." && sleep 60 && ./scripts/postgres_setup.sh
+docker-compose up -d 
+
+# Create a virtualenv that Nginx/Django integration seems to 
+# require ...
+pip3 install virtualenv
+virtualenv ../issf/
