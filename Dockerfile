@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get update 
 RUN apt-get -y install dialog apt-utils realpath coreutils libgeos-dev \
     gdal-bin binutils libproj-dev build-essential python-sphinx pylint \
-    libxss1 libappindicator1 wget
+    libxss1 libappindicator1 wget virtualenv
 
 
 RUN mkdir /issf/

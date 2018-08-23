@@ -11,5 +11,4 @@ docker-compose up -d
 
 # Create a virtualenv that Nginx/Django integration seems to 
 # require ...
-pip3 install virtualenv
-virtualenv ../issf/
+docker-compose exec -T web /bin/bash -c 'virtualenv ../issf/'
