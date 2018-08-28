@@ -9,6 +9,5 @@ docker-compose up -d db
 for Postgres container..." && sleep 60 && ./scripts/postgres_setup.sh
 docker-compose up -d 
 
-# Create a virtualenv that Nginx/Django integration seems to 
-# require ...
-#docker-compose exec -T web /bin/bash -c 'virtualenv ../issf/'
+docker-compose exec -T web /bin/bash -c 'npm install'
+docker-compose exec -T web /bin/bash -c 'virtualenv ../issf'
