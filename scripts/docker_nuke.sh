@@ -11,4 +11,5 @@
 
 docker-compose stop 
 docker-compose rm -fv
+docker system prune -a
 
