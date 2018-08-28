@@ -22,8 +22,9 @@ ADD package-lock.json /issf
 WORKDIR /issf
 RUN pip install -r requirements.txt
 RUN pip install --upgrade pip
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get -y install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
 RUN npm install 
+RUN virtualenv ../issf
 
 MAINTAINER Joshua Murphy tbti@mun.ca

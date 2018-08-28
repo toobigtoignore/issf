@@ -10,10 +10,10 @@ version: '2'
 
 services: 
   web: 
-    image: tbti/web:latest 
-    #build: "."
-    command: "/bin/bash -c './scripts/wait-for-it.sh 0.0.0.0:5432 -- sleep 30
-    && python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
+    #image: tbti/web:latest 
+    build: "."
+    command: "yes" #/bin/bash -c './scripts/wait-for-it.sh 0.0.0.0:5432 -- sleep 30
+    #&& python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
     depends_on: 
       - db 
     environment: 
