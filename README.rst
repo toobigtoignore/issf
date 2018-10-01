@@ -14,7 +14,8 @@ About
 The Information System on Small-Scale Fisheries (ISSF) is an open-source research project to source information on small-scale 
 fisheries from across the globe. The project is built on top of Python and Django, PostGIS, Foundation, and Docker.  
 
-Usage example
+
+Development
 ---------------------------------------
 Ensure that you have ``docker`` and ``docker-compose`` installed. 
 
