@@ -32,7 +32,7 @@ You will notice the commented out the lines ``#build`` and below it, ``#context:
 this is for when you have to build the ISSF container yourself locally, as opposed to pulling 
 the pre-built image from the Docker Hub, but still need the rest of the containers and your 
 orchestration of them to continue as if nothing has changed. This is needed for doing development
-on the containre itself, because you’re now working locally with the container and making changes
+on the container itself, because you’re now working locally with the container and making changes
 that are reflected on your system only.
 
 If you’re building the container and need to work on it independently from the other containers, run:
