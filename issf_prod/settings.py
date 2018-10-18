@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'crispy_forms_foundation',
     'django_tables2',
-    'djangojs',
+    'django_js_reverse',
     'djgeojson',
     'eztables',
     'foundationform',
@@ -62,14 +62,15 @@ INSTALLED_APPS = (
     'details.templatetags'
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
 STATIC_ROOT = '/issf/static'
 STATIC_URL  = '/static/'
@@ -93,7 +94,6 @@ TEMPLATES = [
          os.path.join(APPS_DIR, 'frontend/templates/frontend'),
          os.path.join(APPS_DIR, 'details/templates/details'),
          os.path.join(APPS_DIR, 'issf_admin/templates/issf_admin'),
-
      ],
      'APP_DIRS': True,
      'OPTIONS': {

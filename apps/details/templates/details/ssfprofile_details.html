@@ -1,4 +1,7 @@
-{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load js %}{% load staticfiles %}
+{% extends 'issf_base/base.html' %}
+{% load leaflet_tags %}
+{% load js_reverse %}
+{% load staticfiles %}
 {% load crispy_forms_tags %}{% load profile_attributes %}
 
 {% block additional_css_scripts %}
@@ -714,11 +717,11 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js %}{% django_js jquery=false %}
+    {% leaflet_js %}
+    <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
 
-    {% js "details/js/map-setup.js" %}
-    {% js "details/js/error-handling.js" %}
-    {% js "details/js/page-functions.js" %}
 
     <script type="text/javascript">
         $('#report-btn').on('click', function (event) {

@@ -7,7 +7,7 @@ from issf_base.models import Country, SSFOrganization
 # custom user model
 class UserProfile(AbstractUser):
     initials = models.CharField(blank=True, max_length=10)
-    country = models.ForeignKey(Country, blank=True, null=True)
+    country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     # # set true when creating user accounts on their behalf, so that they get prompted to
     # change password after verification
     # prompt_change_password = models.BooleanField(default=False)

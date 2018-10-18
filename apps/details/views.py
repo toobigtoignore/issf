@@ -10,7 +10,7 @@ import collections
 from django.contrib.auth.decorators import login_required
 from django.contrib.sitemaps import Sitemap
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import connection
 from django.forms.utils import ErrorList
 from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
