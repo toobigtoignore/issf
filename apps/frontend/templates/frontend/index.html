@@ -4,8 +4,10 @@
 {% load staticfiles %}
 {% load render_table from django_tables2 %}
 {% load eztables %}
-{% load js %}
+{% load js_reverse %}
 {% load humanize %}
+
+<script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 
 {% block additional_css_scripts %}
     {% leaflet_css %}
@@ -764,7 +766,7 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js plugins="cluster,navbar,binggeocoder" %}{% django_js jquery=false i18n=false %}
+    {% leaflet_js plugins="cluster,navbar,binggeocoder" %}
 
     {#    <script src="{% static 'issf_base/rateit/jquery.rateit.min.js' %}"></script>#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.7/js/jquery.dataTables.min.js"></script>

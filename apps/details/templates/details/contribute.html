@@ -1,4 +1,6 @@
-{% extends 'issf_base/base.html' %}{% load leaflet_tags %}{% load staticfiles %}{% load js %}
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}
+{% load staticfiles %}
+{% load js_reverse %}
 
 {% block additional_css_scripts %}
     {% leaflet_css %}
@@ -867,11 +869,11 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js %}{% django_js jquery=false %}
-
-    {% js "details/js/map-setup.js" %}
-    {% js "details/js/error-handling.js" %}
-    {% js "details/js/page-functions.js" %}
+    {% leaflet_js %}
+    
+    <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
 
     <script type="text/javascript">
         // all the map initialization functionality is handled by this function call.

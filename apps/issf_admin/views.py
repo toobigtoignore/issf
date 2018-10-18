@@ -3,7 +3,7 @@ import json
 import random
 
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import render, HttpResponse
 from django.db import connection
 from allauth.account.models import EmailAddress
