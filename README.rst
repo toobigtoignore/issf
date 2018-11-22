@@ -56,11 +56,3 @@ See our list of contributors `here. <https://github.com/toobigtoignore/issf/grap
     :alt: license
     :scale: 100%
     :target: https://github.com/toobigtoignore/issf/blob/master/LICENSE
- 
-   
-    
-License
-------------------------------------------------
-
-This software is licensed under the GNU GPLv3 . See ``LICENSE.md`` for information.
-    
