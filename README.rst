@@ -3,7 +3,7 @@ Information System on Small-Scale Fisheries (ISSF)
 
 A global, open-source collaborative database of information on small-scale fisheries
 
-|docs| |license|
+|docs|
 
 .. image:: screenshot.png
 
@@ -51,8 +51,3 @@ See our list of contributors `here. <https://github.com/toobigtoignore/issf/grap
 .. |docs| image:: https://readthedocs.org/projects/issf/badge/?version=latest
     :target: http://issf.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
-  
-.. |license| image:: https://badges.frapsoft.com/os/gpl/gpl.png?v=103
-    :alt: license
-    :scale: 100%
-    :target: https://github.com/toobigtoignore/issf/blob/master/LICENSE
