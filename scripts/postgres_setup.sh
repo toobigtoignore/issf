@@ -18,8 +18,6 @@ docker-compose exec -T db \
 /bin/bash -c 'psql -U postgres -c "CREATE DATABASE issf_prod"'
 
 docker-compose exec -T db \
-/bin/bash -c "psql -U postgres issf_prod < /data/postgres/database.pgsql"
+/bin/bash -c "psql -U postgres issf_prod < /data/postgres/dummy_database.pgsql"
 
-docker-compose exec -T db \
-/bin/bash -c "psql -U postgres issf_prod -f /data/postgres/clean_db.sql"
     
