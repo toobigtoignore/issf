@@ -8,7 +8,6 @@
 /apps/issf_base/static/issf_base/issf-js/chorodataold.geojson
 /tabledata.zip
 .idea/
-.env
 
 
 bin/
@@ -19,7 +18,6 @@ data/postgres/misc
 data/postgres/sessions
 data/postgres/logs
 data/postgres/storage
-data/postgres/*.pgsql
 
 # Testing
 .pytest_cache/
