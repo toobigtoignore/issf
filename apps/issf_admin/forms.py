@@ -4,10 +4,6 @@ from django.forms import ModelForm
 # replace * with specific references
 from .models import *
 
-# class UserProfileForm(ModelForm):
-# class Meta:
-# model = UserProfile
-
 
 class ProfileForm(ModelForm):
     def clean(self):
@@ -36,5 +32,4 @@ class ProfileForm(ModelForm):
         }
         widgets = {
             'username': forms.HiddenInput(),
-            # 'email': forms.HiddenInput()
         }

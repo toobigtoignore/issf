@@ -101,7 +101,6 @@ def translate(request):
                 import_account_adapter.save_user(user=user, first_name='', last_name='', email=email,
                                                  username=user_name)
                 # this steps sends a verification email
-                # complete_signup(request, user, app_settings.EMAIL_VERIFICATION, '/', signal_kwargs={})
             else:
                 # update
                 userUpdate += 1
@@ -117,7 +116,6 @@ def translate(request):
             country = Country.objects.get(short_name__iexact=country_res)
             up.country_id = country.country_id
             contribution_date = datetime.fromtimestamp(mktime(time.strptime(row['Timestamp'], '%m/%d/%Y %H:%M')))
-            # contribution_date = datetime.fromtimestamp(mktime(time.strptime(row['Timestamp'], '%m/%d/%Y %H:%M')))
             up.date_joined = contribution_date
             up.save()
 
@@ -152,17 +150,6 @@ def translate(request):
             res.issues_addressed = row['Issues']
             res.url = row['URL']
             res.discipline = row['Discipline']
-            # if 'Theoretical' in row['Methodtype']:
-            # res.research_method = 'Theoretical'
-            # else:
-            # res.research_method = 'Empirical'
-            # research_method_specify = row['Methodspec']
-            # if 'Qualitative' in research_method_specify:
-            #     res.method_specify_qualitative = True
-            # if 'Quantitative' in research_method_specify:
-            #     res.method_specify_quantitative = True
-            # if 'Mixed' in research_method_specify:
-            #     res.method_specify_mixed = True
             res.contributor_id = up.id
             res.contribution_date = contribution_date
             res.save()
