@@ -1,21 +1,23 @@
 Information System on Small-Scale Fisheries (ISSF)
 ==================================================
 
-A global, open-source collaborative database of information on small-scale fisheries
+A global, open-source collaborative database of information on small-scale
+fisheries
 
 .. image:: screenshot.png
 
 The ISSF homepage, accessible `here <https://www.issfcloud.toobigtoignore.net>`_.
 
 About
-----------------------------------
-The Information System on Small-Scale Fisheries (ISSF) is an open-source research project to source information on small-scale 
-fisheries from across the globe. The project is built on top of Python and Django, PostGIS, Foundation, and Docker.  
+-----
 
+The Information System on Small-Scale Fisheries (ISSF) is an open-source
+research project to source information on small-scale fisheries from across
+the globe. The project is built on top of Python and Django, PostGIS,
+Foundation, and Docker.
 
 Development
----------------------------------------
-Ensure that you have ``docker`` and ``docker-compose`` installed. 
+-----------
 
 Clone the git repository with:
 
@@ -33,10 +35,9 @@ After that, launch the existing containers with:
 
 Once the other containers are running, you will still need to install the `npm` packages on the ISSF container. Open a shell with ``./scripts/issf_shell.sh`` and run the npm installation commands.
 
-    
 Roadmap
------------------------------------------------
-  
+-------
+
 - v2.0.0
 
   - Upgrade to Django 2.0 and updated major Python libs
