@@ -33,11 +33,6 @@ class SSFKnowledgeForm(ModelForm):
                 attrs={'rows': 3}), 'nonenglish_title': forms.Textarea(
                 attrs={'rows': 3}), }
 
-    # # override __init__ to set readonly fields (may be a better place to
-    # do this)
-    # def __init__(self, *args, **kwargs):
-    # super(SSFKnowledgeForm, self).__init__(*args, **kwargs)
-    # self.fields['core_record_type'].widget.attrs['readonly'] = True
 
     # override clean to check combinations of fields
     def clean(self):
@@ -53,9 +48,6 @@ class SSFKnowledgeForm(ModelForm):
             if cleaned_data[
                 'publication_type'].publication_type == 'Other (specify)':
                 other_selected = True
-                # if other_text and not other_selected:
-        # raise forms.ValidationError('Other publication type requires Other
-        #  to be checked.')
         # could auto-set checkbox
         if not other_text and other_selected:
             raise forms.ValidationError(
@@ -192,19 +184,11 @@ class SSFProfileForm(ModelForm):
     class Meta:
         model = SSFProfile
         fields = ['ssf_name', 'ssf_defined', 'ssf_definition', 'data_year',
-                  # 'data_month',
-                  # 'data_day',
-                  'data_end_year',  # 'data_end_month',
-                  # 'data_end_day',
+                  'data_end_year',
                   'sources', 'comments', 'contributor', 'img_url']
         widgets = {
             'data_year': forms.NumberInput(attrs={'placeholder': 'Year'}),
-            # 'data_month': forms.NumberInput(attrs={'placeholder': 'Month'}),
-            # 'data_day': forms.NumberInput(attrs={'placeholder': 'Day'}),
             'data_end_year': forms.NumberInput(attrs={'placeholder': 'Year'}),
-            # 'data_end_month': forms.NumberInput(attrs={'placeholder':
-            # 'Month'}),
-            # 'data_end_day': forms.NumberInput(attrs={'placeholder': 'Day'}),
             'ssf_definition': forms.Textarea(
                 attrs={'rows': 3}), 'comments': forms.Textarea(
                 attrs={'rows': 3}), 'sources': forms.Textarea(
@@ -301,8 +285,6 @@ class CapacityNeedRatingForm(ModelForm):
         }
         widgets = {
             'capacity_need': HiddenInput, 'rater': HiddenInput
-            # 'rating': TextInput(attrs={'type':'range', 'min':'1',
-            # 'max':'5', 'step':'1'})
         }
 
     def clean(self):
@@ -340,8 +322,6 @@ class MainAttributeForm(ModelForm):
             'attribute': HiddenInput, 'row_number': HiddenInput,
             'selected_attribute_id': HiddenInput, 'issf_core': HiddenInput,
             'other_value': HiddenInput,
-            # 'additional': HiddenInput,
-            # 'additional_value': HiddenInput,
         }
 
     def clean(self):
@@ -403,91 +383,6 @@ class CommonThemeIssueForm(ModelForm):
         return cleaned_data
 
 
-# class ThemesIssuesForm(ModelForm):
-# other_economic_theme_issue = forms.CharField(required=False,
-# label='Other economic theme/issue')
-# other_ecological_theme_issue = forms.CharField(required=False,
-# label='Other ecological theme/issue')
-# other_social_cultural_theme_issue = forms.CharField(required=False,
-# label='Other social/cultural
-# theme/issue')
-# other_governance_theme_issue = forms.CharField(required=False,
-# label='Other governance theme/issue')
-#
-# class Meta:
-# model = ISSF_Core
-# fields = [
-# 'core_record_type',
-# 'economic_themes_issues',
-# 'other_economic_theme_issue',
-# 'ecological_themes_issues',
-# 'other_ecological_theme_issue',
-# 'social_cultural_themes_issues',
-# 'other_social_cultural_theme_issue',
-# 'governance_themes_issues',
-# 'other_governance_theme_issue'
-# ]
-# widgets = {
-#             'core_record_type': HiddenInput,
-#             'economic_themes_issues': CheckboxSelectMultiple,
-#             'ecological_themes_issues': CheckboxSelectMultiple,
-#             'social_cultural_themes_issues': CheckboxSelectMultiple,
-#             'governance_themes_issues': CheckboxSelectMultiple,
-#         }
-#         labels = {
-#             'core_record_type': 'Record type',
-#             'economic_themes_issues': 'Economic themes/issues (check all
-# that apply)',
-#             'ecological_themes_issues': 'Ecological themes/issues (check
-# all that apply)',
-#             'social_cultural_themes_issues': 'Social/Cultural
-# themes/issues (check all that '
-#                                              'apply)',
-#             'governance_themes_issues': 'Governance themes/issues (check
-# all that apply)',
-#         }
-#
-#     # probably don't need to set to readonly because widget is now hidden
-#     def __init__(self, *args, **kwargs):
-#         super(ThemesIssuesForm, self).__init__(*args, **kwargs)
-#         self.fields['core_record_type'].widget.attrs['readonly'] = True
-#
-#     def check_other(self, cleaned_data, other_field, checks_field, category):
-#         other_text = False
-#         if len(cleaned_data[other_field]) > 0:
-#             other_text = True
-#         other_check = False
-#         if cleaned_data[checks_field]._result_cache:
-#             for theme_issue in cleaned_data[checks_field]._result_cache:
-#                 if theme_issue.theme_issue_label == 'Other':
-#                     other_check = True
-#         # if other_text and not other_check:
-#         # raise forms.ValidationError('Other ' + category + ' theme/issue
-# requires Other to be
-#         # checked.') # could auto-set checkbox
-#         if not other_text and other_check:
-#             raise forms.ValidationError(
-#                 'Please specify other ' + category + ' theme/issue,
-# or uncheck Other.')
-#
-#     # override clean to check combinations of fields
-#     def clean(self):
-#         cleaned_data = super(ThemesIssuesForm, self).clean()
-#         # other check and text must be provided in combination
-#         self.check_other(cleaned_data, 'other_economic_theme_issue',
-# 'economic_themes_issues',
-#                          'economic')
-#         self.check_other(cleaned_data, 'other_ecological_theme_issue',
-# 'ecological_themes_issues',
-#                          'ecological')
-#         self.check_other(cleaned_data, 'other_social_cultural_theme_issue',
-#                          'social_cultural_themes_issues', 'social/cultural')
-#         self.check_other(cleaned_data, 'other_governance_theme_issue',
-# 'governance_themes_issues',
-#                          'governance')
-#         return cleaned_data
-
-
 class ProfileOrganizationForm(ModelForm):
     class Meta:
         model = ProfileOrganization
@@ -517,128 +412,6 @@ class ProfileOrganizationForm(ModelForm):
             'geographic_scope']:
             raise forms.ValidationError('Please select a geographic scope.')
         return cleaned_data
-
-
-# class CharacteristicsForm(ModelForm):
-# other_ssfterm = forms.CharField(required=False, label='Other SSF term')
-# other_fisherytype = forms.CharField(required=False, label='Other fishery
-# type')
-# other_geartype = forms.CharField(required=False, label='Other gear type')
-# other_ecosystem_detailed = forms.CharField(required=False,
-# label='Other detailed ecosystem type')
-# other_market = forms.CharField(required=False, label='Other market channel')
-# other_governance = forms.CharField(required=False, label='Other governance
-#  system')
-# other_management = forms.CharField(required=False, label='Other management
-#  instrument')
-#
-# class Meta:
-# model = ISSF_Core
-# fields = [
-# 'core_record_type',
-# 'ssfterm_characteristics',
-# 'other_ssfterm',
-# 'fisherytype_characteristics',
-#             'other_fisherytype',
-#             'geartype_characteristics',
-#             'other_geartype',
-#             'ecosystem_highlevel_characteristics',
-#             'ecosystem_detailed_characteristics',
-#             'other_ecosystem_detailed',
-#             'market_characteristics',
-#             'other_market',
-#             'governance_characteristics',
-#             'other_governance',
-#             'management_characteristics',
-#             'other_management'
-#         ]
-#         widgets = {
-#             'core_record_type': HiddenInput,
-#             'ssfterm_characteristics': CheckboxSelectMultiple,
-#             'fisherytype_characteristics': CheckboxSelectMultiple,
-#             'geartype_characteristics': CheckboxSelectMultiple,
-#             'ecosystem_highlevel_characteristics': CheckboxSelectMultiple,
-#             'ecosystem_detailed_characteristics': CheckboxSelectMultiple,
-#             'market_characteristics': CheckboxSelectMultiple,
-#             'governance_characteristics': CheckboxSelectMultiple,
-#             'management_characteristics': CheckboxSelectMultiple,
-#         }
-#         labels = {
-#             'core_record_type': 'Record type',
-#             'ssfterm_characteristics': 'What term is used to describe
-# small-scale fisheries ('
-#                                        'check all that apply)?',
-#             'fisherytype_characteristics': 'Type(s) of fishery (check all
-# that apply)',
-#             'geartype_characteristics': 'Main gear type(s) (check all that
-#  apply)',
-#             'ecosystem_highlevel_characteristics': 'Ecosystem high-level
-# type(s) (check all
-# that '
-#                                                    'apply)',
-#             'ecosystem_detailed_characteristics': 'Ecosystem detailed
-# type(s) (check all that '
-#                                                   'apply)',
-#             'market_characteristics': 'Market channel(s) used by
-# small-scale fisheries (check
-# all '
-#                                       'that apply):',
-#             'governance_characteristics': 'Governance system(s) in
-# small-scale fisheries (check '
-#                                           'all that apply)',
-#             'management_characteristics': 'Management instruments(s) in
-# small-scale fisheries ('
-#                                           'check all that apply):',
-#         }
-#
-#     # probably don't need to set to readonly because widget is now hidden
-#     def __init__(self, *args, **kwargs):
-#         super(CharacteristicsForm, self).__init__(*args, **kwargs)
-#         self.fields['core_record_type'].widget.attrs['readonly'] = True
-#
-#     def check_other(self, cleaned_data, other_field, checks_field, category):
-#         other_text = False
-#         if len(cleaned_data[other_field]) > 0:
-#             other_text = True
-#         other_check = False
-#         if cleaned_data[checks_field]._result_cache:
-#             for characteristic in cleaned_data[checks_field]._result_cache:
-#                 if characteristic.characteristic_label == 'Other':
-#                     other_check = True
-#         # if other_text and not other_check:
-#         # raise forms.ValidationError(
-#         # 'Other ' + category + ' requires Other to be check.')  # could
-# auto-set checkbox
-#         if not other_text and other_check:
-#             raise forms.ValidationError('Please specify other ' + category
-#  + ', or uncheck '
-#
-#    'Other.')
-#
-#     # override clean to check combinations of fields
-#     def clean(self):
-#         cleaned_data = super(CharacteristicsForm, self).clean()
-#         # other check and text must be provided in combination
-#         self.check_other(cleaned_data, 'other_ssfterm',
-# 'ssfterm_characteristics', 'SSF term')
-#         self.check_other(cleaned_data, 'other_fisherytype',
-# 'fisherytype_characteristics',
-#                          'fishery type')
-#         self.check_other(cleaned_data, 'other_geartype',
-# 'geartype_characteristics', 'gear type')
-#         self.check_other(cleaned_data, 'other_ecosystem_detailed',
-#                          'ecosystem_detailed_characteristics', 'ecosystem
-# detailed term')
-#         self.check_other(cleaned_data, 'other_market',
-# 'market_characteristics',
-# 'market channel')
-#         self.check_other(cleaned_data, 'other_governance',
-# 'governance_characteristics',
-#                          'governance system')
-#         self.check_other(cleaned_data, 'other_management',
-# 'management_characteristics',
-#                          'management instrument')
-#         return cleaned_data
 
 
 class CommonAttributeForm(ModelForm):
@@ -746,7 +519,6 @@ class KnowledgeOtherDetailsForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(KnowledgeOtherDetailsForm, self).__init__(*args, **kwargs)
-        # self.fields['research_method'].required = True
         self.fields['ssf_defined'].required = True
 
     def clean(self):
@@ -756,13 +528,6 @@ class KnowledgeOtherDetailsForm(ModelForm):
             if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data[
                 'ssf_definition']:
                 raise forms.ValidationError('Please provide an SSF defintion.')
-
-        # if (not cleaned_data['method_specify_qualitative'] and
-        # not cleaned_data['method_specify_quantitative'] and
-        # not cleaned_data['method_specify_mixed']):
-        # raise forms.ValidationError('Please select at least one method
-        # approach (
-        # qualitative, quantitative, mixed).')
 
         if (not cleaned_data['demographics_na'] and not cleaned_data[
             'demographics_age'] and not cleaned_data[
@@ -795,12 +560,6 @@ class KnowledgeOtherDetailsForm(ModelForm):
                                   'demographics_other', cleaned_data):
             raise forms.ValidationError(
                 'Please specify Other demographic factor, or uncheck Other.')
-
-        # if not confirm_other_text('other_research_method',
-        # 'research_method', cleaned_data):
-        # raise forms.ValidationError('Please specify Other research method,
-        #  or uncheck
-        # Other.')
 
         return cleaned_data
 
@@ -926,8 +685,6 @@ class GeographicScopeSubnationForm(ModelForm):
                                'edit and delete '
                                'controls to set/modify)'
         }
-        # exclude = ('subnation_point',)
-        # widgets = {'subnation_point': LeafletWidget()}
         widgets = {'subnation_point': ISSFMapWidget()}
 
     # override clean to check combinations of fields
@@ -952,20 +709,10 @@ class GeographicScopeSubnationForm(ModelForm):
 
 class GeographicScopeNationForm(ModelForm):
     class Meta:
-        # model = GeographicScopeNation
-        # fields = [
-        # 'country',
-        # ]
-        # labels = {
-        # 'country': '*Select country(ries) (at least one)',
-        # }
         model = ISSF_Core
         fields = ['countries', ]
         labels = {
             'countries': '*Select country(ries) (at least one)', }
-        # widgets = {
-        # 'country': SelectMultiple,
-        # }
 
 
 class GeographicScopeRegionForm(ModelForm):
@@ -1059,14 +806,8 @@ MainAttributesViewInlineFormSet = inlineformset_factory(ISSF_Core,
                                                         can_delete=True)
 
 SpeciesLandingsInlineFormSet = inlineformset_factory(ISSF_Core, Species,
-                                                     # formset=MainAttributesCustomInlineFormSet,
                                                      form=SpeciesLandingsForm,
                                                      extra=1, can_delete=True)
-
-# MainAttributesInlineFormSet = inlineformset_factory(SSFProfile,
-# MainAttribute,
-# form=MainAttributeForm, extra=0,
-# can_delete=False)
 
 ExternalLinksInlineFormSet = inlineformset_factory(ISSF_Core, ExternalLink,
                                                    form=ExternalLinkForm,
@@ -1090,8 +831,6 @@ GeographicScopeSubnationInlineFormSet = inlineformset_factory(ISSF_Core,
                                                               form=GeographicScopeSubnationForm,
                                                               extra=1)
 
-# GeographicScopeNationInlineFormSet = inlineformset_factory(ISSF_Core, GeographicScopeNation,
-# form=GeographicScopeNationForm, extra=1)
 
 GeographicScopeRegionInlineFormSet = inlineformset_factory(ISSF_Core,
                                                            Geographic_Scope_Region,
@@ -1107,18 +846,6 @@ def confirm_other_text(other_text_field, other_check_field, cleaned_data):
     other_check = False
     if cleaned_data[other_check_field]:
         other_check = True
-        # if other_text and not other_check:
-    # return False
     if not other_text and other_check:
         return False
     return True
-
-#
-# class PhotoForm(ModelForm):
-#     image = forms.ImageField()
-#
-#     class Meta:
-#         model = Photos
-#         fields = ['issf_core_id', 'photo_id']
-#
-#         widgets = {'issf_core_id': HiddenInput, 'photo_id': HiddenInput}
