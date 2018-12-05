@@ -39,7 +39,6 @@ var HJExtension = new function () {
     //Any empty <p> or <div> containers will be given a class of "EmptyContainer"
     //--------------------------------------
     var MarkOutEmptyContainers = function () {
-        console.log("-->[init]MarkOutEmptyContainers");
         $('p').each(function () {
             if ($(this).children().length == 0 && $(this).text().length == 0) {
                 $(this).addClass('EmptyContainer');
@@ -57,8 +56,6 @@ var HJExtension = new function () {
     //Condition:  If the associated "other"  select/radio/checkbox has been checked.
     //--------------------------------------
     var HideOtherFieldsGlobal = function () {
-        console.log("-->[init]HideOtherFieldsGlobal");
-
         //Mark out all other inputfields/labels for easy manipulation
         $('.FormSet input[type="text"][name*=other]').each(function () {
             $(this).addClass("FormSetOtherInputField");
@@ -79,7 +76,6 @@ var HJExtension = new function () {
                 if ($(this).next().attr('for') == $(this).prop('id')) {
                     text = $(this).next().text().trim().toLowerCase();
                 }
-                console.log($(this).prop('id') + ":" + text);
                 if (text.indexOf('other') == 0) {
                     var isChecked = $(this).is(":checked");
                     if (isChecked) {
@@ -129,7 +125,6 @@ var HJExtension = new function () {
     // Toggle [UL-CheckBox] Other Field: this is the case where checkbox is a <UL>
     //--------------------------------------
     var SetUpULCheckBoxOtherFieldToggle = function () {
-        console.log('-->[init]ToggleChecklistOtherField');
         $('.FormSet ul').each(function () {
             var text = $(this).children('li:last-child').text().trim().toLowerCase();
             var hasCheckBox = $(this).children('li:last-child').find('input[type="checkbox"]').length > 0;
@@ -153,7 +148,6 @@ var HJExtension = new function () {
     // Toggle [FormSet-CheckBox] Other Field: this is the case where checkbox is directly under <div class="FormSet"> element (Additional Details formset)
     //--------------------------------------
     var SetUpFormSetCheckBoxOtherFieldToggle = function () {
-        console.log('-->[init]ToggleChecklistOtherField');
         $('.FormSet').each(function () {
             $(this).children('input[type="checkbox"][name*="other"]').each(function () {
                 var text = "";
@@ -181,7 +175,6 @@ var HJExtension = new function () {
     // Toggle [select] Other Field
     //--------------------------------------
     var SetUpSelectOtherFieldToggle = function () {
-        console.log('-->[init]SetUpSelectOtherFieldToggle');
         $('.FormSet select').each(function () {
             if ($(this).children('option:last-child').text().trim().toLowerCase().indexOf("other") == 0) {
                 $(this).on('change', function () {
@@ -203,8 +196,6 @@ var HJExtension = new function () {
     //Hides and show different form sets by selecting from a list
     //---------------------------------------------------------
     var FormsetToggler = function () {
-        console.log('-->[init]FormsetToggler - for GeographicScope Page');
-
         //Click listener for Toggler options
         $('.FormSetToggler > ul').on('click', function (evt) {
             var $itemClicked = $(evt.target);
@@ -232,7 +223,6 @@ var HJExtension = new function () {
     //Prompt user when navigating away from page
     //---------------------------------------------------------
     var LeavePageWarning = function () {
-        console.log('-->[init]LeavePageWarning');
         Global_InitialFormValues = Util_GetAllFormValues();
 
         //Forms that has ajax submits prevents the bubbling of
@@ -253,7 +243,6 @@ var HJExtension = new function () {
         });
 
         window.onbeforeunload = function () {
-            //console.log("before unload event");
             var currentFormValues = Util_GetAllFormValues();
 
             //Check if the user is trying to submit a form
@@ -286,7 +275,6 @@ var HJExtension = new function () {
         };
 
         window.onunload = function () {
-            //console.log("unload event");
             var currentFormValues = Util_GetAllFormValues();
 
             //Check if the user is trying to submit a form
@@ -330,7 +318,7 @@ var HJExtension = new function () {
     //have breakers between growable sets. resulting in bad presentation.
     //------------------------------------------------------
     var InsertBreakLinesToFormSets = function () {
-        console.log('-->[init]InsertBreakLinesToFormSets');
+        ('-->[init]InsertBreakLinesToFormSets');
         $('.FormSetGrowable').each(function (index) {
             $(this).attr('formset-num', index);
             var numberOfSetsPresent = parseInt($($(this).children('input[name$="-TOTAL_FORMS"]')[0]).val());
