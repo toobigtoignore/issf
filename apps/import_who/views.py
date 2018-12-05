@@ -64,13 +64,6 @@ def genmail(request):
 
     sent = 0
     where = []
-    # where.append("id = 331") rodolphe
-    # where.append("id = 7") eric
-    # where.append("id = 8") easkey
-    # where.append("id = 9") ian
-    # where.append("id = 10") kris
-    # where.append("id = 11") viviana
-    # where.append("id in (332, 184, 333, 81, 102, 86, 334, 335, 336, 145, 337, 338, 339, 340, 341, 330)") WG1 + Ratana
     where.append(
         "id not in (332, 184, 333, 81, 102, 86, 334, 335, 336, 145, 337, 338, 339, 340, 341, 330, 331, 1, 7, 8, 9, 10, 11)")
     user_profiles = UserProfile.objects.extra(where=where)
@@ -81,7 +74,6 @@ def genmail(request):
             password = password + '1'
         header = 'To:' + to + '\n' + 'From: ' + smtp_email + '\n' + 'Subject:Too Big to Ignore - ISSF user account\n'
         body = 'Dear colleague,\n\n'
-        # body = body + "[You are receiving this email because of your involvement in TBTI WG1. We apologize for the delays in getting this out to you! Below is the notice that will be sent to the larger group. We would appreciate your following the instructions to check out the initial public release of ISSF and will be happy to accept your feedback anytime. Only a portion of our collective ISSF vision has been implemented so far, and your continued involved is greatly appreciated. For those attending 2WSFC in Merida, we look forward to seeing you there.]\n\n"
         body = body + "You are receiving this email because you completed the Too Big To Ignore (TBTI) Who's Who survey and/or you registered for the 2nd World Small-scale Fisheries Congress in Merida, Mexico.\n\n"
         body = body + "In Merida, TBTI will be launching the Information System on Small-scale Fisheries (ISSF), a web-based application for contributing and disseminating information about small-scales fisheries (SSF). It will include the information entered in the Who's Who survey to help build a community of SSF scientists and stakeholders. In addition to this, as an expert in SSF, we require your help to share your knowledge.\n\n"
         body = body + 'Contributing or modifying information requires an ISSF user account, and we have setup one for you.\n\n'
@@ -92,8 +84,6 @@ def genmail(request):
         body = body + 'Kind regards,\n'
         body = body + 'The ISSF team'
         msg = header + '\n' + body
-        # print msg
-        # print to
         smtpserver.sendmail(smtp_email, to, msg)
         sent = sent + 1
 
@@ -150,7 +140,6 @@ def translate(request):
                 import_account_adapter.save_user(user=user, first_name='', last_name='', email=email,
                                                  username=user_name)
                 # this steps sends a verification email
-                # complete_signup(request, user, app_settings.EMAIL_VERIFICATION, '/', signal_kwargs={})
             else:
                 # update
                 userUpdate += 1
@@ -166,7 +155,6 @@ def translate(request):
             country = Country.objects.get(short_name__iexact=country_res)
             up.country_id = country.country_id
             contribution_date = datetime.fromtimestamp(mktime(time.strptime(row['Timestamp'], '%m/%d/%Y %H:%M')))
-            # contribution_date = datetime.fromtimestamp(mktime(time.strptime(row['Timestamp'], '%m/%d/%Y %H:%M')))
             up.date_joined = contribution_date
             up.save()
 
@@ -201,17 +189,6 @@ def translate(request):
             res.issues_addressed = row['Issues']
             res.url = row['URL']
             res.discipline = row['Discipline']
-            # if 'Theoretical' in row['Methodtype']:
-            # res.research_method = 'Theoretical'
-            # else:
-            # res.research_method = 'Empirical'
-            # research_method_specify = row['Methodspec']
-            # if 'Qualitative' in research_method_specify:
-            #     res.method_specify_qualitative = True
-            # if 'Quantitative' in research_method_specify:
-            #     res.method_specify_quantitative = True
-            # if 'Mixed' in research_method_specify:
-            #     res.method_specify_mixed = True
             res.contributor_id = up.id
             res.contribution_date = contribution_date
             res.save()
