@@ -10,7 +10,6 @@ class UserProfile(AbstractUser):
     country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     # # set true when creating user accounts on their behalf, so that they get prompted to
     # change password after verification
-    # prompt_change_password = models.BooleanField(default=False)
 
     class Meta:
         managed = True
