@@ -3,8 +3,6 @@ Information System on Small-Scale Fisheries (ISSF)
 
 A global, open-source collaborative database of information on small-scale fisheries
 
-|docs|
-
 .. image:: screenshot.png
 
 The ISSF homepage, accessible `here <https://www.issfcloud.toobigtoignore.net>`_.
@@ -43,11 +41,3 @@ Read our documentation `here <https://issf.readthedocs.io/en/latest/contributing
 
 See our list of contributors `here. <https://github.com/toobigtoignore/issf/graphs/contributors>`_
 
-.. |build-status| image:: https://img.shields.io/travis/rtfd/readthedocs.org.svg?style=flat
-    :alt: build status
-    :scale: 100%
-    :target: https://travis-ci.org/issf/readthedocs.org
-
-.. |docs| image:: https://readthedocs.org/projects/issf/badge/?version=latest
-    :target: http://issf.readthedocs.io/en/latest/?badge=latest
-    :alt: Documentation Status
