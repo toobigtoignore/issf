@@ -4,7 +4,7 @@
 -- https://github.com/toobigtoignore/issf
 
 -- A script for scrubbing the ISSF database of sensitive artifacts.
--- Don't be a goof, don't run on prod.  
+-- Don't be a goof, don't run on prod.
 
 -- The unique key constraints for social accounts make it a pain to obscure.
 
@@ -32,7 +32,7 @@ UPDATE user_profile SET
   email = to_char(id,'FM0000000') || '@harold.com',
   initials = 'H',
   country_id = null;
- 
+
 UPDATE ssf_person SET
   geographic_scope_type = 'Unspecified',
   number_publications = 0,
@@ -40,13 +40,13 @@ UPDATE ssf_person SET
   affiliation = 'ISSF',
   url = '',
   img_url='http://i0.kym-cdn.com/entries/icons/original/000/016/546/hidethepainharold.jpg',
-  
+
   is_researcher = false,
   issues_addressed = 'All of them',
   research_method = 'Trial and error',
   education_level = 'PhD',
   other_education_level = 'N/A',
-  
+
   address1 = '1 Townsville St',
   address2 = '',
   city_town = 'Townsville',
@@ -97,4 +97,3 @@ UPDATE account_emailconfirmation SET
 key = to_char(id,'FM000_')  || 'dummy_key';
 
 SELECT * FROM run_person_updates();
-
