@@ -1,7 +1,5 @@
-*.html  linguist-detectable=false
-*.rst   linguist-detectable=false
-*.md    linguist-detectable=false
-*.sql   linguist-detectable=false
-*.pgsql linguist-detectable=false
+*.html linguist-detectable=false
+*.rst  linguist-detectable=false
+*.md   linguist-detectable=false
 
 templates/* linguist-vendored
