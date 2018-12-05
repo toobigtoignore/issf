@@ -568,9 +568,12 @@
                         </div>
 
                     </div>
-                    <a class="twitter-timeline" href="https://twitter.com/hashtag/tbtiissf"
+                    <!--<a class="twitter-timeline" href="https://twitter.com/hashtag/tbtiissf"
                        data-widget-id="654732495926112256" style="height: 505px;">#tbtiissf Tweets
-                    </a>
+                    </a>-->
+                    <a href="https://twitter.com/intent/tweet?button_hashtag=tbtiissf&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-size="large" data-show-count="false">Tweet #tbtiissf</a>
+                    <a class="twitter-timeline" data-height="512" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
                 <div>
 
@@ -582,9 +585,10 @@
                     <header>
                         <h2>Welcome</h2>
                     </header>
-                    <div class="body-contribute">
 
-                        <p align="center">ISSF is a global collaborative online database
+                    <div class="body-contribute">
+                        <p align="center">
+                            ISSF is a global collaborative online database
 
                             providing information on small-scale fisheries (SSF)
 
@@ -592,6 +596,7 @@
 
                             their overall contributions.
                         </p>
+
                         <div style="height:50px; padding-left: 10px;">
                             <div style="background-image: url({% static 'issf_base/img/icon-who.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
@@ -604,7 +609,9 @@
                             <div style="background-image: url({% static 'issf_base/img/icon-guidelines.png' %}); background-position: right center; float: left; height:48px; width:60px;">
                             </div>
                         </div>
+
                         <h6 style="margin-top: 20px;">What can you do with ISSF?</h6>
+
                         <ul style="margin-left: 25px; margin-bottom: 10px;">
                             <li>
                                 <strong>Learn</strong>
@@ -647,28 +654,24 @@
                                     <span>Portuguese</span>
                                 </a>
                                 )
-                                {#                                <br>#}
-                                {#                                <a href="{% url 'brazil-pdf' %}"#}
-                                {#                                   target="_blank">#}
-                                {#                                    <span>#}
-                                {#                                        Click here#}
-                                {#                                    </span>#}
-                                {#                                </a>#}
-                                {#                                for an example of a completed SSF profile: Pontal do Parana, Brazil.#}
                             </li>
+
                             <li>
                                 <strong>Explore</strong>
                                 SSF characteristics through charts, tables, and infographics with
                                 <a href="{% url 'report' 'profile' 2288 %}" target="_blank">SSF Profile Reports</a>
                             </li>
+
                             <li>
                                 <strong>Visualize</strong>
                                 and compare SSF Profiles around the world using the
                                 <a href="http://demo.vista.cs.uregina.ca/gcpc-ssf/" target="_blank">GCPC tool</a>
                             </li>
                         </ul>
+
                         <div align="center">
                             <p style="text-decoration: underline; margin-bottom: 0;">Need help with ISSF?</p>
+
                             <p style="margin-top: 0;">See our
                                 <a
                                         href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-basic-tutorial-1.0.1.pdf"
@@ -785,48 +788,16 @@
 
         var mapDataTokenSeperator = "~~^~~%|%~~^~~";
 
-        console.log("#newload: " + $('#newload').val());
-        if (localStorage.getItem("filterButtonCache")) {
-            console.log("#filter button cache: " + localStorage.getItem("filterButtonCache"));
-        }
-        if (localStorage.getItem("mapDataCache")) {
-            console.log("#map data cache: " + localStorage.getItem("mapDataCache").length);
-        }
-        if (localStorage.getItem("tableDataCache")) {
-            console.log("#table data cache: " + localStorage.getItem("tableDataCache").length);
-        }
-        if (localStorage.getItem("activetab")) {
-            console.log("#Active Tab: " + localStorage.getItem("activetab"));
-        }
-        if (localStorage.getItem("mapzoom")) {
-            console.log("#Map zoom: " + localStorage.getItem("mapzoom"));
-        }
-        if (localStorage.getItem("mapcenter")) {
-            console.log("#Map center: " + localStorage.getItem("mapcenter"));
-        }
-        if (localStorage.getItem("tablepage")) {
-            console.log("#Table Page: " + localStorage.getItem("tablepage"));
-        }
-        if (localStorage.getItem("tableorder")) {
-            console.log("#Table Order: " + localStorage.getItem("tableorder"));
-        }
-        if (localStorage.getItem("recordPerPage")) {
-            console.log("#Table Record Per Page: " + localStorage.getItem("recordPerPage"));
-        }
-
-
         /*************** Page State **************/
         var GlobalNewLoad = false;
         var GlobalMapChangeFlag = false;
 
         if ($("#newload").val().length > 0) {
-            console.log('User returned to page using backspace');
+            // User returned to page using backspace'
         } else {
             $('#newload').val(1);
             GlobalNewLoad = true;
-            console.log('Fresh page load');
-
-
+            // Fresh page load'
             //localStorage.removeItem("lastselectedlayer");
         }
 
@@ -915,7 +886,6 @@
                 attributeValues.valueOrder.push({{ attribute_value.value_order }});
             {% endfor %}
 
-
             //Home Page advanced search -> characteristics -> select on change handler
             var $select = $('.advancedSearchPanelTab #char-attr select');
             var attrVals = $('.advancedSearchPanelTab #char-attr-val select');
@@ -931,7 +901,6 @@
             });
 
             //--------------------------------------------------------------------------------
-
             var HomepageAdvancedSearchThemeIssueValueCollection = function () {
                 this.themeissueValueID = [];
                 this.themeissueID = [];
@@ -947,7 +916,6 @@
                 themeissueValues.themeissueLabel.push("{{ theme_issue_value.theme_issue_label }}");
                 themeissueValues.themeissueOrder.push({{ theme_issue_value.label_order }});
             {% endfor %}
-
 
             //Home Page advanced search -> themes/issues -> select on change handler
             var $tiSelect = $('.advancedSearchPanelTab #ti-attr select');
@@ -971,17 +939,7 @@
         });
 
         /*************** Map/Data Filter Buttons **************/
-        // Update Sept05
         $(window).load(is.verticalResize);
-
-        // Update Sept05
-        /*
-         $(window).resize(function(){
-         var h = $(window).height()-20;
-         is.verticalResize(h);
-         if(h<672){ is.toMap(144); }
-         });
-         */
 
         $('.content-section .bt-prev').addClass('disable');
 
@@ -1003,7 +961,6 @@
                 });
             }
         });
-        // Update Sept05
         //-----------------------------------------
         //Icon filter button click listener
         //-----------------------------------------
@@ -1058,7 +1015,7 @@
                 });
                 $('.map-icons h3').fadeOut(200);
             } else {
-                // Update Sept05 - If you want more space for longer text you can change 200 to more number
+                // If you want more space for longer text you can change 200 to more number
                 $('.map-icons').animate({width: 200}, 300, function () {
                     $('#toexpand,.map-icons').addClass('on');
                 });
@@ -1102,7 +1059,7 @@
                 $('#advance-search #quick-search').stop().slideUp(200);
                 $('#tosearch').animate({bottom: -30}, 50);
             }
-            //loadData2();	//refresh map/table
+            //loadData2(); //refresh map/table
         });
 
         $('#q-search').on('focusout', function () {
@@ -1115,7 +1072,6 @@
         $('#id_keywords').on('focusout', function () {
             $('#q-search').val($('#id_keywords').val());
         });
-
 
         $('.accordion a').on('click', function (e) {
             e.preventDefault();
@@ -1133,6 +1089,7 @@
                 });
             }
         });
+
         $(':input[required]').each(function () {
             var idd = $(this).attr('id');
             $('label[for="' + idd + '"]').append('<sup>*</sup>');
@@ -1146,7 +1103,6 @@
             is.visibleCheck();
         });
 
-        // Update Sept05
         $('nav .tab-title').hover(function () {
             $(this).find('.pop').css({'display': 'block', opacity: 0}).animate({bottom: '120%', opacity: 1}, 200);
         }, function () {
@@ -1178,14 +1134,12 @@
             }
         }
 
-
         /********************************* Leaflet ***************************/
         $(".tabs>li").click(function () {
             if (GlobalMapHandle) {
                 L.Util.requestAnimFrame(GlobalMapHandle.invalidateSize, GlobalMapHandle, !1, GlobalMapHandle._container);
             }
         });
-
 
         var markers = L.markerClusterGroup({
             // map markers dynamically set via ajax
@@ -1205,7 +1159,6 @@
         // prepare everything in map except markers
         var GlobalMapHandle = null;
         var GlobalTableHandle = null;
-        console.log("preparing");
 
         var geojson, choroControl, legend, extloadChoropleth;
 
@@ -1494,11 +1447,11 @@
                 var div = L.DomUtil.create('div', 'info legend');
                 var grades = [];
                 {#                var ticks = linScale.ticks(8);#}
-                {#                console.log(ticks);#}
+                {#                (ticks);#}
                 {#                for (var n = 0; n < ticks.length - 1; n++) {#}
                 {#                    grades.push(ticks[n]);#}
                 {#                }#}
-                {#                console.log('GRADES', grades);#}
+                {#                ('GRADES', grades);#}
                 labels = [];
 
                 div.style.maxWidth = '60%';
