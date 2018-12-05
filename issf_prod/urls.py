@@ -12,7 +12,6 @@ from frontend.views import new_tip, new_faq, who_feature, geojson_upload, index,
 admin.autodiscover()
 
 urlpatterns = [
-    #url(r'^jsreverse/$', cache_page(3600)(urls_js), name='js_reverse'),
     url(r'^sitemap.xml/$', return_sitemap, name="return-sitemap"),
     url(r'^robots.txt/$', return_robots, name="return-robots"),
     url(r'^googlee9690f8983b8a350.html/$', return_google_site_verification, name="return-google-site-verification"),

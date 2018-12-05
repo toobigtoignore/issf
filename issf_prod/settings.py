@@ -12,7 +12,6 @@ ALLOWED_HOSTS=['*']
 
 SECRET_KEY= config('SECRET_KEY')
 
-#DEBUG = config('DEBUG', default=False, cast=bool)
 DEBUG = True
 
 DATABASES = {
@@ -90,7 +89,6 @@ CRISPY_TEMPLATE_PACK = 'foundation-5'
 TEMPLATES = [
     {'BACKEND': 'django.template.backends.django.DjangoTemplates',
      'DIRS': [
-         #APPS_DIR.child('issf_admin').child('templates').child('issf_admin'),
          os.path.join(APPS_DIR, 'frontend/templates/frontend'),
          os.path.join(APPS_DIR, 'details/templates/details'),
          os.path.join(APPS_DIR, 'issf_admin/templates/issf_admin'),
