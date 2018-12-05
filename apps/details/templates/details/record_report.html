@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{% static 'issf_base/foundation/css/foundation.css' %}">
         <title>{{ record.ssf_name }} Generated Report</title>
 
+        <!-- TODO The line below was left by someone who has lost all sanity, and therefore this file must be burned with css-fire -->
         <style>
             /* Yes this is all inline. Fight me.*/
             body {
@@ -80,7 +81,6 @@
             google.charts.load('current', {'packages': ['corechart']});
             google.charts.setOnLoadCallback(drawChart);
             function drawChart() {
-
                 data_array = [['Distribution type', 'Percentage']];
                 {% for key, slice in distribution.items %}
                     data_array.push(['{{key}}', {{slice}}]);
@@ -160,10 +160,16 @@
             <div align="center" id="section-header" style="width: 55%; float: right;">DISTRIBUTION CHANNELS</div>
         </div>
         <div class="row" style="margin-top: 20px;">
-            <div class="no-shadow"
-                 style="width: 40%; border: 2px solid #1f4e79; padding: 13px; float:left;">
-                {% if record.ssf_definition %}{{ record.ssf_definition }}{% else %}No definition
-                    provided.{% endif %}</div>
+            <div
+                class="no-shadow"
+                style="width: 40%; border: 2px solid #1f4e79; padding: 13px; float:left;"
+            >
+                {% if record.ssf_definition %}
+                    {{ record.ssf_definition }}
+                {% else %}
+                    No definition provided.
+                {% endif %}
+                </div>
             <style>
                 #piechart div {
                     -webkit-box-shadow: none;
@@ -183,13 +189,26 @@
         <div class="row" style="display: table; margin-top: 20px; table-layout: fixed;">
             {% if species_colors %}
                 {% for spec_col in species_colors %}
-                    <div class="no-shadow" align="center"
-                         style="background-color:{{ spec_col.1 }}; display: table-cell; height:80px; width:100%; border:2px solid #1f4e79;">
-                        <p style="margin: 0; font-size: 1.4em; font-weight: bold;">
-                            {% if spec_col.0.species_common %}{{ spec_col.0.species_common }}{% else %}
-                                {{ spec_col.0.species_scientific }}{% endif %}</p>
+                    <div
+                        class="no-shadow"
+                        align="center"
+                        style="background-color:{{ spec_col.1 }}; display: table-cell; height:80px; width:100%; border:2px solid #1f4e79;"
+                    >
+                        <p
+                            style="margin: 0; font-size: 1.4em; font-weight: bold;"
+                        >
+                            {% if spec_col.0.species_common %}
+                                {{ spec_col.0.species_common }}
+                            {% else %}
+                                {{ spec_col.0.species_scientific }}
+                            {% endif %}
+                        </p>h
                         <p style="margin: 0; font-size: large;">
-                            {% if spec_col.0.landings %}{{ spec_col.0.landings|intcomma }}{% else %}---{% endif %} t
+                            {% if spec_col.0.landings %}
+                                {{ spec_col.0.landings|intcomma }}
+                            {% else %}
+                                ---
+                            {% endif %} t
                         </p>
                     </div>
                 {% endfor %}
@@ -202,13 +221,21 @@
             <div align="center" id="section-header" style="width: 55%; float: right;">KEY RULES & REGULATIONS</div>
         </div>
         <div class="row">
-            <div align="center" class="no-shadow"
-                 style="width:40%; margin-left: initial; margin-top: 20px; float:left;">
+            <div
+                align="center"
+                class="no-shadow"
+                style="width:40%; margin-left: initial; margin-top: 20px; float:left;"
+            >
                 {% if issues %}
                     {% for issue in issues %}
-                        <div class="no-shadow" align="center"
-                             style="margin-top: 10px; width: 80%; height: 50px; border: 1px solid #4f8ac0;">
-                            <p style="font-weight: bold; line-height: 50px; text-align:center; font-size: medium; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ issue }}</p>
+                        <div
+                            class="no-shadow"
+                            align="center"
+                            style="margin-top: 10px; width: 80%; height: 50px; border: 1px solid #4f8ac0;"
+                        >
+                            <p style="font-weight: bold; line-height: 50px; text-align:center; font-size: medium; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                                {{ issue }}
+                            </p>
                         </div>
                     {% endfor %}
                 {% else %}
@@ -226,15 +253,23 @@
                     No data provided.
                 {% endif %}
             </div>
-            <div align="center" id="section-header" class="no-shadow"
-                 style="width: 55%; float: right; font-size: 1.4em; clear:right; padding:0; background-color: transparent;">
-                <div class="no-shadow"
-                     style="float:left; border-right: 5px solid; padding:10px; background-color: #184f7b; width:82%;">
+            <div
+                align="center"
+                id="section-header"
+                class="no-shadow"
+                style="width: 55%; float: right; font-size: 1.4em; clear:right; padding:0; background-color: transparent;"
+            >
+                <div
+                    class="no-shadow"
+                    style="float:left; border-right: 5px solid; padding:10px; background-color: #184f7b; width:82%;"
+                >
                     HOUSEHOLD INCOME
                     FROM SSF
                 </div>
-                <div class="no-shadow"
-                     style="float: left; padding: 10px 10px 8px;background-color: transparent; color:black; border:1px solid #184f7b; margin-left: 15px; width:15%;">
+                <div
+                    class="no-shadow"
+                    style="float: left; padding: 10px 10px 8px;background-color: transparent; color:black; border:1px solid #184f7b; margin-left: 15px; width:15%;"
+                >
                     {% if hh_income %}
                         {{ hh_income }}%
                     {% else %}
@@ -242,24 +277,37 @@
                     {% endif %}
                 </div>
             </div>
-            <div align="center" id="section-header"
-                 style="width: 55%; float: right; font-size: 1.4em; margin-bottom: 10px;">NON-FISHING
-                LIVELIHOOD ACTIVITIES
+
+            <div
+                align="center"
+                id="section-header"
+                style="width: 55%; float: right; font-size: 1.4em; margin-bottom: 10px;"
+            >
+                NON-FISHING LIVELIHOOD ACTIVITIES
             </div>
 
-            <div align="center" class="no-shadow"
-                 style="float:right; width:55%;">
+            <div
+                align="center"
+                class="no-shadow"
+                style="float:right; width:55%;"
+            >
                 <div class="no-shadow" style="float:left;  margin-left: 30px; margin-right: -70px;">
                     {% if non_fish_act %}
                         {% for activity in non_fish_act|slice:":3" %}
                             {% if activity %}
-                                <div class="no-shadow"
-                                     style="width:120px; height:50px; line-height: 50px; margin-top: 15px; font-size: 0.8em; overflow: hidden; border: 1px solid #4f8ac0;">{{ activity }}</div>
+                                <div
+                                    class="no-shadow"
+                                    style="width:120px; height:50px; line-height: 50px; margin-top: 15px; font-size: 0.8em; overflow: hidden; border: 1px solid #4f8ac0;"
+                                >
+                                    {{ activity }}
+                                </div>
                             {% endif %}
                         {% endfor %}
                     {% else %}
-                        <div class="no-shadow"
-                             style="width:120px; height:50px; border-radius:10px; line-height: 50px; margin-top: 15px; font-size: 0.8em; overflow: hidden; border: 1px solid #4f8ac0;">
+                        <div
+                            class="no-shadow"
+                            style="width:120px; height:50px; border-radius:10px; line-height: 50px; margin-top: 15px; font-size: 0.8em; overflow: hidden; border: 1px solid #4f8ac0;"
+                        >
                             No data provided
                         </div>
                     {% endif %}
@@ -270,15 +318,21 @@
                 <div class="no-shadow" style="float:left; margin-left: -70px;">
                     {% for activity in non_fish_act|slice:"-3:" %}
                         {% if activity %}
-                            <div class="no-shadow"
-                                 style="width:120px; height:50px; line-height: 50px; margin-top: 15px; font-size: 0.8em; overflow: hidden;  border: 1px solid #4f8ac0;">{{ activity }}</div>
+                            <div
+                                class="no-shadow"
+                                style="width:120px; height:50px; line-height: 50px; margin-top: 15px; font-size: 0.8em; overflow: hidden;  border: 1px solid #4f8ac0;"
+                            >
+                                {{ activity }}
+                            </div>
                         {% endif %}
                     {% endfor %}
                 </div>
             </div>
         </div>
         <div class="row">
-            <div align="center" id="section-header" style="width: 40%; float: left;">GOVERNANCE</div>
+            <div align="center" id="section-header" style="width: 40%; float: left;">
+                GOVERNANCE
+            </div>
             <div class="no-shadow" style="margin-top: 20px; float:left; clear:left; width:40%;">
                 {% if governance %}
                     <ul style="margin-left: 50px; font-size: large; font-weight: bold;">
@@ -290,38 +344,47 @@
                     No data provided.
                 {% endif %}
             </div>
-            <div class="no-shadow"
-                 style="border:1px solid #357ab7; float:right; width:45%; margin-top: -42px; margin-bottom: 20px; margin-right: 50px;">
+            <div
+                class="no-shadow"
+                style="border:1px solid #357ab7; float:right; width:45%; margin-top: -42px; margin-bottom: 20px; margin-right: 50px;"
+            >
                 {% if record.img_url %}
                     <img src="{{ record.img_url }}">
                 {% endif %}
                 <div class="no-shadow" style="background-color: #bdbdbd; padding-left: 10px;">
-                    <style> p {
-                        margin: 0;
-                    }</style>
+                    <style>p {margin: 0;}</style><!-- TODO this really has to go -->
                     <p>
                         <strong>Contributor:</strong>
                     </p>
                     <p style="margin-bottom: 10px;">
                         {% if who_page %}
-                            <a href="{% url 'who-details' who_page.issf_core_id %}"
-                               style="color:#055bb7;">{{ record.contributor }}</a>
+                            <a
+                                href="{% url 'who-details' who_page.issf_core_id %}"
+                                style="color:#055bb7;"
+                            >
+                                {{ record.contributor }}
+                            </a>
                         {% else %}
-                            <a href="mailto:{{ record.contributor.email }}"
-                               target="_blank" style="color:#055bb7;">{{ record.contributor }}</a>
-                        {% endif %}</p>
-                    <p>
-                        <strong>Date created:</strong>
+                            <a
+                                href="mailto:{{ record.contributor.email }}"
+                                target="_blank"
+                                style="color:#055bb7;"
+                            >
+                                {{ record.contributor }}
+                            </a>
+                        {% endif %}
                     </p>
+
+                    <p><strong>Date created:</strong></p>
                     <p style="margin-bottom: 10px;">{{ record.contribution_date }}</p>
-                    <p>
-                        <strong>For complete information about the profile, please visit:</strong>
-                    </p>
+
+                    <p><strong>For complete information about the profile, please visit:</strong></p>
                     <a href="{{ url }}" style="color:#055bb7;">
                         <strong>
                             https://issfcloud.toobigtoignore.net.ca{{ url }}
                         </strong>
                     </a>
+
                     <p style="margin-top: 10px;">
                         <a href="http://toobigtoignore.net/" target="_blank" style="color:#055bb7;">
                             <strong>toobigtooignore.net</strong>
@@ -332,7 +395,6 @@
         </div>
 
         <div class="row" style="margin-bottom: 15px;">
-
             <div style="width:32%; float:left;">
                 <img src="{% static 'issf_base/img/TBTImedia.png' %}" style="border:1px solid #4d683a;">
             </div>
