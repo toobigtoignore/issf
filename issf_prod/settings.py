@@ -1,5 +1,5 @@
 import os, sys
-from decouple import config 
+from decouple import config
 from unipath import Path
 
 
@@ -11,24 +11,24 @@ sys.path.append('apps')
 ALLOWED_HOSTS=['*']
 
 SECRET_KEY= config('SECRET_KEY')
- 
-#DEBUG = config('DEBUG', default=False, cast=bool) 
+
+#DEBUG = config('DEBUG', default=False, cast=bool)
 DEBUG = True
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': config('DB_NAME'), 
+        'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'), 
+        'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT'),
         'ATOMIC_REQUESTS': True
     }
 }
 
 INSTALLED_APPS = (
-    # Django 
+    # Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
-    # Third-Party 
+    # Third-Party
     'crispy_forms',
     'crispy_forms_foundation',
     'django_tables2',
@@ -54,7 +54,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
 
-    # ISSF 
+    # ISSF
     'issf_base',
     'issf_admin',
     'details',
@@ -120,7 +120,7 @@ AUTHENTICATION_BACKENDS = (
 
 # Leaflet
 LEAFLET_CONFIG = {
-    'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    'TILES': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     'PLUGINS': {
         'forms': {'auto-include': True, },
         'cluster': {

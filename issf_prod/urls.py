@@ -11,7 +11,7 @@ from frontend.views import new_tip, new_faq, who_feature, geojson_upload, index,
 
 admin.autodiscover()
 
-urlpatterns = [  
+urlpatterns = [
     #url(r'^jsreverse/$', cache_page(3600)(urls_js), name='js_reverse'),
     url(r'^sitemap.xml/$', return_sitemap, name="return-sitemap"),
     url(r'^robots.txt/$', return_robots, name="return-robots"),
@@ -30,11 +30,12 @@ urlpatterns = [
     url(r'^tip-archive/', fact_archive, name='fact-archive'),
 
     url(r'^accounts/contributed-records/$', contributed_records, name="contributed-records"),
+
     # apps
     url(r'^$', index, name='index'),
     url(r'^frontend/', include('frontend.urls')),
     url(r'^details/', include('details.urls')),
-    
+
     url(r'^data-export/$', table_data_export, name='data-export'),
 
     url(r'^profile-csv/$', profile_csv,

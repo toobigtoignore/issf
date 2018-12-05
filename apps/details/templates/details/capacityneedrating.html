@@ -71,7 +71,6 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function (jsonData) {
-                        console.log(jsonData);
                         if (jsonData.success == 'false') {
                             //Turn off the submit state on submission failure
                             //because if submit fails, then the page should not be in "submit" state
@@ -82,9 +81,7 @@
                             form.find('button.submit').attr('data-submit', 'off');
                             //HJExtention.TurnOffSubmitStateOnAllFormSubmitButtons();
 
-
                             var formLevelError = false;
-                            console.log("Error count:" + jsonData.errors);
                             //Case: submission unsuccessful but error msg has been returned
                             for (error in jsonData.errors) {
                                 if (!jQuery.isEmptyObject(jsonData.errors[error])) {
