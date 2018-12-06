@@ -1,6 +1,6 @@
-import os, sys
+import os
+import sys
 from decouple import config
-from unipath import Path
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -8,11 +8,11 @@ APPS_DIR = os.path.join(BASE_DIR, 'apps')
 sys.path.insert(0, APPS_DIR)
 sys.path.append('apps')
 
-ALLOWED_HOSTS=['*']
+ALLOWED_HOSTS = ['*']
 
-SECRET_KEY= config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
-#DEBUG = config('DEBUG', default=False, cast=bool)
+# DEBUG = config('DEBUG', default=False, cast=bool)
 DEBUG = True
 
 DATABASES = {
@@ -73,18 +73,8 @@ MIDDLEWARE = [
 ]
 
 STATIC_ROOT = '/issf/static'
-STATIC_URL  = '/static/'
-STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'node_modules/'), APPS_DIR,
-        '/issf/static_root' )
-
-print("*****************************")
-print("STATIC ROOT: " + STATIC_ROOT)
-print("*****************************")
-print("STATIC_URL : " + STATIC_URL)
-print("*****************************")
-print("BASE_DIR: " + BASE_DIR)
-print("APPS: " + APPS_DIR)
-print("*****************************")
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'node_modules/'), APPS_DIR, '/issf/static_root')
 
 CRISPY_TEMPLATE_PACK = 'foundation-5'
 TEMPLATES = [
@@ -151,7 +141,7 @@ LEAFLET_CONFIG = {
 EMAIL_USE_TLS = config('EMAIL_TLS')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_HOST_USER =  config('EMAIL_HOST_USER')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 DEFAULT_TO_EMAIL = 'to'
