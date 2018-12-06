@@ -41,39 +41,6 @@ class Theme_Issue_Value(models.Model):
         return '%s' % (self.theme_issue_label)
 
 
-# class Characteristic(models.Model):
-# characteristic_id = models.AutoField(primary_key=True)
-# characteristic_category = models.TextField()
-# category_order = models.IntegerField()
-# question_number = models.TextField()
-#
-# class Meta:
-# managed = False
-# db_table = 'characteristic'
-# ordering = ['category_order']
-#
-# def __str__(self):
-# return '%s' % (self.characteristic_category)
-
-
-# class Characteristic_Value(models.Model):
-# # class name exception (underscore) because ManyToManyField (see
-# Issf_Core) assumes pk is
-# # lower(Table_Name) + _id
-# characteristic_value_id = models.AutoField(primary_key=True)
-# characteristic = models.ForeignKey(Characteristic)
-# characteristic_label = models.TextField()
-# label_order = models.IntegerField()
-#
-# class Meta:
-# managed = False
-# db_table = 'characteristic_value'
-# ordering = ['characteristic', 'label_order']
-#
-# def __str__(self):
-# return '%s' % (self.characteristic_label)
-
-
 class Country(models.Model):
     country_id = models.AutoField(primary_key=True)
     short_name = models.CharField(max_length=100)
@@ -84,7 +51,6 @@ class Country(models.Model):
     uni = models.IntegerField(blank=True, null=True)
     faostat = models.IntegerField(blank=True, null=True)
     gaul = models.IntegerField(blank=True, null=True)
-    # country_point = models.GeometryField(blank=True, null=True)
     country_point = models.PointField(blank=True, null=True)
     objects = models.Manager()
 
@@ -123,8 +89,6 @@ class Language(models.Model):
     def __str__(self):
         return '%s' % (self.language_name)
 
-        # return '%s %s' % (self.publication_type_id, self.publication_type)
-
 
 class SSFKnowledge(models.Model):
     # core (inherited from issf_core) fields
@@ -141,11 +105,6 @@ class SSFKnowledge(models.Model):
                                         default='State-of-the-Art in SSF '
                                                 'Research')
     core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
-    # geographic_scope_type = models.CharField(max_length=100, default='Not
-    # specific')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # fields on main form
@@ -159,18 +118,6 @@ class SSFKnowledge(models.Model):
     nonenglish_title = models.TextField(blank=True)
     year = models.IntegerField(
         validators=[MinValueValidator(1000), MaxValueValidator(3000)])
-    # authors = models.ManyToManyField(Person, blank=True, null=True,
-    # db_table='knowledge_author')
-    # authors = models.ManyToManyField(Person, through='KnowledgeAuthor',
-    # blank=True, null=True)
-
-    # other fields
-    # SSF_DEFINED = (
-    # (True, 'Yes'),
-    # (False, 'No'),
-    # (None, 'Not Explicitly')
-    # )
-    # ssf_defined = models.NullBooleanField(choices=SSF_DEFINED)
     SSF_DEFINED = (
         ('Yes', 'Yes'), ('No', 'No'), ('Not explicitly', 'Not explicitly'))
     ssf_defined = models.CharField(choices=SSF_DEFINED, max_length=100)
@@ -227,8 +174,7 @@ class SSFKnowledge(models.Model):
     demographics_other_text = models.CharField(max_length=100, blank=True)
     demographic_details = models.TextField(blank=True)
     employment_na = models.BooleanField(
-        default=False)  # , help_text='Employment status of fishers (check
-    # all that apply):')
+        default=False)
     employment_full_time = models.BooleanField(default=False)
     employment_part_time = models.BooleanField(default=False)
     employment_seasonal = models.BooleanField(default=False)
@@ -262,15 +208,10 @@ class KnowledgeAuthor(models.Model):
     knowledge_core = models.ForeignKey(SSFKnowledge,
             related_name='issf_core', on_delete=models.CASCADE)
 
-    # person = models.ForeignKey(Person)
-
     class Meta:
         managed = False
         db_table = 'knowledge_author'
         ordering = ['knowledge_author_id']
-
-        # def __str__(self):
-        # return '%s, %s' % ()
 
 
 class KnowledgeAuthorSimple(models.Model):
@@ -282,9 +223,6 @@ class KnowledgeAuthorSimple(models.Model):
         managed = False
         db_table = 'knowledge_author_simple'
         ordering = ['knowledge_author_simple_id']
-
-    # def __str__(self):
-    # return '%s, %s' % ()
 
     def save(self, *args, **kwargs):
         self.author_name = conditional_escape(self.author_name)
@@ -309,7 +247,6 @@ class Attribute(models.Model):
     class Meta:
         managed = False
         db_table = 'attribute'
-        # ordering = ['label_order']
         ordering = ['attribute_label']
 
     def __str__(self):
@@ -327,12 +264,6 @@ class SSFProfile(models.Model):
     editor = models.ForeignKey(settings.AUTH_USER_MODEL,
                                related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Profile')
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
-    # geographic_scope_type = models.CharField(max_length=100, default='Not
-    # specific')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # profile-specific fields
@@ -360,9 +291,6 @@ class SSFProfile(models.Model):
 
     img_url = models.URLField(max_length=200, blank=True)
 
-    # # many-to-many between profiles and attributes
-    # attributes = models.ManyToManyField(to=Attribute,
-    # through='MainAttributeView')
 
     class Meta:
         managed = False
@@ -402,31 +330,6 @@ class AdditionalValue(models.Model):
         return '%s' % (self.value_label)
 
 
-# class CommonAttributeView(models.Model):
-# # uses database view to populate form of table of attributes
-# # selected_attribute_id is the real PK, but could be multiple instances
-# due to
-# multi-select of
-# # qualitative values!
-# # saving uses postgres INSTEAD OF rules to send updates to the
-# selected_attribute table
-# row_number = models.IntegerField(verbose_name='', primary_key=True)
-# selected_attribute_id = models.IntegerField(verbose_name='', blank=True,
-# null=True)
-#     issf_core_id = models.IntegerField()
-#     # issf_core = models.ForeignKey(SSFProfile, verbose_name='')
-#     # attribute_id is a FK to Attribute
-#     attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
-# attribute_category='Common'))
-#     attribute_value = models.ForeignKey(AttributeValue, blank=True,
-# null=True)
-#     other_value = models.CharField(max_length=100, blank=True)
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'common_attributes'
-
-
 class SSFOrganization(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
@@ -438,12 +341,6 @@ class SSFOrganization(models.Model):
     editor = models.ForeignKey(settings.AUTH_USER_MODEL,
                                related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Organization')
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
-    # geographic_scope_type = models.CharField(max_length=100, default='Not
-    # specific')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # many-to-many with persons
@@ -504,8 +401,6 @@ class SSFOrganization(models.Model):
         ordering = ['organization_name']
 
     def __str__(self):
-        # return '%s, %s, %s' % (self.organization_name, self.address1,
-        # self.country)
         return '%s' % (self.organization_name)
 
     def save(self, *args, **kwargs):
@@ -526,12 +421,6 @@ class SSFPerson(models.Model):
     editor = models.ForeignKey(settings.AUTH_USER_MODEL,
                                related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default="Who's Who in SSF")
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
-    # geographic_scope_type = models.CharField(max_length=100, default='Not
-    # specific')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # fields on main form
@@ -561,10 +450,8 @@ class SSFPerson(models.Model):
     education_level = models.CharField(max_length=100, choices=EDUCATION_LEVEL,
                                        blank=True)
     other_education_level = models.CharField(max_length=100, blank=True)
-    # is_tbti_member = models.BooleanField(default=False, choices=YES_NO)
     research_method = models.TextField(blank=True)
     issues_addressed = models.TextField(blank=True)
-    # discipline = models.CharField(max_length=100, blank=True)
     objects = models.Manager()
 
     class Meta:
@@ -591,10 +478,6 @@ class SSFCapacityNeed(models.Model):
     editor = models.ForeignKey(settings.AUTH_USER_MODEL,
                                related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='Capacity Development')
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # model-specific fields
@@ -632,10 +515,6 @@ class SSFGuidelines(models.Model):
     editor = models.ForeignKey(settings.AUTH_USER_MODEL,
                                related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Guidelines')
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # model-specific fields
@@ -701,10 +580,6 @@ class SSFExperiences(models.Model):
                                related_name='editor+',
                                on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Experiences')
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # model-specific fields
@@ -739,10 +614,6 @@ class SSFCaseStudies(models.Model):
     editor = models.ForeignKey(settings.AUTH_USER_MODEL,
                                related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='Case Study')
-    # core_record_summary = models.TextField(blank=True)
-    # core_record_tsvector = models.TextField(blank=True) # This field type
-    # is a guess.
-    # core_record_status = models.IntegerField(default=0)
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # model-specific fields
@@ -785,8 +656,6 @@ class CapacityNeedRating(models.Model):
             on_delete=models.CASCADE)
     STARS = [(i, i) for i in range(0, 6)]
     rating = models.IntegerField(choices=STARS, default=0)
-
-    # rating = models.IntegerField()
 
     class Meta:
         managed = False
@@ -841,104 +710,6 @@ class ISSF_Core(models.Model):
     core_record_type = models.CharField(max_length=100)
     core_record_summary = models.TextField(blank=True)
     core_record_status = models.IntegerField(blank=True, null=True)
-    # themes/issues
-    # economic_themes_issues = models.ManyToManyField(Theme_Issue_Value,
-    #
-    # db_table='selected_economic_theme_issue',
-    #                                                 limit_choices_to={
-    #                                                     'theme_issue': '1'},
-    #                                                 blank=True,
-    #                                                 related_name='econ+')
-    # ecological_themes_issues = models.ManyToManyField(Theme_Issue_Value,
-    #
-    # db_table='selected_ecological_theme_issue',
-    #                                                   limit_choices_to={
-    #                                                       'theme_issue':
-    # '2'},
-    #                                                   blank=True,
-    # related_name='ecol+')
-    # social_cultural_themes_issues = models.ManyToManyField(Theme_Issue_Value,
-    #
-    # db_table='selected_social_cultural_theme_issue',
-    #                                                        limit_choices_to={
-    #
-    # 'theme_issue': '3'},
-    #                                                        blank=True,
-    # related_name='soc+')
-    # governance_themes_issues = models.ManyToManyField(Theme_Issue_Value,
-    #
-    # db_table='selected_governance_theme_issue',
-    #                                                   limit_choices_to={
-    #                                                       'theme_issue':
-    # '4'},
-    #                                                   blank=True,
-    # related_name='govti+')
-    # # characteristics
-    # ssfterm_characteristics = models.ManyToManyField(Characteristic_Value,
-    #
-    # db_table='selected_ssfterm_characteristic',
-    #                                                  limit_choices_to={
-    # 'characteristic': '1'},
-    #                                                  blank=True,
-    # related_name='ssft+')
-    # fisherytype_characteristics = models.ManyToManyField(
-    # Characteristic_Value,
-    #
-    # db_table='selected_fisherytype_characteristic',
-    #
-    # limit_choices_to={'characteristic':
-    # '2'},
-    #                                                      blank=True,
-    #                                                      related_name='ft+')
-    # geartype_characteristics = models.ManyToManyField(Characteristic_Value,
-    #
-    # db_table='selected_geartype_characteristic',
-    #                                                   limit_choices_to={
-    # 'characteristic': '3'},
-    #                                                   blank=True,
-    # related_name='gt+')
-    # ecosystem_highlevel_characteristics = models.ManyToManyField(
-    # Characteristic_Value,
-    #
-    # db_table='selected_ecosystem_highlevel_characteristic',
-    #
-    # limit_choices_to={
-    #
-    # 'characteristic': '4'},
-    #                                                              blank=True,
-    # related_name='ehlt+')
-    # ecosystem_detailed_characteristics = models.ManyToManyField(
-    # Characteristic_Value,
-    #
-    # db_table='selected_ecosystem_detailed_characteristic',
-    #
-    # limit_choices_to={
-    #
-    # 'characteristic': '5'},
-    #
-    # blank=True, related_name='edt+')
-    # market_characteristics = models.ManyToManyField(Characteristic_Value,
-    #
-    # db_table='selected_market_characteristic',
-    #                                                 limit_choices_to={
-    # 'characteristic': '6'},
-    #                                                 blank=True,
-    # related_name='mkt+')
-    # governance_characteristics = models.ManyToManyField(Characteristic_Value,
-    #
-    # db_table='selected_governance_characteristic',
-    #                                                     limit_choices_to={
-    # 'characteristic': '7'},
-    #                                                     blank=True,
-    #
-    # related_name='govch+')
-    # management_characteristics = models.ManyToManyField(Characteristic_Value,
-    #
-    # db_table='selected_management_characteristic',
-    #                                                     limit_choices_to={
-    # 'characteristic': '8'},
-    #                                                     blank=True,
-    # related_name='mgmt+')
     # geographic scope
     GEOGRAPHIC_SCOPE_TYPE = (
         ('Local', 'Local'), ('Sub-national', 'Sub-national'),
@@ -948,12 +719,6 @@ class ISSF_Core(models.Model):
                                              max_length=100, default='Local')
     countries = models.ManyToManyField(Country,
                                        db_table='geographic_scope_nation')
-
-    # many-to-many to attributes
-    # attributes = models.ManyToManyField(to=Attribute,
-    # through='MainAttributeView')
-    # attributes = models.ManyToManyField(to=Attribute,
-    # through='MainAttributeView')
 
     class Meta:
         managed = False
@@ -1024,7 +789,6 @@ class CommonAttributeView(models.Model):
                                                 null=True)
     issf_core = models.ForeignKey(ISSF_Core, verbose_name='',
             on_delete=models.CASCADE)
-    # issf_core = models.ForeignKey(SSFProfile, verbose_name='')
     # attribute_id is a FK to Attribute
     attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
         attribute_category='Common') | Q(attribute_category='Non-profile'),
@@ -1055,8 +819,6 @@ class CommonThemeIssueView(models.Model):
     issf_core = models.ForeignKey(ISSF_Core, verbose_name='',
             on_delete=models.CASCADE)
     theme_issue = models.ForeignKey(Theme_Issue, on_delete=models.CASCADE)
-    # theme_issue_value = models.ForeignKey(Theme_Issue_Value, blank=True,
-    # null=True)
     theme_issue_value = models.ForeignKey(Theme_Issue_Value, blank=True, null=True, on_delete=models.CASCADE)
     other_theme_issue = models.CharField(max_length=100, blank=True)
 
@@ -1079,27 +841,13 @@ class MainAttributeView(models.Model):
     row_number = models.IntegerField(verbose_name='', primary_key=True)
     selected_attribute_id = models.IntegerField(verbose_name='', blank=True,
                                                 null=True)
-    # issf_core_id is a FK to SSFProfile
-    # issf_core_id = models.IntegerField()
-    # issf_core = models.ForeignKey(SSFProfile, verbose_name='')
     issf_core = models.ForeignKey(ISSF_Core, verbose_name='', on_delete=models.CASCADE)
-    # attribute_id is a FK to Attribute
-    # attribute_id = models.IntegerField(blank=True, null=True)
     attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
         attribute_category='Main') | Q(attribute_category='Common'),
         on_delete=models.CASCADE)
-    # attribute_category = models.TextField()
-    # attribute_label = models.TextField()
-    # attribute_type = models.TextField()
-    # units_label = models.TextField(blank=True)
-    # value = models.DecimalField(verbose_name='', max_digits=18,
-    # decimal_places=3, blank=True,
-    # null=True)
     value = models.IntegerField(verbose_name='', blank=True, null=True)
     attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True,
             on_delete=models.CASCADE)
-    # value_label is decoded attribute_value
-    # value_label = models.TextField(blank=True)
     other_value = models.CharField(max_length=100, blank=True)
     additional = models.IntegerField(blank=True)
     additional_value = models.ForeignKey(AdditionalValue, blank=True, null=True, on_delete=models.CASCADE)
@@ -1125,7 +873,6 @@ class ISSFCoreMapPointUnique(models.Model):
     core_record_summary = models.TextField(blank=True)
     core_record_status = models.IntegerField(blank=True, null=True)
     geographic_scope_type = models.TextField(blank=True)
-    # map_point = models.GeometryField()
     map_point = models.PointField()
     lon = models.FloatField()
     lat = models.FloatField()
@@ -1137,18 +884,6 @@ class ISSFCoreMapPointUnique(models.Model):
         db_table = 'issf_core_map_point_unique'
 
 
-# class TopContributors(models.Model):
-# # top_contributors is a database view, not a table; it is read-only
-# row_number = models.IntegerField(primary_key=True)
-# contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-# related_name='contributor+')
-# contribution_count = models.IntegerField()
-#
-# class Meta:
-# managed = False
-# db_table = 'top_contributors'
-
-
 class RecentContributions(models.Model):
     # recent_contributions is a database view, not a table; it is read-only
     issf_core_id = models.IntegerField(primary_key=True)
@@ -1158,17 +893,6 @@ class RecentContributions(models.Model):
     class Meta:
         managed = False
         db_table = 'recent_contributions'
-
-
-# class TopRatedCapacityNeeds(models.Model):
-# # top_rated_capacity_needs is a database view, not a table; it is read-only
-# issf_core_id = models.IntegerField(primary_key=True)
-# capacity_need_title = models.TextField()
-# avg_rating = models.FloatField()
-#
-# class Meta:
-# managed = False
-# db_table = 'top_rated_capacity_needs'
 
 
 class ContributionsByRecordType(models.Model):
@@ -1219,19 +943,6 @@ class SelectedThemeIssue(models.Model):
         db_table = 'selected_theme_issue'
 
 
-# class SelectedCharacteristic(models.Model):
-#     selected_characteristic_id = models.AutoField(primary_key=True)
-#     issf_core = models.ForeignKey(ISSF_Core, db_column='issf_core_id')
-#     characteristic_value = models.ForeignKey(Characteristic_Value,
-#
-# db_column='characteristic_value_id')
-#     other_characteristic = models.TextField()
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'selected_characteristic'
-
-
 class ExternalLink(models.Model):
     external_link_id = models.AutoField(primary_key=True)
     LINK_TYPE = (('URL Link', 'URL Link'), ('Image Link', 'Image Link'),
@@ -1251,7 +962,6 @@ class ExternalLink(models.Model):
 class Species(models.Model):
     species_id = models.AutoField(primary_key=True)
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
-    # species_typed = models.CharField(max_length=100)
     species_scientific = models.CharField(max_length=100, blank=True)
     species_common = models.CharField(max_length=100, blank=True)
     landings = models.IntegerField(null=True, blank=True)
@@ -1293,7 +1003,6 @@ class GeographicScopeLocalArea(models.Model):
     local_area_setting = models.CharField(choices=LOCAL_AREA_SETTING,
                                           max_length=100)
     local_area_setting_other = models.CharField(max_length=100, blank=True)
-    # local_area_point = models.GeometryField(blank=True, null=True)
     local_area_point = models.PointField(blank=True, null=True)
     objects = models.Manager()
 
@@ -1318,7 +1027,6 @@ class GeographicScopeSubnation(models.Model):
         ('Other', 'Other'),)
     subnation_type = models.CharField(choices=SUBNATION_TYPE, max_length=100)
     subnation_type_other = models.CharField(max_length=100, blank=True)
-    # subnation_point = models.GeometryField(blank=True, null=True)
     subnation_point = models.PointField(blank=True, null=True)
     objects = models.Manager()
 
@@ -1349,17 +1057,6 @@ class Geographic_Scope_Region(models.Model):
     # _id
     geographic_scope_region_id = models.AutoField(primary_key=True)
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
-    # REGION_NAME = (
-    #     ('Asia', 'Asia'),
-    #     ('Africa', 'Africa'),
-    #     ('Caribbean', 'Caribbean'),
-    #     ('Europe', 'Europe'),
-    #     ('Latin America', 'Latin America'),
-    #     ('North America', 'North America'),
-    #     ('Oceania', 'Oceania'),
-    #     ('Other', 'Other'),
-    # )
-    # region_name = models.CharField(choices=REGION_NAME, max_length=100)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     region_name_other = models.CharField(max_length=100, blank=True)
     countries = models.ManyToManyField(Country,
@@ -1442,12 +1139,3 @@ class WhoFeature(models.Model):
     class Meta:
         managed = False
         db_table = 'who_feature'
-
-# class Photos(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     issf_core_id = models.IntegerField()
-#     photo_id = models.TextField()
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'photos'

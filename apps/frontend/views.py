@@ -43,18 +43,6 @@ from issf_base.models import GeographicScopeLocalArea
 from issf_base.models import GeographicScopeSubnation
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
-# from frontend.forms import EconomicThemesIssuesForm
-# from frontend.forms import EcologicalThemesIssuesForm
-# from frontend.forms import SocialCulturalThemesIssuesForm
-# from frontend.forms import GovernanceThemesIssuesForm
-# from frontend.forms import SsftermCharacteristicsForm
-# from frontend.forms import FisherytypeCharacteristicsForm
-# from frontend.forms import GeartypeCharacteristicsForm
-# from frontend.forms import EcosystemHighlevelCharacteristicsForm
-# from frontend.forms import EcosystemDetailedCharacteristicsForm
-# from frontend.forms import MarketCharacteristicsForm
-# from frontend.forms import GovernanceCharacteristicsForm
-# from frontend.forms import ManagementCharacteristicsForm
 from frontend.forms import SelectedAttributesFormSet
 from frontend.forms import SelectedThemesIssuesFormSet
 
@@ -80,7 +68,6 @@ def parse_search_terms(input_search_terms):
 
 def index(request):
     # get data for dashboard panels
-    # top_contributors = TopContributors.objects.all()
     recent_contributions = RecentContributions.objects.all()
     for recent_contribution in recent_contributions:
         lines = recent_contribution.core_record_summary.split('\\n')
@@ -100,33 +87,19 @@ def index(request):
     attribute_values = AttributeValue.objects.all()
     theme_issue_values = Theme_Issue_Value.objects.all()
     who_feature = WhoFeature.objects.latest('id')
-    # top_rated_capacity_needs = TopRatedCapacityNeeds.objects.all()
     # return dashboard data and empty search forms
     return render(request, "frontend/index.html", {
         'contributions_by_record_type': contributions_by_record_type,
         'contributions_by_country': contributions_by_country,
         'other_countries': other_countries,
         'contributions_by_geographic_scope': contributions_by_geographic_scope,
-        # 'top_contributors': top_contributors,
         'recent_contributions': recent_contributions,
-        # 'top_rated_capacity_needs': top_rated_capacity_needs,
-        'searchForm': SearchForm,  # 'econTIForm': EconomicThemesIssuesForm,
-        # 'ecolTIForm': EcologicalThemesIssuesForm,
-        # 'socTIForm': SocialCulturalThemesIssuesForm,
-        # 'govTIForm': GovernanceThemesIssuesForm,
+        'searchForm': SearchForm,
         'selected_themes_issues_formset': SelectedThemesIssuesFormSet,
         'selected_attributes_formset': SelectedAttributesFormSet,
         'attribute_values': attribute_values, 'theme_issue_values':
             theme_issue_values,
         'who_feature': who_feature,
-        # 'stCharForm': SsftermCharacteristicsForm,
-        # 'ftCharForm': FisherytypeCharacteristicsForm,
-        # 'gtCharForm': GeartypeCharacteristicsForm,
-        # 'ehCharForm': EcosystemHighlevelCharacteristicsForm,
-        # 'edCharForm': EcosystemDetailedCharacteristicsForm,
-        # 'mktCharForm': MarketCharacteristicsForm,
-        # 'govCharForm': GovernanceCharacteristicsForm,
-        # 'mgmtCharForm': ManagementCharacteristicsForm,
         'num_who_records': SSFPerson.objects.all().count(),
         'num_sota_records': SSFKnowledge.objects.all().count(),
         'num_profile_records': SSFProfile.objects.all().count(),
@@ -139,7 +112,6 @@ def index(request):
 
 
 def frontend_data(request):
-    # sleep(3)
     queryset = None
     map_queryset = None
     search_terms = u""
@@ -167,9 +139,6 @@ def frontend_data(request):
             # append to search_terms display string
             if len(search_terms) > 0:
                 search_terms = search_terms + u" AND "
-            # search_terms = search_terms + u"(Full text = " +
-            # keywords.replace(u" ",
-            # u" OR ") + u")"
             parsed_keywords = parse_search_terms(keywords)
 
             where.append(
@@ -230,32 +199,6 @@ def frontend_data(request):
                     '%Y-%m-%d')
                 where.append(
                     u"contribution_date <= date '" + date_string + u"'")
-        # if len(request.POST['edited_begin_date']) > 0:
-        #     date_string = request.POST['edited_begin_date']
-        #     if r.match(date_string) is not None:
-        #         # append to search_terms display string
-        #         if len(search_terms) > 0:
-        #             search_terms = search_terms + u" AND "
-        #         search_terms = search_terms + u"(Edited begin date = " + \
-        #                        date_string + ")"
-        #         date_string = datetime.datetime.strptime(date_string,
-        #
-        # '%m/%d/%Y').strftime(
-        #             '%Y-%m-%d')
-        #         where.append(u"edited_date >= date '" + date_string + u"'")
-        # if len(request.POST['edited_end_date']) > 0:
-        #     date_string = request.POST['edited_end_date']
-        #     if r.match(date_string) is not None:
-        #         # append to search_terms display string
-        #         if len(search_terms) > 0:
-        #             search_terms = search_terms + u" AND "
-        #         search_terms = search_terms + u"(Edited end date = " + \
-        #                        date_string + u")"
-        #         date_string = datetime.datetime.strptime(date_string,
-        #
-        # '%m/%d/%Y').strftime(
-        #             '%Y-%m-%d')
-        #         where.append(u"edited_date <= date '" + date_string + u"'")
 
         if 'countries' in request.POST:
             # append to search_terms display string
@@ -278,101 +221,6 @@ def frontend_data(request):
             where.append(u"issf_core_id IN (SELECT issf_core_id FROM "
                          u"issf_core_map_point_unique WHERE " +
                          country_where + u")")
-
-        # themes_issues_list = []
-        # if 'economic_themes_issues' in request.POST:
-        # themes_issues_list.append(u",".join(request.POST.getlist(
-        # 'economic_themes_issues')))
-        # if 'ecological_themes_issues' in request.POST:
-        # themes_issues_list.append(u",".join(request.POST.getlist(
-        # 'ecological_themes_issues')))
-        # if 'social_cultural_themes_issues' in request.POST:
-        # themes_issues_list.append(
-        # u",".join(request.POST.getlist('social_cultural_themes_issues')))
-        # if 'governance_themes_issues' in request.POST:
-        #     themes_issues_list.append(u",".join(request.POST.getlist(
-        # 'governance_themes_issues')))
-        # if themes_issues_list:
-        #     # append to search_terms display string
-        #     if len(search_terms) > 0:
-        #         search_terms = search_terms + u" AND "
-        #     search_terms = search_terms + u"(Themes/issues = "
-        #     themes_issues_where = (u"theme_issue_value_id IN (" + u",
-        # ".join(themes_issues_list) +
-        #                            u")")
-        #     inner_where = []
-        #     inner_where.append(themes_issues_where)
-        #     theme_issue_values = Theme_Issue_Value.objects.extra(
-        # where=inner_where)
-        #     first = True
-        #     for theme_issue_value in theme_issue_values:
-        #         if not first:
-        #             search_terms = search_terms + u" OR "
-        #         search_terms = search_terms +
-        # theme_issue_value.theme_issue_label
-        #         first = False
-        #     search_terms = search_terms + u")"
-        #     where.append(
-        #         u"issf_core_id IN (SELECT issf_core_id FROM
-        # selected_theme_issue WHERE " +
-        #         themes_issues_where + u")")
-
-        # characteristics_list = []
-        # if 'ssfterm_characteristics' in request.POST:
-        # characteristics_list.append(u",".join(request.POST.getlist(
-        # 'ssfterm_characteristics')))
-        # if 'fisherytype_characteristics' in request.POST:
-        # characteristics_list.append(
-        # u",".join(request.POST.getlist('fisherytype_characteristics')))
-        # if 'geartype_characteristics' in request.POST:
-        # characteristics_list.append(
-        # u",".join(request.POST.getlist('geartype_characteristics')))
-        # if 'ecosystem_highlevel_characteristics' in request.POST:
-        # characteristics_list.append(
-        # u",".join(request.POST.getlist(
-        # 'ecosystem_highlevel_characteristics')))
-        # if 'ecosystem_detailed_characteristics' in request.POST:
-        #     characteristics_list.append(
-        #         u",".join(request.POST.getlist(
-        # 'ecosystem_detailed_characteristics')))
-        # if 'market_characteristics' in request.POST:
-        #     characteristics_list.append(u",".join(request.POST.getlist(
-        # 'market_characteristics')))
-        # if 'governance_characteristics' in request.POST:
-        #     characteristics_list.append(
-        #         u",".join(request.POST.getlist(
-        # 'governance_characteristics')))
-        # if 'management_characteristics' in request.POST:
-        #     characteristics_list.append(
-        #         u",".join(request.POST.getlist(
-        # 'management_characteristics')))
-        # if characteristics_list:
-        #     # append to search_terms display string
-        #     if len(search_terms) > 0:
-        #         search_terms = search_terms + u" AND "
-        #     search_terms = search_terms + u"(Characteristics = "
-        #     characteristics_where = (
-        #         u"characteristic_value_id IN (" + u",".join(
-        # characteristics_list) + u")")
-        #     inner_where = []
-        #     inner_where.append(characteristics_where)
-        #     characteristic_values = Characteristic_Value.objects.extra(
-        # where=inner_where)
-        #     first = True
-        #     for characteristic_value in characteristic_values:
-        #         if not first:
-        #             search_terms = search_terms + u" OR "
-        #         # search_terms = search_terms +
-        # characteristic.characteristic_category + " - " +
-        #         # characteristic.characteristic_label
-        #         search_terms = search_terms +
-        # characteristic_value.characteristic_label
-        #         first = False
-        #     search_terms = search_terms + u")"
-        #     where.append(
-        #         u"issf_core_id IN (SELECT issf_core_id FROM
-        # selected_characteristic WHERE " +
-        #         characteristics_where + u")")
 
         # Qualitative and ordinal characteristics
         selected_themes_issues_formset = SelectedThemesIssuesFormSet(
@@ -406,7 +254,6 @@ def frontend_data(request):
                              u"attribute_value_id IN (" +
                              attribute_value_ids + u"))")
 
-        # queryset = ISSFCore.objects.extra(where=where, select=select)
         map_queryset = ISSFCoreMapPointUnique.objects.extra(where=where,
                                                             select=select)
 
@@ -416,38 +263,6 @@ def frontend_data(request):
         I've left it for posterity.
         """
         # data found
-        # for row in queryset:
-        #     temp = []
-        #     temp.append(row.core_record_type)
-        #     url = ''
-        #     if row.core_record_type == "Who's Who in SSF":
-        #         url = reverse('who-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "State-of-the-Art in SSF Research":
-        #         url = reverse('sota-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "Capacity Development":
-        #         url = reverse('capacity-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "SSF Organization":
-        #         url = reverse('organization-details', kwargs={
-        # 'issf_core_id': row.issf_core_id})
-        #     elif row.core_record_type == "SSF Profile":
-        #         url = reverse('profile-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "SSF Guidelines":
-        #         url = reverse('guidelines-details', kwargs={
-        # 'issf_core_id': row.issf_core_id})
-        #     # temp.append('<a href="' + url + '">' + escape(
-        # row.core_record_summary) + '</a>')
-        #     lines = row.core_record_summary.split('\\n')
-        #     summary = ''
-        #     for line in lines:
-        #         summary += line + '<br/>'
-        #     temp.append('<a href="' + url + '">' + summary + '</a>')
-        #     temp.append(row.edited_date.strftime("%Y-%m-%d"))
-        #     temp.append(str(row.relevance))
-        #     search_results.append(temp)
 
         # Put data for each record into map data array. This probably won't scale well. Would probably be better off
         # calculating a record's URL when it's contributed and then storing it as a column in the database.
@@ -778,13 +593,6 @@ def table_data_export(request):
         return response
 
 
-# def nstr(s):
-#     # returns s if it is not None, otherwise returns an empty string
-#     if not s:
-#         return ''
-#     return s
-
-
 def write_file_csv(filename, records, zipfile):
     if len(records) > 0:
         csvfile = open('/home/projects/issf/issf_prod/' + filename, 'wb+')
@@ -1016,520 +824,3 @@ def geojson_upload(request):
         else:
             form = GeoJSONUploadForm()
             return render(request, 'frontend/geojson_upload.html', {'form': form})
-
-
-# here be dragons
-"""I think it's best if we never speak of the following code block."""
-
-# def write_zip_csv(filename, table, ids, zip_object):
-#     if len(ids) > 0:
-#         with open(filename, 'wb+') as csvfile:
-#             string_buffer = StringIO()
-#             writer = unicodecsv.writer(string_buffer)
-#
-#             """ The following code is the exact opposite of DRY.
-#             I swear it was the only way."""
-#
-#             if filename == 'capacity.csv':
-#                 records = table.objects.select_related().filter(pk__in=ids)
-#                 geog_scope_local = \
-#                     GeographicScopeLocalArea.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 geog_scope_subnational = \
-#                     GeographicScopeSubnation.objects.select_related(
-#
-#                 ).filter(issf_core__in=ids)
-#                 geog_scope_regional = \
-#                     Geographic_Scope_Region.objects.select_related().filter(
-#                     issf_core__in=ids)
-#
-#                 field_names = [field.name for field in
-#                                records.model._meta.fields]
-#
-#                 if geog_scope_local:
-#                     geog_scope_local_field_names = [field.name for field in
-#                                                     geog_scope_local.model._meta.fields]
-#                 else:
-#                     geog_scope_local_field_names = []
-#                 if geog_scope_subnational:
-#                     geog_scope_subnational_field_names = [field.name for field
-#                                                           in
-#                                                           geog_scope_subnational.model._meta.fields]
-#                 else:
-#                     geog_scope_subnational_field_names = []
-#                 if geog_scope_regional:
-#                     geog_scope_regional_field_names = [field.name for field in
-#                                                        geog_scope_regional.model._meta.fields]
-#                 else:
-#                     geog_scope_regional_field_names = []
-#
-#                 writer.writerow(
-#                     field_names + geog_scope_local_field_names +
-#                     geog_scope_subnational_field_names +
-#                     geog_scope_regional_field_names)
-#
-#                 for record, local, subnat, regional in izip_longest(records,
-#                                                                     geog_scope_local,
-#                                                                     geog_scope_subnational,
-#                                                                     geog_scope_regional,
-#                                                                     fillvalue=' '):
-#                     # Somehow a record sometimes might be None. This is
-#                     # baffling.
-#                     try:
-#                         writer.writerow(
-#                             [getattr(record, field, ' ') for field in
-#                              field_names] + [getattr(local, field, ' ') for
-#                                              field in
-#                                              geog_scope_local_field_names if
-#                                              local] + [
-#                                 getattr(subnat, field, ' ') for field in
-#                                 geog_scope_subnational_field_names if
-#                                 subnat] + [getattr(regional, field, ' ') for
-#                                            field in
-#                                            geog_scope_regional_field_names if
-#                                            regional])
-#                     except AttributeError:
-#                         pass
-#             elif filename == 'guidelines.csv':
-#                 records = table.objects.select_related().filter(pk__in=ids)
-#                 geog_scope_local = \
-#                     GeographicScopeLocalArea.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 geog_scope_subnational = \
-#                     GeographicScopeSubnation.objects.select_related(
-#
-#                 ).filter(issf_core__in=ids)
-#                 geog_scope_regional = \
-#                     Geographic_Scope_Region.objects.select_related().filter(
-#                     issf_core__in=ids)
-#
-#                 field_names = [field.name for field in
-#                                records.model._meta.fields]
-#
-#                 if geog_scope_local:
-#                     geog_scope_local_field_names = [field.name for field in
-#                                                     geog_scope_local.model._meta.fields]
-#                 else:
-#                     geog_scope_local_field_names = []
-#                 if geog_scope_subnational:
-#                     geog_scope_subnational_field_names = [field.name for field
-#                                                           in
-#                                                           geog_scope_subnational.model._meta.fields]
-#                 else:
-#                     geog_scope_subnational_field_names = []
-#                 if geog_scope_regional:
-#                     geog_scope_regional_field_names = [field.name for field in
-#                                                        geog_scope_regional.model._meta.fields]
-#                 else:
-#                     geog_scope_regional_field_names = []
-#
-#                 writer.writerow(
-#                     field_names + geog_scope_local_field_names +
-#                     geog_scope_subnational_field_names +
-#                     geog_scope_regional_field_names)
-#
-#                 for record, local, subnat, regional in izip_longest(records,
-#                                                                     geog_scope_local,
-#                                                                     geog_scope_subnational,
-#                                                                     geog_scope_regional,
-#                                                                     fillvalue=' '):
-#
-#                     try:
-#                         writer.writerow(
-#                             [getattr(record, field, ' ') for field in
-#                              field_names] + [getattr(local, field, ' ') for
-#                                              field in
-#                                              geog_scope_local_field_names if
-#                                              local] + [
-#                                 getattr(subnat, field, ' ') for field in
-#                                 geog_scope_subnational_field_names if
-#                                 subnat] + [getattr(regional, field, ' ') for
-#                                            field in
-#                                            geog_scope_regional_field_names if
-#                                            regional])
-#                     except AttributeError:
-#                         pass
-#             elif filename == 'organization.csv':
-#                 records = table.objects.select_related().filter(pk__in=ids)
-#                 geog_scope_local = \
-#                     GeographicScopeLocalArea.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 geog_scope_subnational = \
-#                     GeographicScopeSubnation.objects.select_related(
-#
-#                 ).filter(issf_core__in=ids)
-#                 geog_scope_regional = \
-#                     Geographic_Scope_Region.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 # themes_issues = CommonThemeIssueView.objects.select_related(
-#                 #
-#                 # ).filter(issf_core__in=ids)
-#
-#                 field_names = [field.name for field in
-#                                records.model._meta.fields]
-#
-#                 if geog_scope_local:
-#                     geog_scope_local_field_names = [field.name for field in
-#                                                     geog_scope_local.model._meta.fields]
-#                 else:
-#                     geog_scope_local_field_names = []
-#                 if geog_scope_subnational:
-#                     geog_scope_subnational_field_names = [field.name for field
-#                                                           in
-#                                                           geog_scope_subnational.model._meta.fields]
-#                 else:
-#                     geog_scope_subnational_field_names = []
-#                 if geog_scope_regional:
-#                     geog_scope_regional_field_names = [field.name for field in
-#                                                        geog_scope_regional.model._meta.fields]
-#                 else:
-#                     geog_scope_regional_field_names = []
-#
-#                 # themes_issues_field_names = [field.name for field in
-#                 #
-#                 # themes_issues.model._meta.fields]
-#
-#                 if geog_scope_local_field_names:
-#                     geog_scope_local_field_names[
-#                         geog_scope_local_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_subnational_field_names:
-#                     geog_scope_subnational_field_names[
-#                         geog_scope_subnational_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_regional_field_names:
-#                     geog_scope_regional_field_names[
-#                         geog_scope_regional_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 # if themes_issues_field_names:
-#                 #     themes_issues_field_names[
-#                 # themes_issues_field_names.index(
-#                 #         'issf_core')] = 'issf_core_id'
-#
-#                 writer.writerow(
-#                     field_names + geog_scope_local_field_names +
-#                     geog_scope_subnational_field_names +
-#                     geog_scope_regional_field_names)
-#
-#                 for record, local, subnat, regional in izip_longest(records,
-#                                                                     geog_scope_local,
-#                                                                     geog_scope_subnational,
-#                                                                     geog_scope_regional,
-#                                                                     fillvalue=' '):
-#
-#                     try:
-#                         writer.writerow(
-#                             [getattr(record, field, ' ') for field in
-#                              field_names] + [getattr(local, field, ' ') for
-#                                              field in
-#                                              geog_scope_local_field_names if
-#                                              local] + [
-#                                 getattr(subnat, field, ' ') for field in
-#                                 geog_scope_subnational_field_names if
-#                                 subnat] + [getattr(regional, field, ' ') for
-#                                            field in
-#                                            geog_scope_regional_field_names if
-#                                            regional])
-#                     except AttributeError:
-#                         pass
-#
-#             elif filename == 'profile.csv':
-#                 records = table.objects.select_related().filter(pk__in=ids)
-#                 geog_scope_local = \
-#                     GeographicScopeLocalArea.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 geog_scope_subnational = \
-#                     GeographicScopeSubnation.objects.select_related(
-#
-#                 ).filter(issf_core__in=ids)
-#                 geog_scope_regional = \
-#                     Geographic_Scope_Region.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 species = Species.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 orgs = ProfileOrganization.objects.select_related().filter(
-#                     ssfprofile__in=ids)
-#
-#                 field_names = [field.name for field in
-#                                records.model._meta.fields]
-#                 if geog_scope_local:
-#                     geog_scope_local_field_names = [field.name for field in
-#                                                     geog_scope_local.model._meta.fields]
-#                 else:
-#                     geog_scope_local_field_names = []
-#                 if geog_scope_subnational:
-#                     geog_scope_subnational_field_names = [field.name for field
-#                                                           in
-#                                                           geog_scope_subnational.model._meta.fields]
-#                 else:
-#                     geog_scope_subnational_field_names = []
-#                 if geog_scope_regional:
-#                     geog_scope_regional_field_names = [field.name for field in
-#                                                        geog_scope_regional.model._meta.fields]
-#                 else:
-#                     geog_scope_regional_field_names = []
-#                 species_field_names = [field.name for field in
-#                                        species.model._meta.fields]
-#                 org_field_names = [field.name for field in
-#                                    orgs.model._meta.fields]
-#
-#                 if geog_scope_local_field_names:
-#                     geog_scope_local_field_names[
-#                         geog_scope_local_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_subnational_field_names:
-#                     geog_scope_subnational_field_names[
-#                         geog_scope_subnational_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_regional_field_names:
-#                     geog_scope_regional_field_names[
-#                         geog_scope_regional_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if species_field_names:
-#                     species_field_names[species_field_names.index(
-#                         'issf_core')] = 'issf_core_id'
-#
-#                 writer.writerow(
-#                     field_names + geog_scope_local_field_names +
-#                     geog_scope_subnational_field_names +
-#                     geog_scope_regional_field_names + species_field_names +
-#                     org_field_names)
-#
-#                 for record, local, subnat, regional, spec, org in izip_longest(
-#                         records, geog_scope_local, geog_scope_subnational,
-#                         geog_scope_regional, species, orgs, fillvalue=' '):
-#
-#                     try:
-#                         writer.writerow(
-#                             [getattr(record, field, ' ') for field in
-#                              field_names] + [getattr(local, field, ' ') for
-#                                              field in
-#                                              geog_scope_local_field_names if
-#                                              local] + [
-#                                 getattr(subnat, field, ' ') for field in
-#                                 geog_scope_subnational_field_names if
-#                                 subnat] + [getattr(regional, field, ' ') for
-#                                            field in
-#                                            geog_scope_regional_field_names if
-#                                            regional] + [
-#                                 getattr(spec, field, ' ') for field in
-#                                 species_field_names] + [
-#                                 getattr(org, field, ' ') for field in
-#                                 org_field_names])
-#                     except:
-#                         pass
-#             elif filename == 'state_of_the_art.csv':
-#                 records = table.objects.select_related().filter(pk__in=ids)
-#                 geog_scope_local = \
-#                     GeographicScopeLocalArea.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 geog_scope_subnational = \
-#                     GeographicScopeSubnation.objects.select_related(
-#
-#                 ).filter(issf_core__in=ids)
-#                 geog_scope_regional = \
-#                     Geographic_Scope_Region.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 # themes_issues = CommonThemeIssueView.objects.select_related(
-#                 #
-#                 # ).filter(issf_core__in=ids)
-#                 # attrs = CommonAttributeView.objects.select_related().filter(
-#                 #     issf_core__in=ids)
-#                 species = Species.objects.select_related().filter(
-#                     issf_core__in=ids)
-#
-#                 field_names = [field.name for field in
-#                                records.model._meta.fields]
-#                 if geog_scope_local:
-#                     geog_scope_local_field_names = [field.name for field in
-#                                                     geog_scope_local.model._meta.fields]
-#                 else:
-#                     geog_scope_local_field_names = []
-#                 if geog_scope_subnational:
-#                     geog_scope_subnational_field_names = [field.name for field
-#                                                           in
-#                                                           geog_scope_subnational.model._meta.fields]
-#                 else:
-#                     geog_scope_subnational_field_names = []
-#                 if geog_scope_regional:
-#                     geog_scope_regional_field_names = [field.name for field in
-#                                                        geog_scope_regional.model._meta.fields]
-#                 else:
-#                     geog_scope_regional_field_names = []
-#                 # themes_issues_field_names = [field.name for field in
-#                 #
-#                 # themes_issues.model._meta.fields]
-#                 #
-#                 # attrs_field_names = [field.name for field in
-#                 #                      attrs.model._meta.fields]
-#
-#                 species_field_names = [field.name for field in
-#                                        species.model._meta.fields]
-#
-#                 if geog_scope_local_field_names:
-#                     geog_scope_local_field_names[
-#                         geog_scope_local_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_subnational_field_names:
-#                     geog_scope_subnational_field_names[
-#                         geog_scope_subnational_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_regional_field_names:
-#                     geog_scope_regional_field_names[
-#                         geog_scope_regional_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 # if attrs_field_names:
-#                 #     attrs_field_names[
-#                 #         attrs_field_names.index('issf_core')] =
-#                 # 'issf_core_id'
-#                 # if themes_issues_field_names:
-#                 #     themes_issues_field_names[
-#                 # themes_issues_field_names.index(
-#                 #         'issf_core')] = 'issf_core_id'
-#                 if species_field_names:
-#                     species_field_names[species_field_names.index(
-#                         'issf_core')] = 'issf_core_id'
-#
-#                 writer.writerow(field_names +  # themes_issues_field_names +
-#                                 # attrs_field_names +
-#                                 geog_scope_local_field_names +
-#                                 geog_scope_subnational_field_names +
-#                                 geog_scope_regional_field_names +
-#                                 species_field_names)
-#
-#                 for record, local, subnat, regional, spec in izip_longest(
-#                         records,  # themes_issues, attrs,
-#                         geog_scope_local, geog_scope_subnational,
-#                         geog_scope_regional, species, fillvalue=' '):
-#
-#                     try:
-#                         writer.writerow(
-#                             [getattr(record, field, ' ') for field in
-#                              field_names] +  # [getattr(ti, field, ' ') for
-#                             # field
-#                             #                  in themes_issues_field_names] +
-#                             # [
-#                             #     getattr(attr, field, ' ') for field in
-#                             #     attrs_field_names] +
-#                             [getattr(local, field, ' ') for field in
-#                              geog_scope_local_field_names if local] + [
-#                                 getattr(subnat, field, ' ') for field in
-#                                 geog_scope_subnational_field_names if
-#                                 subnat] + [getattr(regional, field, ' ') for
-#                                            field in
-#                                            geog_scope_regional_field_names if
-#                                            regional] + [
-#                                 getattr(spec, field, ' ') for field in
-#                                 species_field_names])
-#                     except:
-#                         pass
-#             elif filename == 'whos_who.csv':
-#                 records = table.objects.select_related().filter(pk__in=ids)
-#                 geog_scope_local = \
-#                     GeographicScopeLocalArea.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 geog_scope_subnational = \
-#                     GeographicScopeSubnation.objects.select_related(
-#
-#                 ).filter(issf_core__in=ids)
-#                 geog_scope_regional = \
-#                     Geographic_Scope_Region.objects.select_related().filter(
-#                     issf_core__in=ids)
-#                 # themes_issues = CommonThemeIssueView.objects.select_related(
-#                 #
-#                 # ).filter(issf_core__in=ids)
-#
-#                 field_names = [field.name for field in
-#                                records.model._meta.fields]
-#
-#                 if geog_scope_local:
-#                     geog_scope_local_field_names = [field.name for field in
-#                                                     geog_scope_local.model._meta.fields]
-#                 else:
-#                     geog_scope_local_field_names = []
-#                 if geog_scope_subnational:
-#                     geog_scope_subnational_field_names = [field.name for field
-#                                                           in
-#                                                           geog_scope_subnational.model._meta.fields]
-#                 else:
-#                     geog_scope_subnational_field_names = []
-#                 if geog_scope_regional:
-#                     geog_scope_regional_field_names = [field.name for field in
-#                                                        geog_scope_regional.model._meta.fields]
-#                 else:
-#                     geog_scope_regional_field_names = []
-#
-#                 # themes_issues_field_names = [field.name for field in
-#                 #
-#                 # themes_issues.model._meta.fields]
-#
-#                 if geog_scope_local_field_names:
-#                     geog_scope_local_field_names[
-#                         geog_scope_local_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_subnational_field_names:
-#                     geog_scope_subnational_field_names[
-#                         geog_scope_subnational_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 if geog_scope_regional_field_names:
-#                     geog_scope_regional_field_names[
-#                         geog_scope_regional_field_names.index(
-#                             'issf_core')] = 'issf_core_id'
-#                 # if themes_issues_field_names:
-#                 #     themes_issues_field_names[
-#                 # themes_issues_field_names.index(
-#                 #         'issf_core')] = 'issf_core_id'
-#
-#                 writer.writerow(
-#                     field_names + geog_scope_local_field_names +
-#                     geog_scope_subnational_field_names +
-#                     geog_scope_regional_field_names)
-#
-#                 for record, local, subnat, regional in izip_longest(records,
-#                                                                     geog_scope_local,
-#                                                                     geog_scope_subnational,
-#                                                                     geog_scope_regional,
-#                                                                     fillvalue=' '):
-#
-#                     try:
-#                         writer.writerow(
-#                             [getattr(record, field, ' ') for field in
-#                              field_names] + [getattr(local, field, ' ') for
-#                                              field in
-#                                              geog_scope_local_field_names if
-#                                              local] + [
-#                                 getattr(subnat, field, ' ') for field in
-#                                 geog_scope_subnational_field_names if
-#                                 subnat] + [getattr(regional, field, ' ') for
-#                                            field in
-#                                            geog_scope_regional_field_names if
-#                                            regional])
-#                     except AttributeError:
-#                         pass
-#             else:
-#                 writer.writerow(
-#                     ['issf_core_id', 'question_number', 'attribute_label',
-#                      'value', 'attribute_value', 'units', 'other_value',
-#                      'additional', 'additional_value'])
-#
-#                 main_attrs = table.objects.filter(
-#                     issf_core__in=ids).select_related().order_by('issf_core',
-#                                                                  'label_order')
-#                 for attr in main_attrs:
-#                     # have to check if some values are not None, else an error
-#                     # will be thrown
-#                     writer.writerow(
-#                         [attr.issf_core_id, attr.attribute.question_number,
-#                          attr.attribute.attribute_label, nstr(attr.value),
-#                          # requires an additional check because if
-#                          # attribute_value
-#                          # is None then it will throw an error
-#                          # before the string
-#                          # can even be checked
-#                          nstr(
-#                              attr.attribute_value.value_label) if
-#                          attr.attribute_value else '',
-#                          attr.attribute.units_label, attr.other_value,
-#                          nstr(attr.additional), nstr(attr.additional_value)])
-#
-#         zip_object.writestr(csvfile.name, string_buffer.getvalue())
