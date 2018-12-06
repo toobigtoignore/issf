@@ -4,9 +4,7 @@ from django.conf.urls import url
 # replace * with specific references
 from django.views.generic import TemplateView
 
-from details import views as d_views
 from .views import *
-from frontend.views import index
 from issf_base.models import *
 
 urlpatterns = [  # display
