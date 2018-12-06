@@ -8,7 +8,7 @@ from issf_base.models import Country, ISSFCore, ISSF_Core, SelectedAttribute, \
 
 
 class SearchForm(forms.Form):
-    keywords = forms.CharField(label='Full text')
+    keywords = forms.CharField(label='Full text', required=False)
     # contributor_id=1 is the ISSF Staff account
     existing_contributors = ISSFCore.objects.all().values(
         'contributor')  # .exclude(contributor_id=1)
@@ -21,16 +21,16 @@ class SearchForm(forms.Form):
                                'username')]
     contributor_choices.insert(0, ('', '------------------'))
     contributor = forms.ChoiceField(choices=contributor_choices,
-                                    label='Contributor/editor')
-    contribution_begin_date = forms.DateField()
-    contribution_end_date = forms.DateField()
+                                    label='Contributor/editor', required=False)
+    contribution_begin_date = forms.DateField(required=False)
+    contribution_end_date = forms.DateField(required=False)
     # edited_begin_date = forms.DateField()
     # edited_end_date = forms.DateField()
     countries = forms.MultipleChoiceField(
         choices=[(c.country_id, c.short_name) for c in
                  Country.objects.order_by('short_name')],
         help_text='Hold down "Control", or "Command" on a Mac, to select '
-                  'more than one.')
+                  'more than one.', required=False)
 
 
 # class EconomicThemesIssuesForm(ModelForm):
