@@ -1,7 +1,6 @@
 from django import forms
-from django.forms import ModelForm, CheckboxSelectMultiple, RadioSelect, \
-    HiddenInput, TextInput, SelectMultiple
-from django.forms.models import inlineformset_factory, formset_factory
+from django.forms import ModelForm, RadioSelect, HiddenInput
+from django.forms.models import inlineformset_factory
 from leaflet.forms.widgets import LeafletWidget
 # replace * with specific references
 from issf_base.models import *
@@ -19,20 +18,22 @@ class SSFKnowledgeForm(ModelForm):
                   'level2_title', 'nonenglish_language', 'nonenglish_title',
                   'year', 'contributor', ]
         labels = {
-            'publication_type': '*Publication type', 'level1_title':
-                '*Journal/book/report/newsletter/conference',
+            'publication_type': '*Publication type',
+            'level1_title': '*Journal/book/report/newsletter/conference',
             'level2_title': '*Article/chapter/item title',
             'nonenglish_language': 'If the study was published in a language '
                                    'other than English, '
-                                   'please specify', 'nonenglish_title': 'Title in original language', 'year': '*Year',
+                                   'please specify',
+            'nonenglish_title': 'Title in original language',
+            'year': '*Year',
             'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
-                           'who can edit the record)', }
+                           'who can edit the record)'
+        }
         widgets = {
-            'level1_title': forms.Textarea(
-                attrs={'rows': 3}), 'level2_title': forms.Textarea(
-                attrs={'rows': 3}), 'nonenglish_title': forms.Textarea(
-                attrs={'rows': 3}), }
-
+            'level1_title': forms.Textarea(attrs={'rows': 3}),
+            'level2_title': forms.Textarea(attrs={'rows': 3}),
+            'nonenglish_title': forms.Textarea(attrs={'rows': 3})
+        }
 
     # override clean to check combinations of fields
     def clean(self):
@@ -44,15 +45,12 @@ class SSFKnowledgeForm(ModelForm):
         if len(cleaned_data['other_publication_type']) > 0:
             other_text = True
         other_selected = False
-        if cleaned_data.has_key('publication_type'):
-            if cleaned_data[
-                'publication_type'].publication_type == 'Other (specify)':
+        if 'publication_type' in cleaned_data:
+            if cleaned_data['publication_type'].publication_type == 'Other (specify)':
                 other_selected = True
         # could auto-set checkbox
         if not other_text and other_selected:
-            raise forms.ValidationError(
-                'Please specify other publication type, or uncheck '
-                'Other.')
+            raise forms.ValidationError('Please specify other publication type, or uncheck Other.')
         return cleaned_data
 
 
@@ -63,30 +61,31 @@ class SSFPersonForm(ModelForm):
                   'prov_state', 'postal_code', 'country', 'person_point',
                   'url', 'organizations', 'contributor', 'img_url']
         labels = {
-            'affiliation': 'Primary institutional/organizational '
-                           'affiliation', 'address1': 'Address', 'address2':
-                'Address', 'city_town': 'City/town', 'prov_state':
-                'Province/state', 'person_point': 'Address location (use the '
-                                                  'draw, edit and delete '
-                                                  'controls to '
-                                                  'set/modify)',
+            'affiliation': 'Primary institutional/organizational affiliation',
+            'address1': 'Address',
+            'address2': 'Address',
+            'city_town': 'City/town',
+            'prov_state': 'Province/state',
+            'person_point': 'Address location (use the draw, edit and delete controls to '
+                            'set/modify)',
             'url': 'Please include a link to your homepage or online profile (Google Scholar, '
                    'LinkedIn, etc.)',
             'organizations': 'Select all SSF Organizations/Networks/Associations that you are a '
                              'member of (use Contribute to add)',
             'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
-                           'who can edit the record)', 'img_url': 'Your picture (direct links only)'}
+                           'who can edit the record)',
+            'img_url': 'Your picture (direct links only)'
+        }
         help_texts = {
-            'organizations': 'Hold down "Control", or "Command" on a Mac, '
-                             'to select more than '
-                             'one.', }
+            'organizations': 'Hold down "Control", or "Command" on a Mac, to select more than one.'
+        }
         widgets = {
-            'person_point': ISSFMapWidget(), 'contributor':
-                forms.widgets.HiddenInput, }
+            'person_point': ISSFMapWidget(),
+            'contributor': forms.widgets.HiddenInput
+        }
 
 
 class SSFOrganizationForm(ModelForm):
-    # organization_point = PointField()
     class Meta:
         model = SSFOrganization
         fields = (
@@ -109,53 +108,44 @@ class SSFOrganizationForm(ModelForm):
             'city_town', 'prov_state', 'postal_code', 'country',
             'organization_point', 'contributor',)
         labels = {
-            'organization_name': '*Organization name', 'address1':
-                'Address', 'address2': 'Address', 'city_town': 'City/town',
-            'prov_state': 'Province/state', 'organization_point': 'Address '
-                                                                  'location '
-                                                                  '(use the '
-                                                                  'draw, '
-                                                                  'edit and '
-                                                                  'delete '
-                                                                  'controls '
-                                                                  'to '
-                                                                  'set/modify)',
+            'organization_name': '*Organization name',
+            'address1': 'Address',
+            'address2': 'Address',
+            'city_town': 'City/town',
+            'prov_state': 'Province/state',
+            'organization_point': 'Address location (use the draw, edit and delete controls to '
+                                  'set/modify)',
             'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
-                           'who can edit the record)', }
+                           'who can edit the record)'
+        }
         widgets = {
-            'organization_point': ISSFMapWidget(), 'ssf_definition':
-                forms.Textarea(
-                    attrs={'rows': 3}), 'mission': forms.Textarea(
-                attrs={'rows': 3}), 'achievements': forms.Textarea(
-                attrs={'rows': 3}), 'success_factors': forms.Textarea(
-                attrs={'rows': 3}), 'obstacles': forms.Textarea(
-                attrs={'rows': 3}), }
+            'organization_point': ISSFMapWidget(),
+            'ssf_definition': forms.Textarea(attrs={'rows': 3}),
+            'mission': forms.Textarea(attrs={'rows': 3}),
+            'achievements': forms.Textarea(attrs={'rows': 3}),
+            'success_factors': forms.Textarea(attrs={'rows': 3}),
+            'obstacles': forms.Textarea(attrs={'rows': 3})
+        }
 
     def clean(self):
         cleaned_data = super(SSFOrganizationForm, self).clean()
 
         if 'ssf_defined' in cleaned_data:
-            if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data[
-                'ssf_definition']:
+            if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data['ssf_definition']:
                 raise forms.ValidationError('Please provide an SSF defintion.')
 
-        if not confirm_other_text('organization_type_other_text',
-                                  'organization_type_other', cleaned_data):
+        if not confirm_other_text('organization_type_other_text', 'organization_type_other',
+                                  cleaned_data):
             raise forms.ValidationError(
                 'Please specify Other organization type, or uncheck Other.')
 
-        if not confirm_other_text('motivation_other_text', 'motivation_other',
-                                  cleaned_data):
-            raise forms.ValidationError(
-                'Please specify Other motivation/goal, or uncheck Other.')
+        if not confirm_other_text('motivation_other_text', 'motivation_other', cleaned_data):
+            raise forms.ValidationError('Please specify Other motivation/goal, or uncheck Other.')
 
-        if not confirm_other_text('activities_other_text', 'activities_other',
-                                  cleaned_data):
-            raise forms.ValidationError(
-                'Please specify Other activity, or uncheck Other.')
+        if not confirm_other_text('activities_other_text', 'activities_other', cleaned_data):
+            raise forms.ValidationError('Please specify Other activity, or uncheck Other.')
 
-        if not confirm_other_text('network_types_other_text',
-                                  'network_types_other', cleaned_data):
+        if not confirm_other_text('network_types_other_text', 'network_types_other', cleaned_data):
             raise forms.ValidationError(
                 'Please specify Other networks/partnerships/collaborations, '
                 'or uncheck Other.')
@@ -170,14 +160,14 @@ class SSFCapacityNeedForm(ModelForm):
                   'capacity_need_title', 'capacity_need_description',
                   'contributor', ]
         labels = {
-            'capacity_need_category': '*Category', 'capacity_need_type':
-                '*Type', 'capacity_need_title': '*Short title',
-            'capacity_need_description': '*Description', 'contributor':
-                '*Contributor (note: this is the only person, other than '
-                'ISSF staff, '
-                'who can edit the record)', }
-        widgets = {
-            'capacity_need_description': forms.Textarea(attrs={'rows': 3}), }
+            'capacity_need_category': '*Category',
+            'capacity_need_type': '*Type',
+            'capacity_need_title': '*Short title',
+            'capacity_need_description': '*Description',
+            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+                           'who can edit the record)'
+        }
+        widgets = {'capacity_need_description': forms.Textarea(attrs={'rows': 3})}
 
 
 class SSFProfileForm(ModelForm):
@@ -189,20 +179,20 @@ class SSFProfileForm(ModelForm):
         widgets = {
             'data_year': forms.NumberInput(attrs={'placeholder': 'Year'}),
             'data_end_year': forms.NumberInput(attrs={'placeholder': 'Year'}),
-            'ssf_definition': forms.Textarea(
-                attrs={'rows': 3}), 'comments': forms.Textarea(
-                attrs={'rows': 3}), 'sources': forms.Textarea(
-                attrs={'rows': 3}), }
+            'ssf_definition': forms.Textarea(attrs={'rows': 3}),
+            'comments': forms.Textarea(attrs={'rows': 3}),
+            'sources': forms.Textarea(attrs={'rows': 3})
+        }
 
         labels = {
-            'ssf_name': '1A. *Name of fishery', 'ssf_defined': '4B. *SSF '
-                                                               'defined?',
-            'ssf_definition': 'SSF Definition (if applicable)', 'sources':
-                'Sources', 'comments': 'Comments', 'description':
-                'Description/history of the fishery', 'contributor':
-                '*Contributor (note: this is the only person, other than '
-                'ISSF staff, '
-                'who can edit the record)',
+            'ssf_name': '1A. *Name of fishery',
+            'ssf_defined': '4B. *SSF defined?',
+            'ssf_definition': 'SSF Definition (if applicable)',
+            'sources': 'Sources',
+            'comments': 'Comments',
+            'description': 'Description/history of the fishery',
+            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+                           'who can edit the record)',
             'img_url': 'Image URL (direct links only)'
         }
 
@@ -222,48 +212,66 @@ class SSFGuidelinesForm(ModelForm):
         widgets = {'purpose': forms.Textarea(attrs={'rows': 3})}
 
         labels = {
-            'contributor': '*Contributor (note: this is the only person, '
-                           'other than ISSF staff, '
-                           'who can edit the record)', 'title': '*Title',
-            'activity_type': '*Activity type', 'activity_coverage':
-                '*Activity coverage', 'location': '*Location', 'start_year':
-                '*Year', 'start_month': 'Month', 'start_day': 'Day',
-            'end_year': 'Year', 'end_month': 'Month', 'end_day': 'Day',
-            'ongoing': '*Ongoing?', 'organizer': '*Organizer', 'purpose':
-                '*Purpose'
+            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+                           'who can edit the record)',
+            'title': '*Title',
+            'activity_type': '*Activity type',
+            'activity_coverage': '*Activity coverage',
+            'location': '*Location',
+            'start_year': '*Year',
+            'start_month': 'Month',
+            'start_day': 'Day',
+            'end_year': 'Year',
+            'end_month': 'Month',
+            'end_day': 'Day',
+            'ongoing': '*Ongoing?',
+            'organizer': '*Organizer',
+            'purpose': '*Purpose'
         }
 
 
 class SSFExperiencesForm(ModelForm):
     class Meta:
         model = SSFExperiences
-        fields = ['name', 'title', 'video_url', 'vimeo_video_url', 'description', 'img_url', 'contributor']
-        labels = {'name': '*Presenter name', 'title': 'Video title',
-                  'video_url': 'YouTube video URL (no shortened links)',
-                  'description': '*Describe the experience',
-                  'img_url': 'Image URL (direct links only)',
-                  'contributor': '*Contributor (note: this is the only person, '
-                                 'other than ISSF staff, '
-                                 'who can edit the record)', 'vimeo_video_url': 'Vimeo video URL (no shortened links)'}
+        fields = [
+            'name', 'title', 'video_url', 'vimeo_video_url',
+            'description', 'img_url', 'contributor'
+        ]
+        labels = {
+            'name': '*Presenter name',
+            'title': 'Video title',
+            'video_url': 'YouTube video URL (no shortened links)',
+            'description': '*Describe the experience',
+            'img_url': 'Image URL (direct links only)',
+            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+                           'who can edit the record)',
+            'vimeo_video_url': 'Vimeo video URL (no shortened links)'
+        }
 
 
 class SSFCaseStudiesForm(ModelForm):
     class Meta:
         model = SSFCaseStudies
-        fields = ['name', 'role', 'description_area', 'description_fishery', 'description_issues', 'issues_challenges',
-                  'stakeholders', 'transdisciplinary', 'background_context', 'activities_innovation', 'contributor']
-        labels = {'name': '*Case study name', 'role': '*Your role in the case study',
-                  'description_area': '*Describe case study area',
-                  'description_fishery': '*Describe case study fishery',
-                  'description_issues': '*Describe case study issues', 'major_issues': '*Major issues',
-                  'stakeholders': '*Stakeholders involved',
-                  'issues_challenges': '*Issues addressed?/Remaining challenges',
-                  'transdisciplinary': '*Was the transdisciplinary perspective applied? Explain how.',
-                  'background_context': '*Background and context',
-                  'activities_innovation': '*Key activities/innovation',
-                  'contributor': '*Contributor (note: this is the only person, '
-                                 'other than ISSF staff, '
-                                 'who can edit the record)'}
+        fields = [
+            'name', 'role', 'description_area', 'description_fishery', 'description_issues',
+            'issues_challenges', 'stakeholders', 'transdisciplinary', 'background_context',
+            'activities_innovation', 'contributor'
+        ]
+        labels = {
+            'name': '*Case study name',
+            'role': '*Your role in the case study',
+            'description_area': '*Describe case study area',
+            'description_fishery': '*Describe case study fishery',
+            'description_issues': '*Describe case study issues',
+            'major_issues': '*Major issues',
+            'stakeholders': '*Stakeholders involved',
+            'issues_challenges': '*Issues addressed?/Remaining challenges',
+            'transdisciplinary': '*Was the transdisciplinary perspective applied? Explain how.',
+            'background_context': '*Background and context',
+            'activities_innovation': '*Key activities/innovation',
+            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+                           'who can edit the record)'
+        }
         widgets = {
             'description_area': forms.Textarea(attrs={'rows': 4}),
             'description_fishery': forms.Textarea(attrs={'rows': 4}),
@@ -290,38 +298,36 @@ class CapacityNeedRatingForm(ModelForm):
     def clean(self):
         cleaned_data = super(CapacityNeedRatingForm, self).clean()
         if cleaned_data['rating'] == 0:
-            raise forms.ValidationError(
-                'Please select a rating between 1 and 5')
+            raise forms.ValidationError('Please select a rating between 1 and 5')
 
 
 class MainAttributeForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MainAttributeForm, self).__init__(*args, **kwargs)
         if len(self.initial) > 0:
-            self.fields['attribute_value'] = forms.ModelChoiceField(label='',
-                                                                    required=False,
-                                                                    queryset=AttributeValue.objects.filter(
-                                                                        attribute=
-                                                                        self.initial[
-                                                                            'attribute']))
-            self.fields['additional_value'] = forms.ModelChoiceField(label='',
-                                                                     required=False,
-                                                                     queryset=AdditionalValue.objects.filter(
-                                                                         attribute=
-                                                                         self.initial[
-                                                                             'attribute']))
-            self.fields['value'].widget.attrs[
-                'placeholder'] = self.instance.attribute.units_label
-            self.fields['additional'].widget.attrs[
-                'placeholder'] = self.instance.attribute.additional_field
+            self.fields['attribute_value'] = forms.ModelChoiceField(
+                label='',
+                required=False,
+                queryset=AttributeValue.objects.filter(attribute=self.initial['attribute'])
+            )
+            self.fields['additional_value'] = forms.ModelChoiceField(
+                label='',
+                required=False,
+                queryset=AdditionalValue.objects.filter(attribute=self.initial['attribute'])
+            )
+            self.fields['value'].widget.attrs['placeholder'] = self.instance.attribute.units_label
+            self.fields['additional'].widget.attrs['placeholder'] = \
+                self.instance.attribute.additional_field
 
     class Meta:
         model = MainAttributeView
         fields = '__all__'
         widgets = {
-            'attribute': HiddenInput, 'row_number': HiddenInput,
-            'selected_attribute_id': HiddenInput, 'issf_core': HiddenInput,
-            'other_value': HiddenInput,
+            'attribute': HiddenInput,
+            'row_number': HiddenInput,
+            'selected_attribute_id': HiddenInput,
+            'issf_core': HiddenInput,
+            'other_value': HiddenInput
         }
 
     def clean(self):
@@ -339,11 +345,9 @@ class MainAttributeForm(ModelForm):
         # if a user selected "Other" but didn't provide a value
         # have to use this if-chain to avoid a rare bug where django would
         # throw a key-error
-        if 'attribute_value' in cleaned_data and str(cleaned_data[
-                                                         'attribute_value']) \
-                == 'Other' and 'other_value' in cleaned_data and str(
-            cleaned_data['other_value']) == '':
-            raise forms.ValidationError('Please provide a value for Other. ')
+        if 'attribute_value' in cleaned_data and str(cleaned_data['attribute_value']) == 'Other':
+            if 'other_value' in cleaned_data and str(cleaned_data['other_value']) == '':
+                raise forms.ValidationError('Please provide a value for Other. ')
 
         return cleaned_data
 
@@ -352,21 +356,22 @@ class CommonThemeIssueForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(CommonThemeIssueForm, self).__init__(*args, **kwargs)
         if len(self.initial) > 0:
-            self.fields['theme_issue_value'] = forms.ModelChoiceField(label='',
-                                                                      required=False,
-                                                                      queryset=Theme_Issue_Value.objects.filter(
-                                                                          theme_issue=
-                                                                          self.initial[
-
-                                                                              'theme_issue']))
+            self.fields['theme_issue_value'] = forms.ModelChoiceField(
+                label='',
+                required=False,
+                queryset=Theme_Issue_Value.objects.filter(theme_issue=self.initial['theme_issue'])
+            )
 
     class Meta:
         model = CommonThemeIssueView
         fields = '__all__'
         widgets = {
-            'theme_issue': HiddenInput, 'row_number': HiddenInput,
-            'selected_theme_issue_id': HiddenInput, 'issf_core':
-                HiddenInput, 'other_theme_issue': HiddenInput, }
+            'theme_issue': HiddenInput,
+            'row_number': HiddenInput,
+            'selected_theme_issue_id': HiddenInput,
+            'issf_core': HiddenInput,
+            'other_theme_issue': HiddenInput
+        }
 
     def clean(self):
         cleaned_data = super(CommonThemeIssueForm, self).clean()
@@ -391,25 +396,20 @@ class ProfileOrganizationForm(ModelForm):
             'ssforganization': 'SSF Organization already in ISSF',
             'organization_name': 'Other organization name',
             'organization_type': 'Other organization type',
-            'geographic_scope': 'Other organization geographic scope', }
+            'geographic_scope': 'Other organization geographic scope'
+        }
 
     # override clean to check combinations of fields
     def clean(self):
         cleaned_data = super(ProfileOrganizationForm, self).clean()
         # either select organizaton or type a name
-        if not cleaned_data['ssforganization'] and not cleaned_data[
-            'organization_name']:
-            raise forms.ValidationError(
-                'Please select or name an organization.')
-        if cleaned_data['ssforganization'] and cleaned_data[
-            'organization_name']:
-            raise forms.ValidationError(
-                'Please select or name an organization, but not both.')
-        if cleaned_data['organization_name'] and not cleaned_data[
-            'organization_type']:
+        if not cleaned_data['ssforganization'] and not cleaned_data['organization_name']:
+            raise forms.ValidationError('Please select or name an organization.')
+        if cleaned_data['ssforganization'] and cleaned_data['organization_name']:
+            raise forms.ValidationError('Please select or name an organization, but not both.')
+        if cleaned_data['organization_name'] and not cleaned_data['organization_type']:
             raise forms.ValidationError('Please select an organization type.')
-        if cleaned_data['organization_name'] and not cleaned_data[
-            'geographic_scope']:
+        if cleaned_data['organization_name'] and not cleaned_data['geographic_scope']:
             raise forms.ValidationError('Please select a geographic scope.')
         return cleaned_data
 
@@ -418,20 +418,22 @@ class CommonAttributeForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(CommonAttributeForm, self).__init__(*args, **kwargs)
         if len(self.initial) > 0:
-            self.fields['attribute_value'] = forms.ModelChoiceField(label='',
-                                                                    required=False,
-                                                                    queryset=AttributeValue.objects.filter(
-                                                                        attribute=
-                                                                        self.initial[
-                                                                            'attribute']))
+            self.fields['attribute_value'] = forms.ModelChoiceField(
+                label='',
+                required=False,
+                queryset=AttributeValue.objects.filter(attribute=self.initial['attribute'])
+            )
 
     class Meta:
         model = CommonAttributeView
         fields = '__all__'
         widgets = {
-            'attribute': HiddenInput, 'row_number': HiddenInput,
-            'selected_attribute_id': HiddenInput, 'issf_core': HiddenInput,
-            'other_value': HiddenInput, }
+            'attribute': HiddenInput,
+            'row_number': HiddenInput,
+            'selected_attribute_id': HiddenInput,
+            'issf_core': HiddenInput,
+            'other_value': HiddenInput
+        }
 
     def clean(self):
         cleaned_data = super(CommonAttributeForm, self).clean()
@@ -468,17 +470,30 @@ class KnowledgeOtherDetailsForm(ModelForm):
                   'explicit_implications_recommendations',
                   'implication_details', 'comments']
         labels = {
-            'core_record_type': 'Record type', 'demographics_na': 'Not '
-                                                                  'applicable', 'demographics_age': 'Age',
-            'demographics_education': 'Education', 'demographics_ethnicity': 'Ethnicity',
-            'demographics_gender': 'Gender', 'demographics_health': 'Health', 'demographics_income': 'Income',
-            'demographics_religion': 'Religion', 'demographics_unspecified': 'Unspecified',
-            'demographics_other': 'Other', 'demographics_other_text': 'Other demographic factor',
-            'demographic_details': 'Demographic details (if applicable)', 'employment_na': 'Not applicable',
-            'employment_full_time': 'Full-time', 'employment_part_time': 'Part-time', 'employment_seasonal': 'Seasonal',
-            'employment_unspecified': 'Unspecified', 'employment_details': 'Employment details (if applicable)',
-            'stage_na': 'Not applicable', 'stage_pre_harvest': 'Pre-harvest', 'stage_harvest': 'Harvest',
-            'stage_post_harvest': 'Post-harvest', 'stage_unspecified': 'Unspecified',
+            'core_record_type': 'Record type',
+            'demographics_na': 'Not applicable',
+            'demographics_age': 'Age',
+            'demographics_education': 'Education',
+            'demographics_ethnicity': 'Ethnicity',
+            'demographics_gender': 'Gender',
+            'demographics_health': 'Health',
+            'demographics_income': 'Income',
+            'demographics_religion': 'Religion',
+            'demographics_unspecified': 'Unspecified',
+            'demographics_other': 'Other',
+            'demographics_other_text': 'Other demographic factor',
+            'demographic_details': 'Demographic details (if applicable)',
+            'employment_na': 'Not applicable',
+            'employment_full_time': 'Full-time',
+            'employment_part_time': 'Part-time',
+            'employment_seasonal': 'Seasonal',
+            'employment_unspecified': 'Unspecified',
+            'employment_details': 'Employment details (if applicable)',
+            'stage_na': 'Not applicable',
+            'stage_pre_harvest': 'Pre-harvest',
+            'stage_harvest': 'Harvest',
+            'stage_post_harvest': 'Post-harvest',
+            'stage_unspecified': 'Unspecified',
             'ssf_defined': '*Are small-scale fisheries defined?',
             'ssf_definition': 'Provide definition of small-scale fisheries (if applicable)',
             'lsf_considered': '*Are large-scale fisheries also considered?',
@@ -497,25 +512,26 @@ class KnowledgeOtherDetailsForm(ModelForm):
                                                      'recommendations made explicit?',
             'implication_details': 'Please provide details about the research implications '
                                    'identified in the study (if applicable)',
-            'comments': 'Additional details/comments', }
+            'comments': 'Additional details/comments'
+        }
         widgets = {
-            'core_record_type': forms.widgets.HiddenInput, 'ssf_definition':
-                forms.Textarea(
-                    attrs={'rows': 3}), 'research_method': forms.Textarea(
-                attrs={'rows': 3}), 'aim_purpose_question': forms.Textarea(
-                attrs={'rows': 3}), 'solution_details': forms.Textarea(
-                attrs={'rows': 3}), 'implication_details': forms.Textarea(
-                attrs={'rows': 3}), 'comments': forms.Textarea(
-                attrs={'rows': 3}), 'fishery_type_details': forms.Textarea(
-                attrs={'rows': 3}), 'gear_type_details': forms.Textarea(
-                attrs={'rows': 3}), 'ecosystem_type_details': forms.Textarea(
-                attrs={'rows': 3}), 'market_details': forms.Textarea(
-                attrs={'rows': 3}), 'governance_details': forms.Textarea(
-                attrs={'rows': 3}), 'management_details': forms.Textarea(
-                attrs={'rows': 3}), 'theme_issue_details': forms.Textarea(
-                attrs={'rows': 3}), 'demographic_details': forms.Textarea(
-                attrs={'rows': 3}), 'employment_details': forms.Textarea(
-                attrs={'rows': 3}), }
+            'core_record_type': forms.widgets.HiddenInput,
+            'ssf_definition': forms.Textarea(attrs={'rows': 3}),
+            'research_method': forms.Textarea(attrs={'rows': 3}),
+            'aim_purpose_question': forms.Textarea(attrs={'rows': 3}),
+            'solution_details': forms.Textarea(attrs={'rows': 3}),
+            'implication_details': forms.Textarea(attrs={'rows': 3}),
+            'comments': forms.Textarea(attrs={'rows': 3}),
+            'fishery_type_details': forms.Textarea(attrs={'rows': 3}),
+            'gear_type_details': forms.Textarea(attrs={'rows': 3}),
+            'ecosystem_type_details': forms.Textarea(attrs={'rows': 3}),
+            'market_details': forms.Textarea(attrs={'rows': 3}),
+            'governance_details': forms.Textarea(attrs={'rows': 3}),
+            'management_details': forms.Textarea(attrs={'rows': 3}),
+            'theme_issue_details': forms.Textarea(attrs={'rows': 3}),
+            'demographic_details': forms.Textarea(attrs={'rows': 3}),
+            'employment_details': forms.Textarea(attrs={'rows': 3})
+        }
 
     def __init__(self, *args, **kwargs):
         super(KnowledgeOtherDetailsForm, self).__init__(*args, **kwargs)
@@ -525,36 +541,30 @@ class KnowledgeOtherDetailsForm(ModelForm):
         cleaned_data = super(KnowledgeOtherDetailsForm, self).clean()
 
         if 'ssf_defined' in cleaned_data:
-            if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data[
-                'ssf_definition']:
+            if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data['ssf_definition']:
                 raise forms.ValidationError('Please provide an SSF defintion.')
 
-        if (not cleaned_data['demographics_na'] and not cleaned_data[
-            'demographics_age'] and not cleaned_data[
-            'demographics_education'] and not cleaned_data[
-            'demographics_ethnicity'] and not cleaned_data[
-            'demographics_gender'] and not cleaned_data[
-            'demographics_health'] and not cleaned_data[
-            'demographics_income'] and not cleaned_data[
-            'demographics_unspecified'] and not cleaned_data[
-            'demographics_other']):
-            raise forms.ValidationError(
-                'Please select at least one demographic factor.')
+        demographic_factors = [
+            'demographics_na', 'demographics_age', 'demographics_education',
+            'demographics_ethnicity', 'demographics_gender', 'demographics_health',
+            'demographics_income', 'demographics_unspecified', 'demographics_other'
+        ]
+        if not any(cleaned_data[x] for x in demographic_factors):
+            raise forms.ValidationError('Please select at least one demographic factor.')
 
-        if (not cleaned_data['employment_na'] and not cleaned_data[
-            'employment_full_time'] and not cleaned_data[
-            'employment_part_time'] and not cleaned_data[
-            'employment_seasonal'] and not cleaned_data[
-            'employment_unspecified']):
-            raise forms.ValidationError(
-                'Please select at least one employment status.')
+        employment_statuses = [
+            'employment_na', 'employment_full_time', 'employment_part_time',
+            'employment_seasonal', 'employment_unspecified'
+        ]
+        if not any(cleaned_data[x] for x in employment_statuses):
+            raise forms.ValidationError('Please select at least one employment status.')
 
-        if (not cleaned_data['stage_na'] and not cleaned_data[
-            'stage_pre_harvest'] and not cleaned_data['stage_harvest'] and not
-        cleaned_data['stage_post_harvest'] and not cleaned_data[
-            'stage_unspecified']):
-            raise forms.ValidationError(
-                'Please select at least one stage of the fishery chain.')
+        stages = [
+            'stage_na', 'stage_pre_harvest', 'stage_harvest', 'stage_post_harvest'
+            'stage_unspecified'
+        ]
+        if not any(cleaned_data[x] for x in stages):
+            raise forms.ValidationError('Please select at least one stage of the fishery chain.')
 
         if not confirm_other_text('demographics_other_text',
                                   'demographics_other', cleaned_data):
@@ -584,7 +594,8 @@ class PersonResearcherForm(ModelForm):
                                                                 'SSF '
                                                                 'researcher?',
             'number_publications': 'Number of publications in the last 10 years',
-            'education_level': 'Highest level of education', 'other_education_level': 'Other level of education',
+            'education_level': 'Highest level of education',
+            'other_education_level': 'Other level of education',
             'research_method': 'Research method(s) or approach(es) most commonly applied (e.g. '
                                'ethnographic, survey, etc.)',
             'issues_addressed': 'List up three main issues your research aims to address', }
@@ -602,7 +613,7 @@ class PersonResearcherForm(ModelForm):
         if len(cleaned_data['other_education_level']) > 0:
             other_text = True
         other_selected = False
-        if cleaned_data.has_key('education_level'):
+        if 'education_level' in cleaned_data:
             if cleaned_data['education_level'] == 'Other':
                 other_selected = True
         if not other_text and other_selected:
@@ -659,7 +670,7 @@ class GeographicScopeLocalAreaForm(ModelForm):
         if len(cleaned_data['local_area_setting_other']) > 0:
             other_text = True
         other_selected = False
-        if cleaned_data.has_key('local_area_setting'):
+        if 'local_area_setting' in cleaned_data:
             if cleaned_data['local_area_setting'] == 'Other':
                 other_selected = True
         if not other_text and other_selected:
@@ -771,9 +782,8 @@ class SpeciesLandingsForm(ModelForm):
     def clean(self):
         cleaned_data = super(SpeciesLandingsForm, self).clean()
 
-        if cleaned_data['landings'] and not (
-                    cleaned_data['species_scientific'] or cleaned_data[
-                    'species_common']):
+        species_specified = cleaned_data['species_scientific'] or cleaned_data['species_common']
+        if cleaned_data['landings'] and not species_specified:
             raise forms.ValidationError(
                 'Please provide either a common or scientific name for the '
                 'species.')
