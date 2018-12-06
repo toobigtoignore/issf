@@ -1,10 +1,9 @@
-# from django.db import models
 from django.contrib.gis.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
 from django.utils.html import conditional_escape
-from django.db.models import Manager
+
 
 class Theme_Issue(models.Model):
     # class name exception (underscore) because ManyToManyField (see
@@ -94,32 +93,22 @@ class SSFKnowledge(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                    related_name='contributor+',
-                                    on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributor+', on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+',
-                               on_delete=models.CASCADE)
-    core_record_type = models.CharField(max_length=100,
-                                        default='State-of-the-Art in SSF '
-                                                'Research')
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
+    core_record_type = models.CharField(max_length=100, default='State-of-the-Art in SSF ' 'Research')
     core_record_summary = models.TextField(blank=True)
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # fields on main form
-    publication_type = models.ForeignKey(PublicationType,
-            on_delete=models.CASCADE)
+    publication_type = models.ForeignKey(PublicationType, on_delete=models.CASCADE)
     other_publication_type = models.CharField(blank=True, max_length=50)
     level1_title = models.TextField()
     level2_title = models.TextField()
-    nonenglish_language = models.ForeignKey(Language, blank=True, null=True,
-            on_delete=models.CASCADE)
+    nonenglish_language = models.ForeignKey(Language, blank=True, null=True, on_delete=models.CASCADE)
     nonenglish_title = models.TextField(blank=True)
-    year = models.IntegerField(
-        validators=[MinValueValidator(1000), MaxValueValidator(3000)])
-    SSF_DEFINED = (
-        ('Yes', 'Yes'), ('No', 'No'), ('Not explicitly', 'Not explicitly'))
+    year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)])
+    SSF_DEFINED = (('Yes', 'Yes'), ('No', 'No'), ('Not explicitly', 'Not explicitly'))
     ssf_defined = models.CharField(choices=SSF_DEFINED, max_length=100)
     ssf_definition = models.TextField(blank=True)
     YES_NO = ((True, 'Yes'), (False, 'No'))
@@ -128,8 +117,7 @@ class SSFKnowledge(models.Model):
     aim_purpose_question = models.TextField()
     solutions_offered = models.BooleanField(choices=YES_NO, default=False)
     solution_details = models.TextField(blank=True)
-    explicit_implications_recommendations = models.BooleanField(choices=YES_NO,
-                                                                default=False)
+    explicit_implications_recommendations = models.BooleanField(choices=YES_NO, default=False)
     implication_details = models.TextField(blank=True)
     comments = models.TextField(blank=True)
 
@@ -148,20 +136,10 @@ class SSFKnowledge(models.Model):
     theme_issue_details = models.TextField(blank=True)
 
     # checkbox sets not generalized as themes/issues or characteristics
-    method_specify_qualitative = models.BooleanField(choices=YES_NO,
-                                                     default=False,
-                                                     help_text='Specify '
-                                                               'method '
-                                                               'approach ('
-                                                               'check '
-                                                               'all that '
-                                                               'apply):')
-    method_specify_quantitative = models.BooleanField(choices=YES_NO,
-                                                      default=False)
+    method_specify_qualitative = models.BooleanField(choices=YES_NO, default=False, help_text='Specify ' 'method ' 'approach (' 'check ' 'all that ' 'apply):')
+    method_specify_quantitative = models.BooleanField(choices=YES_NO, default=False)
     method_specify_mixed = models.BooleanField(choices=YES_NO, default=False)
-    demographics_na = models.BooleanField(default=False,
-                                          help_text='Demographic factors ('
-                                                    'check all that apply):')
+    demographics_na = models.BooleanField(default=False, help_text='Demographic factors (' 'check all that apply):')
     demographics_age = models.BooleanField(default=False)
     demographics_education = models.BooleanField(default=False)
     demographics_ethnicity = models.BooleanField(default=False)
@@ -173,17 +151,13 @@ class SSFKnowledge(models.Model):
     demographics_other = models.BooleanField(default=False)
     demographics_other_text = models.CharField(max_length=100, blank=True)
     demographic_details = models.TextField(blank=True)
-    employment_na = models.BooleanField(
-        default=False)
+    employment_na = models.BooleanField(default=False)
     employment_full_time = models.BooleanField(default=False)
     employment_part_time = models.BooleanField(default=False)
     employment_seasonal = models.BooleanField(default=False)
     employment_unspecified = models.BooleanField(default=False)
     employment_details = models.TextField(blank=True)
-    stage_na = models.BooleanField(default=False,
-                                   help_text='Stage(s) of fishery chain '
-                                             'addressed (check all that '
-                                             'apply)')
+    stage_na = models.BooleanField(default=False, help_text='Stage(s) of fishery chain ' 'addressed (check all that ' 'apply)')
     stage_pre_harvest = models.BooleanField(default=False)
     stage_harvest = models.BooleanField(default=False)
     stage_post_harvest = models.BooleanField(default=False)
@@ -205,8 +179,7 @@ class SSFKnowledge(models.Model):
 
 class KnowledgeAuthor(models.Model):
     knowledge_author_id = models.AutoField(primary_key=True)
-    knowledge_core = models.ForeignKey(SSFKnowledge,
-            related_name='issf_core', on_delete=models.CASCADE)
+    knowledge_core = models.ForeignKey(SSFKnowledge, related_name='issf_core', on_delete=models.CASCADE)
 
     class Meta:
         managed = False
@@ -257,12 +230,9 @@ class SSFProfile(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                    related_name='contributor+',
-                                    on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributor+', on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Profile')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
@@ -272,25 +242,17 @@ class SSFProfile(models.Model):
         ('Yes', 'Yes'), ('No', 'No'), ('Not explicitly', 'Not explicitly'))
     ssf_defined = models.CharField(choices=SSF_DEFINED, max_length=100)
     ssf_definition = models.TextField(blank=True)
-    data_year = models.IntegerField(
-        validators=[MinValueValidator(1000), MaxValueValidator(3000)])
+    data_year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)])
     data_month = models.IntegerField(blank=True, null=True)
-    data_day = models.IntegerField(blank=True, null=True,
-                                   validators=[MinValueValidator(1),
-                                               MaxValueValidator(31)])
-    data_end_year = models.IntegerField(blank=True, null=True,
-                                        validators=[MinValueValidator(1000),
-                                                    MaxValueValidator(3000)])
+    data_day = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(31)])
+    data_end_year = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)])
     data_end_month = models.IntegerField(blank=True, null=True)
-    data_end_day = models.IntegerField(blank=True, null=True,
-                                       validators=[MinValueValidator(1),
-                                                   MaxValueValidator(31)])
+    data_end_day = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(31)])
     comments = models.TextField(blank=True)
     sources = models.TextField(blank=True)
     percent = models.IntegerField(default=0)
 
     img_url = models.URLField(max_length=200, blank=True)
-
 
     class Meta:
         managed = False
@@ -334,12 +296,9 @@ class SSFOrganization(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                    related_name='contributor+',
-                                    on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributor+', on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Organization')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
@@ -414,12 +373,9 @@ class SSFPerson(models.Model):
     # core (inherited from issf_core fields) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                    related_name='contributor+',
-                                    on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributor+', on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default="Who's Who in SSF")
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
@@ -429,26 +385,19 @@ class SSFPerson(models.Model):
     address2 = models.CharField(max_length=100, blank=True)
     city_town = models.CharField(max_length=100, blank=True)
     prov_state = models.CharField(max_length=100, blank=True)
-    country = models.ForeignKey(Country, blank=True, null=True,
-            on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     postal_code = models.CharField(max_length=100, blank=True)
     person_point = models.PointField(blank=True, null=True)
     url = models.URLField(blank=True)
-    organizations = models.ManyToManyField(SSFOrganization,
-                                           db_table='person_organization',
-                                           blank=True, related_name='persons')
-
+    organizations = models.ManyToManyField(SSFOrganization, db_table='person_organization', blank=True, related_name='persons')
     img_url = models.URLField(max_length=200, blank=True)
 
     # researcher-specific fields
     YES_NO = ((True, 'Yes'), (False, 'No'))
     is_researcher = models.BooleanField(default=False, choices=YES_NO)
     number_publications = models.PositiveIntegerField(blank=True, null=True)
-    EDUCATION_LEVEL = (
-        ('Bachelor', 'Bachelor'), ('Master', 'Master'), ('PhD', 'PhD'),
-        ('Other', 'Other'),)
-    education_level = models.CharField(max_length=100, choices=EDUCATION_LEVEL,
-                                       blank=True)
+    EDUCATION_LEVEL = (('Bachelor', 'Bachelor'), ('Master', 'Master'), ('PhD', 'PhD'), ('Other', 'Other'),)
+    education_level = models.CharField(max_length=100, choices=EDUCATION_LEVEL, blank=True)
     other_education_level = models.CharField(max_length=100, blank=True)
     research_method = models.TextField(blank=True)
     issues_addressed = models.TextField(blank=True)
@@ -472,11 +421,9 @@ class SSFCapacityNeed(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='Capacity Development')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
@@ -484,11 +431,9 @@ class SSFCapacityNeed(models.Model):
     CAPACITY_NEED_CATEGORY = (
         ('Economic', 'Economic'), ('Ecological', 'Ecological'),
         ('Social/Cultural', 'Social/Cultural'), ('Governance', 'Governance'),)
-    capacity_need_category = models.CharField(max_length=50,
-                                              choices=CAPACITY_NEED_CATEGORY)
+    capacity_need_category = models.CharField(max_length=50, choices=CAPACITY_NEED_CATEGORY)
     CAPACITY_NEED_TYPE = (('Existing', 'Existing'), ('Need', 'Need'),)
-    capacity_need_type = models.CharField(max_length=50,
-                                          choices=CAPACITY_NEED_TYPE)
+    capacity_need_type = models.CharField(max_length=50, choices=CAPACITY_NEED_TYPE)
     capacity_need_title = models.CharField(max_length=50)
     capacity_need_description = models.TextField()
 
@@ -509,11 +454,9 @@ class SSFGuidelines(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Guidelines')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
@@ -524,30 +467,19 @@ class SSFGuidelines(models.Model):
         ('Meeting', 'Meeting'), ('National Plan', 'National Plan'),
         ('Network', 'Network'), ('Newsletter', 'Newsletter'),
         ('Regional Programme', 'Regional Programme'), ('Workshop', 'Workshop'), ('Research', 'Research'))
+    # Refactor
     activity_type = models.CharField(choices=ACTIVITY_TYPE, max_length=100)
     ACTIVITY_COVERAGE = (('Regional', 'Regional'), ('National', 'National'),
                          ('International', 'International'),
                          ('Global', 'Global'))
-    activity_coverage = models.CharField(choices=ACTIVITY_COVERAGE,
-                                         max_length=100)
+    activity_coverage = models.CharField(choices=ACTIVITY_COVERAGE, max_length=100)
     location = models.CharField(max_length=256)
-    start_day = models.SmallIntegerField(blank=True,
-                                         validators=[MinValueValidator(1),
-                                                     MaxValueValidator(31)])
-    start_month = models.SmallIntegerField(blank=True,
-                                           validators=[MinValueValidator(1),
-                                                       MaxValueValidator(12)])
-    start_year = models.SmallIntegerField(
-        validators=[MinValueValidator(1000), MaxValueValidator(3000)])
-    end_day = models.SmallIntegerField(blank=True,
-                                       validators=[MinValueValidator(1),
-                                                   MaxValueValidator(31)])
-    end_month = models.SmallIntegerField(blank=True,
-                                         validators=[MinValueValidator(1),
-                                                     MaxValueValidator(12)])
-    end_year = models.SmallIntegerField(blank=True,
-                                        validators=[MinValueValidator(1000),
-                                                    MaxValueValidator(3000)])
+    start_day = models.SmallIntegerField(blank=True, validators=[MinValueValidator(1), MaxValueValidator(31)])
+    start_month = models.SmallIntegerField(blank=True, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    start_year = models.SmallIntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)])
+    end_day = models.SmallIntegerField(blank=True, validators=[MinValueValidator(1), MaxValueValidator(31)])
+    end_month = models.SmallIntegerField(blank=True, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    end_year = models.SmallIntegerField(blank=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)])
     ONGOING_STATUS = (('Yes', 'Yes'), ('No', 'No'))
     ongoing = models.CharField(choices=ONGOING_STATUS, max_length=100)
     organizer = models.CharField(max_length=256)
@@ -573,12 +505,9 @@ class SSFExperiences(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+',
-                               on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='SSF Experiences')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
@@ -608,11 +537,9 @@ class SSFCaseStudies(models.Model):
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.TextField(default='Case Study')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
@@ -652,8 +579,7 @@ class SSFCaseStudies(models.Model):
 class CapacityNeedRating(models.Model):
     capacity_need_rating_id = models.AutoField(primary_key=True)
     capacity_need = models.ForeignKey(SSFCapacityNeed, on_delete=models.CASCADE)
-    rater = models.ForeignKey(settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE)
+    rater = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     STARS = [(i, i) for i in range(0, 6)]
     rating = models.IntegerField(choices=STARS, default=0)
 
@@ -669,12 +595,9 @@ class CapacityNeedRating(models.Model):
 class ISSFCore(models.Model):
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                    related_name='contributor+',
-                                    on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributor+', on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.CharField(max_length=100)
     core_record_summary = models.TextField(blank=True)
     core_record_status = models.IntegerField(blank=True, null=True)
@@ -682,9 +605,7 @@ class ISSFCore(models.Model):
         ('Local', 'Local'), ('Sub-national', 'Sub-national'),
         ('National', 'National'), ('Regional', 'Regional'),
         ('Global', 'Global'), ('Not specific', 'Not specific'),)
-    geographic_scope_type = models.CharField(choices=GEOGRAPHIC_SCOPE_TYPE,
-                                             max_length=100, blank=False,
-                                             null=False)
+    geographic_scope_type = models.CharField(choices=GEOGRAPHIC_SCOPE_TYPE, max_length=100, blank=False, null=False)
 
     class Meta:
         managed = False
@@ -701,12 +622,9 @@ class ISSF_Core(models.Model):
     # this model is used for related data that applies to all core tables
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
-    contributor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                    related_name='contributor+',
-                                    on_delete=models.CASCADE)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributor+', on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
-    editor = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               related_name='editor+', on_delete=models.CASCADE)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
     core_record_type = models.CharField(max_length=100)
     core_record_summary = models.TextField(blank=True)
     core_record_status = models.IntegerField(blank=True, null=True)
@@ -715,10 +633,8 @@ class ISSF_Core(models.Model):
         ('Local', 'Local'), ('Sub-national', 'Sub-national'),
         ('National', 'National'), ('Regional', 'Regional'),
         ('Global', 'Global'), ('Not specific', 'Not specific'),)
-    geographic_scope_type = models.CharField(choices=GEOGRAPHIC_SCOPE_TYPE,
-                                             max_length=100, default='Local')
-    countries = models.ManyToManyField(Country,
-                                       db_table='geographic_scope_nation')
+    geographic_scope_type = models.CharField(choices=GEOGRAPHIC_SCOPE_TYPE, max_length=100, default='Local')
+    countries = models.ManyToManyField(Country, db_table='geographic_scope_nation')
 
     class Meta:
         managed = False
@@ -728,8 +644,7 @@ class ISSF_Core(models.Model):
 class ProfileOrganization(models.Model):
     profile_organization_id = models.AutoField(primary_key=True)
     ssfprofile = models.ForeignKey(SSFProfile, on_delete=models.CASCADE)
-    ssforganization = models.ForeignKey(SSFOrganization, null=True, blank=True,
-            on_delete=models.CASCADE)
+    ssforganization = models.ForeignKey(SSFOrganization, null=True, blank=True, on_delete=models.CASCADE)
     organization_name = models.CharField(max_length=200, blank=True)
     ORG_TYPE = (('State/government department', 'State/government department'),
                 ('Union/association', 'Union/association'),
@@ -738,13 +653,11 @@ class ProfileOrganization(models.Model):
                     'Fisheries local action group'),
                 ('Market organization', 'Market organization'),
                 ('Co-op/society', 'Co-op/society'), ('Other', 'Other'))
-    organization_type = models.CharField(choices=ORG_TYPE, max_length=100,
-                                         blank=True)
+    organization_type = models.CharField(choices=ORG_TYPE, max_length=100, blank=True)
     GEOG_SCOPE = (('Local', 'Local'), ('Sub-national', 'Sub-national'),
                   ('National', 'National'), ('Regional', 'Regional'),
                   ('Global', 'Global'))
-    geographic_scope = models.CharField(choices=GEOG_SCOPE, max_length=100,
-                                        blank=True)
+    geographic_scope = models.CharField(choices=GEOG_SCOPE, max_length=100, blank=True)
 
     class Meta:
         managed = False
@@ -785,16 +698,13 @@ class CommonAttributeView(models.Model):
     # saving uses postgres INSTEAD OF rules to send updates to the
     # selected_attribute table
     row_number = models.IntegerField(verbose_name='', primary_key=True)
-    selected_attribute_id = models.IntegerField(verbose_name='', blank=True,
-                                                null=True)
-    issf_core = models.ForeignKey(ISSF_Core, verbose_name='',
-            on_delete=models.CASCADE)
+    selected_attribute_id = models.IntegerField(verbose_name='', blank=True, null=True)
+    issf_core = models.ForeignKey(ISSF_Core, verbose_name='', on_delete=models.CASCADE)
     # attribute_id is a FK to Attribute
     attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
         attribute_category='Common') | Q(attribute_category='Non-profile'),
         on_delete=models.CASCADE)
-    attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True,
-            on_delete=models.CASCADE)
+    attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
 
     label_order = models.IntegerField(blank=True)
@@ -814,10 +724,8 @@ class CommonThemeIssueView(models.Model):
     # saving uses postgres INSTEAD OF rules to send updates to the
     # selected_theme_issue table
     row_number = models.IntegerField(verbose_name='', primary_key=True)
-    selected_theme_issue_id = models.IntegerField(verbose_name='', blank=True,
-                                                  null=True)
-    issf_core = models.ForeignKey(ISSF_Core, verbose_name='',
-            on_delete=models.CASCADE)
+    selected_theme_issue_id = models.IntegerField(verbose_name='', blank=True, null=True)
+    issf_core = models.ForeignKey(ISSF_Core, verbose_name='', on_delete=models.CASCADE)
     theme_issue = models.ForeignKey(Theme_Issue, on_delete=models.CASCADE)
     theme_issue_value = models.ForeignKey(Theme_Issue_Value, blank=True, null=True, on_delete=models.CASCADE)
     other_theme_issue = models.CharField(max_length=100, blank=True)
@@ -839,15 +747,13 @@ class MainAttributeView(models.Model):
     # saving uses postgres INSTEAD OF rules to send updates to the
     # selected_attribute table
     row_number = models.IntegerField(verbose_name='', primary_key=True)
-    selected_attribute_id = models.IntegerField(verbose_name='', blank=True,
-                                                null=True)
+    selected_attribute_id = models.IntegerField(verbose_name='', blank=True, null=True)
     issf_core = models.ForeignKey(ISSF_Core, verbose_name='', on_delete=models.CASCADE)
     attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
         attribute_category='Main') | Q(attribute_category='Common'),
         on_delete=models.CASCADE)
     value = models.IntegerField(verbose_name='', blank=True, null=True)
-    attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True,
-            on_delete=models.CASCADE)
+    attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
     additional = models.IntegerField(blank=True)
     additional_value = models.ForeignKey(AdditionalValue, blank=True, null=True, on_delete=models.CASCADE)
@@ -933,8 +839,7 @@ class ContributionsByCountry(models.Model):
 # models attached to issf_core via foreign key
 class SelectedThemeIssue(models.Model):
     selected_theme_issue_id = models.AutoField(primary_key=True)
-    issf_core = models.ForeignKey(ISSF_Core, db_column='issf_core_id',
-            on_delete=models.CASCADE)
+    issf_core = models.ForeignKey(ISSF_Core, db_column='issf_core_id', on_delete=models.CASCADE)
     theme_issue_value = models.ForeignKey(Theme_Issue_Value, db_column='theme_issue_value_id', on_delete=models.CASCADE)
     other_theme_issue = models.TextField()
 
@@ -1059,9 +964,7 @@ class Geographic_Scope_Region(models.Model):
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     region_name_other = models.CharField(max_length=100, blank=True)
-    countries = models.ManyToManyField(Country,
-                                       db_table='geographic_scope_region_country',
-                                       blank=True)
+    countries = models.ManyToManyField(Country, db_table='geographic_scope_region_country', blank=True)
 
     class Meta:
         managed = False
@@ -1131,10 +1034,8 @@ class WhoFeature(models.Model):
     name = models.TextField(blank=False)
     about = models.TextField(blank=True, null=True, default='')
     img_url = models.URLField(blank=True, null=True)
-    ssf_person = models.ForeignKey(SSFPerson, blank=True, null=True,
-            on_delete=models.CASCADE)
-    ssf_knowledge = models.ForeignKey(SSFKnowledge, blank=True, null=True,
-            on_delete=models.CASCADE)
+    ssf_person = models.ForeignKey(SSFPerson, blank=True, null=True, on_delete=models.CASCADE)
+    ssf_knowledge = models.ForeignKey(SSFKnowledge, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         managed = False

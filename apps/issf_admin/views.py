@@ -1,4 +1,3 @@
-import codecs
 import json
 import random
 
@@ -34,8 +33,7 @@ def update_profile(request, template_name='issf_admin/user_profile.html'):
         # load
         user_profile = UserProfile.objects.get(id=request.user.pk)
         profile_form = ProfileForm(instance=user_profile)
-        return render(request, template_name, {
-            'userName': request.user.username, 'userForm': profile_form, })
+        return render(request, template_name, {'userName': request.user.username, 'userForm': profile_form, })
 
 
 def save_profile(request):
@@ -54,18 +52,15 @@ def save_profile(request):
             # # should go to verification_sent page and force logout
 
         # update summary and search vector for Who's Who (if exists)
-        person_list = SSFPerson.objects.filter(
-            contributor_id=profile_form.instance.id)
+        person_list = SSFPerson.objects.filter(contributor_id=profile_form.instance.id)
 
         if len(person_list) > 0:
             person = SSFPerson.objects.get(
                 contributor_id=profile_form.instance.id)
 
             cursor = connection.cursor()
-            cursor.execute('SELECT * FROM person_tsvector_update(' + str(
-                person.issf_core_id) + ')')
-            cursor.execute('SELECT * FROM person_summary_update(' + str(
-                person.issf_core_id) + ')')
+            cursor.execute('SELECT * FROM person_tsvector_update(' + str(person.issf_core_id) + ')')
+            cursor.execute('SELECT * FROM person_summary_update(' + str(person.issf_core_id) + ')')
         return True, None
     else:
         # invalidly-formatted email address will land here
@@ -98,9 +93,7 @@ custom_password_change = login_required(CustomPasswordChangeView.as_view())
 
 
 def return_google_site_verification(request):
-    return HttpResponse(
-        unicode('google-site-verification: googlee9690f8983b8a350.html',
-                "utf-8"), content_type="text/plain")
+    return HttpResponse(unicode('google-site-verification: googlee9690f8983b8a350.html', "utf-8"), content_type="text/plain")
 
 
 def return_sitemap(request):
@@ -108,27 +101,17 @@ def return_sitemap(request):
     retstr = retstr + request.build_absolute_uri(reverse('index')) + '\r\n'
     for record in ISSFCore.objects.all():
         if record.core_record_type == "Who's Who in SSF":
-            retstr = retstr + request.build_absolute_uri(
-                reverse('who-details', args=[record.issf_core_id])) + "\r\n"
+            retstr = retstr + request.build_absolute_uri(reverse('who-details', args=[record.issf_core_id])) + "\r\n"
         elif record.core_record_type == "State-of-the-Art in SSF Research":
-            retstr = retstr + request.build_absolute_uri(
-                reverse('sota-details', args=[record.issf_core_id])) + "\r\n"
+            retstr = retstr + request.build_absolute_uri(reverse('sota-details', args=[record.issf_core_id])) + "\r\n"
         elif record.core_record_type == "Capacity Development":
-            retstr = retstr + request.build_absolute_uri(
-                reverse('capacity-details',
-                        args=[record.issf_core_id])) + "\r\n"
+            retstr = retstr + request.build_absolute_uri(reverse('capacity-details', args=[record.issf_core_id])) + "\r\n"
         elif record.core_record_type == "SSF Organization":
-            retstr = retstr + request.build_absolute_uri(
-                reverse('organization-details',
-                        args=[record.issf_core_id])) + "\r\n"
+            retstr = retstr + request.build_absolute_uri(reverse('organization-details', args=[record.issf_core_id])) + "\r\n"
         elif record.core_record_type == "SSF Profile":
-            retstr = retstr + request.build_absolute_uri(
-                reverse('profile-details',
-                        args=[record.issf_core_id])) + "\r\n"
+            retstr = retstr + request.build_absolute_uri(reverse('profile-details', args=[record.issf_core_id])) + "\r\n"
         elif record.core_record_type == "SSF Guidelines":
-            retstr = retstr + request.build_absolute_uri(
-                reverse('guidelines-details',
-                        args=[record.issf_core_id])) + "\r\n"
+            retstr = retstr + request.build_absolute_uri(reverse('guidelines-details', args=[record.issf_core_id])) + "\r\n"
     return HttpResponse(unicode(retstr, "utf-8"), content_type="text/plain")
 
 
