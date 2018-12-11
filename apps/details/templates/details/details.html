@@ -208,7 +208,8 @@
                 {#                        {% autoescape off %}#}
                 <table>
                     {% for external_link in external_links %}
-                        <tr> <td>{{ external_link.link_type }}</td>
+                        <tr> 
+                            <td>{{ external_link.link_type }}</td>
                             <td>
                                 <a href="{{ external_link.link_address }}"
                                    target="_blank">{{ external_link.link_address }}</a>
