@@ -1,4 +1,4 @@
-{% extends "issf_base/base.html" %}{% load js %}{% load staticfiles %}
+{% extends "issf_base/base.html" %}
 
 {% load staticfiles %}
 {% load foundation %}
@@ -33,7 +33,6 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% django_js jquery=false %}
     <script src={% static "details/js/error-handling.js" %}></script>
     <script>
         error_handler();
