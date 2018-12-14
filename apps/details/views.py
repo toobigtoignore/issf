@@ -777,7 +777,7 @@ def save_basic(request, model_class, form_class):
 
                     issf_id = str(instance.issf_core_id)
 
-                    url = 'https://dory.creait.mun.ca' + reverse(get_redirectname(instance.core_record_type),
+                    url = 'https://issfcloud.toobigtoignore.net' + reverse(get_redirectname(instance.core_record_type),
                                                                  kwargs={'issf_core_id': issf_id})
 
                     api.PostUpdate(
@@ -952,7 +952,7 @@ def sota_basic(request):
 
                     api.PostUpdate(
                         'Check out the new #tbtiissf SOTA record for ' + name + '. ' +
-                        'https://dory.creait.mun.ca/details/sota/' + issf_id)
+                        'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
 
                 update_tsvector_summary(knowledge_instance.core_record_type,
                                         str(knowledge_instance.pk))
@@ -1076,7 +1076,7 @@ def organization_basic(request):
 
                 api.PostUpdate(
                     'Check out the new #tbtiissf SSF Organization record for ' + name + '. ' +
-                    'https://dory.creait.mun.ca/details/organization/' + issf_id)
+                    'https://issfcloud.toobigtoignore.net/details/organization/' + issf_id)
 
                 update_tsvector_summary(instance.core_record_type,
                                         str(instance.pk))
