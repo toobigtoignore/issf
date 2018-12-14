@@ -1,1 +1,0 @@
-/issf/first_run.sh

@@ -1,6 +1,6 @@
 # ISSF - Information System on Small Scale Fisheries
 # Author: Joshua Murphy
-# Date: August 21st, 2018
+# Date: December 13th, 2018 
 # https://github.com/toobigtoignore/issf
 
 # Docker Compose file to orchestrate the containers needed to run ISSF
@@ -8,15 +8,16 @@
 
 version: '2'
 
-services:
-  web:
-    #image: tbti/web:latest
-    build: "."
-    command: "/bin/bash -c './scripts/wait-for-it.sh 0.0.0.0:5432 -- sleep 30
-    && python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
-    depends_on:
-      - db
-    environment:
+services: 
+  web: 
+    image: tbti/web:latest 
+    #build: "."
+    #command: "/bin/bash -c 'yes'"
+    command: "/bin/bash -c 'npm i && python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
+    depends_on: 
+      - db 
+      - nginx
+    environment: 
       - DJANGO_SETTINGS_MODULE=issf_prod.settings
     volumes:
       - "./:/issf:Z"
@@ -25,19 +26,35 @@ services:
       - "80"
     stdin_open: true
     tty: true
-  db:
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+  db: 
     image: mdillon/postgis:9.5
     ports:
       - "5432:5432"
     volumes:
       - "./scripts:/scripts:Z"
-      - "./data/postgres:/data/postgres/:Z"
-  pgadmin:
-    image: chorss/docker-pgadmin4:2.1
+      - "./data/postgres:/data/postgres/:Z"  
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+  pgadmin: 
+    image: chorss/docker-pgadmin4:2.1 
     ports:
       - "5050:5050"
     volumes:
+      - "./data/postgres:/data/postgres/:Z"
       - "./data/pgadmin:/data/pgadmin:Z"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
   nginx:
     image: nginx:latest
     ports:
@@ -46,5 +63,10 @@ services:
       - "./:/src:Z"
       - "./data/nginx:/etc/nginx/conf.d:Z"
       - "./static:/static:Z"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
     depends_on:
-      - web
+      web
