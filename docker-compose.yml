@@ -19,7 +19,7 @@ services:
       - nginx
     environment: 
       - DJANGO_SETTINGS_MODULE=issf_prod.settings
-    volumes: 
+    volumes:
       - "./:/issf:Z"
       - "./static:/static:Z"
     expose:
@@ -35,7 +35,7 @@ services:
     image: mdillon/postgis:9.5
     ports:
       - "5432:5432"
-    volumes: 
+    volumes:
       - "./scripts:/scripts:Z"
       - "./data/postgres:/data/postgres/:Z"  
     logging:
@@ -47,7 +47,8 @@ services:
     image: chorss/docker-pgadmin4:2.1 
     ports:
       - "5050:5050"
-    volumes: 
+    volumes:
+      - "./data/postgres:/data/postgres/:Z"
       - "./data/pgadmin:/data/pgadmin:Z"
     logging:
       driver: json-file
@@ -56,7 +57,7 @@ services:
         max-file: "10"
   nginx:
     image: nginx:latest
-    ports: 
+    ports:
       - "80:80"
     volumes:
       - "./:/src:Z"
@@ -67,4 +68,5 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
-
+    depends_on:
+      web

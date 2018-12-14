@@ -5,6 +5,7 @@
 *.swp
 *.out
 *.pyc
+.vscode/
 /apps/issf_base/static/issf_base/issf-js/chorodataold.geojson
 /tabledata.zip
 .idea/
@@ -33,7 +34,7 @@ apps/issf_base/__pycache__/
 issf_prod/__pycache__/
 
 # npm
-node_modules
+node_modules/
 
 # CSV Files
 attribute_values.csv
