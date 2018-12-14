@@ -31,6 +31,8 @@ After that, launch the existing containers with:
 
 ``docker-compose up -d``
 
+Once the other containers are running, you will still need to install the `npm` packages on the ISSF container. Open a shell with ``./scripts/issf_shell.sh`` and run the npm installation commands.
+
     
 Roadmap
 -----------------------------------------------
