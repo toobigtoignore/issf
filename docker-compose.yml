@@ -68,5 +68,3 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
-    depends_on:
-      - web
