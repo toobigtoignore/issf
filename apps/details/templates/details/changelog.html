@@ -18,10 +18,10 @@
 {% block body %}
     <div class="row">
         <div class="large-12 columns page-title2">
-            <!-- page title ------->
             <h1>ISSF Changelog</h1>
         </div>
     </div>
+
     <div class="row ">
         <div class="large-12 columns accountFormContainer">
             <form>
@@ -31,6 +31,7 @@
                         {% ifchanged version %}
                             <li>{{ version.major_version }}.{{ version.minor_version }}.{{ version.revision }} ({{ version.release_date }})</li>
                         {% endifchanged %}
+
                         {% for change in version.change_set.all %}
                             <ul style="list-style: square; padding-left: 10px;">
                                 <li>{{ change.change_desc }}</li>
