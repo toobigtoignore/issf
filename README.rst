@@ -17,10 +17,19 @@ Development
 ---------------------------------------
 Ensure that you have ``docker`` and ``docker-compose`` installed. 
 
-Pull the docker image with:
+Clone the git repository with:
 
-``docker pull tbti/issf``
+``git clone https://github.com/toobigtoignore/issf``
 
+Then spin up the database container. From within the `issf` directory run:
+
+``docker-compose up -d db``
+
+Next, acquire the test database so we can import it. There is an automated script to handle the process of importing and populating the database with the data dump called ``./scripts/postgres_setup.sh``
+
+After that, launch the existing containers with:
+
+``docker-compose up -d``
 
     
 Roadmap
