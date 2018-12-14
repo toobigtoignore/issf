@@ -1,6 +1,4 @@
-/*
-    DJANGO Admin styles
-*/
+/* Django Admin styles */
 
 body {
     margin: 0;
@@ -11,7 +9,7 @@ body {
     background: #fff;
 }
 
-/* LINKS */
+/* Links */
 
 a:link, a:visited {
     color: #5b80b2;
@@ -31,7 +29,7 @@ a.section:link, a.section:visited {
     text-decoration: none;
 }
 
-/* GLOBAL DEFAULTS */
+/* Global Defaults */
 
 p, ol, ul, dl {
     margin: .2em 0 .8em 0;
@@ -42,7 +40,7 @@ p {
     line-height: 140%;
 }
 
-h1,h2,h3,h4,h5 {
+h1, h2, h3, h4, h5 {
     font-weight: bold;
 }
 
@@ -161,7 +159,7 @@ hr {
     line-height: 1px;
 }
 
-/* TEXT STYLES & MODIFIERS */
+/* Text styles & Modifiers */
 
 .small {
     font-size: 11px;
@@ -235,7 +233,7 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
     white-space: nowrap;
 }
 
-/* TABLES */
+/* Tables */
 
 table {
     border-collapse: collapse;
@@ -306,7 +304,7 @@ tr.alt {
     background: #fff;
 }
 
-/* SORTABLE TABLES */
+/* Sortable tables */
 
 thead th {
     padding: 2px 5px;
@@ -392,7 +390,7 @@ table thead th.sorted .sortoptions a.descending:hover {
     background: url(../img/sorting-icons.gif) -5px -115px no-repeat;
 }
 
-/* ORDERABLE TABLES */
+/* Orderable tables */
 
 table.orderable tbody tr td:hover {
     cursor: move;
@@ -408,7 +406,7 @@ table.orderable-initalized .order-cell, body>tr>td.order-cell {
     display: none;
 }
 
-/* FORM DEFAULTS */
+/* Form defaults */
 
 input, textarea, select, .form-row p, form .button {
     margin: 2px 0;
@@ -428,7 +426,7 @@ textarea, select, .vTextField {
     border: 1px solid #ccc;
 }
 
-/* FORM BUTTONS */
+/* Form buttons */
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     background: #fff url(../img/nav-bg.gif) bottom repeat-x;
@@ -512,7 +510,7 @@ a.button {
     border-collapse: collapse;
 }
 
-/* MESSAGES & ERRORS */
+/* Messages & errors */
 
 ul.messagelist {
     padding: 0;
@@ -617,7 +615,7 @@ div.system-message p.system-message-title {
     padding: 5px 0 0 12px;
 }
 
-/* BREADCRUMBS */
+/* Breadcrumbs */
 
 div.breadcrumbs {
     background: #fff url(../img/nav-bg-reverse.gif) 0 -10px repeat-x;
@@ -629,7 +627,7 @@ div.breadcrumbs {
     text-align: left;
 }
 
-/* ACTION ICONS */
+/* Action icons */
 
 .addlink {
     padding-left: 12px;
@@ -654,7 +652,7 @@ a.deletelink:hover {
     color: #993333;
 }
 
-/* OBJECT TOOLS */
+/* Object tools */
 
 .object-tools {
     font-size: 10px;
@@ -708,7 +706,7 @@ a.deletelink:hover {
     padding-right: 26px;
 }
 
-/* OBJECT HISTORY */
+/* Object history */
 
 table#change-history {
     width: 100%;
@@ -718,7 +716,7 @@ table#change-history tbody th {
     width: 16em;
 }
 
-/* PAGE STRUCTURE */
+/* Page structure */
 
 #container {
     position: relative;
@@ -748,7 +746,7 @@ table#change-history tbody th {
     padding: 10px;
 }
 
-/* COLUMN TYPES */
+/* Coulmn types */
 
 .colMS {
     margin-right: 20em !important;
@@ -782,7 +780,7 @@ table#change-history tbody th {
     width: 500px;
 }
 
-/* HEADER */
+/* Header */
 
 #header {
     width: 100%;
@@ -832,7 +830,7 @@ table#change-history tbody th {
     text-align: right;
 }
 
-/* SIDEBAR */
+/* Sidebar */
 
 #content-related h3 {
     font-size: 12px;

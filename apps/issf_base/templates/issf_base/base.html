@@ -4,20 +4,24 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="description"
-              content="ISSF, Information System on Small-scale Fisheries, Fish, Seafood, Crowdsourcing, Public Contribution">
+        <meta
+            name="description"
+            content="ISSF, Information System on Small-scale Fisheries, Fish, Seafood, Crowdsourcing, Public Contribution"
+        >
         <meta name="author" content="Too Big To Ignore">
-        <meta name="google-translate-customization"
-              content="619d9e4b12097142-e4051ce1d3f4b9a6-gc9d1921458bbd665-13">
+        <meta
+            name="google-translate-customization"
+            content="619d9e4b12097142-e4051ce1d3f4b9a6-gc9d1921458bbd665-13"
+        >
+
         <title>{% block title %}ISSF: Information System on Small-scale Fisheries{% endblock %}</title>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
         <link rel="stylesheet" href="{% static 'issf_base/foundation/css/foundation.css' %}">
-        <!--link rel="stylesheet" href="{% static 'issf_base/foundation/css/foundation-datepicker.css'%}"-->
         <link rel="stylesheet" href="{% static 'issf_base/issf-js/jquery-ui-1.11.1.custom/jquery-ui.css' %}">
-        <link rel="stylesheet"
-              href="{% static 'issf_base/foundation/foundation-icon-font-3/foundation-icons/foundation-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'issf_base/foundation/foundation-icon-font-3/foundation-icons/foundation-icons.css' %}">
 
         <link rel="stylesheet" href="{% static 'issf_base/issf-css/app.css' %}">
         <link rel="stylesheet" href="{% static 'issf_base/issf-css/main.css' %}">
@@ -63,8 +67,10 @@
                 }, 'google_translate_element');
             }
         </script>
-        <script type="text/javascript"
-                src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <script
+            type="text/javascript"
+            src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        ></script>
     </head>
 
     <body LeavePageWarning=true>
@@ -85,17 +91,21 @@
                     <div class="logo" id="issf">
                         <h1>ISSF : Information System on Small Scale Fisheries</h1>
                         <a href="/">
-                            <img src="{% static "issf_base/img/logo-issf.png" %}"
-                                 alt="Information System on Small Scale Fisheries ">
+                            <img
+                                src="{% static "issf_base/img/logo-issf.png" %}"
+                                alt="Information System on Small Scale Fisheries"
+                            >
                         </a>
                     </div>
                 </div>
                 <div class="large-7 columns header-right">
                     <div class="account-bar">
-                        <style>.goog-te-gadget-simple {
+                        <style>
+                        .goog-te-gadget-simple {
                             background-color: transparent;
                             border: none;
-                        }</style>
+                        }
+                        </style>
                         <div id="google_translate_element" style="display: inline-block;"></div>
                         |
                         <i class="fi-torso"></i>
@@ -103,8 +113,12 @@
                             <a href="{% url 'account_login' %}?next={{ request.path }}">Login</a> |
                             <a href="{% url 'account_signup' %}">Sign up</a> |
                         {% else %}
-                            <a href="#" data-dropdown="user-options"
-                               data-options="align:left; is_hover:true">{{ user.username }}</a>
+                            <a
+                                href="#" data-dropdown="user-options"
+                                data-options="align:left; is_hover:true"
+                            >
+                                {{ user.username }}
+                            </a>
                             <ul id="user-options" class="tiny f-dropdown right text-left" data-dropdown-content>
                                 <li>
                                     <a href="{% url 'custom-password-change' %}">{% trans "Change Password" %}</a>
@@ -139,12 +153,13 @@
                             |
                         {% endif %}
 
-                        <span data-tooltip aria-haspopup="true" class="has-tip"
-                              title="ISSF Help Page" style="padding-left: 3px;">
-                            <a href="{% url 'help' %}" style="padding:0;">
-                                HELP
-                            </a>
+                        <span
+                            data-tooltip aria-haspopup="true" class="has-tip"
+                            title="ISSF Help Page" style="padding-left: 3px;"
+                        >
+                            <a href="{% url 'help' %}" style="padding:0;">HELP</a>
                         </span>
+
                     </div>
                     <a class="bt-contribute" href="{% url 'contribute' %}"></a>
                     <a href="http://toobigtoignore.net/" target="_blank">
@@ -152,71 +167,6 @@
                     </a>
                 </div>
             </div>
-            <!--style>
-			*{
-				position: relative;
-			}
-			#logocontainer{
-				height: 125px;
-				width: 1000px !important;
-				margin-left:auto;
-				margin-right: auto;
-			}
-
-			#logocontainer>*{
-				position: absolute;
-			}
-
-			#logocontainer>.bt-contribute{
-				top:30px;
-				right: 20px;
-			}
-
-			.logobox{
-				margin:0px;
-				padding:0px;
-				top: 10px;
-			}
-			.logobox>h1{
-				display:none;
-			}
-			.account-bar2{
-				display:inline-block;
-				width: 130px;
-				text-align:center;
-				right: 0px;
-				top: 0px;
-			}
-			.account-bar2:hover{
-				background:#c8c8c8;
-			}
-		</style>
-		<div id="logocontainer">
-                <div class="account-bar2">
-                    <i class="fi-torso"></i>
-                    {% if user.is_anonymous %}
-                        <a href="{% url 'account_login' %}">Login</a> |
-                        <a href="{% url 'account_signup' %}">Sign up</a>
-                    {% else %}
-                        <a href="#" data-dropdown="user-options" data-options="align:left; is_hover:true">{{ user }}</a>
-                        <ul id="user-options" class="tiny f-dropdown right text-left" data-dropdown-content>
-                            <li><a href="{% url 'custom-password-change' %}">{% trans "Change Password" %}</a></li>
-                            <li><a href="{% url 'account_reset_password' %}">{% trans "Password Reset" %}</a></li>
-                            <li><a href="{% url 'update-profile' %}">{% trans "User Profile" %}</a></li>
-                            <li><a href="{% url 'account-verified' %}">{% trans "Public Information Policy" %}</a></li>
-                            <li><a href="{% url 'account_logout' %}?next=/">{% trans "Logout" %}</a></li>
-                        </ul>
-                    {% endif %}
-                </div>
-				<div class="logobox">
-                    <h1>ISSF : Information System on Small Scale Fisheries</h1>
-                    <a href="/"><img src="{% static "issf_base/img/logo-issf.png" %}" alt="Information System on Small Scale Fisheries "></a>
-                </div>
-                <a class="bt-contribute" href="{% url 'contribute' %}"></a>
-                <a href="http://toobigtoignore.net/" target="_blank">
-                    <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
-                </a>
-        </div-->
         </header>
 
         {% block body %} {% endblock body %}
@@ -225,47 +175,39 @@
         <footer>
             <div class="row">
                 <div class="large-8 columns">
-                    <p class="copy">&copy;2018 TBTI, all rights reserved. Hosted by
+                    <p class="copy">
+                        &copy;2018 TBTI, all rights reserved. Hosted by
                         <a
-                                href="http://www.mun.ca/research/resources/computing/creait-isg/index.php"
-                                target="_blank">CREAIT-ISG
+                            href="http://www.mun.ca/research/resources/computing/creait-isg/index.php"
+                            target="_blank"
+                        >
+                            CREAIT-ISG
                         </a>
-                        .
-                        Contact
-                        <a href="mailto:issf.tbti@gmail.com">ISSF Support</a>
-                        .
+                        - Contact <a href="mailto:issf.tbti@gmail.com">ISSF Support</a>
                     </p>
                     <p class="copy">
                         <i>Any use of ISSF data must acknowledge TBTI as the source of contribution.</i>
                     </p>
                 </div>
-                <div class="large-4 columns" style="text-align:right">
-                <span>
-                    <div class="footerSocialMediaContainer">
-                        <a href="https://twitter.com/TBTInetwork" class="twitter-follow-button" data-show-count="true"
-                           data-show-screen-name="false">Follow @TBTInetwork
-                        </a>
-                    </div>
-                    {#<div class="fb-like-box" data-href="https://www.facebook.com/TBTInetwork" data-colorscheme="dark" data-show-faces="false" data-header="false" data-stream="false" data-show-border="false"></div>#}
-                    <div class="footerSocialMediaContainer">
-                        <div class="fb-like" data-href="https://www.facebook.com/TBTInetwork" data-layout="button_count"
-                             data-action="like" data-show-faces="false" data-share="false"></div>
-                    </div>
-                </span>
 
-                    <!-- Google Translate dropdown-->
+                <div class="large-4 columns" style="text-align:right">
+                    <span>
+                        <div class="footerSocialMediaContainer">
+                            <a href="https://twitter.com/TBTInetwork" class="twitter-follow-button" data-show-count="true"
+                            data-show-screen-name="false">Follow @TBTInetwork
+                            </a>
+                        </div>
+                        <div class="footerSocialMediaContainer">
+                            <div class="fb-like" data-href="https://www.facebook.com/TBTInetwork" data-layout="button_count"
+                                data-action="like" data-show-faces="false" data-share="false"></div>
+                        </div>
+                    </span>
+
                     <div id="google_translate_element" style="padding-top: 3px;"></div>
-                    {#                <div class="social">#}
-                    {#                    <a id="twitter" href="" target="_blank">twitter</a>#}
-                    {#                    <a id="facebook" href="" target="_blank">facebook</a>#}
-                    {#                    <a id="googleplus" href="" target="_blank">google+</a>#}
-                    {#                    <a id="youtube" href="" target="_blank">youtube</a>#}
-                    {#                </div>#}
                 </div>
             </div>
         </footer>
 
-        <!--script src="//code.jquery.com/jquery-1.11.0.min.js"></script-->
         <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="{% static 'issf_base/issf-js/jquery-ui-1.11.1.custom/jquery-ui.min.js' %}"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js'></script>
@@ -273,13 +215,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.3.1/js/foundation.min.js"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.4.11/perfect-scrollbar.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.4.11/perfect-scrollbar.with-mousewheel.min.js'></script>
-        <!--script src="{% static 'issf_base/foundation/js/foundation-datepicker.min.js' %}"></script-->
-        <script src='{% static "issf_base/issf-js/HJExtension2.js" %}'></script>
 
-        <script src="{% static 'issf_base/issf-js/app.min.js' %}"></script>
+        <script src='{% static "issf_base/issf-js/HJExtension2.js" %}'></script>
+        <script src="{% static 'issf_base/issf-js/app.js' %}"></script>
 
         <script type="text/javascript">
-
             $(document).ready(function () {
                 $('#details-loading-overlay').show();
                 $(document).foundation();
@@ -313,35 +253,6 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }
         }(document, "script", "twitter-wjs");</script>
-
-        {#        <!-- Google Translate code-->#}
-        {#        <script type="text/javascript">#}
-        {#            function googleTranslateElementInit() {#}
-        {#                new google.translate.TranslateElement({#}
-        {#                    pageLanguage: 'en',#}
-        {#                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,#}
-        {#                    gaTrack: true,#}
-        {#                    gaId: 'UA-58301238-1'#}
-        {#                }, 'google_translate_element');#}
-        {#            }#}
-        {#        </script>#}
-        {#        <script type="text/javascript"#}
-        {#                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
-
-        {#        <div id="google_translate_element"></div>#}
-        {#        <script type="text/javascript">#}
-        {#            function googleTranslateElementInit() {#}
-        {#                new google.translate.TranslateElement({#}
-        {#                    pageLanguage: 'en',#}
-        {#                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,#}
-        {#                    autoDisplay: false,#}
-        {#                    gaTrack: true,#}
-        {#                    gaId: 'UA-58301238-1'#}
-        {#                }, 'google_translate_element');#}
-        {#            }#}
-        {#        </script>#}
-        {#        <script type="text/javascript"#}
-        {#                src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
 
         {% block additional_js_scripts %}
         {% endblock additional_js_scripts %}
