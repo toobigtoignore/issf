@@ -1234,7 +1234,7 @@
 
             function numberCommas(x, sep, grp) {
                 if (x.length > 3) {
-                    var sx = ('' + x).split('.'), s = '', i, j;
+                    var sx = ('' + Math.round(x)).split('.'), s = '', i, j;
                     sep || (sep = ','); // default seperator
                     grp || grp === 0 || (grp = 3); // default grouping
                     i = sx[0].length;
