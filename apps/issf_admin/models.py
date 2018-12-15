@@ -1,7 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import AbstractUser
 
-from issf_base.models import Country, SSFOrganization
+from issf_base.models import Country
 
 
 # custom user model
@@ -10,7 +10,6 @@ class UserProfile(AbstractUser):
     country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     # # set true when creating user accounts on their behalf, so that they get prompted to
     # change password after verification
-    # prompt_change_password = models.BooleanField(default=False)
 
     class Meta:
         managed = True

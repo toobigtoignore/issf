@@ -2,7 +2,6 @@ import datetime
 import json
 import re
 import os.path
-from zipfile import ZipFile
 
 import djqscsv
 from django.contrib.auth.decorators import login_required
@@ -11,12 +10,10 @@ from django.core.management import call_command
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
-from django.templatetags.static import static
 from djgeojson.views import GeoJSONLayerView
 
-from issf_base.models import CommonAttributeView, Attribute, AdditionalValue, WhoFeature, SSFCaseStudies, \
-    SSFExperiences, \
-    KnowledgeAuthorSimple, ISSF_Core, GeographicScopeNation, SelectedThemeIssue, SelectedAttribute, CommonThemeIssueView
+from issf_base.models import CommonAttributeView, WhoFeature, SSFCaseStudies, SSFExperiences, \
+    KnowledgeAuthorSimple, ISSF_Core, GeographicScopeNation, CommonThemeIssueView
 from issf_base.models import ISSFCoreMapPointUnique
 from issf_base.models import Theme_Issue_Value
 
@@ -43,20 +40,7 @@ from issf_base.models import GeographicScopeLocalArea
 from issf_base.models import GeographicScopeSubnation
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
-# from frontend.forms import EconomicThemesIssuesForm
-# from frontend.forms import EcologicalThemesIssuesForm
-# from frontend.forms import SocialCulturalThemesIssuesForm
-# from frontend.forms import GovernanceThemesIssuesForm
-# from frontend.forms import SsftermCharacteristicsForm
-# from frontend.forms import FisherytypeCharacteristicsForm
-# from frontend.forms import GeartypeCharacteristicsForm
-# from frontend.forms import EcosystemHighlevelCharacteristicsForm
-# from frontend.forms import EcosystemDetailedCharacteristicsForm
-# from frontend.forms import MarketCharacteristicsForm
-# from frontend.forms import GovernanceCharacteristicsForm
-# from frontend.forms import ManagementCharacteristicsForm
-from frontend.forms import SelectedAttributesFormSet
-from frontend.forms import SelectedThemesIssuesFormSet
+from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
 
 
 def parse_search_terms(input_search_terms):
@@ -64,6 +48,8 @@ def parse_search_terms(input_search_terms):
         Strip away special characters because they would cause the tsquery to fail
         and the search to hang.
     """
+
+    # Refactor!
     search_array = input_search_terms.replace(u":", u" ").replace(u"'",
                                                                   u" ").replace(
         u"|", u" ").replace(u"!", u" ").replace(u"&", u" ").replace(u"%",
@@ -80,7 +66,6 @@ def parse_search_terms(input_search_terms):
 
 def index(request):
     # get data for dashboard panels
-    # top_contributors = TopContributors.objects.all()
     recent_contributions = RecentContributions.objects.all()
     for recent_contribution in recent_contributions:
         lines = recent_contribution.core_record_summary.split('\\n')
@@ -100,33 +85,19 @@ def index(request):
     attribute_values = AttributeValue.objects.all()
     theme_issue_values = Theme_Issue_Value.objects.all()
     who_feature = WhoFeature.objects.latest('id')
-    # top_rated_capacity_needs = TopRatedCapacityNeeds.objects.all()
     # return dashboard data and empty search forms
     return render(request, "frontend/index.html", {
         'contributions_by_record_type': contributions_by_record_type,
         'contributions_by_country': contributions_by_country,
         'other_countries': other_countries,
         'contributions_by_geographic_scope': contributions_by_geographic_scope,
-        # 'top_contributors': top_contributors,
         'recent_contributions': recent_contributions,
-        # 'top_rated_capacity_needs': top_rated_capacity_needs,
-        'searchForm': SearchForm,  # 'econTIForm': EconomicThemesIssuesForm,
-        # 'ecolTIForm': EcologicalThemesIssuesForm,
-        # 'socTIForm': SocialCulturalThemesIssuesForm,
-        # 'govTIForm': GovernanceThemesIssuesForm,
+        'searchForm': SearchForm,
         'selected_themes_issues_formset': SelectedThemesIssuesFormSet,
         'selected_attributes_formset': SelectedAttributesFormSet,
-        'attribute_values': attribute_values, 'theme_issue_values':
-            theme_issue_values,
+        'attribute_values': attribute_values,
+        'theme_issue_values': theme_issue_values,
         'who_feature': who_feature,
-        # 'stCharForm': SsftermCharacteristicsForm,
-        # 'ftCharForm': FisherytypeCharacteristicsForm,
-        # 'gtCharForm': GeartypeCharacteristicsForm,
-        # 'ehCharForm': EcosystemHighlevelCharacteristicsForm,
-        # 'edCharForm': EcosystemDetailedCharacteristicsForm,
-        # 'mktCharForm': MarketCharacteristicsForm,
-        # 'govCharForm': GovernanceCharacteristicsForm,
-        # 'mgmtCharForm': ManagementCharacteristicsForm,
         'num_who_records': SSFPerson.objects.all().count(),
         'num_sota_records': SSFKnowledge.objects.all().count(),
         'num_profile_records': SSFProfile.objects.all().count(),
@@ -139,11 +110,8 @@ def index(request):
 
 
 def frontend_data(request):
-    # sleep(3)
-    queryset = None
     map_queryset = None
     search_terms = u""
-    search_results = []
     map_results = []
 
     if request.method != 'POST':  # Could cause bugs, should be == 'GET'?
@@ -167,24 +135,14 @@ def frontend_data(request):
             # append to search_terms display string
             if len(search_terms) > 0:
                 search_terms = search_terms + u" AND "
-            # search_terms = search_terms + u"(Full text = " +
-            # keywords.replace(u" ",
-            # u" OR ") + u")"
             parsed_keywords = parse_search_terms(keywords)
 
             where.append(
-                u"core_record_tsvector @@ to_tsquery('english', unaccent('{"
-                u"0}'))".format(parsed_keywords))
+                u"core_record_tsvector @@ to_tsquery('english', unaccent('{" u"0}'))".format(parsed_keywords))
 
-            select = {
-                "relevance": u"round(CAST(ts_rank(core_record_tsvector, "
-                             u"to_tsquery('{0}')) AS "
-                             u"NUMERIC), 3)".format(parsed_keywords)
-            }
+            select = {"relevance": u"round(CAST(ts_rank(core_record_tsvector, " u"to_tsquery('{0}')) AS " u"NUMERIC), 3)".format(parsed_keywords)}
 
-            search_terms = search_terms + u"(Full text = " + \
-                           parsed_keywords.replace(
-                               u" | ", u" OR ").replace(u" & ", u" AND ") + u"; returned "
+            search_terms = search_terms + u"(Full text = " + parsed_keywords.replace(u" | ", u" OR ").replace(u" & ", u" AND ") + u"; returned "
             search_terms = search_terms.replace(u":*", u"")
         else:
             select = {"relevance": u"0"}
@@ -195,13 +153,12 @@ def frontend_data(request):
             # append to search_terms display string
             if len(search_terms) > 0:
                 search_terms = search_terms + u" AND "
+
+            # Refactor!
             search_terms = search_terms + u"(Contributor/editor = " + (
                 user_profile.username + u" (" + user_profile.first_name + u" " + user_profile.initials + u" " +
-                user_profile.last_name + u")").replace(
-                u"  ", u" ") + u")"
-            where.append(
-                u"contributor_id = " + contributor_id + u" OR editor_id = "
-                + contributor_id)
+                user_profile.last_name + u")").replace(u"  ", u" ") + u")"
+            where.append(u"contributor_id = " + contributor_id + u" OR editor_id = " + contributor_id)
 
         r = re.compile('.*/.*/.*')
         if len(request.POST['contribution_begin_date']) > 0:
@@ -210,53 +167,18 @@ def frontend_data(request):
                 # append to search_terms display string
                 if len(search_terms) > 0:
                     search_terms = search_terms + u" AND "
-                search_terms = search_terms + u"(Contribution begin date = " \
-                               + date_string + u")"
-                date_string = datetime.datetime.strptime(date_string,
-                                                         '%m/%d/%Y').strftime(
-                    '%Y-%m-%d')
-                where.append(
-                    u"contribution_date >= date '" + date_string + u"'")
+                search_terms = search_terms + u"(Contribution begin date = " + date_string + u")"
+                date_string = datetime.datetime.strptime(date_string, '%m/%d/%Y').strftime('%Y-%m-%d')
+                where.append(u"contribution_date >= date '" + date_string + u"'")
         if len(request.POST['contribution_end_date']) > 0:
             date_string = request.POST['contribution_end_date']
             if r.match(date_string) is not None:
                 # append to search_terms display string
                 if len(search_terms) > 0:
                     search_terms = search_terms + u" AND "
-                search_terms = search_terms + u"(Contribution end date = " + \
-                               date_string + u")"
-                date_string = datetime.datetime.strptime(date_string,
-                                                         '%m/%d/%Y').strftime(
-                    '%Y-%m-%d')
-                where.append(
-                    u"contribution_date <= date '" + date_string + u"'")
-        # if len(request.POST['edited_begin_date']) > 0:
-        #     date_string = request.POST['edited_begin_date']
-        #     if r.match(date_string) is not None:
-        #         # append to search_terms display string
-        #         if len(search_terms) > 0:
-        #             search_terms = search_terms + u" AND "
-        #         search_terms = search_terms + u"(Edited begin date = " + \
-        #                        date_string + ")"
-        #         date_string = datetime.datetime.strptime(date_string,
-        #
-        # '%m/%d/%Y').strftime(
-        #             '%Y-%m-%d')
-        #         where.append(u"edited_date >= date '" + date_string + u"'")
-        # if len(request.POST['edited_end_date']) > 0:
-        #     date_string = request.POST['edited_end_date']
-        #     if r.match(date_string) is not None:
-        #         # append to search_terms display string
-        #         if len(search_terms) > 0:
-        #             search_terms = search_terms + u" AND "
-        #         search_terms = search_terms + u"(Edited end date = " + \
-        #                        date_string + u")"
-        #         date_string = datetime.datetime.strptime(date_string,
-        #
-        # '%m/%d/%Y').strftime(
-        #             '%Y-%m-%d')
-        #         where.append(u"edited_date <= date '" + date_string + u"'")
-
+                search_terms = search_terms + u"(Contribution end date = " + date_string + u")"
+                date_string = datetime.datetime.strptime(date_string, '%m/%d/%Y').strftime('%Y-%m-%d')
+                where.append(u"contribution_date <= date '" + date_string + u"'")
         if 'countries' in request.POST:
             # append to search_terms display string
             if len(search_terms) > 0:
@@ -275,104 +197,7 @@ def frontend_data(request):
                 search_terms = search_terms + country.short_name
                 first = False
             search_terms = search_terms + u")"
-            where.append(u"issf_core_id IN (SELECT issf_core_id FROM "
-                         u"issf_core_map_point_unique WHERE " +
-                         country_where + u")")
-
-        # themes_issues_list = []
-        # if 'economic_themes_issues' in request.POST:
-        # themes_issues_list.append(u",".join(request.POST.getlist(
-        # 'economic_themes_issues')))
-        # if 'ecological_themes_issues' in request.POST:
-        # themes_issues_list.append(u",".join(request.POST.getlist(
-        # 'ecological_themes_issues')))
-        # if 'social_cultural_themes_issues' in request.POST:
-        # themes_issues_list.append(
-        # u",".join(request.POST.getlist('social_cultural_themes_issues')))
-        # if 'governance_themes_issues' in request.POST:
-        #     themes_issues_list.append(u",".join(request.POST.getlist(
-        # 'governance_themes_issues')))
-        # if themes_issues_list:
-        #     # append to search_terms display string
-        #     if len(search_terms) > 0:
-        #         search_terms = search_terms + u" AND "
-        #     search_terms = search_terms + u"(Themes/issues = "
-        #     themes_issues_where = (u"theme_issue_value_id IN (" + u",
-        # ".join(themes_issues_list) +
-        #                            u")")
-        #     inner_where = []
-        #     inner_where.append(themes_issues_where)
-        #     theme_issue_values = Theme_Issue_Value.objects.extra(
-        # where=inner_where)
-        #     first = True
-        #     for theme_issue_value in theme_issue_values:
-        #         if not first:
-        #             search_terms = search_terms + u" OR "
-        #         search_terms = search_terms +
-        # theme_issue_value.theme_issue_label
-        #         first = False
-        #     search_terms = search_terms + u")"
-        #     where.append(
-        #         u"issf_core_id IN (SELECT issf_core_id FROM
-        # selected_theme_issue WHERE " +
-        #         themes_issues_where + u")")
-
-        # characteristics_list = []
-        # if 'ssfterm_characteristics' in request.POST:
-        # characteristics_list.append(u",".join(request.POST.getlist(
-        # 'ssfterm_characteristics')))
-        # if 'fisherytype_characteristics' in request.POST:
-        # characteristics_list.append(
-        # u",".join(request.POST.getlist('fisherytype_characteristics')))
-        # if 'geartype_characteristics' in request.POST:
-        # characteristics_list.append(
-        # u",".join(request.POST.getlist('geartype_characteristics')))
-        # if 'ecosystem_highlevel_characteristics' in request.POST:
-        # characteristics_list.append(
-        # u",".join(request.POST.getlist(
-        # 'ecosystem_highlevel_characteristics')))
-        # if 'ecosystem_detailed_characteristics' in request.POST:
-        #     characteristics_list.append(
-        #         u",".join(request.POST.getlist(
-        # 'ecosystem_detailed_characteristics')))
-        # if 'market_characteristics' in request.POST:
-        #     characteristics_list.append(u",".join(request.POST.getlist(
-        # 'market_characteristics')))
-        # if 'governance_characteristics' in request.POST:
-        #     characteristics_list.append(
-        #         u",".join(request.POST.getlist(
-        # 'governance_characteristics')))
-        # if 'management_characteristics' in request.POST:
-        #     characteristics_list.append(
-        #         u",".join(request.POST.getlist(
-        # 'management_characteristics')))
-        # if characteristics_list:
-        #     # append to search_terms display string
-        #     if len(search_terms) > 0:
-        #         search_terms = search_terms + u" AND "
-        #     search_terms = search_terms + u"(Characteristics = "
-        #     characteristics_where = (
-        #         u"characteristic_value_id IN (" + u",".join(
-        # characteristics_list) + u")")
-        #     inner_where = []
-        #     inner_where.append(characteristics_where)
-        #     characteristic_values = Characteristic_Value.objects.extra(
-        # where=inner_where)
-        #     first = True
-        #     for characteristic_value in characteristic_values:
-        #         if not first:
-        #             search_terms = search_terms + u" OR "
-        #         # search_terms = search_terms +
-        # characteristic.characteristic_category + " - " +
-        #         # characteristic.characteristic_label
-        #         search_terms = search_terms +
-        # characteristic_value.characteristic_label
-        #         first = False
-        #     search_terms = search_terms + u")"
-        #     where.append(
-        #         u"issf_core_id IN (SELECT issf_core_id FROM
-        # selected_characteristic WHERE " +
-        #         characteristics_where + u")")
+            where.append(u"issf_core_id IN (SELECT issf_core_id FROM " u"issf_core_map_point_unique WHERE " + country_where + u")")
 
         # Qualitative and ordinal characteristics
         selected_themes_issues_formset = SelectedThemesIssuesFormSet(
@@ -381,11 +206,12 @@ def frontend_data(request):
         if selected_themes_issues_formset.is_valid():
             for form in selected_themes_issues_formset.forms:
                 if len(form.cleaned_data) > 0:
-                    theme_issue_value_ids.append(
-                        str(form.cleaned_data['theme_issue_value']))
+                    theme_issue_value_ids.append(str(form.cleaned_data['theme_issue_value']))
 
             if theme_issue_value_ids:
                 theme_issue_value_ids = ','.join(theme_issue_value_ids)
+
+                # Refactor!
                 where.append(u"issf_core_id IN (SELECT issf_core_id FROM "
                              u"selected_theme_issue WHERE " +
                              u"theme_issue_value_id IN (" +
@@ -396,8 +222,7 @@ def frontend_data(request):
         if selected_attributes_formset.is_valid():
             for form in selected_attributes_formset.forms:
                 if len(form.cleaned_data) > 0:
-                    attribute_value_ids.append(
-                        str(form.cleaned_data['attribute_value']))
+                    attribute_value_ids.append(str(form.cleaned_data['attribute_value']))
 
             if attribute_value_ids:
                 attribute_value_ids = ','.join(attribute_value_ids)
@@ -406,9 +231,7 @@ def frontend_data(request):
                              u"attribute_value_id IN (" +
                              attribute_value_ids + u"))")
 
-        # queryset = ISSFCore.objects.extra(where=where, select=select)
-        map_queryset = ISSFCoreMapPointUnique.objects.extra(where=where,
-                                                            select=select)
+        map_queryset = ISSFCoreMapPointUnique.objects.extra(where=where, select=select)
 
     if map_queryset:
         """The following code block is commented out because the table on the homepage now uses the same data as the
@@ -416,38 +239,6 @@ def frontend_data(request):
         I've left it for posterity.
         """
         # data found
-        # for row in queryset:
-        #     temp = []
-        #     temp.append(row.core_record_type)
-        #     url = ''
-        #     if row.core_record_type == "Who's Who in SSF":
-        #         url = reverse('who-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "State-of-the-Art in SSF Research":
-        #         url = reverse('sota-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "Capacity Development":
-        #         url = reverse('capacity-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "SSF Organization":
-        #         url = reverse('organization-details', kwargs={
-        # 'issf_core_id': row.issf_core_id})
-        #     elif row.core_record_type == "SSF Profile":
-        #         url = reverse('profile-details', kwargs={'issf_core_id':
-        # row.issf_core_id})
-        #     elif row.core_record_type == "SSF Guidelines":
-        #         url = reverse('guidelines-details', kwargs={
-        # 'issf_core_id': row.issf_core_id})
-        #     # temp.append('<a href="' + url + '">' + escape(
-        # row.core_record_summary) + '</a>')
-        #     lines = row.core_record_summary.split('\\n')
-        #     summary = ''
-        #     for line in lines:
-        #         summary += line + '<br/>'
-        #     temp.append('<a href="' + url + '">' + summary + '</a>')
-        #     temp.append(row.edited_date.strftime("%Y-%m-%d"))
-        #     temp.append(str(row.relevance))
-        #     search_results.append(temp)
 
         # Put data for each record into map data array. This probably won't scale well. Would probably be better off
         # calculating a record's URL when it's contributed and then storing it as a column in the database.
@@ -462,29 +253,21 @@ def frontend_data(request):
             temp.append(summary)
             url = ''
             if row.core_record_type == "Who's Who in SSF":
-                url = reverse('who-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('who-details', kwargs={'issf_core_id': row.issf_core_id})
             elif row.core_record_type == "State-of-the-Art in SSF Research":
-                url = reverse('sota-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('sota-details', kwargs={'issf_core_id': row.issf_core_id})
             elif row.core_record_type == "Capacity Development":
-                url = reverse('capacity-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('capacity-details', kwargs={'issf_core_id': row.issf_core_id})
             elif row.core_record_type == "SSF Organization":
-                url = reverse('organization-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('organization-details', kwargs={'issf_core_id': row.issf_core_id})
             elif row.core_record_type == "SSF Profile":
-                url = reverse('profile-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('profile-details', kwargs={'issf_core_id': row.issf_core_id})
             elif row.core_record_type == "SSF Guidelines":
-                url = reverse('guidelines-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('guidelines-details', kwargs={'issf_core_id': row.issf_core_id})
             elif row.core_record_type == "SSF Experiences":
-                url = reverse('experiences-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('experiences-details', kwargs={'issf_core_id': row.issf_core_id})
             elif row.core_record_type == "Case Study":
-                url = reverse('case-studies-details',
-                              kwargs={'issf_core_id': row.issf_core_id})
+                url = reverse('case-studies-details', kwargs={'issf_core_id': row.issf_core_id})
             temp.append('<a href="' + url + '">Details</a>')
             temp.append(str(row.lon))
             temp.append(str(row.lat))
@@ -507,15 +290,13 @@ def frontend_data(request):
 class MapLayer(GeoJSONLayerView):
     geometry_field = 'map_point'
     queryset = ISSFCoreMapPointUnique.objects.all()
-    properties = ['issf_core_id', 'core_record_type', 'core_record_summary',
-                  'geographic_scope_type']
+    properties = ['issf_core_id', 'core_record_type', 'core_record_summary', 'geographic_scope_type']
 
     def get_context_data(self, **kwargs):
         # this case is called from details to show map points for one record
         context = super(MapLayer, self).get_context_data(**kwargs)
         issf_core_id = self.request.GET['issf_core_id']
-        self.queryset = ISSFCoreMapPointUnique.objects.filter(
-            issf_core_id=issf_core_id)
+        self.queryset = ISSFCoreMapPointUnique.objects.filter(issf_core_id=issf_core_id)
         return context
 
 
@@ -560,8 +341,9 @@ def table_data_export(request):
             elif type == 'SSF Experiences':
                 expe_items.append(issf_core_id)
 
+        # Refactor !
         zipfile = ZipFile('/home/projects/issf/issf_prod/tabledata.zip', 'w')
-
+        # Refactor!
         cap_records = SSFCapacityNeed.objects.filter(issf_core_id__in=cap_items).values('issf_core_id',
                                                                                         'contributor_id__first_name',
                                                                                         'contributor_id__last_name',
@@ -718,13 +500,9 @@ def table_data_export(request):
                                                                                              'additional_value__value_label')
 
         write_file_csv('main_attributes.csv', main_attrs, zipfile)
-
         author_records = KnowledgeAuthorSimple.objects.filter(knowledge_core__in=sota_items).values()
-
         write_file_csv('authors.csv', author_records, zipfile)
-
         all_ids = cap_items + guide_items + org_items + profile_items + sota_items + who_items + expe_items + case_items
-
         theme_issue_records = CommonThemeIssueView.objects.filter(issf_core_id__in=all_ids).values('issf_core_id',
                                                                                                    'selected_theme_issue_id',
                                                                                                    'theme_issue_value__theme_issue_label',
@@ -770,19 +548,10 @@ def table_data_export(request):
     else:
         zipfile = open('/home/projects/issf/issf_prod/tabledata.zip', 'rb')
 
-        response = HttpResponse(zipfile,
-                                content_type='application/x-zip-compressed')
-        response[
-            'Content-Disposition'] = 'attachment; filename="tabledata.zip"'
+        response = HttpResponse(zipfile, content_type='application/x-zip-compressed')
+        response['Content-Disposition'] = 'attachment; filename="tabledata.zip"'
 
         return response
-
-
-# def nstr(s):
-#     # returns s if it is not None, otherwise returns an empty string
-#     if not s:
-#         return ''
-#     return s
 
 
 def write_file_csv(filename, records, zipfile):
@@ -847,13 +616,10 @@ def profile_csv(request):
     write_file_csv('geog_scope_national.csv', geog_scope_national_records, zipfile)
 
     zipfile.close()
-
     zipfile = open('profile_data.zip', 'rb')
 
-    response = HttpResponse(zipfile,
-                            content_type='application/x-zip-compressed')
-    response[
-        'Content-Disposition'] = 'attachment; filename="profile_data.zip"'
+    response = HttpResponse(zipfile, content_type='application/x-zip-compressed')
+    response['Content-Disposition'] = 'attachment; filename="profile_data.zip"'
 
     return response
 
@@ -927,8 +693,7 @@ def country_records(request, country_id):
     else:
         country.short_name = ''
 
-    return render(request, 'frontend/country_records.html',
-                  {'records': records, 'country_name': country.short_name})
+    return render(request, 'frontend/country_records.html', {'records': records, 'country_name': country.short_name})
 
 
 # For staff members only, used to submit new tips for the help page.
@@ -950,8 +715,7 @@ def new_tip(request):
         tip_form = TipForm()
         faq_form = FAQForm()
 
-        return render(request, 'frontend/new_tip.html',
-                      {'tip_form': tip_form, 'faq_form': faq_form, 'is_staff': is_staff})
+        return render(request, 'frontend/new_tip.html', {'tip_form': tip_form, 'faq_form': faq_form, 'is_staff': is_staff})
     else:
         raise Http404("Insufficient permission.")
 
@@ -1003,16 +767,14 @@ def geojson_upload(request):
                 file_ext = form.cleaned_data['file'].name.split('.')[-1]
                 if file_ext == 'geojson':
                     BASE = os.path.dirname(os.path.abspath(__file__))
-                    with open(os.path.join(BASE, "static/frontend/js/chorodata.geojson"),
-                              'wb') as destination:
+                    with open(os.path.join(BASE, "static/frontend/js/chorodata.geojson"), 'wb') as destination:
                         destination.write("var choroData = ".encode(encoding='UTF-8'))
                         for chunk in request.FILES['file'].chunks():
                             destination.write(chunk)
                     call_command('collectstatic', verbosity=0, interactive=False)
                     return HttpResponseRedirect(reverse('geojson-upload'))
                 else:
-                    return render(request, 'frontend/geojson_upload.html',
-                                  {'form': form, 'form_error': 'File must be of type GeoJSON.'})
+                    return render(request, 'frontend/geojson_upload.html', {'form': form, 'form_error': 'File must be of type GeoJSON.'})
         else:
             form = GeoJSONUploadForm()
             return render(request, 'frontend/geojson_upload.html', {'form': form})

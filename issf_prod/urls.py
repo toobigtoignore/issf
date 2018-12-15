@@ -1,18 +1,16 @@
-import django
-from django.conf.urls import include, url
-from django.contrib import admin
-from django_js_reverse.views import urls_js
-
 from issf_admin.views import return_sitemap, return_robots, return_google_site_verification, update_profile, \
     profile_saved, account_verified, custom_password_change, help_page, fact_archive, contributed_records
+
 from django.contrib.auth.views import logout
-from frontend.views import new_tip, new_faq, who_feature, geojson_upload, index, table_data_export, profile_csv, \
-    country_records
+from frontend.views import new_tip, new_faq, who_feature, geojson_upload, index, table_data_export, profile_csv, country_records
+
+from django.conf.urls import include, url
+from django.contrib import admin
+
 
 admin.autodiscover()
 
 urlpatterns = [
-    #url(r'^jsreverse/$', cache_page(3600)(urls_js), name='js_reverse'),
     url(r'^sitemap.xml/$', return_sitemap, name="return-sitemap"),
     url(r'^robots.txt/$', return_robots, name="return-robots"),
     url(r'^googlee9690f8983b8a350.html/$', return_google_site_verification, name="return-google-site-verification"),

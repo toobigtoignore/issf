@@ -4,9 +4,7 @@ from django.conf.urls import url
 # replace * with specific references
 from django.views.generic import TemplateView
 
-from details import views as d_views
 from .views import *
-from frontend.views import index
 from issf_base.models import *
 
 urlpatterns = [  # display
@@ -49,14 +47,7 @@ urlpatterns = [  # display
     # changelog
     url(r'^changelog/$', changelog, name='changelog'),
 
-    # saving
     # core datasets
-    # url(r'^test/$', AttributesCreateView.as_view()),
-    # url(r'^test/(?P<pk>\d+)/$',
-    # AttributesUpdateView.as_view()),
-    # url(r'^test/(?P<issf_core_id>\d+)/$',
-    # 'attributes_update_view',
-    # name='attributes-update-view'),
     url(r'^who/basic/$', who_basic, name='who-basic'),
     url(r'^who/researcher/$', who_researcher,
         name='who-researcher'),
@@ -84,8 +75,6 @@ urlpatterns = [  # display
         name='themes-issues'),
     url(r'^common-themes-issues/$', common_themes_issues,
         name='common-themes-issues'),
-    # url(r'^characteristics/$', 'characteristics',
-    # name='characteristics'),
     url(r'^common-attributes/$', common_attributes,
         name='common-attributes'),
     url(r'^geographic-scope/$', geographic_scope,

@@ -1,25 +1,19 @@
 import ast
 import json
 import re
-from urllib import request
 from urllib.parse import urlparse
-
-from random import randint
-
 import collections
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.sitemaps import Sitemap
 from django.core.cache import cache
 from django.urls import reverse
 from django.db import connection
 from django.forms.utils import ErrorList
-from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
-
-# from issf_base.models import MainAttribute
-# from issf_base.models import SelectedCharacteristic
 
 from issf_admin.models import UserProfile
 # replace * with specific references
@@ -28,25 +22,12 @@ from issf_admin.forms import ProfileForm
 from issf_admin.views import save_profile
 
 import twitter
-from issf_prod.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, \
-    TWITTER_CONSUMER_SECRET
+from issf_prod.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
+from issf_prod.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
 
 api = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY, consumer_secret=TWITTER_CONSUMER_SECRET,
                   access_token_key=TWITTER_ACCESS_TOKEN, access_token_secret=TWITTER_ACCESS_TOKEN_SECRET)
 
-
-# test using simple class-based views
-# class SSFPersonCreateView(CreateView):
-# model = SSFPerson
-# form_class = SSFPersonForm
-# template_name = 'details/test.html'
-# success_url = '/'
-
-# class PersonResearcherUpdateView(UpdateView):
-# model = SSFPerson
-# form_class = PersonResearcherForm
-# template_name = 'details/test.html'
-# success_url = '/'
 
 class AttributesCreateView(CreateView):
     model = MainAttributeView
@@ -62,19 +43,6 @@ class AttributesUpdateView(UpdateView):
     success_url = '/'
 
 
-# def attributes_update_view(request, issf_core_id):
-# #profile = SSFProfile.objects.get(issf_core_id=issf_core_id)
-# #attributes = SelectedAttribute.objects.filter(issf_core_id=issf_core_id)
-# attributes = SelectedAttribute.objects.all()
-# form = MainAttributesFormSet(initial=attributes.values())
-# return render(request, "details/test.html", {"form": form,})
-
-# class AttributesUpdateView(UpdateView):
-# model = SelectedAttribute
-# form_class = MainAttributesInlineFormSet
-# template_name = 'details/test.html'
-# success_url = '/'
-
 # sitemap
 class DetailsSitemap(Sitemap):
     changefreq = "weekly"
@@ -87,8 +55,9 @@ class DetailsSitemap(Sitemap):
         return obj.edited_date
 
 
-"""View for the contribute page. It's initialized with blank forms for each dataset except that the contributor is
-automatically set to the currently logged in user.
+"""
+View for the contribute page. It's initialized with blank forms for each dataset except that
+the contributor is automatically set to the currently logged in user.
 """
 
 
@@ -111,26 +80,29 @@ def contribute(request, who=''):
     if who == 'who':
         is_active = 'active'
 
-    return render(request, "details/contribute.html", {
-        "profile_form": profile_form, "person_form": person_form, "person":
-            person, "issf_core_id": issf_core_id,
-        # add prefix because contribute form has multiple "locate using
-        # bing" features and they
-        # need unique js field/label ids
-        "organization_form": SSFOrganizationForm(prefix="org", initial={
-            'contributor': request.user.id
-        }), "knowledge_form": SSFKnowledgeForm(
-            initial={'contributor': request.user.id}),
-        "knowledge_authors_form": AuthorsInlineFormSet,
-        "capacity_need_form": SSFCapacityNeedForm(
-            initial={'contributor': request.user.id}),
-        "fishery_profile_form": SSFProfileForm(
-            initial={'contributor': request.user.id}), "guidelines_form":
-            SSFGuidelinesForm(
-                initial={'contributor': request.user.id}),
-        "experiences_form": SSFExperiencesForm(initial={'contributor': request.user.id}),
-        "case_study_form": SSFCaseStudiesForm(initial={'contributor': request.user.id}), "is_active": is_active
-    })
+    return render(request,
+                  "details/contribute.html", {
+                      "profile_form": profile_form, "person_form": person_form,
+                      "person": person,
+                      "issf_core_id": issf_core_id,
+                      "organization_form": SSFOrganizationForm(prefix="org", initial={
+                          'contributor': request.user.id}),
+                      "knowledge_form": SSFKnowledgeForm(initial={'contributor':
+                                                                  request.user.id}),
+                      "knowledge_authors_form": AuthorsInlineFormSet,
+                      "capacity_need_form": SSFCapacityNeedForm(initial={'contributor':
+                                                                         request.user.id}),
+                      "fishery_profile_form": SSFProfileForm(initial={'contributor':
+                                                                      request.user.id}),
+                      "guidelines_form": SSFGuidelinesForm(initial={'contributor':
+                                                                    request.user.id}),
+                      "experiences_form": SSFExperiencesForm(initial={'contributor':
+                                                                      request.user.id}),
+                      "case_study_form": SSFCaseStudiesForm(initial={'contributor':
+                                                                     request.user.id}),
+                      "is_active": is_active
+                  }
+                  )
 
 
 # BEGIN DETAILS VIEWS
@@ -147,38 +119,25 @@ def sota_details(request, issf_core_id):
     knowledge_instance = SSFKnowledge.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     authors = KnowledgeAuthorSimple.objects.filter(knowledge_core=issf_core_id)
-    common_themes_issues = CommonThemeIssueView.objects.filter(
-        issf_core=issf_core_id)
-    common_attributes = CommonAttributeView.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    # geographic_scope_nation = GeographicScopeNation.objects.filter(
-    # issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    common_themes_issues = CommonThemeIssueView.objects.filter(issf_core=issf_core_id)
+    common_attributes = CommonAttributeView.objects.filter(issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
     species = Species.objects.filter(issf_core=issf_core_id)
     external_links = ExternalLink.objects.filter(issf_core=issf_core_id)
 
     # forms
     knowledge_form = SSFKnowledgeForm(instance=knowledge_instance)
     knowledge_authors_form = AuthorsInlineFormSet(instance=knowledge_instance)
-    common_themes_issues_formset = CommonThemesIssuesViewInlineFormSet(
-        instance=core_instance)
-    common_attributes_formset = CommonAttributesViewInlineFormSet(
-        instance=core_instance)
+    common_themes_issues_formset = CommonThemesIssuesViewInlineFormSet(instance=core_instance)
+    common_attributes_formset = CommonAttributesViewInlineFormSet(instance=core_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
-    # nation_form = GeographicScopeNationInlineFormSet(instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
-    knowledge_other_details_form = KnowledgeOtherDetailsForm(
-        instance=knowledge_instance)
+    knowledge_other_details_form = KnowledgeOtherDetailsForm(instance=knowledge_instance)
     species_form = SpeciesInlineFormSet(instance=core_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
@@ -204,7 +163,6 @@ def sota_details(request, issf_core_id):
                 common_themes_issues, "common_attributes":
                 common_attributes, "geographic_scope_region":
                 geographic_scope_region,
-            # "geographic_scope_nation": geographic_scope_nation,
             "geographic_scope_subnation": geographic_scope_subnation,
             "geographic_scope_local_area": geographic_scope_local_area,
             "species": species, "external_links": external_links,
@@ -232,8 +190,6 @@ def who_details(request, issf_core_id):
         issf_core=issf_core_id)
     geographic_scope_region = Geographic_Scope_Region.objects.filter(
         issf_core=issf_core_id)
-    # geographic_scope_nation = GeographicScopeNation.objects.filter(
-    # issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
         issf_core=issf_core_id)
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
@@ -250,7 +206,6 @@ def who_details(request, issf_core_id):
         instance=core_instance)
     subnation_form = GeographicScopeSubnationInlineFormSet(
         instance=core_instance)
-    # nation_form = GeographicScopeNationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     person_researcher_form = PersonResearcherForm(instance=person_instance)
@@ -270,7 +225,6 @@ def who_details(request, issf_core_id):
                 person_instance, "core_instance": core_instance,
             "common_themes_issues": common_themes_issues,
             "geographic_scope_region": geographic_scope_region,
-            # "geographic_scope_nation": geographic_scope_nation,
             "geographic_scope_subnation": geographic_scope_subnation,
             "geographic_scope_local_area": geographic_scope_local_area,
             "external_links": external_links, "species": species,
@@ -295,14 +249,11 @@ def organization_details(request, issf_core_id):
         issf_core=issf_core_id)
     geographic_scope_region = Geographic_Scope_Region.objects.filter(
         issf_core=issf_core_id)
-    # geographic_scope_nation = GeographicScopeNation.objects.filter(
-    # issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
         issf_core=issf_core_id)
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
         issf_core=issf_core_id)
     external_links = ExternalLink.objects.filter(issf_core=issf_core_id)
-    # connected_people = SSFPerson.objects.filter(organization=issf_core_id)
 
     # forms
     organization_form = SSFOrganizationForm(instance=organization_instance,
@@ -314,7 +265,6 @@ def organization_details(request, issf_core_id):
         instance=core_instance)
     subnation_form = GeographicScopeSubnationInlineFormSet(
         instance=core_instance)
-    # nation_form = GeographicScopeNationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
@@ -337,11 +287,9 @@ def organization_details(request, issf_core_id):
             "organization_instance": organization_instance, "core_instance":
                 core_instance, "common_themes_issues": common_themes_issues,
             "geographic_scope_region": geographic_scope_region,
-            # "geographic_scope_nation": geographic_scope_nation,
             "geographic_scope_subnation": geographic_scope_subnation,
             "geographic_scope_local_area": geographic_scope_local_area,
             "external_links": external_links, "species": species,
-            # "connected_people": connected_people,
             "organization_form": organization_form,
             "common_themes_issues_formset": common_themes_issues_formset,
             "geographic_scope_form": geographic_scope_form,
@@ -358,17 +306,9 @@ def capacity_details(request, issf_core_id):
     capacity_need_instance = SSFCapacityNeed.objects.get(
         issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
-    # selected_themes_issues = SelectedThemeIssue.objects.filter(
-    # issf_core=issf_core_id)
-    # .order_by('theme_issue__category_order', 'theme_issue__label_order')
-    # selected_characteristics = SelectedCharacteristic.objects.filter(
-    # issf_core=issf_core_id)
-    # .order_by('characteristic__category_order',
-    # 'characteristic__label_order')
+
     geographic_scope_region = Geographic_Scope_Region.objects.filter(
         issf_core=issf_core_id)
-    # geographic_scope_nation = GeographicScopeNation.objects.filter(
-    # issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
         issf_core=issf_core_id)
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
@@ -377,14 +317,11 @@ def capacity_details(request, issf_core_id):
 
     # forms
     capacity_need_form = SSFCapacityNeedForm(instance=capacity_need_instance)
-    # themes_issues_form = ThemesIssuesForm(instance=core_instance)
-    # characteristics_form = CharacteristicsForm(instance=core_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
     local_area_form = GeographicScopeLocalAreaInlineFormSet(
         instance=core_instance)
     subnation_form = GeographicScopeSubnationInlineFormSet(
         instance=core_instance)
-    # nation_form = GeographicScopeNationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
@@ -406,16 +343,11 @@ def capacity_details(request, issf_core_id):
         return render(request, "details/ssfcapacity_details.html", {
             "capacity_need_instance": capacity_need_instance,
             "core_instance": core_instance,
-            # "selected_themes_issues": selected_themes_issues,
-            # "selected_characteristics": selected_characteristics,
             "geographic_scope_region": geographic_scope_region,
-            # "geographic_scope_nation": geographic_scope_nation,
             "geographic_scope_subnation": geographic_scope_subnation,
             "geographic_scope_local_area": geographic_scope_local_area,
             "external_links": external_links, "capacity_need_form":
                 capacity_need_form,
-            # "themes_issues_form": themes_issues_form,
-            # "characteristics_form": characteristics_form,
             "geographic_scope_form": geographic_scope_form,
             "local_area_form": local_area_form, "subnation_form":
                 subnation_form, "nation_form": nation_form, "region_form":
@@ -430,7 +362,6 @@ def profile_details(request, issf_core_id):
     profile_instance = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     main_attributes = MainAttributeView.objects.filter(issf_core_id=issf_core_id)
-    # photo_instance, created = Photos.objects.get_or_create(issf_core_id=issf_core_id)
     geographic_scope_region = Geographic_Scope_Region.objects.filter(
         issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
@@ -451,28 +382,10 @@ def profile_details(request, issf_core_id):
     else:
         pct_colour = '#F44336'
 
-    # begin_year = str(profile_instance.data_year)
-    # begin_month = '/' + str(profile_instance.data_month) if
-    # profile_instance.data_month else ''
-    # begin_day = '/' + str(profile_instance.data_day) if
-    # profile_instance.data_day else ''
-    #
-    # end_year = str(profile_instance.data_end_year) if
-    # profile_instance.data_end_year else ''
-    # end_month = '/' + str(
-    # profile_instance.data_end_month) if profile_instance.data_end_month
-    # else ''
-    # end_day = '/' + str(profile_instance.data_end_day) if
-    # profile_instance.data_end_day else ''
-    #
-    # begin_date = begin_year + begin_month + begin_day
-    # end_date = end_year + end_month + end_day
-
     # forms
     profile_form = SSFProfileForm(instance=profile_instance)
     main_attributes_formset = MainAttributesViewInlineFormSet(
         instance=core_instance)
-    # photo_form = PhotoForm(instance=photo_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
     local_area_form = GeographicScopeLocalAreaInlineFormSet(
         instance=core_instance)
@@ -506,9 +419,6 @@ def profile_details(request, issf_core_id):
                 geographic_scope_region, "geographic_scope_subnation":
                 geographic_scope_subnation, "geographic_scope_local_area":
                 geographic_scope_local_area,
-            # "begin_date": begin_date,
-            # "end_date": end_date,
-            # "selected_characteristics": selected_characteristics,
             "main_attributes": main_attributes, "profile_organizations":
                 profile_organizations, "species_landings": species_landings,
             "external_links": external_links, "profile_form": profile_form,
@@ -652,17 +562,8 @@ def case_study_details(request, issf_core_id):
     case_studies_instance = SSFCaseStudies.objects.get(
         issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
-    # selected_themes_issues = SelectedThemeIssue.objects.filter(
-    # issf_core=issf_core_id)
-    # .order_by('theme_issue__category_order', 'theme_issue__label_order')
-    # selected_characteristics = SelectedCharacteristic.objects.filter(
-    # issf_core=issf_core_id)
-    # .order_by('characteristic__category_order',
-    # 'characteristic__label_order')
     geographic_scope_region = Geographic_Scope_Region.objects.filter(
         issf_core=issf_core_id)
-    # geographic_scope_nation = GeographicScopeNation.objects.filter(
-    # issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
         issf_core=issf_core_id)
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
@@ -671,14 +572,11 @@ def case_study_details(request, issf_core_id):
 
     # forms
     case_study_form = SSFCaseStudiesForm(instance=case_studies_instance)
-    # themes_issues_form = ThemesIssuesForm(instance=core_instance)
-    # characteristics_form = CharacteristicsForm(instance=core_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
     local_area_form = GeographicScopeLocalAreaInlineFormSet(
         instance=core_instance)
     subnation_form = GeographicScopeSubnationInlineFormSet(
         instance=core_instance)
-    # nation_form = GeographicScopeNationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
@@ -701,16 +599,19 @@ def case_study_details(request, issf_core_id):
             "case_studies_instance": case_studies_instance,
             "core_instance": core_instance,
             "geographic_scope_region": geographic_scope_region,
-            # "geographic_scope_nation": geographic_scope_nation,
             "geographic_scope_subnation": geographic_scope_subnation,
             "geographic_scope_local_area": geographic_scope_local_area,
-            "external_links": external_links, "case_study_form":
-                case_study_form,
+            "external_links": external_links,
+            "case_study_form": case_study_form,
             "geographic_scope_form": geographic_scope_form,
-            "local_area_form": local_area_form, "subnation_form":
-                subnation_form, "nation_form": nation_form, "region_form":
-                region_form, "external_links_form": external_links_form,
-            "editor": editor, 'who_page': who_page})
+            "local_area_form": local_area_form,
+            "subnation_form": subnation_form,
+            "nation_form": nation_form,
+            "region_form": region_form,
+            "external_links_form": external_links_form,
+            "editor": editor, 'who_page': who_page
+        })
+
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
@@ -718,15 +619,11 @@ def case_study_details(request, issf_core_id):
 # END DETAILS VIEWS
 
 
-def get_other_theme_issue(themes_issues_form, field, issf_core_id,
-                          theme_issue_value_id):
-    if SelectedThemeIssue.objects.filter(issf_core=issf_core_id,
-                                         theme_issue_value=theme_issue_value_id).exists():
-        selected_theme_issue = SelectedThemeIssue.objects.get(
-            issf_core=issf_core_id, theme_issue_value=theme_issue_value_id)
+def get_other_theme_issue(themes_issues_form, field, issf_core_id, theme_issue_value_id):
+    if SelectedThemeIssue.objects.filter(issf_core=issf_core_id, theme_issue_value=theme_issue_value_id).exists():
+        selected_theme_issue = SelectedThemeIssue.objects.get(issf_core=issf_core_id, theme_issue_value=theme_issue_value_id)
         if len(selected_theme_issue.other_theme_issue) > 0:
-            themes_issues_form.initial[
-                field] = selected_theme_issue.other_theme_issue
+            themes_issues_form.initial[field] = selected_theme_issue.other_theme_issue
 
 
 """Most record types have a view associated with them called *_basic which just calls this method. It gets the
@@ -740,12 +637,10 @@ def save_basic(request, model_class, form_class):
         if request.is_ajax():
             instance = None
             existing = False
-            if 'issf_core_id' in request.POST and request.POST[
-                'issf_core_id'] != 'None':
+            if 'issf_core_id' in request.POST and request.POST['issf_core_id'] != 'None':
                 # editing an existing record
                 issf_core_id = request.POST['issf_core_id']
-                instance = get_object_or_404(model_class,
-                                             issf_core_id=issf_core_id)
+                instance = get_object_or_404(model_class, issf_core_id=issf_core_id)
                 existing = True
             form = form_class(request.POST, instance=instance)
             if form.is_valid():
@@ -755,8 +650,6 @@ def save_basic(request, model_class, form_class):
                 cache.delete('cached_map_data')
                 cache.delete('cached_table_data')
 
-                # if not existing:
-                # instance.contributor_id = request.user.id
                 instance.editor_id = request.user.id
                 instance.save()
 
@@ -777,15 +670,11 @@ def save_basic(request, model_class, form_class):
 
                     issf_id = str(instance.issf_core_id)
 
-                    url = 'https://issfcloud.toobigtoignore.net' + reverse(get_redirectname(instance.core_record_type),
-                                                                 kwargs={'issf_core_id': issf_id})
+                    url = 'https://issfcloud.toobigtoignore.net' + reverse(get_redirectname(instance.core_record_type), kwargs={'issf_core_id': issf_id})
 
-                    api.PostUpdate(
-                        'Check out the new #tbtiissf ' + instance.core_record_type + ' record for ' + name + '. ' +
-                        url)
+                    api.PostUpdate('Check out the new #tbtiissf ' + instance.core_record_type + ' record for ' + name + '. ' + url)
 
-                update_tsvector_summary(instance.core_record_type,
-                                        str(instance.pk))
+                update_tsvector_summary(instance.core_record_type, str(instance.pk))
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
                     redirectname = 'geographic-scope-save'
@@ -807,46 +696,29 @@ def update_tsvector_summary(core_record_type, issf_core_id):
     # update summary and full-text search vector using direct db call
     cursor = connection.cursor()
     if core_record_type == "State-of-the-Art in SSF Research":
-        cursor.execute(
-            'SELECT * FROM knowledge_tsvector_update(' + issf_core_id + ')')
-        cursor.execute(
-            'SELECT * FROM knowledge_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM knowledge_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM knowledge_summary_update(' + issf_core_id + ')')
     elif core_record_type == "Who's Who in SSF":
-        cursor.execute(
-            'SELECT * FROM person_tsvector_update(' + issf_core_id + ')')
-        cursor.execute(
-            'SELECT * FROM person_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM person_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM person_summary_update(' + issf_core_id + ')')
     elif core_record_type == "SSF Organization":
-        cursor.execute(
-            'SELECT * FROM organization_tsvector_update(' + issf_core_id + ')')
-        cursor.execute(
-            'SELECT * FROM organization_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM organization_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM organization_summary_update(' + issf_core_id + ')')
     elif core_record_type == "Capacity Development":
-        cursor.execute(
-            'SELECT * FROM capacity_need_tsvector_update(' + issf_core_id +
-            ')')
-        cursor.execute(
-            'SELECT * FROM capacity_need_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM capacity_need_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM capacity_need_summary_update(' + issf_core_id + ')')
     elif core_record_type == "SSF Profile":
-        cursor.execute(
-            'SELECT * FROM profile_tsvector_update(' + issf_core_id + ')')
-        cursor.execute(
-            'SELECT * FROM profile_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM profile_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM profile_summary_update(' + issf_core_id + ')')
     elif core_record_type == "SSF Guidelines":
-        cursor.execute(
-            'SELECT * FROM guidelines_tsvector_update(' + issf_core_id + ')')
-        cursor.execute(
-            'SELECT * FROM guidelines_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM guidelines_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM guidelines_summary_update(' + issf_core_id + ')')
     elif core_record_type == "SSF Experiences":
-        cursor.execute(
-            'SELECT * FROM experiences_tsvector_update(' + issf_core_id + ')')
-        cursor.execute(
-            'SELECT * FROM experiences_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM experiences_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM experiences_summary_update(' + issf_core_id + ')')
     elif core_record_type == "Case Study":
-        cursor.execute(
-            'SELECT * FROM casestudies_tsvector_update(' + issf_core_id + ')')
-        cursor.execute(
-            'SELECT * FROM casestudies_summary_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM casestudies_tsvector_update(' + issf_core_id + ')')
+        cursor.execute('SELECT * FROM casestudies_summary_update(' + issf_core_id + ')')
 
 
 def get_redirectname(core_record_type):
@@ -883,18 +755,12 @@ are blank templates in various languages.
 
 def serve_pdf(request, filename, language=None):
     if filename == 'brazil':
-        path = '/home/projects/issf/issf_prod/apps/details/static/details' \
-               '/pdf' \
-               '/ISSF_Profile_Example_Brazil.pdf'
+        path = '/home/projects/issf/issf_prod/apps/details/static/details/pdf/ISSF_Profile_Example_Brazil.pdf'
     elif filename == 'template':
-        path = '/home/projects/issf/issf_prod/apps/details/static/details' \
-               '/pdf' \
-               '/ISSF_Profile_' + language + '_Template.pdf'
-
+        path = '/home/projects/issf/issf_prod/apps/details/static/details/pdf/ISSF_Profile_' + language + '_Template.pdf'
     with open(path, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response[
-            'Content-Disposition'] = 'filename=ISSF_Profile_Example_Brazil.pdf'
+        response['Content-Disposition'] = 'filename=ISSF_Profile_Example_Brazil.pdf'
         pdf.close()
         return response
 
@@ -906,17 +772,14 @@ def sota_basic(request):
         if request.is_ajax():
             knowledge_instance = None
             existing = False
+
             if 'issf_core_id' in request.POST:
                 # editing an existing record
-                knowledge_instance = get_object_or_404(SSFKnowledge,
-                                                       issf_core_id=
-                                                       request.POST[
-                                                           'issf_core_id'])
+                knowledge_instance = get_object_or_404(SSFKnowledge, issf_core_id=request.POST['issf_core_id'])
                 existing = True
-            knowledge_form = SSFKnowledgeForm(request.POST,
-                                              instance=knowledge_instance)
-            knowledge_authors_form = AuthorsInlineFormSet(request.POST,
-                                                          instance=knowledge_instance)
+
+            knowledge_form = SSFKnowledgeForm(request.POST, instance=knowledge_instance)
+            knowledge_authors_form = AuthorsInlineFormSet(request.POST, instance=knowledge_instance)
             author_count = -1
             if knowledge_authors_form.is_valid():
                 # ensure at least one author
@@ -924,35 +787,30 @@ def sota_basic(request):
                 for frm in knowledge_authors_form.cleaned_data:
                     if 'knowledge_core' in frm:
                         author_count = author_count + 1
-                author_count = author_count - len(
-                    knowledge_authors_form.deleted_forms)
-            if knowledge_form.is_valid() and \
-                    knowledge_authors_form.is_valid() and author_count > 0:
+                author_count = author_count - len(knowledge_authors_form.deleted_forms)
+            if knowledge_form.is_valid() and knowledge_authors_form.is_valid() and author_count > 0:
                 knowledge_instance = knowledge_form.save()
 
                 # clear cache to update front page data
                 cache.delete('cached_map_data')
                 cache.delete('cached_table_data')
+
                 if not existing:
                     # knowledge_instance.contributor_id = request.user.id
                     # reload and revalidate authors because it needs to be
                     # tied to
                     # knowledge_instance
-                    knowledge_authors_form = AuthorsInlineFormSet(request.POST,
-                                                                  instance=knowledge_instance)
+                    knowledge_authors_form = AuthorsInlineFormSet(request.POST, instance=knowledge_instance)
                     knowledge_authors_form.is_valid()
+
                 knowledge_authors_form.save()
                 knowledge_instance.editor_id = request.user.id
                 knowledge_instance.save()
 
                 if not existing:
                     name = str(knowledge_instance.level1_title)[:20]
-
                     issf_id = str(knowledge_instance.issf_core_id)
-
-                    api.PostUpdate(
-                        'Check out the new #tbtiissf SOTA record for ' + name + '. ' +
-                        'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
+                    api.PostUpdate('Check out the new #tbtiissf SOTA record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
 
                 update_tsvector_summary(knowledge_instance.core_record_type,
                                         str(knowledge_instance.pk))
@@ -989,55 +847,6 @@ def who_basic(request):
         return save_basic(request, SSFPerson, SSFPersonForm)
     else:
         return HttpResponse(response)
-        # # does not use save_basic because we may need to add the organization
-        # if request.method == 'POST':
-        # if request.is_ajax():
-        # instance = None
-        # existing = False
-        # add_org = False
-        # new_org = ''
-        # if 'issf_core_id' in request.POST:
-        # if request.POST['issf_core_id'] != 'None':
-        # # editing an existing record
-        # issf_core_id = request.POST['issf_core_id']
-        # instance = get_object_or_404(SSFPerson, issf_core_id=issf_core_id)
-        # existing = True
-        # if len(request.POST['organization']) > 0:
-        # if not is_int(request.POST['organization']):
-        # # organization not in list - remember to add
-        # add_org = True
-        # # clear out organization so that form validates
-        # post_copy = request.POST.copy()
-        # new_org = post_copy['organization']
-        # post_copy['organization'] = ''
-        # request.POST = post_copy.copy()
-        # form = SSFPersonForm(request.POST, instance=instance)
-        # if form.is_valid():
-        # org_instance = None
-        # if add_org:
-        # # save org
-        # org_instance = SSFOrganization(organization_name=new_org,
-        # contributor=request.user, editor=request.user)
-        # org_instance.save()
-        # update_tsvector_summary(org_instance.core_record_type,
-        # str(org_instance.pk))
-        # instance = form.save()
-        # if not existing:
-        # instance.contributor_id = request.user.id
-        # instance.editor_id = request.user.id
-        # if add_org:
-        # # associate with person
-        # instance.organization = org_instance
-        # instance.save()
-        # update_tsvector_summary(instance.core_record_type, str(instance.pk))
-        # redirectname = get_redirectname(instance.core_record_type)
-        # response = json.dumps({'success':'true', 'redirectname':redirectname,
-        # 'record':instance.pk})
-        # return HttpResponse(response)
-        # else:
-        # errors = form.errors
-        # response = json.dumps({'success':'false', 'errors':errors})
-        # return HttpResponse(response)
 
 
 @login_required
@@ -1048,15 +857,12 @@ def organization_basic(request):
         if request.is_ajax():
             instance = None
             existing = False
-            if 'issf_core_id' in request.POST and request.POST[
-                'issf_core_id'] != 'None':
+            if 'issf_core_id' in request.POST and request.POST['issf_core_id'] != 'None':
                 # editing an existing record
                 issf_core_id = request.POST['issf_core_id']
-                instance = get_object_or_404(SSFOrganization,
-                                             issf_core_id=issf_core_id)
+                instance = get_object_or_404(SSFOrganization, issf_core_id=issf_core_id)
                 existing = True
-            form = SSFOrganizationForm(request.POST, instance=instance,
-                                       prefix="org")
+            form = SSFOrganizationForm(request.POST, instance=instance, prefix="org")
             if form.is_valid():
                 instance = form.save()
 
@@ -1064,8 +870,6 @@ def organization_basic(request):
                 cache.delete('cached_map_data')
                 cache.delete('cached_table_data')
 
-                # if not existing:
-                # instance.contributor_id = request.user.id
                 instance.editor_id = request.user.id
                 instance.save()
 
@@ -1074,12 +878,9 @@ def organization_basic(request):
 
                 issf_id = str(instance.issf_core_id)
 
-                api.PostUpdate(
-                    'Check out the new #tbtiissf SSF Organization record for ' + name + '. ' +
-                    'https://issfcloud.toobigtoignore.net/details/organization/' + issf_id)
+                api.PostUpdate('Check out the new #tbtiissf SSF Organization record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/organization/' + issf_id)
 
-                update_tsvector_summary(instance.core_record_type,
-                                        str(instance.pk))
+                update_tsvector_summary(instance.core_record_type, str(instance.pk))
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
                     redirectname = 'geographic-scope-save'
@@ -1103,8 +904,7 @@ def urlEncodeNonAscii(b):
 def iriToUri(iri):
     parts = urlparse.urlparse(iri)
     return urlparse.urlunparse(
-        part.encode('idna') if parti == 1 else urlEncodeNonAscii(
-            part.encode('utf-8')) for parti, part in enumerate(parts))
+        part.encode('idna') if parti == 1 else urlEncodeNonAscii(part.encode('utf-8')) for parti, part in enumerate(parts))
 
 
 @login_required
@@ -1114,61 +914,46 @@ def geocode_address(request):
             # ensure we have at least one of the address fields
             at_least_one = False
             # get submitted data
-            # organization_instance = get_object_or_404(SSFOrganization,
-            # issf_core_id=request
-            # .POST['issf_core_id'])
-            # organization_form = SSFOrganizationForm(request.POST,
-            # instance=organization_instance)
             organization_form = SSFOrganizationForm(request.POST)
             geocoding_url = 'http://dev.virtualearth.net/REST/v1/Locations?'
             if len(organization_form.data['country']) > 0:
                 if at_least_one:
                     geocoding_url = geocoding_url + '&'
-                iso2 = get_object_or_404(Country,
-                                         country_id=organization_form.data[
-                                             'country']).iso2
+                iso2 = get_object_or_404(Country, country_id=organization_form.data['country']).iso2
                 geocoding_url = geocoding_url + 'countryRegion=' + iso2
                 at_least_one = True
             if len(organization_form.data['postal_code']) > 0:
                 if at_least_one:
                     geocoding_url = geocoding_url + '&'
-                geocoding_url = geocoding_url + 'postalCode=' + \
-                                organization_form.data['postal_code']
+                geocoding_url = geocoding_url + 'postalCode=' + organization_form.data['postal_code']
                 at_least_one = True
             if len(organization_form.data['prov_state']) > 0:
                 if at_least_one:
                     geocoding_url = geocoding_url + '&'
-                geocoding_url = geocoding_url + 'adminDistrict=' + \
-                                organization_form.data['prov_state']
+                geocoding_url = geocoding_url + 'adminDistrict=' + organization_form.data['prov_state']
                 at_least_one = True
             if len(organization_form.data['city_town']) > 0:
                 if at_least_one:
                     geocoding_url = geocoding_url + '&'
-                geocoding_url = geocoding_url + 'locality=' + \
-                                organization_form.data['city_town']
+                geocoding_url = geocoding_url + 'locality=' + organization_form.data['city_town']
                 at_least_one = True
-            if len(organization_form.data['address1']) > 0 or len(
-                    organization_form.data['address2']) > 0:
+            if len(organization_form.data['address1']) > 0 or len(organization_form.data['address2']) > 0:
                 if at_least_one:
                     geocoding_url = geocoding_url + '&'
-                geocoding_url = geocoding_url + 'addressLine=' + \
-                                organization_form.data['address1'] + ', ' + \
-                                organization_form.data['address2']
+                geocoding_url = geocoding_url + 'addressLine=' + organization_form.data['address1'] + ', ' + organization_form.data['address2']
                 at_least_one = True
                 # geocode address using Bing
             if at_least_one:
-                geocoding_url = geocoding_url + \
-                                '&maxResults=1&key=Al1mXkJObbAqh8s8TkCwTnIYZOemobAiJZSVaPklNXPS_ErYDtPButHlPDJrznFf'
-                geocoding_dict = ast.literal_eval(
-                    request(iriToUri(geocoding_url)).read())
+                geocoding_url = geocoding_url + '&maxResults=1&key=Al1mXkJObbAqh8s8TkCwTnIYZOemobAiJZSVaPklNXPS_ErYDtPButHlPDJrznFf'
+                geocoding_dict = ast.literal_eval(request(iriToUri(geocoding_url)).read())
                 if geocoding_dict['statusDescription'] == 'OK':
                     if geocoding_dict['resourceSets'][0]['estimatedTotal'] > 0:
+
+                        # This needs a more serious look in another refactor.
                         return HttpResponse(str(
-                            geocoding_dict['resourceSets'][0]['resources'][0][
-                                'geocodePoints'][0]['coordinates'][
-                                1]) + ',' + str(
-                            geocoding_dict['resourceSets'][0]['resources'][0][
-                                'geocodePoints'][0]['coordinates'][0]))
+                            geocoding_dict['resourceSets'][0]['resources'][0]['geocodePoints'][0]['coordinates'][1]) + ',' + str(
+                            geocoding_dict['resourceSets'][0]['resources'][0]['geocodePoints'][0]['coordinates'][0])
+                        )
 
             return HttpResponse('')
 
@@ -1185,70 +970,54 @@ def capacity_basic(request):
 @login_required
 def capacity_need_rating(request, prev_capacity_need_id):
     if request.method != 'POST':
-        # display
-        # randomly choose any need but the previous one
+        # Display
+        # Randomly choose any need but the previous one
         capacity_need_instance = SSFCapacityNeed.objects.all().exclude(
             issf_core_id__exact=prev_capacity_need_id).exclude(
             capacity_need_type__exact='Existing').order_by('?')[0]
         capacity_need_rating_id = '0'
-        # determine is user has already rated this one
+
+        # Determine is user has already rated this one
         capacity_need_rating_instance = CapacityNeedRating.objects.filter(
-            capacity_need_id__exact=capacity_need_instance.issf_core_id,
-            rater__exact=request.user.id)
+            capacity_need_id__exact=capacity_need_instance.issf_core_id, rater__exact=request.user.id)
+
         if len(capacity_need_rating_instance) > 0:
-            # existing
-            capacity_need_rating_id = capacity_need_rating_instance[
-                0].capacity_need_rating_id
-            capacity_need_rating_form = CapacityNeedRatingForm(
-                instance=capacity_need_rating_instance[0])
+            # Existing
+            capacity_need_rating_id = capacity_need_rating_instance[0].capacity_need_rating_id
+            capacity_need_rating_form = CapacityNeedRatingForm(instance=capacity_need_rating_instance[0])
         else:
             # new
             rater_instance = get_object_or_404(UserProfile, id=request.user.id)
-            capacity_need_rating_form = CapacityNeedRatingForm(initial={
-                'capacity_need': capacity_need_instance, 'rater':
-                    rater_instance
-            })
+            capacity_need_rating_form = CapacityNeedRatingForm(initial={'capacity_need': capacity_need_instance, 'rater': rater_instance})
+
         return render(request, "details/capacityneedrating.html", {
             'capacity_need_rating_form': capacity_need_rating_form,
             'capacity_need_rating_id': capacity_need_rating_id,
             'capacity_need_instance': capacity_need_instance
         })
+
     else:
         # save
         capacity_need_rating_instance = None
         capacity_need_rating_id = request.POST['capacity_need_rating_id']
+        capacity_need_rating_form = CapacityNeedRatingForm(request.POST, instance=capacity_need_rating_instance)
+
         if capacity_need_rating_id != '0':
             # editing an existing rating
-            capacity_need_rating_instance = get_object_or_404(
-                CapacityNeedRating,
-                capacity_need_rating_id=capacity_need_rating_id)
-        capacity_need_rating_form = CapacityNeedRatingForm(request.POST,
-                                                           instance=capacity_need_rating_instance)
-        # if capacity_need_rating_form.is_valid():
-        if capacity_need_rating_form.data['rating'] != '0' and \
-                        capacity_need_rating_form.data['rating'] != 0:
+            capacity_need_rating_instance = get_object_or_404(CapacityNeedRating, capacity_need_rating_id=capacity_need_rating_id)
+        if capacity_need_rating_form.data['rating'] != '0' and capacity_need_rating_form.data['rating'] != 0:
             if capacity_need_rating_id == '0':
                 # new record
-                capacity_need_instance = get_object_or_404(SSFCapacityNeed,
-                                                           issf_core_id=
-                                                           capacity_need_rating_form.data[
-                                                               'capacity_need'])
-                rater_instance = get_object_or_404(UserProfile, id=
-                capacity_need_rating_form.data['rater'])
-                capacity_need_rating_instance = CapacityNeedRating(
-                    capacity_need=capacity_need_instance, rater=rater_instance)
-            capacity_need_rating_instance.rating = \
-                capacity_need_rating_form.data['rating']
+                capacity_need_instance = get_object_or_404(SSFCapacityNeed, issf_core_id=capacity_need_rating_form.data['capacity_need'])
+                rater_instance = get_object_or_404(UserProfile, id=capacity_need_rating_form.data['rater'])
+                capacity_need_rating_instance = CapacityNeedRating(capacity_need=capacity_need_instance, rater=rater_instance)
+
+            capacity_need_rating_instance.rating = capacity_need_rating_form.data['rating']
             capacity_need_rating_instance.save()
-            # capacity_need_rating_form.save()
             response = json.dumps({'success': 'true'})
             return HttpResponse(response)
+
         else:
-            # if '__ALL__' not in capacity_need_rating_form._errors:
-            # capacity_need_rating_form._errors['__ALL__'] = []
-            # capacity_need_rating_form._errors['__ALL__'].append('Please
-            # rate the need between
-            # 1 and 5 stars')
             errors = capacity_need_rating_form.errors
             response = json.dumps({'success': 'false', 'errors': errors})
             return HttpResponse(response)
@@ -1259,26 +1028,31 @@ def sota_other(request):
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
-            knowledge_instance = get_object_or_404(SSFKnowledge,
-                                                   issf_core_id=issf_core_id)
-            knowledge_other_details_form = KnowledgeOtherDetailsForm(
-                request.POST, instance=knowledge_instance)
+            knowledge_instance = get_object_or_404(SSFKnowledge, issf_core_id=issf_core_id)
+            knowledge_other_details_form = KnowledgeOtherDetailsForm(request.POST, instance=knowledge_instance)
+
             if knowledge_other_details_form.is_valid():
                 knowledge_other_details_form.save()
                 knowledge_instance.editor_id = request.user.id
                 knowledge_instance.save()
-                update_tsvector_summary(knowledge_instance.core_record_type,
-                                        issf_core_id)
-                redirectname = get_redirectname(
-                    knowledge_instance.core_record_type)
+                update_tsvector_summary(knowledge_instance.core_record_type, issf_core_id)
+                redirectname = get_redirectname(knowledge_instance.core_record_type)
+
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': knowledge_instance.pk
                 })
+
                 return HttpResponse(response)
+
             else:
                 errors = knowledge_other_details_form.errors
-                response = json.dumps({'success': 'false', 'errors': errors})
+                response = json.dumps({
+                    'success': 'false',
+                    'errors': errors
+                })
+
                 return HttpResponse(response)
 
 
@@ -1289,9 +1063,7 @@ def who_researcher(request):
 
 def is_filled(field):
     for (key, value) in field.items():
-        if value and not (
-                    key in ['attribute', 'issf_core', 'label_order', 'row_number',
-                            'value_order', 'selected_attribute_id', 'DELETE']):
+        if value and not (key in ['attribute', 'issf_core', 'label_order', 'row_number', 'value_order', 'selected_attribute_id', 'DELETE']):
             return True
 
     return False
@@ -1307,15 +1079,12 @@ def profile_main_attributes(request):
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
-            profile_instance = get_object_or_404(SSFProfile,
-                                                 issf_core_id=issf_core_id)
+            profile_instance = get_object_or_404(SSFProfile, issf_core_id=issf_core_id)
             data_end_year = profile_instance.data_end_year
-            core_instance = get_object_or_404(ISSF_Core,
-                                              issf_core_id=issf_core_id)
-            main_attributes_formset = MainAttributesViewInlineFormSet(
-                request.POST, instance=core_instance)
-            profile_form = SSFProfileForm(request.POST,
-                                          instance=profile_instance)
+            core_instance = get_object_or_404(ISSF_Core, issf_core_id=issf_core_id)
+            main_attributes_formset = MainAttributesViewInlineFormSet(request.POST, instance=core_instance)
+            profile_form = SSFProfileForm(request.POST, instance=profile_instance)
+
             # for some reason data_end_year gets set to None when
             # contributing a Profile so it gets manually set again here.
             # This is a bandaid fix.
@@ -1332,9 +1101,8 @@ def profile_main_attributes(request):
                 # have a value in them
                 flag = False
                 for form in main_attributes_formset.forms:
-                    if form.cleaned_data and form.cleaned_data[
-                        'attribute'].attribute_id == 38:
-                        if form.cleaned_data['DELETE'] == False:
+                    if form.cleaned_data and form.cleaned_data['attribute'].attribute_id == 38:
+                        if form.cleaned_data['DELETE'] is False:
                             if form.cleaned_data['additional']:
                                 percent += form.cleaned_data['additional']
                             else:
@@ -1345,10 +1113,13 @@ def profile_main_attributes(request):
 
                 if flag and percent is not 100:
                     errors = main_attributes_formset._errors
-                    errors[index]['__all__'] = ErrorList(
-                        [u'Percents must add to 100%'])
-                    response = json.dumps(
-                        {'success': 'false', 'errors': errors})
+                    errors[index]['__all__'] = ErrorList([u'Percents must add to 100%'])
+
+                    response = json.dumps({
+                        'success': 'false',
+                        'errors': errors
+                    })
+
                     return HttpResponse(response)
 
                 fields_filled = 0.0  # have to make floating point because
@@ -1358,8 +1129,7 @@ def profile_main_attributes(request):
                 # make sure same attributes with different values aren't counted more than once
                 seen_fields = set()
                 for field in main_attributes_formset.cleaned_data:
-                    if (field['attribute'] not in seen_fields) and is_filled(
-                            field):
+                    if (field['attribute'] not in seen_fields) and is_filled(field):
                         fields_filled += 1
                         seen_fields.add(field['attribute'])
 
@@ -1370,32 +1140,19 @@ def profile_main_attributes(request):
 
                 # END PERCENTAGE CALCULATION
 
-                # main_attributes_formset.Model = MainAttribute
-
-                # core_instance.editor_id = request.user.id
-                # core_instance.save()
-                # update_tsvector_summary(core_instance.core_record_type,
-                # issf_core_id)
-
                 if profile_form.is_valid():
                     profile_form.save()
 
-                update_tsvector_summary(profile_instance.core_record_type,
-                                        str(profile_instance.pk))
+                update_tsvector_summary(profile_instance.core_record_type, str(profile_instance.pk))
 
-                redirectname = get_redirectname(
-                    profile_instance.core_record_type)
+                redirectname = get_redirectname(profile_instance.core_record_type)
+
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': profile_instance.pk
                 })
 
-                # if main_attributes_formset.has_changed():
-                # for form in main_attributes_formset.forms:
-                # if form.changed_data and (
-                # form.cleaned_data['attribute_value'] is not None or
-                # form.cleaned_data['value'] is not None):
-                # profile_instance.count += 1
                 return HttpResponse(response)
             else:
                 errors = main_attributes_formset.errors
@@ -1515,10 +1272,6 @@ def common_themes_issues(request):
                 request.POST, instance=core_instance)
             if common_themes_issues_formset.is_valid():
                 common_themes_issues_formset.save()
-                # core_instance.editor_id = request.user.id
-                # core_instance.save()
-                # update_tsvector_summary(core_instance.core_record_type,
-                # issf_core_id)
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
                     'success': 'true', 'redirectname': redirectname,
@@ -1542,10 +1295,6 @@ def common_attributes(request):
                 request.POST, instance=core_instance)
             if common_attributes_formset.is_valid():
                 common_attributes_formset.save()
-                # core_instance.editor_id = request.user.id
-                # core_instance.save()
-                # update_tsvector_summary(core_instance.core_record_type,
-                # issf_core_id)
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
                     'success': 'true', 'redirectname': redirectname,
@@ -1625,32 +1374,9 @@ def geographic_scope(request):
                 else:
                     valid_subform = False
             elif core_instance.geographic_scope_type == 'National':
-                # nation_form = GeographicScopeNationInlineFormSet(
-                # request.POST,
-                # instance=core_instance)
                 nation_form = GeographicScopeNationForm(request.POST,
                                                         instance=core_instance)
                 if nation_form.is_valid():
-                    # # the formset is valid with no subforms filled in,
-                    # so ensure at least one
-                    # subform
-                    # subform_count = 0
-                    # for frm in nation_form.cleaned_data:
-                    # if 'issf_core' in frm:
-                    # subform_count = subform_count + 1
-                    # subform_count = subform_count - len(
-                    # nation_form.deleted_forms)
-                    # if subform_count < 1:
-                    # valid_subform = False
-                    # if '__ALL__' not in geographic_scope_form._errors:
-                    # geographic_scope_form._errors['__ALL__'] = []
-                    # geographic_scope_form._errors['__ALL__'].append(
-                    # 'Please select at
-                    # least one nation')
-                    # else:
-                    # nation_form.save()
-                    # the form is valid with no countries selected,
-                    # so ensure at least one selected
                     nation_form.save()
                 else:
                     valid_subform = False
@@ -1872,22 +1598,18 @@ def report(request, record_type, issf_core_id):
     record = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     main_attributes = MainAttributeView.objects.filter(issf_core=issf_core_id)
-    species = Species.objects.filter(issf_core=issf_core_id).values("species_common", "species_scientific", "landings")[
-              :4]
+    species = Species.objects.filter(issf_core=issf_core_id).values(
+        "species_common", "species_scientific", "landings")[:4]
 
     distribution = {}
     for entry in main_attributes:
         if entry.attribute_id == 38 and entry.attribute_value is not None:
             distribution[entry.attribute_value] = (entry.additional if entry.additional else 0)
 
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_nation = GeographicScopeNation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_nation = GeographicScopeNation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
     location = ''
     if core_instance.geographic_scope_type == 'Regional':
@@ -1947,6 +1669,7 @@ def report(request, record_type, issf_core_id):
         if len(issues) >= 10:
             break
         if issue.attribute_value:
+            # Refactor
             issues.append(issue.attribute_value.value_label.split('(')[0] + (
                 ': ' + issue.other_value if issue.other_value else ''))
 
