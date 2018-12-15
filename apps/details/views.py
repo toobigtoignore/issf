@@ -22,11 +22,20 @@ from issf_admin.forms import ProfileForm
 from issf_admin.views import save_profile
 
 import twitter
+import twitter.error
 from issf_prod.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
 from issf_prod.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
 
-api = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY, consumer_secret=TWITTER_CONSUMER_SECRET,
-                  access_token_key=TWITTER_ACCESS_TOKEN, access_token_secret=TWITTER_ACCESS_TOKEN_SECRET)
+api = twitter.Api(
+    consumer_key=TWITTER_CONSUMER_KEY,
+    consumer_secret=TWITTER_CONSUMER_SECRET,
+    access_token_key=TWITTER_ACCESS_TOKEN,
+    access_token_secret=TWITTER_ACCESS_TOKEN_SECRET
+)
+try:
+    TWITTER_AUTHENTICATED = api.VerifyCredentials() is not None
+except twitter.error.TwitterError:
+    TWITTER_AUTHENTICATED = False
 
 
 class AttributesCreateView(CreateView):
@@ -662,6 +671,27 @@ def save_basic(request, model_class, form_class):
                 instance.editor_id = request.user.id
                 instance.save()
 
+                if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and TWITTER_AUTHENTICATED:
+                    name = ''
+                    if instance.core_record_type == 'Capacity Development':
+                        name = instance.capacity_need_title
+                    elif instance.core_record_type == 'SSF Profile':
+                        name = instance.ssf_name
+                    elif instance.core_record_type == 'SSF Guidelines':
+                        name = instance.title
+                    elif instance.core_record_type == 'SSF Experiences':
+                        name = instance.name
+                    elif instance.core_record_type == 'Case Study':
+                        name = instance.name
+
+                    name = str(name)[:20]
+
+                    issf_id = str(instance.issf_core_id)
+
+                    url = 'https://issfcloud.toobigtoignore.net' + reverse(get_redirectname(instance.core_record_type), kwargs={'issf_core_id': issf_id})
+
+                    api.PostUpdate('Check out the new #tbtiissf ' + instance.core_record_type + ' record for ' + name + '. ' + url)
+
                 update_tsvector_summary(instance.core_record_type, str(instance.pk))
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
@@ -782,7 +812,7 @@ def sota_basic(request):
                 knowledge_instance.editor_id = request.user.id
                 knowledge_instance.save()
 
-                if not existing:
+                if not existing and TWITTER_AUTHENTICATED:
                     name = str(knowledge_instance.level1_title)[:20]
                     issf_id = str(knowledge_instance.issf_core_id)
                     api.PostUpdate('Check out the new #tbtiissf SOTA record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
@@ -847,11 +877,12 @@ def organization_basic(request):
                 instance.save()
 
             if not existing:
-                name = str(instance.organization_name)[:20]
+                if TWITTER_AUTHENTICATED:
+                    name = str(instance.organization_name)[:20]
 
-                issf_id = str(instance.issf_core_id)
+                    issf_id = str(instance.issf_core_id)
 
-                api.PostUpdate('Check out the new #tbtiissf SSF Organization record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/organization/' + issf_id)
+                    api.PostUpdate('Check out the new #tbtiissf SSF Organization record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/organization/' + issf_id)
 
                 update_tsvector_summary(instance.core_record_type, str(instance.pk))
                 # contributing new record, user must fill out Geographic Scope
