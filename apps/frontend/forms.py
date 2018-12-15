@@ -1,10 +1,10 @@
 from django import forms
 from django.db.models import Q
-from django.forms import ModelForm, CheckboxSelectMultiple, Select, CharField
+from django.forms import ModelForm, Select
 from django.forms.models import formset_factory
 from issf_admin.models import UserProfile
-from issf_base.models import Country, ISSFCore, ISSF_Core, SelectedAttribute, \
-    SelectedThemeIssue, DidYouKnow, FAQ, FAQCategory, WhoFeature, SSFPerson, SSFKnowledge
+from issf_base.models import Country, ISSFCore, SelectedAttribute, \
+    SelectedThemeIssue, DidYouKnow, FAQ, WhoFeature, SSFPerson, SSFKnowledge
 
 
 class SearchForm(forms.Form):
@@ -14,9 +14,9 @@ class SearchForm(forms.Form):
         'contributor')
     contributor_choices = [(u.id, '%s (%s %s %s)' % (
         u.username, u.first_name, u.initials, u.last_name)) for u in
-                           UserProfile.objects.filter(
-                               Q(id__in=existing_contributors)).order_by(
-                               'username')]
+        UserProfile.objects.filter(
+            Q(id__in=existing_contributors)).order_by('username')
+    ]
     contributor_choices.insert(0, ('', '------------------'))
     contributor = forms.ChoiceField(choices=contributor_choices,
                                     label='Contributor/editor')
