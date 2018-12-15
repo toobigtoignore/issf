@@ -1,4 +1,5 @@
 {% extends 'issf_base/base.html' %}
+
 {% load staticfiles %}
 
 {% block additional_css_scripts %}
@@ -17,8 +18,11 @@
 
                 <div class="panel callout radius">
                     <p style="margin-bottom: 0">{{ fact.fact }}</p>
-                    <a href="{% url 'fact-archive' %}"
-                       style="position:absolute; right:20px; font-size: 0.75em;">Archive
+                    <a
+                        href="{% url 'fact-archive' %}"
+                        style="position:absolute; right:20px; font-size: 0.75em;"
+                    >
+                        Archive
                     </a>
                 </div>
             </div>
@@ -36,9 +40,9 @@
                                     {% endif %}
                                 {% endfor %}
                                 {% ifchanged category.faq_category %}
-                                    </div>
-                                    </dd>
-                                    </dl>
+                            </div>
+                        </dd>
+                    </dl>
                                 {% endifchanged %}
                 {% endfor %}
             </div>
@@ -51,11 +55,16 @@
                             <p style="margin: 5px 0 5px 0; font-size: 0.86rem;">
                                 <strong>1. Introduction</strong>
                                 -
-
                                 Introduction to the Information System on Small-scale Fisheries (ISSF)
                             </p>
-                            <iframe width="500" height="281" src="https://www.youtube.com/embed/IZV05y95_JM"
-                                    frameborder="0" allowfullscreen></iframe>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/IZV05y95_JM"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
                         </td>
 
 
@@ -63,11 +72,16 @@
                             <p style="margin: 5px 0 5px 0;">
                                 <strong>2. Sign Up</strong>
                                 -
-
                                 Tutorial video explaining how to create an account on ISSF
                             </p>
-                            <iframe width="500" height="281" src="https://www.youtube.com/embed/lhDxUS4rOho"
-                                    frameborder="0" allowfullscreen></iframe>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/lhDxUS4rOho"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
                         </td>
                     </tr>
                     <tr>
@@ -75,21 +89,31 @@
                             <p style="margin: 5px 0 5px 0;">
                                 <strong>3. Contribute</strong>
                                 -
-
                                 Tutorial video explaining how to contribute your knowledge to ISSF
                             </p>
-                            <iframe width="500" height="281" src="https://www.youtube.com/embed/EDRuhoBfmnU"
-                                    frameborder="0" allowfullscreen></iframe>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/EDRuhoBfmnU"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
                         </td>
                         <td>
                             <p style="margin: 5px 0 5px 0;">
                                 <strong>4. Explore</strong>
                                 -
-
                                 Tutorial video demonstrating the various aspects of ISSF
                             </p>
-                            <iframe width="500" height="281" src="https://www.youtube.com/embed/Ai3ZMQb3ssI"
-                                    frameborder="0" allowfullscreen></iframe>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/Ai3ZMQb3ssI"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
                         </td>
                     </tr>
                     <tr>
@@ -98,16 +122,28 @@
                                 <strong>5. Additional features</strong>
                                 - Tutorial video demonstrating the additional features of ISSF
                             </p>
-                            <iframe width="500" height="281" src="https://www.youtube.com/embed/rqhwImqqIOw"
-                                    frameborder="0" allowfullscreen></iframe>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/rqhwImqqIOw"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
                         </td>
                         <td>
                             <p style="margin: 5px 0 5px 0;">
                                 <strong>6. Export</strong>
                                 - Tutorial video demonstrating how to export data from ISSF
                             </p>
-                            <iframe width="500" height="281" src="https://www.youtube.com/embed/QrbFre9gPac"
-                                    frameborder="0" allowfullscreen></iframe>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/QrbFre9gPac"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
                         </td>
                     </tr>
                 </table>

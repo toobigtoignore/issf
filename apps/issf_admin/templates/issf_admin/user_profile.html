@@ -1,5 +1,6 @@
-{% extends "issf_base/base.html" %}{% load js %}{% load staticfiles %}
+{% extends "issf_base/base.html" %}
 
+{% load js_reverse %}
 {% load staticfiles %}
 {% load foundation %}
 {% load i18n %}
@@ -8,7 +9,6 @@
     <title>{% block title %}ISSF: User Profile{% endblock %}</title>
     <div class="row">
         <div class="large-12 columns page-title2">
-            <!-- page title ------->
             <h1>User Profile for {{ userName }}</h1>
         </div>
     </div>
@@ -16,15 +16,15 @@
         <div class="large-12 columns accountFormContainer">
             &nbsp;
 
-            <!-- begin form --->
             <form method="post" action="{% url 'update-profile' %}" role="form">
                 {% csrf_token %}
                 {{ userForm }}
                 <div class="button-bar large-12 right">
-                    <button class="medium bt-submit" value="{% trans 'Submit' %}">{% trans "Submit" %}</button>
+                    <button class="medium bt-submit" value="{% trans 'Submit' %}">
+                        {% trans "Submit" %}
+                    </button>
                 </div>
             </form>
-            <!-- end form --->
 
             <p>&nbsp;</p>
         </div>
