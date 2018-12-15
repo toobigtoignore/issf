@@ -121,10 +121,10 @@
                      style="width: 392px; border:1px solid #5b9ad4; font-size: large; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                     {{ location }}</div>
                 {% if location %}
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ location }}&zoom={{ zoom }}&size=390x300&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
-&markers=color:red%7Clabel:C%7C40.718217,-73.998284
-&key=AIzaSyCJHSv1dWx6oDExnkcxzsCHUQX-eeF15gs" style="border:1px solid #5b9ad4">
+                    <img
+                        src="https://open.mapquestapi.com/staticmap/v5/map?key=QNOjYn29lvUFIowAJ5mokSwVN9XgWvxg&center={{ location }}&size=390,300&zoom={{ zoom }}"
+                        style="border: 1px solid #5b9ad4"
+                    />
                 {% endif %}
             </div>
             <div>
@@ -346,7 +346,7 @@
             </div>
             <div
                 class="no-shadow"
-                style="border:1px solid #357ab7; float:right; width:45%; margin-top: -42px; margin-bottom: 20px; margin-right: 50px;"
+                style="border:1px solid #357ab7; float:right; width:50%; margin-top: -42px; margin-bottom: 20px; margin-right: 50px;"
             >
                 {% if record.img_url %}
                     <img src="{{ record.img_url }}">
