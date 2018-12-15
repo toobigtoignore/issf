@@ -1,7 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import AbstractUser
 
-from issf_base.models import Country, SSFOrganization
+from issf_base.models import Country
 
 
 # custom user model
