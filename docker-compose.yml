@@ -15,8 +15,7 @@ services:
     #command: "/bin/bash -c 'yes'"
     command: "/bin/bash -c 'npm i && python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
     depends_on: 
-      - db 
-      - nginx
+      - db
     environment: 
       - DJANGO_SETTINGS_MODULE=issf_prod.settings
     volumes:
@@ -59,6 +58,8 @@ services:
     image: nginx:latest
     ports:
       - "80:80"
+    depends_on:
+      - web
     volumes:
       - "./:/src:Z"
       - "./data/nginx:/etc/nginx/conf.d:Z"
