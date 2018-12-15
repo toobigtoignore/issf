@@ -11,8 +11,8 @@ sys.path.append('apps')
 ALLOWED_HOSTS = ['*']
 
 SECRET_KEY= config('SECRET_KEY')
- 
-DEBUG = config('DEBUG', default=False, cast=bool) 
+
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 DATABASES = {
     'default': {
@@ -69,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
 ]
 
 STATIC_ROOT = '/issf/static'

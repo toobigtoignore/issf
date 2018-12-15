@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from djgeojson.views import GeoJSONLayerView
+from django.views.decorators.gzip import gzip_page
 
 from issf_base.models import CommonAttributeView, WhoFeature, SSFCaseStudies, SSFExperiences, \
     KnowledgeAuthorSimple, ISSF_Core, GeographicScopeNation, CommonThemeIssueView
@@ -42,6 +43,9 @@ from issf_base.models import GeographicScopeSubnation
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
 from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
 
+from django.middleware.gzip import GZipMiddleware
+
+gzip_middleware = GZipMiddleware()
 
 def parse_search_terms(input_search_terms):
     """
@@ -63,7 +67,7 @@ def parse_search_terms(input_search_terms):
         return parsed_search_terms.replace(u" ", u" & ")
     return parsed_search_terms.replace(u" ", u" | ")
 
-
+@gzip_page
 def index(request):
     # get data for dashboard panels
     recent_contributions = RecentContributions.objects.all()
@@ -108,7 +112,7 @@ def index(request):
         'num_expe_records': SSFExperiences.objects.all().count(),
     })
 
-
+@gzip_page
 def frontend_data(request):
     map_queryset = None
     search_terms = u""
@@ -284,7 +288,7 @@ def frontend_data(request):
     response = json.dumps({
         'success': 'true',  # 'data': search_results,
         'mapData': map_results, 'searchTerms': search_terms, 'msg': 'OK', })
-    return HttpResponse(response)
+    return gzip_middleware.process_response(request, HttpResponse(response))
 
 
 class MapLayer(GeoJSONLayerView):
@@ -698,6 +702,7 @@ def country_records(request, country_id):
 
 # For staff members only, used to submit new tips for the help page.
 @login_required()
+@gzip_page
 def new_tip(request):
     is_staff = False
     if request.user.is_staff:
@@ -722,6 +727,7 @@ def new_tip(request):
 
 # For staff members only, used to submit new FAQs for the help page.
 @login_required()
+@gzip_page
 def new_faq(request):
     if request.method == 'POST':
         form = FAQForm(request.POST)
@@ -734,6 +740,7 @@ def new_faq(request):
 
 # For staff members only, used to replace the current Who's Who feature.
 @login_required()
+@gzip_page
 def who_feature(request):
     is_staff = False
     if request.user.is_staff:
@@ -755,6 +762,7 @@ def who_feature(request):
 
 
 @login_required()
+@gzip_page
 def geojson_upload(request):
     is_staff = False
     if request.user.is_staff:
