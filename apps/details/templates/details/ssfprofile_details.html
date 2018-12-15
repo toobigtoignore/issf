@@ -632,26 +632,26 @@
                     <ul style="font-size: 0.85rem;">
                         <li>
                             Download a 'fillable' PDF form in
-                            <a href="{% url 'template-pdf' 'english' %}"
+                            <a href="{% static "/pdf/ISSF_Profile_English_Template.pdf" %}"
                                target="_blank">
                                     <span>
                                          English,
                                     </span>
                             </a>
-                            <a href="{% url 'template-pdf' 'french' %}"
+                            <a href="{% static "/pdf/ISSF_Profile_French_Template.pdf" %}"
                                target="_blank">
                                     <span>
                                          French,
                                     </span>
                             </a>
-                            <a href="{% url 'template-pdf' 'spanish' %}"
+                            <a href="{% static "/pdf/ISSF_Profile_Spanish_Template.pdf" %}"
                                target="_blank">
                                     <span>
                                          Spanish,
                                     </span>
                             </a>
-                            or
-                            <a href="{% url 'template-pdf' 'portuguese' %}"
+                            <span> and </span>
+                            <a href="{% static "/pdf/ISSF_Profile_Portuguese_Template.pdf" %}"
                                target="_blank">
                                     <span>
                                          Portuguese
@@ -661,11 +661,11 @@
                             complete the form offline.
                         </li>
                         <li>
-                            <a href="{% url 'brazil-pdf' %}"
+                            <a href="{% static "pdf/ISSF_Profile_Example_Brazil.pdf" %}"
                                target="_blank">
-                    <span>
-                        Click here for an example of an SSF profile: Pontal do Parana, Brazil.
-                    </span>
+                                <span>
+                                    Click here for an example of an SSF profile: Pontal do Parana, Brazil.
+                                </span>
                             </a>
                         </li>
                     </ul>

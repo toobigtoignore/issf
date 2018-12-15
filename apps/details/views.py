@@ -730,24 +730,6 @@ def is_int(s):
     except ValueError:
         return False
 
-
-"""Loads the appropriate PDF SSF Profile template. The Brazil one is an example already filled in, while the others
-are blank templates in various languages.
-"""
-
-
-def serve_pdf(request, filename, language=None):
-    if filename == 'brazil':
-        path = '/home/projects/issf/issf_prod/apps/details/static/details/pdf/ISSF_Profile_Example_Brazil.pdf'
-    elif filename == 'template':
-        path = '/home/projects/issf/issf_prod/apps/details/static/details/pdf/ISSF_Profile_' + language + '_Template.pdf'
-    with open(path, 'rb') as pdf:
-        response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'filename=ISSF_Profile_Example_Brazil.pdf'
-        pdf.close()
-        return response
-
-
 @login_required
 def sota_basic(request):
     # does not use save_basic because the submit includes two django forms

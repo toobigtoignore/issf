@@ -38,12 +38,6 @@ urlpatterns = [  # display
         main_attributes_save,
         name='main-attributes-save'),
 
-    # serving pdf file
-    url(r'brazil-pdf/$', serve_pdf,
-        {'filename': 'brazil'}, name='brazil-pdf'),
-    url(r'template-pdf/(?P<language>\w+)/$', serve_pdf,
-        {'filename': 'template'}, name='template-pdf'),
-
     # changelog
     url(r'^changelog/$', changelog, name='changelog'),
 

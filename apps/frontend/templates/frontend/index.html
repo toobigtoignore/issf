@@ -562,27 +562,21 @@
                             <li>
                                 <strong>Contribute</strong> by creating a profile for SSF that you know,
                                 <a href="{% url 'contribute' %}">online,</a> or using a template (available in
-                                <a
-                                    href="{% url 'template-pdf' 'english' %}"
+                                <a href="{% static "pdf/ISSF_Profile_English_Template.pdf" %}"
                                     target="_blank"
                                 >
                                     <span>English,</span>
                                 </a>
-                                <a
-                                    href="{% url 'template-pdf' 'french' %}"
+                                <a href="{% static "pdf/ISSF_Profile_French_Template.pdf" %}"
                                     target="_blank"
                                 >
                                     <span>French,</span>
                                 </a>
-                                <a
-                                    href="{% url 'template-pdf' 'spanish' %}"
+                                <span> and </span>
+                                <a href="{% static "pdf/ISSF_Profile_Spanish_Template.pdf" %}"
                                     target="_blank"
                                 >
-                                    <span>Spanish,</span>
-                                </a>
-                                or
-                                <a href="{% url 'template-pdf' 'portuguese' %}" target="_blank">
-                                    <span>Portuguese</span>
+                                    <span>Spanish.</span>
                                 </a>
                                 )
                             </li>
