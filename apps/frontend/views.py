@@ -43,6 +43,9 @@ from issf_base.models import GeographicScopeSubnation
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
 from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
 
+from django.middleware.gzip import GZipMiddleware
+
+gzip_middleware = GZipMiddleware()
 
 def parse_search_terms(input_search_terms):
     """
@@ -285,7 +288,7 @@ def frontend_data(request):
     response = json.dumps({
         'success': 'true',  # 'data': search_results,
         'mapData': map_results, 'searchTerms': search_terms, 'msg': 'OK', })
-    return HttpResponse(response)
+    return gzip_middleware.process_response(request, HttpResponse(response))
 
 
 class MapLayer(GeoJSONLayerView):
