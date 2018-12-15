@@ -1,10 +1,10 @@
-{% extends 'issf_base/base.html' %}{% load leaflet_tags %}
+{% extends 'issf_base/base.html' %}
+{% load leaflet_tags %}
 {% load staticfiles %}
 {% load js_reverse %}
 
 {% block additional_css_scripts %}
     {% leaflet_css %}
-    <!-- DataTables CSS -->
     <link rel="stylesheet" href="{% static "details/css/details.css" %}">
 {% endblock additional_css_scripts %}
 
@@ -17,21 +17,20 @@
             </div>
         </div>
         <div class="row">
-            <h6>Please select the dataset associated with the information you would like to
+            <h6>
+                Please select the dataset associated with the information you would like to
                 contribute.
             </h6>
         </div>
         <div class="row">
-            <h6>Before contributing a new record, please explore/search using the
-                <a
-                        href="{% url 'index' %}">table and
-                    map
-                </a>
-                to see if it it already exists.
+            <h6>
+                Before contributing a new record, please explore/search using the
+                <a href="{% url 'index' %}">table and map </a> to see if it it already exists.
             </h6>
         </div>
         <div class="row">
-            <h6>After submitting, you will be redirected to the record's page where you can add additional information.
+            <h6>
+                After submitting, you will be redirected to the record's page where you can add additional information.
             </h6>
         </div>
         <br>
@@ -42,7 +41,6 @@
                     <li class="tab-title">
                         <a id="who" tabindex="0" href="#panel-who">
                             <span></span>
-
                             <h3>Who’s Who in SSF</h3>
                         </a>
 
@@ -53,20 +51,18 @@
                     <li class="tab-title">
                         <a id="sota" tabindex="1" href="#panel-sota">
                             <span></span>
-
                             <h3>State-of-the-Art in SSF Research</h3>
                         </a>
 
                         <div class="pop">
-                            <p>Existing published information about small-scale
-                                fisheries
+                            <p>
+                                Existing published information about small-scale fisheries
                             </p>
                         </div>
                     </li>
                     <li class="tab-title">
                         <a id="profile" tabindex="2" href="#panel-profile">
                             <span></span>
-
                             <h3>SSF Profiles</h3>
                         </a>
 
@@ -77,20 +73,18 @@
                     <li class="tab-title {{ is_active }}">
                         <a id="organize" tabindex="3" href="#panel-organize">
                             <span></span>
-
                             <h3>Organizations</h3>
                         </a>
 
                         <div class="pop">
-                            <p>Organizations directly involved in small-scale
-                                fisheries
+                            <p>
+                                Organizations directly involved in small-scale fisheries
                             </p>
                         </div>
                     </li>
                     <li class="tab-title">
                         <a id="case" tabindex="4" href="#panel-case">
                             <span></span>
-
                             <h3>Case Studies</h3>
                         </a>
 
@@ -101,20 +95,18 @@
                     <li class="tab-title">
                         <a id="capacity" tabindex="5" href="#panel-capacity">
                             <span></span>
-
                             <h3>Capacity Development</h3>
                         </a>
 
                         <div class="pop">
-                            <p>What capacity needs to be developed for small-scale
-                                fisheries
+                            <p>
+                                What capacity needs to be developed for small-scale fisheries
                             </p>
                         </div>
                     </li>
                     <li class="tab-title">
                         <a id="expe" tabindex="6" href="#panel-expe">
                             <span></span>
-
                             <h3>Experiences</h3>
                         </a>
 
@@ -125,7 +117,6 @@
                     <li class="tab-title" style="margin-bottom: 3px !important;">
                         <a id="guidelines" tabindex="7" href="#panel-guidelines">
                             <span></span>
-
                             <h3>SSF Guidelines</h3>
                         </a>
 
@@ -133,39 +124,6 @@
                             <p>Tracking of the SSF Guidelines implementation worldwide</p>
                         </div>
                     </li>
-                    {#                    <li class="tab-title">#}
-                    {#                        <a id="project" tabindex="8" href="#panel-project">#}
-                    {#                            <span></span>#}
-                    {##}
-                    {#                            <h3>Projects</h3>#}
-                    {#                        </a>#}
-                    {##}
-                    {#                        <div class="pop">#}
-                    {#                            <p>Coming soon</p>#}
-                    {#                        </div>#}
-                    {#                    </li>#}
-                    {#                    <li class="tab-title">#}
-                    {#                        <a id="training" tabindex="9" href="#panel-training">#}
-                    {#                            <span></span>#}
-                    {##}
-                    {#                            <h3>Training Courses</h3>#}
-                    {#                        </a>#}
-                    {##}
-                    {#                        <div class="pop">#}
-                    {#                            <p>Coming soon</p>#}
-                    {#                        </div>#}
-                    {#                    </li>#}
-                    {#                    <li class="tab-title" style="margin-bottom: 2px !important;">#}
-                    {#                        <a id="data" tabindex="10" href="#panel-data">#}
-                    {#                            <span></span>#}
-                    {##}
-                    {#                            <h3>Data Sources</h3>#}
-                    {#                        </a>#}
-                    {##}
-                    {#                        <div class="pop">#}
-                    {#                            <p>Coming soon</p>#}
-                    {#                        </div>#}
-                    {#                    </li>#}
                 </ul>
             </nav>
             <main class="col-760 right">
@@ -178,16 +136,15 @@
 
                                 <div id="panel11" class="content">
 
-                                    <h6>Step 1. {{ request.user }}, if you are directly involved in SSF
+                                    <h6>
+                                        Step 1. {{ request.user }}, if you are directly involved in SSF
                                         please provide
                                         your
                                         basic details here. Name, email, and country of residence
                                         are provided
                                         on
                                         the
-                                        <a
-                                                href="{% url 'update-profile' %}">User Profile
-                                        </a>
+                                        <a href="{% url 'update-profile' %}">User Profile</a>
                                         form.
                                         Additional
                                         details, including researcher information, can be provided
@@ -239,13 +196,16 @@
                                             {% else %}
                                                 {{ person_form.country }}
                                             {% endif %}
-                                            <button class="medium radius blueOrangeButton"
-                                                    id="getPersonAddress">
+                                            <button
+                                                class="medium radius blueOrangeButton"
+                                                id="getPersonAddress"
+                                            >
                                                 Locate
                                                 Address using Bing
                                             </button>
                                             <br/>
-                                            <label for="id_person_point">Address location (use the
+                                            <label for="id_person_point">
+                                                Address location (use the
                                                 draw, edit
                                                 and
                                                 delete
@@ -841,12 +801,6 @@
                             <dd class="accordion-navigation active">
                                 <a href="#panel101">Training Courses coming soon...</a>
                             </dd>
-                            {#                        <dd class="accordion-navigation">#}
-                            {#                            <a href="#panel102">Training Courses Section #2</a>#}
-                            {#                            <div id="panel102" class="content">#}
-                            {#                                Panel 2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.#}
-                            {#                            </div>#}
-                            {#                        </dd>#}
                         </dl>
                         <!-- Training Courses -- end -->
                     </div>
@@ -870,7 +824,8 @@
 
 {% block additional_js_scripts %}
     {% leaflet_js %}
-    
+    {% js_reverse_inline %}
+
     <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
     <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
     <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
