@@ -752,12 +752,11 @@ def is_int(s):
 are blank templates in various languages.
 """
 
-
 def serve_pdf(request, filename, language=None):
     if filename == 'brazil':
-        path = '/home/projects/issf/issf_prod/apps/details/static/details/pdf/ISSF_Profile_Example_Brazil.pdf'
+        path = 'pdf/ISSF_Profile_Example_Brazil.pdf'
     elif filename == 'template':
-        path = '/home/projects/issf/issf_prod/apps/details/static/details/pdf/ISSF_Profile_' + language + '_Template.pdf'
+        path = 'pdf/ISSF_Profile_' + language + '_Template.pdf'
     with open(path, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'filename=ISSF_Profile_Example_Brazil.pdf'
