@@ -67,8 +67,7 @@ def contribute(request, who=''):
     issf_core_id = None
     person = None
     profile_form = ProfileForm(instance=request.user)
-    ssf_persons = SSFPerson.objects.filter(
-        contributor_id__exact=request.user.id)
+    ssf_persons = SSFPerson.objects.filter(contributor_id__exact=request.user.id)
     if ssf_persons.count() > 0:
         person = ssf_persons[0]
         issf_core_id = person.issf_core_id
@@ -80,29 +79,25 @@ def contribute(request, who=''):
     if who == 'who':
         is_active = 'active'
 
-    return render(request,
-                  "details/contribute.html", {
-                      "profile_form": profile_form, "person_form": person_form,
-                      "person": person,
-                      "issf_core_id": issf_core_id,
-                      "organization_form": SSFOrganizationForm(prefix="org", initial={
-                          'contributor': request.user.id}),
-                      "knowledge_form": SSFKnowledgeForm(initial={'contributor':
-                                                                  request.user.id}),
-                      "knowledge_authors_form": AuthorsInlineFormSet,
-                      "capacity_need_form": SSFCapacityNeedForm(initial={'contributor':
-                                                                         request.user.id}),
-                      "fishery_profile_form": SSFProfileForm(initial={'contributor':
-                                                                      request.user.id}),
-                      "guidelines_form": SSFGuidelinesForm(initial={'contributor':
-                                                                    request.user.id}),
-                      "experiences_form": SSFExperiencesForm(initial={'contributor':
-                                                                      request.user.id}),
-                      "case_study_form": SSFCaseStudiesForm(initial={'contributor':
-                                                                     request.user.id}),
-                      "is_active": is_active
-                  }
-                  )
+    return render(
+        request,
+        "details/contribute.html", 
+        {
+            "profile_form": profile_form,
+            "person_form": person_form,
+            "person": person,
+            "issf_core_id": issf_core_id,
+            "organization_form": SSFOrganizationForm(prefix="org", initial={'contributor': request.user.id}),
+            "knowledge_form": SSFKnowledgeForm(initial={'contributor': request.user.id}),
+            "knowledge_authors_form": AuthorsInlineFormSet,
+            "capacity_need_form": SSFCapacityNeedForm(initial={'contributor': request.user.id}),
+            "fishery_profile_form": SSFProfileForm(initial={'contributor': request.user.id}),
+            "guidelines_form": SSFGuidelinesForm(initial={'contributor': request.user.id}),
+            "experiences_form": SSFExperiencesForm(initial={'contributor': request.user.id}),
+            "case_study_form": SSFCaseStudiesForm(initial={'contributor': request.user.id}),
+            "is_active": is_active
+        }
+    )
 
 
 # BEGIN DETAILS VIEWS
@@ -155,26 +150,37 @@ def sota_details(request, issf_core_id):
         who_page = None
 
     # ensure record is of type knowledge
-    if "State-of-the-Art in SSF Research" in \
-            knowledge_instance.core_record_type:
-        return render(request, "details/ssfknowledge_details.html", {
-            "knowledge_instance": knowledge_instance, "core_instance":
-                core_instance, "authors": authors, "common_themes_issues":
-                common_themes_issues, "common_attributes":
-                common_attributes, "geographic_scope_region":
-                geographic_scope_region,
-            "geographic_scope_subnation": geographic_scope_subnation,
-            "geographic_scope_local_area": geographic_scope_local_area,
-            "species": species, "external_links": external_links,
-            "knowledge_form": knowledge_form, "knowledge_authors_form":
-                knowledge_authors_form, "common_themes_issues_formset":
-                common_themes_issues_formset, "common_attributes_formset":
-                common_attributes_formset, "geographic_scope_form":
-                geographic_scope_form, "local_area_form": local_area_form,
-            "subnation_form": subnation_form, "nation_form": nation_form,
-            "region_form": region_form, "knowledge_other_details_form":
-                knowledge_other_details_form, "species_form": species_form,
-            "external_links_form": external_links_form, "editor": editor, 'who_page': who_page})
+    if "State-of-the-Art in SSF Research" in knowledge_instance.core_record_type:
+        return render(
+            request,
+            "details/ssfknowledge_details.html",
+            {
+                "knowledge_instance": knowledge_instance,
+                "core_instance": core_instance,
+                "authors": authors,
+                "common_themes_issues": common_themes_issues,
+                "common_attributes": common_attributes,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "species": species,
+                "external_links": external_links,
+                "knowledge_form": knowledge_form,
+                "knowledge_authors_form": knowledge_authors_form,
+                "common_themes_issues_formset": common_themes_issues_formset,
+                "common_attributes_formset": common_attributes_formset,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "knowledge_other_details_form": knowledge_other_details_form,
+                "species_form": species_form,
+                "external_links_form": external_links_form,
+                "editor": editor,
+                'who_page': who_page
+            }
+        )
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
@@ -186,26 +192,19 @@ def who_details(request, issf_core_id):
         profile_form = ProfileForm(instance=request.user)
     person_instance = SSFPerson.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
-    common_themes_issues = CommonThemeIssueView.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    common_themes_issues = CommonThemeIssueView.objects.filter(issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
     external_links = ExternalLink.objects.filter(issf_core=issf_core_id)
     species = Species.objects.filter(issf_core=issf_core_id)
 
     # forms
     person_form = SSFPersonForm(instance=person_instance)
-    common_themes_issues_formset = CommonThemesIssuesViewInlineFormSet(
-        instance=core_instance)
+    common_themes_issues_formset = CommonThemesIssuesViewInlineFormSet(instance=core_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     person_researcher_form = PersonResearcherForm(instance=person_instance)
@@ -214,65 +213,64 @@ def who_details(request, issf_core_id):
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
     # ensure record is of type person
     if "Who's Who in SSF" in person_instance.core_record_type:
-        return render(request, "details/ssfperson_details.html", {
-            "profile_form": profile_form, "person_instance":
-                person_instance, "core_instance": core_instance,
-            "common_themes_issues": common_themes_issues,
-            "geographic_scope_region": geographic_scope_region,
-            "geographic_scope_subnation": geographic_scope_subnation,
-            "geographic_scope_local_area": geographic_scope_local_area,
-            "external_links": external_links, "species": species,
-            "person_form": person_form, "common_themes_issues_formset":
-                common_themes_issues_formset, "geographic_scope_form":
-                geographic_scope_form, "local_area_form": local_area_form,
-            "subnation_form": subnation_form, "nation_form": nation_form,
-            "region_form": region_form, "person_researcher_form":
-                person_researcher_form, "external_links_form":
-                external_links_form, "species_form": species_form, "editor":
-                editor, })
+        return render(
+            request,
+            "details/ssfperson_details.html",
+            {
+                "profile_form": profile_form,
+                "person_instance": person_instance,
+                "core_instance": core_instance,
+                "common_themes_issues": common_themes_issues,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "external_links": external_links,
+                "species": species,
+                "person_form": person_form,
+                "common_themes_issues_formset": common_themes_issues_formset,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "person_researcher_form": person_researcher_form,
+                "external_links_form": external_links_form,
+                "species_form": species_form,
+                "editor": editor
+            }
+        )
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
 def organization_details(request, issf_core_id):
     # organization and related instances
-    organization_instance = SSFOrganization.objects.get(
-        issf_core_id=issf_core_id)
+    organization_instance = SSFOrganization.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
-    common_themes_issues = CommonThemeIssueView.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    common_themes_issues = CommonThemeIssueView.objects.filter(issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
     external_links = ExternalLink.objects.filter(issf_core=issf_core_id)
 
     # forms
-    organization_form = SSFOrganizationForm(instance=organization_instance,
-                                            prefix='org')
-    common_themes_issues_formset = CommonThemesIssuesViewInlineFormSet(
-        instance=core_instance)
+    organization_form = SSFOrganizationForm(instance=organization_instance, prefix='org')
+    common_themes_issues_formset = CommonThemesIssuesViewInlineFormSet(instance=core_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
@@ -283,53 +281,56 @@ def organization_details(request, issf_core_id):
 
     # ensure record is of type organization
     if "SSF Organization" in organization_instance.core_record_type:
-        return render(request, "details/ssforganization_details.html", {
-            "organization_instance": organization_instance, "core_instance":
-                core_instance, "common_themes_issues": common_themes_issues,
-            "geographic_scope_region": geographic_scope_region,
-            "geographic_scope_subnation": geographic_scope_subnation,
-            "geographic_scope_local_area": geographic_scope_local_area,
-            "external_links": external_links, "species": species,
-            "organization_form": organization_form,
-            "common_themes_issues_formset": common_themes_issues_formset,
-            "geographic_scope_form": geographic_scope_form,
-            "local_area_form": local_area_form, "subnation_form":
-                subnation_form, "nation_form": nation_form, "region_form":
-                region_form, "external_links_form": external_links_form,
-            "editor": editor, 'who_page': who_page})
+        return render(
+            request,
+            "details/ssforganization_details.html",
+            {
+                "organization_instance": organization_instance,
+                "core_instance": core_instance,
+                "common_themes_issues": common_themes_issues,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "external_links": external_links,
+                "species": species,
+                "organization_form": organization_form,
+                "common_themes_issues_formset": common_themes_issues_formset,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "external_links_form": external_links_form,
+                "editor": editor,
+                'who_page': who_page
+            }
+        )
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
 def capacity_details(request, issf_core_id):
     # data
-    capacity_need_instance = SSFCapacityNeed.objects.get(
-        issf_core_id=issf_core_id)
+    capacity_need_instance = SSFCapacityNeed.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
 
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
     external_links = ExternalLink.objects.filter(issf_core=issf_core_id)
 
     # forms
     capacity_need_form = SSFCapacityNeedForm(instance=capacity_need_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
@@ -340,19 +341,27 @@ def capacity_details(request, issf_core_id):
 
     # ensure record is of type capacity
     if "Capacity Development" in capacity_need_instance.core_record_type:
-        return render(request, "details/ssfcapacity_details.html", {
-            "capacity_need_instance": capacity_need_instance,
-            "core_instance": core_instance,
-            "geographic_scope_region": geographic_scope_region,
-            "geographic_scope_subnation": geographic_scope_subnation,
-            "geographic_scope_local_area": geographic_scope_local_area,
-            "external_links": external_links, "capacity_need_form":
-                capacity_need_form,
-            "geographic_scope_form": geographic_scope_form,
-            "local_area_form": local_area_form, "subnation_form":
-                subnation_form, "nation_form": nation_form, "region_form":
-                region_form, "external_links_form": external_links_form,
-            "editor": editor, 'who_page': who_page})
+        return render(
+            request,
+            "details/ssfcapacity_details.html",
+            {
+                "capacity_need_instance": capacity_need_instance,
+                "core_instance": core_instance,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "external_links": external_links,
+                "capacity_need_form": capacity_need_form,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "external_links_form": external_links_form,
+                "editor": editor,
+                'who_page': who_page
+            }
+        )
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
@@ -362,15 +371,11 @@ def profile_details(request, issf_core_id):
     profile_instance = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     main_attributes = MainAttributeView.objects.filter(issf_core_id=issf_core_id)
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
     species_landings = Species.objects.filter(issf_core=issf_core_id)
-    profile_organizations = ProfileOrganization.objects.filter(
-        ssfprofile=issf_core_id)
+    profile_organizations = ProfileOrganization.objects.filter(ssfprofile=issf_core_id)
     external_links = ExternalLink.objects.filter(issf_core=issf_core_id)
 
     # calculate percentage of record completed and assign colour for sidebar
@@ -384,25 +389,19 @@ def profile_details(request, issf_core_id):
 
     # forms
     profile_form = SSFProfileForm(instance=profile_instance)
-    main_attributes_formset = MainAttributesViewInlineFormSet(
-        instance=core_instance)
+    main_attributes_formset = MainAttributesViewInlineFormSet(instance=core_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
-    species_landings_formset = SpeciesLandingsInlineFormSet(
-        instance=core_instance)
-    profile_organization_formset = ProfileOrganizationInlineFormset(
-        instance=profile_instance)
+    species_landings_formset = SpeciesLandingsInlineFormSet(instance=core_instance)
+    profile_organization_formset = ProfileOrganizationInlineFormset(instance=profile_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
@@ -413,24 +412,34 @@ def profile_details(request, issf_core_id):
 
     # ensure record is of type profile
     if "SSF Profile" in profile_instance.core_record_type:
-        return render(request, "details/ssfprofile_details.html", {
-            "profile_instance": profile_instance, "core_instance":
-                core_instance, "geographic_scope_region":
-                geographic_scope_region, "geographic_scope_subnation":
-                geographic_scope_subnation, "geographic_scope_local_area":
-                geographic_scope_local_area,
-            "main_attributes": main_attributes, "profile_organizations":
-                profile_organizations, "species_landings": species_landings,
-            "external_links": external_links, "profile_form": profile_form,
-            "geographic_scope_form": geographic_scope_form,
-            "local_area_form": local_area_form, "subnation_form":
-                subnation_form, "nation_form": nation_form, "region_form":
-                region_form, "main_attributes_formset":
-                main_attributes_formset, "species_landings_formset":
-                species_landings_formset, "profile_organization_formset":
-                profile_organization_formset, "external_links_form":
-                external_links_form, "editor": editor, "pct_colour":
-                pct_colour, 'who_page': who_page})
+        return render(
+            request,
+            "details/ssfprofile_details.html",
+            {
+                "profile_instance": profile_instance,
+                "core_instance": core_instance,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "main_attributes": main_attributes,
+                "profile_organizations": profile_organizations,
+                "species_landings": species_landings,
+                "external_links": external_links,
+                "profile_form": profile_form,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "main_attributes_formset": main_attributes_formset,
+                "species_landings_formset": species_landings_formset,
+                "profile_organization_formset": profile_organization_formset,
+                "external_links_form": external_links_form,
+                "editor": editor,
+                "pct_colour": pct_colour,
+                'who_page': who_page
+            }
+        )
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
@@ -439,27 +448,16 @@ def guidelines_details(request, issf_core_id):
     # data
     guidelines_instance = SSFGuidelines.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
-    start_year = str(
-        guidelines_instance.start_year) if guidelines_instance.start_year \
-        else ''
-    start_month = '/' + str(
-        guidelines_instance.start_month) if guidelines_instance.start_month \
-        else ''
-    start_day = '/' + str(
-        guidelines_instance.start_day) if guidelines_instance.start_day else ''
-    end_year = str(
-        guidelines_instance.end_year) if guidelines_instance.end_year else ''
-    end_month = '/' + str(
-        guidelines_instance.end_month) if guidelines_instance.end_month else ''
-    end_day = '/' + str(
-        guidelines_instance.end_day) if guidelines_instance.end_day else ''
+    start_year = str(guidelines_instance.start_year) if guidelines_instance.start_year else ''
+    start_month = '/' + str(guidelines_instance.start_month) if guidelines_instance.start_month else ''
+    start_day = '/' + str(guidelines_instance.start_day) if guidelines_instance.start_day else ''
+    end_year = str(guidelines_instance.end_year) if guidelines_instance.end_year else ''
+    end_month = '/' + str(guidelines_instance.end_month) if guidelines_instance.end_month else ''
+    end_day = '/' + str(guidelines_instance.end_day) if guidelines_instance.end_day else ''
 
     # concatenate dates
     begin_date = start_year + start_month + start_day
@@ -468,17 +466,14 @@ def guidelines_details(request, issf_core_id):
     # forms
     guidelines_form = SSFGuidelinesForm(instance=guidelines_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
@@ -489,17 +484,28 @@ def guidelines_details(request, issf_core_id):
 
     # ensure record is of type guidelines
     if "SSF Guidelines" in guidelines_instance.core_record_type:
-        return render(request, "details/ssfguidelines_details.html", {
-            "guidelines_instance": guidelines_instance, "core_instance":
-                core_instance, "geographic_scope_region":
-                geographic_scope_region, "geographic_scope_subnation":
-                geographic_scope_subnation, "geographic_scope_local_area":
-                geographic_scope_local_area, "begin_date": begin_date,
-            "end_date": end_date, "external_links": external_links,
-            "guidelines_form": guidelines_form, "geographic_scope_form":
-                geographic_scope_form, "local_area_form": local_area_form,
-            "subnation_form": subnation_form, "nation_form": nation_form,
-            "region_form": region_form, "editor": editor, 'who_page': who_page})
+        return render(
+            request,
+            "details/ssfguidelines_details.html",
+            {
+                "guidelines_instance": guidelines_instance,
+                "core_instance": core_instance,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "begin_date": begin_date,
+                "end_date": end_date,
+                "external_links": external_links,
+                "guidelines_form": guidelines_form,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "editor": editor,
+                'who_page': who_page
+            }
+        )
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
@@ -508,12 +514,9 @@ def experiences_details(request, issf_core_id):
     # data
     experiences_instance = SSFExperiences.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
     video_id = experiences_instance.video_url.split('=')[1].split('&')[0] if experiences_instance.video_url else ''
     vimeo_video_id = experiences_instance.vimeo_video_url.split('/')[3] if experiences_instance.vimeo_video_url else ''
@@ -521,17 +524,14 @@ def experiences_details(request, issf_core_id):
     # forms
     experiences_form = SSFExperiencesForm(instance=experiences_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
@@ -542,49 +542,53 @@ def experiences_details(request, issf_core_id):
 
     # ensure record is of type experiences
     if "SSF Experiences" in experiences_instance.core_record_type:
-        return render(request, "details/ssfexperiences_details.html", {
-            "experiences_instance": experiences_instance, "core_instance":
-                core_instance, "geographic_scope_region":
-                geographic_scope_region, "geographic_scope_subnation":
-                geographic_scope_subnation, "geographic_scope_local_area":
-                geographic_scope_local_area, "external_links": external_links,
-            "experiences_form": experiences_form, "geographic_scope_form":
-                geographic_scope_form, "local_area_form": local_area_form,
-            "subnation_form": subnation_form, "nation_form": nation_form,
-            "region_form": region_form, "editor": editor, 'who_page': who_page, "video_id": video_id,
-            "vimeo_video_id": vimeo_video_id})
+        return render(
+            request,
+            "details/ssfexperiences_details.html",
+            {
+                "experiences_instance": experiences_instance,
+                "core_instance": core_instance,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "external_links": external_links,
+                "experiences_form": experiences_form,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "editor": editor,
+                'who_page': who_page,
+                "video_id": video_id,
+                "vimeo_video_id": vimeo_video_id
+            }
+        )
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
 def case_study_details(request, issf_core_id):
     # data
-    case_studies_instance = SSFCaseStudies.objects.get(
-        issf_core_id=issf_core_id)
+    case_studies_instance = SSFCaseStudies.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
-    geographic_scope_region = Geographic_Scope_Region.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(
-        issf_core=issf_core_id)
-    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(
-        issf_core=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
     external_links = ExternalLink.objects.filter(issf_core=issf_core_id)
 
     # forms
     case_study_form = SSFCaseStudiesForm(instance=case_studies_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
@@ -595,22 +599,27 @@ def case_study_details(request, issf_core_id):
 
     # ensure record is of type capacity
     if "Case Study" in case_studies_instance.core_record_type:
-        return render(request, "details/ssf_case_study_details.html", {
-            "case_studies_instance": case_studies_instance,
-            "core_instance": core_instance,
-            "geographic_scope_region": geographic_scope_region,
-            "geographic_scope_subnation": geographic_scope_subnation,
-            "geographic_scope_local_area": geographic_scope_local_area,
-            "external_links": external_links,
-            "case_study_form": case_study_form,
-            "geographic_scope_form": geographic_scope_form,
-            "local_area_form": local_area_form,
-            "subnation_form": subnation_form,
-            "nation_form": nation_form,
-            "region_form": region_form,
-            "external_links_form": external_links_form,
-            "editor": editor, 'who_page': who_page
-        })
+        return render(
+            request,
+            "details/ssf_case_study_details.html",
+            {
+                "case_studies_instance": case_studies_instance,
+                "core_instance": core_instance,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "external_links": external_links,
+                "case_study_form": case_study_form,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "external_links_form": external_links_form,
+                "editor": editor,
+                'who_page': who_page
+            }
+        )
 
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
@@ -661,7 +670,8 @@ def save_basic(request, model_class, form_class):
                     redirectname = get_redirectname(instance.core_record_type)
 
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': instance.pk
                 })
                 return HttpResponse(response)
@@ -795,16 +805,15 @@ def sota_basic(request):
                     issf_id = str(knowledge_instance.issf_core_id)
                     api.PostUpdate('Check out the new #tbtiissf SOTA record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
 
-                update_tsvector_summary(knowledge_instance.core_record_type,
-                                        str(knowledge_instance.pk))
+                update_tsvector_summary(knowledge_instance.core_record_type, str(knowledge_instance.pk))
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
                     redirectname = 'geographic-scope-save'
                 else:
-                    redirectname = get_redirectname(
-                        knowledge_instance.core_record_type)
+                    redirectname = get_redirectname(knowledge_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': knowledge_instance.pk
                 })
                 return HttpResponse(response)
@@ -812,8 +821,7 @@ def sota_basic(request):
                 if author_count == 0:
                     if '__ALL__' not in knowledge_form._errors:
                         knowledge_form._errors['__ALL__'] = []
-                    knowledge_form._errors['__ALL__'].append(
-                        'Please specify at least one author')
+                    knowledge_form._errors['__ALL__'].append('Please specify at least one author')
                 if len(knowledge_form.errors) > 0:
                     errors = knowledge_form.errors
                 else:
@@ -870,7 +878,8 @@ def organization_basic(request):
                 else:
                     redirectname = get_redirectname(instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': instance.pk
                 })
                 return HttpResponse(response)
@@ -886,8 +895,7 @@ def urlEncodeNonAscii(b):
 
 def iriToUri(iri):
     parts = urlparse.urlparse(iri)
-    return urlparse.urlunparse(
-        part.encode('idna') if parti == 1 else urlEncodeNonAscii(part.encode('utf-8')) for parti, part in enumerate(parts))
+    return urlparse.urlunparse(part.encode('idna') if parti == 1 else urlEncodeNonAscii(part.encode('utf-8')) for parti, part in enumerate(parts))
 
 
 @login_required
@@ -962,7 +970,9 @@ def capacity_need_rating(request, prev_capacity_need_id):
 
         # Determine is user has already rated this one
         capacity_need_rating_instance = CapacityNeedRating.objects.filter(
-            capacity_need_id__exact=capacity_need_instance.issf_core_id, rater__exact=request.user.id)
+            capacity_need_id__exact=capacity_need_instance.issf_core_id,
+            rater__exact=request.user.id
+        )
 
         if len(capacity_need_rating_instance) > 0:
             # Existing
@@ -971,13 +981,22 @@ def capacity_need_rating(request, prev_capacity_need_id):
         else:
             # new
             rater_instance = get_object_or_404(UserProfile, id=request.user.id)
-            capacity_need_rating_form = CapacityNeedRatingForm(initial={'capacity_need': capacity_need_instance, 'rater': rater_instance})
+            capacity_need_rating_form = CapacityNeedRatingForm(
+                initial={
+                    'capacity_need': capacity_need_instance,
+                    'rater': rater_instance
+                }
+            )
 
-        return render(request, "details/capacityneedrating.html", {
-            'capacity_need_rating_form': capacity_need_rating_form,
-            'capacity_need_rating_id': capacity_need_rating_id,
-            'capacity_need_instance': capacity_need_instance
-        })
+        return render(
+            request,
+            "details/capacityneedrating.html",
+            {
+                'capacity_need_rating_form': capacity_need_rating_form,
+                'capacity_need_rating_id': capacity_need_rating_id,
+                'capacity_need_instance': capacity_need_instance
+            }
+        )
 
     else:
         # save
@@ -1153,15 +1172,20 @@ def main_attributes_save(request, issf_core_id):
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
-    return render(request, "details/main_attributes_save.html", {
-        "profile_instance": profile_instance, "core_instance":
-            core_instance, "profile_form": profile_form,
-        "main_attributes_formset": main_attributes_formset, "editor": editor
-    })
+    return render(
+        request,
+        "details/main_attributes_save.html",
+        {
+            "profile_instance": profile_instance,
+            "core_instance": core_instance,
+            "profile_form": profile_form,
+            "main_attributes_formset": main_attributes_formset,
+            "editor": editor
+        }
+    )
 
 
 @login_required
@@ -1215,7 +1239,8 @@ def themes_issues(request):
                                         issf_core_id)
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
                 return HttpResponse(response)
@@ -1233,13 +1258,13 @@ def save_other_theme_issue(themes_issues_form, field, issf_core_id,
         # to store the other text in
         selected_themes_issues = SelectedThemeIssue.objects.filter(
             issf_core__exact=issf_core_id,
-            theme_issue_value__exact=theme_issue_value_id)
+            theme_issue_value__exact=theme_issue_value_id
+        )
         if len(selected_themes_issues) > 0:
             selected_theme_issue = selected_themes_issues[0]
             selected_theme_issue = SelectedThemeIssue.objects.get(
                 issf_core=issf_core_id, theme_issue_value=theme_issue_value_id)
-            selected_theme_issue.other_theme_issue = \
-                themes_issues_form.cleaned_data[field]
+            selected_theme_issue.other_theme_issue = themes_issues_form.cleaned_data[field]
             selected_theme_issue.save()
     return
 
@@ -1257,7 +1282,8 @@ def common_themes_issues(request):
                 common_themes_issues_formset.save()
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
                 return HttpResponse(response)
@@ -1280,7 +1306,8 @@ def common_attributes(request):
                 common_attributes_formset.save()
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
                 return HttpResponse(response)
@@ -1310,7 +1337,9 @@ def geographic_scope(request):
             valid_subform = True
             if core_instance.geographic_scope_type == 'Local':
                 local_area_form = GeographicScopeLocalAreaInlineFormSet(
-                    request.POST, instance=core_instance)
+                    request.POST,
+                    instance=core_instance
+                )
                 if local_area_form.is_valid():
                     # the formset is valid with no subforms filled in,
                     # so ensure at least one
@@ -1319,15 +1348,12 @@ def geographic_scope(request):
                     for frm in local_area_form.cleaned_data:
                         if 'issf_core' in frm:
                             subform_count = subform_count + 1
-                    subform_count = subform_count - len(
-                        local_area_form.deleted_forms)
+                    subform_count = subform_count - len(local_area_form.deleted_forms)
                     if subform_count < 1:
                         valid_subform = False
                         if '__ALL__' not in geographic_scope_form._errors:
                             geographic_scope_form._errors['__ALL__'] = []
-                        geographic_scope_form._errors['__ALL__'].append(
-                            'Please specify the details for at least one '
-                            'local area')
+                        geographic_scope_form._errors['__ALL__'].append('Please specify the details for at least one local area')
                     else:
                         local_area_form.save()
                 else:
@@ -1343,29 +1369,30 @@ def geographic_scope(request):
                     for frm in subnation_form.cleaned_data:
                         if 'issf_core' in frm:
                             subform_count = subform_count + 1
-                    subform_count = subform_count - len(
-                        subnation_form.deleted_forms)
+                    subform_count = subform_count - len(subnation_form.deleted_forms)
                     if subform_count < 1:
                         valid_subform = False
                         if '__ALL__' not in geographic_scope_form._errors:
                             geographic_scope_form._errors['__ALL__'] = []
-                        geographic_scope_form._errors['__ALL__'].append(
-                            'Please specify the details for at least one '
-                            'sub-national area')
+                        geographic_scope_form._errors['__ALL__'].append('Please specify the details for at least one sub-national area')
                     else:
                         subnation_form.save()
                 else:
                     valid_subform = False
             elif core_instance.geographic_scope_type == 'National':
-                nation_form = GeographicScopeNationForm(request.POST,
-                                                        instance=core_instance)
+                nation_form = GeographicScopeNationForm(
+                    request.POST,
+                    instance=core_instance
+                )
                 if nation_form.is_valid():
                     nation_form.save()
                 else:
                     valid_subform = False
             elif core_instance.geographic_scope_type == 'Regional':
-                region_form = GeographicScopeRegionInlineFormSet(request.POST,
-                                                                 instance=core_instance)
+                region_form = GeographicScopeRegionInlineFormSet(
+                    request.POST,
+                    instance=core_instance
+                )
                 if region_form.is_valid():
                     # the formset is valid with no subforms filled in,
                     # so ensure at least one
@@ -1374,15 +1401,12 @@ def geographic_scope(request):
                     for frm in region_form.cleaned_data:
                         if 'issf_core' in frm:
                             subform_count = subform_count + 1
-                    subform_count = subform_count - len(
-                        region_form.deleted_forms)
+                    subform_count = subform_count - len(region_form.deleted_forms)
                     if subform_count < 1:
                         valid_subform = False
                         if '__ALL__' not in geographic_scope_form._errors:
                             geographic_scope_form._errors['__ALL__'] = []
-                        geographic_scope_form._errors['__ALL__'].append(
-                            'Please specify the details for at least one '
-                            'region')
+                        geographic_scope_form._errors['__ALL__'].append('Please specify the details for at least one region')
                     else:
                         region_form.save()
                 else:
@@ -1396,15 +1420,13 @@ def geographic_scope(request):
                 update_tsvector_summary(core_instance.core_record_type,
                                         issf_core_id)
 
-                if 'geog-scope' in request.META[
-                    'HTTP_REFERER'] and core_instance.core_record_type == \
-                        u'SSF Profile':
+                if 'geog-scope' in request.META['HTTP_REFERER'] and core_instance.core_record_type == u'SSF Profile':
                     redirectname = 'main-attributes-save'
                 else:
-                    redirectname = get_redirectname(
-                        core_instance.core_record_type)
+                    redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
 
@@ -1431,25 +1453,29 @@ def geographic_scope_save(request, issf_core_id):
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
 
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
-    local_area_form = GeographicScopeLocalAreaInlineFormSet(
-        instance=core_instance)
-    subnation_form = GeographicScopeSubnationInlineFormSet(
-        instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
     nation_form = GeographicScopeNationForm(instance=core_instance)
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
     editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
+    if request.user.is_staff or request.user.id == core_instance.contributor_id:
         editor = True
 
-    return render(request, "details/geographic_scope_save.html", {
-        "core_instance": core_instance, "geographic_scope_form":
-            geographic_scope_form, "local_area_form": local_area_form,
-        "subnation_form": subnation_form, "nation_form": nation_form,
-        "region_form": region_form, "editor": editor
-    })
+    return render(
+        request,
+        "details/geographic_scope_save.html",
+        {
+            "core_instance": core_instance,
+            "geographic_scope_form": geographic_scope_form,
+            "local_area_form": local_area_form,
+            "subnation_form": subnation_form,
+            "nation_form": nation_form,
+            "region_form": region_form,
+            "editor": editor
+        }
+    )
 
 
 # Save organization associated with a SSF Profile
@@ -1458,21 +1484,30 @@ def profile_organizations(request):
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
-            core_instance = get_object_or_404(ISSF_Core,
-                                              issf_core_id=issf_core_id)
-            profile_instance = get_object_or_404(SSFProfile,
-                                                 issf_core_id=issf_core_id)
+            core_instance = get_object_or_404(
+                ISSF_Core,
+                issf_core_id=issf_core_id
+            )
+            profile_instance = get_object_or_404(
+                SSFProfile,
+                issf_core_id=issf_core_id
+            )
             profile_organization_formset = ProfileOrganizationInlineFormset(
-                request.POST, instance=profile_instance)
+                request.POST,
+                instance=profile_instance
+            )
             if profile_organization_formset.is_valid():
                 core_instance.editor_id = request.user.id
                 core_instance.save()
                 profile_organization_formset.save()
-                update_tsvector_summary(core_instance.core_record_type,
-                                        issf_core_id)
+                update_tsvector_summary(
+                    core_instance.core_record_type,
+                    issf_core_id
+                )
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
                 return HttpResponse(response)
@@ -1488,19 +1523,26 @@ def species(request):
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
-            core_instance = get_object_or_404(ISSF_Core,
-                                              issf_core_id=issf_core_id)
-            species_form = SpeciesInlineFormSet(request.POST,
-                                                instance=core_instance)
+            core_instance = get_object_or_404(
+                ISSF_Core,
+                issf_core_id=issf_core_id
+            )
+            species_form = SpeciesInlineFormSet(
+                request.POST,
+                instance=core_instance
+            )
             if species_form.is_valid():
                 core_instance.editor_id = request.user.id
                 core_instance.save()
                 species_form.save()
-                update_tsvector_summary(core_instance.core_record_type,
-                                        issf_core_id)
+                update_tsvector_summary(
+                    core_instance.core_record_type,
+                    issf_core_id
+                )
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
                 return HttpResponse(response)
@@ -1516,19 +1558,26 @@ def species_landings(request):
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
-            core_instance = get_object_or_404(ISSF_Core,
-                                              issf_core_id=issf_core_id)
-            species_landings_form = SpeciesLandingsInlineFormSet(request.POST,
-                                                                 instance=core_instance)
+            core_instance = get_object_or_404(
+                ISSF_Core,
+                issf_core_id=issf_core_id
+            )
+            species_landings_form = SpeciesLandingsInlineFormSet(
+                request.POST,
+                instance=core_instance
+            )
             if species_landings_form.is_valid():
                 core_instance.editor_id = request.user.id
                 core_instance.save()
                 species_landings_form.save()
-                update_tsvector_summary(core_instance.core_record_type,
-                                        issf_core_id)
+                update_tsvector_summary(
+                    core_instance.core_record_type,
+                    issf_core_id
+                )
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
                 return HttpResponse(response)
@@ -1543,19 +1592,26 @@ def external_links(request):
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
-            core_instance = get_object_or_404(ISSF_Core,
-                                              issf_core_id=issf_core_id)
-            external_links_form = ExternalLinksInlineFormSet(request.POST,
-                                                             instance=core_instance)
+            core_instance = get_object_or_404(
+                ISSF_Core,
+                issf_core_id=issf_core_id
+            )
+            external_links_form = ExternalLinksInlineFormSet(
+                request.POST,
+                instance=core_instance
+            )
             if external_links_form.is_valid():
                 external_links_form.save()
                 core_instance.editor_id = request.user.id
                 core_instance.save()
-                update_tsvector_summary(core_instance.core_record_type,
-                                        issf_core_id)
+                update_tsvector_summary(
+                    core_instance.core_record_type,
+                    issf_core_id
+                )
                 redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
-                    'success': 'true', 'redirectname': redirectname,
+                    'success': 'true',
+                    'redirectname': redirectname,
                     'record': core_instance.pk
                 })
                 return HttpResponse(response)
@@ -1568,8 +1624,11 @@ def external_links(request):
 def changelog(request):
     site_versions = SiteVersion.objects.all()
 
-    return render(request, 'details/changelog.html',
-                  {'site_versions': site_versions})
+    return render(
+        request,
+        'details/changelog.html',
+        {'site_versions': site_versions}
+    )
 
 
 """View function for generating SSF profile reports. Another very complicated function. Could definitely do with
@@ -1581,8 +1640,7 @@ def report(request, record_type, issf_core_id):
     record = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     main_attributes = MainAttributeView.objects.filter(issf_core=issf_core_id)
-    species = Species.objects.filter(issf_core=issf_core_id).values(
-        "species_common", "species_scientific", "landings")[:4]
+    species = Species.objects.filter(issf_core=issf_core_id).values("species_common", "species_scientific", "landings")[:4]
 
     distribution = {}
     for entry in main_attributes:
@@ -1640,9 +1698,7 @@ def report(request, record_type, issf_core_id):
             break
 
         if attr.attribute_value:
-            attrs[attr.attribute.attribute_label].append(
-                attr.attribute_value.value_label + (
-                    ": " + attr.other_value if attr.other_value else ''))  # this right here is why I love Python <3
+            attrs[attr.attribute.attribute_label].append(attr.attribute_value.value_label + (": " + attr.other_value if attr.other_value else ''))  # this right here is why I love Python <3
         elif attr.value:
             attrs[attr.attribute.attribute_label] = str(attr.value)
 
@@ -1653,8 +1709,7 @@ def report(request, record_type, issf_core_id):
             break
         if issue.attribute_value:
             # Refactor
-            issues.append(issue.attribute_value.value_label.split('(')[0] + (
-                ': ' + issue.other_value if issue.other_value else ''))
+            issues.append(issue.attribute_value.value_label.split('(')[0] + (': ' + issue.other_value if issue.other_value else ''))
 
     key_rules_regs = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=42)
     krr = []
@@ -1662,8 +1717,7 @@ def report(request, record_type, issf_core_id):
         if len(krr) >= 6:
             break
         if rule_reg.attribute_value:
-            krr.append(rule_reg.attribute_value.value_label + (
-                ': ' + rule_reg.other_value if rule_reg.other_value else ''))
+            krr.append(rule_reg.attribute_value.value_label + (': ' + rule_reg.other_value if rule_reg.other_value else ''))
 
     hh_income = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=13).values()[0]['value']
 
@@ -1673,8 +1727,7 @@ def report(request, record_type, issf_core_id):
         if len(gov_modes) >= 4:
             break
         if gov.attribute_value:
-            gov_modes.append(gov.attribute_value.value_label + (
-                ': ' + gov.other_value if gov.other_value else ''))
+            gov_modes.append(gov.attribute_value.value_label + (': ' + gov.other_value if gov.other_value else ''))
 
     non_fish = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=23)
     non_fish_act = [None] * 6
@@ -1692,8 +1745,7 @@ def report(request, record_type, issf_core_id):
     else:
         num_fishers = None
 
-    record_url = reverse(get_redirectname(record.core_record_type),
-                         kwargs={'issf_core_id': record.issf_core_id})
+    record_url = reverse(get_redirectname(record.core_record_type), kwargs={'issf_core_id': record.issf_core_id})
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
@@ -1701,17 +1753,38 @@ def report(request, record_type, issf_core_id):
     else:
         who_page = None
 
-    return render(request, 'details/record_report.html',
-                  {'record': record, 'location': location, 'zoom': zoom_level, 'distribution': distribution,
-                   'attrs': dict(attrs), 'species_colors': species_colors, 'colors': colors, 'issues': issues,
-                   'key_rules_regs': krr, 'hh_income': hh_income, 'governance': gov_modes,
-                   'non_fish_act': non_fish_act, 'url': record_url, 'who_page': who_page, 'num_fishers': num_fishers})
+    return render(
+        request,
+        'details/record_report.html',
+        {
+            'record': record,
+            'location': location,
+            'zoom': zoom_level,
+            'distribution': distribution,
+            'attrs': dict(attrs),
+            'species_colors': species_colors,
+            'colors': colors,
+            'issues': issues,
+            'key_rules_regs': krr,
+            'hh_income': hh_income,
+            'governance': gov_modes,
+            'non_fish_act': non_fish_act,
+            'url': record_url,
+            'who_page': who_page,
+            'num_fishers': num_fishers
+        }
+    )
 
 
 def get_record_type(record_type):
     record_types = {
-        'who': SSFPerson, 'sota': SSFKnowledge, 'profile': SSFProfile, 'organization':
-            SSFOrganization, 'guidelines': SSFGuidelines, 'capacity': SSFCapacityNeed, 'experiences': SSFExperiences
+        'who': SSFPerson,
+        'sota': SSFKnowledge,
+        'profile': SSFProfile,
+        'organization': SSFOrganization,
+        'guidelines': SSFGuidelines,
+        'capacity': SSFCapacityNeed,
+        'experiences': SSFExperiences
     }
 
     return record_types[record_type]
@@ -1723,14 +1796,12 @@ def delete_record(request, issf_core_id):
     # if record is sota then delete author record first to avoid integrity
     # errors
     if record.core_record_type == 'State-of-the-Art in SSF Research':
-        KnowledgeAuthorSimple.objects.filter(
-            knowledge_core=issf_core_id).delete()
+        KnowledgeAuthorSimple.objects.filter(knowledge_core=issf_core_id).delete()
 
     # if record is organization then delete profile org record first to
     # avoid integrity errors
     if record.core_record_type == 'SSF Organization':
-        ProfileOrganization.objects.filter(
-            ssforganization=issf_core_id).delete()
+        ProfileOrganization.objects.filter(ssforganization=issf_core_id).delete()
 
     # if record is person then delete org record first to
     # avoid integrity errors
