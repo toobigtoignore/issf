@@ -106,10 +106,14 @@ function error_handler() {
                         var redirectURL;
 
                         if (jsonData.record === null) {
-                            redirectURL = Urls(jsonData.redirectname);
+                          // Urls[...] returns null if no argument
+                          redirectURL = Urls[jsonData.redirectname]('');
+                          // Giving an empty string returns a extra / at end of URL, this removes it
+                          redirectURL = redirectURL.substr(0,a.length-1);
                         } else {
-                            redirectURL = Urls(jsonData.redirectname, jsonData.record);
+                          redirectURL = Urls[jsonData.redirectname](jsonData.record);
                         }
+
                         window.location.replace(redirectURL);
                     }
                 }

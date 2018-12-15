@@ -1,7 +1,6 @@
 {% extends 'issf_base/base.html' %}
 {% load leaflet_tags %}
 {% load staticfiles %}
-{% load js_reverse %}
 
 {% block additional_css_scripts %}
     {% leaflet_css %}
@@ -824,7 +823,6 @@
 
 {% block additional_js_scripts %}
     {% leaflet_js %}
-    {% js_reverse_inline %}
 
     <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
     <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>

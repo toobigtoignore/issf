@@ -1,6 +1,5 @@
 {% extends 'issf_base/base.html' %}
 {% load leaflet_tags %}
-{% load js_reverse %}
 {% load staticfiles %}
 {% load profile_attributes %}
 
@@ -700,33 +699,13 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js %}{% django_js jquery=false %}
+    {% leaflet_js %}
 
-    {% js "details/js/map-setup.js" %}
-    {% js "details/js/error-handling.js" %}
-    {% js "details/js/page-functions.js" %}
+    <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
 
     <script type="text/javascript">
-
-        /********** Organization Autocomplete ***********/
-        {#        var idToHide = $('#id_org_autocomplete').attr('for');#}
-        {#        $('#'+idToHide).hide();#}
-        {#        var defaultOrg = $('#'+idToHide+'>option:selected').val();#}
-        {#        if(defaultOrg){#}
-        {#            $('#id_org_autocomplete').val($('#'+idToHide+'>option:selected').text());#}
-        {#        }#}
-        {#        $('#'+idToHide).children().removeAttr('selected');#}
-        {#        var availableSelection = [];#}
-        {#        $('#'+idToHide).children('option').each(function(){#}
-        {#            availableSelection.push($(this).text());#}
-        {#        });#}
-        {#        $('#id_org_autocomplete').autocomplete({#}
-        {#                source:availableSelection, #}
-        {#                minLength: 0#}
-        {#            });#}
-        {#        $('#id_org_autocomplete').on( "focus", function( event, ui ) {#}
-        {#            $(this).trigger(jQuery.Event("keydown"));#}
-        {#        });#}
 
         /************** leaflet ****************/
 
