@@ -590,20 +590,20 @@ class PersonResearcherForm(ModelForm):
                   'education_level', 'other_education_level',
                   'research_method', 'issues_addressed']
         labels = {
-            'core_record_type': 'Record type', 'is_researcher': 'Are you a '
-                                                                'SSF '
-                                                                'researcher?',
+            'core_record_type': 'Record type',
+            'is_researcher': 'Are you a SSF researcher?',
             'number_publications': 'Number of publications in the last 10 years',
             'education_level': 'Highest level of education',
             'other_education_level': 'Other level of education',
             'research_method': 'Research method(s) or approach(es) most commonly applied (e.g. '
                                'ethnographic, survey, etc.)',
-            'issues_addressed': 'List up three main issues your research aims to address', }
+            'issues_addressed': 'List up three main issues your research aims to address'
+        }
         widgets = {
             'core_record_type': forms.widgets.HiddenInput,
-            'research_method': forms.Textarea(
-                attrs={'rows': 3}), 'issues_addressed': forms.Textarea(
-                attrs={'rows': 3}), }
+            'research_method': forms.Textarea(attrs={'rows': 3}),
+            'issues_addressed': forms.Textarea(attrs={'rows': 3})
+        }
 
     # override clean to check combinations of fields
     def clean(self):
@@ -617,8 +617,7 @@ class PersonResearcherForm(ModelForm):
             if cleaned_data['education_level'] == 'Other':
                 other_selected = True
         if not other_text and other_selected:
-            raise forms.ValidationError(
-                'Please specify other education level, or uncheck Other.')
+            raise forms.ValidationError('Please specify other education level, or uncheck Other.')
         return cleaned_data
 
 
@@ -627,7 +626,8 @@ class ExternalLinkForm(ModelForm):
         model = ExternalLink
         fields = '__all__'
         labels = {
-            'link_type': '*Link type', 'link_address': '*Link address'
+            'link_type': '*Link type',
+            'link_address': '*Link address'
         }
 
 
@@ -649,17 +649,13 @@ class GeographicScopeLocalAreaForm(ModelForm):
         fields = '__all__'
         labels = {
             'local_area_name': '*Name of local area',
-            'local_area_alternate_name': 'Alternate name', 'country':
-                '*Specify country for local area', 'local_area_setting':
-                '*Local area setting', 'local_area_setting_other': 'Other '
-                                                                   'local '
-                                                                   'area '
-                                                                   'setting',
+            'local_area_alternate_name': 'Alternate name',
+            'country': '*Specify country for local area',
+            'local_area_setting': '*Local area setting',
+            'local_area_setting_other': 'Other local area setting',
             'local_area_point': 'Local area location (use the draw, edit and delete controls to '
                                 'set/modify)'
         }
-        # exclude = ('local_area_point',)
-        # widgets = {'local_area_point': LeafletWidget()}
         widgets = {'local_area_point': ISSFMapWidget()}
 
     # override clean to check combinations of fields
@@ -674,9 +670,7 @@ class GeographicScopeLocalAreaForm(ModelForm):
             if cleaned_data['local_area_setting'] == 'Other':
                 other_selected = True
         if not other_text and other_selected:
-            raise forms.ValidationError(
-                'Please specify other local area setting, or unselected '
-                'Other.')
+            raise forms.ValidationError('Please specify other local area setting, or unselect Other.')
         if 'local_area_point' in cleaned_data:
             if cleaned_data['local_area_point'] is None:
                 raise forms.ValidationError('Please place a point on the map.')
@@ -688,13 +682,11 @@ class GeographicScopeSubnationForm(ModelForm):
         model = GeographicScopeSubnation
         fields = '__all__'
         labels = {
-            'subnation_name': '*Name of sub-national area', 'country':
-                '*Specify country for sub-national area', 'subnation_type':
-                '*Sub-national area type (select one)',
+            'subnation_name': '*Name of sub-national area',
+            'country': '*Specify country for sub-national area',
+            'subnation_type': '*Sub-national area type (select one)',
             'subnation_type_other': 'Other sub-national area type',
-            'subnation_point': 'Sub-national area location (use the draw, '
-                               'edit and delete '
-                               'controls to set/modify)'
+            'subnation_point': 'Sub-national area location (use the draw, edit and delete controls to set/modify)'
         }
         widgets = {'subnation_point': ISSFMapWidget()}
 
@@ -721,9 +713,10 @@ class GeographicScopeSubnationForm(ModelForm):
 class GeographicScopeNationForm(ModelForm):
     class Meta:
         model = ISSF_Core
-        fields = ['countries', ]
+        fields = ['countries']
         labels = {
-            'countries': '*Select country(ries) (at least one)', }
+            'countries': '*Select country(ries) (at least one)'
+        }
 
 
 class GeographicScopeRegionForm(ModelForm):
@@ -731,9 +724,10 @@ class GeographicScopeRegionForm(ModelForm):
         model = Geographic_Scope_Region
         fields = '__all__'
         labels = {
-            'region': '*Name of region', 'region_name_other': 'Other region '
-                                                              'name',
-            'countries': 'Select country(ies) (if applicable)', }
+            'region': '*Name of region',
+            'region_name_other': 'Other region name',
+            'countries': 'Select country(ies) (if applicable)'
+        }
 
     # override clean to check combinations of fields
     def clean(self):
@@ -746,13 +740,8 @@ class GeographicScopeRegionForm(ModelForm):
         if 'region' in cleaned_data:
             if cleaned_data['region'].region_name == 'Other':
                 other_selected = True
-                # if other_text and not other_selected:
-        # raise forms.ValidationError('Other region name requires Other to
-        # be checked.') # could
-        # auto-set checkbox
         if not other_text and other_selected:
-            raise forms.ValidationError(
-                'Please specify other region name, or uncheck Other.')
+            raise forms.ValidationError('Please specify other region name, or uncheck Other.')
         return cleaned_data
 
 
@@ -763,8 +752,8 @@ class SpeciesForm(ModelForm):
         fields = ['species_common', 'species_scientific']
 
         labels = {
-            'species_common': 'Common species name', 'species_scientific':
-                'Scientific/Latin name'
+            'species_common': 'Common species name',
+            'species_scientific': 'Scientific/Latin name'
         }
 
 
@@ -775,8 +764,9 @@ class SpeciesLandingsForm(ModelForm):
         fields = ['species_common', 'species_scientific', 'landings']
 
         labels = {
-            'species_common': 'Common species name', 'species_scientific':
-                'Scientific/Latin name', 'landings': 'Landings (t)'
+            'species_common': 'Common species name',
+            'species_scientific': 'Scientific/Latin name',
+            'landings': 'Landings (t)'
         }
 
     def clean(self):
@@ -784,9 +774,7 @@ class SpeciesLandingsForm(ModelForm):
 
         species_specified = cleaned_data['species_scientific'] or cleaned_data['species_common']
         if cleaned_data['landings'] and not species_specified:
-            raise forms.ValidationError(
-                'Please provide either a common or scientific name for the '
-                'species.')
+            raise forms.ValidationError('Please provide either a common or scientific name for the species.')
 
         return cleaned_data
 
@@ -828,8 +816,10 @@ ProfileOrganizationInlineFormset = inlineformset_factory(SSFProfile,
                                                          form=ProfileOrganizationForm,
                                                          extra=1)
 
-SpeciesInlineFormSet = inlineformset_factory(ISSF_Core, Species,
-                                             form=SpeciesForm, extra=1)
+SpeciesInlineFormSet = inlineformset_factory(ISSF_Core,
+                                             Species,
+                                             form=SpeciesForm,
+                                             extra=1)
 
 GeographicScopeLocalAreaInlineFormSet = inlineformset_factory(ISSF_Core,
                                                               GeographicScopeLocalArea,
