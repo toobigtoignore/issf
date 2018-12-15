@@ -13,32 +13,7 @@ from django.shortcuts import render
 from djgeojson.views import GeoJSONLayerView
 from django.views.decorators.gzip import gzip_page
 
-from issf_base.models import CommonAttributeView, WhoFeature, SSFCaseStudies, SSFExperiences, \
-    KnowledgeAuthorSimple, ISSF_Core, GeographicScopeNation, CommonThemeIssueView
-from issf_base.models import ISSFCoreMapPointUnique
-from issf_base.models import Theme_Issue_Value
-
-# from issf_base.models import Characteristic_Value
-from issf_base.models import Country
-from issf_admin.models import UserProfile
-# from issf_base.models import TopContributors
-from issf_base.models import RecentContributions
-# from issf_base.models import TopRatedCapacityNeeds
-from issf_base.models import ContributionsByRecordType
-from issf_base.models import ContributionsByCountry
-from issf_base.models import ContributionsByGeographicScope
-from issf_base.models import AttributeValue
-from issf_base.models import SSFOrganization
-from issf_base.models import SSFProfile
-from issf_base.models import SSFKnowledge
-from issf_base.models import SSFPerson
-from issf_base.models import SSFGuidelines
-from issf_base.models import SSFCapacityNeed
-from issf_base.models import MainAttributeView
-from issf_base.models import Species
-from issf_base.models import Geographic_Scope_Region
-from issf_base.models import GeographicScopeLocalArea
-from issf_base.models import GeographicScopeSubnation
+from issf_base.models import *
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
 from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
@@ -47,18 +22,16 @@ from django.middleware.gzip import GZipMiddleware
 
 gzip_middleware = GZipMiddleware()
 
+
 def parse_search_terms(input_search_terms):
     """
         Strip away special characters because they would cause the tsquery to fail
         and the search to hang.
     """
 
-    # Refactor!
-    search_array = input_search_terms.replace(u":", u" ").replace(u"'",
-                                                                  u" ").replace(
-        u"|", u" ").replace(u"!", u" ").replace(u"&", u" ").replace(u"%",
-                                                                    u" ").replace(
-        u"\"", u" ").split()
+    for char in ":'|!&%\"":
+        input_search_terms = input_search_terms.replace(char, " ")
+    search_array = input_search_terms.split()
     for idx in range(0, len(search_array)):
         search_array[idx] = search_array[idx] + u":*"
     parsed_search_terms = u" ".join(search_array)
@@ -66,6 +39,7 @@ def parse_search_terms(input_search_terms):
     if '"' in input_search_terms:
         return parsed_search_terms.replace(u" ", u" & ")
     return parsed_search_terms.replace(u" ", u" | ")
+
 
 @gzip_page
 def index(request):
@@ -79,38 +53,40 @@ def index(request):
         recent_contribution.core_record_summary = summary
     contributions_by_record_type = ContributionsByRecordType.objects.all()
     # countries with more than one record
-    contributions_by_country = ContributionsByCountry.objects.filter(
-        contribution_count__gt=1)
+    contributions_by_country = ContributionsByCountry.objects.filter(contribution_count__gt=1)
     # countries with exactly one record
-    other_countries = ContributionsByCountry.objects.filter(
-        contribution_count__exact=1)
-    contributions_by_geographic_scope = \
-        ContributionsByGeographicScope.objects.all()
+    other_countries = ContributionsByCountry.objects.filter(contribution_count__exact=1)
+    contributions_by_geographic_scope = ContributionsByGeographicScope.objects.all()
     attribute_values = AttributeValue.objects.all()
     theme_issue_values = Theme_Issue_Value.objects.all()
     who_feature = WhoFeature.objects.latest('id')
     # return dashboard data and empty search forms
-    return render(request, "frontend/index.html", {
-        'contributions_by_record_type': contributions_by_record_type,
-        'contributions_by_country': contributions_by_country,
-        'other_countries': other_countries,
-        'contributions_by_geographic_scope': contributions_by_geographic_scope,
-        'recent_contributions': recent_contributions,
-        'searchForm': SearchForm,
-        'selected_themes_issues_formset': SelectedThemesIssuesFormSet,
-        'selected_attributes_formset': SelectedAttributesFormSet,
-        'attribute_values': attribute_values,
-        'theme_issue_values': theme_issue_values,
-        'who_feature': who_feature,
-        'num_who_records': SSFPerson.objects.all().count(),
-        'num_sota_records': SSFKnowledge.objects.all().count(),
-        'num_profile_records': SSFProfile.objects.all().count(),
-        'num_org_records': SSFOrganization.objects.all().count(),
-        'num_cap_records': SSFCapacityNeed.objects.all().count(),
-        'num_guide_records': SSFGuidelines.objects.all().count(),
-        'num_case_records': SSFCaseStudies.objects.all().count(),
-        'num_expe_records': SSFExperiences.objects.all().count(),
-    })
+    return render(
+        request,
+        "frontend/index.html",
+        {
+            'contributions_by_record_type': contributions_by_record_type,
+            'contributions_by_country': contributions_by_country,
+            'other_countries': other_countries,
+            'contributions_by_geographic_scope': contributions_by_geographic_scope,
+            'recent_contributions': recent_contributions,
+            'searchForm': SearchForm,
+            'selected_themes_issues_formset': SelectedThemesIssuesFormSet,
+            'selected_attributes_formset': SelectedAttributesFormSet,
+            'attribute_values': attribute_values,
+            'theme_issue_values': theme_issue_values,
+            'who_feature': who_feature,
+            'num_who_records': SSFPerson.objects.all().count(),
+            'num_sota_records': SSFKnowledge.objects.all().count(),
+            'num_profile_records': SSFProfile.objects.all().count(),
+            'num_org_records': SSFOrganization.objects.all().count(),
+            'num_cap_records': SSFCapacityNeed.objects.all().count(),
+            'num_guide_records': SSFGuidelines.objects.all().count(),
+            'num_case_records': SSFCaseStudies.objects.all().count(),
+            'num_expe_records': SSFExperiences.objects.all().count(),
+        }
+    )
+
 
 @gzip_page
 def frontend_data(request):
@@ -126,8 +102,7 @@ def frontend_data(request):
         if cached_map_data:
             map_queryset = cached_map_data
         else:
-            map_queryset = ISSFCoreMapPointUnique.objects.extra(
-                select={"relevance": "0"})
+            map_queryset = ISSFCoreMapPointUnique.objects.extra(select={"relevance": "0"})
             cache.set('cached_map_data', map_queryset, 86400)
     else:
         # user hit search
@@ -141,10 +116,11 @@ def frontend_data(request):
                 search_terms = search_terms + u" AND "
             parsed_keywords = parse_search_terms(keywords)
 
-            where.append(
-                u"core_record_tsvector @@ to_tsquery('english', unaccent('{" u"0}'))".format(parsed_keywords))
+            where.append(u"core_record_tsvector @@ to_tsquery('english', unaccent('{" u"0}'))".format(parsed_keywords))
 
-            select = {"relevance": u"round(CAST(ts_rank(core_record_tsvector, " u"to_tsquery('{0}')) AS " u"NUMERIC), 3)".format(parsed_keywords)}
+            select = {
+                "relevance": u"round(CAST(ts_rank(core_record_tsvector, " u"to_tsquery('{0}')) AS " u"NUMERIC), 3)".format(parsed_keywords)
+            }
 
             search_terms = search_terms + u"(Full text = " + parsed_keywords.replace(u" | ", u" OR ").replace(u" & ", u" AND ") + u"; returned "
             search_terms = search_terms.replace(u":*", u"")
@@ -189,8 +165,7 @@ def frontend_data(request):
                 search_terms = search_terms + u" AND "
             country_list = request.POST.getlist('countries')
             search_terms = search_terms + u"(Country = "
-            country_where = (
-                u"country_id IN (" + u",".join(country_list) + u")")
+            country_where = (u"country_id IN (" + u",".join(country_list) + u")")
             inner_where = []
             inner_where.append(country_where)
             countries = Country.objects.extra(where=inner_where)
@@ -287,7 +262,10 @@ def frontend_data(request):
 
     response = json.dumps({
         'success': 'true',  # 'data': search_results,
-        'mapData': map_results, 'searchTerms': search_terms, 'msg': 'OK', })
+        'mapData': map_results,
+        'searchTerms': search_terms,
+        'msg': 'OK'
+    })
     return gzip_middleware.process_response(request, HttpResponse(response))
 
 
@@ -348,141 +326,208 @@ def table_data_export(request):
         # Refactor !
         zipfile = ZipFile('/home/projects/issf/issf_prod/tabledata.zip', 'w')
         # Refactor!
-        cap_records = SSFCapacityNeed.objects.filter(issf_core_id__in=cap_items).values('issf_core_id',
-                                                                                        'contributor_id__first_name',
-                                                                                        'contributor_id__last_name',
-                                                                                        'contribution_date',
-                                                                                        'geographic_scope_type',
-                                                                                        'capacity_need_title',
-                                                                                        'capacity_need_description',
-                                                                                        'capacity_need_category',
-                                                                                        'capacity_need_type')
-        guide_records = SSFGuidelines.objects.filter(issf_core_id__in=guide_items).values('issf_core_id',
-                                                                                          'contributor_id__first_name',
-                                                                                          'contributor_id__last_name',
-                                                                                          'contribution_date',
-                                                                                          'geographic_scope_type',
-                                                                                          'title',
-                                                                                          'location', 'start_day',
-                                                                                          'start_month', 'start_year',
-                                                                                          'end_day', 'end_month',
-                                                                                          'end_year', 'organizer',
-                                                                                          'purpose', 'link',
-                                                                                          'activity_type',
-                                                                                          'activity_coverage',
-                                                                                          'ongoing')
-        org_records = SSFOrganization.objects.filter(issf_core_id__in=org_items).values('issf_core_id',
-                                                                                        'contributor_id__first_name',
-                                                                                        'contributor_id__last_name',
-                                                                                        'contribution_date',
-                                                                                        'geographic_scope_type',
-                                                                                        'organization_name', 'mission',
-                                                                                        'address1', 'address2',
-                                                                                        'prov_state',
-                                                                                        'country__short_name',
-                                                                                        'postal_code', 'city_town',
-                                                                                        'year_established',
-                                                                                        'ssf_defined', 'ssf_definition',
-                                                                                        'organization_type_union',
-                                                                                        'organization_type_support',
-                                                                                        'organization_type_coop',
-                                                                                        'organization_type_flag',
-                                                                                        'organization_type_other',
-                                                                                        'organization_type_other_text',
-                                                                                        'motivation_voice',
-                                                                                        'motivation_market',
-                                                                                        'motivation_sustainability',
-                                                                                        'motivation_economics',
-                                                                                        'motivation_rights',
-                                                                                        'motivation_collaboration',
-                                                                                        'motivation_other',
-                                                                                        'motivation_other_text',
-                                                                                        'activities_capacity',
-                                                                                        'activities_sustainability',
-                                                                                        'activities_networking',
-                                                                                        'activities_marketing',
-                                                                                        'activities_collaboration',
-                                                                                        'activities_other',
-                                                                                        'activities_other_text',
-                                                                                        'network_types_state',
-                                                                                        'network_types_ssfos',
-                                                                                        'network_types_community',
-                                                                                        'network_types_society',
-                                                                                        'network_types_ngos',
-                                                                                        'network_types_other',
-                                                                                        'network_types_other_text',
-                                                                                        'achievements',
-                                                                                        'success_factors', 'obstacles',
-                                                                                        'organization_point')
-        pro_records = SSFProfile.objects.filter(issf_core_id__in=profile_items).values('issf_core_id',
-                                                                                       'contributor_id__first_name',
-                                                                                       'contributor_id__last_name',
-                                                                                       'contribution_date',
-                                                                                       'geographic_scope_type',
-                                                                                       'ssf_name',
-                                                                                       'ssf_defined', 'ssf_definition',
-                                                                                       'data_day', 'data_month',
-                                                                                       'data_year', 'data_end_day',
-                                                                                       'data_end_month',
-                                                                                       'data_end_year', 'comments',
-                                                                                       'sources', 'percent')
+        cap_records = SSFCapacityNeed.objects.filter(issf_core_id__in=cap_items).values(
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
+            'geographic_scope_type',
+            'capacity_need_title',
+            'capacity_need_description',
+            'capacity_need_category',
+            'capacity_need_type'
+        )
+        guide_records = SSFGuidelines.objects.filter(issf_core_id__in=guide_items).values(
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
+            'geographic_scope_type',
+            'title',
+            'location', 'start_day',
+            'start_month', 'start_year',
+            'end_day', 'end_month',
+            'end_year', 'organizer',
+            'purpose', 'link',
+            'activity_type',
+            'activity_coverage',
+            'ongoing'
+        )
+        org_records = SSFOrganization.objects.filter(issf_core_id__in=org_items).values(
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
+            'geographic_scope_type',
+            'organization_name',
+            'mission',
+            'address1',
+            'address2',
+            'prov_state',
+            'country__short_name',
+            'postal_code',
+            'city_town',
+            'year_established',
+            'ssf_defined',
+            'ssf_definition',
+            'organization_type_union',
+            'organization_type_support',
+            'organization_type_coop',
+            'organization_type_flag',
+            'organization_type_other',
+            'organization_type_other_text',
+            'motivation_voice',
+            'motivation_market',
+            'motivation_sustainability',
+            'motivation_economics',
+            'motivation_rights',
+            'motivation_collaboration',
+            'motivation_other',
+            'motivation_other_text',
+            'activities_capacity',
+            'activities_sustainability',
+            'activities_networking',
+            'activities_marketing',
+            'activities_collaboration',
+            'activities_other',
+            'activities_other_text',
+            'network_types_state',
+            'network_types_ssfos',
+            'network_types_community',
+            'network_types_society',
+            'network_types_ngos',
+            'network_types_other',
+            'network_types_other_text',
+            'achievements',
+            'success_factors', 'obstacles',
+            'organization_point'
+        )
+        pro_records = SSFProfile.objects.filter(issf_core_id__in=profile_items).values(
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
+            'geographic_scope_type',
+            'ssf_name',
+            'ssf_defined',
+            'ssf_definition',
+            'data_day',
+            'data_month',
+            'data_year',
+            'data_end_day',
+            'data_end_month',
+            'data_end_year',
+            'comments',
+            'sources',
+            'percent'
+        )
 
         sota_records = SSFKnowledge.objects.filter(issf_core_id__in=sota_items).values(
-            'issf_core_id', 'contribution_date',
-            'contributor__first_name', 'contributor__last_name',
+            'issf_core_id',
+            'contribution_date',
+            'contributor__first_name',
+            'contributor__last_name',
             'geographic_scope_type',
-            'publication_type__publication_type', 'other_publication_type',
-            'level1_title', 'level2_title', 'year',
-            'nonenglish_language__language_name', 'nonenglish_title',
-            'ssf_defined', 'ssf_definition', 'lsf_considered',
-            'fishery_type_details', 'gear_type_details',
-            'ecosystem_type_details', 'demographics_na',
-            'demographics_age', 'demographics_education',
-            'demographics_ethnicity', 'demographics_gender',
-            'demographics_health', 'demographics_income',
-            'demographics_religion', 'demographics_unspecified',
-            'demographics_other', 'demographics_other_text',
-            'demographic_details', 'employment_na',
-            'employment_full_time', 'employment_part_time',
-            'employment_seasonal', 'employment_unspecified',
-            'employment_details', 'stage_na',
-            'stage_pre_harvest', 'stage_harvest', 'stage_post_harvest',
-            'stage_unspecified', 'market_details', 'governance_details',
-            'management_details', 'research_method',
-            'method_specify_qualitative', 'method_specify_quantitative',
-            'method_specify_mixed', 'aim_purpose_question',
-            'theme_issue_details', 'solutions_offered',
-            'solution_details', 'explicit_implications_recommendations',
-            'implication_details', 'comments')
-        case_records = SSFCaseStudies.objects.filter(issf_core_id__in=case_items).values('issf_core_id',
-                                                                                         'contributor_id__first_name',
-                                                                                         'contributor_id__last_name',
-                                                                                         'contribution_date',
-                                                                                         'geographic_scope_type',
-                                                                                         'name',
-                                                                                         'role', 'description_area',
-                                                                                         'description_fishery',
-                                                                                         'description_issues',
-                                                                                         'issues_challenges',
-                                                                                         'stakeholders',
-                                                                                         'transdisciplinary',
-                                                                                         'background_context',
-                                                                                         'activities_innovation')
-        expe_records = SSFExperiences.objects.filter(issf_core_id__in=expe_items).values('issf_core_id',
-                                                                                         'contributor_id__first_name',
-                                                                                         'contributor_id__last_name',
-                                                                                         'contribution_date',
-                                                                                         'geographic_scope_type',
-                                                                                         'title',
-                                                                                         'name', 'description')
+            'publication_type__publication_type',
+            'other_publication_type',
+            'level1_title',
+            'level2_title',
+            'year',
+            'nonenglish_language__language_name',
+            'nonenglish_title',
+            'ssf_defined',
+            'ssf_definition',
+            'lsf_considered',
+            'fishery_type_details',
+            'gear_type_details',
+            'ecosystem_type_details',
+            'demographics_na',
+            'demographics_age',
+            'demographics_education',
+            'demographics_ethnicity',
+            'demographics_gender',
+            'demographics_health',
+            'demographics_income',
+            'demographics_religion',
+            'demographics_unspecified',
+            'demographics_other',
+            'demographics_other_text',
+            'demographic_details',
+            'employment_na',
+            'employment_full_time',
+            'employment_part_time',
+            'employment_seasonal',
+            'employment_unspecified',
+            'employment_details',
+            'stage_na',
+            'stage_pre_harvest',
+            'stage_harvest',
+            'stage_post_harvest',
+            'stage_unspecified',
+            'market_details',
+            'governance_details',
+            'management_details',
+            'research_method',
+            'method_specify_qualitative',
+            'method_specify_quantitative',
+            'method_specify_mixed',
+            'aim_purpose_question',
+            'theme_issue_details',
+            'solutions_offered',
+            'solution_details',
+            'explicit_implications_recommendations',
+            'implication_details',
+            'comments'
+        )
+        case_records = SSFCaseStudies.objects.filter(issf_core_id__in=case_items).values(
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
+            'geographic_scope_type',
+            'name',
+            'role',
+            'description_area',
+            'description_fishery',
+            'description_issues',
+            'issues_challenges',
+            'stakeholders',
+            'transdisciplinary',
+            'background_context',
+            'activities_innovation'
+        )
+        expe_records = SSFExperiences.objects.filter(issf_core_id__in=expe_items).values(
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
+            'geographic_scope_type',
+            'title',
+            'name',
+            'description'
+        )
         who_records = SSFPerson.objects.filter(issf_core_id__in=who_items).values(
-            'issf_core_id', 'contributor_id__first_name', 'contributor_id__last_name', 'contribution_date',
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
             'geographic_scope_type',
-            'number_publications', 'education_level', 'research_method', 'issues_addressed',
+            'number_publications',
+            'education_level',
+            'research_method',
+            'issues_addressed',
             'url',
-            'other_education_level', 'affiliation', 'address1', 'address2', 'city_town', 'prov_state',
+            'other_education_level',
+            'affiliation',
+            'address1',
+            'address2',
+            'city_town',
+            'prov_state',
             'country__short_name',
-            'postal_code', 'is_researcher', 'person_point')
+            'postal_code',
+            'is_researcher',
+            'person_point'
+        )
 
         write_file_csv('capacity.csv', cap_records, zipfile)
         write_file_csv('guidelines.csv', guide_records, zipfile)
@@ -493,48 +538,74 @@ def table_data_export(request):
         write_file_csv('experiences.csv', expe_records, zipfile)
         write_file_csv('whos_who.csv', who_records, zipfile)
 
-        main_attrs = MainAttributeView.objects.filter(issf_core_id__in=profile_items).values('issf_core_id',
-                                                                                             'attribute__question_number',
-                                                                                             'attribute__attribute_label',
-                                                                                             'value',
-                                                                                             'attribute__units_label',
-                                                                                             'attribute_value__value_label',
-                                                                                             'other_value',
-                                                                                             'additional',
-                                                                                             'additional_value__value_label')
+        main_attrs = MainAttributeView.objects.filter(issf_core_id__in=profile_items).values(
+            'issf_core_id',
+            'attribute__question_number',
+            'attribute__attribute_label',
+            'value',
+            'attribute__units_label',
+            'attribute_value__value_label',
+            'other_value',
+            'additional',
+            'additional_value__value_label'
+        )
 
         write_file_csv('main_attributes.csv', main_attrs, zipfile)
         author_records = KnowledgeAuthorSimple.objects.filter(knowledge_core__in=sota_items).values()
         write_file_csv('authors.csv', author_records, zipfile)
         all_ids = cap_items + guide_items + org_items + profile_items + sota_items + who_items + expe_items + case_items
-        theme_issue_records = CommonThemeIssueView.objects.filter(issf_core_id__in=all_ids).values('issf_core_id',
-                                                                                                   'selected_theme_issue_id',
-                                                                                                   'theme_issue_value__theme_issue_label',
-                                                                                                   'theme_issue_value__theme_issue__theme_issue_category',
-                                                                                                   'other_theme_issue')
+        theme_issue_records = CommonThemeIssueView.objects.filter(issf_core_id__in=all_ids).values(
+            'issf_core_id',
+            'selected_theme_issue_id',
+            'theme_issue_value__theme_issue_label',
+            'theme_issue_value__theme_issue__theme_issue_category',
+            'other_theme_issue'
+        )
 
-        characteristic_records = CommonAttributeView.objects.filter(issf_core_id__in=all_ids).values('issf_core_id',
-                                                                                                     'selected_attribute_id',
-                                                                                                     'attribute__attribute_category',
-                                                                                                     'attribute__attribute_label',
-                                                                                                     'attribute__units_label',
-                                                                                                     'attribute__additional_field',
-                                                                                                     'attribute_value__value_label',
-                                                                                                     'other_value')
+        characteristic_records = CommonAttributeView.objects.filter(issf_core_id__in=all_ids).values(
+            'issf_core_id',
+            'selected_attribute_id',
+            'attribute__attribute_category',
+            'attribute__attribute_label',
+            'attribute__units_label',
+            'attribute__additional_field',
+            'attribute_value__value_label',
+            'other_value'
+        )
 
         write_file_csv('themes_issues.csv', theme_issue_records, zipfile)
         write_file_csv('characteristics.csv', characteristic_records, zipfile)
 
         geog_scope_local_records = GeographicScopeLocalArea.objects.filter(issf_core_id__in=all_ids).values(
-            'geographic_scope_local_area_id', 'issf_core_id', 'local_area_name', 'local_area_alternate_name',
-            'country__short_name', 'local_area_setting', 'local_area_setting_other', 'local_area_point')
+            'geographic_scope_local_area_id',
+            'issf_core_id',
+            'local_area_name',
+            'local_area_alternate_name',
+            'country__short_name',
+            'local_area_setting',
+            'local_area_setting_other',
+            'local_area_point'
+        )
         geog_scope_regional_records = Geographic_Scope_Region.objects.filter(issf_core_id__in=all_ids).values(
-            'geographic_scope_region_id', 'issf_core_id', 'region__region_name', 'region_name_other')
+            'geographic_scope_region_id',
+            'issf_core_id',
+            'region__region_name',
+            'region_name_other'
+        )
         geog_scope_subnational_records = GeographicScopeSubnation.objects.filter(issf_core_id__in=all_ids).values(
-            'geographic_scope_subnation_id', 'issf_core_id', 'subnation_name', 'country__short_name', 'subnation_type',
-            'subnation_type_other', 'subnation_point')
+            'geographic_scope_subnation_id',
+            'issf_core_id',
+            'subnation_name',
+            'country__short_name',
+            'subnation_type',
+            'subnation_type_other',
+            'subnation_point'
+        )
         geog_scope_national_records = GeographicScopeNation.objects.filter(issf_core_id__in=all_ids).values(
-            'geographic_scope_nation_id', 'issf_core_id', 'country__short_name')
+            'geographic_scope_nation_id',
+            'issf_core_id',
+            'country__short_name'
+        )
 
         species_records = Species.objects.filter(issf_core_id__in=all_ids).defer('species_id').values()
 
@@ -572,47 +643,72 @@ def write_file_csv(filename, records, zipfile):
 # DO NOT MODIFY, THIS URL IS AUTOMATICALLY HIT.
 # If any change is made to the database, test this URL to make sure everything still works.
 def profile_csv(request):
-    profile_records = SSFProfile.objects.all().values('issf_core_id',
-                                                      'contributor_id__first_name',
-                                                      'contributor_id__last_name',
-                                                      'contribution_date',
-                                                      'geographic_scope_type',
-                                                      'ssf_name',
-                                                      'ssf_defined', 'ssf_definition',
-                                                      'data_day', 'data_month',
-                                                      'data_year', 'data_end_day',
-                                                      'data_end_month',
-                                                      'data_end_year', 'comments',
-                                                      'sources', 'percent')
+    profile_records = SSFProfile.objects.all().values(
+        'issf_core_id',
+        'contributor_id__first_name',
+        'contributor_id__last_name',
+        'contribution_date',
+        'geographic_scope_type',
+        'ssf_name',
+        'ssf_defined',
+        'ssf_definition',
+        'data_day',
+        'data_month',
+        'data_year',
+        'data_end_day',
+        'data_end_month',
+        'data_end_year',
+        'comments',
+        'sources',
+        'percent'
+    )
     zipfile = ZipFile('profile_data.zip', 'w')
 
-    main_attrs = MainAttributeView.objects.all().values('issf_core_id',
-                                                        'attribute__question_number',
-                                                        'attribute__attribute_label',
-                                                        'value',
-                                                        'attribute__units_label',
-                                                        'attribute_value__value_label',
-                                                        'other_value',
-                                                        'additional',
-                                                        'additional_value__value_label')
+    main_attrs = MainAttributeView.objects.all().values(
+        'issf_core_id',
+        'attribute__question_number',
+        'attribute__attribute_label',
+        'value',
+        'attribute__units_label',
+        'attribute_value__value_label',
+        'other_value',
+        'additional',
+        'additional_value__value_label'
+    )
 
     write_file_csv('profile.csv', profile_records, zipfile)
     write_file_csv('main_attributes.csv', main_attrs, zipfile)
 
-    geog_scope_local_records = GeographicScopeLocalArea.objects.filter(
-        issf_core__core_record_type='SSF Profile').values(
-        'geographic_scope_local_area_id', 'issf_core_id', 'local_area_name', 'local_area_alternate_name',
-        'country__short_name', 'local_area_setting', 'local_area_setting_other', 'local_area_point')
-    geog_scope_regional_records = Geographic_Scope_Region.objects.filter(
-        issf_core__core_record_type='SSF Profile').values(
-        'geographic_scope_region_id', 'issf_core_id', 'region__region_name', 'region_name_other')
-    geog_scope_subnational_records = GeographicScopeSubnation.objects.filter(
-        issf_core__core_record_type='SSF Profile').values(
-        'geographic_scope_subnation_id', 'issf_core_id', 'subnation_name', 'country__short_name', 'subnation_type',
-        'subnation_type_other', 'subnation_point')
-    geog_scope_national_records = GeographicScopeNation.objects.filter(
-        issf_core__core_record_type='SSF Profile').values(
-        'geographic_scope_nation_id', 'issf_core_id', 'country__short_name')
+    geog_scope_local_records = GeographicScopeLocalArea.objects.filter(issf_core__core_record_type='SSF Profile').values(
+        'geographic_scope_local_area_id',
+        'issf_core_id',
+        'local_area_name',
+        'local_area_alternate_name',
+        'country__short_name',
+        'local_area_setting',
+        'local_area_setting_other',
+        'local_area_point'
+    )
+    geog_scope_regional_records = Geographic_Scope_Region.objects.filter(issf_core__core_record_type='SSF Profile').values(
+        'geographic_scope_region_id',
+        'issf_core_id',
+        'region__region_name',
+        'region_name_other'
+    )
+    geog_scope_subnational_records = GeographicScopeSubnation.objects.filter(issf_core__core_record_type='SSF Profile').values(
+        'geographic_scope_subnation_id',
+        'issf_core_id',
+        'subnation_name',
+        'country__short_name',
+        'subnation_type',
+        'subnation_type_other',
+        'subnation_point'
+    )
+    geog_scope_national_records = GeographicScopeNation.objects.filter(issf_core__core_record_type='SSF Profile').values(
+        'geographic_scope_nation_id',
+        'issf_core_id',
+        'country__short_name'
+    )
 
     write_file_csv('geog_scope_local.csv', geog_scope_local_records, zipfile)
     write_file_csv('geog_scope_regional.csv', geog_scope_regional_records, zipfile)
@@ -715,12 +811,24 @@ def new_tip(request):
                 tip_form.save()
                 tip_form = TipForm()
 
-            return render(request, 'frontend/new_tip.html', {'tip_form': tip_form})
+            return render(
+                request,
+                'frontend/new_tip.html',
+                {'tip_form': tip_form}
+            )
 
         tip_form = TipForm()
         faq_form = FAQForm()
 
-        return render(request, 'frontend/new_tip.html', {'tip_form': tip_form, 'faq_form': faq_form, 'is_staff': is_staff})
+        return render(
+            request,
+            'frontend/new_tip.html',
+            {
+                'tip_form': tip_form,
+                'faq_form': faq_form,
+                'is_staff': is_staff
+            }
+        )
     else:
         raise Http404("Insufficient permission.")
 
