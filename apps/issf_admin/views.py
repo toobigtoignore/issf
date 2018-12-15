@@ -96,7 +96,7 @@ custom_password_change = login_required(CustomPasswordChangeView.as_view())
 
 
 def return_google_site_verification(request):
-    return HttpResponse(unicode('google-site-verification: googlee9690f8983b8a350.html', "utf-8"), content_type="text/plain")
+    return HttpResponse('google-site-verification: googlee9690f8983b8a350.html', content_type="text/plain")
 
 
 def return_sitemap(request):
@@ -115,7 +115,7 @@ def return_sitemap(request):
             retstr = retstr + request.build_absolute_uri(reverse('profile-details', args=[record.issf_core_id])) + "\r\n"
         elif record.core_record_type == "SSF Guidelines":
             retstr = retstr + request.build_absolute_uri(reverse('guidelines-details', args=[record.issf_core_id])) + "\r\n"
-    return HttpResponse(unicode(retstr, "utf-8"), content_type="text/plain")
+    return HttpResponse(retstr, content_type="text/plain")
 
 
 def return_robots(request):
@@ -125,7 +125,7 @@ def return_robots(request):
     retstr = retstr + 'Disallow: /djangojs/\r\n'
     retstr = retstr + 'Disallow: /frontend/\r\n'
     retstr = retstr + 'Disallow: /import-who/\r\n'
-    return HttpResponse(unicode(retstr, "utf-8"), content_type="text/plain")
+    return HttpResponse(retstr, content_type="text/plain")
 
 
 def contributed_records(request):
