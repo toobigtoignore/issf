@@ -653,27 +653,6 @@ def save_basic(request, model_class, form_class):
                 instance.editor_id = request.user.id
                 instance.save()
 
-                if not existing and not instance.core_record_type == 'Who\'s Who in SSF':
-                    name = ''
-                    if instance.core_record_type == 'Capacity Development':
-                        name = instance.capacity_need_title
-                    elif instance.core_record_type == 'SSF Profile':
-                        name = instance.ssf_name
-                    elif instance.core_record_type == 'SSF Guidelines':
-                        name = instance.title
-                    elif instance.core_record_type == 'SSF Experiences':
-                        name = instance.name
-                    elif instance.core_record_type == 'Case Study':
-                        name = instance.name
-
-                    name = str(name)[:20]
-
-                    issf_id = str(instance.issf_core_id)
-
-                    url = 'https://issfcloud.toobigtoignore.net' + reverse(get_redirectname(instance.core_record_type), kwargs={'issf_core_id': issf_id})
-
-                    api.PostUpdate('Check out the new #tbtiissf ' + instance.core_record_type + ' record for ' + name + '. ' + url)
-
                 update_tsvector_summary(instance.core_record_type, str(instance.pk))
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
