@@ -1,5 +1,4 @@
 {% extends 'issf_base/base.html' %}{% load leaflet_tags %}
-{% load js_reverse %}
 {% load staticfiles %}
 {% load profile_attributes %}
 
@@ -136,9 +135,9 @@
 {% endblock %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js %}{% django_js jquery=false %}
+    {% leaflet_js %}
 
-    {% js "details/js/error-handling.js" %}
+    <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
 
     <script type="text/javascript">
         // This function handles all form errors; both field- and form-level.

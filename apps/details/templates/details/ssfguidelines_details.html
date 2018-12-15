@@ -1,6 +1,5 @@
 {% extends 'issf_base/base.html' %}
 {% load leaflet_tags %}
-{% load js_reverse %}
 {% load staticfiles %}
 
 {% block additional_css_scripts %}
@@ -346,14 +345,13 @@
 {% endblock %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js %}{% django_js jquery=false %}
+    {% leaflet_js %}
 
-    {% js "details/js/map-setup.js" %}
-    {% js "details/js/error-handling.js" %}
-    {% js "details/js/page-functions.js" %}
+    <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
 
     <script type="text/javascript">
-
         // this function serves as a junction between the Leaflet map and
         // the initialization functionality in map_init_basic_ext() can be found in map-setup.js
         function map_init_basic(map, options) {

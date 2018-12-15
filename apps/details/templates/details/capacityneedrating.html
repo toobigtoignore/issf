@@ -1,5 +1,4 @@
 {% extends 'issf_base/base.html' %}
-{% load js_reverse %}
 {% load staticfiles %}
 
 {% block additional_css_scripts %}
@@ -70,8 +69,6 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% django_js jquery=false %}
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('form').submit(function (e) {

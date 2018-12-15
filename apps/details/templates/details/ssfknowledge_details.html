@@ -1,6 +1,5 @@
 {% extends 'issf_base/base.html' %}
 {% load leaflet_tags %}
-{% load js_reverse %}
 {% load staticfiles %}
 {% load profile_attributes %}
 
@@ -956,19 +955,16 @@
 {% endblock body %}
 
 {% block additional_js_scripts %}
-    {% leaflet_js %}{% django_js jquery=false %}
+    {% leaflet_js %}
 
-    {% js "details/js/map-setup.js" %}
-    {% js "details/js/error-handling.js" %}
-    {% js "details/js/page-functions.js" %}
+    <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
 
     <script type="text/javascript">
-
         // this function serves as a junction between the Leaflet map and
         // the initialization functionality in map_init_basic_ext() can be found in map-setup.js
         function map_init_basic(map, options) {
-
-
             var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
             var sotaIcon = L.icon({
                 iconUrl: '{% static "img/icon-sota.png" %}',

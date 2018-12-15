@@ -1,12 +1,10 @@
 {% extends 'issf_base/base.html' %}
 {% load leaflet_tags %}
-{% load js_reverse %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}{% load profile_attributes %}
 
 {% block additional_css_scripts %}
     {% leaflet_css %}
-    <!-- DataTables CSS -->
     <link rel="stylesheet" href="{% static "details/css/details.css" %}">
 {% endblock additional_css_scripts %}
 
