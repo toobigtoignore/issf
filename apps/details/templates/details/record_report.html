@@ -9,7 +9,7 @@
         <title>{{ record.ssf_name }} Generated Report</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-        <link rel="stylesheet" href="{% static 'css/recordreport.css' %}">
+        <link rel="stylesheet" href="{% static 'reports/css/recordreport.css' %}">
     </head>
     <body>
         <div class="container">
@@ -72,7 +72,7 @@
                     <div id="map" class="five columns">
                         <h3>{{ location }}</h3>
                         <img
-                            src="https://open.mapquestapi.com/staticmap/v5/map?key=QNOjYn29lvUFIowAJ5mokSwVN9XgWvxg&center={{ location }}&size=350,300&zoom={{ zoom }}"
+                            src="https://open.mapquestapi.com/staticmap/v5/map?key=QNOjYn29lvUFIowAJ5mokSwVN9XgWvxg&center={{ location }}&size=512,512&zoom={{ zoom }}"
                         />
                     </div>
                 {% endif %}
@@ -276,7 +276,7 @@
                             <p><strong>For complete information about the profile, visit:</strong></p>
                             <a href="{{ url }}">
                                 <strong>
-                                    https://issfcloud.toobigtoignore.net.ca{{ url }}
+                                    https://issfcloud.toobigtoignore.net{{ url }}
                                 </strong>
                             </a>
 
@@ -309,6 +309,6 @@
                 colors.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
             {% endfor %}
         </script>
-        <script src="{% static 'js/recordreport.js' %}"></script>
+        <script src="{% static 'reports/js/recordreport.js' %}"></script>
     </body>
 </html>
