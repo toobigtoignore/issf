@@ -1,3 +1,4 @@
+// this might break now! :(
 django.jQuery(function($){
     function updateLinks() {
         var $this = $(this);
