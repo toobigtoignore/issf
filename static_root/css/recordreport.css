@@ -1,0 +1,90 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 1em;
+}
+
+h1 {
+    margin-top: 0.75em;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 2.5em;
+}
+
+h1, h2, h3, h4 {
+    text-align: center;
+}
+
+.float-right {
+    float: right;
+}
+
+#map img {
+    width: 100%;
+}
+
+#section-header, #contributor {
+    background-color: #001871;
+    border-radius: 0.25em;
+    padding: 0.75em;
+    box-shadow: 0 3px 3px 2px #ccc;
+    margin: 1.2em 0;
+}
+#section-header h2 {
+    margin: 0;
+    color: white;
+}
+
+table {
+    width: 100%;
+}
+
+td:first-child {
+    width: 16em;
+}
+
+td {
+    padding: 0;
+}
+
+#piechart-container {
+    position: relative;
+}
+#piechart {
+    margin: 0 auto;
+}
+
+#key-species div {
+    display: inline-block;
+    width: 24.5%;
+    text-align: center;
+}
+#key-species div h4 {
+    margin: 0;
+}
+
+#major-issues, #activities {
+    text-align: center;
+    font-weight: 600;
+}
+#major-issues p, #activities p {
+    margin: 1em 0 0 0;
+    font-style: italic;
+}
+
+#footer-flower div {
+    width: 10em;
+    margin: 0 auto;
+}
+#footer-flower img {
+    width: 100%;
+}
+
+#contributor {
+    background-color: #cacddb;
+}
+#contributor p {
+    margin: 0;
+}
