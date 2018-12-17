@@ -1774,6 +1774,7 @@ def generate_report(record_type, issf_core_id):
         who_page = None
 
     return {
+        'id': issf_core_id,
         'record': record,
         'location': location,
         'zoom': zoom_level,

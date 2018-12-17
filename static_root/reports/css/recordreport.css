@@ -13,6 +13,14 @@ h2 {
     font-size: 2em;
 }
 
+h3 {
+    font-size: 2em;
+}
+
+h4 {
+    font-size: 1.75em;
+}
+
 h1,
 h2,
 h3,
@@ -28,7 +36,15 @@ h4 {
     width: 100%;
 }
 
-#section-header,
+#downloadaspdf {
+    background:  #f16a2c;
+}
+
+#downloadaspdf:hover {
+    background:  #ff9666;
+}
+
+.section-header,
 #contributor {
     background-color: #001871;
     border-radius: 0.25em;
@@ -37,7 +53,7 @@ h4 {
     margin: 1.2em 0;
 }
 
-#section-header h2 {
+.section-header h2 {
     margin: 0;
     color: white;
 }
@@ -107,6 +123,10 @@ td {
         font-size: 0.8em;
     }
 
+    .hidefromprint {
+        display: none;
+    }
+
     #piechart {
         min-height: 100%;
         max-width: 100%;
@@ -115,14 +135,14 @@ td {
         width: auto !important;
     }
 
-    #section-header,
+    .section-header,
     #contributor {
         border: 1px solid black;
         background: white;
         box-shadow: none;
     }
 
-    #section-header h2,
+    .section-header h2,
     #contributor h2 {
         color: black;
     }
