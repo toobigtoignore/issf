@@ -634,7 +634,7 @@ class ISSF_Core(models.Model):
         ('National', 'National'), ('Regional', 'Regional'),
         ('Global', 'Global'), ('Not specific', 'Not specific'),)
     geographic_scope_type = models.CharField(choices=GEOGRAPHIC_SCOPE_TYPE, max_length=100, default='Local')
-    countries = models.ManyToManyField(Country, db_table='geographic_scope_nation')
+    countries = models.ManyToManyField(Country, db_table='geographic_scope_nation', blank=True)
 
     class Meta:
         managed = False
