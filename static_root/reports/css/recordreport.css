@@ -119,7 +119,12 @@ td {
 }
 
 @media print {
+    @page {
+        margin: 16px;
+    }
+
     body {
+        margin: 1.6cm;
         font-size: 0.8em;
     }
 
