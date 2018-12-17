@@ -27,9 +27,9 @@
                 </ul>
             </div>
             <div class="large-12 columns main-wrapper" id="info-map">
-                <div id="map-loading-overlay"></div>
                 <div class="info-ctn tabs-content">
                     <div class="map-holder content active" id="tab-map">
+                        <div id="map-loading-overlay"></div>
                         <div class="headline"></div>
                         {% leaflet_map "map" callback="window.map_init_basic" %}
                     </div>
@@ -54,8 +54,8 @@
                     <a id="toexpand">
                         <div class="pop">
                             <h4>Dataset Filters</h4>
-
-                            <p>click icon to hide/show dataset; hover icon to popup dataset description; click here to
+                            <p>
+                                click icon to hide/show dataset; hover icon to popup dataset description; click here to
                                 show dataset names
                             </p>
                         </div>
@@ -1035,7 +1035,7 @@
             GlobalMapHandle = map;
 
             // Showing Loading Overlay on map init.
-            $("#map-loading-overlay").show();
+            $("#map-loading-overlay").fadeIn(100);
 
             map.setMaxBounds(null);
 
@@ -1611,7 +1611,8 @@
         // Search submit
         $('#home-search-form').submit(function (e) {
             // Showing Loading Overlay
-            $("#map-loading-overlay").show();
+            $("#map-loading-overlay").fadeIn(100);
+
             e.preventDefault();
 
             var form = $(this);
@@ -1881,7 +1882,7 @@
                 }
 
                 // Hide Loading Overlay
-                $("#map-loading-overlay").hide();
+                $("#map-loading-overlay").fadeOut(100);
             }
             exportCallBack = true;
         }

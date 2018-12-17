@@ -165,24 +165,6 @@ Couldn't find the CSS file so had to resort to desperate measures.
     background-color: rgba(255, 255, 0, 0);
 }
 
-#details-loading-overlay {
-    background-color: rgba(255, 255, 255, 0.8);
-    background-image: url('../img/loading.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 100;
-    width: 100%;
-    height: 100%;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    border-radius: 10px;
-    display: none;
-}
-
 div.percent-box {
     display: block;
     overflow: hidden;

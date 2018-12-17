@@ -10,19 +10,27 @@
 
 {% block body %}
     {% autoescape off %}
-        <div id="details-loading-overlay"></div>
-        <title>{% block title %}ISSF: Organization -
-            {{ organization_instance.organization_name }}{% endblock %}</title>
+        {% include "issf_base/loading-spinner.html" %}
+
+        <title>
+            {% block title %}
+            ISSF: Organization -
+            {{ organization_instance.organization_name }}
+            {% endblock %}
+        </title>
+
         <section class="content-section report" id="content-organize">
             <div class="row" id="main">
                 <div class="large-12 columns page-title">
-            <span>
-                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
-                    class="twitter-share-button"
-                    data-lang="en"
-                    data-size="large">
-                 </a>
-            </span>
+                    <span>
+                        <a
+                            href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                            class="twitter-share-button"
+                            data-lang="en"
+                            data-size="large"
+                        >
+                        </a>
+                    </span>
 
                     <h1>SSF Organization</h1>
 
@@ -32,19 +40,20 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="large-9 columns">
                     <dl class="accordion" data-accordion>
                         <dd class="accordion-navigation active">
                             {% if editor %}
-                                <button class="bt-edit">edit</button>{% endif %}
+                                <button class="bt-edit">edit</button>
+                            {% endif %}b
+
                             <a class="accordion-nav" href="#panel1">
-                                {#                        {{ organization_instance.organization_name }}<br>#}
                                 Details
                             </a>
 
                             <div id="panel1" class="content">
-                                {#                        {% autoescape off %}#}
                                 <table>
                                     <tr>
                                         <td>
@@ -266,23 +275,7 @@
                                         </td>
                                         <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
                                     </tr>
-                                    {#                                <tr>#}
-                                    {#                                    <td>#}
-                                    {#                                        <strong>Editor</strong>#}
-                                    {#                                    </td>#}
-                                    {#                                    <td>#}
-                                    {#                                        <a href="mailto:{{ core_instance.editor.email }}"#}
-                                    {#                                           target="_blank">{{ core_instance.editor }}</a>#}
-                                    {#                                    </td>#}
-                                    {#                                </tr>#}
-                                    {#                                <tr>#}
-                                    {#                                    <td>#}
-                                    {#                                        <strong>Edited date</strong>#}
-                                    {#                                    </td>#}
-                                    {#                                    <td>{{ core_instance.edited_date|date:"SHORT_DATE_FORMAT" }}</td>#}
-                                    {#                                </tr>#}
                                 </table>
-                                {#                        {% endautoescape %}#}
                                 {% if editor %}
                                     <form action="{% url 'organization-basic' %}" method="post">
                                         <h6>Please provide the basic organization information.</h6>
@@ -293,7 +286,6 @@
                                         </p>
                                         {% csrf_token %}
                                         <div class="FormSet">
-                                            {#                                    {{ organization_form }}#}
                                             <label for="id_org-organization_name">*Organization name:</label>
                                             {{ organization_form.organization_name }}
                                             <label for="id_org-address1">Address line 1:</label>
@@ -401,7 +393,6 @@
                                                         networking
                                                     </label>
                                                 </li>
-                                                {#                                            incorrect label id used to allow other hide/show js code to work#}
                                                 <li>{{ organization_form.motivation_other }}
                                                     <label
                                                             for="id_motivation_other">Other
@@ -447,7 +438,6 @@
                                                         with scientists and/or officials
                                                     </label>
                                                 </li>
-                                                {#                                            incorrect label id used to allow other hide/show js code to work#}
                                                 <li>{{ organization_form.activities_other }}
                                                     <label
                                                             for="id_activities_other">Other
@@ -489,7 +479,6 @@
                                                         organizations
                                                     </label>
                                                 </li>
-                                                {#                                            incorrect label id used to allow other hide/show js code to work#}
                                                 <li>{{ organization_form.network_types_other }}
                                                     <label
                                                             for="id_network_types_other">Other
@@ -511,8 +500,11 @@
                                             </label>
                                             {{ organization_form.contributor }}
                                         </div>
-                                        <input id="issf_core_id" type="hidden"
-                                               value="{{ organization_instance.issf_core_id }}" name="issf_core_id">
+
+                                        <input
+                                            id="issf_core_id" type="hidden"
+                                            value="{{ organization_instance.issf_core_id }}" name="issf_core_id"
+                                        >
 
                                         <div class="button-bar">
                                             <button class="medium radius submit bt-submit">Submit</button>
@@ -523,11 +515,12 @@
                         </dd>
                         <dd class="accordion-navigation">
                             {% if editor %}
-                                <button class="bt-edit">edit</button>{% endif %}
+                                <button class="bt-edit">edit</button>
+                            {% endif %}
+
                             <a class="accordion-nav" href="#panel4">Geographic scope</a>
 
                             <div id="panel4" class="content">
-                                {#                        {% autoescape off %}#}
                                 <table>
                                     {% if core_instance.geographic_scope_type == 'Regional' %}
                                         {% for gsregion in geographic_scope_region %}
@@ -607,7 +600,6 @@
                                         <div class="FormSet FormSetTogglable FormSetGrowable">
                                             {{ subnation_form }}
                                         </div>
-                                        {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
                                         <div class="FormSet FormSetTogglable">
                                             {{ nation_form }}
                                         </div>
@@ -662,7 +654,6 @@
                                         </tr>
                                     {% endfor %}
                                 </table>
-                                {#                        {% endautoescape %}#}
                                 {% if editor %}
                                     <form class="accordionFormsetGrowable" action="{% url 'common-themes-issues' %}"
                                           method="post">
@@ -738,7 +729,6 @@
                             <a class="accordion-nav" href="#panel7">External links</a>
 
                             <div id="panel7" class="content">
-                                {#                        {% autoescape off %}#}
                                 <table>
                                     {% for external_link in external_links %}
                                         <tr>
@@ -750,7 +740,6 @@
                                         </tr>
                                     {% endfor %}
                                 </table>
-                                {#                        {% endautoescape %}#}
                                 {% if editor %}
                                     <form action="{% url 'external-links' %}" method="post">
                                         <h6>Please provide links to related material on the internet</h6>
@@ -771,7 +760,7 @@
                     </dl>
                 </div>
                 <div class="large-3 columns">
-                    {#            domain hard-coded because request.get_host broke under https #}
+                    <!--domain hard-coded because request.get_host broke under https-->
                     <div class="fb-comments"
                          data-href="https://issfcloud.toobigtoignore.net{% url 'organization-details' issf_core_id=core_instance.issf_core_id %}"
                          data-width="220" data-numposts="3" data-colorscheme="light"></div>
@@ -861,6 +850,5 @@
             //lookup address using Bing's geocoding service, all functionality is handled in this getAddress() call
             getAddress(address, "#id_org_organization_point", "id_org_organization_point_map", url);
         });
-
     </script>
 {% endblock additional_js_scripts %}
