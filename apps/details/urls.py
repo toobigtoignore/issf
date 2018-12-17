@@ -92,6 +92,10 @@ urlpatterns = [  # display
         r'?P<issf_core_id>\d+)/$',
         report,
         name='report'),
+    url(r'^report-pdf/(?P<record_type>\w+)/('
+        r'?P<issf_core_id>\d+)/$',
+        render_report_pdf,
+        name='report-pdf'),
 
     url(r'^delete/(?P<issf_core_id>\d+)/$', delete_record,
         name='delete-record'),
