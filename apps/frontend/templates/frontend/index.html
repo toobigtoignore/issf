@@ -1902,7 +1902,7 @@
                     type: "POST",
                     url: "{% url 'data-export' %}",
                     dataType: "json",
-                    data: {'ids': currentRecords},
+                    data: {'ids': currentRecords, csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     complete: function () {
                         window.location.replace("{% url 'data-export' %}");
                     }
