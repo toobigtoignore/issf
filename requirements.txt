@@ -42,4 +42,4 @@ six==1.10.0
 tablib==0.10.0
 unicodecsv==0.14.1
 Unipath==1.1
-xhtml2pdf==0.2.3
+django-hardcopy==0.1.4
