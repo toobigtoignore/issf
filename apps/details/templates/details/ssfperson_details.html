@@ -10,20 +10,22 @@
 
 {% block body %}
     {% autoescape off %}
-        <div id="details-loading-overlay"></div>
-        <title>{% block title %}ISSF: Who's Who in SSF -
+        <title>
+            {% block title %}ISSF: Who's Who in SSF -
             {{ person_instance.contributor.first_name }} {{ person_instance.contributor.initials }}
-            {{ person_instance.contributor.last_name }}{% endblock %}</title>
+            {{ person_instance.contributor.last_name }}{% endblock %}
+        </title>
+
         <section class="content-section report" id="content-who">
             <div class="row" id="main">
                 <div class="large-12 columns page-title">
-            <span>
-                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
-                    class="twitter-share-button"
-                    data-lang="en"
-                    data-size="large">
-                 </a>
-            </span>
+                    <span>
+                        <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                            class="twitter-share-button"
+                            data-lang="en"
+                            data-size="large">
+                        </a>
+                    </span>
 
                     <h1>Who's Who in SSF</h1>
 
@@ -35,6 +37,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="large-9 columns">
                     <dl class="accordion" data-accordion>
@@ -153,23 +156,7 @@
                                         </td>
                                         <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
                                     </tr>
-                                    {#                                <tr>#}
-                                    {#                                    <td>#}
-                                    {#                                        <strong>Editor</strong>#}
-                                    {#                                    </td>#}
-                                    {#                                    <td>#}
-                                    {#                                        <a href="mailto:{{ core_instance.editor.email }}"#}
-                                    {#                                           target="_blank">{{ core_instance.editor }}</a>#}
-                                    {#                                    </td>#}
-                                    {#                                </tr>#}
-                                    {#                                <tr>#}
-                                    {#                                    <td>#}
-                                    {#                                        <strong>Edited date</strong>#}
-                                    {#                                    </td>#}
-                                    {#                                    <td>{{ core_instance.edited_date|date:"SHORT_DATE_FORMAT" }}</td>#}
-                                    {#                                </tr>#}
                                 </table>
-                                {#                        {% endautoescape %}#}
                                 {% if editor %}
                                     <form action="{% url 'who-basic' %}" method="post">
                                         <h6>Please provide your basic details. Name, email and country of residence are
@@ -186,9 +173,6 @@
                                         </p>
                                         {% csrf_token %}
                                         <div class="FormSet">
-                                            {#                                    <label for="id_organization">Affiliated organization (select from the list, or type a new value to add a new organization record that you can edit):</label>#}
-                                            {#                                    <input id="id_org_autocomplete" for="id_organization" type="text">#}
-                                            {#                                    {{ person_form.organization }}#}
                                             {{ profile_form.username }}
                                             {{ profile_form.email }}
                                             <label>*First Name:</label>
@@ -706,7 +690,6 @@
     <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
 
     <script type="text/javascript">
-
         /************** leaflet ****************/
 
         // this function serves as a junction between the Leaflet map and

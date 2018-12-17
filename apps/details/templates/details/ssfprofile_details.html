@@ -10,22 +10,24 @@
 
 {% block body %}
     {% autoescape off %}
-        <div id="details-loading-overlay"></div>
+        {% include "issf_base/loading-spinner.html" %}
+
         <title>
             {% block title %}
                 ISSF: Small-scale Fishery Profile - {{ profile_instance.ssf_name }}
             {% endblock %}
         </title>
+
         <section class="content-section report" id="content-profile">
             <div class="row" id="main">
                 <div class="large-12 columns page-title">
-            <span>
-                 <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
-                    class="twitter-share-button"
-                    data-lang="en"
-                    data-size="large">
-                 </a>
-            </span>
+                    <span>
+                        <a href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                            class="twitter-share-button"
+                            data-lang="en"
+                            data-size="large">
+                        </a>
+                    </span>
 
                     <h1>SSF Profile</h1>
 
@@ -100,35 +102,9 @@
                                             {{ profile_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}
                                         </td>
                                     </tr>
-                                    {#                                <tr>#}
-                                    {#                                    <td>#}
-                                    {#                                        <strong>Editor</strong>#}
-                                    {#                                    </td>#}
-                                    {#                                    <td>#}
-                                    {#                                        <a href="mailto:{{ profile_instance.editor.email }}"#}
-                                    {#                                           target="_blank">{{ profile_instance.editor }}</a>#}
-                                    {#                                    </td>#}
-                                    {#                                </tr>#}
-                                    {#                                <tr>#}
-                                    {#                                    <td>#}
-                                    {#                                        <strong>Edited date</strong>#}
-                                    {#                                    </td>#}
-                                    {#                                    <td>#}
-                                    {#                                        {{ profile_instance.edited_date|date:"SHORT_DATE_FORMAT" }}#}
-                                    {#                                    </td>#}
-                                    {#                                </tr>#}
                                 </table>
 
                                 {% if editor %}
-                                    {#                                <form class="photo_form" action="{% url 'photo-save' %}" method="post"#}
-                                    {#                                      enctype="multipart/form-data">#}
-                                    {#                                    {% csrf_token %}#}
-                                    {#                                    {{ photo_form }}#}
-                                    {#                                    <input id="issf_core_id" type="hidden"#}
-                                    {#                                           value="{{ profile_instance.issf_core_id }}"#}
-                                    {#                                           name="issf_core_id">#}
-                                    {#                                    <button type="submit">SUBMIT</button>#}
-                                    {#                                </form>#}
                                     <form action="{% url 'profile-basic' %}" method="post">
                                         <h6>Please provide basic details of the profile</h6>
 
@@ -731,11 +707,7 @@
             return false;
         });
 
-        $('#details-loading-overlay').show();
-
         function map_init_basic(map, options) {
-
-
             var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
             var profileIcon = L.icon({
                 iconUrl: '{% static "img/icon-profile.png" %}',
@@ -754,6 +726,5 @@
         // this function handles all form errors; both field- and form-level.
         // it can be found in error-handling.js
         error_handler();
-
     </script>
 {% endblock additional_js_scripts %}

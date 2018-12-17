@@ -11,10 +11,16 @@
 
 {% block body %}
     {% autoescape off %}
-        <div id="details-loading-overlay"></div>
-        <title>{% block title %}ISSF: State-of-the-Art in SSF Research -
+        {% include "issf_base/loading-spinner.html" %}
+
+        <title>
+            {% block title %}
+            ISSF: State-of-the-Art in SSF Research -
             {{ knowledge_instance.level1_title }}{% if knowledge_instance.level2_title %};
-                {{ knowledge_instance.level2_title }}{% endif %}{% endblock %}</title>
+                {{ knowledge_instance.level2_title }}{% endif %}
+            {% endblock %}
+        </title>
+
         <section class="content-section report" id="content-sota">
             <div class="row" id="main">
                 <div class="large-12 columns page-title">
@@ -983,6 +989,5 @@
         // this function handles all form errors; both field- and form-level.
         // it can be found in error-handling.js
         error_handler();
-
     </script>
 {% endblock additional_js_scripts %}

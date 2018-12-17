@@ -8,8 +8,10 @@
 
 {% block body %}
     {% autoescape off %}
-        <div id="details-loading-overlay"></div>
+        {% include "issf_base/loading-spinner.html" %}
+
         <title>{% block title %}ISSF: Experiences - {{ experiences_instance.title }}{% endblock %}</title>
+
         <section class="content-section report" id="content-experience">
             <div class="row" id="main">
                 <div class="large-12 columns page-title">

@@ -224,7 +224,6 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#details-loading-overlay').show();
                 $(document).foundation();
                 $("#search_button").click(function () {
                     window.location.href = '/?input_search_terms=' + $("#search_terms").val();
@@ -242,7 +241,7 @@
             })();
 
             $(window).load(function () {
-                $('#details-loading-overlay').hide();
+                $('.lds-ring').fadeOut(100);
             });
         </script>
 

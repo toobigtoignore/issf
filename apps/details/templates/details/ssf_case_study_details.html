@@ -1,4 +1,5 @@
-{% extends 'issf_base/base.html' %}{% load leaflet_tags %}
+{% extends 'issf_base/base.html' %}
+{% load leaflet_tags %}
 {% load staticfiles %}
 
 {% block additional_css_scripts %}
@@ -20,7 +21,7 @@
 
 {% block body %}
     {% autoescape off %}
-        <div id="details-loading-overlay"></div>
+        {% include "issf_base/loading-spinner.html" %}
         <title>{% block title %}ISSF: Case Study - {{ case_studies_instance.name }}{% endblock %}</title>
 
         <section class="content-section report" id="content-case">

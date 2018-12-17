@@ -9,7 +9,7 @@
 
 {% block body %}
     {% autoescape off %}
-        <div id="details-loading-overlay"></div>
+        {% include "issf_base/loading-spinner.html" %}
         <title>
             {% block title %}
                 ISSF: SSF Guidelines - {{ guidelines_instance.title }}
