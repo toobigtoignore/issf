@@ -180,3 +180,5 @@ ROOT_URLCONF = 'issf_prod.urls'
 WSGI_APPLICATION = 'issf_prod.wsgi_dev.application'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 POSTGIS_VERSION = (2, 1)
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 4096
