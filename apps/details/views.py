@@ -1,7 +1,7 @@
 import ast
 import json
 import re
-from io import BytesIO
+import tempfile
 from urllib.parse import urlparse
 import collections
 
@@ -25,7 +25,7 @@ from issf_admin.views import save_profile
 
 import twitter
 import twitter.error
-import xhtml2pdf.pisa as pisa
+import hardcopy
 from issf_prod.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
 from issf_prod.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
 
@@ -1809,12 +1809,9 @@ def render_report_pdf(request, record_type, issf_core_id):
     """
     template = get_template("details/record_report.html")
     html = template.render(generate_report(record_type, issf_core_id))
-    response = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
-    if not pdf.err:
-        return HttpResponse(response.getvalue(), content_type='application/pdf')
-    else:
-        return HttpResponse("Error Rendering PDF", status=400)
+    with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
+        hardcopy.bytestring_to_pdf(html.encode("utf8"), f)
+        return HttpResponse(f.read(), content_type='application/pdf')
 
 
 def get_record_type(record_type):
