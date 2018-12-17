@@ -90,7 +90,7 @@ def contribute(request, who=''):
 
     return render(
         request,
-        "details/contribute.html", 
+        "details/contribute.html",
         {
             "profile_form": profile_form,
             "person_form": person_form,
@@ -769,6 +769,7 @@ def is_int(s):
         return True
     except ValueError:
         return False
+
 
 @login_required
 def sota_basic(request):
