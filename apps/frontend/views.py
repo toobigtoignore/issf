@@ -882,7 +882,7 @@ def geojson_upload(request):
                 file_ext = form.cleaned_data['file'].name.split('.')[-1]
                 if file_ext == 'geojson':
                     BASE = os.path.dirname(os.path.abspath(__file__))
-                    with open(os.path.join(BASE, "static/frontend/js/chorodata.geojson"), 'wb') as destination:
+                    with open(os.path.join(BASE, "static/frontend/js/chorodata.json"), 'wb') as destination:
                         destination.write("var choroData = ".encode(encoding='UTF-8'))
                         for chunk in request.FILES['file'].chunks():
                             destination.write(chunk)
