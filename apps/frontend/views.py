@@ -11,7 +11,6 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from djgeojson.views import GeoJSONLayerView
-from django.views.decorators.gzip import gzip_page
 
 from issf_base.models import *
 
@@ -88,7 +87,7 @@ def index(request):
     )
 
 
-@gzip_page
+
 def frontend_data(request):
     map_queryset = None
     search_terms = u""
@@ -798,7 +797,6 @@ def country_records(request, country_id):
 
 # For staff members only, used to submit new tips for the help page.
 @login_required()
-@gzip_page
 def new_tip(request):
     is_staff = False
     if request.user.is_staff:
@@ -835,7 +833,6 @@ def new_tip(request):
 
 # For staff members only, used to submit new FAQs for the help page.
 @login_required()
-@gzip_page
 def new_faq(request):
     if request.method == 'POST':
         form = FAQForm(request.POST)
@@ -848,7 +845,6 @@ def new_faq(request):
 
 # For staff members only, used to replace the current Who's Who feature.
 @login_required()
-@gzip_page
 def who_feature(request):
     is_staff = False
     if request.user.is_staff:
@@ -870,7 +866,6 @@ def who_feature(request):
 
 
 @login_required()
-@gzip_page
 def geojson_upload(request):
     is_staff = False
     if request.user.is_staff:

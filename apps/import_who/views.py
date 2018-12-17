@@ -9,7 +9,6 @@ from datetime import datetime
 
 from django.db import transaction
 from django.http import HttpResponse
-from django.views.decorators.gzip import gzip_page
 
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.account.utils import user_username, user_email, user_field
@@ -19,12 +18,12 @@ from allauth.account import app_settings
 from issf_base.models import *
 from issf_admin.models import UserProfile
 
-@gzip_page
+
 def index(request):
     translate(request)
     return HttpResponse("done")
 
-@gzip_page
+
 def createuser(request):
     filename = 'C:/Users/Randal/repos/issf_prod/apps/import_who/newusers2.csv'
     read = 0
