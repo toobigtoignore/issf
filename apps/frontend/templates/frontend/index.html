@@ -822,7 +822,7 @@
             ==== Map/Data Filter Buttons ====
         */
 
-        $(window).load(is.verticalResize);
+        $(window).on('load', is.verticalResize);
 
         $('.content-section .bt-prev').addClass('disable');
 
@@ -1027,7 +1027,7 @@
 
         // Flag used to check if the DOM is ready
         var isReady = false;
-        $(window).load(function () {
+        $(window).on('load', function () {
             isReady = true;
         });
 
