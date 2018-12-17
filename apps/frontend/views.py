@@ -29,7 +29,7 @@ def parse_search_terms(input_search_terms):
         and the search to hang.
     """
 
-    for char in ":'|!&%\"":
+    for char in ":'|!&%\"()":
         input_search_terms = input_search_terms.replace(char, " ")
     search_array = input_search_terms.split()
     for idx in range(0, len(search_array)):
