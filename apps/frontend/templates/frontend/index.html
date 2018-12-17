@@ -1223,7 +1223,8 @@
                 return this._div;
             };
 
-            function numberCommas(x, sep, grp) {
+            function formatChoroProp(x, sep, grp) {
+                if (x === "-") return "No Data";
                 if (x.length > 3) {
                     var sx = ('' + Math.round(x)).split('.'), s = '', i, j;
                     sep || (sep = ','); // default seperator
@@ -1246,7 +1247,7 @@
             choroControl.update = function (props) {
                 this._div.innerHTML = (props ? '<h5><b>' + props.name + '</b></h5>' +
                     localStorage.getItem('choroPropTitle') + ': ' +
-                    numberCommas(props[localStorage.getItem("choroProp")]) : 'Hover over a country');
+                    formatChoroProp(props[localStorage.getItem("choroProp")]) : 'Hover over a country');
             };
 
             // Legend for choropleth layer
@@ -1902,7 +1903,7 @@
                     type: "POST",
                     url: "{% url 'data-export' %}",
                     dataType: "json",
-                    data: {'ids': currentRecords},
+                    data: {'ids': currentRecords, csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     complete: function () {
                         window.location.replace("{% url 'data-export' %}");
                     }

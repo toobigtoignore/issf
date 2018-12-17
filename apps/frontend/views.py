@@ -3,6 +3,8 @@ import json
 import re
 import os.path
 
+from zipfile import ZipFile
+
 import djqscsv
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
@@ -284,6 +286,8 @@ class MapLayer(GeoJSONLayerView):
 # This function groups all results currently displayed in the table by record type and exports the records to several
 #  CSV files, one for each record type, and then serves them to user in a .zip file.
 def table_data_export(request):
+    table_data_file_name = "/tmp/tabledata.zip"
+
     if request.method == 'POST':
         map_data = request.POST.getlist('ids[]')
         # sort based on record type
@@ -322,9 +326,8 @@ def table_data_export(request):
             elif type == 'SSF Experiences':
                 expe_items.append(issf_core_id)
 
-        # Refactor !
-        zipfile = ZipFile('/home/projects/issf/issf_prod/tabledata.zip', 'w')
-        # Refactor!
+        zipfile = ZipFile(table_data_file_name, 'w')
+
         cap_records = SSFCapacityNeed.objects.filter(issf_core_id__in=cap_items).values(
             'issf_core_id',
             'contributor_id__first_name',
@@ -615,25 +618,31 @@ def table_data_export(request):
 
         write_file_csv('species.csv', species_records, zipfile)
 
-        zipfile.write('/home/projects/issf/issf_prod/docs/README.txt', 'README.txt')
+        zipfile.write('/issf/export/README within exported zip files.txt', 'README.txt')
 
         zipfile.close()
 
-    else:
-        zipfile = open('/home/projects/issf/issf_prod/tabledata.zip', 'rb')
+        return HttpResponse("Created tabledata.zip")
 
-        response = HttpResponse(zipfile, content_type='application/x-zip-compressed')
-        response['Content-Disposition'] = 'attachment; filename="tabledata.zip"'
+    else:
+        if os.path.isfile(table_data_file_name):
+            zipfile = open(table_data_file_name, 'rb')
+
+            response = HttpResponse(zipfile, content_type='application/x-zip-compressed')
+            response['Content-Disposition'] = 'attachment; filename="tabledata.zip"'
+
+        else:
+            response = HttpResponse("No tabledata.zip")
 
         return response
 
 
 def write_file_csv(filename, records, zipfile):
     if len(records) > 0:
-        csvfile = open('/home/projects/issf/issf_prod/' + filename, 'wb+')
+        csvfile = open('/issf/issf_prod/' + filename, 'wb+')
         djqscsv.write_csv(records, csvfile, use_verbose_names=False)
         csvfile.close()
-        zipfile.write(csvfile.name)
+        zipfile.write(csvfile.name, os.path.basename(csvfile.name))
     else:
         return
 
