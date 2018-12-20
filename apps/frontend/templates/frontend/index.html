@@ -1732,10 +1732,14 @@
                 });
 
                 currentRecords = [];
+                var notShown = 0;
 
                 for (newRow in mapDataSource) {
+                    var row = mapDataSource[newRow];
+                    var rowAsJsonString = JSON.stringify(row);
+
                     // Save the data to #hiddenmapdata
-                    if (typeof JSON.stringify(mapDataSource[newRow]) == "undefined") {
+                    if (typeof rowAsJsonString === "undefined") {
                         // For some RIDICULOUS REASON the final element in the
                         // jsonData.mapData and jsonData.data array are always
                         // a function... WTH!!! how can it be a function???
@@ -1746,12 +1750,16 @@
                         break;
                     }
 
-                    var hiddenmapdata = hiddenmapdata + JSON.stringify(mapDataSource[newRow]) + mapDataTokenSeperator;
+                    if (row[1] === "Global" || row[1] === "Not specific") {
+                        notShown += 1;
+                        continue;
+                    }
+
+                    var hiddenmapdata = hiddenmapdata + rowAsJsonString + mapDataTokenSeperator;
                     var mrk;
 
                     for (var i = 0; i < activeFilters.length; i++) {
                         var currentIcon;
-                        var row = mapDataSource[newRow];
                         if (row[0] == "Who's Who in SSF") {
                             currentIcon = whoIcon;
                         }
