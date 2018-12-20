@@ -1195,6 +1195,7 @@
             }
 
             function resetHighlight(e) {
+                var layer = e.target;
                 geojson.setStyle(style);
                 choroControl.update(layer.feature.properties);
             }
