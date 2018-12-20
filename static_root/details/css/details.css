@@ -128,7 +128,18 @@ div.data-dates input {
     display: inline-block;
     margin-bottom: 5px;
     margin-left: 5px;
+}
 
+button.addFormSetButton {
+    margin: 0;
+}
+
+div.FormButtonBar {
+    display: none;
+}
+
+div.FormButtonBarInitial {
+    display: block;
 }
 
 /*
