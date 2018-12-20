@@ -583,23 +583,45 @@
                                  style="border: solid 5px #FFF; -moz-box-shadow: 5px 5px 0px #999; -webkit-box-shadow: 5px 5px 0px #999; box-shadow: 5px 5px 0px #999;;">
                         </div>
                     {% endif %}
-                    <div class="percent-box"
-                         style="background-color: {{ pct_colour }}; margin-bottom: 20px; width:145px; margin-left: 42px;">
-                        <div title="If you think this value is incorrect try resubmitting the Main Characteristics and refresh the page."
-                             class="pct-text">{{ profile_instance.percent }}% completed
+                    <div
+                        class="percent-box"
+                        style="background-color: {{ pct_colour }}; width:145px; margin-left: 42px; margin-bottom: 12px">
+                        <div
+                            title="If you think this value is incorrect try resubmitting the Main Characteristics and refresh the page."
+                            class="pct-text"
+                        >
+                            <h6>{{ profile_instance.percent }}% Completed</h6>
                         </div>
                     </div>
 
-                    <a id="report-btn"
-                       href="/details/report/profile/{{ profile_instance.issf_core_id }}"
-                       class="button radius {% if profile_instance.percent < 70 %}disabled-link has-tip{% endif %}"
-                       {% if profile_instance.percent < 70 %}data-tooltip aria-haspopup='true'
-                       title='Profiles must be at least 70% complete to generate a report.'{% endif %}
-                       style="margin-left: 42px; width:145px;">Generate
-                        Report
+                    <a
+                        id="report-btn"
+                        href="/details/report/profile/{{ profile_instance.issf_core_id }}"
+                        class="button radius {% if profile_instance.percent < 70 %}disabled-link has-tip{% endif %}"
+                        {% if profile_instance.percent < 70 %}data-tooltip aria-haspopup='true'
+                        title='Profiles must be at least 70% complete to generate a report.'{% endif %}
+                        style="margin-left: 42px; width:145px;"
+                    >
+                        View Report
                     </a>
-                    <a target="_blank" href="http://demo.vista.cs.uregina.ca/gcpc-ssf/" class="button radius"
-                       style="margin-left: 42px; width:145px;">
+
+                    <a
+                        id="report-btn"
+                        href="/details/report-pdf/profile/{{ profile_instance.issf_core_id }}"
+                        class="button radius {% if profile_instance.percent < 70 %}disabled-link has-tip{% endif %}"
+                        {% if profile_instance.percent < 70 %}data-tooltip aria-haspopup='true'
+                        title='Profiles must be at least 70% complete to generate a report.'{% endif %}
+                        style="margin-left: 42px; width:145px;"
+                    >
+                        Download Report As PDF
+                    </a>
+
+                    <a
+                        target="_blank"
+                        href="http://demo.vista.cs.uregina.ca/gcpc-ssf/"
+                        class="button radius"
+                        style="margin-left: 42px; width:145px;"
+                    >
                         Compare Profiles
                     </a>
 
