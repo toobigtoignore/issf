@@ -21,7 +21,7 @@ from issf_admin.models import UserProfile
 # replace * with specific references
 from .forms import *
 from issf_admin.forms import ProfileForm
-from issf_admin.views import save_profile
+from issf_admin.views import save_profile, get_redirectname
 
 import twitter
 import twitter.error
@@ -728,19 +728,6 @@ def update_tsvector_summary(core_record_type, issf_core_id):
     elif core_record_type == "Case Study":
         cursor.execute('SELECT * FROM casestudies_tsvector_update(' + issf_core_id + ')')
         cursor.execute('SELECT * FROM casestudies_summary_update(' + issf_core_id + ')')
-
-
-def get_redirectname(core_record_type):
-    urls = {
-        "State-of-the-Art in SSF Research": 'sota-details',
-        "Who's Who in SSF": 'who-details',
-        "SSF Organization": 'organization-details',
-        "Capacity Development": 'capacity-details',
-        "SSF Profile": 'profile-details',
-        "SSF Guidelines": 'guidelines-details',
-        "Case Study": 'case-studies-details'
-    }
-    return urls[core_record_type]
 
 
 def is_int(s):

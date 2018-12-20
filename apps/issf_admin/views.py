@@ -163,7 +163,8 @@ def get_redirectname(core_record_type):
         "Capacity Development": 'capacity-details',
         "SSF Profile": 'profile-details',
         "SSF Guidelines": 'guidelines-details',
-        "Case Study": 'case-studies-details'
+        "Case Study": 'case-studies-details',
+        "SSF Experiences": 'experiences-details'
     }
     return urls[core_record_type]
 
