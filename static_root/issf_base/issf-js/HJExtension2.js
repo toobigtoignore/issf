@@ -192,7 +192,9 @@ var HJExtension = new function () {
 
         var indexToShow = $($itemClicked.parent().parent()).index();
         $('.FormSetTogglable').hide();
+        $('.FormButtonBar').hide();
         $($('.FormSetTogglable')[indexToShow]).fadeIn('fast');
+        $($('.FormButtonBar')[indexToShow]).fadeIn('fast');
       }
     });
 
@@ -298,7 +300,6 @@ var HJExtension = new function () {
   // This function is needed because Django rendered formsets doesn't
   // have breakers between growable sets. resulting in bad presentation.
   var InsertBreakLinesToFormSets = function () {
-    ('-->[init]InsertBreakLinesToFormSets');
     $('.FormSetGrowable').each(function (index) {
       $(this).attr('formset-num', index);
       var numberOfSetsPresent = parseInt($($(this).children('input[name$="-TOTAL_FORMS"]')[0]).val());
