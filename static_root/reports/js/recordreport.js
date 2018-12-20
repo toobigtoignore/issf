@@ -10,6 +10,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
         data: values,
         backgroundColor: colors
       }]
+    },
+    options: {
+      animation: {
+        duration: 0,
+      },
+      legend: {
+        labels: {
+          fontSize: 10
+        }
+      }
     }
   });
 });

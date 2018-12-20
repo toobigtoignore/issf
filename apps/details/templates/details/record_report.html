@@ -18,6 +18,12 @@
                 <img id="issf-logo" class="float-right" src="{% static 'issf_base/img/logo-issf.png' %}">
             </div>
 
+            <div class="row hidefromprint" onclick="window.open('/details/report-pdf/profile/{{ id }}');">
+                <div class="section-header" id="downloadaspdf">
+                    <h2>Download as PDF</h2>
+                </div>
+            </div>
+
             <div class="row">
                 <div id="title">
                     <h1>{{ record.ssf_name }}</h1>
@@ -25,7 +31,7 @@
             </div>
 
             <div class="row">
-                <div id="section-header">
+                <div class="section-header">
                     <h2>At a Glance</h2>
                 </div>
             </div>
@@ -77,7 +83,7 @@
                     </div>
                 {% endif %}
                 <div class="seven columns">
-                    <div id="section-header">
+                    <div class="section-header">
                         <h2>SSF Definition</h2>
                     </div>
 
@@ -88,7 +94,7 @@
                         No definition provided.
                     {% endif %}
                     </div>
-                    <div id="section-header">
+                    <div class="section-header">
                         <h2>Distribution Channels</h2>
                     </div>
                     <div class="twelve columns">
@@ -107,7 +113,7 @@
 
             <div class="row">
                 <div class="twelve columns">
-                    <div id="section-header">
+                    <div class="section-header">
                         <h2>Key Species & Landings</h2>
                     </div>
 
@@ -140,9 +146,10 @@
 
             <div class="row">
                 <div class="four columns">
-                    <div id="section-header">
+                    <div class="section-header">
                         <h2>Major Issues</h2>
                     </div>
+
                     <div id="major-issues">
                         {% if issues %}
                             {% for issue in issues %}
@@ -159,7 +166,7 @@
                 </div>
 
                 <div class="eight columns">
-                    <div id="section-header">
+                    <div class="section-header">
                         <h2>Key Rules & Regulations</h2>
                     </div>
 
@@ -188,7 +195,7 @@
                         </h4>
                     </div>
 
-                    <div id="section-header">
+                    <div class="section-header">
                         <h2>Non-fishing Livelihood Activities</h2>
                     </div>
 
@@ -220,7 +227,7 @@
                         </div>
                     </div>
 
-                    <div id="footer-flower">
+                    <div id="footer-flower" class="hidefromprint">
                         <div>
                             <img src="{% static 'issf_base/img/TBTIflower.png' %}"/>
                         </div>
@@ -230,7 +237,7 @@
 
             <div class="row">
                 <div class="four columns">
-                    <div id="section-header">
+                    <div class="section-header">
                         <h2>Governance</h2>
                     </div>
                     <div>
@@ -290,7 +297,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row hidefromprint">
                 <div>
                     <img src="{% static 'issf_base/img/TBTImedia.png' %}"/>
                 </div>

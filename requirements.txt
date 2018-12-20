@@ -20,7 +20,7 @@ flickrapi==2.1.2
 foundationform==0.2
 future==0.16.0
 gunicorn==19.9.0
-html5lib==0.999
+html5lib==1.0.1
 httplib2==0.9.2
 oauth==1.0.1
 oauth2==1.9.0.post1
@@ -42,3 +42,4 @@ six==1.10.0
 tablib==0.10.0
 unicodecsv==0.14.1
 Unipath==1.1
+django-hardcopy==0.1.4

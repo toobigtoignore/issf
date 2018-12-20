@@ -1,6 +1,7 @@
 import ast
 import json
 import re
+import tempfile
 from urllib.parse import urlparse
 import collections
 
@@ -10,6 +11,7 @@ from django.core.cache import cache
 from django.urls import reverse
 from django.db import connection
 from django.forms.utils import ErrorList
+from django.template.loader import get_template
 from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import CreateView
@@ -23,6 +25,7 @@ from issf_admin.views import save_profile
 
 import twitter
 import twitter.error
+import hardcopy
 from issf_prod.settings import TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
 from issf_prod.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
 
@@ -1650,7 +1653,10 @@ some refactoring. I made this when I was short on time.
 """
 
 
-def report(request, record_type, issf_core_id):
+def generate_report(record_type, issf_core_id):
+    """
+    Handles the retrieval and generation of data to be used in reports.
+    """
     record = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     main_attributes = MainAttributeView.objects.filter(issf_core=issf_core_id)
@@ -1767,27 +1773,46 @@ def report(request, record_type, issf_core_id):
     else:
         who_page = None
 
+    return {
+        'id': issf_core_id,
+        'record': record,
+        'location': location,
+        'zoom': zoom_level,
+        'distribution': distribution,
+        'attrs': dict(attrs),
+        'species_colors': species_colors,
+        'colors': colors,
+        'issues': issues,
+        'key_rules_regs': krr,
+        'hh_income': hh_income,
+        'governance': gov_modes,
+        'non_fish_act': non_fish_act,
+        'url': record_url,
+        'who_page': who_page,
+        'num_fishers': num_fishers
+    }
+
+
+def report(request, record_type, issf_core_id):
+    """
+    Renders a webpage containing a report on a given item.
+    """
     return render(
         request,
         'details/record_report.html',
-        {
-            'record': record,
-            'location': location,
-            'zoom': zoom_level,
-            'distribution': distribution,
-            'attrs': dict(attrs),
-            'species_colors': species_colors,
-            'colors': colors,
-            'issues': issues,
-            'key_rules_regs': krr,
-            'hh_income': hh_income,
-            'governance': gov_modes,
-            'non_fish_act': non_fish_act,
-            'url': record_url,
-            'who_page': who_page,
-            'num_fishers': num_fishers
-        }
+        generate_report(record_type, issf_core_id)
     )
+
+
+def render_report_pdf(request, record_type, issf_core_id):
+    """
+    Renders a report for a given item and returns it to the user as a PDF.
+    """
+    template = get_template("details/record_report.html")
+    html = template.render(generate_report(record_type, issf_core_id))
+    with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
+        hardcopy.bytestring_to_pdf(html.encode("utf8"), f)
+        return HttpResponse(f.read(), content_type='application/pdf')
 
 
 def get_record_type(record_type):
