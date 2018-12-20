@@ -256,7 +256,7 @@ def frontend_data(request):
             map_results.append(temp)
 
     if len(search_terms) == 0:
-        search_terms = u"None (showing all "
+        search_terms = u"None (all "
 
     if not map_queryset and len(search_terms) > 0:
         search_terms = u"No records found."

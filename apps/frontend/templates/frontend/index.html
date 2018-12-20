@@ -1839,7 +1839,6 @@
                 }
 
                 for (newRow in tableDataSource) {
-
                     if (typeof JSON.stringify(tableDataSource[newRow]) == "undefined") {
                         // For some RIDICULOUS REASON the final element in the
                         // jsonData.mapData and jsonData.data array are always
@@ -1876,7 +1875,9 @@
                 localStorage.setItem('searchTerms', searchterms);
                 $('#searchTerms').html("");
                 if (searchterms !== null && searchterms !== "null" && searchterms !== "undefined" && typeof searchterms !== "undefined") {
-                    $('#searchTerms').html("<strong>Current Search Terms:</strong> " + searchterms + " " + tableDataSource.length + " records)");
+                    var notShownText = notShown > 0 ? ', ' + String(notShown) + ' not plotted on map' : '';
+                    var searchTerms = "<strong>Current Search Terms:</strong> " + searchterms + " " + tableDataSource.length + " records" + notShownText + ")";
+                    $('#searchTerms').html(searchTerms);
                 }
 
                 // Hack: if you do this without a pause, it can cause map freeze because it not initialized!
