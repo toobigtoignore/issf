@@ -245,7 +245,7 @@ class SSFProfile(models.Model):
     data_year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)])
     data_month = models.IntegerField(blank=True, null=True)
     data_day = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(31)])
-    data_end_year = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)])
+    data_end_year = models.IntegerField(null=True, validators=[MaxValueValidator(3000)])
     data_end_month = models.IntegerField(blank=True, null=True)
     data_end_day = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(31)])
     comments = models.TextField(blank=True)

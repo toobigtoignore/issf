@@ -103,7 +103,7 @@ def contribute(request, who=''):
             "knowledge_form": SSFKnowledgeForm(initial={'contributor': request.user.id}),
             "knowledge_authors_form": AuthorsInlineFormSet,
             "capacity_need_form": SSFCapacityNeedForm(initial={'contributor': request.user.id}),
-            "fishery_profile_form": SSFProfileForm(initial={'contributor': request.user.id}),
+            "fishery_profile_form": SSFProfileForm(initial={'contributor': request.user.id, 'data_end_year': 0}),
             "guidelines_form": SSFGuidelinesForm(initial={'contributor': request.user.id}),
             "experiences_form": SSFExperiencesForm(initial={'contributor': request.user.id}),
             "case_study_form": SSFCaseStudiesForm(initial={'contributor': request.user.id}),
@@ -400,7 +400,7 @@ def profile_details(request, issf_core_id):
         pct_colour = '#F44336'
 
     # forms
-    profile_form = SSFProfileForm(instance=profile_instance)
+    profile_form = SSFProfileForm(instance=profile_instance, initial={'data_end_year': 0})
     main_attributes_formset = MainAttributesViewInlineFormSet(instance=core_instance)
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
     local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
