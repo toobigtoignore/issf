@@ -712,10 +712,10 @@ class GeographicScopeSubnationForm(ModelForm):
 
 class GeographicScopeNationForm(ModelForm):
     class Meta:
-        model = ISSF_Core
-        fields = ['countries']
+        model = GeographicScopeNation
+        fields = ['country']
         labels = {
-            'countries': '*Select country(ries) (at least one)'
+            'country': '*Select country'
         }
 
 

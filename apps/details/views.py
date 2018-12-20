@@ -1397,12 +1397,14 @@ def geographic_scope(request):
                 else:
                     valid_subform = False
             elif core_instance.geographic_scope_type == 'National':
+                # https://stackoverflow.com/a/18287039
                 nation_form = GeographicScopeNationForm(
-                    request.POST,
-                    instance=core_instance
+                    request.POST
                 )
                 if nation_form.is_valid():
-                    nation_form.save()
+                    scope = nation_form.save(commit=False)
+                    scope.issf_core = core_instance
+                    scope.save()
                 else:
                     valid_subform = False
             elif core_instance.geographic_scope_type == 'Regional':
