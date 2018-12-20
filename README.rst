@@ -49,7 +49,7 @@ Roadmap
 
 Contributing
 ---------------------------------------------
-Read our documentation `here <https://issf.readthedocs.io/en/latest/contributing.html>`_ to contribute. Thank you for contributing!
+Read our documentation `here <https://github.com/toobigtoignore/issf/wiki>`_ to contribute. Thank you for contributing!
 
 See our list of contributors `here. <https://github.com/toobigtoignore/issf/graphs/contributors>`_
 
