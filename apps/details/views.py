@@ -149,10 +149,7 @@ def sota_details(request, issf_core_id):
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (record owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == \
-            core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     # check if the contributor has a Who's Who record
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
@@ -224,9 +221,7 @@ def who_details(request, issf_core_id):
     species_form = SpeciesInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     # ensure record is of type person
     if "Who's Who in SSF" in person_instance.core_record_type:
@@ -281,9 +276,7 @@ def organization_details(request, issf_core_id):
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
@@ -341,9 +334,7 @@ def capacity_details(request, issf_core_id):
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
@@ -412,9 +403,7 @@ def profile_details(request, issf_core_id):
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
@@ -484,9 +473,7 @@ def guidelines_details(request, issf_core_id):
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
@@ -542,9 +529,7 @@ def experiences_details(request, issf_core_id):
     region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
@@ -599,9 +584,7 @@ def case_study_details(request, issf_core_id):
     external_links_form = ExternalLinksInlineFormSet(instance=core_instance)
 
     # check if user has rights to edit (owner or staff)
-    editor = False
-    if request.user.is_staff or request.user.id == core_instance.contributor_id:
-        editor = True
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
@@ -748,22 +731,16 @@ def update_tsvector_summary(core_record_type, issf_core_id):
 
 
 def get_redirectname(core_record_type):
-    if core_record_type == "State-of-the-Art in SSF Research":
-        return 'sota-details'
-    elif core_record_type == "Who's Who in SSF":
-        return 'who-details'
-    elif core_record_type == "SSF Organization":
-        return 'organization-details'
-    elif core_record_type == "Capacity Development":
-        return 'capacity-details'
-    elif core_record_type == "SSF Profile":
-        return 'profile-details'
-    elif core_record_type == "SSF Guidelines":
-        return 'guidelines-details'
-    elif core_record_type == "SSF Experiences":
-        return 'experiences-details'
-    elif core_record_type == "Case Study":
-        return 'case-studies-details'
+    urls = {
+        "State-of-the-Art in SSF Research": 'sota-details',
+        "Who's Who in SSF": 'who-details',
+        "SSF Organization": 'organization-details',
+        "Capacity Development": 'capacity-details',
+        "SSF Profile": 'profile-details',
+        "SSF Guidelines": 'guidelines-details',
+        "Case Study": 'case-studies-details'
+    }
+    return urls[core_record_type]
 
 
 def is_int(s):

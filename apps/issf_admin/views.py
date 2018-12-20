@@ -156,18 +156,16 @@ def contributed_records(request):
 
 
 def get_redirectname(core_record_type):
-    if core_record_type == "State-of-the-Art in SSF Research":
-        return 'sota-details'
-    elif core_record_type == "Who's Who in SSF":
-        return 'who-details'
-    elif core_record_type == "SSF Organization":
-        return 'organization-details'
-    elif core_record_type == "Capacity Development":
-        return 'capacity-details'
-    elif core_record_type == "SSF Profile":
-        return 'profile-details'
-    elif core_record_type == "SSF Guidelines":
-        return 'guidelines-details'
+    urls = {
+        "State-of-the-Art in SSF Research": 'sota-details',
+        "Who's Who in SSF": 'who-details',
+        "SSF Organization": 'organization-details',
+        "Capacity Development": 'capacity-details',
+        "SSF Profile": 'profile-details',
+        "SSF Guidelines": 'guidelines-details',
+        "Case Study": 'case-studies-details'
+    }
+    return urls[core_record_type]
 
 
 def help_page(request):
