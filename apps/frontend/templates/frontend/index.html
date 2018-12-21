@@ -1087,7 +1087,7 @@
             var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttr = 'basemap data &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, ' +
                 'basemap &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>';
-            var osm = L.tileLayer(osmUrl, {attribution: osmAttr, noWrap: false});
+            var osm = L.tileLayer(osmUrl, {attribution: osmAttr, noWrap: true});
             var esriAttr = 'basemap &copy; <a href="http://esri.com" target="_blank">Esri</a>';
             var esriUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/{id}/MapServer/tile/{z}/{y}/{x}';
             var esriImagery = L.tileLayer(esriUrl, {id: 'World_Imagery', attribution: esriAttr, noWrap: true});
