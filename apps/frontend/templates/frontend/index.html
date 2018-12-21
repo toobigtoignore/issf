@@ -1225,7 +1225,8 @@
             };
 
             function formatChoroProp(x, sep, grp) {
-                if (!x || x === "-") return "No Data";
+                if (!x) return "0";
+                if (x === "-") return "No Data";
                 if (x.length > 3) {
                     var sx = ('' + Math.round(x)).split('.'), s = '', i, j;
                     sep || (sep = ','); // default seperator
