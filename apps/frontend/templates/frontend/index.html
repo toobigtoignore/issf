@@ -1293,7 +1293,7 @@
                 for (var i = 0; i < quantiles.length; i++) {
                     div.innerHTML +=
                         '<i style="background:' + getColor(quantScale(quantiles[i])) + '"></i> ' +
-                        Math.round(quantiles[i]) + (Math.round(quantiles[i + 1]) >= 0 ? '&ndash;' +
+                        (Math.round(quantiles[i]) + (i===0?0:1)) + (Math.round(quantiles[i + 1]) >= 0 ? '&ndash;' +
                         Math.round(quantiles[i + 1]) + '<br>' : '+');
                 }
 
