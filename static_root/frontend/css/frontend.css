@@ -39,6 +39,7 @@
 }
 
 select#choroProps {
+    margin-right: 50px;
     font-size: 10pt;
 }
 
