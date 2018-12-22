@@ -1087,7 +1087,7 @@
             var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttr = 'basemap data &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, ' +
                 'basemap &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>';
-            var osm = L.tileLayer(osmUrl, {attribution: osmAttr, noWrap: false});
+            var osm = L.tileLayer(osmUrl, {attribution: osmAttr, noWrap: true});
             var esriAttr = 'basemap &copy; <a href="http://esri.com" target="_blank">Esri</a>';
             var esriUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/{id}/MapServer/tile/{z}/{y}/{x}';
             var esriImagery = L.tileLayer(esriUrl, {id: 'World_Imagery', attribution: esriAttr, noWrap: true});
@@ -1225,9 +1225,10 @@
             };
 
             function formatChoroProp(x, sep, grp) {
-                if (!x || x === "-") return "No Data";
+                if (x === null || x === "-") return "No Data";
+                var num = Math.round(x);
                 if (x.length > 3) {
-                    var sx = ('' + Math.round(x)).split('.'), s = '', i, j;
+                    var sx = ('' + num).split('.'), s = '', i, j;
                     sep || (sep = ','); // default seperator
                     grp || grp === 0 || (grp = 3); // default grouping
                     i = sx[0].length;
@@ -1240,7 +1241,7 @@
                     sx[0] = s;
                     return sx.join('.');
                 } else {
-                    return x;
+                    return num;
                 }
             }
 
@@ -1292,7 +1293,7 @@
                 for (var i = 0; i < quantiles.length; i++) {
                     div.innerHTML +=
                         '<i style="background:' + getColor(quantScale(quantiles[i])) + '"></i> ' +
-                        Math.round(quantiles[i]) + (Math.round(quantiles[i + 1]) >= 0 ? '&ndash;' +
+                        (Math.round(quantiles[i]) + (i===0?0:1)) + (Math.round(quantiles[i + 1]) >= 0 ? '&ndash;' +
                         Math.round(quantiles[i + 1]) + '<br>' : '+');
                 }
 
