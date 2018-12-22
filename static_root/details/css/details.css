@@ -210,7 +210,6 @@ div.faq-container p {
 
 .videos-container tr {
     background: none !important;
-
 }
 
 .videos-container td {
@@ -222,4 +221,8 @@ div.faq-container p {
 .videos-container iframe {
     width: 100%;
     padding-right: 5px;
+}
+
+.staffbox h5, .staffbox label {
+    color: #f16a2c;
 }

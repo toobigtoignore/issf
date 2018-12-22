@@ -245,6 +245,14 @@
                                             name="issf_core_id"
                                         >
 
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ person_form.tweet }}
+                                            </div>
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -279,6 +287,14 @@
                                         <div class="FormSet FormSetGrowable">
                                             {{ knowledge_authors_form }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ knowledge_authors.tweet }}
+                                            </div>
+                                        {% endif %}
 
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
@@ -325,7 +341,11 @@
                                         </div>
 
                                         {% if user.is_staff %}
-                                            {{ fishery_profile_form.tweet }}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ fishery_profile_form.tweet }}
+                                            </div>
                                         {% endif %}
 
                                         <div class="button-bar">
@@ -627,7 +647,11 @@
                                         </div>
 
                                         {% if user.is_staff %}
-                                            {{ organization_form.tweet }}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ organization_form.tweet }}
+                                            </div>
                                         {% endif %}
 
                                         <div class="button-bar">
@@ -664,7 +688,11 @@
                                         </div>
 
                                         {% if user.is_staff %}
-                                            {{ case_study_form.tweet }}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ case_study_form.tweet }}
+                                            </div>
                                         {% endif %}
 
                                         <div class="button-bar">
@@ -703,7 +731,11 @@
                                         </div>
 
                                         {% if user.is_staff %}
-                                            {{ capacity_need_form.tweet }}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ capacity_need_form.tweet }}
+                                            </div>
                                         {% endif %}
 
                                         <div class="button-bar">
@@ -745,7 +777,11 @@
                                         </div>
 
                                         {% if user.is_staff %}
-                                            {{ experiences_form.tweet }}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ experiences_form.tweet }}
+                                            </div>
                                         {% endif %}
 
                                         <div class="button-bar">
@@ -801,7 +837,11 @@
                                         </div>
 
                                         {% if user.is_staff %}
-                                            {{ guidelines_form.tweet }}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
+                                                {{ guidelines_form.tweet }}
+                                            </div>
                                         {% endif %}
 
                                         <div class="button-bar">
