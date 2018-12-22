@@ -20,7 +20,7 @@ from issf_admin.views import get_redirectname
 from issf_admin.models import UserProfile
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
-from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
+from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet, SearchForm
 
 from django.middleware.gzip import GZipMiddleware
 
@@ -111,9 +111,12 @@ def frontend_data(request):
     if request.method == 'GET':
         map_queryset = ISSFCoreMapPointUnique.objects.all()
     else:
+        form = SearchForm(request.POST)
         map_queryset = []
-        keywords = request.POST['keywords']
-        contributor = request.POST['contributor']
+        if form.is_valid():
+            keywords = form.cleaned_data['keywords']
+            contributor = form.cleaned_data['contributor']
+            countries = form.cleaned_data['countries']
 
         models = [
             SSFPerson,
@@ -166,6 +169,14 @@ def frontend_data(request):
             for item in map_queryset[:]:
                 if item.contributor_id != contributor:
                     map_queryset.remove(item)
+
+        if countries:
+            countries = [int(i) for i in countries]
+            country_names = [list(Country.objects.filter(country_id__exact=country))[0].short_name for country in countries]
+            search_terms.append("Countries: {}".format(", ".join(country_names)))
+            # for item in map_queryset[:]:
+            #     if item.country_id not in countries:
+            #         map_queryset.remove(item)
 
     map_results = []
 
