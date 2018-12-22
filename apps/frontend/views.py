@@ -107,11 +107,11 @@ def frontend_data(request):
 
     if request.method == 'GET':
         map_queryset = ISSFCoreMapPointUnique.objects.all()
-        search_terms = 'None'
+        search_terms = 'None ('
     else:
         map_queryset = []
         keywords = request.POST['keywords']
-        search_terms = str(keywords)
+        search_terms = str(keywords) + " ("
 
         models = [
             SSFPerson,
@@ -124,10 +124,11 @@ def frontend_data(request):
             SSFExperiences
         ]
 
-        if keywords:
+        if keywords != "":
             for model in models:
-                print(model)
+                # Every object has different variables for "title"
                 if model == SSFPerson:
+                    # SSFPerson has no name or title, so we retrieve all matching users from the map points and remove them from the users
                     results = list(model.objects.all())
                     filtered_ids = [i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=keywords)]
                     for result in results[:]:
@@ -145,13 +146,16 @@ def frontend_data(request):
                     results = model.objects.filter(name__icontains=keywords)
                 else:
                     results = model.objects.filter(title__icontains=keywords)
-                
                 ids = [result.issf_core_id for result in results]
                 map_queryset += get_map_points(ids)
+        else:
+            map_queryset = ISSFCoreMapPointUnique.objects.all()
+            search_terms = 'None'
 
     map_results = []
 
     for row in map_queryset:
+        # This code was copied from the previous function
         temp = []
         temp.append(row.core_record_type)
         temp.append(row.geographic_scope_type)
@@ -165,13 +169,14 @@ def frontend_data(request):
         temp.append(str(row.lon))
         temp.append(str(row.lat))
         temp.append(row.edited_date.strftime("%Y-%m-%d"))
-        temp.append(str(0))
+        # The table originally was sorted by the "relevance", which we no longer have, so we just use a value of 0
+        temp.append("0")
         map_results.append(temp)
 
     response = json.dumps({
         'success': 'true',
         'msg': 'OK',
-        'searchTerms': '(' + search_terms,
+        'searchTerms': search_terms,
         'mapData': map_results
     })
     return gzip_middleware.process_response(request, HttpResponse(response))
