@@ -173,10 +173,18 @@ def frontend_data(request):
         if countries:
             countries = [int(i) for i in countries]
             country_names = [list(Country.objects.filter(country_id__exact=country))[0].short_name for country in countries]
+            # Underlying DB has a column for country id, but model itself doesn't
+            # Therefore, we need to fall back to using plain SQL
+            country_matches = list(ISSFCoreMapPointUnique.objects.raw(
+                "SELECT row_number, issf_core_id, contribution_date, contributor_id, edited_date, editor_id, \
+                core_record_type, core_record_summary, core_record_status geographic_scope_type,\
+                 map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id IN (%(countries)s)",
+                {"countries": ", ".join(map(str, countries))}
+            ))
             search_terms.append("Countries: {}".format(", ".join(country_names)))
-            # for item in map_queryset[:]:
-            #     if item.country_id not in countries:
-            #         map_queryset.remove(item)
+            for item in map_queryset[:]:
+                if item not in country_matches:
+                    map_queryset.remove(item)
 
     map_results = []
 
