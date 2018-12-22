@@ -20,6 +20,7 @@ flickrapi==2.4.0
 foundationform==0.2
 future==0.17.1
 gunicorn==19.9.0
+hardcopy==0.1.0
 html5lib==1.0.1
 httplib2==0.12.0
 oauth==1.0.1
