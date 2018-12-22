@@ -17,6 +17,7 @@ from django.views.decorators.gzip import gzip_page
 
 from issf_base.models import *
 from issf_admin.views import get_redirectname
+from issf_admin.models import UserProfile
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
 from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
@@ -105,13 +106,14 @@ def get_map_points(issf_core_ids):
 @gzip_page
 def frontend_data(request):
 
+    search_terms = []
+
     if request.method == 'GET':
         map_queryset = ISSFCoreMapPointUnique.objects.all()
-        search_terms = 'None ('
     else:
         map_queryset = []
         keywords = request.POST['keywords']
-        search_terms = str(keywords) + " ("
+        contributor = request.POST['contributor']
 
         models = [
             SSFPerson,
@@ -125,6 +127,7 @@ def frontend_data(request):
         ]
 
         if keywords != "":
+            search_terms.append(str(keywords))
             for model in models:
                 # Every object has different variables for "title"
                 if model == SSFPerson:
@@ -149,8 +152,20 @@ def frontend_data(request):
                 ids = [result.issf_core_id for result in results]
                 map_queryset += get_map_points(ids)
         else:
-            map_queryset = ISSFCoreMapPointUnique.objects.all()
-            search_terms = 'None'
+            map_queryset = list(ISSFCoreMapPointUnique.objects.all())
+
+        if contributor:
+            contributor = int(contributor)
+            contributor_instance = tuple(UserProfile.objects.filter(id__exact=contributor))[0]
+            contributor_name = contributor_instance.username
+            # If the user has defined a name, choose all components of the name that aren't none and add them to the username
+            if any([contributor_instance.first_name, contributor_instance.initials, contributor_instance.last_name]):
+                components = (i for i in [contributor_instance.first_name, contributor_instance.initials, contributor_instance.last_name] if i != None)
+                contributor_name += " ({})".format(" ".join(components))
+            search_terms.append("Contributor: {}".format(contributor_name))
+            for item in map_queryset[:]:
+                if item.contributor_id != contributor:
+                    map_queryset.remove(item)
 
     map_results = []
 
@@ -173,10 +188,15 @@ def frontend_data(request):
         temp.append("0")
         map_results.append(temp)
 
+    if len(search_terms) == 0:
+        search_terms = ["None"]
+
+    joined_terms = ", ".join(search_terms)
+
     response = json.dumps({
         'success': 'true',
         'msg': 'OK',
-        'searchTerms': search_terms,
+        'searchTerms': joined_terms[0].capitalize() + joined_terms[1:] + " (",
         'mapData': map_results
     })
     return gzip_middleware.process_response(request, HttpResponse(response))
