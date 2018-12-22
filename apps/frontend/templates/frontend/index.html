@@ -8,8 +8,11 @@
 
 {% block additional_css_scripts %}
     {% leaflet_css %}
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'issf_base/DataTables-1.10.2/media/css/jquery.dataTables.min.css' %}">
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'issf_base/DataTables-1.10.2/media/css/jquery.dataTables.min.css' %}"
+    >
     <link rel="stylesheet" href="{% static 'frontend/css/frontend.css' %}">
 {% endblock additional_css_scripts %}
 
@@ -26,13 +29,17 @@
                     </li>
                 </ul>
             </div>
+
             <div class="large-12 columns main-wrapper" id="info-map">
                 <div class="info-ctn tabs-content">
+                    <!-- Main Map -->
                     <div class="map-holder content active" id="tab-map">
                         <div id="map-loading-overlay"></div>
                         <div class="headline"></div>
                         {% leaflet_map "map" callback="window.map_init_basic" %}
                     </div>
+
+                    <!-- Table Tab -->
                     <div class="table-holder content" id="tab-table">
                         <div class="headline"></div>
                         <div>
@@ -50,6 +57,7 @@
                         </div>
                     </div>
                 </div>
+
                 <nav class="map-icons">
                     <a id="toexpand">
                         <div class="pop">
@@ -60,6 +68,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="who" tabindex="0">
                         <h3>Who's Who in SSF</h3>
                         <span></span>
@@ -71,6 +80,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="sota" tabindex="1">
                         <h3>State-of-the-Art in SSF Research</h3>
                         <span></span>
@@ -82,6 +92,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="profile" tabindex="2">
                         <h3>SSF Profile</h3>
                         <span></span>
@@ -93,6 +104,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="organize" tabindex="3">
                         <h3>SSF Organization</h3>
                         <span></span>
@@ -104,6 +116,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="case" tabindex="4">
                         <h3>Case Studies</h3>
                         <span></span>
@@ -115,6 +128,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="capacity" tabindex="5">
                         <h3>Capacity Development</h3>
                         <span></span>
@@ -128,6 +142,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="expe" tabindex="6">
                         <h3>Experiences</h3>
                         <span></span>
@@ -141,6 +156,7 @@
                             </p>
                         </div>
                     </a>
+
                     <a id="guidelines" tabindex="7">
                         <h3>SSF Guidelines</h3>
                         <span></span>
@@ -152,18 +168,22 @@
                             </p>
                         </div>
                     </a>
+
                     <a class="disable" id="no-hover" tabindex="8" style="border-bottom: 0;">
                         <h3></h3>
                         <span></span>
                     </a>
+
                     <a class="disable" id="no-hover" tabindex="9" style="border-bottom: 0;">
                         <h3></h3>
                         <span></span>
                     </a>
+
                     <a class="disable" id="no-hover" tabindex="10" style="border-bottom: 0;">
                         <h3></h3>
                         <span></span>
                     </a>
+
                     <a id="all" tabindex="11">
                         <h3>Show/Hide All</h3>
                         <span></span>
@@ -190,6 +210,7 @@
                             <div class="large-9 left">
                                 <input id="q-search" name="q-search" type="text">
                             </div>
+
                             <div class="large-3 right BtnCol">
                                 <button
                                     class="medium radius issf-scroll-button" id="quick-search-button"
@@ -197,6 +218,7 @@
                                 >
                                     Search
                                 </button>
+
                                 <div
                                     id="exportModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle"
                                     aria-hidden="true" role="dialog" style="width:60%; margin-left: -30%;"
@@ -220,19 +242,23 @@
 
                                         following the format described in the README file.
                                     </p>
+
                                     <a href="#" class="button radius" onclick="exportData();">
                                         I agree
                                     </a>
+
                                     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row row-fit" id="term-search">
                             <div class="search-term">
                                 <p id="searchTerms" class="EmptyContainer">
                                 </p>
                             </div>
                         </div>
+
                         <div id="full-search">
                             <div class="row row-fit">
                                 <ul id="search-tabs" class="tabs" data-tab>
@@ -247,6 +273,7 @@
                                     </li>
                                 </ul>
                             </div>
+
                             <div class="tabs-content">
                                 <div class="content active" id="panel-basic">
                                     {{ searchForm }}
@@ -275,8 +302,11 @@
                                                         {{ form.theme_issue_value }}
                                                     </td>
                                                     <td style="width: 20%;">
-                                                        <button class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
-                                                                type="button">Remove
+                                                        <button
+                                                            class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
+                                                            type="button"
+                                                        >
+                                                            Remove
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -288,8 +318,10 @@
                                 <div class="content" id="panel-character">
                                     <div class="FormSet FormSetGrowable advancedSearchPanelTab">
                                         {{ selected_attributes_formset.management_form }}
-                                        <table class="advancedSearchPanelTabTable"
-                                               style="width:100%; background-color: inherit; border: none;">
+                                        <table
+                                            class="advancedSearchPanelTabTable"
+                                            style="width:100%; background-color: inherit; border: none;"
+                                        >
                                             <tr style="background-color: inherit;">
                                                 <td>
                                                     <label>Characteristic</label>
@@ -298,6 +330,7 @@
                                                     <label>Value</label>
                                                 </td>
                                             </tr>
+
                                             {% for form in selected_attributes_formset %}
                                                 <tr style="background-color: inherit;">
                                                     <td id="char-attr" style="width: 40%;">
@@ -307,8 +340,11 @@
                                                         {{ form.attribute_value }}
                                                     </td>
                                                     <td style="width: 20%;">
-                                                        <button class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
-                                                                type="button">Remove
+                                                        <button
+                                                            class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
+                                                            type="button"
+                                                        >
+                                                            Remove
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -317,15 +353,19 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="large-12 btn-container">
                                 <button
-                                    class="medium radius issf-scroll-button" id="default" scrollto="#info-map"
+                                    class="medium radius issf-scroll-button"
+                                    id="default"
+                                    scrollto="#info-map"
                                     type="submit"
                                 >
                                     Search
                                 </button>
+
                                 <div class="BtnCol" style="display:inline;"></div>
-                                </span>
+
                                 <button
                                     class="medium radius reset-button"
                                     type="reset"
@@ -357,11 +397,19 @@
                         <small>and join the movement</small>
                     </h2>
                 </a>
+
                 <p style="margin-bottom: 0.8rem; font-size: 1.2rem; font-weight: bold;">
                     What is the Information System on Small-scale Fisheries?
                 </p>
-                <iframe height="315" src="https://www.youtube.com/embed/vTipjN5Fjs0" frameborder="0"
-                        allowfullscreen style="width:inherit; margin-bottom: 14px;"></iframe>
+
+                <iframe
+                    height="315"
+                    src="https://www.youtube.com/embed/vTipjN5Fjs0"
+                    frameborder="0"
+                    allowfullscreen
+                    style="width:inherit; margin-bottom: 14px;"
+                >
+                </iframe>
 
                 <div class="col-280 left">
                     <div id="recent-contributions" class="box box-contribute">
@@ -509,9 +557,8 @@
                     <a class="twitter-timeline" data-height="512" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
+
                 <div>
-
-
                 </div>
             </div>
             <div class="col-360 right">
@@ -559,18 +606,21 @@
                             <li>
                                 <strong>Contribute</strong> by creating a profile for SSF that you know,
                                 <a href="{% url 'contribute' %}">online,</a> or using a template (available in
-                                <a href="{% static "pdf/ISSF_Profile_English_Template.pdf" %}"
+                                <a
+                                    href="{% static "pdf/ISSF_Profile_English_Template.pdf" %}"
                                     target="_blank"
                                 >
                                     <span>English,</span>
                                 </a>
-                                <a href="{% static "pdf/ISSF_Profile_French_Template.pdf" %}"
+                                <a
+                                    href="{% static "pdf/ISSF_Profile_French_Template.pdf" %}"
                                     target="_blank"
                                 >
                                     <span>French,</span>
                                 </a>
                                 <span> and </span>
-                                <a href="{% static "pdf/ISSF_Profile_Spanish_Template.pdf" %}"
+                                <a
+                                    href="{% static "pdf/ISSF_Profile_Spanish_Template.pdf" %}"
                                     target="_blank"
                                 >
                                     <span>Spanish.</span>
@@ -642,7 +692,8 @@
 
                     {% if who_feature.ssf_knowledge %}
                         <strong>Select publication:</strong>
-                        <a href="{% url 'sota-details' who_feature.ssf_knowledge.issf_core_id %}">{{ who_feature.ssf_knowledge.level1_title }}: {{ who_feature.ssf_knowledge.level2_title }}
+                        <a
+                            href="{% url 'sota-details' who_feature.ssf_knowledge.issf_core_id %}">{{ who_feature.ssf_knowledge.level1_title }}: {{ who_feature.ssf_knowledge.level2_title }}
                         </a>
                     {% endif %}
                 </div>
@@ -666,7 +717,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.7/js/jquery.dataTables.min.js"></script>
 
-    <!-- Note that the chorodata.geojson file needs to be prefaced with "var choroData = " in order for it to work-->
+    <!-- Note that the chorodata.json file needs to be prefaced with "var choroData = " in order for it to work-->
     <script src="{% static 'frontend/js/chorodata.json' %}"></script>
     <script src="https://d3js.org/d3-array.v1.min.js"></script>
     <script src="https://d3js.org/d3-collection.v1.min.js"></script>
@@ -678,15 +729,13 @@
     <script type="text/javascript">
         var mapDataTokenSeperator = "~~^~~%|%~~^~~";
 
-        /*
-            ==== Page State ====
-        */
+        /* Page State */
 
         var GlobalNewLoad = false;
         var GlobalMapChangeFlag = false;
 
         if ($("#newload").val().length > 0) {
-            // User returned to page using backspace'
+            // User returned to page using backspace
         } else {
             $('#newload').val(1);
             GlobalNewLoad = true;
@@ -733,9 +782,7 @@
                 }
             };
 
-            /*
-                ==== Restore Page State ====
-            */
+            /* Restore Page State */
 
             // Restore tab
             if (localStorage.getItem("activetab") && !GlobalNewLoad) {
@@ -745,9 +792,7 @@
             // Restoration of mapzoom/mapcenter is perform at the end of loadData() -> map loading
             // Restoration of table order/page is perform at the end of loadData() -> table loading
 
-            /*
-                ==== Initialize Perfect Scroll bar on Advanced Search content containers ====
-            */
+            /* Initialize Perfect Scroll bar on Advanced Search content containers */
 
             // Prepare Attribute Values dynamically fill select on search form
             var HomepageAdvancedSearchCharacteriscticsAttributeValueCollection = function () {
@@ -1619,7 +1664,6 @@
             e.preventDefault();
 
             var form = $(this);
-
             search = true;
 
             $.ajax({
@@ -1671,9 +1715,7 @@
                 $('#searchTerms').addClass('error');
             }
             else {
-                /*
-                    ==== Update map ====
-                */
+                /* Update map */
 
                 markers.clearLayers();
                 map = markers._map;
@@ -1683,54 +1725,38 @@
 
                 var hiddenmapdata = "";
 
-                var whoIcon = L.icon({
-                    iconUrl: '{% static "img/icon-who.png" %}',
+                var defaultIconProps = {
                     iconSize: [24, 24],
                     iconAnchor: [12, 12],
                     popupAnchor: [0, 0]
-                });
-                var orgIcon = L.icon({
-                    iconUrl: '{% static "img/icon-organizations.png" %}',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, 0]
-                });
-                var sotaIcon = L.icon({
-                    iconUrl: '{% static "img/icon-sota.png" %}',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, 0]
-                });
-                var capacityIcon = L.icon({
-                    iconUrl: '{% static "img/icon-capacity.png" %}',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, 0]
-                });
-                var profileIcon = L.icon({
-                    iconUrl: '{% static "img/icon-profile.png" %}',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, 0]
-                });
-                var guidelinesIcon = L.icon({
-                    iconUrl: '{% static "img/icon-guidelines.png" %}',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, 0]
-                });
-                var experiencesIcon = L.icon({
-                    iconUrl: '{% static "img/icon-experiences.png" %}',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, 0]
-                });
-                var casestudiesIcon = L.icon({
-                    iconUrl: '{% static "img/icon-casestudies.png" %}',
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, 0]
-                });
+                };
+
+                var icons = {
+                    "Who's Who in SSF": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-who.png" %}'
+                    })),
+                    "State-of-the-Art in SSF Research": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-sota.png" %}'
+                    })),
+                    "SSF Organization": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-organizations.png" %}'
+                    })),
+                    "Capacity Development": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-capacity.png" %}'
+                    })),
+                    "SSF Profile": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-profile.png" %}'
+                    })),
+                    "SSF Guidelines": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-guidelines.png" %}'
+                    })),
+                    "SSF Experiences": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-experiences.png" %}'
+                    })),
+                    "Case Study": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-casestudies.png" %}'
+                    }))
+                };
 
                 currentRecords = [];
                 var notShown = 0;
@@ -1741,13 +1767,6 @@
 
                     // Save the data to #hiddenmapdata
                     if (typeof rowAsJsonString === "undefined") {
-                        // For some RIDICULOUS REASON the final element in the
-                        // jsonData.mapData and jsonData.data array are always
-                        // a function... WTH!!! how can it be a function???
-                        // running JSON.stringify( function ) yields a result of type undefined
-                        // and this will screw up the data that we are processing.
-                        // By observation, the function always appears at the end of array
-                        // It could have potentially be added on by the Django framework.
                         break;
                     }
 
@@ -1760,37 +1779,16 @@
                     var mrk;
 
                     for (var i = 0; i < activeFilters.length; i++) {
-                        var currentIcon;
-                        if (row[0] == "Who's Who in SSF") {
-                            currentIcon = whoIcon;
-                        }
-                        else if (row[0] == "State-of-the-Art in SSF Research") {
-                            currentIcon = sotaIcon;
-                        }
-                        else if (row[0] == "SSF Organization") {
-                            currentIcon = orgIcon;
-                        }
-                        else if (row[0] == "Capacity Development") {
-                            currentIcon = capacityIcon;
-                        }
-                        else if (row[0] == "SSF Profile") {
-                            currentIcon = profileIcon;
-                        }
-                        else if (row[0] == "SSF Guidelines") {
-                            currentIcon = guidelinesIcon;
-                        }
-                        else if (row[0] == "SSF Experiences") {
-                            currentIcon = experiencesIcon;
-                        }
-                        else if (row[0] == "Case Study") {
-                            currentIcon = casestudiesIcon;
-                        }
                         if (row[0] == activeFilters[i]) {
+                            var currentIcon = icons[row[0]];
+
                             mrk = L.marker([row[5], row[4]], {icon: currentIcon});
-                            mrk.bindPopup('<b>Record type:</b> ' + row[0] +
+                            mrk.bindPopup(
+                                '<b>Record type:</b> ' + row[0] +
                                 '<br><b>Geographic scope:</b> ' + row[1] +
                                 '<br><br>' + row[2] +
-                                '<br><br>' + row[3]);
+                                '<br><br>' + row[3]
+                            );
                             markers.addLayer(mrk);
                             var urlString = row[3].split('/');
                             currentRecords.push(row[0] + '&' + urlString[3]);
@@ -1808,14 +1806,13 @@
 
                 map.addLayer(markers);
 
-                /*
-                    ==== Update table ====
-                */
+                /* Update table */
 
                 var table = $('#record-table-result').DataTable({
                     "retrieve": true
                 });
                 table.clear();
+
                 // Order by relevance after performing a search
                 if (search) {
                     table.order([3, 'desc']);
@@ -1833,21 +1830,14 @@
                     var summary = tableItem[2];
                     if (dupe[summary]) {
                         tableDataSource.splice(i, 1);
-                        i--
+                        i--;
                     } else {
                         dupe[summary] = true;
                     }
                 }
 
                 for (newRow in tableDataSource) {
-                    if (typeof JSON.stringify(tableDataSource[newRow]) == "undefined") {
-                        // For some RIDICULOUS REASON the final element in the
-                        // jsonData.mapData and jsonData.data array are always
-                        // a function... WTH!!! how can it be a function???
-                        // running JSON.stringify( function ) yields a result of type undefined
-                        // and this will screw up the data that we are processing.
-                        // By observation, the function always appears at the end of array
-                        // It could have potentially be added on by the Django framework.
+                    if (typeof JSON.stringify(tableDataSource[newRow]) === "undefined") {
                         break;
                     }
 
@@ -1888,6 +1878,7 @@
                         map.setView(JSON.parse(localStorage.getItem("mapcenter")), localStorage.getItem("mapzoom"));
                     }
                 }, 2000);
+
                 // Restore table page and order if NOT new page load
                 if (localStorage.getItem("tableorder") && localStorage.getItem("tablepage") && localStorage.getItem("recordPerPage") && !GlobalNewLoad) {
                     table.order(JSON.parse(localStorage.getItem("tableorder"))).page.len(parseInt(localStorage.getItem("recordPerPage"))).page(parseInt(localStorage.getItem("tablepage"))).draw(false);
@@ -1996,9 +1987,7 @@
             }
         });
 
-        /*
-            ==== JQuery Date Picker Initialization ====
-        */
+        /* JQuery Date Picker Initialization */
 
         // Initialize date pickers
         $('input[id*="date"]').each(function () {
@@ -2026,7 +2015,6 @@
             e.preventDefault();
             window.location.replace('/details/capacity-need-rating/0/');
         });
-
     </script>
     <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=r6zHiLKHtnlqqDuyu2YBfU2JxAnowqE5"></script>
 
