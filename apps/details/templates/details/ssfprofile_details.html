@@ -596,26 +596,16 @@
 
                     <a
                         id="report-btn"
-                        href="/details/report/profile/{{ profile_instance.issf_core_id }}"
-                        class="button radius {% if profile_instance.percent < 70 %}disabled-link has-tip{% endif %}"
-                        {% if profile_instance.percent < 70 %}data-tooltip aria-haspopup='true'
-                        title='Profiles must be at least 70% complete to generate a report.'{% endif %}
-                        style="margin-left: 42px; width:145px;"
-                    >
-                        View Report
-                    </a>
-
-                    <a
-                        id="report-btn"
                         href="/details/report-pdf/profile/{{ profile_instance.issf_core_id }}"
                         class="button radius {% if profile_instance.percent < 70 %}disabled-link has-tip{% endif %}"
                         {% if profile_instance.percent < 70 %}data-tooltip aria-haspopup='true'
                         title='Profiles must be at least 70% complete to generate a report.'{% endif %}
                         style="margin-left: 42px; width:145px;"
                     >
-                        Download Report As PDF
+                        View As PDF
                     </a>
 
+                    <!-- https://github.com/toobigtoignore/issf/issues/139
                     <a
                         target="_blank"
                         href="http://demo.vista.cs.uregina.ca/gcpc-ssf/"
@@ -624,6 +614,7 @@
                     >
                         Compare Profiles
                     </a>
+                    -->
 
                     <ul style="font-size: 0.85rem;">
                         <li>
