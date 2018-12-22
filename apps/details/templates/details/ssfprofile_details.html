@@ -212,38 +212,138 @@
                                     {% endif %}
                                 </table>
                                 {% if editor %}
-                                    <form action="{% url 'geographic-scope' %}" method="post">
+                                    <div class="multiforms" style="display: none;">
                                         <h6>Please indicate the geographic scope of the profile</h6>
 
                                         <p class="alert">
                                             <label>*</label>
                                             indicates required fields
                                         </p>
-                                        {% csrf_token %}
+
                                         <div class="FormSet FormSetToggler">
                                             {{ geographic_scope_form }}
                                         </div>
-                                        <div class="FormSet FormSetTogglable FormSetGrowable">
-                                            {{ local_area_form }}
-                                        </div>
-                                        <div class="FormSet FormSetTogglable FormSetGrowable">
-                                            {{ subnation_form }}
-                                        </div>
-                                        {#                                <div class="FormSet FormSetTogglable FormSetGrowable">#}
-                                        <div class="FormSet FormSetTogglable">
-                                            {{ nation_form }}
-                                        </div>
-                                        <div class="FormSet FormSetTogglable FormSetGrowable">
-                                            {{ region_form }}
-                                        </div>
 
-                                        <input id="issf_core_id" type="hidden" value="{{ core_instance.issf_core_id }}"
-                                               name="issf_core_id">
+                                        <form action="{% url 'geographic-scope' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet FormSetTogglable FormSetGrowable">
+                                                {{ local_area_form }}
+                                            </div>
+                                            <input
+                                                id="id_geographic_scope_type_0"
+                                                type="hidden"
+                                                value="Local"
+                                                name="geographic_scope_type"
+                                            >
+                                            <input
+                                                id="issf_core_id"
+                                                type="hidden"
+                                                value="{{ core_instance.issf_core_id }}"
+                                                name="issf_core_id"
+                                            >
+                                            <div class="FormButtonBar FormButtonBarInitial button-bar">
+                                                <button class="medium radius submit bt-submit">Submit</button>
+                                            </div>
+                                        </form>
 
-                                        <div class="button-bar">
-                                            <button class="medium radius submit bt-submit">Submit</button>
-                                        </div>
-                                    </form>
+                                        <form action="{% url 'geographic-scope' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet FormSetTogglable FormSetGrowable">
+                                                {{ subnation_form }}
+                                            </div>
+                                            <input
+                                                id="id_geographic_scope_type_1"
+                                                type="hidden"
+                                                value="Sub-national"
+                                                name="geographic_scope_type"
+                                            >
+                                            <input
+                                                id="issf_core_id"
+                                                type="hidden"
+                                                value="{{ core_instance.issf_core_id }}"
+                                                name="issf_core_id"
+                                            >
+                                            <div class="FormButtonBar button-bar">
+                                                <button class="medium radius submit bt-submit">Submit</button>
+                                            </div>
+                                        </form>
+
+                                        <form action="{% url 'geographic-scope' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet FormSetTogglable">
+                                                {{ nation_form }}
+                                            </div>
+                                            <input
+                                                id="id_geographic_scope_type_2"
+                                                type="hidden"
+                                                value="National"
+                                                name="geographic_scope_type"
+                                            >
+                                            <input
+                                                id="issf_core_id"
+                                                type="hidden"
+                                                value="{{ core_instance.issf_core_id }}"
+                                                name="issf_core_id"
+                                            >
+                                            <div class="FormButtonBar button-bar">
+                                                <button class="medium radius submit bt-submit">Submit</button>
+                                            </div>
+                                        </form>
+
+                                        <form action="{% url 'geographic-scope' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet FormSetTogglable FormSetGrowable">
+                                                {{ region_form }}
+                                            </div>
+                                            <input
+                                                id="issf_core_id"
+                                                type="hidden"
+                                                value="{{ core_instance.issf_core_id }}"
+                                                name="issf_core_id"
+                                            >
+                                            <div class="FormButtonBar button-bar">
+                                                <button class="medium radius submit bt-submit">Submit</button>
+                                            </div>
+                                        </form>
+
+                                        <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
+                                            {% csrf_token %}
+                                            <input
+                                                id="id_geographic_scope_type_4"
+                                                type="hidden"
+                                                value="Global"
+                                                name="geographic_scope_type"
+                                            >
+                                            <input
+                                                id="issf_core_id"
+                                                type="hidden"
+                                                value="{{ core_instance.issf_core_id }}"
+                                                name="issf_core_id"
+                                            >
+                                            <div class="FormButtonBar button-bar">
+                                                <button class="medium radius submit bt-submit">Submit</button>
+                                            </div>
+                                        </form>
+
+                                        <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
+                                            {% csrf_token %}
+                                            <input
+                                                id="issf_core_id"
+                                                type="hidden"
+                                                value="{{ core_instance.issf_core_id }}"
+                                                name="issf_core_id"
+                                            >
+                                            <input
+                                                type="hidden"
+                                                name="geographic_scope_type"
+                                                value="Not specific"
+                                                id="id_geographic_scope_type_5"
+                                            >
+                                            <div class="FormButtonBar button-bar">
+                                                <button class="medium radius submit bt-submit">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 {% endif %}
                             </div>
                         </dd>
