@@ -136,10 +136,14 @@ class SSFKnowledge(models.Model):
     theme_issue_details = models.TextField(blank=True)
 
     # checkbox sets not generalized as themes/issues or characteristics
-    method_specify_qualitative = models.BooleanField(choices=YES_NO, default=False, help_text='Specify ' 'method ' 'approach (' 'check ' 'all that ' 'apply):')
+    method_specify_qualitative = models.BooleanField(
+        choices=YES_NO,
+        default=False,
+        help_text='Specify method approach (check all that apply):'
+    )
     method_specify_quantitative = models.BooleanField(choices=YES_NO, default=False)
     method_specify_mixed = models.BooleanField(choices=YES_NO, default=False)
-    demographics_na = models.BooleanField(default=False, help_text='Demographic factors (' 'check all that apply):')
+    demographics_na = models.BooleanField(default=False, help_text='Demographic factors (check all that apply):')
     demographics_age = models.BooleanField(default=False)
     demographics_education = models.BooleanField(default=False)
     demographics_ethnicity = models.BooleanField(default=False)
@@ -157,7 +161,7 @@ class SSFKnowledge(models.Model):
     employment_seasonal = models.BooleanField(default=False)
     employment_unspecified = models.BooleanField(default=False)
     employment_details = models.TextField(blank=True)
-    stage_na = models.BooleanField(default=False, help_text='Stage(s) of fishery chain ' 'addressed (check all that ' 'apply)')
+    stage_na = models.BooleanField(default=False, help_text='Stage(s) of fishery chain addressed (check all that apply)')
     stage_pre_harvest = models.BooleanField(default=False)
     stage_harvest = models.BooleanField(default=False)
     stage_post_harvest = models.BooleanField(default=False)
@@ -396,7 +400,12 @@ class SSFPerson(models.Model):
     YES_NO = ((True, 'Yes'), (False, 'No'))
     is_researcher = models.BooleanField(default=False, choices=YES_NO)
     number_publications = models.PositiveIntegerField(blank=True, null=True)
-    EDUCATION_LEVEL = (('Bachelor', 'Bachelor'), ('Master', 'Master'), ('PhD', 'PhD'), ('Other', 'Other'),)
+    EDUCATION_LEVEL = (
+        ('Bachelor', 'Bachelor'),
+        ('Master', 'Master'),
+        ('PhD', 'PhD'),
+        ('Other', 'Other')
+    )
     education_level = models.CharField(max_length=100, choices=EDUCATION_LEVEL, blank=True)
     other_education_level = models.CharField(max_length=100, blank=True)
     research_method = models.TextField(blank=True)
@@ -408,9 +417,7 @@ class SSFPerson(models.Model):
         db_table = 'ssf_person'
 
     def __str__(self):
-        return '%s %s %s' % (
-            self.contributor.first_name, self.contributor.initials,
-            self.contributor.last_name)
+        return '%s %s %s' % (self.contributor.first_name, self.contributor.initials, self.contributor.last_name)
 
     def save(self, *args, **kwargs):
         self.affiliation = conditional_escape(self.affiliation)
@@ -429,10 +436,16 @@ class SSFCapacityNeed(models.Model):
 
     # model-specific fields
     CAPACITY_NEED_CATEGORY = (
-        ('Economic', 'Economic'), ('Ecological', 'Ecological'),
-        ('Social/Cultural', 'Social/Cultural'), ('Governance', 'Governance'),)
+        ('Economic', 'Economic'),
+        ('Ecological', 'Ecological'),
+        ('Social/Cultural', 'Social/Cultural'),
+        ('Governance', 'Governance')
+    )
     capacity_need_category = models.CharField(max_length=50, choices=CAPACITY_NEED_CATEGORY)
-    CAPACITY_NEED_TYPE = (('Existing', 'Existing'), ('Need', 'Need'),)
+    CAPACITY_NEED_TYPE = (
+        ('Existing', 'Existing'),
+        ('Need', 'Need')
+    )
     capacity_need_type = models.CharField(max_length=50, choices=CAPACITY_NEED_TYPE)
     capacity_need_title = models.CharField(max_length=50)
     capacity_need_description = models.TextField()
@@ -463,15 +476,24 @@ class SSFGuidelines(models.Model):
     # model-specific fields
     title = models.CharField(max_length=256)
     ACTIVITY_TYPE = (
-        ('Conference', 'Conference'), ('Journal Article', 'Journal Article'),
-        ('Meeting', 'Meeting'), ('National Plan', 'National Plan'),
-        ('Network', 'Network'), ('Newsletter', 'Newsletter'),
-        ('Regional Programme', 'Regional Programme'), ('Workshop', 'Workshop'), ('Research', 'Research'))
+        ('Conference', 'Conference'),
+        ('Journal Article', 'Journal Article'),
+        ('Meeting', 'Meeting'),
+        ('National Plan', 'National Plan'),
+        ('Network', 'Network'),
+        ('Newsletter', 'Newsletter'),
+        ('Regional Programme', 'Regional Programme'),
+        ('Workshop', 'Workshop'),
+        ('Research', 'Research')
+    )
     # Refactor
     activity_type = models.CharField(choices=ACTIVITY_TYPE, max_length=100)
-    ACTIVITY_COVERAGE = (('Regional', 'Regional'), ('National', 'National'),
-                         ('International', 'International'),
-                         ('Global', 'Global'))
+    ACTIVITY_COVERAGE = (
+        ('Regional', 'Regional'),
+        ('National', 'National'),
+        ('International', 'International'),
+        ('Global', 'Global')
+    )
     activity_coverage = models.CharField(choices=ACTIVITY_COVERAGE, max_length=100)
     location = models.CharField(max_length=256)
     start_day = models.SmallIntegerField(blank=True, validators=[MinValueValidator(1), MaxValueValidator(31)])
@@ -602,9 +624,13 @@ class ISSFCore(models.Model):
     core_record_summary = models.TextField(blank=True)
     core_record_status = models.IntegerField(blank=True, null=True)
     GEOGRAPHIC_SCOPE_TYPE = (
-        ('Local', 'Local'), ('Sub-national', 'Sub-national'),
-        ('National', 'National'), ('Regional', 'Regional'),
-        ('Global', 'Global'), ('Not specific', 'Not specific'),)
+        ('Local', 'Local'),
+        ('Sub-national', 'Sub-national'),
+        ('National', 'National'),
+        ('Regional', 'Regional'),
+        ('Global', 'Global'),
+        ('Not specific', 'Not specific')
+    )
     geographic_scope_type = models.CharField(choices=GEOGRAPHIC_SCOPE_TYPE, max_length=100, blank=False, null=False)
 
     class Meta:
@@ -630,9 +656,13 @@ class ISSF_Core(models.Model):
     core_record_status = models.IntegerField(blank=True, null=True)
     # geographic scope
     GEOGRAPHIC_SCOPE_TYPE = (
-        ('Local', 'Local'), ('Sub-national', 'Sub-national'),
-        ('National', 'National'), ('Regional', 'Regional'),
-        ('Global', 'Global'), ('Not specific', 'Not specific'),)
+        ('Local', 'Local'),
+        ('Sub-national', 'Sub-national'),
+        ('National', 'National'),
+        ('Regional', 'Regional'),
+        ('Global', 'Global'),
+        ('Not specific', 'Not specific')
+    )
     geographic_scope_type = models.CharField(choices=GEOGRAPHIC_SCOPE_TYPE, max_length=100, default='Local')
     countries = models.ManyToManyField(Country, db_table='geographic_scope_nation', blank=True)
 
@@ -646,17 +676,23 @@ class ProfileOrganization(models.Model):
     ssfprofile = models.ForeignKey(SSFProfile, on_delete=models.CASCADE)
     ssforganization = models.ForeignKey(SSFOrganization, null=True, blank=True, on_delete=models.CASCADE)
     organization_name = models.CharField(max_length=200, blank=True)
-    ORG_TYPE = (('State/government department', 'State/government department'),
-                ('Union/association', 'Union/association'),
-                ('Support organization', 'Support organization'), (
-                    'Fisheries local action group',
-                    'Fisheries local action group'),
-                ('Market organization', 'Market organization'),
-                ('Co-op/society', 'Co-op/society'), ('Other', 'Other'))
+    ORG_TYPE = (
+        ('State/government department', 'State/government department'),
+        ('Union/association', 'Union/association'),
+        ('Support organization', 'Support organization'),
+        ('Fisheries local action group', 'Fisheries local action group'),
+        ('Market organization', 'Market organization'),
+        ('Co-op/society', 'Co-op/society'),
+        ('Other', 'Other')
+    )
     organization_type = models.CharField(choices=ORG_TYPE, max_length=100, blank=True)
-    GEOG_SCOPE = (('Local', 'Local'), ('Sub-national', 'Sub-national'),
-                  ('National', 'National'), ('Regional', 'Regional'),
-                  ('Global', 'Global'))
+    GEOG_SCOPE = (
+        ('Local', 'Local'),
+        ('Sub-national', 'Sub-national'),
+        ('National', 'National'),
+        ('Regional', 'Regional'),
+        ('Global', 'Global')
+    )
     geographic_scope = models.CharField(choices=GEOG_SCOPE, max_length=100, blank=True)
 
     class Meta:
@@ -669,9 +705,11 @@ class SelectedAttribute(models.Model):
     # does not contains all
     # fields; see CommonAttributeView and MainAttributeView for adding records
     selected_attribute_id = models.AutoField(primary_key=True)
-    attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
-        attribute_type='Qualitative') | Q(attribute_type='Ordinal'),
-        on_delete=models.CASCADE)
+    attribute = models.ForeignKey(
+        Attribute,
+        limit_choices_to=Q(attribute_type='Qualitative') | Q(attribute_type='Ordinal'),
+        on_delete=models.CASCADE
+    )
     attribute_value = models.IntegerField()
 
     class Meta:
@@ -701,9 +739,11 @@ class CommonAttributeView(models.Model):
     selected_attribute_id = models.IntegerField(verbose_name='', blank=True, null=True)
     issf_core = models.ForeignKey(ISSF_Core, verbose_name='', on_delete=models.CASCADE)
     # attribute_id is a FK to Attribute
-    attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
-        attribute_category='Common') | Q(attribute_category='Non-profile'),
-        on_delete=models.CASCADE)
+    attribute = models.ForeignKey(
+        Attribute,
+        limit_choices_to=Q(attribute_category='Common') | Q(attribute_category='Non-profile'),
+        on_delete=models.CASCADE
+    )
     attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
 
@@ -749,9 +789,11 @@ class MainAttributeView(models.Model):
     row_number = models.IntegerField(verbose_name='', primary_key=True)
     selected_attribute_id = models.IntegerField(verbose_name='', blank=True, null=True)
     issf_core = models.ForeignKey(ISSF_Core, verbose_name='', on_delete=models.CASCADE)
-    attribute = models.ForeignKey(Attribute, limit_choices_to=Q(
-        attribute_category='Main') | Q(attribute_category='Common'),
-        on_delete=models.CASCADE)
+    attribute = models.ForeignKey(
+        Attribute,
+        limit_choices_to=Q(attribute_category='Main') | Q(attribute_category='Common'),
+        on_delete=models.CASCADE
+    )
     value = models.IntegerField(verbose_name='', blank=True, null=True)
     attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
@@ -850,8 +892,11 @@ class SelectedThemeIssue(models.Model):
 
 class ExternalLink(models.Model):
     external_link_id = models.AutoField(primary_key=True)
-    LINK_TYPE = (('URL Link', 'URL Link'), ('Image Link', 'Image Link'),
-                 ('YouTube Video Link', 'YouTube Video Link'),)
+    LINK_TYPE = (
+        ('URL Link', 'URL Link'),
+        ('Image Link', 'Image Link'),
+        ('YouTube Video Link', 'YouTube Video Link')
+    )
     link_type = models.CharField(choices=LINK_TYPE, max_length=50)
     link_address = models.URLField(max_length=2000)
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
@@ -902,11 +947,13 @@ class GeographicScopeLocalArea(models.Model):
     local_area_alternate_name = models.CharField(max_length=100, blank=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     LOCAL_AREA_SETTING = (
-        ('Urban', 'Urban'), ('Rural, developed', 'Rural, developed'),
+        ('Urban', 'Urban'),
+        ('Rural, developed', 'Rural, developed'),
         ('Rural, less developed', 'Rural, less developed'),
-        ('Unspecified', 'Unspecified'), ('Other', 'Other'),)
-    local_area_setting = models.CharField(choices=LOCAL_AREA_SETTING,
-                                          max_length=100)
+        ('Unspecified', 'Unspecified'),
+        ('Other', 'Other')
+    )
+    local_area_setting = models.CharField(choices=LOCAL_AREA_SETTING, max_length=100)
     local_area_setting_other = models.CharField(max_length=100, blank=True)
     local_area_point = models.PointField(blank=True, null=True)
     objects = models.Manager()
@@ -925,11 +972,17 @@ class GeographicScopeSubnation(models.Model):
     subnation_name = models.CharField(max_length=100)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     SUBNATION_TYPE = (
-        ('Canton', 'Canton'), ('Commune', 'Commune'), ('County', 'County'),
-        ('Department', 'Department'), ('District', 'District'),
-        ('Province', 'Province'), ('State', 'State'),
-        ('Territory', 'Territory'), ('Unspecified', 'Unspecified'),
-        ('Other', 'Other'),)
+        ('Canton', 'Canton'),
+        ('Commune', 'Commune'),
+        ('County', 'County'),
+        ('Department', 'Department'),
+        ('District', 'District'),
+        ('Province', 'Province'),
+        ('State', 'State'),
+        ('Territory', 'Territory'),
+        ('Unspecified', 'Unspecified'),
+        ('Other', 'Other')
+    )
     subnation_type = models.CharField(choices=SUBNATION_TYPE, max_length=100)
     subnation_type_other = models.CharField(max_length=100, blank=True)
     subnation_point = models.PointField(blank=True, null=True)

@@ -41,9 +41,7 @@ class SSFKnowledgeForm(ModelForm):
         # make safe text entered by user
 
         # other publication type and text must be provided in combination
-        other_text = False
-        if len(cleaned_data['other_publication_type']) > 0:
-            other_text = True
+        other_text = len(cleaned_data['other_publication_type']) > 0
         other_selected = False
         if 'publication_type' in cleaned_data:
             if cleaned_data['publication_type'].publication_type == 'Other (specify)':
@@ -197,8 +195,7 @@ class SSFProfileForm(ModelForm):
         }
 
     def clean(self):
-        cleaned_data = super(SSFProfileForm, self).clean()
-        return cleaned_data
+        return super(SSFProfileForm, self).clean()
 
 
 class SSFGuidelinesForm(ModelForm):
@@ -381,8 +378,7 @@ class CommonThemeIssueForm(ModelForm):
             cleaned_data['DELETE'] = True
 
         # if a user selected "Other" but didn't provide a value
-        if str(cleaned_data['theme_issue_value']) == 'Other' and str(
-                cleaned_data['other_theme_issue']) == '':
+        if str(cleaned_data['theme_issue_value']) == 'Other' and str(cleaned_data['other_theme_issue']) == '':
             raise forms.ValidationError('Please provide a value for Other. ')
 
         return cleaned_data
@@ -443,8 +439,7 @@ class CommonAttributeForm(ModelForm):
             cleaned_data['DELETE'] = True
 
         # if a user selected "Other" but didn't provide a value
-        if str(cleaned_data['attribute_value']) == 'Other' and str(
-                cleaned_data['other_value']) == '':
+        if str(cleaned_data['attribute_value']) == 'Other' and str(cleaned_data['other_value']) == '':
             raise forms.ValidationError('Please provide a value for Other. ')
 
         return cleaned_data
@@ -609,9 +604,7 @@ class PersonResearcherForm(ModelForm):
     def clean(self):
         cleaned_data = super(PersonResearcherForm, self).clean()
         # other level of education and text must be provided in combination
-        other_text = False
-        if len(cleaned_data['other_education_level']) > 0:
-            other_text = True
+        other_text = len(cleaned_data['other_education_level']) > 0
         other_selected = False
         if 'education_level' in cleaned_data:
             if cleaned_data['education_level'] == 'Other':
@@ -662,9 +655,7 @@ class GeographicScopeLocalAreaForm(ModelForm):
     def clean(self):
         cleaned_data = super(GeographicScopeLocalAreaForm, self).clean()
         # other local area setting and text must be provided in combination
-        other_text = False
-        if len(cleaned_data['local_area_setting_other']) > 0:
-            other_text = True
+        other_text = len(cleaned_data['local_area_setting_other']) > 0
         other_selected = False
         if 'local_area_setting' in cleaned_data:
             if cleaned_data['local_area_setting'] == 'Other':
@@ -694,16 +685,10 @@ class GeographicScopeSubnationForm(ModelForm):
     def clean(self):
         cleaned_data = super(GeographicScopeSubnationForm, self).clean()
         # other local area setting and text must be provided in combination
-        other_text = False
-        if len(cleaned_data['subnation_type_other']) > 0:
-            other_text = True
-        other_selected = False
-        if cleaned_data['subnation_type'] == 'Other':
-            other_selected = True
+        other_text = len(cleaned_data['subnation_type_other']) > 0
+        other_selected = cleaned_data['subnation_type'] == 'Other'
         if not other_text and other_selected:
-            raise forms.ValidationError(
-                'Please specify other sub-national area type, or uncheck '
-                'Other.')
+            raise forms.ValidationError('Please specify other sub-national area type, or uncheck Other.')
         if 'subnation_point' in cleaned_data:
             if cleaned_data['subnation_point'] is None:
                 raise forms.ValidationError('Please place a point on the map.')
@@ -733,9 +718,7 @@ class GeographicScopeRegionForm(ModelForm):
     def clean(self):
         cleaned_data = super(GeographicScopeRegionForm, self).clean()
         # other local area setting and text must be provided in combination
-        other_text = False
-        if len(cleaned_data['region_name_other']) > 0:
-            other_text = True
+        other_text = len(cleaned_data['region_name_other']) > 0
         other_selected = False
         if 'region' in cleaned_data:
             if cleaned_data['region'].region_name == 'Other':
@@ -803,11 +786,13 @@ MainAttributesViewInlineFormSet = inlineformset_factory(ISSF_Core,
                                                         extra=0,
                                                         can_delete=True)
 
-SpeciesLandingsInlineFormSet = inlineformset_factory(ISSF_Core, Species,
+SpeciesLandingsInlineFormSet = inlineformset_factory(ISSF_Core,
+                                                     Species,
                                                      form=SpeciesLandingsForm,
                                                      extra=1, can_delete=True)
 
-ExternalLinksInlineFormSet = inlineformset_factory(ISSF_Core, ExternalLink,
+ExternalLinksInlineFormSet = inlineformset_factory(ISSF_Core,
+                                                   ExternalLink,
                                                    form=ExternalLinkForm,
                                                    extra=1)
 
@@ -846,6 +831,4 @@ def confirm_other_text(other_text_field, other_check_field, cleaned_data):
     other_check = False
     if cleaned_data[other_check_field]:
         other_check = True
-    if not other_text and other_check:
-        return False
-    return True
+    return other_text or not other_check

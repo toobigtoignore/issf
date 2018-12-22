@@ -7,11 +7,10 @@ from django.shortcuts import render, HttpResponse
 from django.db import connection
 from allauth.account.models import EmailAddress
 from allauth.account.views import PasswordChangeView
+
 from .models import UserProfile
-from issf_base.models import FAQ, FAQCategory
-from issf_base.models import DidYouKnow
+from issf_base.models import FAQ, FAQCategory, ISSFCore, SSFPerson, ISSF_Core, DidYouKnow
 from .forms import ProfileForm
-from issf_base.models import ISSFCore, SSFPerson, ISSF_Core
 
 
 @login_required
@@ -19,9 +18,9 @@ def update_profile(request, template_name='issf_admin/user_profile.html'):
     if request.method == "POST":
         saved, response = save_profile(request)
         if saved:
-
             response = json.dumps({
-                'success': 'true', 'redirectname': 'profile-saved',
+                'success': 'true',
+                'redirectname': 'profile-saved',
                 'record': None
             })
             return HttpResponse(response)
@@ -33,7 +32,14 @@ def update_profile(request, template_name='issf_admin/user_profile.html'):
         # load
         user_profile = UserProfile.objects.get(id=request.user.pk)
         profile_form = ProfileForm(instance=user_profile)
-        return render(request, template_name, {'userName': request.user.username, 'userForm': profile_form, })
+        return render(
+            request,
+            template_name,
+            {
+                'userName': request.user.username,
+                'userForm': profile_form
+            }
+        )
 
 
 def save_profile(request):
@@ -136,27 +142,31 @@ def contributed_records(request):
     for record in records:
         titles = record.core_record_summary.split('<strong>')
         record_title = titles[1].replace('</strong>', '')
-        record_url = reverse(get_redirectname(record.core_record_type),
-                             kwargs={'issf_core_id': record.issf_core_id})
+        record_url = reverse(
+            get_redirectname(record.core_record_type),
+            kwargs={'issf_core_id': record.issf_core_id}
+        )
         record_items[record_url] = [record_title, record.core_record_type]
 
-    return render(request, 'issf_admin/account/contributed_records.html',
-                  {'record_items': record_items})
+    return render(
+        request,
+        'issf_admin/account/contributed_records.html',
+        {'record_items': record_items}
+    )
 
 
 def get_redirectname(core_record_type):
-    if core_record_type == "State-of-the-Art in SSF Research":
-        return 'sota-details'
-    elif core_record_type == "Who's Who in SSF":
-        return 'who-details'
-    elif core_record_type == "SSF Organization":
-        return 'organization-details'
-    elif core_record_type == "Capacity Development":
-        return 'capacity-details'
-    elif core_record_type == "SSF Profile":
-        return 'profile-details'
-    elif core_record_type == "SSF Guidelines":
-        return 'guidelines-details'
+    urls = {
+        "State-of-the-Art in SSF Research": 'sota-details',
+        "Who's Who in SSF": 'who-details',
+        "SSF Organization": 'organization-details',
+        "Capacity Development": 'capacity-details',
+        "SSF Profile": 'profile-details',
+        "SSF Guidelines": 'guidelines-details',
+        "Case Study": 'case-studies-details',
+        "SSF Experiences": 'experiences-details'
+    }
+    return urls[core_record_type]
 
 
 def help_page(request):
@@ -167,11 +177,20 @@ def help_page(request):
     random_index = random.randint(1, num_facts)
     random_fact = DidYouKnow.objects.get(id=random_index)
 
-    return render(request, 'issf_admin/help.html',
-                  {'faqs': faqs, 'categories': categories, 'fact':
-                      random_fact})
+    return render(
+        request,
+        'issf_admin/help.html',
+        {
+            'faqs': faqs,
+            'categories': categories,
+            'fact': random_fact
+        }
+    )
 
 
 def fact_archive(request):
-    return render(request, 'issf_admin/fact_archive.html',
-                  {'facts': DidYouKnow.objects.all()})
+    return render(
+        request,
+        'issf_admin/fact_archive.html',
+        {'facts': DidYouKnow.objects.all()}
+    )

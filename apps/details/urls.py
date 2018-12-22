@@ -100,6 +100,5 @@ urlpatterns = [  # display
     url(r'^delete/(?P<issf_core_id>\d+)/$', delete_record,
         name='delete-record'),
     url(r'^delete-record/$',
-        TemplateView.as_view(
-            template_name='details/record_deleted.html'),
+        TemplateView.as_view(template_name='details/record_deleted.html'),
         name='delete-record'), ]
