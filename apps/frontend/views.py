@@ -16,6 +16,7 @@ from djgeojson.views import GeoJSONLayerView
 from django.views.decorators.gzip import gzip_page
 
 from issf_base.models import *
+from issf_admin.views import get_redirectname
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
 from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
@@ -41,6 +42,7 @@ def parse_search_terms(input_search_terms):
     if '"' in input_search_terms:
         return parsed_search_terms.replace(u" ", u" & ")
     return parsed_search_terms.replace(u" ", u" | ")
+
 
 @gzip_page
 def index(request):
@@ -89,8 +91,94 @@ def index(request):
     )
 
 
+def get_map_points(issf_core_ids):
+    """
+    Returns map points for all given IDs, if they exist.
+    :param issf_core_ids: An iterator containing core ids.
+    """
+    points = []
+    for core_id in issf_core_ids:
+        points += list(ISSFCoreMapPointUnique.objects.filter(issf_core_id__exact=core_id))
+    return points
+
+
 @gzip_page
 def frontend_data(request):
+
+    if request.method == 'GET':
+        map_queryset = ISSFCoreMapPointUnique.objects.all()
+        search_terms = 'None'
+    else:
+        map_queryset = []
+        keywords = request.POST['keywords']
+        search_terms = str(keywords)
+
+        models = [
+            SSFPerson,
+            SSFKnowledge,
+            SSFProfile,
+            SSFOrganization,
+            SSFCapacityNeed,
+            SSFGuidelines,
+            SSFCaseStudies,
+            SSFExperiences
+        ]
+
+        if keywords:
+            for model in models:
+                print(model)
+                if model == SSFPerson:
+                    results = list(model.objects.all())
+                    filtered_ids = [i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=keywords)]
+                    for result in results[:]:
+                        if result.issf_core_id not in filtered_ids:
+                            results.remove(result)
+                elif model == SSFKnowledge:
+                    results = model.objects.filter(level1_title__icontains=keywords)
+                elif model == SSFProfile:
+                    results = model.objects.filter(ssf_name__icontains=keywords)
+                elif model == SSFOrganization:
+                    results = model.objects.filter(organization_name__icontains=keywords)
+                elif model == SSFCapacityNeed:
+                    results = model.objects.filter(capacity_need_title__icontains=keywords)
+                elif model == SSFCaseStudies:
+                    results = model.objects.filter(name__icontains=keywords)
+                else:
+                    results = model.objects.filter(title__icontains=keywords)
+                
+                ids = [result.issf_core_id for result in results]
+                map_queryset += get_map_points(ids)
+
+    map_results = []
+
+    for row in map_queryset:
+        temp = []
+        temp.append(row.core_record_type)
+        temp.append(row.geographic_scope_type)
+        lines = row.core_record_summary.split('\\n')
+        summary = ''
+        for line in lines:
+            summary += line + '<br/>'
+        temp.append(summary)
+        url = reverse(get_redirectname(row.core_record_type), kwargs={'issf_core_id': row.issf_core_id})
+        temp.append('<a href="' + url + '">Details</a>')
+        temp.append(str(row.lon))
+        temp.append(str(row.lat))
+        temp.append(row.edited_date.strftime("%Y-%m-%d"))
+        temp.append(str(0))
+        map_results.append(temp)
+
+    response = json.dumps({
+        'success': 'true',
+        'msg': 'OK',
+        'searchTerms': '(' + search_terms,
+        'mapData': map_results
+    })
+    return gzip_middleware.process_response(request, HttpResponse(response))
+
+
+@gzip_page
+def frontend_data_old(request):
     map_queryset = None
     search_terms = u""
     map_results = []
