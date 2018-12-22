@@ -238,16 +238,17 @@
                                             one.
                                             {{ person_form.contributor }}
                                         </div>
-                                        <input id="issf_core_id" type="hidden"
-                                               value="{{ issf_core_id }}"
-                                               name="issf_core_id">
-
+                                        <input
+                                            id="issf_core_id"
+                                            type="hidden"
+                                            value="{{ issf_core_id }}"
+                                            name="issf_core_id"
+                                        >
 
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
                                             </button>
-
                                         </div>
                                     </form>
                                 </div>
@@ -322,6 +323,11 @@
                                             {{ fishery_profile_form.img_url.label_tag }}{{ fishery_profile_form.img_url }}
                                             {{ fishery_profile_form.contributor.label_tag }}{{ fishery_profile_form.contributor }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            {{ fishery_profile_form.tweet }}
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -620,6 +626,10 @@
                                             {{ organization_form.contributor }}
                                         </div>
 
+                                        {% if user.is_staff %}
+                                            {{ organization_form.tweet }}
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -648,9 +658,15 @@
 
                                     <form action="{% url 'case-studies-basic' %}" method="post">
                                         {% csrf_token %}
+
                                         <div class="FormSet">
                                             {{ case_study_form }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            {{ case_study_form.tweet }}
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -681,9 +697,15 @@
 
                                     <form action="{% url 'capacity-basic' %}" method="post">
                                         {% csrf_token %}
+
                                         <div class="FormSet">
                                             {{ capacity_need_form }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            {{ capacity_need_form.tweet }}
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -711,6 +733,7 @@
 
                                     <form action="{% url 'experiences-basic' %}" method="post">
                                         {% csrf_token %}
+
                                         <div class="FormSet">
                                             {{ experiences_form.name.label_tag }}{{ experiences_form.name }}
                                             {{ experiences_form.title.label_tag }}{{ experiences_form.title }}
@@ -720,6 +743,11 @@
                                             {{ experiences_form.img_url.label_tag }}{{ experiences_form.img_url }}
                                             {{ experiences_form.contributor.label_tag }}{{ experiences_form.contributor }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            {{ experiences_form.tweet }}
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -736,8 +764,7 @@
                         <!-- Guidelines -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel81">SSF Guidelines
-                                </a>
+                                <a href="#panel81">SSF Guidelines</a>
                                 <div id="panel81" class="content">
                                     <h6>Step 1. Please provide details of the SSF Guidelines documentation.</h6>
 
@@ -772,6 +799,11 @@
                                             {{ guidelines_form.link.label_tag }}{{ guidelines_form.link }}
                                             {{ guidelines_form.contributor.label_tag }}{{ guidelines_form.contributor }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            {{ guidelines_form.tweet }}
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit

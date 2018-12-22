@@ -646,6 +646,7 @@ def save_basic(request, model_class, form_class):
                 issf_core_id = request.POST['issf_core_id']
                 instance = get_object_or_404(model_class, issf_core_id=issf_core_id)
                 existing = True
+
             form = form_class(request.POST, instance=instance)
             if form.is_valid():
                 instance = form.save()
@@ -679,6 +680,7 @@ def save_basic(request, model_class, form_class):
                     api.PostUpdate('Check out the new #tbtiissf ' + instance.core_record_type + ' record for ' + name + '. ' + url)
 
                 update_tsvector_summary(instance.core_record_type, str(instance.pk))
+
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
                     redirectname = 'geographic-scope-save'
