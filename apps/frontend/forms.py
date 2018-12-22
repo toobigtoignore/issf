@@ -3,13 +3,13 @@ from django.db.models import Q
 from django.forms import ModelForm, Select
 from django.forms.models import formset_factory
 from issf_admin.models import UserProfile
-from issf_base.models import Country, ISSFCore, SelectedAttribute, SelectedThemeIssue, DidYouKnow, FAQ, WhoFeature, SSFPerson, SSFKnowledge
+from issf_base.models import Country, ISSF_Core, SelectedAttribute, SelectedThemeIssue, DidYouKnow, FAQ, WhoFeature, SSFPerson, SSFKnowledge
 
 
 class SearchForm(forms.Form):
     keywords = forms.CharField(label='Search by title', required=False)
     # contributor_id=1 is the ISSF Staff account
-    existing_contributors = ISSFCore.objects.all().values('contributor')
+    existing_contributors = ISSF_Core.objects.all().values('contributor')
     contributor_choices = [
         (u.id, '%s (%s %s %s)' % (u.username, u.first_name, u.initials, u.last_name)) for u in UserProfile.objects.filter(
             Q(id__in=existing_contributors)
