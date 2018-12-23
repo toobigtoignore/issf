@@ -181,6 +181,7 @@ WSGI_APPLICATION = 'issf_prod.wsgi_dev.application'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 POSTGIS_VERSION = (2, 1)
 
-CHROME_PATH = "google-chrome"
+CHROME_PATH = "/usr/bin/chromium-browser"
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 4096
 
+GEOS_LIBRARY_PATH = "/usr/lib/libgeos_c.so.1"
