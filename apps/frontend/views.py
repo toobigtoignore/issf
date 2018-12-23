@@ -117,6 +117,12 @@ def frontend_data(request):
             keywords = form.cleaned_data['keywords']
             contributor = form.cleaned_data['contributor']
             countries = form.cleaned_data['countries']
+            contribution_begin_date = form.cleaned_data['contribution_begin_date']
+            contribution_end_date = form.cleaned_data['contribution_end_date']
+        else:
+            keywords = None
+            contributor = None
+            countries = None
 
         models = [
             SSFPerson,
@@ -129,31 +135,34 @@ def frontend_data(request):
             SSFExperiences
         ]
 
-        if keywords != "":
-            search_terms.append(str(keywords))
-            for model in models:
-                # Every object has different variables for "title"
-                if model == SSFPerson:
-                    # SSFPerson has no name or title, so we retrieve all matching users from the map points and remove them from the users
-                    results = list(model.objects.all())
-                    filtered_ids = [i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=keywords)]
-                    for result in results[:]:
-                        if result.issf_core_id not in filtered_ids:
-                            results.remove(result)
-                elif model == SSFKnowledge:
-                    results = model.objects.filter(level1_title__icontains=keywords)
-                elif model == SSFProfile:
-                    results = model.objects.filter(ssf_name__icontains=keywords)
-                elif model == SSFOrganization:
-                    results = model.objects.filter(organization_name__icontains=keywords)
-                elif model == SSFCapacityNeed:
-                    results = model.objects.filter(capacity_need_title__icontains=keywords)
-                elif model == SSFCaseStudies:
-                    results = model.objects.filter(name__icontains=keywords)
-                else:
-                    results = model.objects.filter(title__icontains=keywords)
-                ids = [result.issf_core_id for result in results]
-                map_queryset += get_map_points(ids)
+        if keywords:
+            if keywords == "":
+                map_queryset = list(ISSFCoreMapPointUnique.objects.all())
+            else:
+                search_terms.append(str(keywords))
+                for model in models:
+                    # Every object has different variables for "title"
+                    if model == SSFPerson:
+                        # SSFPerson has no name or title, so we retrieve all matching users from the map points and remove them from the users
+                        results = list(model.objects.all())
+                        filtered_ids = [i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=keywords)]
+                        for result in results[:]:
+                            if result.issf_core_id not in filtered_ids:
+                                results.remove(result)
+                    elif model == SSFKnowledge:
+                        results = model.objects.filter(level1_title__icontains=keywords)
+                    elif model == SSFProfile:
+                        results = model.objects.filter(ssf_name__icontains=keywords)
+                    elif model == SSFOrganization:
+                        results = model.objects.filter(organization_name__icontains=keywords)
+                    elif model == SSFCapacityNeed:
+                        results = model.objects.filter(capacity_need_title__icontains=keywords)
+                    elif model == SSFCaseStudies:
+                        results = model.objects.filter(name__icontains=keywords)
+                    else:
+                        results = model.objects.filter(title__icontains=keywords)
+                    ids = [result.issf_core_id for result in results]
+                    map_queryset += get_map_points(ids)
         else:
             map_queryset = list(ISSFCoreMapPointUnique.objects.all())
 
@@ -184,6 +193,20 @@ def frontend_data(request):
             search_terms.append("Countries: {}".format(", ".join(country_names)))
             for item in map_queryset[:]:
                 if item not in country_matches:
+                    map_queryset.remove(item)
+
+        if contribution_begin_date:
+            search_terms.append("Contribution date begin: {}".format(contribution_begin_date))
+            matches = list(ISSFCoreMapPointUnique.objects.filter(contribution_date__gt=contribution_begin_date))
+            for item in map_queryset[:]:
+                if item not in matches:
+                    map_queryset.remove(item)
+        
+        if contribution_end_date:
+            search_terms.append("Contribution date end: {}".format(contribution_end_date))
+            matches = list(ISSFCoreMapPointUnique.objects.filter(contribution_date__lt=contribution_end_date))
+            for item in map_queryset[:]:
+                if item not in matches:
                     map_queryset.remove(item)
 
     map_results = []
