@@ -215,7 +215,13 @@ def frontend_data(request):
                  map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id = ANY(%(countries)s)',
                 {'countries': countries}
             ))
-            search_terms.append('Countries: {}'.format(', '.join(country_names)))
+            if len(countries) <= 5:
+                search_terms.append('Countries: {}'.format(', '.join(country_names)))
+            else:
+                search_terms.append('Countries: {} (and {} more)'.format(
+                    ', '.join(country_names[0:5]),
+                    len(countries) - 5
+                ))
             for item in map_queryset[:]:
                 if item.issf_core_id not in country_matches:
                     map_queryset.remove(item)
