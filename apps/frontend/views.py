@@ -113,6 +113,7 @@ def frontend_data(request):
     else:
         form = SearchForm(request.POST)
         themes_form = SelectedThemesIssuesFormSet(request.POST)
+        attributes_form = SelectedAttributesFormSet(request.POST)
         map_queryset = []
         if form.is_valid():
             keywords = form.cleaned_data['keywords']
@@ -127,16 +128,27 @@ def frontend_data(request):
             contribution_begin_date = None
             contribution_end_date = None
 
+        themes = []
         if themes_form.is_valid():
-            themes = []
+            
             for subform in themes_form.forms:
                 try:
                     themes.append(subform.cleaned_data['theme_issue_value'])
                 except KeyError:
                     # Occurs when form doesn't have a theme_issue_value value, meaning it isn't valid
                     pass
-        else:
-            return HttpResponse(json.dumps(themes_form.errors))
+
+        attributes = []
+        if attributes_form.is_valid():
+            for subform in attributes_form:
+                try:
+                    attributes.append({
+                        'attribute': subform.cleaned_data['attribute'],
+                        'attribute_value': subform.cleaned_data['attribute_value']
+                    })
+                except KeyError:
+                    # Occurs when form doesn't have an attribute set, meaning it actually isn't valid
+                    pass
 
         models = [
             SSFPerson,
@@ -187,8 +199,8 @@ def frontend_data(request):
             # If the user has defined a name, choose all components of the name that aren't none and add them to the username
             if any([contributor_instance.first_name, contributor_instance.initials, contributor_instance.last_name]):
                 components = (i for i in [contributor_instance.first_name, contributor_instance.initials, contributor_instance.last_name] if i != None)
-                contributor_name += " ({})".format(" ".join(components))
-            search_terms.append("Contributor: {}".format(contributor_name))
+                contributor_name += ' ({})'.format(' '.join(components))
+            search_terms.append('Contributor: {}'.format(contributor_name))
             for item in map_queryset[:]:
                 if item.contributor_id != contributor:
                     map_queryset.remove(item)
@@ -199,25 +211,25 @@ def frontend_data(request):
             # Underlying DB has a column for country id, but model itself doesn't
             # Therefore, we need to fall back to using plain SQL
             country_matches = list(ISSFCoreMapPointUnique.objects.raw(
-                "SELECT row_number, issf_core_id, contribution_date, contributor_id, edited_date, editor_id, \
+                'SELECT row_number, issf_core_id, contribution_date, contributor_id, edited_date, editor_id, \
                 core_record_type, core_record_summary, core_record_status geographic_scope_type,\
-                 map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id = ANY(%(countries)s)",
-                {"countries": countries}
+                 map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id = ANY(%(countries)s)',
+                {'countries': countries}
             ))
-            search_terms.append("Countries: {}".format(", ".join(country_names)))
+            search_terms.append('Countries: {}'.format('', ''.join(country_names)))
             for item in map_queryset[:]:
                 if item not in country_matches:
                     map_queryset.remove(item)
 
         if contribution_begin_date:
-            search_terms.append("Contribution date begin: {}".format(contribution_begin_date))
+            search_terms.append('Contribution date begin: {}'.format(contribution_begin_date))
             matches = list(ISSFCoreMapPointUnique.objects.filter(contribution_date__gt=contribution_begin_date))
             for item in map_queryset[:]:
                 if item not in matches:
                     map_queryset.remove(item)
 
         if contribution_end_date:
-            search_terms.append("Contribution date end: {}".format(contribution_end_date))
+            search_terms.append('Contribution date end: {}'.format(contribution_end_date))
             matches = list(ISSFCoreMapPointUnique.objects.filter(contribution_date__lt=contribution_end_date))
             for item in map_queryset[:]:
                 if item not in matches:
@@ -225,8 +237,23 @@ def frontend_data(request):
 
         if len(themes) > 0:
             theme_ids = [theme.theme_issue_value_id for theme in themes]
-            search_terms.append("Themes / Issues: {}".format(", ".join((theme.theme_issue_label for theme in themes))))
+            search_terms.append('Themes / Issues: {}'.format(', '.join((theme.theme_issue_label for theme in themes))))
             matches = set(i.issf_core_id for i in SelectedThemeIssue.objects.filter(theme_issue_value__in=theme_ids))
+            for item in map_queryset[:]:
+                if item.issf_core_id not in matches:
+                    map_queryset.remove(item)
+
+        if len(attributes) > 0:
+            attribute_value_ids = []
+            for attribute in attributes:
+                search_terms.append(
+                    '{} {}'.format(
+                        attribute['attribute'].attribute_label,
+                        attribute['attribute_value']
+                    )
+                )
+                attribute_value_ids.append(attribute['attribute_value'].attribute_value_id)
+            matches = set(i.issf_core_id for i in SelectedAttribute.objects.filter(attribute_value__in=attribute_value_ids))
             for item in map_queryset[:]:
                 if item.issf_core_id not in matches:
                     map_queryset.remove(item)
@@ -249,6 +276,7 @@ def frontend_data(request):
         temp.append(str(row.lat))
         temp.append(row.edited_date.strftime("%Y-%m-%d"))
         # The table originally was sorted by the "relevance", which we no longer have, so we just use a value of 0
+        # Removing this value results in errors with the DataTable library
         temp.append("0")
         map_results.append(temp)
 
@@ -260,7 +288,7 @@ def frontend_data(request):
     response = json.dumps({
         'success': 'true',
         'msg': 'OK',
-        'searchTerms': joined_terms[0].capitalize() + joined_terms[1:] + " (",
+        'searchTerms': joined_terms[0].capitalize() + joined_terms[1:] + ' (',
         'mapData': map_results
     })
     return gzip_middleware.process_response(request, HttpResponse(response))

@@ -704,13 +704,14 @@ class SelectedAttribute(models.Model):
     # only used for searching of qualitative/ordinal attributes, therefore
     # does not contains all
     # fields; see CommonAttributeView and MainAttributeView for adding records
+    issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE, blank=True)
     selected_attribute_id = models.AutoField(primary_key=True)
     attribute = models.ForeignKey(
         Attribute,
         limit_choices_to=Q(attribute_type='Qualitative') | Q(attribute_type='Ordinal'),
         on_delete=models.CASCADE
     )
-    attribute_value = models.IntegerField()
+    attribute_value = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, blank=True)
 
     class Meta:
         managed = False
