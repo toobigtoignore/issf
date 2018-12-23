@@ -2,6 +2,8 @@ from django import forms
 from django.forms import ModelForm, RadioSelect, HiddenInput
 from django.forms.models import inlineformset_factory
 from leaflet.forms.widgets import LeafletWidget
+import bleach
+
 # replace * with specific references
 from issf_base.models import *
 
@@ -39,6 +41,10 @@ class SSFKnowledgeForm(ModelForm):
     def clean(self):
         cleaned_data = super(SSFKnowledgeForm, self).clean()
         # make safe text entered by user
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
 
         # other publication type and text must be provided in combination
         other_text = len(cleaned_data['other_publication_type']) > 0
@@ -81,6 +87,15 @@ class SSFPersonForm(ModelForm):
             'person_point': ISSFMapWidget(),
             'contributor': forms.widgets.HiddenInput
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFOrganizationForm(ModelForm):
@@ -128,6 +143,10 @@ class SSFOrganizationForm(ModelForm):
     def clean(self):
         cleaned_data = super(SSFOrganizationForm, self).clean()
 
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         if 'ssf_defined' in cleaned_data:
             if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data['ssf_definition']:
                 raise forms.ValidationError('Please provide an SSF defintion.')
@@ -166,6 +185,15 @@ class SSFCapacityNeedForm(ModelForm):
                            'who can edit the record)'
         }
         widgets = {'capacity_need_description': forms.Textarea(attrs={'rows': 3})}
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFProfileForm(ModelForm):
@@ -195,7 +223,13 @@ class SSFProfileForm(ModelForm):
         }
 
     def clean(self):
-        return super(SSFProfileForm, self).clean()
+        cleaned_data = super(SSFProfileForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFGuidelinesForm(ModelForm):
@@ -225,6 +259,15 @@ class SSFGuidelinesForm(ModelForm):
             'organizer': '*Organizer',
             'purpose': '*Purpose'
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFExperiencesForm(ModelForm):
@@ -244,6 +287,15 @@ class SSFExperiencesForm(ModelForm):
                            'who can edit the record)',
             'vimeo_video_url': 'Vimeo video URL (no shortened links)'
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFCaseStudiesForm(ModelForm):
@@ -279,6 +331,15 @@ class SSFCaseStudiesForm(ModelForm):
             'background_context': forms.Textarea(attrs={'rows': 4}),
             'activities_innovation': forms.Textarea(attrs={'rows': 4}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class CapacityNeedRatingForm(ModelForm):
