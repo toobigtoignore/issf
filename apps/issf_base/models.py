@@ -717,17 +717,6 @@ class SelectedAttribute(models.Model):
         db_table = 'selected_attribute'
 
 
-class SelectedThemeIssue(models.Model):
-    # fields; see CommonThemeIssueView for adding records
-    selected_theme_issue_id = models.AutoField(primary_key=True)
-    theme_issue = models.ForeignKey(Theme_Issue, on_delete=models.CASCADE)
-    theme_issue_value = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'selected_theme_issue'
-
-
 class CommonAttributeView(models.Model):
     # uses database view to populate form of table of attributes
     # selected_attribute_id is the real PK, but could be multiple instances
@@ -881,9 +870,9 @@ class ContributionsByCountry(models.Model):
 # models attached to issf_core via foreign key
 class SelectedThemeIssue(models.Model):
     selected_theme_issue_id = models.AutoField(primary_key=True)
-    issf_core = models.ForeignKey(ISSF_Core, db_column='issf_core_id', on_delete=models.CASCADE)
+    issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE, blank=True)
     theme_issue_value = models.ForeignKey(Theme_Issue_Value, db_column='theme_issue_value_id', on_delete=models.CASCADE)
-    other_theme_issue = models.TextField()
+    other_theme_issue = models.TextField(blank=True)
 
     class Meta:
         managed = False
