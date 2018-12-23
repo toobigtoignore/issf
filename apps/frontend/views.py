@@ -130,7 +130,11 @@ def frontend_data(request):
         if themes_form.is_valid():
             themes = []
             for subform in themes_form.forms:
-                themes.append(subform.cleaned_data['theme_issue_value'])
+                try:
+                    themes.append(subform.cleaned_data['theme_issue_value'])
+                except KeyError:
+                    # Occurs when form doesn't have a theme_issue_value value, meaning it isn't valid
+                    pass
         else:
             return HttpResponse(json.dumps(themes_form.errors))
 
@@ -197,8 +201,8 @@ def frontend_data(request):
             country_matches = list(ISSFCoreMapPointUnique.objects.raw(
                 "SELECT row_number, issf_core_id, contribution_date, contributor_id, edited_date, editor_id, \
                 core_record_type, core_record_summary, core_record_status geographic_scope_type,\
-                 map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id IN (%(countries)s)",
-                {"countries": ", ".join(map(str, countries))}
+                 map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id = ANY(%(countries)s)",
+                {"countries": countries}
             ))
             search_terms.append("Countries: {}".format(", ".join(country_names)))
             for item in map_queryset[:]:
@@ -218,7 +222,7 @@ def frontend_data(request):
             for item in map_queryset[:]:
                 if item not in matches:
                     map_queryset.remove(item)
-        
+
         if len(themes) > 0:
             theme_ids = [theme.theme_issue_value_id for theme in themes]
             search_terms.append("Themes / Issues: {}".format(", ".join((theme.theme_issue_label for theme in themes))))
