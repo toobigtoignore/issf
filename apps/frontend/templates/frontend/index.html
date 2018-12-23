@@ -59,16 +59,6 @@
                 </div>
 
                 <nav class="map-icons">
-                    <a id="toexpand">
-                        <div class="pop">
-                            <h4>Dataset Filters</h4>
-                            <p>
-                                click icon to hide/show dataset; hover icon to popup dataset description; click here to
-                                show dataset names
-                            </p>
-                        </div>
-                    </a>
-
                     <a id="who" tabindex="0">
                         <h3>Who's Who in SSF</h3>
                         <span></span>
@@ -871,25 +861,6 @@
 
         $('.content-section .bt-prev').addClass('disable');
 
-        $('.map-icons a:not(#toexpand)').each(function () {
-            var tt = $(this).find('h3').html(),
-                title = tt.replace('<br>', ' ');
-            $(this).find('.pop').prepend('<h4>' + title + '</h4>');
-        });
-
-        $('.map-icons a').on('mouseenter', function () {
-            if (!$('.map-icons').hasClass('on')) {
-                $(this).find('.pop').show().css({opacity: 0}).animate({right: 66, opacity: 1}, 300);
-            }
-        });
-        $('.map-icons a').on('mouseleave', function () {
-            if (!$('.map-icons').hasClass('on')) {
-                $(this).find('.pop').animate({right: 52, opacity: 0}, 100, function () {
-                    $(this).removeAttr('style');
-                });
-            }
-        });
-
         /*
             ==== Icon filter button click listener ====
         */
@@ -912,41 +883,23 @@
             SaveFilterButtonStatus();
         });
 
-        $('#toexpand').on('click', function () {
-            if ($(this).hasClass('on')) {
-                $('.map-icons').animate({width: 52}, 200, function () {
-                    $('#toexpand,.map-icons').removeClass('on');
-                });
-                $('.map-icons h3').fadeOut(200);
-            } else {
+
+        $('.map-icons a:not(.disable)').on('mouseenter', function () {
                 // If you want more space for longer text you can change 200 to more number
-                $('.map-icons').animate({width: 200}, 300, function () {
-                    $('#toexpand,.map-icons').addClass('on');
-                });
-                $('.map-icons h3').fadeIn(300, function () {
+                $( this ).animate({width: 200}, 300);
+                $( this ).css('border-radius', '10px 0 0 10px');
+                $( this ).find('h3').fadeIn(300, function () {
                     var hi = $(this).height();
                     $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
                 });
                 $('.map-icons .pop').fadeOut(50);
-            }
-            setTimeout(function () {
-                $('.map-icons').animate({width: 52}, 300, function () {
-                    $('#toexpand,.map-icons').removeClass('on');
-                });
-                $('.map-icons h3').fadeOut(300);
-            }, 10000);
         });
-        $('.map-icons a:not(a#no-hover):not(#toexpand)').mouseover(function () {
-            $('<div class="btn_popup">Click to show/hide</div>').appendTo('body');
-        })
-            .mouseleave(function () {
-                $('.btn_popup').remove();
-            })
-            .mousemove(function (e) {
-                var mouseX = e.pageX, //X coordinates of mouse
-                    mouseY = e.pageY; //Y coordinates of mouse
-                $('.btn_popup').css({top: mouseY - 28, left: mouseX + 4});
-            });
+        $('.map-icons a:not(.disable)').on('mouseleave', function () {
+            $( this ).animate({width: 52}, 100);
+            $( this ).css('border-radius', '0 0 0 0');
+            $( this ).find('h3').fadeOut(50);
+        });
+
         $('#tosearch').on('click', function () {
             if ($(this).hasClass('on')) {
                 $('#advance-search #full-search').stop().slideUp(300, function () {
@@ -1006,27 +959,12 @@
             is.visibleCheck();
         });
 
-        $('nav .tab-title').hover(function () {
-            $(this).find('.pop').css({'display': 'block', opacity: 0}).animate({bottom: '120%', opacity: 1}, 200);
-        }, function () {
-            $(this).find('.pop').animate({bottom: '103%', opacity: 0}, 100, function () {
-                $(this).hide();
-            });
-        });
-
         // Turn on all filters
         if (GlobalNewLoad) {
             // Loading default filter buttons'
-            $('nav.map-icons a:nth-child(2)').addClass('on'); //who
-            $('nav.map-icons a:nth-child(3)').addClass('on'); //sota
-            $('nav.map-icons a:nth-child(4)').addClass('on'); //profile
-            $('nav.map-icons a:nth-child(5)').addClass('on'); //orgs
-            $('nav.map-icons a:nth-child(6)').addClass('on'); //case studies
-            $('nav.map-icons a:nth-child(7)').addClass('on'); //capacity
-            $('nav.map-icons a:nth-child(8)').addClass('on'); //experiences
-            $('nav.map-icons a:nth-child(9)').addClass('on'); //guidelines
-            $('nav.map-icons a:nth-child(10)').addClass('on'); //choropleth layer
-            $('nav.map-icons a:last-child').addClass('on'); //toggle all
+            for(i = 0; i < 10; i++)
+                $('nav.map-icons a:nth-child(' + i + ')').addClass('on');
+            $('nav.map-icons a:last-child').addClass('on');
             SaveFilterButtonStatus();
         } else {
             // Loading saved filter buttons
