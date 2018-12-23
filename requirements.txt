@@ -42,3 +42,4 @@ tablib==0.12.1
 unicodecsv==0.14.1
 Unipath==1.1
 django-hardcopy==0.1.4
+bleach==3.0.2
