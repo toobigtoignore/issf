@@ -112,6 +112,7 @@ def frontend_data(request):
         map_queryset = ISSFCoreMapPointUnique.objects.all()
     else:
         form = SearchForm(request.POST)
+        themes_form = SelectedThemesIssuesFormSet(request.POST)
         map_queryset = []
         if form.is_valid():
             keywords = form.cleaned_data['keywords']
@@ -123,6 +124,15 @@ def frontend_data(request):
             keywords = None
             contributor = None
             countries = None
+            contribution_begin_date = None
+            contribution_end_date = None
+
+        if themes_form.is_valid():
+            themes = []
+            for subform in themes_form.forms:
+                themes.append(subform.cleaned_data['theme_issue_value'])
+        else:
+            return HttpResponse(json.dumps(themes_form.errors))
 
         models = [
             SSFPerson,
@@ -201,12 +211,20 @@ def frontend_data(request):
             for item in map_queryset[:]:
                 if item not in matches:
                     map_queryset.remove(item)
-        
+
         if contribution_end_date:
             search_terms.append("Contribution date end: {}".format(contribution_end_date))
             matches = list(ISSFCoreMapPointUnique.objects.filter(contribution_date__lt=contribution_end_date))
             for item in map_queryset[:]:
                 if item not in matches:
+                    map_queryset.remove(item)
+        
+        if len(themes) > 0:
+            theme_ids = [theme.theme_issue_value_id for theme in themes]
+            search_terms.append("Themes / Issues: {}".format(", ".join((theme.theme_issue_label for theme in themes))))
+            matches = set(i.issf_core_id for i in SelectedThemeIssue.objects.filter(theme_issue_value__in=theme_ids))
+            for item in map_queryset[:]:
+                if item.issf_core_id not in matches:
                     map_queryset.remove(item)
 
     map_results = []

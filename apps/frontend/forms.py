@@ -41,7 +41,7 @@ class SelectedThemeIssueForm(ModelForm):
     class Meta:
         model = SelectedThemeIssue
         fields = '__all__'
-        widgets = {'theme_issue_value': Select}
+        # widgets = {'theme_issue_value': Select}
 
 
 class TipForm(ModelForm):
