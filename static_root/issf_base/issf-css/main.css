@@ -683,11 +683,11 @@ footer {
 }
 
 .map-icons #capacity h3, .map-icons #capacity h4 {
-    color: #bc6129;
+    color: #59CD90;
 }
 
 .map-icons #expe h3, .map-icons #expe h4 {
-    color: #7359a5;
+    color: #4D9DE0;
 }
 
 .map-icons #guidelines h3, .map-icons #guidelines h4 {
@@ -791,7 +791,7 @@ footer {
 }
 
 .map-icons #capacity.on {
-    background: #bc6129;
+    background: #59CD90;
 }
 
 .map-icons #expe.on {
@@ -839,7 +839,7 @@ footer {
 }
 
 .map-icons #capacity.on .pop {
-    background-color: #bc6129;
+    background-color: #59CD90;
 }
 
 .map-icons #expe.on .pop {
@@ -1770,7 +1770,7 @@ form sup {
 }
 
 #content-capacity .page-title, #content-capacity .mapbox, #content-capacity .accordion-navigation.active > a {
-    background-color: #bc6129;
+    background-color: #59CD90;
 }
 
 #content-experience .page-title {
@@ -1982,7 +1982,7 @@ nav .tabs .active #case {
 }
 
 nav .tabs .active #capacity {
-    background-color: #bc6129;
+    background-color: #59CD90;
 }
 
 nav .tabs .active #expe {
@@ -2039,7 +2039,7 @@ nav .tabs .active #case:after {
 }
 
 nav .tabs .active #capacity:after {
-    border-left-color: #bc6129;
+    border-left-color: #59CD90;
 }
 
 nav .tabs .active #expe:after {
