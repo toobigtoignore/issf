@@ -2660,6 +2660,7 @@ form ul {
 
 .map-icons a h3 {
     padding: 0 8px;
+    white-space: nowrap;
 }
 
 .map-icons #all h4, .map-icons #all.on h4 {
