@@ -1658,6 +1658,10 @@
         // Load clickable map image in dashboard panel
         $('#regional').load('/static/frontend/img/worldmap.svg', svgLoaded);
 
+        function goToTable() {
+            $(".totable").click();
+        }
+
         $('.totable').on('click', function () {
             $('.dataTables_scrollHeadInner, .dataTables_scrollHeadInner table').width('100%');
         });
@@ -1809,6 +1813,22 @@
                             currentRecords.push(row[0] + '&' + urlString[3]);
                         }
                     }
+                }
+
+                var notShownLatLng = L.latLng(-25, -10)
+
+                var notShownMarker = L.marker(notShownLatLng);
+
+                var notShownPopup = L.popup()
+                    .setLatLng(notShownLatLng)
+                    .setContent('<p>Some items don\'t have a specific location<br /><button onclick="goToTable();">Find them in the table here</button></p>');
+
+                notShownMarker.on('click', function () {
+                    notShownPopup.openOn(map);
+                });
+
+                if (notShown > 0) {
+                    map.addLayer(notShownMarker);
                 }
 
                 // Remove the trailing mapDataTokenSeperator from hiddenmapdata
