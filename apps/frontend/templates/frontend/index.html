@@ -865,17 +865,17 @@
             ==== Icon filter button click listener ==== 
         */
 
-        $('.map-icons a:not(#toexpand,.disable)').on('click', function () {
+        $('.map-icons a:not(.disable)').on('click', function () {
             var icon = $(this).attr('id');
             if ($(this).hasClass('on')) {
                 // Turn off the "show all" button
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand)').removeClass('on mask');
+                    $('.map-icons a').removeClass('on mask');
                     $(this).removeClass('on');
                 } else {
                     // Toggle mask
                     if ($( this ).hasClass('mask')) {
-                        $('nav.map-icons a:not(#toexpand,.disable)').addClass('on');
+                        $('nav.map-icons a:not(,.disable)').addClass('on');
                         $( this ).removeClass('mask');
                     } else {
                         $( this ).siblings().removeClass('on');
@@ -885,11 +885,11 @@
             } else {
                 // Remove mask
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand,.disable)').addClass('on');
-                    $('nav.map-icons a:not(#toexpand,.disable)').removeClass('mask');
+                    $('.map-icons a:not(.disable)').addClass('on');
+                    $('nav.map-icons a:not(.disable)').removeClass('mask');
                 } else {
                     // Switch mask
-                    $('nav.map-icons a:not(#toexpand,.disable)').removeClass('on mask');
+                    $('nav.map-icons a:not(.disable)').removeClass('on mask');
                     $( this ).addClass('mask');
                     $( this ).addClass('on');
                 }
@@ -899,7 +899,6 @@
             SaveFilterButtonStatus();
         });
 
-<<<<<<< HEAD
         //Precalculates top height for h3s 
         $( '.map-icons a:not(.disable) h3' ).fadeOut(10, function () {
             var hi = $(this).height();
@@ -910,13 +909,6 @@
         $('.map-icons a:not(.disable)').on('mouseenter', function () {
                 // If you want more space for longer text you can change 200 to more number
                 $( this ).animate({width: 220}, 300);
-=======
-
-        $('.map-icons a:not(.disable)').on('mouseenter', function () {
-                // If you want more space for longer text you can change 200 to more number
-                $( this ).animate({width: 200}, 300);
-                $( this ).css('border-radius', '10px 0 0 10px');
->>>>>>> f18eac4866406cbd372fe29d19c133f6d607e130
                 $( this ).find('h3').fadeIn(300, function () {
                     var hi = $(this).height();
                     $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
@@ -924,12 +916,7 @@
                 $('.map-icons .pop').fadeOut(50);
         });
         $('.map-icons a:not(.disable)').on('mouseleave', function () {
-<<<<<<< HEAD
             $( this ).animate({width: 60}, 100);
-=======
-            $( this ).animate({width: 52}, 100);
-            $( this ).css('border-radius', '0 0 0 0');
->>>>>>> f18eac4866406cbd372fe29d19c133f6d607e130
             $( this ).find('h3').fadeOut(50);
         });
 
@@ -1401,7 +1388,7 @@
                         map.removeControl(choroControl);
                         map.removeControl(legend);
 
-                        $('.map-icons a:not(#toexpand)').addClass('on');
+                        $('.map-icons a').addClass('on');
                         loadData2();
                     } else {
                         loadChoropleth();
@@ -1430,7 +1417,7 @@
                     map.removeLayer(geojson);
                     map.removeControl(choroControl);
                     map.removeControl(legend);
-                    $('.map-icons a:not(#toexpand)').addClass('on');
+                    $('.map-icons a').addClass('on');
                     loadData2();
                 }
             });
@@ -1440,7 +1427,7 @@
 
             function loadChoropleth() {
                 if (isReady) {
-                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    $('.map-icons a').removeClass('on');
                     loadData2();
                     if (geojson) {
                         map.removeLayer(geojson);
