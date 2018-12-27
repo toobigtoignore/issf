@@ -795,7 +795,7 @@ footer {
 }
 
 .map-icons #expe.on {
-    background: #7359a5;
+    background: #4D9DE0;
 }
 
 .map-icons #guidelines.on {
@@ -843,7 +843,7 @@ footer {
 }
 
 .map-icons #expe.on .pop {
-    background-color: #7359a5;
+    background-color: #4D9DE0;
 }
 
 .map-icons #guidelines.on .pop {
@@ -1778,7 +1778,7 @@ form sup {
 }
 
 #content-experience .page-title, #content-experience .mapbox, #content-experience .accordion-navigation.active > a {
-    background-color: #7359a5;
+    background-color: #4D9DE0;
 }
 
 #content-guidelines .page-title {
@@ -1986,7 +1986,7 @@ nav .tabs .active #capacity {
 }
 
 nav .tabs .active #expe {
-    background-color: #7359a5;
+    background-color: #4D9DE0;
 }
 
 nav .tabs .active #guidelines {
@@ -2043,7 +2043,7 @@ nav .tabs .active #capacity:after {
 }
 
 nav .tabs .active #expe:after {
-    border-left-color: #7359a5;
+    border-left-color: #4D9DE0;
 }
 
 nav .tabs .active #guidelines:after {
