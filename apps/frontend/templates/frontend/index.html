@@ -862,23 +862,39 @@
         $('.content-section .bt-prev').addClass('disable');
 
         /*
-            ==== Icon filter button click listener ====
+            ==== Icon filter button click listener ==== 
         */
 
         $('.map-icons a:not(#toexpand,.disable)').on('click', function () {
             var icon = $(this).attr('id');
             if ($(this).hasClass('on')) {
-                $(this).removeClass('on');
-                $('#all').removeClass('on');
+                // Turn off the "show all" button
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    $('.map-icons a:not(#toexpand)').removeClass('on mask');
+                    $(this).removeClass('on');
+                } else {
+                    // Toggle mask
+                    if ($( this ).hasClass('mask')) {
+                        $('nav.map-icons a:not(#toexpand,.disable)').addClass('on');
+                        $( this ).removeClass('mask');
+                    } else {
+                        $( this ).siblings().removeClass('on');
+                        $( this ).addClass('mask');
+                    }
                 }
             } else {
-                $(this).addClass('on');
+                // Remove mask
                 if (icon == 'all') {
                     $('.map-icons a:not(#toexpand,.disable)').addClass('on');
+                    $('nav.map-icons a:not(#toexpand,.disable)').removeClass('mask');
+                } else {
+                    // Switch mask
+                    $('nav.map-icons a:not(#toexpand,.disable)').removeClass('on mask');
+                    $( this ).addClass('mask');
+                    $( this ).addClass('on');
                 }
             }
+
             loadData2();
             SaveFilterButtonStatus();
         });
