@@ -886,10 +886,11 @@
         });
 
 
+        $( '.map-icons a:not(.disable)' ).css('border-radius', '10px 0 0 10px');
+        $( '.map-icons a:not(.disable)' ).animate({width: 60}, 100);
         $('.map-icons a:not(.disable)').on('mouseenter', function () {
                 // If you want more space for longer text you can change 200 to more number
-                $( this ).animate({width: 200}, 300);
-                $( this ).css('border-radius', '10px 0 0 10px');
+                $( this ).animate({width: 220}, 300);
                 $( this ).find('h3').fadeIn(300, function () {
                     var hi = $(this).height();
                     $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
@@ -897,8 +898,7 @@
                 $('.map-icons .pop').fadeOut(50);
         });
         $('.map-icons a:not(.disable)').on('mouseleave', function () {
-            $( this ).animate({width: 52}, 100);
-            $( this ).css('border-radius', '0 0 0 0');
+            $( this ).animate({width: 60}, 100);
             $( this ).find('h3').fadeOut(50);
         });
 
