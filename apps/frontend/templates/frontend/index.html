@@ -885,7 +885,11 @@
             SaveFilterButtonStatus();
         });
 
-
+        //Precalculates top height for h3s 
+        $( '.map-icons a:not(.disable) h3' ).fadeOut(10, function () {
+            var hi = $(this).height();
+            $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
+        });
         $( '.map-icons a:not(.disable)' ).css('border-radius', '10px 0 0 10px');
         $( '.map-icons a:not(.disable)' ).animate({width: 60}, 100);
         $('.map-icons a:not(.disable)').on('mouseenter', function () {
