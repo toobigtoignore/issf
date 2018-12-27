@@ -536,12 +536,14 @@ footer {
 
 /* Update Sept05 */
 .map-icons {
+    padding-top: 12px;
     position: absolute;
     top: 12px;
     right: 12px;
     bottom: 12px;
     width: 52px;
-    background: #275D97;
+    border-radius: 0 10px 10px 0;
+    background: #d0d0d0;
     z-index: 10;
 }
 
@@ -578,7 +580,7 @@ footer {
     font-size: 0.9375rem;
     line-height: 1;
     font-weight: normal;
-    text-align: right;
+    text-align: left;
     white-space: -moz-pre-wrap;
     white-space: -o-pre-wrap;
     white-space: pre-wrap;
