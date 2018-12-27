@@ -867,17 +867,17 @@
             ==== Icon filter button click listener ==== 
         */
 
-        $('.map-icons a:not(#toexpand,.disable)').on('click', function () {
+        $('.map-icons a:not(.disable)').on('click', function () {
             var icon = $(this).attr('id');
             if ($(this).hasClass('on')) {
                 // Turn off the "show all" button
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand)').removeClass('on mask');
+                    $('.map-icons a').removeClass('on mask');
                     $(this).removeClass('on');
                 } else {
                     // Toggle mask
                     if ($( this ).hasClass('mask')) {
-                        $('nav.map-icons a:not(#toexpand,.disable)').addClass('on');
+                        $('nav.map-icons a:not(,.disable)').addClass('on');
                         $( this ).removeClass('mask');
                     } else {
                         $( this ).siblings().removeClass('on');
@@ -887,11 +887,11 @@
             } else {
                 // Remove mask
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand,.disable)').addClass('on');
-                    $('nav.map-icons a:not(#toexpand,.disable)').removeClass('mask');
+                    $('.map-icons a:not(.disable)').addClass('on');
+                    $('nav.map-icons a:not(.disable)').removeClass('mask');
                 } else {
                     // Switch mask
-                    $('nav.map-icons a:not(#toexpand,.disable)').removeClass('on mask');
+                    $('nav.map-icons a:not(.disable)').removeClass('on mask');
                     $( this ).addClass('mask');
                     $( this ).addClass('on');
                 }
@@ -1390,7 +1390,7 @@
                         map.removeControl(choroControl);
                         map.removeControl(legend);
 
-                        $('.map-icons a:not(#toexpand)').addClass('on');
+                        $('.map-icons a').addClass('on');
                         loadData2();
                     } else {
                         loadChoropleth();
@@ -1419,7 +1419,7 @@
                     map.removeLayer(geojson);
                     map.removeControl(choroControl);
                     map.removeControl(legend);
-                    $('.map-icons a:not(#toexpand)').addClass('on');
+                    $('.map-icons a').addClass('on');
                     loadData2();
                 }
             });
@@ -1429,7 +1429,7 @@
 
             function loadChoropleth() {
                 if (isReady) {
-                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    $('.map-icons a').removeClass('on');
                     loadData2();
                     if (geojson) {
                         map.removeLayer(geojson);

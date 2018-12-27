@@ -914,62 +914,6 @@ footer {
     border-right-color: #0d415e;
 }
 
-.map-icons #toexpand {
-    display: block;
-    width: 100%;
-    height: 28px;
-    background: #376291;
-    background: -webkit-gradient(linear, left top, right top, from(#FF376291), to(#FF3D71A9));
-    background: -moz-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: -moz-gradient(center top, #376291 0%, #3d71a9 12%);
-    background: -webkit-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: -o-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: -ms-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: linear-gradient(to right, #376291 0%, #3d71a9 12%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF376291', endColorstr='#FF3D71A9', GradientType=1);
-    opacity: 0.9;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
-    filter: alpha(opacity=90);
-}
-
-.map-icons #toexpand:hover {
-    background: #376291;
-    background: -webkit-gradient(linear, left top, right top, from(#FF376291), to(#FF3D71A9));
-    background: -moz-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: -moz-gradient(center top, #376291 0%, #3d71a9 12%);
-    background: -webkit-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: -o-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: -ms-linear-gradient(left, #376291 0%, #3d71a9 12%);
-    background: linear-gradient(to right, #376291 0%, #3d71a9 12%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF376291', endColorstr='#FF3D71A9', GradientType=1);
-    opacity: 0.6;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-    filter: alpha(opacity=60);
-}
-
-.map-icons #toexpand:after, .map-icons .toexpand.on:after {
-    content: '';
-}
-
-.map-icons #toexpand:before, .map-icons .toexpand:hover:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    width: 0;
-    height: 0;
-    margin: 0;
-    border-right: 11px solid #6D9FD5;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-}
-
-.map-icons #toexpand.on:before {
-    border-left: 11px solid #6D9FD5;
-    border-right: 0;
-}
-
 .map-icons.on a h3 {
     display: block;
     background: none;
@@ -2669,29 +2613,17 @@ form ul {
     margin: 0 0 3px;
 }
 
-.map-icons #all.on h4, .map-icons #toexpand h4 {
+.map-icons #all.on h4, .map-icons h4 {
     color: #0D415E !important;
 }
 
-.map-icons #all.on, .map-icons #toexpand,
-.map-icons #toexpand:hover {
+.map-icons #all.on, .map-icons,
+.map-icons {
     background: #0d415e;
 }
 
-.map-icons #all.on .pop, .map-icons #toexpand .pop {
+.map-icons #all.on .pop, .map-icons .pop {
     background-color: #9CF9F9;
-}
-
-.map-icons #toexpand:hover {
-    opacity: 1;
-}
-
-.map-icons #toexpand:hover:before {
-    left: -11px;
-}
-
-.map-icons.on #toexpand:hover:before {
-    left: 7px;
 }
 
 #advance-search .search-wrapper {
@@ -2886,17 +2818,6 @@ form ul {
 
 #tosearch {
     bottom: -29px;
-}
-
-/***** map-icon height ****/
-.map-icons a[id
-
-!=
-'toexpand'
-]
-{
-    height: 42px !important
-;
 }
 
 /***** map loading ****/
