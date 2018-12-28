@@ -2,8 +2,9 @@ import json
 import random
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.urls import reverse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.db import connection
 from allauth.account.models import EmailAddress
 from allauth.account.views import PasswordChangeView
@@ -99,6 +100,11 @@ class CustomPasswordChangeView(PasswordChangeView):
 
 
 custom_password_change = login_required(CustomPasswordChangeView.as_view())
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 
 def return_google_site_verification(request):
