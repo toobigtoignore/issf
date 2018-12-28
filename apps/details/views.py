@@ -658,7 +658,12 @@ def save_basic(request, model_class, form_class):
                 instance.editor_id = request.user.id
                 instance.save()
 
-                if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and form.data.get("tweet", True) and TWITTER_AUTHENTICATED:
+                if 'tweet' in form.cleaned_data:
+                    tweet = form.cleaned_data['tweet']
+                else:
+                    tweet = True
+
+                if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and tweet and TWITTER_AUTHENTICATED:
                     name = ''
                     if instance.core_record_type == 'Capacity Development':
                         name = instance.capacity_need_title
@@ -782,7 +787,12 @@ def sota_basic(request):
                 knowledge_instance.editor_id = request.user.id
                 knowledge_instance.save()
 
-                if not existing and TWITTER_AUTHENTICATED and knowledge_form.data.get("tweet", True):
+                if 'tweet' in knowledge_form.cleaned_data:
+                    tweet = knowledge_form.cleaned_data['tweet']
+                else:
+                    tweet = True
+
+                if not existing and TWITTER_AUTHENTICATED and tweet:
                     name = str(knowledge_instance.level1_title)[:20]
                     issf_id = str(knowledge_instance.issf_core_id)
                     api.PostUpdate('Check out the new #tbtiissf SOTA record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
@@ -847,7 +857,13 @@ def organization_basic(request):
                 instance.save()
 
             if not existing:
-                if TWITTER_AUTHENTICATED and form.data.get("tweet", True):
+
+                if 'tweet' in form.cleaned_data:
+                    tweet = form.cleaned_data['tweet']
+                else:
+                    tweet = True
+
+                if TWITTER_AUTHENTICATED and tweet:
                     name = str(instance.organization_name)[:20]
 
                     issf_id = str(instance.issf_core_id)
