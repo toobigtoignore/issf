@@ -106,12 +106,14 @@ def frontend_data(request):
         map_queryset = []
         if form.is_valid():
             keywords = form.cleaned_data['keywords']
+            fulltext_keywords = form.cleaned_data['fulltext_keywords']
             contributor = form.cleaned_data['contributor']
             countries = form.cleaned_data['countries']
             contribution_begin_date = form.cleaned_data['contribution_begin_date']
             contribution_end_date = form.cleaned_data['contribution_end_date']
         else:
             keywords = None
+            fulltext_keywords = None
             contributor = None
             countries = None
             contribution_begin_date = None
@@ -159,7 +161,7 @@ def frontend_data(request):
                     cache.set('cached_map_data', map_queryset, 86400)
                 map_queryset = list(map_queryset)
             else:
-                search_terms.append(str(bleach.clean(keywords)))
+                search_terms.append('Title: {}'.format(str(bleach.clean(keywords))))
                 for model in models:
                     # Every object has different variables for "title"
                     if model == SSFPerson:
@@ -185,6 +187,14 @@ def frontend_data(request):
                     map_queryset += get_map_points(ids)
         else:
             map_queryset = list(ISSFCoreMapPointUnique.objects.all())
+
+        if fulltext_keywords:
+            if fulltext_keywords != '':
+                search_terms.append('Full text: {}'.format(fulltext_keywords))
+                fulltext_matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=fulltext_keywords))
+                for item in map_queryset[:]:
+                    if item.issf_core_id not in fulltext_matches:
+                        map_queryset.remove(item)
 
         if contributor:
             contributor = int(contributor)

@@ -7,6 +7,7 @@ from issf_base.models import Country, ISSF_Core, SelectedAttribute, SelectedThem
 
 
 class SearchForm(forms.Form):
+    fulltext_keywords = forms.CharField(label='Search by full text', required=False)
     keywords = forms.CharField(label='Search by title', required=False)
     # contributor_id=1 is the ISSF Staff account
     existing_contributors = ISSF_Core.objects.all().values('contributor')
