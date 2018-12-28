@@ -282,7 +282,13 @@
                                     <form action="{% url 'sota-basic' %}" method="post">
                                         {% csrf_token %}
                                         <div class="FormSet">
-                                            {{ knowledge_form }}
+                                            {{ knowledge_form.publication_type.label_tag }}{{ knowledge_form.publication_type }}
+                                            {{ knowledge_form.level1_title.label_tag }}{{ knowledge_form.level1_title }}
+                                            {{ knowledge_form.level2_title.label_tag }}{{ knowledge_form.level2_title}}
+                                            {{ knowledge_form.nonenglish_language.label_tag }}{{ knowledge_form.nonenglish_language }}
+                                            {{ knowledge_form.nonenglish_title.label_tag }}{{ knowledge_form.nonenglish_title }}
+                                            {{ knowledge_form.year.label_tag }}{{ knowledge_form.year }}
+                                            {{ knowledge_form.contributor.label_tag }}{{ knowledge_form.contributor }}
                                         </div>
                                         <div class="FormSet FormSetGrowable">
                                             {{ knowledge_authors_form }}
@@ -292,7 +298,7 @@
                                             <div class="staffbox">
                                                 <h5>Staff only:</h5>
                                                 <label style="padding-right: 5px;">Post to @TBTInetwork on Twitter</label>
-                                                {{ knowledge_authors.tweet }}
+                                                {{ knowledge_form.tweet }}
                                             </div>
                                         {% endif %}
 
