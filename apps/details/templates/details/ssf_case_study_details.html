@@ -74,6 +74,7 @@
                                             <strong>Contributor</strong>
                                         </td>
                                         <td>
+                                            {% autoescape on %}
                                             {% if who_page %}
                                                 <a href="{% url 'who-details' who_page.issf_core_id %}">
                                                     {{ core_instance.contributor }}
@@ -86,6 +87,7 @@
                                                     {{ core_instance.contributor }}
                                                 </a>
                                             {% endif %}
+                                            {% endautoescape %}
                                         </td>
                                     </tr>
                                     <tr>

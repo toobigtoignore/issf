@@ -111,12 +111,14 @@
                                             <strong>Contributor</strong>
                                         </td>
                                         <td>
+                                            {% autoescape on %}
                                             {% if who_page %}
                                                 <a href="{% url 'who-details' who_page.issf_core_id %}">{{ guidelines_instance.contributor }}</a>
                                             {% else %}
                                                 <a href="mailto:{{ guidelines_instance.contributor.email }}"
                                                    target="_blank">{{ guidelines_instance.contributor }}</a>
                                             {% endif %}
+                                            {% endautoescape %}
                                         </td>
                                     </tr>
                                     <tr>
