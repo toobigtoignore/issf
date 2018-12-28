@@ -646,6 +646,7 @@ def save_basic(request, model_class, form_class):
                 issf_core_id = request.POST['issf_core_id']
                 instance = get_object_or_404(model_class, issf_core_id=issf_core_id)
                 existing = True
+
             form = form_class(request.POST, instance=instance)
             if form.is_valid():
                 instance = form.save()
@@ -657,7 +658,12 @@ def save_basic(request, model_class, form_class):
                 instance.editor_id = request.user.id
                 instance.save()
 
-                if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and TWITTER_AUTHENTICATED:
+                if 'tweet' in form.cleaned_data:
+                    tweet_disabled = form.cleaned_data['tweet']
+                else:
+                    tweet_disabled = False
+
+                if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and not tweet_disabled and TWITTER_AUTHENTICATED:
                     name = ''
                     if instance.core_record_type == 'Capacity Development':
                         name = instance.capacity_need_title
@@ -679,6 +685,7 @@ def save_basic(request, model_class, form_class):
                     api.PostUpdate('Check out the new #tbtiissf ' + instance.core_record_type + ' record for ' + name + '. ' + url)
 
                 update_tsvector_summary(instance.core_record_type, str(instance.pk))
+
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
                     redirectname = 'geographic-scope-save'
@@ -780,7 +787,12 @@ def sota_basic(request):
                 knowledge_instance.editor_id = request.user.id
                 knowledge_instance.save()
 
-                if not existing and TWITTER_AUTHENTICATED:
+                if 'tweet' in knowledge_form.cleaned_data:
+                    tweet_disabled = knowledge_form.cleaned_data['tweet']
+                else:
+                    tweet_disabled = False
+
+                if not existing and TWITTER_AUTHENTICATED and not tweet_disabled:
                     name = str(knowledge_instance.level1_title)[:20]
                     issf_id = str(knowledge_instance.issf_core_id)
                     api.PostUpdate('Check out the new #tbtiissf SOTA record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
@@ -845,7 +857,13 @@ def organization_basic(request):
                 instance.save()
 
             if not existing:
-                if TWITTER_AUTHENTICATED:
+
+                if 'tweet' in form.cleaned_data:
+                    tweet_disabled = form.cleaned_data['tweet']
+                else:
+                    tweet_disabled = False
+
+                if TWITTER_AUTHENTICATED and not tweet_disabled:
                     name = str(instance.organization_name)[:20]
 
                     issf_id = str(instance.issf_core_id)

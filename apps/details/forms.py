@@ -12,6 +12,8 @@ class ISSFMapWidget(LeafletWidget):
 
 # django "generated" forms
 class SSFKnowledgeForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFKnowledge
         fields = ['publication_type', 'other_publication_type', 'level1_title',
@@ -53,6 +55,8 @@ class SSFKnowledgeForm(ModelForm):
 
 
 class SSFPersonForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFPerson
         fields = ['affiliation', 'address1', 'address2', 'city_town',
@@ -84,6 +88,8 @@ class SSFPersonForm(ModelForm):
 
 
 class SSFOrganizationForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFOrganization
         fields = (
@@ -152,6 +158,8 @@ class SSFOrganizationForm(ModelForm):
 
 
 class SSFCapacityNeedForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFCapacityNeed
         fields = ['capacity_need_category', 'capacity_need_type',
@@ -169,6 +177,8 @@ class SSFCapacityNeedForm(ModelForm):
 
 
 class SSFProfileForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFProfile
         fields = ['ssf_name', 'ssf_defined', 'ssf_definition', 'data_year',
@@ -199,6 +209,8 @@ class SSFProfileForm(ModelForm):
 
 
 class SSFGuidelinesForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFGuidelines
         fields = ['title', 'activity_type', 'activity_coverage', 'location',
@@ -228,6 +240,8 @@ class SSFGuidelinesForm(ModelForm):
 
 
 class SSFExperiencesForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFExperiences
         fields = [
@@ -247,6 +261,8 @@ class SSFExperiencesForm(ModelForm):
 
 
 class SSFCaseStudiesForm(ModelForm):
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFCaseStudies
         fields = [
