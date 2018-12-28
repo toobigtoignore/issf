@@ -32,7 +32,7 @@
                     <h1>SSF Profile</h1>
 
                     <div class="basic-info">
-                        <strong>{{ profile_instance.ssf_name }}</strong>
+                        <strong>{% autoescape on %}{{ profile_instance.ssf_name }}{% endautoescape %}</strong>
                         | {{ profile_instance.data_year }}
                         {% if profile_instance.data_end_year %}
                             - {{ profile_instance.data_end_year }}
@@ -86,12 +86,14 @@
                                             <strong>Contributor</strong>
                                         </td>
                                         <td>
+                                            {% autoescape on %}
                                             {% if who_page %}
                                                 <a href="{% url 'who-details' who_page.issf_core_id %}">{{ core_instance.contributor }}</a>
                                             {% else %}
                                                 <a href="mailto:{{ core_instance.contributor.email }}"
                                                    target="_blank">{{ core_instance.contributor }}</a>
                                             {% endif %}
+                                            {% endautoescape %}
                                         </td>
                                     </tr>
                                     <tr>
