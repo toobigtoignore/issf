@@ -731,6 +731,11 @@ class GeographicScopeLocalAreaForm(ModelForm):
     # override clean to check combinations of fields
     def clean(self):
         cleaned_data = super(GeographicScopeLocalAreaForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+        
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['local_area_setting_other']) > 0
         other_selected = False
@@ -761,6 +766,11 @@ class GeographicScopeSubnationForm(ModelForm):
     # override clean to check combinations of fields
     def clean(self):
         cleaned_data = super(GeographicScopeSubnationForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['subnation_type_other']) > 0
         other_selected = cleaned_data['subnation_type'] == 'Other'
@@ -794,6 +804,11 @@ class GeographicScopeRegionForm(ModelForm):
     # override clean to check combinations of fields
     def clean(self):
         cleaned_data = super(GeographicScopeRegionForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['region_name_other']) > 0
         other_selected = False
