@@ -636,6 +636,9 @@ footer {
     width: 0;
     height: 0;
     margin-top: -7px;
+    border-right: 11px solid #6b7279;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
 }
 
 .map-icons a#no-hover:before {
