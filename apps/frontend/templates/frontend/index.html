@@ -978,6 +978,14 @@
             is.visibleCheck();
         });
 
+        $('nav .tab-title').hover(function () {
+            $(this).find('.pop').css({'display': 'block', opacity: 0}).animate({bottom: '120%', opacity: 1}, 200);
+        }, function () {
+            $(this).find('.pop').animate({bottom: '103%', opacity: 0}, 100, function () {
+                $(this).hide();
+            });
+        });
+
         // Turn on all filters
         if (GlobalNewLoad) {
             // Loading default filter buttons'
