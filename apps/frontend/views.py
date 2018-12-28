@@ -268,6 +268,8 @@ def frontend_data(request):
         lines = row.core_record_summary.split('\\n')
         summary = ''
         for line in lines:
+            if 'Timeframe: ' in line:
+                line = line.replace('-0', '')
             summary += line + '<br/>'
         temp.append(summary)
         url = reverse(get_redirectname(row.core_record_type), kwargs={'issf_core_id': row.issf_core_id})
