@@ -29,24 +29,6 @@ from django.middleware.gzip import GZipMiddleware
 gzip_middleware = GZipMiddleware()
 
 
-def parse_search_terms(input_search_terms):
-    """
-        Strip away special characters because they would cause the tsquery to fail
-        and the search to hang.
-    """
-
-    for char in ":'|!&%\"()":
-        input_search_terms = input_search_terms.replace(char, " ")
-    search_array = input_search_terms.split()
-    for idx in range(0, len(search_array)):
-        search_array[idx] = search_array[idx] + u":*"
-    parsed_search_terms = u" ".join(search_array)
-
-    if '"' in input_search_terms:
-        return parsed_search_terms.replace(u" ", u" & ")
-    return parsed_search_terms.replace(u" ", u" | ")
-
-
 @gzip_page
 def index(request):
     # get data for dashboard panels
@@ -111,7 +93,12 @@ def frontend_data(request):
     search_terms = []
 
     if request.method == 'GET':
-        map_queryset = ISSFCoreMapPointUnique.objects.all()
+        cached_map_data = cache.get('cached_map_data')
+        if cached_map_data:
+            map_queryset = cached_map_data
+        else:
+            map_queryset = ISSFCoreMapPointUnique.objects.all()
+            cache.set('cached_map_data', map_queryset, 86400)
     else:
         form = SearchForm(request.POST)
         themes_form = SelectedThemesIssuesFormSet(request.POST)
@@ -164,7 +151,13 @@ def frontend_data(request):
 
         if keywords:
             if keywords == "":
-                map_queryset = list(ISSFCoreMapPointUnique.objects.all())
+                cached_map_data = cache.get('cached_map_data')
+                if cached_map_data:
+                    map_queryset = cached_map_data
+                else:
+                    map_queryset = ISSFCoreMapPointUnique.objects.all()
+                    cache.set('cached_map_data', map_queryset, 86400)
+                map_queryset = list(map_queryset)
             else:
                 search_terms.append(str(bleach.clean(keywords)))
                 for model in models:
