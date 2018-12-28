@@ -12,7 +12,7 @@ class ISSFMapWidget(LeafletWidget):
 
 # django "generated" forms
 class SSFKnowledgeForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFKnowledge
@@ -55,7 +55,7 @@ class SSFKnowledgeForm(ModelForm):
 
 
 class SSFPersonForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFPerson
@@ -88,7 +88,7 @@ class SSFPersonForm(ModelForm):
 
 
 class SSFOrganizationForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFOrganization
@@ -158,7 +158,7 @@ class SSFOrganizationForm(ModelForm):
 
 
 class SSFCapacityNeedForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFCapacityNeed
@@ -177,7 +177,7 @@ class SSFCapacityNeedForm(ModelForm):
 
 
 class SSFProfileForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFProfile
@@ -209,7 +209,7 @@ class SSFProfileForm(ModelForm):
 
 
 class SSFGuidelinesForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFGuidelines
@@ -240,7 +240,7 @@ class SSFGuidelinesForm(ModelForm):
 
 
 class SSFExperiencesForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFExperiences
@@ -261,7 +261,7 @@ class SSFExperiencesForm(ModelForm):
 
 
 class SSFCaseStudiesForm(ModelForm):
-    tweet = forms.BooleanField(initial=True, required=False)
+    tweet = forms.BooleanField(initial=False, required=False)
 
     class Meta:
         model = SSFCaseStudies
