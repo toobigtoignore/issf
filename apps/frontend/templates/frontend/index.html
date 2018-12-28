@@ -1819,13 +1819,9 @@
 
                 var notShownMarker = L.marker(notShownLatLng);
 
-                var notShownPopup = L.popup()
-                    .setLatLng(notShownLatLng)
-                    .setContent('<p>Some items don\'t have a specific location<br /><button onclick="goToTable();">Find them in the table here</button></p>');
-
-                notShownMarker.on('click', function () {
-                    notShownPopup.openOn(map);
-                });
+                notShownMarker.bindPopup(
+                    'Some items don\'t have a specific location<br /><a onclick="goToTable();">Find them in the table</a>'
+                );
 
                 if (notShown > 0) {
                     map.addLayer(notShownMarker);
