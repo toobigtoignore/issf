@@ -862,6 +862,26 @@
         $(window).load(is.verticalResize);
 
         $('.content-section .bt-prev').addClass('disable');
+        
+        $('.map-icons a:not(#toexpand)').each(function () {
+            var tt = $(this).find('h3').html(),
+                title = tt.replace('<br>', ' ');
+            $(this).find('.pop').prepend('<h4>' + title + '</h4>');
+        });
+
+        $('.map-icons a:not(.disable)').on('mouseenter', function () {
+            if (!$('.map-icons').hasClass('on')) {
+                $(this).find('.pop').show().css({opacity: 0}).animate({right: 66, opacity: 1}, 300);
+            }
+        });
+        $('.map-icons a:not(.disable)').on('mouseleave', function () {
+            $('.map-icons .pop').fadeOut(50);
+            if (!$('.map-icons').hasClass('on')) {
+                $(this).find('.pop').animate({right: 52, opacity: 0}, 100, function () {
+                    $(this).removeAttr('style');
+                });
+            }
+        });
 
         /*
             ==== Icon filter button click listener ==== 
@@ -897,27 +917,6 @@
 
             loadData2();
             SaveFilterButtonStatus();
-        });
-
-        //Precalculates top height for h3s 
-        $( '.map-icons a:not(.disable) h3' ).fadeOut(10, function () {
-            var hi = $(this).height();
-            $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
-        });
-        $( '.map-icons a:not(.disable)' ).css('border-radius', '10px 0 0 10px');
-        $( '.map-icons a:not(.disable)' ).animate({width: 60}, 100);
-        $('.map-icons a:not(.disable)').on('mouseenter', function () {
-                // If you want more space for longer text you can change 200 to more number
-                $( this ).animate({width: 220}, 300);
-                $( this ).find('h3').fadeIn(300, function () {
-                    var hi = $(this).height();
-                    $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
-                });
-                $('.map-icons .pop').fadeOut(50);
-        });
-        $('.map-icons a:not(.disable)').on('mouseleave', function () {
-            $( this ).animate({width: 60}, 100);
-            $( this ).find('h3').fadeOut(50);
         });
 
         $('#tosearch').on('click', function () {
