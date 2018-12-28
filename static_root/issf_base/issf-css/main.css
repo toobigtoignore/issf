@@ -618,6 +618,10 @@ footer {
     margin: 0;
 }
 
+.map-icons #guidelines.on .pop p {
+    color: #fff !important;
+} 
+
 .map-icons a:hover {
     background: #c9d7e5;
 }
