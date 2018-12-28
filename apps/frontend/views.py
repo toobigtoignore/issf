@@ -19,6 +19,8 @@ from issf_base.models import *
 from issf_admin.views import get_redirectname
 from issf_admin.models import UserProfile
 
+import bleach
+
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
 from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet, SearchForm
 
@@ -164,7 +166,7 @@ def frontend_data(request):
             if keywords == "":
                 map_queryset = list(ISSFCoreMapPointUnique.objects.all())
             else:
-                search_terms.append(str(keywords))
+                search_terms.append(str(bleach.clean(keywords)))
                 for model in models:
                     # Every object has different variables for "title"
                     if model == SSFPerson:
