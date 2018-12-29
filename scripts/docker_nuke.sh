@@ -9,6 +9,6 @@
 # removing them and building them again from the downloaded image is
 # the solution.
 
-docker-compose stop
-docker-compose rm -fv
-docker system prune -a
+docker-compose down --rmi all --volumes --remove-orphans
+docker system prune
+
