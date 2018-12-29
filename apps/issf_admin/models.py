@@ -4,8 +4,10 @@ from django.contrib.auth.models import AbstractUser
 from issf_base.models import Country
 
 
-# custom user model
 class UserProfile(AbstractUser):
+    """
+    Custom model for User Profiles.
+    """
     initials = models.CharField(blank=True, max_length=10)
     country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     # # set true when creating user accounts on their behalf, so that they get prompted to

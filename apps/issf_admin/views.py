@@ -18,6 +18,10 @@ from .forms import ProfileForm
 
 @login_required
 def update_profile(request, template_name='issf_admin/user_profile.html'):
+    """
+    View to update a user's profile.
+    """
+    # Save changes to profile
     if request.method == "POST":
         saved, response = save_profile(request)
         if saved:
@@ -31,8 +35,8 @@ def update_profile(request, template_name='issf_admin/user_profile.html'):
             # # invalidly-formatted email address will land here
             # # send errors back for display...
             return HttpResponse(response)
+    # Give user form to update profile
     else:
-        # load
         user_profile = UserProfile.objects.get(id=request.user.pk)
         profile_form = ProfileForm(instance=user_profile)
         return render(
@@ -46,6 +50,9 @@ def update_profile(request, template_name='issf_admin/user_profile.html'):
 
 
 def save_profile(request):
+    """
+    Saves changes to a user's profile.
+    """
     # save
     profile_form = ProfileForm(data=request.POST, instance=request.user)
     if profile_form.is_valid():
@@ -83,6 +90,9 @@ def save_profile(request):
 
 
 def temp(request):
+    """
+    Unused function that seems to set the password for a set user to 'temp'.
+    """
     user_profile = UserProfile.objects.get(id=325)
     user_profile.set_password('temp')
     user_profile.save()
@@ -90,14 +100,23 @@ def temp(request):
 
 
 def account_verified(request):
+    """
+    View that notifies a user that their account was verified successfully.
+    """
     return render(request, 'issf_admin/verification_successful.html')
 
 
 def profile_saved(request):
+    """
+    View that notifies a user that their profile was saved successfully.
+    """
     return render(request, 'issf_admin/user_profile_saved.html')
 
 
 class CustomPasswordChangeView(PasswordChangeView):
+    """
+    Custom password change view that redirects the user to their profile once the password has been changed.
+    """
     success_url = '/accounts/profile/'
 
 
@@ -105,15 +124,24 @@ custom_password_change = login_required(CustomPasswordChangeView.as_view())
 
 
 def logout_view(request):
+    """
+    Custom logout view. Logs out the user, and then redirects them to the front page.
+    """
     logout(request)
     return HttpResponseRedirect('/')
 
 
 def return_google_site_verification(request):
+    """
+    View that returns Google's site verification key.
+    """
     return HttpResponse('google-site-verification: googlee9690f8983b8a350.html', content_type="text/plain")
 
 
 def return_robots(request):
+    """
+    View that returns a robots.txt file.
+    """
     retstr = 'User-agent: *\r\n'
     retstr = retstr + 'Disallow: /admin/\r\n'
     retstr = retstr + 'Disallow: /accounts/\r\n'
@@ -125,6 +153,9 @@ def return_robots(request):
 
 
 def contributed_records(request):
+    """
+    View that shows the user all the records that they have contributed.
+    """
     user = request.user
     records = ISSF_Core.objects.filter(contributor_id=user.id)
     record_items = {}
@@ -146,6 +177,9 @@ def contributed_records(request):
 
 
 def help_page(request):
+    """
+    View that renders the help page with a random fact contained within it.
+    """
     faqs = FAQ.objects.all()
     categories = FAQCategory.objects.all()
 
@@ -165,6 +199,9 @@ def help_page(request):
 
 
 def fact_archive(request):
+    """
+    View that displays the complete list of facts.
+    """
     return render(
         request,
         'issf_admin/fact_archive.html',

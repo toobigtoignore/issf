@@ -6,7 +6,13 @@ from .models import *
 
 
 class ProfileForm(ModelForm):
+    """
+    Form for creating and updating a user profile.
+    """
     def clean(self):
+        """
+        Cleans and validates the data entered by the user.
+        """
         cleaned_data = super(ProfileForm, self).clean()
         # check for required fields, it cannot be done in the model because it inherits from
         # Django's AbstractUser (auth app)
