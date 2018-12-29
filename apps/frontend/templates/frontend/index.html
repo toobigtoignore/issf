@@ -59,16 +59,6 @@
                 </div>
 
                 <nav class="map-icons">
-                    <a id="toexpand">
-                        <div class="pop">
-                            <h4>Dataset Filters</h4>
-                            <p>
-                                click icon to hide/show dataset; hover icon to popup dataset description; click here to
-                                show dataset names
-                            </p>
-                        </div>
-                    </a>
-
                     <a id="who" tabindex="0">
                         <h3>Who's Who in SSF</h3>
                         <span></span>
@@ -82,7 +72,7 @@
                     </a>
 
                     <a id="sota" tabindex="1">
-                        <h3>State-of-the-Art in SSF Research</h3>
+                        <h3>State-of-the-Art<br>in SSF Research</h3>
                         <span></span>
 
                         <div class="pop">
@@ -130,7 +120,7 @@
                     </a>
 
                     <a id="capacity" tabindex="5">
-                        <h3>Capacity Development</h3>
+                        <h3>Capacity<br>Development</h3>
                         <span></span>
 
                         <div class="pop">
@@ -148,10 +138,10 @@
                         <span></span>
 
                         <div class="pop">
-                            <p style="color: #FFFFFF;">
+                            <p style="color: #333;">
                                 Stories, lessons and knowledge about small-scale fisheries
                             </p>
-                            <p style="color: #FFFFFF;">
+                            <p style="color: #333;">
                                 <strong>{{ num_expe_records }} records.</strong>
                             </p>
                         </div>
@@ -162,8 +152,8 @@
                         <span></span>
 
                         <div class="pop">
-                            <p style="color: #FFFFFF;">Tracking of the SSF Guidelines implementation worldwide</p>
-                            <p style="color: #FFFFFF;">
+                            <p>Tracking of the SSF Guidelines implementation worldwide</p>
+                            <p>
                                 <strong>{{ num_guide_records }} records.</strong>
                             </p>
                         </div>
@@ -870,19 +860,20 @@
         $(window).load(is.verticalResize);
 
         $('.content-section .bt-prev').addClass('disable');
-
+        
         $('.map-icons a:not(#toexpand)').each(function () {
             var tt = $(this).find('h3').html(),
                 title = tt.replace('<br>', ' ');
             $(this).find('.pop').prepend('<h4>' + title + '</h4>');
         });
 
-        $('.map-icons a').on('mouseenter', function () {
+        $('.map-icons a:not(.disable)').on('mouseenter', function () {
             if (!$('.map-icons').hasClass('on')) {
                 $(this).find('.pop').show().css({opacity: 0}).animate({right: 66, opacity: 1}, 300);
             }
         });
-        $('.map-icons a').on('mouseleave', function () {
+        $('.map-icons a:not(.disable)').on('mouseleave', function () {
+            $('.map-icons .pop').fadeOut(50);
             if (!$('.map-icons').hasClass('on')) {
                 $(this).find('.pop').animate({right: 52, opacity: 0}, 100, function () {
                     $(this).removeAttr('style');
@@ -891,62 +882,41 @@
         });
 
         /*
-            ==== Icon filter button click listener ====
+            ==== Icon filter button click listener ==== 
         */
 
-        $('.map-icons a:not(#toexpand,.disable)').on('click', function () {
+        $('.map-icons a:not(.disable)').on('click', function () {
             var icon = $(this).attr('id');
             if ($(this).hasClass('on')) {
-                $(this).removeClass('on');
-                $('#all').removeClass('on');
+                // Turn off the "show all" button
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    $('.map-icons a').removeClass('on mask');
+                } else {
+                    // Toggle mask
+                    if ($( this ).hasClass('mask')) {
+                        $('nav.map-icons a:not(.disable)').addClass('on');
+                        $( this ).removeClass('mask');
+                    } else {
+                        $( this ).siblings().removeClass('on');
+                        $( this ).addClass('on mask');
+                    }
                 }
             } else {
-                $(this).addClass('on');
+                // Remove mask
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand,.disable)').addClass('on');
+                    $('.map-icons a:not(.disable)').addClass('on');
+                    $('nav.map-icons a:not(.disable)').removeClass('mask');
+                } else {
+                    // Switch mask
+                    $('nav.map-icons a:not(.disable)').removeClass('on mask');
+                    $( this ).addClass('on mask');
                 }
             }
+
             loadData2();
             SaveFilterButtonStatus();
         });
 
-        $('#toexpand').on('click', function () {
-            if ($(this).hasClass('on')) {
-                $('.map-icons').animate({width: 52}, 200, function () {
-                    $('#toexpand,.map-icons').removeClass('on');
-                });
-                $('.map-icons h3').fadeOut(200);
-            } else {
-                // If you want more space for longer text you can change 200 to more number
-                $('.map-icons').animate({width: 200}, 300, function () {
-                    $('#toexpand,.map-icons').addClass('on');
-                });
-                $('.map-icons h3').fadeIn(300, function () {
-                    var hi = $(this).height();
-                    $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
-                });
-                $('.map-icons .pop').fadeOut(50);
-            }
-            setTimeout(function () {
-                $('.map-icons').animate({width: 52}, 300, function () {
-                    $('#toexpand,.map-icons').removeClass('on');
-                });
-                $('.map-icons h3').fadeOut(300);
-            }, 10000);
-        });
-        $('.map-icons a:not(a#no-hover):not(#toexpand)').mouseover(function () {
-            $('<div class="btn_popup">Click to show/hide</div>').appendTo('body');
-        })
-            .mouseleave(function () {
-                $('.btn_popup').remove();
-            })
-            .mousemove(function (e) {
-                var mouseX = e.pageX, //X coordinates of mouse
-                    mouseY = e.pageY; //Y coordinates of mouse
-                $('.btn_popup').css({top: mouseY - 28, left: mouseX + 4});
-            });
         $('#tosearch').on('click', function () {
             if ($(this).hasClass('on')) {
                 $('#advance-search #full-search').stop().slideUp(300, function () {
@@ -1017,16 +987,9 @@
         // Turn on all filters
         if (GlobalNewLoad) {
             // Loading default filter buttons'
-            $('nav.map-icons a:nth-child(2)').addClass('on'); //who
-            $('nav.map-icons a:nth-child(3)').addClass('on'); //sota
-            $('nav.map-icons a:nth-child(4)').addClass('on'); //profile
-            $('nav.map-icons a:nth-child(5)').addClass('on'); //orgs
-            $('nav.map-icons a:nth-child(6)').addClass('on'); //case studies
-            $('nav.map-icons a:nth-child(7)').addClass('on'); //capacity
-            $('nav.map-icons a:nth-child(8)').addClass('on'); //experiences
-            $('nav.map-icons a:nth-child(9)').addClass('on'); //guidelines
-            $('nav.map-icons a:nth-child(10)').addClass('on'); //choropleth layer
-            $('nav.map-icons a:last-child').addClass('on'); //toggle all
+            for(i = 0; i < 10; i++)
+                $('nav.map-icons a:nth-child(' + i + ')').addClass('on');
+            $('nav.map-icons a:last-child').addClass('on');
             SaveFilterButtonStatus();
         } else {
             // Loading saved filter buttons
@@ -1430,7 +1393,7 @@
                         map.removeControl(choroControl);
                         map.removeControl(legend);
 
-                        $('.map-icons a:not(#toexpand)').addClass('on');
+                        $('.map-icons a').addClass('on');
                         loadData2();
                     } else {
                         loadChoropleth();
@@ -1459,7 +1422,7 @@
                     map.removeLayer(geojson);
                     map.removeControl(choroControl);
                     map.removeControl(legend);
-                    $('.map-icons a:not(#toexpand)').addClass('on');
+                    $('.map-icons a').addClass('on');
                     loadData2();
                 }
             });
@@ -1469,7 +1432,7 @@
 
             function loadChoropleth() {
                 if (isReady) {
-                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    $('.map-icons a').removeClass('on');
                     loadData2();
                     if (geojson) {
                         map.removeLayer(geojson);

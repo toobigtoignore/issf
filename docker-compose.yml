@@ -1,6 +1,6 @@
 # ISSF - Information System on Small Scale Fisheries
 # Author: Joshua Murphy
-# Date: December 13th, 2018 
+# Date: December 23rd, 2018 
 # https://github.com/toobigtoignore/issf
 
 # Docker Compose file to orchestrate the containers needed to run ISSF
@@ -13,7 +13,7 @@ services:
     image: tbti/web:latest 
     #build: "."
     #command: "/bin/bash -c 'yes'"
-    command: "/bin/bash -c 'npm i && python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
+    command: "/bin/sh -c 'npm i && python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
     depends_on: 
       - db
     environment: 
@@ -31,7 +31,7 @@ services:
         max-size: "10m"
         max-file: "10"
   db: 
-    image: mdillon/postgis:9.5
+    image: mdillon/postgis:9.5-alpine
     ports:
       - "5432:5432"
     volumes:
@@ -43,7 +43,7 @@ services:
         max-size: "10m"
         max-file: "10"
   pgadmin: 
-    image: chorss/docker-pgadmin4:2.1 
+    image: nphung/pgadmin:latest
     ports:
       - "5050:5050"
     volumes:
@@ -55,7 +55,7 @@ services:
         max-size: "10m"
         max-file: "10"
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     ports:
       - "80:80"
     depends_on:
