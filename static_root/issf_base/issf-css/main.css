@@ -374,7 +374,7 @@ footer {
     position: relative;
     width: 1000px;
     margin: -12px 0;
-    padding: 12px;
+    padding: 14px;
     z-index: 5;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -537,13 +537,12 @@ footer {
 
 /* Update Sept05 */
 .map-icons {
-    padding-top: 12px;
+    padding-top: 16px;
     position: absolute;
     top: 12px;
     right: 12px;
     bottom: 12px;
     width: 52px;
-    border-radius: 0 10px 10px 0;
     background: #d0d0d0;
     z-index: 10;
 }
@@ -668,15 +667,7 @@ footer {
 }
 
 .map-icons a.disable {
-    background: #6b7279;
-    background: -webkit-gradient(linear, left top, right top, from(#FF6B7279), to(#FFBCC8D4));
-    background: -moz-linear-gradient(left, #6b7279 0%, #bcc8d4 12%);
-    background: -moz-gradient(center top, #6b7279 0%, #bcc8d4 12%);
-    background: -webkit-linear-gradient(left, #6b7279 0%, #bcc8d4 12%);
-    background: -o-linear-gradient(left, #6b7279 0%, #bcc8d4 12%);
-    background: -ms-linear-gradient(left, #6b7279 0%, #bcc8d4 12%);
-    background: linear-gradient(to right, #6b7279 0%, #bcc8d4 12%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF6B7279', endColorstr='#FFBCC8D4', GradientType=1);
+    background: #0d415e;
 }
 
 .map-icons #organize h3, .map-icons #expe h3, .map-icons #project h3 {
