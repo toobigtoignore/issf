@@ -618,7 +618,7 @@ footer {
     margin: 0;
 }
 
-.map-icons #guidelines.on .pop p {
+.map-icons #expe.on .pop p,#guidelines.on .pop p {
     color: #fff !important;
 } 
 
@@ -689,7 +689,7 @@ footer {
 }
 
 .map-icons #capacity h3, .map-icons #capacity h4 {
-    color: #59CD90;
+    color: #ca9174;
 }
 
 .map-icons #expe h3, .map-icons #expe h4 {
@@ -797,7 +797,7 @@ footer {
 }
 
 .map-icons #capacity.on {
-    background: #59CD90;
+    background: #ca9174;
 }
 
 .map-icons #expe.on {
@@ -845,7 +845,7 @@ footer {
 }
 
 .map-icons #capacity.on .pop {
-    background-color: #59CD90;
+    background-color: #ca9174;
 }
 
 .map-icons #expe.on .pop {
@@ -1716,7 +1716,7 @@ form sup {
 }
 
 #content-capacity .page-title, #content-capacity .mapbox, #content-capacity .accordion-navigation.active > a {
-    background-color: #59CD90;
+    background-color: #ca9174;
 }
 
 #content-experience .page-title {
@@ -1928,7 +1928,7 @@ nav .tabs .active #case {
 }
 
 nav .tabs .active #capacity {
-    background-color: #59CD90;
+    background-color: #ca9174;
 }
 
 nav .tabs .active #expe {
@@ -1985,7 +1985,7 @@ nav .tabs .active #case:after {
 }
 
 nav .tabs .active #capacity:after {
-    border-left-color: #59CD90;
+    border-left-color: #ca9174;
 }
 
 nav .tabs .active #expe:after {
