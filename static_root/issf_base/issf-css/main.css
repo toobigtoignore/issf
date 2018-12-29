@@ -1157,7 +1157,6 @@ footer {
     left: 50%;
     margin-left: -140px;
     text-align: center;
-    z-index: 100;
 }
 
 #tosearch h5 {
@@ -2697,7 +2696,7 @@ form .row .row-fit {
 }
 
 form input[type="text"], form input[type="date"], form input[type="number"], form input[type="email"], form select, form textarea {
-    height: 1.9rem;
+    height: 2.25rem;
     margin-bottom: 0;
     border-color: #37516F;
     -webkit-box-shadow: inset 1px 1px 3px #a4a4a4;
@@ -2835,7 +2834,6 @@ form ul {
 
 #quick-search button {
     margin: 0;
-    padding-bottom: .45rem;
 }
 
 .btn-container:before, .btn-container:after {

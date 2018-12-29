@@ -14,7 +14,7 @@
     font-size: 1rem;
 }
 
-/* To align search terms and export button*/
+/* To align search terms and export button */
 #searchTerms {
     display: inline;
 }
@@ -68,4 +68,30 @@ select#choroProps {
     float: left;
     margin-right: 8px;
     opacity: 0.7;
+}
+
+#panel-basic {
+    color: white;
+}
+
+#quick-country-select {
+    display: none;
+}
+
+.selectize-input {
+    border: 1px solid #37516F !important;
+    border-radius: 0 !important;
+}
+
+.selectize-input.full {
+    border: 1px solid #37516F;
+    border-radius: 0;
+}
+
+#quick-button-floaty {
+    float: right;
+}
+
+#quick-search-fulltext-container input {
+    width: 98%;
 }

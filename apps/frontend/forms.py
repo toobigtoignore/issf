@@ -90,4 +90,4 @@ class GeoJSONUploadForm(forms.Form):
 
 
 SelectedAttributesFormSet = formset_factory(SelectedAttributeForm, extra=1)
-SelectedThemesIssuesFormSet = formset_factory(SelectedThemeIssueForm, extra=1)
+SelectedThemesIssuesFormSet = formset_factory(SelectedThemeIssueForm, extra=6)
