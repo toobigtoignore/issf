@@ -7,8 +7,12 @@ from issf_base.models import Country, ISSF_Core, SelectedAttribute, SelectedThem
 
 
 class SearchForm(forms.Form):
+    """
+    Form for searching for records.
+    """
     fulltext_keywords = forms.CharField(label='Search by full text', required=False)
     keywords = forms.CharField(label='Search by title', required=False)
+
     # contributor_id=1 is the ISSF Staff account
     existing_contributors = ISSF_Core.objects.all().values('contributor')
     contributor_choices = [
@@ -32,6 +36,10 @@ class SearchForm(forms.Form):
 
 
 class SelectedAttributeForm(ModelForm):
+    """
+    Form for searching for selected attributes.
+    Not used on it's own, rather used as a part of a formset.
+    """
     class Meta:
         fields = '__all__'
         model = SelectedAttribute
@@ -39,6 +47,10 @@ class SelectedAttributeForm(ModelForm):
 
 
 class SelectedThemeIssueForm(ModelForm):
+    """
+    Form for searching for selected themes/issues.
+    Not used on it's own, rather used as a part of a formset.
+    """
     class Meta:
         model = SelectedThemeIssue
         fields = '__all__'
@@ -46,6 +58,9 @@ class SelectedThemeIssueForm(ModelForm):
 
 
 class TipForm(ModelForm):
+    """
+    Form for submitting new tips.
+    """
     fact = forms.CharField()
 
     class Meta:
@@ -54,6 +69,9 @@ class TipForm(ModelForm):
 
 
 class FAQForm(ModelForm):
+    """
+    Form for submitting new FAQ entries.
+    """
 
     class Meta:
         model = FAQ
@@ -61,10 +79,13 @@ class FAQForm(ModelForm):
 
 
 class WhosWhoForm(ModelForm):
+    """
+    Form for changing the who feature on the front page.
+    """
     name = forms.CharField()
     about = forms.CharField(required=False)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(WhosWhoForm, self).__init__(*args, **kwargs)
         self.fields['ssf_person'].queryset = SSFPerson.objects.all().order_by(
             'contributor__last_name',
@@ -86,6 +107,9 @@ class WhosWhoForm(ModelForm):
 
 
 class GeoJSONUploadForm(forms.Form):
+    """
+    Form for uploading a new GeoJSON file.
+    """
     file = forms.FileField(required=False)
 
 

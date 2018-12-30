@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from django import forms
 from django.forms import ModelForm
 
@@ -8,7 +10,13 @@ from .models import *
 
 
 class ProfileForm(ModelForm):
-    def clean(self):
+    """
+    Form for creating and updating a user profile.
+    """
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data entered by the user.
+        """
         cleaned_data = super(ProfileForm, self).clean()
         # check for required fields, it cannot be done in the model because it inherits from
         # Django's AbstractUser (auth app)

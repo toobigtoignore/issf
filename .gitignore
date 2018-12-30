@@ -19,6 +19,7 @@ data/postgres/misc
 data/postgres/sessions
 data/postgres/logs
 data/postgres/storage
+data/postgres/backups
 
 # Testing
 .pytest_cache/

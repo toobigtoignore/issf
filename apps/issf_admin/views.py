@@ -5,17 +5,24 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.urls import reverse
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest
 from django.db import connection
 from allauth.account.models import EmailAddress
 from allauth.account.views import PasswordChangeView
 
+
 from .models import UserProfile
-from issf_base.models import FAQ, FAQCategory, ISSFCore, SSFPerson, ISSF_Core, DidYouKnow
+from issf_base.models import FAQ, FAQCategory, SSFPerson, ISSF_Core, DidYouKnow
+from issf_base.utils import get_redirectname
 from .forms import ProfileForm
 
 
 @login_required
-def update_profile(request, template_name='issf_admin/user_profile.html'):
+def update_profile(request: HttpRequest, template_name: str = 'issf_admin/user_profile.html') -> HttpResponse:
+    """
+    View to update a user's profile.
+    """
+    # Save changes to profile
     if request.method == "POST":
         saved, response = save_profile(request)
         if saved:
@@ -29,8 +36,8 @@ def update_profile(request, template_name='issf_admin/user_profile.html'):
             # # invalidly-formatted email address will land here
             # # send errors back for display...
             return HttpResponse(response)
+    # Give user form to update profile
     else:
-        # load
         user_profile = UserProfile.objects.get(id=request.user.pk)
         profile_form = ProfileForm(instance=user_profile)
         return render(
@@ -43,7 +50,10 @@ def update_profile(request, template_name='issf_admin/user_profile.html'):
         )
 
 
-def save_profile(request):
+def save_profile(request: HttpRequest) -> HttpResponse:
+    """
+    Saves changes to a user's profile.
+    """
     # save
     profile_form = ProfileForm(data=request.POST, instance=request.user)
     if profile_form.is_valid():
@@ -80,67 +90,73 @@ def save_profile(request):
         return False, response
 
 
-def temp(request):
+def temp(request: HttpRequest) -> HttpResponse:
+    """
+    Unused function that seems to set the password for a set user to 'temp'.
+    """
     user_profile = UserProfile.objects.get(id=325)
     user_profile.set_password('temp')
     user_profile.save()
     return render(request, 'issf_admin/verification_successful.html')
 
 
-def account_verified(request):
+def account_verified(request: HttpRequest) -> HttpResponse:
+    """
+    View that notifies a user that their account was verified successfully.
+    """
     return render(request, 'issf_admin/verification_successful.html')
 
 
-def profile_saved(request):
+def profile_saved(request: HttpRequest) -> HttpResponse:
+    """
+    View that notifies a user that their profile was saved successfully.
+    """
     return render(request, 'issf_admin/user_profile_saved.html')
 
 
 class CustomPasswordChangeView(PasswordChangeView):
+    """
+    Custom password change view that redirects the user to their profile once the password has been changed.
+    """
     success_url = '/accounts/profile/'
 
 
 custom_password_change = login_required(CustomPasswordChangeView.as_view())
 
 
-def logout_view(request):
+def logout_view(request: HttpRequest) -> HttpResponse:
+    """
+    Custom logout view. Logs out the user, and then redirects them to the front page.
+    """
     logout(request)
     return HttpResponseRedirect('/')
 
 
-def return_google_site_verification(request):
+def return_google_site_verification(request: HttpRequest) -> HttpResponse:
+    """
+    View that returns Google's site verification key.
+    """
     return HttpResponse('google-site-verification: googlee9690f8983b8a350.html', content_type="text/plain")
 
 
-def return_sitemap(request):
-    retstr = ''
-    retstr = retstr + request.build_absolute_uri(reverse('index')) + '\r\n'
-    for record in ISSFCore.objects.all():
-        if record.core_record_type == "Who's Who in SSF":
-            retstr = retstr + request.build_absolute_uri(reverse('who-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "State-of-the-Art in SSF Research":
-            retstr = retstr + request.build_absolute_uri(reverse('sota-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "Capacity Development":
-            retstr = retstr + request.build_absolute_uri(reverse('capacity-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "SSF Organization":
-            retstr = retstr + request.build_absolute_uri(reverse('organization-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "SSF Profile":
-            retstr = retstr + request.build_absolute_uri(reverse('profile-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "SSF Guidelines":
-            retstr = retstr + request.build_absolute_uri(reverse('guidelines-details', args=[record.issf_core_id])) + "\r\n"
-    return HttpResponse(retstr, content_type="text/plain")
-
-
 def return_robots(request):
+    """
+    View that returns a robots.txt file.
+    """
     retstr = 'User-agent: *\r\n'
     retstr = retstr + 'Disallow: /admin/\r\n'
     retstr = retstr + 'Disallow: /accounts/\r\n'
     retstr = retstr + 'Disallow: /djangojs/\r\n'
     retstr = retstr + 'Disallow: /frontend/\r\n'
     retstr = retstr + 'Disallow: /import-who/\r\n'
+    retstr = retstr + 'Disallow: /details/report-pdf/\r\n'
     return HttpResponse(retstr, content_type="text/plain")
 
 
-def contributed_records(request):
+def contributed_records(request: HttpRequest) -> HttpResponse:
+    """
+    View that shows the user all the records that they have contributed.
+    """
     user = request.user
     records = ISSF_Core.objects.filter(contributor_id=user.id)
     record_items = {}
@@ -161,21 +177,10 @@ def contributed_records(request):
     )
 
 
-def get_redirectname(core_record_type):
-    urls = {
-        "State-of-the-Art in SSF Research": 'sota-details',
-        "Who's Who in SSF": 'who-details',
-        "SSF Organization": 'organization-details',
-        "Capacity Development": 'capacity-details',
-        "SSF Profile": 'profile-details',
-        "SSF Guidelines": 'guidelines-details',
-        "Case Study": 'case-studies-details',
-        "SSF Experiences": 'experiences-details'
-    }
-    return urls[core_record_type]
-
-
 def help_page(request):
+    """
+    View that renders the help page with a random fact contained within it.
+    """
     faqs = FAQ.objects.all()
     categories = FAQCategory.objects.all()
 
@@ -194,7 +199,10 @@ def help_page(request):
     )
 
 
-def fact_archive(request):
+def fact_archive(request: HttpRequest) -> HttpResponse:
+    """
+    View that displays the complete list of facts.
+    """
     return render(
         request,
         'issf_admin/fact_archive.html',
