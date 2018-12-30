@@ -210,26 +210,30 @@ def frontend_data(request):
                     map_queryset.remove(item)
 
         if countries:
-            countries = [int(i) for i in countries]
-            country_names = [list(Country.objects.filter(country_id__exact=country))[0].short_name for country in countries]
-            # Underlying DB has a column for country id, but model itself doesn't
-            # Therefore, we need to fall back to using plain SQL
-            country_matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.raw(
-                'SELECT row_number, issf_core_id, contribution_date, contributor_id, edited_date, editor_id, \
-                core_record_type, core_record_summary, core_record_status geographic_scope_type,\
-                 map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id = ANY(%(countries)s)',
-                {'countries': countries}
-            ))
-            if len(countries) <= 5:
-                search_terms.append('Countries: {}'.format(', '.join(country_names)))
-            else:
-                search_terms.append('Countries: {} (and {} more)'.format(
-                    ', '.join(country_names[0:5]),
-                    len(countries) - 5
+            try:
+                countries = [int(i) for i in countries]
+                country_names = [list(Country.objects.filter(country_id__exact=country))[0].short_name for country in countries]
+                # Underlying DB has a column for country id, but model itself doesn't
+                # Therefore, we need to fall back to using plain SQL
+                country_matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.raw(
+                    'SELECT row_number, issf_core_id, contribution_date, contributor_id, edited_date, editor_id, \
+                    core_record_type, core_record_summary, core_record_status geographic_scope_type,\
+                    map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id = ANY(%(countries)s)',
+                    {'countries': countries}
                 ))
-            for item in map_queryset[:]:
-                if item.issf_core_id not in country_matches:
-                    map_queryset.remove(item)
+                if len(countries) <= 5:
+                    search_terms.append('Countries: {}'.format(', '.join(country_names)))
+                else:
+                    search_terms.append('Countries: {} (and {} more)'.format(
+                        ', '.join(country_names[0:5]),
+                        len(countries) - 5
+                    ))
+                for item in map_queryset[:]:
+                    if item.issf_core_id not in country_matches:
+                        map_queryset.remove(item)
+            except ValueError:
+                # Occurs when no country is selected
+                pass
 
         if contribution_begin_date:
             search_terms.append('Contribution date begin: {}'.format(contribution_begin_date))
