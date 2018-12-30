@@ -214,7 +214,15 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
                     map_queryset.remove(item)
 
         if countries:
-            try:
+            unprocessed_countries = countries
+            countries = []
+            for country in unprocessed_countries:
+                try:
+                    countries.append(int(country))
+                except ValueError:
+                    pass
+
+            if len(countries) != 0:
                 countries = [int(i) for i in countries]
                 country_names = [list(Country.objects.filter(country_id__exact=country))[0].short_name for country in countries]
                 # Underlying DB has a column for country id, but model itself doesn't
@@ -235,9 +243,6 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
                 for item in map_queryset[:]:
                     if item.issf_core_id not in country_matches:
                         map_queryset.remove(item)
-            except ValueError:
-                # Occurs when no country is selected
-                pass
 
         if contribution_begin_date:
             search_terms.append('Contribution date begin: {}'.format(contribution_begin_date))
