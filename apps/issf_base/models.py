@@ -3,6 +3,10 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
 from django.utils.html import conditional_escape
+from django.urls import reverse
+from django.urls.exceptions import NoReverseMatch
+
+from issf_base.utils import get_redirectname
 
 
 class Theme_Issue(models.Model):
@@ -669,6 +673,12 @@ class ISSF_Core(models.Model):
     class Meta:
         managed = False
         db_table = 'issf_core'
+
+    def get_absolute_url(self):
+        try:
+            return reverse(get_redirectname(self.core_record_type), kwargs={'issf_core_id': self.issf_core_id})
+        except NoReverseMatch:
+            return None
 
 
 class ProfileOrganization(models.Model):
