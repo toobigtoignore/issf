@@ -13,7 +13,7 @@ from django.core.management import call_command
 from django.db.models import QuerySet
 from django.contrib.gis.db.models import Model
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpRequest
+from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpRequest, HttpResponseForbidden
 from django.shortcuts import render
 from django.template import Context
 from djgeojson.views import GeoJSONLayerView
@@ -873,7 +873,7 @@ def new_tip(request: HttpRequest) -> HttpResponse:
             }
         )
     else:
-        raise Http404("Insufficient permission.")
+        raise HttpResponseForbidden("Insufficient permission.")
 
 
 @login_required()
@@ -884,12 +884,15 @@ def new_faq(request: HttpRequest) -> HttpResponse:
     """
 
     if request.method == 'POST':
-        form = FAQForm(request.POST)
+        if request.user.is_staff:
+            form = FAQForm(request.POST)
 
-        if form.is_valid():
-            form.save()
+            if form.is_valid():
+                form.save()
 
-        return HttpResponseRedirect(reverse('new-tip'))
+            return HttpResponseRedirect(reverse('new-tip'))
+        else:
+            raise HttpResponseForbidden("Insufficient permission.")
 
 
 @login_required()
