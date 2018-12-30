@@ -22,7 +22,7 @@ class Theme_Issue(models.Model):
         db_table = 'theme_issue'
         ordering = ['category_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.theme_issue_category)
 
 
@@ -40,7 +40,7 @@ class Theme_Issue_Value(models.Model):
         db_table = 'theme_issue_value'
         ordering = ['theme_issue', 'label_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.theme_issue_label)
 
 
@@ -62,7 +62,7 @@ class Country(models.Model):
         db_table = 'country'
         ordering = ['short_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.short_name)
 
 
@@ -75,7 +75,7 @@ class PublicationType(models.Model):
         db_table = 'publication_type'
         ordering = ['publication_type_id']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.publication_type)
 
 
@@ -89,7 +89,7 @@ class Language(models.Model):
         db_table = 'language'
         ordering = ['language_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.language_name)
 
 
@@ -175,10 +175,10 @@ class SSFKnowledge(models.Model):
         managed = False
         db_table = 'ssf_knowledge'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s %s' % (self.level2_title, self.level1_title)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.level1_title = self.level1_title
         self.level2_title = self.level2_title
         self.nonenglish_title = self.nonenglish_title
@@ -205,7 +205,7 @@ class KnowledgeAuthorSimple(models.Model):
         db_table = 'knowledge_author_simple'
         ordering = ['knowledge_author_simple_id']
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.author_name = conditional_escape(self.author_name)
         super(KnowledgeAuthorSimple, self).save(*args, **kwargs)
 
@@ -230,7 +230,7 @@ class Attribute(models.Model):
         db_table = 'attribute'
         ordering = ['attribute_label']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.attribute_label)
 
 
@@ -266,7 +266,7 @@ class SSFProfile(models.Model):
         managed = False
         db_table = 'ssf_profile'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.ssf_name)
 
 
@@ -281,7 +281,7 @@ class AttributeValue(models.Model):
         db_table = 'attribute_value'
         ordering = ['value_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.value_label)
 
 
@@ -296,7 +296,7 @@ class AdditionalValue(models.Model):
         db_table = 'additional_value'
         ordering = ['value_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.value_label)
 
 
@@ -367,10 +367,10 @@ class SSFOrganization(models.Model):
         db_table = 'ssf_organization'
         ordering = ['organization_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.organization_name)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.organization_name = conditional_escape(self.organization_name)
         self.address1 = conditional_escape(self.address1)
         self.address2 = conditional_escape(self.address2)
@@ -420,10 +420,10 @@ class SSFPerson(models.Model):
         managed = False
         db_table = 'ssf_person'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s %s %s' % (self.contributor.first_name, self.contributor.initials, self.contributor.last_name)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.affiliation = conditional_escape(self.affiliation)
         super(SSFPerson, self).save(*args, **kwargs)
 
@@ -458,10 +458,10 @@ class SSFCapacityNeed(models.Model):
         managed = False
         db_table = 'ssf_capacity_need'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.capacity_need_title)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.capacity_need_title = conditional_escape(self.capacity_need_title)
         self.capacity_need_description = conditional_escape(self.capacity_need_description)
         super(SSFCapacityNeed, self).save(*args, **kwargs)
@@ -516,10 +516,10 @@ class SSFGuidelines(models.Model):
         managed = False
         db_table = 'ssf_guidelines'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % self.title
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.title = conditional_escape(self.title)
         self.location = conditional_escape(self.location)
         self.purpose = conditional_escape(self.purpose)
@@ -549,10 +549,10 @@ class SSFExperiences(models.Model):
         managed = False
         db_table = 'ssf_experience'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % self.title
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.title = conditional_escape(self.title)
         self.name = conditional_escape(self.name)
         self.description = conditional_escape(self.description)
@@ -585,10 +585,10 @@ class SSFCaseStudies(models.Model):
         managed = False
         db_table = 'ssf_case_study'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % self.name
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.name = conditional_escape(self.name)
         self.role = conditional_escape(self.role)
         self.description_area = conditional_escape(self.description_area)
@@ -614,7 +614,7 @@ class CapacityNeedRating(models.Model):
         db_table = 'capacity_need_rating'
         unique_together = ('capacity_need', 'rater',)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.rating)
 
 
@@ -915,7 +915,7 @@ class ExternalLink(models.Model):
         managed = False
         db_table = 'external_link'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s %s' % (self.link_type, self.link_address)
 
 
@@ -930,7 +930,7 @@ class Species(models.Model):
         managed = False
         db_table = 'species'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s(%s)' % (self.species_common, self.species_scientific)
 
 
@@ -946,7 +946,7 @@ class Region(models.Model):
         db_table = 'region'
         ordering = ['region_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.region_name)
 
 
@@ -972,7 +972,7 @@ class GeographicScopeLocalArea(models.Model):
         managed = False
         db_table = 'geographic_scope_local_area'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.local_area_name)
 
 
@@ -1002,7 +1002,7 @@ class GeographicScopeSubnation(models.Model):
         managed = False
         db_table = 'geographic_scope_subnation'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.subnation_name)
 
 
@@ -1015,7 +1015,7 @@ class GeographicScopeNation(models.Model):
         managed = False
         db_table = 'geographic_scope_nation'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.country.short_name)
 
 
@@ -1033,7 +1033,7 @@ class Geographic_Scope_Region(models.Model):
         managed = False
         db_table = 'geographic_scope_region'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s' % (self.country.region_name)
 
 

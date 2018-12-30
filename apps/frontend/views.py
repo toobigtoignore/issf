@@ -2,6 +2,7 @@ import datetime
 import json
 import re
 import os.path
+from typing import Generator, List, Iterator
 
 from zipfile import ZipFile
 
@@ -9,9 +10,12 @@ import djqscsv
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.management import call_command
+from django.db.models import QuerySet
+from django.contrib.gis.db.models import Model
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpRequest
 from django.shortcuts import render
+from django.template import Context
 from djgeojson.views import GeoJSONLayerView
 from django.views.decorators.gzip import gzip_page
 
@@ -25,7 +29,7 @@ from django.middleware.gzip import GZipMiddleware
 gzip_middleware = GZipMiddleware()
 
 
-def parse_search_terms(input_search_terms):
+def parse_search_terms(input_search_terms: str) -> str:
     """
         Strip away special characters because they would cause the tsquery to fail
         and the search to hang.
@@ -42,8 +46,9 @@ def parse_search_terms(input_search_terms):
         return parsed_search_terms.replace(u" ", u" & ")
     return parsed_search_terms.replace(u" ", u" | ")
 
+
 @gzip_page
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     # get data for dashboard panels
     recent_contributions = RecentContributions.objects.all()
     for recent_contribution in recent_contributions:
@@ -90,7 +95,7 @@ def index(request):
 
 
 @gzip_page
-def frontend_data(request):
+def frontend_data(request: HttpRequest) -> HttpResponse:
     map_queryset = None
     search_terms = u""
     map_results = []
@@ -278,7 +283,7 @@ class MapLayer(GeoJSONLayerView):
     queryset = ISSFCoreMapPointUnique.objects.all()
     properties = ['issf_core_id', 'core_record_type', 'core_record_summary', 'geographic_scope_type']
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> Context:
         # this case is called from details to show map points for one record
         context = super(MapLayer, self).get_context_data(**kwargs)
         issf_core_id = self.request.GET['issf_core_id']
@@ -288,7 +293,7 @@ class MapLayer(GeoJSONLayerView):
 
 # This function groups all results currently displayed in the table by record type and exports the records to several
 #  CSV files, one for each record type, and then serves them to user in a .zip file.
-def table_data_export(request):
+def table_data_export(request: HttpRequest) -> HttpResponse:
     """
     View that handles generating and returning zip files containing csv files full of records.
     """
@@ -332,7 +337,7 @@ def table_data_export(request):
                 case_items.append(issf_core_id)
             elif type == 'SSF Experiences':
                 expe_items.append(issf_core_id)
-            
+
         # Generate the zipfile containing all the records
         zipfile = ZipFile(table_data_file_name, 'w')
 
@@ -646,7 +651,7 @@ def table_data_export(request):
         return response
 
 
-def write_file_csv(filename, records, zipfile):
+def write_file_csv(filename: str, records: QuerySet, zipfile: ZipFile) -> None:
     """
     Writes records to a specified file in a zipfile.
     :param filename: The filename to write to
@@ -665,7 +670,7 @@ def write_file_csv(filename, records, zipfile):
 # "Secret" csv exporting URL for GCPC. Only does SSF Profile records and associated characteristics.
 # DO NOT MODIFY, THIS URL IS AUTOMATICALLY HIT.
 # If any change is made to the database, test this URL to make sure everything still works.
-def profile_csv(request):
+def profile_csv(request: HttpRequest) -> HttpResponse:
     """
     URL that generates and returns a zipfile of csv files for GCPC.
     Now unused.
@@ -751,7 +756,7 @@ def profile_csv(request):
     return response
 
 
-def unique_chain(*iterables):
+def unique_chain(*iterables: List[Model]) -> Generator[int, None, None]:
     """
     Generator that returns all unique issf_core_ids
     """
@@ -763,7 +768,7 @@ def unique_chain(*iterables):
                 yield element['issf_core_id']
 
 
-def convert_records(records):
+def convert_records(records: Iterator[Model]) -> List[Model]:
     """
     Converts records to a format that is more easily usable for most purposes.
     """
@@ -809,7 +814,7 @@ def convert_records(records):
     return records
 
 
-def country_records(request, country_id):
+def country_records(request: HttpRequest, country_id: int) -> HttpResponse:
     """
     Gets all records for a given country.
     """
@@ -834,7 +839,7 @@ def country_records(request, country_id):
 
 @login_required()
 @gzip_page
-def new_tip(request):
+def new_tip(request: HttpRequest) -> HttpResponse:
     """
     View to submit a new tip.
     """
@@ -873,7 +878,7 @@ def new_tip(request):
 
 @login_required()
 @gzip_page
-def new_faq(request):
+def new_faq(request: HttpRequest) -> HttpResponse:
     """
     View to submit a new FAQ entry.
     """
@@ -889,7 +894,7 @@ def new_faq(request):
 
 @login_required()
 @gzip_page
-def who_feature(request):
+def who_feature(request: HttpRequest) -> HttpResponse:
     """
     View for setting the who feature on the front page.
     """
@@ -914,7 +919,7 @@ def who_feature(request):
 
 @login_required()
 @gzip_page
-def geojson_upload(request):
+def geojson_upload(request: HttpRequest) -> HttpResponse:
     """
     View for uploading a new geojson file.
     """

@@ -2,7 +2,9 @@ import ast
 import json
 import re
 import tempfile
+from datetime import datetime
 from urllib.parse import urlparse
+from typing import Any, Dict
 import collections
 
 from django.contrib.auth.decorators import login_required
@@ -10,9 +12,11 @@ from django.contrib.sitemaps import Sitemap
 from django.core.cache import cache
 from django.urls import reverse
 from django.db import connection
+from django.forms import ModelForm
+from django.contrib.gis.db.models import Model
 from django.forms.utils import ErrorList
 from django.template.loader import get_template
-from django.http import HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseNotFound, HttpResponse, HttpRequest
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
@@ -77,12 +81,12 @@ class DetailsSitemap(Sitemap):
     def items(self):
         return ISSF_Core.objects.all()
 
-    def lastmod(self, obj):
+    def lastmod(self, obj) -> datetime:
         return obj.edited_date
 
 
 @login_required
-def contribute(request, who=''):
+def contribute(request: HttpRequest, who: str = '') -> HttpResponse:
     """
     View for the contribute page. It's initialized with blank forms for each dataset except that
     the contributor is automatically set to the currently logged in user.
@@ -133,7 +137,7 @@ reused code that could be factored out to functions.
 
 
 # display
-def sota_details(request, issf_core_id):
+def sota_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying details for a SOTA record.
     """
@@ -209,7 +213,7 @@ def sota_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def who_details(request, issf_core_id):
+def who_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Who's Who record.
     """
@@ -273,7 +277,7 @@ def who_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def organization_details(request, issf_core_id):
+def organization_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of an Organization record.
     """
@@ -336,7 +340,7 @@ def organization_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def capacity_details(request, issf_core_id):
+def capacity_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Capacity Development record.
     """
@@ -395,7 +399,7 @@ def capacity_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def profile_details(request, issf_core_id):
+def profile_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a SSF Profile record.
     """
@@ -475,7 +479,7 @@ def profile_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def guidelines_details(request, issf_core_id):
+def guidelines_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Guidelines record.
     """
@@ -543,7 +547,7 @@ def guidelines_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def experiences_details(request, issf_core_id):
+def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of an Experiences record.
     """
@@ -604,7 +608,7 @@ def experiences_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def case_study_details(request, issf_core_id):
+def case_study_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Case Study record.
     """
@@ -666,7 +670,7 @@ def case_study_details(request, issf_core_id):
 # END DETAILS VIEWS
 
 
-def get_other_theme_issue(themes_issues_form, field, issf_core_id, theme_issue_value_id):
+def get_other_theme_issue(themes_issues_form: ThemesIssuesForm, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
     """
     Unused function to set values in a given themes and issues form based on data already stored in the database.
     """
@@ -682,7 +686,7 @@ database.
 """
 
 
-def save_basic(request, model_class, form_class):
+def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) -> HttpResponse:
     """
     View which handles the saving of most types of records.
     """
@@ -757,7 +761,7 @@ def save_basic(request, model_class, form_class):
                 return HttpResponse(response)
 
 
-def update_tsvector_summary(core_record_type, issf_core_id):
+def update_tsvector_summary(core_record_type: str, issf_core_id: str) -> None:
     """
     Updates the tsrecord (now unused) and summary for a given record.
     """
@@ -768,7 +772,7 @@ def update_tsvector_summary(core_record_type, issf_core_id):
     # Therefore this should be safe from SQL injection
 
     # Check the record type and call the corresponding functions on the database
-    
+
     if core_record_type == "State-of-the-Art in SSF Research":
         cursor.execute('SELECT * FROM knowledge_tsvector_update(' + issf_core_id + ')')
         cursor.execute('SELECT * FROM knowledge_summary_update(' + issf_core_id + ')')
@@ -795,7 +799,7 @@ def update_tsvector_summary(core_record_type, issf_core_id):
         cursor.execute('SELECT * FROM casestudies_summary_update(' + issf_core_id + ')')
 
 
-def is_int(s):
+def is_int(s: Any) -> bool:
     """
     Checks whether a provided value can be casted to an integer.
     Unused.
@@ -808,7 +812,7 @@ def is_int(s):
 
 
 @login_required
-def sota_basic(request):
+def sota_basic(request: HttpRequest) -> HttpResponse:
     """
     View for saving a SOTA record.
     """
@@ -894,7 +898,7 @@ def sota_basic(request):
 
 
 @login_required
-def who_basic(request):
+def who_basic(request: HttpRequest) -> HttpResponse:
     """
     View that saves a Who's Who record.
     """
@@ -908,7 +912,7 @@ def who_basic(request):
 
 
 @login_required
-def organization_basic(request):
+def organization_basic(request: HttpRequest) -> HttpResponse:
     """
     View for saving an organization record.
     """
@@ -969,14 +973,14 @@ def organization_basic(request):
                 return HttpResponse(response)
 
 
-def urlEncodeNonAscii(b):
+def urlEncodeNonAscii(b: str) -> str:
     """
     Encodes non-ascii characters in urls so that they can be used.
     """
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
 
 
-def iriToUri(iri):
+def iriToUri(iri: str) -> str:
     """
     Converts an iri to a uri.
     """
@@ -985,7 +989,7 @@ def iriToUri(iri):
 
 
 @login_required
-def geocode_address(request):
+def geocode_address(request: HttpRequest) -> HttpResponse:
     """
     View that geocodes an address using bing's service.
     """
@@ -1040,7 +1044,7 @@ def geocode_address(request):
 
 
 @login_required
-def capacity_basic(request):
+def capacity_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save a Capacity Development record.
     """
@@ -1048,7 +1052,7 @@ def capacity_basic(request):
 
 
 @login_required
-def capacity_need_rating(request, prev_capacity_need_id):
+def capacity_need_rating(request: HttpRequest, prev_capacity_need_id: int) -> HttpResponse:
     """
     View to rate a capacity need.
     No longer used.
@@ -1119,7 +1123,7 @@ def capacity_need_rating(request, prev_capacity_need_id):
 
 
 @login_required
-def sota_other(request):
+def sota_other(request: HttpRequest) -> HttpResponse:
     """
     View for saving other details for a SOTA record.
     """
@@ -1158,14 +1162,14 @@ def sota_other(request):
 
 
 @login_required
-def who_researcher(request):
+def who_researcher(request: HttpRequest) -> HttpResponse:
     """
     View for saving the record for a researcher who's who
     """
     return save_basic(request, SSFPerson, PersonResearcherForm)
 
 
-def is_filled(field):
+def is_filled(field: Dict[str, Any]) -> bool:
     """
     Ensures that at least one item in the field is filled.
     """
@@ -1177,7 +1181,7 @@ def is_filled(field):
 
 
 @login_required
-def profile_main_attributes(request):
+def profile_main_attributes(request: HttpRequest) -> HttpResponse:
     """
     View to save the characteristics form for an SSF Profile.
     Described as a 'house of cards' by the last person to document it.
@@ -1267,7 +1271,7 @@ def profile_main_attributes(request):
                 return HttpResponse(response)
 
 
-def main_attributes_save(request, issf_core_id):
+def main_attributes_save(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for saving the main attributes form for an ssf profile.
     """
@@ -1298,7 +1302,7 @@ def main_attributes_save(request, issf_core_id):
 
 
 @login_required
-def profile_basic(request):
+def profile_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save an SSF profile.
     """
@@ -1306,7 +1310,7 @@ def profile_basic(request):
 
 
 @login_required
-def guidelines_basic(request):
+def guidelines_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save a Guidelines record.
     """
@@ -1314,7 +1318,7 @@ def guidelines_basic(request):
 
 
 @login_required
-def experiences_basic(request):
+def experiences_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save an Experiences record.
     """
@@ -1322,7 +1326,7 @@ def experiences_basic(request):
 
 
 @login_required
-def case_study_basic(request):
+def case_study_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save a Case Study record.
     """
@@ -1331,7 +1335,7 @@ def case_study_basic(request):
 
 # reusable saves attached to issf_core
 @login_required
-def themes_issues(request):
+def themes_issues(request: HttpRequest) -> HttpResponse:
     """
     View for saving themes/issues for a record.
     """
@@ -1376,7 +1380,7 @@ def themes_issues(request):
                 return HttpResponse(response)
 
 
-def save_other_theme_issue(themes_issues_form, field, issf_core_id, theme_issue_value_id):
+def save_other_theme_issue(themes_issues_form: ThemesIssuesForm, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
     """
     Saves 'other' values for theme/issue forms.
     """
@@ -1398,7 +1402,7 @@ def save_other_theme_issue(themes_issues_form, field, issf_core_id, theme_issue_
 
 
 @login_required
-def common_themes_issues(request):
+def common_themes_issues(request: HttpRequest) -> HttpResponse:
     """
     View to save common themes/issues.
     """
@@ -1425,7 +1429,7 @@ def common_themes_issues(request):
 
 
 @login_required
-def common_attributes(request):
+def common_attributes(request: HttpRequest) -> HttpResponse:
     """
     View to save common attributes
     """
@@ -1452,7 +1456,7 @@ def common_attributes(request):
 
 
 @login_required
-def geographic_scope(request):
+def geographic_scope(request: HttpRequest) -> HttpResponse:
     """
     View to save geographic scope form.
     """
@@ -1587,7 +1591,7 @@ def geographic_scope(request):
 
 
 @login_required
-def geographic_scope_save(request, issf_core_id):
+def geographic_scope_save(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View that returns the geographic scope forms when creating a new record.
     """
@@ -1620,7 +1624,7 @@ def geographic_scope_save(request, issf_core_id):
 
 
 @login_required()
-def profile_organizations(request):
+def profile_organizations(request: HttpRequest) -> HttpResponse:
     """
     View to save organization associated with an SSF Profile.
     """
@@ -1661,7 +1665,7 @@ def profile_organizations(request):
 
 
 @login_required()
-def species(request):
+def species(request: HttpRequest) -> HttpResponse:
     """
     View to save species associated with a record.
     """
@@ -1698,7 +1702,7 @@ def species(request):
 
 
 @login_required()
-def species_landings(request):
+def species_landings(request: HttpRequest) -> HttpResponse:
     """
     View to save species form with landings.
     """
@@ -1735,7 +1739,7 @@ def species_landings(request):
 
 
 @login_required()
-def external_links(request):
+def external_links(request: HttpRequest) -> HttpResponse:
     """
     View to save external links associated with a record.
     """
@@ -1771,7 +1775,7 @@ def external_links(request):
                 return HttpResponse(response)
 
 
-def changelog(request):
+def changelog(request: HttpRequest) -> HttpResponse:
     """
     View to render changelogs for the site.
     """
@@ -1784,7 +1788,7 @@ def changelog(request):
     )
 
 
-def generate_report(record_type, issf_core_id):
+def generate_report(record_type: str, issf_core_id: int) -> Dict[str, Any]:
     """
     Handles the retrieval and generation of data to be used in reports.
     """
@@ -1936,7 +1940,7 @@ def generate_report(record_type, issf_core_id):
     }
 
 
-def report(request, record_type, issf_core_id):
+def report(request: HttpRequest, record_type: str, issf_core_id: int) -> HttpResponse:
     """
     Renders a webpage containing a report on a given item.
     """
@@ -1947,7 +1951,7 @@ def report(request, record_type, issf_core_id):
     )
 
 
-def render_report_pdf(request, record_type, issf_core_id):
+def render_report_pdf(request: HttpRequest, record_type: str, issf_core_id: int) -> HttpResponse:
     """
     Renders a report for a given item and returns it to the user as a PDF.
     """
@@ -1960,7 +1964,7 @@ def render_report_pdf(request, record_type, issf_core_id):
         return HttpResponse(f.read(), content_type='application/pdf')
 
 
-def get_record_type(record_type):
+def get_record_type(record_type: str) -> Model:
     """
     Gets the model object for a record type.
     """
@@ -1978,7 +1982,7 @@ def get_record_type(record_type):
 
 
 # Delete specified record
-def delete_record(request, issf_core_id):
+def delete_record(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     Deletes a specified record.
     """

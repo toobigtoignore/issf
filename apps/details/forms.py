@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from django import forms
 from django.forms import ModelForm, RadioSelect, HiddenInput
 from django.forms.models import inlineformset_factory
@@ -47,7 +49,7 @@ class SSFKnowledgeForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and verifies the data entered by the user.
         """
@@ -153,7 +155,7 @@ class SSFOrganizationForm(ModelForm):
             'obstacles': forms.Textarea(attrs={'rows': 3})
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and verifies the data entered by the user.
         """
@@ -241,7 +243,7 @@ class SSFProfileForm(ModelForm):
             'img_url': 'Image URL (direct links only)'
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, any]:
         """
         Cleans and verifies the data entered by the user.
         """
@@ -366,7 +368,7 @@ class CapacityNeedRatingForm(ModelForm):
             'capacity_need': HiddenInput, 'rater': HiddenInput
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data entered by the user.
         """
@@ -380,7 +382,7 @@ class MainAttributeForm(ModelForm):
     Form for entering a main attribute.
     Not used on it's own, but rather used as a part of a formset.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(MainAttributeForm, self).__init__(*args, **kwargs)
         # If the form has an initial value supplied, autopopulate the fields based on the initial value
         if len(self.initial) > 0:
@@ -409,7 +411,7 @@ class MainAttributeForm(ModelForm):
             'other_value': HiddenInput
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data entered by the user.
         """
@@ -439,7 +441,7 @@ class CommonThemeIssueForm(ModelForm):
     Form for entering a common theme issue.
     Not used on it's own, but rather used as a part of a formset.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(CommonThemeIssueForm, self).__init__(*args, **kwargs)
         # If the form has an initial value supplied, autopopulate the fields based on the initial value
         if len(self.initial) > 0:
@@ -493,7 +495,7 @@ class ProfileOrganizationForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         cleaned_data = super(ProfileOrganizationForm, self).clean()
         # either select organizaton or type a name
         if not cleaned_data['ssforganization'] and not cleaned_data['organization_name']:
@@ -513,7 +515,7 @@ class CommonAttributeForm(ModelForm):
     Form for entering a common attribute.
     Not used on it's own, but rather used as a part of a formset.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(CommonAttributeForm, self).__init__(*args, **kwargs)
         # If an initial value is supplied, populate a field based off of it
         if len(self.initial) > 0:
@@ -534,7 +536,7 @@ class CommonAttributeForm(ModelForm):
             'other_value': HiddenInput
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data entered by the user.
         """
@@ -637,11 +639,11 @@ class KnowledgeOtherDetailsForm(ModelForm):
             'employment_details': forms.Textarea(attrs={'rows': 3})
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(KnowledgeOtherDetailsForm, self).__init__(*args, **kwargs)
         self.fields['ssf_defined'].required = True
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data entered by the user.
         """
@@ -726,7 +728,7 @@ class PersonResearcherForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data provided by the user.
         """
@@ -790,7 +792,7 @@ class GeographicScopeLocalAreaForm(ModelForm):
         widgets = {'local_area_point': ISSFMapWidget()}
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data provided by the user. 
         """
@@ -828,7 +830,7 @@ class GeographicScopeSubnationForm(ModelForm):
         widgets = {'subnation_point': ISSFMapWidget()}
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data provided by the user.
         """
@@ -871,7 +873,7 @@ class GeographicScopeRegionForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data provided by the user.
         """
@@ -920,7 +922,7 @@ class SpeciesLandingsForm(ModelForm):
             'landings': 'Landings (t)'
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data provided by the user.
         """
@@ -995,7 +997,7 @@ GeographicScopeRegionInlineFormSet = inlineformset_factory(ISSF_Core,
                                                            extra=1)
 
 
-def confirm_other_text(other_text_field, other_check_field, cleaned_data):
+def confirm_other_text(other_text_field: str, other_check_field: str, cleaned_data: Dict[str, Any]) -> bool:
     """
     Ensures that if a user selected other, that the other value is provided.
     :param other_text_field: The name of the field for other text.

@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from django import forms
 from django.forms import ModelForm
 
@@ -9,7 +11,7 @@ class ProfileForm(ModelForm):
     """
     Form for creating and updating a user profile.
     """
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data entered by the user.
         """

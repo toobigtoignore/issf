@@ -83,7 +83,7 @@ class WhosWhoForm(ModelForm):
     name = forms.CharField()
     about = forms.CharField(required=False)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(WhosWhoForm, self).__init__(*args, **kwargs)
         self.fields['ssf_person'].queryset = SSFPerson.objects.all().order_by(
             'contributor__last_name',
