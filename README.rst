@@ -23,6 +23,10 @@ Clone the git repository with:
 
 ``git clone https://github.com/toobigtoignore/issf``
 
+Create a dummy .env file
+
+``cp issf_prod/.env.dist issf_prod/.env``
+
 Then spin up the database container. From within the `issf` directory run:
 
 ``docker-compose up -d db``

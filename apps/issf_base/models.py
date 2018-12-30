@@ -3,12 +3,16 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
 from django.utils.html import conditional_escape
+from django.urls import reverse
+from django.urls.exceptions import NoReverseMatch
+
+from issf_base.utils import get_redirectname
 
 
 class Theme_Issue(models.Model):
-    # class name exception (underscore) because ManyToManyField (see
-    # Issf_Core) assumes pk is
-    # lower(Table_Name) + _id
+    """
+    Model representing a theme/issue.
+    """
     theme_issue_id = models.AutoField(primary_key=True)
     theme_issue_category = models.TextField()
     category_order = models.IntegerField()
@@ -18,14 +22,17 @@ class Theme_Issue(models.Model):
         db_table = 'theme_issue'
         ordering = ['category_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of this theme/issue.
+        """
         return '%s' % (self.theme_issue_category)
 
 
 class Theme_Issue_Value(models.Model):
-    # class name exception (underscore) because ManyToManyField (see
-    # Issf_Core) assumes pk is
-    # lower(Table_Name) + _id
+    """
+    Model representing a theme/issue value.
+    """
     theme_issue_value_id = models.AutoField(primary_key=True)
     theme_issue = models.ForeignKey(Theme_Issue, on_delete=models.CASCADE)
     theme_issue_label = models.TextField()
@@ -36,11 +43,17 @@ class Theme_Issue_Value(models.Model):
         db_table = 'theme_issue_value'
         ordering = ['theme_issue', 'label_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of this theme/issue value.
+        """
         return '%s' % (self.theme_issue_label)
 
 
 class Country(models.Model):
+    """
+    Model representing a country.
+    """
     country_id = models.AutoField(primary_key=True)
     short_name = models.CharField(max_length=100)
     official_name = models.TextField(blank=True)
@@ -58,11 +71,17 @@ class Country(models.Model):
         db_table = 'country'
         ordering = ['short_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a country.
+        """
         return '%s' % (self.short_name)
 
 
 class PublicationType(models.Model):
+    """
+    Model representing a publication type.
+    """
     publication_type_id = models.AutoField(primary_key=True)
     publication_type = models.TextField()
 
@@ -71,11 +90,17 @@ class PublicationType(models.Model):
         db_table = 'publication_type'
         ordering = ['publication_type_id']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a publication type.
+        """
         return '%s' % (self.publication_type)
 
 
 class Language(models.Model):
+    """
+    Model representing a language.
+    """
     language_id = models.AutoField(primary_key=True)
     iso_639_2digit_code = models.CharField(max_length=2)
     language_name = models.CharField(max_length=200)
@@ -85,11 +110,17 @@ class Language(models.Model):
         db_table = 'language'
         ordering = ['language_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a language.
+        """
         return '%s' % (self.language_name)
 
 
 class SSFKnowledge(models.Model):
+    """
+    Model representing a SOTA record.
+    """
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -171,10 +202,16 @@ class SSFKnowledge(models.Model):
         managed = False
         db_table = 'ssf_knowledge'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a SOTA record.
+        """
         return '%s %s' % (self.level2_title, self.level1_title)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a SOTA record.
+        """
         self.level1_title = self.level1_title
         self.level2_title = self.level2_title
         self.nonenglish_title = self.nonenglish_title
@@ -182,6 +219,9 @@ class SSFKnowledge(models.Model):
 
 
 class KnowledgeAuthor(models.Model):
+    """
+    Model representing an author of a SOTA record.
+    """
     knowledge_author_id = models.AutoField(primary_key=True)
     knowledge_core = models.ForeignKey(SSFKnowledge, related_name='issf_core', on_delete=models.CASCADE)
 
@@ -192,6 +232,9 @@ class KnowledgeAuthor(models.Model):
 
 
 class KnowledgeAuthorSimple(models.Model):
+    """
+    Model representing an author of a SOTA record.
+    """
     knowledge_author_simple_id = models.AutoField(primary_key=True)
     knowledge_core = models.ForeignKey(SSFKnowledge, on_delete=models.CASCADE)
     author_name = models.CharField(max_length=100)
@@ -201,12 +244,18 @@ class KnowledgeAuthorSimple(models.Model):
         db_table = 'knowledge_author_simple'
         ordering = ['knowledge_author_simple_id']
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of an author.
+        """
         self.author_name = conditional_escape(self.author_name)
         super(KnowledgeAuthorSimple, self).save(*args, **kwargs)
 
 
 class Attribute(models.Model):
+    """
+    Model representing an attribute.
+    """
     attribute_id = models.AutoField(primary_key=True)
     attribute_category = models.TextField()
     question_number = models.TextField()
@@ -226,11 +275,17 @@ class Attribute(models.Model):
         db_table = 'attribute'
         ordering = ['attribute_label']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of an attribute.
+        """
         return '%s' % (self.attribute_label)
 
 
 class SSFProfile(models.Model):
+    """
+    Model representing a SSF Profile.
+    """
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -262,11 +317,17 @@ class SSFProfile(models.Model):
         managed = False
         db_table = 'ssf_profile'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a SSF Profile.
+        """
         return '%s' % (self.ssf_name)
 
 
 class AttributeValue(models.Model):
+    """
+    Model representing an attribute value.
+    """
     attribute_value_id = models.AutoField(primary_key=True)
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
     value_label = models.TextField()
@@ -277,11 +338,17 @@ class AttributeValue(models.Model):
         db_table = 'attribute_value'
         ordering = ['value_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of an attribute value.
+        """
         return '%s' % (self.value_label)
 
 
 class AdditionalValue(models.Model):
+    """
+    Model representing an additional value.
+    """
     additional_value_id = models.AutoField(primary_key=True)
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
     value_label = models.TextField()
@@ -292,11 +359,17 @@ class AdditionalValue(models.Model):
         db_table = 'additional_value'
         ordering = ['value_order']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of an additional value.
+        """
         return '%s' % (self.value_label)
 
 
 class SSFOrganization(models.Model):
+    """
+    Model representing a SSF Organization.
+    """
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -363,10 +436,16 @@ class SSFOrganization(models.Model):
         db_table = 'ssf_organization'
         ordering = ['organization_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generate a string representation of a SSF Organization.
+        """
         return '%s' % (self.organization_name)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a SSF Organization.
+        """
         self.organization_name = conditional_escape(self.organization_name)
         self.address1 = conditional_escape(self.address1)
         self.address2 = conditional_escape(self.address2)
@@ -374,6 +453,9 @@ class SSFOrganization(models.Model):
 
 
 class SSFPerson(models.Model):
+    """
+    Model representing a SSF Person.
+    """
     # core (inherited from issf_core fields) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -416,15 +498,24 @@ class SSFPerson(models.Model):
         managed = False
         db_table = 'ssf_person'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a SSF Person.
+        """
         return '%s %s %s' % (self.contributor.first_name, self.contributor.initials, self.contributor.last_name)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a SSF Person.
+        """
         self.affiliation = conditional_escape(self.affiliation)
         super(SSFPerson, self).save(*args, **kwargs)
 
 
 class SSFCapacityNeed(models.Model):
+    """
+    Model representing a capacity need.
+    """
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -454,16 +545,25 @@ class SSFCapacityNeed(models.Model):
         managed = False
         db_table = 'ssf_capacity_need'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a capacity need record.
+        """
         return '%s' % (self.capacity_need_title)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a capacity need record.
+        """
         self.capacity_need_title = conditional_escape(self.capacity_need_title)
         self.capacity_need_description = conditional_escape(self.capacity_need_description)
         super(SSFCapacityNeed, self).save(*args, **kwargs)
 
 
 class SSFGuidelines(models.Model):
+    """
+    Model representing a SSF Guidelines record.
+    """
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -512,10 +612,16 @@ class SSFGuidelines(models.Model):
         managed = False
         db_table = 'ssf_guidelines'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a SSF Guidelines record.
+        """
         return '%s' % self.title
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a SSF Guidelines record.
+        """
         self.title = conditional_escape(self.title)
         self.location = conditional_escape(self.location)
         self.purpose = conditional_escape(self.purpose)
@@ -524,6 +630,9 @@ class SSFGuidelines(models.Model):
 
 
 class SSFExperiences(models.Model):
+    """
+    Model representing a SSF Experiences record.
+    """
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -545,10 +654,16 @@ class SSFExperiences(models.Model):
         managed = False
         db_table = 'ssf_experience'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a SSF Experiences record.
+        """
         return '%s' % self.title
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a SSF Experiences record.
+        """
         self.title = conditional_escape(self.title)
         self.name = conditional_escape(self.name)
         self.description = conditional_escape(self.description)
@@ -556,6 +671,9 @@ class SSFExperiences(models.Model):
 
 
 class SSFCaseStudies(models.Model):
+    """
+    Model representing a SSF Case Studies record.
+    """
     # core (inherited from issf_core) fields
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
@@ -581,10 +699,16 @@ class SSFCaseStudies(models.Model):
         managed = False
         db_table = 'ssf_case_study'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a SSF Case Studies record.
+        """
         return '%s' % self.name
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a SSF Case Studies record.
+        """
         self.name = conditional_escape(self.name)
         self.role = conditional_escape(self.role)
         self.description_area = conditional_escape(self.description_area)
@@ -599,6 +723,9 @@ class SSFCaseStudies(models.Model):
 
 
 class CapacityNeedRating(models.Model):
+    """
+    Model representing a capacity need rating.
+    """
     capacity_need_rating_id = models.AutoField(primary_key=True)
     capacity_need = models.ForeignKey(SSFCapacityNeed, on_delete=models.CASCADE)
     rater = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -610,11 +737,18 @@ class CapacityNeedRating(models.Model):
         db_table = 'capacity_need_rating'
         unique_together = ('capacity_need', 'rater',)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a capacity need rating.
+        """
         return '%s' % (self.rating)
 
 
 class ISSFCore(models.Model):
+    """
+    Core model used as a base for SSF records.
+    No longer used. ISSF_Core is now the core model used.
+    """
     issf_core_id = models.AutoField(primary_key=True)
     contribution_date = models.DateField(auto_now_add=True)
     contributor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributor+', on_delete=models.CASCADE)
@@ -639,6 +773,9 @@ class ISSFCore(models.Model):
 
 
 class ISSF_Core(models.Model):
+    """
+    Core model used as base for all SSF records.
+    """
     # class name exception (underscore) because ManyToManyField assumes pk
     # is lower(Table_Name) +
     # _id
@@ -670,8 +807,20 @@ class ISSF_Core(models.Model):
         managed = False
         db_table = 'issf_core'
 
+    def get_absolute_url(self):
+        """
+        Gets the url for a given record.
+        """
+        try:
+            return reverse(get_redirectname(self.core_record_type), kwargs={'issf_core_id': self.issf_core_id})
+        except NoReverseMatch:
+            return None
+
 
 class ProfileOrganization(models.Model):
+    """
+    Model representing a profile organization.
+    """
     profile_organization_id = models.AutoField(primary_key=True)
     ssfprofile = models.ForeignKey(SSFProfile, on_delete=models.CASCADE)
     ssforganization = models.ForeignKey(SSFOrganization, null=True, blank=True, on_delete=models.CASCADE)
@@ -701,6 +850,9 @@ class ProfileOrganization(models.Model):
 
 
 class SelectedAttribute(models.Model):
+    """
+    Model representing a selected attribute.
+    """
     # only used for searching of qualitative/ordinal attributes, therefore
     # does not contains all
     # fields; see CommonAttributeView and MainAttributeView for adding records
@@ -718,6 +870,9 @@ class SelectedAttribute(models.Model):
 
 
 class SelectedThemeIssue(models.Model):
+    """
+    Model representing a selected theme issue.
+    """
     # fields; see CommonThemeIssueView for adding records
     selected_theme_issue_id = models.AutoField(primary_key=True)
     theme_issue = models.ForeignKey(Theme_Issue, on_delete=models.CASCADE)
@@ -729,6 +884,9 @@ class SelectedThemeIssue(models.Model):
 
 
 class CommonAttributeView(models.Model):
+    """
+    Model representing a common attribute view.
+    """
     # uses database view to populate form of table of attributes
     # selected_attribute_id is the real PK, but could be multiple instances
     # due to multi-select of
@@ -757,6 +915,9 @@ class CommonAttributeView(models.Model):
 
 
 class CommonThemeIssueView(models.Model):
+    """
+    Model representing a common theme issue view.
+    """
     # uses database view to populate form of table of attributes
     # selected_theme_issue_id is the real PK, but could be multiple
     # instances due to multi-select
@@ -780,6 +941,9 @@ class CommonThemeIssueView(models.Model):
 
 
 class MainAttributeView(models.Model):
+    """
+    Model representing a main attribute view.
+    """
     # uses database view to populate form of table of attributes
     # selected_attribute_id is the real PK, but could be multiple instances
     # due to multi-select of
@@ -809,6 +973,9 @@ class MainAttributeView(models.Model):
 
 
 class ISSFCoreMapPointUnique(models.Model):
+    """
+    Model representing a unique map point for an ISSF Core record.
+    """
     # issf_core_map_point_unique is a database view, not a table; it is
     # read-only
     row_number = models.IntegerField(primary_key=True)
@@ -833,6 +1000,9 @@ class ISSFCoreMapPointUnique(models.Model):
 
 
 class RecentContributions(models.Model):
+    """
+    Model representing recent contributions.
+    """
     # recent_contributions is a database view, not a table; it is read-only
     issf_core_id = models.IntegerField(primary_key=True)
     core_record_type = models.TextField()
@@ -844,6 +1014,9 @@ class RecentContributions(models.Model):
 
 
 class ContributionsByRecordType(models.Model):
+    """
+    Model representing contributions by record type.
+    """
     # contributions_by_record_type is a database view, not a table; it is
     # read-only
     row_number = models.IntegerField(primary_key=True)
@@ -856,6 +1029,9 @@ class ContributionsByRecordType(models.Model):
 
 
 class ContributionsByGeographicScope(models.Model):
+    """
+    Model representing contributions by geographic scope.
+    """
     # contributions_by_geographic_scope_type is a database view,
     # not a table; it is read-only
     geographic_scope_type = models.TextField()
@@ -868,6 +1044,9 @@ class ContributionsByGeographicScope(models.Model):
 
 
 class ContributionsByCountry(models.Model):
+    """
+    Model representing contributions by country.
+    """
     # contributions_by_geographic_scope_country is a database view,
     # not a table; it is read-only
     short_name = models.TextField(primary_key=True)
@@ -880,6 +1059,9 @@ class ContributionsByCountry(models.Model):
 
 # models attached to issf_core via foreign key
 class SelectedThemeIssue(models.Model):
+    """
+    Model representing a selected theme issue.
+    """
     selected_theme_issue_id = models.AutoField(primary_key=True)
     issf_core = models.ForeignKey(ISSF_Core, db_column='issf_core_id', on_delete=models.CASCADE)
     theme_issue_value = models.ForeignKey(Theme_Issue_Value, db_column='theme_issue_value_id', on_delete=models.CASCADE)
@@ -891,6 +1073,9 @@ class SelectedThemeIssue(models.Model):
 
 
 class ExternalLink(models.Model):
+    """
+    Model representing an external link.
+    """
     external_link_id = models.AutoField(primary_key=True)
     LINK_TYPE = (
         ('URL Link', 'URL Link'),
@@ -905,11 +1090,17 @@ class ExternalLink(models.Model):
         managed = False
         db_table = 'external_link'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of an external link.
+        """
         return '%s %s' % (self.link_type, self.link_address)
 
 
 class Species(models.Model):
+    """
+    Model representing a species.
+    """
     species_id = models.AutoField(primary_key=True)
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
     species_scientific = models.CharField(max_length=100, blank=True)
@@ -920,11 +1111,17 @@ class Species(models.Model):
         managed = False
         db_table = 'species'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a species.
+        """
         return '%s(%s)' % (self.species_common, self.species_scientific)
 
 
 class Region(models.Model):
+    """
+    Model representing a region.
+    """
     region_id = models.AutoField(primary_key=True)
     region_name = models.CharField(max_length=100)
 
@@ -936,11 +1133,17 @@ class Region(models.Model):
         db_table = 'region'
         ordering = ['region_name']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a region.
+        """
         return '%s' % (self.region_name)
 
 
 class GeographicScopeLocalArea(models.Model):
+    """
+    Model representing a local geographic scope.
+    """
     geographic_scope_local_area_id = models.AutoField(primary_key=True)
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
     local_area_name = models.CharField(max_length=100)
@@ -962,11 +1165,17 @@ class GeographicScopeLocalArea(models.Model):
         managed = False
         db_table = 'geographic_scope_local_area'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a local geographic scope.
+        """
         return '%s' % (self.local_area_name)
 
 
 class GeographicScopeSubnation(models.Model):
+    """
+    Model representing a subnational geographic scope.
+    """
     geographic_scope_subnation_id = models.AutoField(primary_key=True)
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
     subnation_name = models.CharField(max_length=100)
@@ -992,11 +1201,17 @@ class GeographicScopeSubnation(models.Model):
         managed = False
         db_table = 'geographic_scope_subnation'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a subnational geographic scope.
+        """
         return '%s' % (self.subnation_name)
 
 
 class GeographicScopeNation(models.Model):
+    """
+    Model representing a national geographic scope.
+    """
     geographic_scope_nation_id = models.AutoField(primary_key=True)
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
@@ -1005,11 +1220,17 @@ class GeographicScopeNation(models.Model):
         managed = False
         db_table = 'geographic_scope_nation'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a national geographic scope.
+        """
         return '%s' % (self.country.short_name)
 
 
 class Geographic_Scope_Region(models.Model):
+    """
+    Model representing a regional geographic scope.
+    """
     # class name exception (underscore) because ManyToManyField assumes pk
     # is lower(Table_Name) +
     # _id
@@ -1023,11 +1244,17 @@ class Geographic_Scope_Region(models.Model):
         managed = False
         db_table = 'geographic_scope_region'
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a regional geographic scope.
+        """
         return '%s' % (self.country.region_name)
 
 
 class SiteVersion(models.Model):
+    """
+    Model representing a version of the site.
+    """
     site_version_id = models.AutoField(primary_key=True)
     major_version = models.TextField()
     minor_version = models.TextField()
@@ -1041,6 +1268,9 @@ class SiteVersion(models.Model):
 
 
 class Change(models.Model):
+    """
+    Model representing a change in the site.
+    """
     change_id = models.AutoField(primary_key=True)
     site_version = models.ForeignKey(SiteVersion, on_delete=models.CASCADE)
     change_desc = models.TextField()
@@ -1051,10 +1281,16 @@ class Change(models.Model):
 
 
 class FAQCategory(models.Model):
+    """
+    Model representing a FAQ category.
+    """
     faq_category_id = models.AutoField(primary_key=True)
     faq_category = models.CharField(max_length=255)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a FAQ category.
+        """
         return self.faq_category
 
     class Meta:
@@ -1063,6 +1299,9 @@ class FAQCategory(models.Model):
 
 
 class FAQ(models.Model):
+    """
+    Model representing a FAQ entry.
+    """
     faq_id = models.AutoField(primary_key=True)
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=1000)
@@ -1074,6 +1313,9 @@ class FAQ(models.Model):
 
 
 class DidYouKnow(models.Model):
+    """
+    Model representing a Did you Know entry.
+    """
     id = models.AutoField(primary_key=True)
     fact = models.TextField(blank=False)
 
@@ -1083,6 +1325,9 @@ class DidYouKnow(models.Model):
 
 
 class WhoFeature(models.Model):
+    """
+    Model representing a front-page who feature.
+    """
     id = models.AutoField(primary_key=True)
     name = models.TextField(blank=False)
     about = models.TextField(blank=True, null=True, default='')

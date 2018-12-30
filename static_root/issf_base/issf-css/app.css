@@ -115,7 +115,7 @@ select {
 }
 
 .accordion .accordion-navigation > a:hover, .accordion dd > a:hover {
-    background-color: #507cb3;
+    background-color: #507cb352;
 }
 
 .accordion .accordion-navigation > .content, .accordion dd > .content {
@@ -135,7 +135,6 @@ button, .button {
     font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
     font-weight: normal;
     line-height: normal;
-    /*margin: 0 0 1.25rem;*/
     margin: 0 0 0.75rem;
     position: relative;
     text-decoration: none;
@@ -1770,17 +1769,13 @@ blockquote p {
     float: none;
 }
 
-/******************** Ji's overrides *****************/
-
-/** Larger form error font**/
+/* Larger form error font */
 span.error, small.error {
     font-size: 0.95rem;
     font-weight: bold;
 }
 
-/******************** Matt's overrides *****************/
-
-/** Wrong font size in contribute panel**/
+/* Wrong font size in contribute panel */
 div.box-info {
     font-size: 0.875rem;
 }

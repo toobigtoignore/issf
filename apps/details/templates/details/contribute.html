@@ -238,16 +238,25 @@
                                             one.
                                             {{ person_form.contributor }}
                                         </div>
-                                        <input id="issf_core_id" type="hidden"
-                                               value="{{ issf_core_id }}"
-                                               name="issf_core_id">
+                                        <input
+                                            id="issf_core_id"
+                                            type="hidden"
+                                            value="{{ issf_core_id }}"
+                                            name="issf_core_id"
+                                        >
 
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ person_form.tweet }}
+                                            </div>
+                                        {% endif %}
 
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
                                             </button>
-
                                         </div>
                                     </form>
                                 </div>
@@ -273,11 +282,25 @@
                                     <form action="{% url 'sota-basic' %}" method="post">
                                         {% csrf_token %}
                                         <div class="FormSet">
-                                            {{ knowledge_form }}
+                                            {{ knowledge_form.publication_type.label_tag }}{{ knowledge_form.publication_type }}
+                                            {{ knowledge_form.level1_title.label_tag }}{{ knowledge_form.level1_title }}
+                                            {{ knowledge_form.level2_title.label_tag }}{{ knowledge_form.level2_title}}
+                                            {{ knowledge_form.nonenglish_language.label_tag }}{{ knowledge_form.nonenglish_language }}
+                                            {{ knowledge_form.nonenglish_title.label_tag }}{{ knowledge_form.nonenglish_title }}
+                                            {{ knowledge_form.year.label_tag }}{{ knowledge_form.year }}
+                                            {{ knowledge_form.contributor.label_tag }}{{ knowledge_form.contributor }}
                                         </div>
                                         <div class="FormSet FormSetGrowable">
                                             {{ knowledge_authors_form }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ knowledge_form.tweet }}
+                                            </div>
+                                        {% endif %}
 
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
@@ -322,6 +345,15 @@
                                             {{ fishery_profile_form.img_url.label_tag }}{{ fishery_profile_form.img_url }}
                                             {{ fishery_profile_form.contributor.label_tag }}{{ fishery_profile_form.contributor }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ fishery_profile_form.tweet }}
+                                            </div>
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -620,6 +652,14 @@
                                             {{ organization_form.contributor }}
                                         </div>
 
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ organization_form.tweet }}
+                                            </div>
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -648,9 +688,19 @@
 
                                     <form action="{% url 'case-studies-basic' %}" method="post">
                                         {% csrf_token %}
+
                                         <div class="FormSet">
                                             {{ case_study_form }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ case_study_form.tweet }}
+                                            </div>
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -681,9 +731,19 @@
 
                                     <form action="{% url 'capacity-basic' %}" method="post">
                                         {% csrf_token %}
+
                                         <div class="FormSet">
                                             {{ capacity_need_form }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ capacity_need_form.tweet }}
+                                            </div>
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -711,6 +771,7 @@
 
                                     <form action="{% url 'experiences-basic' %}" method="post">
                                         {% csrf_token %}
+
                                         <div class="FormSet">
                                             {{ experiences_form.name.label_tag }}{{ experiences_form.name }}
                                             {{ experiences_form.title.label_tag }}{{ experiences_form.title }}
@@ -720,6 +781,15 @@
                                             {{ experiences_form.img_url.label_tag }}{{ experiences_form.img_url }}
                                             {{ experiences_form.contributor.label_tag }}{{ experiences_form.contributor }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ experiences_form.tweet }}
+                                            </div>
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit
@@ -736,8 +806,7 @@
                         <!-- Guidelines -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel81">SSF Guidelines
-                                </a>
+                                <a href="#panel81">SSF Guidelines</a>
                                 <div id="panel81" class="content">
                                     <h6>Step 1. Please provide details of the SSF Guidelines documentation.</h6>
 
@@ -772,6 +841,15 @@
                                             {{ guidelines_form.link.label_tag }}{{ guidelines_form.link }}
                                             {{ guidelines_form.contributor.label_tag }}{{ guidelines_form.contributor }}
                                         </div>
+
+                                        {% if user.is_staff %}
+                                            <div class="staffbox">
+                                                <h5>Staff only:</h5>
+                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                {{ guidelines_form.tweet }}
+                                            </div>
+                                        {% endif %}
+
                                         <div class="button-bar">
                                             <button class="medium bt-submit " value="Submit">
                                                 Submit

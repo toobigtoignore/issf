@@ -10,7 +10,7 @@ sys.path.append('apps')
 
 ALLOWED_HOSTS = ['*']
 
-SECRET_KEY= config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sitemaps',
 
     # Third-Party
     'crispy_forms',

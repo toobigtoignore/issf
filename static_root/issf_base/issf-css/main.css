@@ -363,6 +363,7 @@ footer {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
     filter: alpha(opacity=90);
     z-index: 3;
+    border-radius: 6px;
 }
 
 #info-section .tabs-content > .content {
@@ -375,10 +376,10 @@ footer {
     margin: -12px 0;
     padding: 14px;
     z-index: 5;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    border-radius: 6px;
 }
 
 #info-section .main-wrapper {
@@ -1019,12 +1020,12 @@ footer {
 }
 
 .map-icons.on a:hover h3 {
-    -webkit-text-shadow: 0 0 0 #454545;
-    -moz-text-shadow: 0 0 0 #454545;
-    text-shadow: 0 0 0 #454545;
-    -webkit-box-shadow: 0 0 0 #444444;
-    -moz-box-shadow: 0 0 0 #444444;
-    box-shadow: 0 0 0 #444444;
+    -webkit-text-shadow: 0 0 0 #45454585;
+    -moz-text-shadow: 0 0 0 #45454585;
+    text-shadow: 0 0 0 #45454585;
+    -webkit-box-shadow: 0 0 0 #44444485;
+    -moz-box-shadow: 0 0 0 #44444485;
+    box-shadow: 0 0 0 #44444485;
 }
 
 .map-icons.on a:hover:before {
@@ -1165,10 +1166,10 @@ form sup {
 .box {
     width: 100%;
     background-color: #e8e8e8;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -1259,10 +1260,10 @@ form sup {
 .box-contribute header {
     padding: 14px 0 14px 60px;
     border-bottom: 4px solid #0B437F;
-    -webkit-border-radius: 8px 8px 0 0;
-    -moz-border-radius: 8px 8px 0 0;
-    -ms-border-radius: 8px 8px 0 0;
-    border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -ms-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
     background-color: #5385BB;
     background-repeat: no-repeat;
     background-position: 20px center;
@@ -1279,10 +1280,10 @@ form sup {
     -webkit-box-shadow: inset 0 0 6px #747474;
     -moz-box-shadow: inset 0 0 6px #747474;
     box-shadow: inset 0 0 6px #747474;
-    -webkit-border-radius: 0 0 8px 8px;
-    -moz-border-radius: 0 0 8px 8px;
-    -ms-border-radius: 0 0 8px 8px;
-    border-radius: 0 0 8px 8px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -ms-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
 }
 
 .box-contribute .body-contribute p {
@@ -1326,10 +1327,10 @@ form sup {
     width: 36px;
     height: 36px;
     background: #275d97 url(../img/icon-contribute.png) no-repeat;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .box-contribute ul .scientist-natural {
@@ -1477,9 +1478,9 @@ form sup {
     color: #FFF;
     font-size: 2.375rem;
     line-height: 2rem;
-    -webkit-text-shadow: 1px 2px 4px #222222;
-    -moz-text-shadow: 1px 2px 4px #222222;
-    text-shadow: 1px 2px 4px #222222;
+    -webkit-text-shadow: 1px 2px 4px #22222285;
+    -moz-text-shadow: 1px 2px 4px #22222285;
+    text-shadow: 1px 2px 4px #22222285;
 }
 
 #join h2 small {
@@ -1517,6 +1518,10 @@ form sup {
     background-image: url(../img/icon-social.png);
 }
 
+.twitter-share-button {
+    margin: 2px 6px 0 0;
+}
+
 .social #twitter {
     background-position: 0 0;
 }
@@ -1552,10 +1557,10 @@ form sup {
 .page-title {
     margin: -12px 0 10px;
     padding: 14px 16px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    border-radius: 6px;
     background: url(../img/icon-lg2.png) no-repeat;
 }
 
@@ -1564,9 +1569,9 @@ form sup {
     color: #fff;
     font-size: 2rem;
     line-height: 1;
-    -webkit-text-shadow: 2px 2px 4px #232323;
-    -moz-text-shadow: 2px 2px 4px #232323;
-    text-shadow: 2px 2px 4px #232323;
+    -webkit-text-shadow: 2px 2px 4px #23232385;
+    -moz-text-shadow: 2px 2px 4px #23232385;
+    text-shadow: 2px 2px 4px #23232385;
 }
 
 .report .accordion-navigation > a {
@@ -1585,22 +1590,22 @@ form sup {
 .report .accordion-navigation.active > a {
     color: #fff;
     padding: 5px 14px;
-    background-color: #868890;
+    background-color: #e4e4e4;
     background-image: url(../img/bt-reclose.png);
     background-position: 98% 15px;
-    -webkit-text-shadow: 0 1px 3px #111111;
-    -moz-text-shadow: 0 1px 3px #111111;
-    text-shadow: 0 1px 3px #111111;
+    -webkit-text-shadow: 0 1px 3px #11111185;
+    -moz-text-shadow: 0 1px 3px #11111185;
+    text-shadow: 0 1px 3px #11111185;
 }
 
 .mapbox {
     width: 100%;
     height: 340px;
     padding: 10px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
 }
 
 #sidemap {
@@ -1618,10 +1623,10 @@ form sup {
     padding: 12px 0 4px 20px;
     border-bottom: 4px solid #275D97;
     background: #5385BB;
-    -webkit-border-radius: 8px 8px 0 0;
-    -moz-border-radius: 8px 8px 0 0;
-    -ms-border-radius: 8px 8px 0 0;
-    border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -ms-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
 }
 
 .infobox header h2 {
@@ -1636,10 +1641,10 @@ form sup {
     -webkit-box-shadow: inset 0 0 12px #8099b4;
     -moz-box-shadow: inset 0 0 12px #8099b4;
     box-shadow: inset 0 0 12px #8099b4;
-    -webkit-border-radius: 0 0 8px 8px;
-    -moz-border-radius: 0 0 8px 8px;
-    -ms-border-radius: 0 0 8px 8px;
-    border-radius: 0 0 8px 8px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -ms-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
     overflow: hidden;
 }
 
@@ -1673,10 +1678,10 @@ form sup {
     color: #d9d9d9;
     font-size: 14px;
     background: #275D97;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
     -webkit-box-shadow: 1px 1px 2px #515151;
     -moz-box-shadow: 1px 1px 2px #515151;
     box-shadow: 1px 1px 2px #515151;
@@ -1704,13 +1709,13 @@ form sup {
     position: absolute;
     margin: 0;
     padding: 8px 34px 8px 12px;
-    color: #d9d9d9;
+    color: #efefef;
     font-size: 15px;
     background: transparent url(../img/icon-edit.png) no-repeat 82% center;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .bt-edit:hover {
@@ -1728,7 +1733,7 @@ form sup {
 .accordion-navigation .bt-edit {
     display: none;
     top: 8px;
-    right: 40px;
+    right: 46px;
     z-index: 99;
 }
 
@@ -1933,9 +1938,9 @@ nav .tabs .tab-title h3 {
     font-size: 0.9375rem;
     font-weight: normal;
     margin-left: 36px;
-    -webkit-text-shadow: 1px 1px 4px #333333;
-    -moz-text-shadow: 1px 1px 4px #333333;
-    text-shadow: 1px 1px 4px #333333;
+    -webkit-text-shadow: 1px 1px 4px #33333385;
+    -moz-text-shadow: 1px 1px 4px #33333385;
+    text-shadow: 1px 1px 4px #33333385;
 }
 
 nav .tabs .tab-title a[tabindex="0"] span {
@@ -2201,10 +2206,10 @@ nav .tabs .active a[tabindex="11"] span {
     position: relative;
     margin: 0 0 5px;
     padding: 5px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    border-radius: 6px;
     background-color: #e9e9e9;
 }
 
@@ -2212,10 +2217,10 @@ nav .tabs .active a[tabindex="11"] span {
     /* Update Sept05 - add '>' */
     position: relative;
     padding: 6px 20px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    border-radius: 6px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
     background-image: url(../img/bt-open.png);
     background-repeat: no-repeat;
     background-position: 98% 15px;
@@ -2242,10 +2247,10 @@ nav .tabs .active a[tabindex="11"] span {
     padding: 8px;
     text-align: center;
     background: #7D7D7D;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .button-bar .button, .button-bar button {
@@ -2262,10 +2267,10 @@ nav .tabs .active a[tabindex="11"] span {
     background: -ms-linear-gradient(top, #d9d9d9 0%, #c4c4c4 100%);
     background: linear-gradient(to bottom, #d9d9d9 0%, #c4c4c4 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFD9D9D9', endColorstr='#FFC4C4C4', GradientType=0);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .button-bar button {
@@ -2341,10 +2346,10 @@ nav .tabs .active a[tabindex="11"] span {
     background: -ms-linear-gradient(top, #d9d9d9 0%, #c4c4c4 100%);
     background: linear-gradient(to bottom, #d9d9d9 0%, #c4c4c4 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFD9D9D9', endColorstr='#FFC4C4C4', GradientType=0);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
     -webkit-box-shadow: 1px 1px 2px #515151;
     -moz-box-shadow: 1px 1px 2px #515151;
     box-shadow: 1px 1px 2px #515151;
@@ -2404,9 +2409,9 @@ nav .tabs .active a[tabindex="11"] span {
 /* Update Sept05 */
 .button.add-formset:hover {
     background-color: #335D93;
-    -webkit-text-shadow: 0 1px 1px #454545;
-    -moz-text-shadow: 0 1px 1px #454545;
-    text-shadow: 0 1px 1px #454545;
+    -webkit-text-shadow: 0 1px 1px #45454585;
+    -moz-text-shadow: 0 1px 1px #45454585;
+    text-shadow: 0 1px 1px #45454585;
 }
 
 /**********************
@@ -2721,10 +2726,6 @@ form ul {
     display: block;
 }
 
-#tosearch {
-    bottom: -29px;
-}
-
 #q-search {
     width: 98%;
     height: 2rem;
@@ -2821,10 +2822,12 @@ form ul {
 }
 
 .page-title .basic-info {
+    text-align: center;
+    font-size: 1.5em;
     margin-top: 12px;
-    padding: 6px 15px;
+    padding: 8px;
     color: #fff;
-    background: rgba(55, 55, 55, .2);
+    background: rgba(169, 169, 169, 0.4);
     border-radius: 5px;
 }
 
@@ -2906,7 +2909,7 @@ form ul {
 }
 
 #tosearch {
-    bottom: -26px;
+    bottom: -29px;
 }
 
 /***** map loading ****/
@@ -2940,11 +2943,6 @@ form ul {
 
 .report .accordion-navigation > a {
     background-repeat: no-repeat;
-}
-
-/**** Active Accordion background color ***/
-.report .accordion-navigation.active {
-    background-color: #bababa;
 }
 
 /******** Accordion <a> effect fix : prevent accordion content <a> from looking like accordoin tabs *****
@@ -2985,10 +2983,10 @@ footer, footer * {
 /************ Styling account pages *******************/
 .accountFormContainer {
     background-color: #bababa;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    border-radius: 6px;
 }
 
 .accountFormContainer form a {
@@ -3040,10 +3038,10 @@ footer, footer * {
     background-color: #1d4d9b;
     margin: -12px 0 20px;
     padding: 14px 16px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
     height: 60px;
 }
 
