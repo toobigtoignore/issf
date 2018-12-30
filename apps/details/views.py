@@ -21,7 +21,8 @@ from issf_admin.models import UserProfile
 # replace * with specific references
 from .forms import *
 from issf_admin.forms import ProfileForm
-from issf_admin.views import save_profile, get_redirectname
+from issf_admin.views import save_profile
+from issf_base.utils import get_redirectname
 
 import twitter
 import twitter.error
@@ -61,7 +62,7 @@ class DetailsSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return ISSFCore.objects.all()
+        return ISSF_Core.objects.all()
 
     def lastmod(self, obj):
         return obj.edited_date

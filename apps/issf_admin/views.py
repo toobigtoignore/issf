@@ -9,8 +9,10 @@ from django.db import connection
 from allauth.account.models import EmailAddress
 from allauth.account.views import PasswordChangeView
 
+
 from .models import UserProfile
-from issf_base.models import FAQ, FAQCategory, ISSFCore, SSFPerson, ISSF_Core, DidYouKnow
+from issf_base.models import FAQ, FAQCategory, SSFPerson, ISSF_Core, DidYouKnow
+from issf_base.utils import get_redirectname
 from .forms import ProfileForm
 
 
@@ -111,25 +113,6 @@ def return_google_site_verification(request):
     return HttpResponse('google-site-verification: googlee9690f8983b8a350.html', content_type="text/plain")
 
 
-def return_sitemap(request):
-    retstr = ''
-    retstr = retstr + request.build_absolute_uri(reverse('index')) + '\r\n'
-    for record in ISSFCore.objects.all():
-        if record.core_record_type == "Who's Who in SSF":
-            retstr = retstr + request.build_absolute_uri(reverse('who-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "State-of-the-Art in SSF Research":
-            retstr = retstr + request.build_absolute_uri(reverse('sota-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "Capacity Development":
-            retstr = retstr + request.build_absolute_uri(reverse('capacity-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "SSF Organization":
-            retstr = retstr + request.build_absolute_uri(reverse('organization-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "SSF Profile":
-            retstr = retstr + request.build_absolute_uri(reverse('profile-details', args=[record.issf_core_id])) + "\r\n"
-        elif record.core_record_type == "SSF Guidelines":
-            retstr = retstr + request.build_absolute_uri(reverse('guidelines-details', args=[record.issf_core_id])) + "\r\n"
-    return HttpResponse(retstr, content_type="text/plain")
-
-
 def return_robots(request):
     retstr = 'User-agent: *\r\n'
     retstr = retstr + 'Disallow: /admin/\r\n'
@@ -137,6 +120,7 @@ def return_robots(request):
     retstr = retstr + 'Disallow: /djangojs/\r\n'
     retstr = retstr + 'Disallow: /frontend/\r\n'
     retstr = retstr + 'Disallow: /import-who/\r\n'
+    retstr = retstr + 'Disallow: /details/report-pdf/\r\n'
     return HttpResponse(retstr, content_type="text/plain")
 
 
@@ -159,20 +143,6 @@ def contributed_records(request):
         'issf_admin/account/contributed_records.html',
         {'record_items': record_items}
     )
-
-
-def get_redirectname(core_record_type):
-    urls = {
-        "State-of-the-Art in SSF Research": 'sota-details',
-        "Who's Who in SSF": 'who-details',
-        "SSF Organization": 'organization-details',
-        "Capacity Development": 'capacity-details',
-        "SSF Profile": 'profile-details',
-        "SSF Guidelines": 'guidelines-details',
-        "Case Study": 'case-studies-details',
-        "SSF Experiences": 'experiences-details'
-    }
-    return urls[core_record_type]
 
 
 def help_page(request):
