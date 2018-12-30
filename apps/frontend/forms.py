@@ -7,6 +7,9 @@ from issf_base.models import Country, ISSFCore, SelectedAttribute, SelectedTheme
 
 
 class SearchForm(forms.Form):
+    """
+    Form for searching for records.
+    """
     keywords = forms.CharField(label='Full text', required=False)
     # contributor_id=1 is the ISSF Staff account
     existing_contributors = ISSFCore.objects.all().values('contributor')
@@ -31,6 +34,10 @@ class SearchForm(forms.Form):
 
 
 class SelectedAttributeForm(ModelForm):
+    """
+    Form for searching for selected attributes.
+    Not used on it's own, rather used as a part of a formset.
+    """
     class Meta:
         fields = '__all__'
         model = SelectedAttribute
@@ -38,6 +45,10 @@ class SelectedAttributeForm(ModelForm):
 
 
 class SelectedThemeIssueForm(ModelForm):
+    """
+    Form for searching for selected themes/issues.
+    Not used on it's own, rather used as a part of a formset.
+    """
     class Meta:
         model = SelectedThemeIssue
         fields = '__all__'
@@ -45,6 +56,9 @@ class SelectedThemeIssueForm(ModelForm):
 
 
 class TipForm(ModelForm):
+    """
+    Form for submitting new tips.
+    """
     fact = forms.CharField()
 
     class Meta:
@@ -53,6 +67,9 @@ class TipForm(ModelForm):
 
 
 class FAQForm(ModelForm):
+    """
+    Form for submitting new FAQ entries.
+    """
 
     class Meta:
         model = FAQ
@@ -60,6 +77,9 @@ class FAQForm(ModelForm):
 
 
 class WhosWhoForm(ModelForm):
+    """
+    Form for changing the who feature on the front page.
+    """
     name = forms.CharField()
     about = forms.CharField(required=False)
 
@@ -85,6 +105,9 @@ class WhosWhoForm(ModelForm):
 
 
 class GeoJSONUploadForm(forms.Form):
+    """
+    Form for uploading a new GeoJSON file.
+    """
     file = forms.FileField(required=False)
 
 
