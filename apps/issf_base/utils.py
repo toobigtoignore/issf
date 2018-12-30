@@ -1,4 +1,9 @@
-def get_redirectname(core_record_type):
+def get_redirectname(core_record_type: str) -> str:
+    """
+    Converts a record type to the url name to be used for reverse.
+    :param core_record_type: The record type
+    :return: The name of the url for this record to be used with reverse
+    """
     urls = {
         "State-of-the-Art in SSF Research": 'sota-details',
         "Who's Who in SSF": 'who-details',
