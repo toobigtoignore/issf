@@ -192,7 +192,11 @@ class SSFCapacityNeedForm(ModelForm):
     """
 
     # Custom field for supressing tweets
-    tweet = forms.BooleanField(initial=False, required=False)
+    tweet = forms.BooleanField(
+        initial=False,
+        required=False,
+        label="Staff only: Prevent tweeting to @TBTInetwork"
+    )
 
     class Meta:
         model = SSFCapacityNeed
@@ -318,7 +322,11 @@ class SSFCaseStudiesForm(ModelForm):
     """
 
     # Custom field for supressing tweets
-    tweet = forms.BooleanField(initial=False, required=False)
+    tweet = forms.BooleanField(
+        initial=False,
+        required=False,
+        label="Staff only: Prevent tweeting to @TBTInetwork"
+    )
 
     class Meta:
         model = SSFCaseStudies
