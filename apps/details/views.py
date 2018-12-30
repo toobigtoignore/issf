@@ -670,7 +670,7 @@ def case_study_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 # END DETAILS VIEWS
 
 
-def get_other_theme_issue(themes_issues_form: ThemesIssuesForm, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
+def get_other_theme_issue(themes_issues_form, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
     """
     Unused function to set values in a given themes and issues form based on data already stored in the database.
     """
@@ -1380,7 +1380,7 @@ def themes_issues(request: HttpRequest) -> HttpResponse:
                 return HttpResponse(response)
 
 
-def save_other_theme_issue(themes_issues_form: ThemesIssuesForm, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
+def save_other_theme_issue(themes_issues_form, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
     """
     Saves 'other' values for theme/issue forms.
     """
