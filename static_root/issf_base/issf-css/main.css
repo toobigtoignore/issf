@@ -370,7 +370,7 @@ footer {
 .main-wrapper {
     position: relative;
     width: 1000px;
-    margin: -12px 0;
+    margin: -14px 0;
     padding: 14px;
     z-index: 5;
     -webkit-border-radius: 6px;
@@ -1020,7 +1020,7 @@ footer {
 
 #advance-search .main-wrapper {
     display: none;
-    margin: -12px 0 0;
+    margin: -14px 0 0;
     padding-top: 24px;
     background: #37516F;
 }
