@@ -34,8 +34,7 @@ class SearchForm(forms.Form):
     contribution_end_date = forms.IntegerField(label='Contribution year end', required=False)
     countries = forms.MultipleChoiceField(
         choices=[(c.country_id, c.short_name) for c in Country.objects.order_by('short_name')] + [("", "")],
-        required=False,
-        widget=Select(attrs={'placeholder': 'Country'})
+        required=False
     )
 
 
