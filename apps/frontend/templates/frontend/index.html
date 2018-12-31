@@ -892,26 +892,15 @@
             if ($(this).hasClass('on')) {
                 // Turn off the "show all" button
                 if (icon == 'all') {
-                    $('.map-icons a').removeClass('on mask');
+                    $('.map-icons a').removeClass('on');
                 } else {
-                    // Toggle mask
-                    if ($( this ).hasClass('mask')) {
-                        $('nav.map-icons a:not(.disable)').addClass('on');
-                        $( this ).removeClass('mask');
-                    } else {
-                        $( this ).siblings().removeClass('on');
-                        $( this ).addClass('on mask');
-                    }
+                    $( this ).removeClass('on');
                 }
             } else {
-                // Remove mask
                 if (icon == 'all') {
                     $('.map-icons a:not(.disable)').addClass('on');
-                    $('nav.map-icons a:not(.disable)').removeClass('mask');
                 } else {
-                    // Switch mask
-                    $('nav.map-icons a:not(.disable)').removeClass('on mask');
-                    $( this ).addClass('on mask');
+                    $( this ).addClass('on');
                 }
             }
 
