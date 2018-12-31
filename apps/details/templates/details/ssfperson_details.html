@@ -55,7 +55,7 @@
                                         <td>
                                             <strong>Name</strong>
                                         </td>
-                                        <td>{{ person_instance.contributor.first_name }} {{ person_instance.contributor.initials }} {{ person_instance.contributor.last_name }}</td>
+                                        <td>{% autoescape on %}{{ person_instance.contributor.first_name }} {{ person_instance.contributor.initials }} {{ person_instance.contributor.last_name }}{% endautoescape %}</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -146,8 +146,10 @@
                                             <strong>Contributor</strong>
                                         </td>
                                         <td>
+                                            {% autoescape on %}
                                             <a href="mailto:{{ core_instance.contributor.email }}"
                                                target="_blank">{{ core_instance.contributor }}</a>
+                                            {% endautoescape %}
                                         </td>
                                     </tr>
                                     <tr>

@@ -107,6 +107,13 @@ def contribute(request: HttpRequest, who: str = '') -> HttpResponse:
     if who == 'who':
         is_active = 'active'
 
+    case_study_form = SSFCaseStudiesForm(initial={'contributor': request.user.id})
+    capacity_need_form = SSFCapacityNeedForm(initial={'contributor': request.user.id})
+
+    if not request.user.is_staff:
+        del case_study_form.fields['tweet']
+        del capacity_need_form.fields['tweet']
+
     return render(
         request,
         "details/contribute.html",
@@ -118,11 +125,11 @@ def contribute(request: HttpRequest, who: str = '') -> HttpResponse:
             "organization_form": SSFOrganizationForm(prefix="org", initial={'contributor': request.user.id}),
             "knowledge_form": SSFKnowledgeForm(initial={'contributor': request.user.id}),
             "knowledge_authors_form": AuthorsInlineFormSet,
-            "capacity_need_form": SSFCapacityNeedForm(initial={'contributor': request.user.id}),
+            "capacity_need_form": capacity_need_form,
             "fishery_profile_form": SSFProfileForm(initial={'contributor': request.user.id, 'data_end_year': 0}),
             "guidelines_form": SSFGuidelinesForm(initial={'contributor': request.user.id}),
             "experiences_form": SSFExperiencesForm(initial={'contributor': request.user.id}),
-            "case_study_form": SSFCaseStudiesForm(initial={'contributor': request.user.id}),
+            "case_study_form": case_study_form,
             "is_active": is_active
         }
     )
@@ -355,6 +362,7 @@ def capacity_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 
     # forms
     capacity_need_form = SSFCapacityNeedForm(instance=capacity_need_instance)
+    del capacity_need_form.fields['tweet']
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
     local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
     subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
@@ -622,6 +630,7 @@ def case_study_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 
     # forms
     case_study_form = SSFCaseStudiesForm(instance=case_studies_instance)
+    del case_study_form.fields['tweet']
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
     local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
     subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)

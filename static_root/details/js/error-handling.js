@@ -106,10 +106,14 @@ function error_handler() {
                         var redirectURL;
 
                         if (jsonData.record === null) {
-                          // Urls[...] returns null if no argument
-                          redirectURL = Urls[jsonData.redirectname]('');
-                          // Giving an empty string returns a extra / at end of URL, this removes it
-                          redirectURL = redirectURL.substr(0,a.length-1);
+                          if (jsonData.redirectname === 'profile-saved') {
+                            redirectURL = Urls[jsonData.redirectname]();
+                          } else {
+                            // Urls[...] returns null if no argument
+                            redirectURL = Urls[jsonData.redirectname]('');
+                            // Giving an empty string returns a extra / at end of URL, this removes it
+                            redirectURL = redirectURL.substr(0,a.length-1);
+                          }
                         } else {
                           redirectURL = Urls[jsonData.redirectname](jsonData.record);
                         }

@@ -43,6 +43,13 @@ hr {
     padding: .25rem 0;
 }
 
+.generic-shadow {
+    border-radius: 0.25em;
+    -webkit-box-shadow: 0 3px 3px 2px #3a393947;
+    -moz-box-shadow: 0 3px 3px 2px #3a393947;
+    box-shadow: 0 3px 3px 2px #3a393947;
+}
+
 #header {
     background-color: #d9d9d9;
 }
@@ -560,7 +567,7 @@ footer {
     display: none;
     position: absolute;
     right: 52px;
-    max-width: 180px; /* change this number for more text space */
+    max-width: 180px;
     min-width: 85px;
     margin: 0;
     padding: 7px 10px;
@@ -742,14 +749,6 @@ footer {
 
 .map-icons #guidelines span {
     background-image: url(../img/icon-guidelines.png);
-}
-
-.map-icons #project span {
-    /*background-image: url(../img/icon-project.png);*/
-}
-
-.map-icons #training span {
-    /*background-image: url(../img/icon-training.png);*/
 }
 
 .map-icons #choropleth span {
@@ -1040,7 +1039,6 @@ footer {
     left: 50%;
     margin-left: -140px;
     text-align: center;
-    z-index: 100;
 }
 
 #tosearch h5 {
@@ -2279,7 +2277,7 @@ nav .tabs .active a[tabindex="11"] span {
     border-right: 7px solid transparent;
 }
 
-/**** draws arrow ***/
+/* draws arrow */
 .button-bar .bt-submit:after {
     content: '';
     display: inline-block;
@@ -2386,57 +2384,15 @@ nav .tabs .active a[tabindex="11"] span {
     text-shadow: 0 1px 1px #45454585;
 }
 
-/**********************
-* Ji's overides
-**********************/
-
 form label {
     color: #335D93 !important;
     font-weight: bold;
 }
 
-/************ Fix for foundation multi select height problem ****************/
+/* Fix for foundation multi select height problem */
 select[multiple] {
     height: 200px;
 }
-
-/*********** fix for contribute nav *********/
-.contributenav {
-
-}
-
-/*/!****** Datatable css fix ****!/*/
-/*#tab-table tr > th:nth-child(1):not(#record-table-result) {*/
-/*width: 175px !important;*/
-/*}*/
-
-/*#tab-table tr > th:nth-child(2):not(#record-table-result) {*/
-/*width: 458px !important;*/
-/*}*/
-
-/*#tab-table tr > th:nth-child(3):not(#record-table-result) {*/
-/*width: 130px !important;*/
-/*}*/
-
-/*#tab-table tr > th:nth-child(4):not(#record-table-result) {*/
-/*width: 130px !important;*/
-/*}*/
-
-/*#tab-table tr > td:nth-child(1):not(#record-table-result) {*/
-/*width: 175px !important;*/
-/*}*/
-
-/*#tab-table tr > td:nth-child(2):not(#record-table-result) {*/
-/*width: 458px !important;*/
-/*}*/
-
-/*#tab-table tr > td:nth-child(3):not(#record-table-result) {*/
-/*width: 130px !important;*/
-/*}*/
-
-/*#tab-table tr > td:nth-child(4):not(#record-table-result) {*/
-/*width: 130px !important;*/
-/*}*/
 
 #record-table-result tbody tr td:nth-child(1) {
     width: 180px;
@@ -2470,7 +2426,6 @@ select[multiple] {
     height: 532px !important;
 }
 
-/******* wichan fix for advanced search *******/
 #advance-search .main-wrapper {
     display: none;
     margin: -12px 0 0;
@@ -2500,6 +2455,8 @@ select[multiple] {
 }
 
 #advance-search .tabs {
+    width: 89%;
+    display: inline-block;
     margin: 10px 15px 0;
     padding-bottom: 15px;
     border-bottom: 1px solid #718AAA;
@@ -2527,6 +2484,17 @@ select[multiple] {
     -webkit-transition: 0.2s;
     transition: 0.2s;
     z-index: 1;
+}
+
+#advance-search .reset-button {
+    display: inline-block;
+    float: right;
+    height: 42px;
+    margin: 8px 4px 0 0;
+    background: #d07145;
+}
+#advance-search .reset-button:hover {
+    background: #f16a2c;
 }
 
 #advance-search .tabs .active a, #advance-search .tabs .active:hover a {
@@ -2610,7 +2578,7 @@ form .row .row-fit {
 }
 
 form input[type="text"], form input[type="date"], form input[type="number"], form input[type="email"], form select, form textarea {
-    height: 1.9rem;
+    height: 2.25rem;
     margin-bottom: 0;
     border-color: #37516F;
     -webkit-box-shadow: inset 1px 1px 3px #a4a4a4;
@@ -2658,9 +2626,7 @@ form ul {
     margin: 0 4px;
 }
 
-/*************** wichan update 2015-Feb  ****************/
-/*	Home Page	*/
-
+/* Home Page */
 .welcome header {
     padding: 20px 5px 20px 95px;
     background: url('../img/Home.png') no-repeat;
@@ -2730,7 +2696,6 @@ form ul {
 
 #quick-search button {
     margin: 0;
-    padding-bottom: .45rem;
 }
 
 .btn-container:before, .btn-container:after {
@@ -2766,7 +2731,7 @@ form ul {
     border-radius: 6px;
 }
 
-/*	Report Page		*/
+/* Report Page */
 
 #main {
     padding-bottom: 20px;
@@ -2862,7 +2827,7 @@ form ul {
     margin-bottom: 5px !important;
 }
 
-/********** Ji's override for advanced search *****/
+/* Ji's override for advanced search */
 #advance-search form label {
     color: white !important;
 }
@@ -2872,18 +2837,10 @@ form ul {
     background-repeat: no-repeat;
 }
 
-#advance-search .content {
-    /*
-    min-height: 550px;
-    overflow-y:scroll;
-    */
-}
-
 #tosearch {
     bottom: -29px;
 }
 
-/***** map loading ****/
 #map-loading-overlay {
     background-color: rgba(255, 255, 255, 0.4);
     background-image: url('../img/loading.gif');
@@ -2898,7 +2855,7 @@ form ul {
     display: none;
 }
 
-/*** homepage Map dimension ***/
+/* homepage Map dimension */
 #map {
     height: 518px !important;
 }
@@ -2907,7 +2864,7 @@ form ul {
     height: 532px !important;
 }
 
-/******** Accordion repeating background image fix ****/
+/* Accordion repeating background image fix */
 .report .accordion-navigation.active > a {
     background-repeat: no-repeat;
 }
@@ -2916,20 +2873,26 @@ form ul {
     background-repeat: no-repeat;
 }
 
-/******** Accordion <a> effect fix : prevent accordion content <a> from looking like accordoin tabs *****
-#
-#	Note the only way to fix this is to do a replace in this file
-#		replace [.accordion-navigation.active a] with [.accordion-navigation.active>a]
-#		replace [.report .accordion-navigation a] with [.report .accordion-navigation>a]
-#	This way we can prevent the effects from cascading into the child elements of the accordion navigation
+/* Accordion <a> effect fix : prevent accordion content <a> from looking like accordoin tabs */
+
+/* Active Accordion background color */
+.report .accordion-navigation.active {
+    background-color: #bababa;
+}
+
+/*
+Note the only way to fix this is to do a replace in this file
+   replace [.accordion-navigation.active a] with [.accordion-navigation.active>a]
+   replace [.report .accordion-navigation a] with [.report .accordion-navigation>a]
+This way we can prevent the effects from cascading into the child elements of the accordion navigation
 */
 
-/**** CSS to override Jquery autocomplete font ******/
+/* CSS to override Jquery autocomplete font */
 .ui-autocomplete {
     font-size: 12px;
 }
 
-/****** Styling the Social Media Buttons in footer ***/
+/* Styling the Social Media Buttons in footer */
 footer, footer * {
     position: relative;
 }
@@ -2951,7 +2914,7 @@ footer, footer * {
     position: absolute !important;
 }
 
-/************ Styling account pages *******************/
+/* Styling account pages */
 .accountFormContainer {
     background-color: #bababa;
     -webkit-border-radius: 6px;
@@ -2968,11 +2931,11 @@ footer, footer * {
     color: rgb(241, 105, 35);
 }
 
-/*************** Adding styles for AddAnother/HelpRate buttons  *****/
+/* Adding styles for AddAnother/HelpRate buttons */
 .blueOrangeButton {
     background-color: #1D4D9B;
-    -webkit-transition-property: background; /* Safari */
-    -webkit-transition-duration: .3s; /* Safari */
+    -webkit-transition-property: background;
+    -webkit-transition-duration: .3s;
     transition-property: background;
     transition-duration: .3s;
 }
@@ -2982,19 +2945,19 @@ footer, footer * {
 }
 
 .orangeRedButton {
-    background-color: #F0512C;
-    -webkit-transition-property: background; /* Safari */
-    -webkit-transition-duration: .3s; /* Safari */
+    background-color: #d05245;
+    -webkit-transition-property: background;
+    -webkit-transition-duration: .3s;
     transition-property: background;
     transition-duration: .3s;
     font-weight: bold;
 }
 
 .orangeRedButton:hover {
-    background-color: #A31F00;
+    background-color: #d56559;
 }
 
-/*************** GrowableQualitative Form styles  *****/
+/* GrowableQualitative Form styles  */
 
 .gqAddButton, .gqRemoveButton {
     font-size: 10px !important;
@@ -3004,7 +2967,7 @@ footer, footer * {
     padding: 5px !important;
 }
 
-/**************** page titles similar to Contribute title but no background image ********/
+/* page titles similar to Contribute title but no background image */
 .page-title2 {
     background-color: #1d4d9b;
     margin: -12px 0 20px;
@@ -3022,12 +2985,12 @@ footer, footer * {
     line-height: 1;
 }
 
-/*********** <p> in table has a different font than regular text  ********/
+/* A<p> in table has a different font than regular text */
 table p {
-    font-size: 0.875rem; /***** same as default size font size ***/
+    font-size: 0.875rem; /* same as default size font size */
 }
 
-/*********** fix index problem with HomePage Map/Index tabs having higher index than the map container resulting in unclickable area on top of map. *****/
+/* fix index problem with HomePage Map/Index tabs having higher index than the map container resulting in unclickable area on top of map. */
 #map {
     z-index: 5000;
 }

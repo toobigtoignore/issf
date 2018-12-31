@@ -856,13 +856,14 @@ class SelectedAttribute(models.Model):
     # only used for searching of qualitative/ordinal attributes, therefore
     # does not contains all
     # fields; see CommonAttributeView and MainAttributeView for adding records
+    issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE, blank=True)
     selected_attribute_id = models.AutoField(primary_key=True)
     attribute = models.ForeignKey(
         Attribute,
         limit_choices_to=Q(attribute_type='Qualitative') | Q(attribute_type='Ordinal'),
         on_delete=models.CASCADE
     )
-    attribute_value = models.IntegerField()
+    attribute_value = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, blank=True)
 
     class Meta:
         managed = False
@@ -1063,9 +1064,9 @@ class SelectedThemeIssue(models.Model):
     Model representing a selected theme issue.
     """
     selected_theme_issue_id = models.AutoField(primary_key=True)
-    issf_core = models.ForeignKey(ISSF_Core, db_column='issf_core_id', on_delete=models.CASCADE)
+    issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE, blank=True)
     theme_issue_value = models.ForeignKey(Theme_Issue_Value, db_column='theme_issue_value_id', on_delete=models.CASCADE)
-    other_theme_issue = models.TextField()
+    other_theme_issue = models.TextField(blank=True)
 
     class Meta:
         managed = False

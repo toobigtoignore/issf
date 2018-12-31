@@ -1487,9 +1487,8 @@ hr {
     height: 0;
 }
 
-#home-search-form hr{
-    margin-top: 3px;
-    margin-bottom: 5px;
+#home-search-form hr {
+    display: none;
 }
 
 em, i {
