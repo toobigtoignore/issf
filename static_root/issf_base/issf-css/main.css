@@ -345,22 +345,12 @@ footer {
     bottom: 0;
     left: 0;
     right: 24px;
-    width: auto;
-    height: 12px;
+    width: 100%;
+    height: 14px;
     background: #275d97;
-    background: -webkit-gradient(linear, left top, left bottom, from(#FF275D97), to(#FF385778));
-    background: -moz-linear-gradient(center top, #275d97 70%, #385778 100%);
-    background: -moz-gradient(center top, #275d97 70%, #385778 100%);
-    background: -webkit-linear-gradient(top, #275d97 70%, #385778 100%);
-    background: -o-linear-gradient(top, #275d97 70%, #385778 100%);
-    background: -ms-linear-gradient(top, #275d97 70%, #385778 100%);
-    background: linear-gradient(to bottom, #275d97 70%, #385778 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF275D97', endColorstr='#FF385778', GradientType=0);
-    opacity: 0.9;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
-    filter: alpha(opacity=90);
     z-index: 3;
-    border-radius: 6px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 #info-section .tabs-content > .content {
@@ -530,10 +520,12 @@ footer {
 
 .map-icons {
     position: absolute;
-    top: 12px;
+    top: 14px;
     right: 12px;
     bottom: 12px;
-    width: 50px;
+    width: 52px;
+    height: 532px;
+    background: #d0d0d0;
     z-index: 10;
 }
 
@@ -990,6 +982,11 @@ footer {
 
 .map-icons #all.on:hover:before {
     border-right-color: #0d415e;
+}
+
+.map-icons #all {
+    position: absolute;
+    bottom: 0;
 }
 
 .map-icons.on a h3 {

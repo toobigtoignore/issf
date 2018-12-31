@@ -152,27 +152,6 @@
                             <p><strong>{{ num_guide_records }} records.</strong></p>
                         </div>
                     </a>
-
-                    <a class="disable" id="no-hover" tabindex="8" style="border-bottom: 0;">
-                        <h3></h3>
-                        <span></span>
-                    </a>
-
-                    <a class="disable" id="no-hover" tabindex="9" style="border-bottom: 0;">
-                        <h3></h3>
-                        <span></span>
-                    </a>
-
-                    <a class="disable" id="no-hover" tabindex="10" style="border-bottom: 0;">
-                        <h3></h3>
-                        <span></span>
-                    </a>
-                    
-                    <a class="disable" id="no-hover" tabindex="10" style="border-bottom: 0;">
-                        <h3></h3>
-                        <span></span>
-                    </a>
-
                     <a id="all" tabindex="11">
                         <h3>Show/Hide All</h3>
                         <span></span>
@@ -865,6 +844,7 @@
         $('.map-icons a:not(#toexpand)').each(function () {
             var tt = $(this).find('h3').html(),
                 title = tt.replace('<br>', ' ');
+            title = '☐ ' + title;
             $(this).find('.pop').prepend('<h4>' + title + '</h4>');
         });
 
@@ -894,12 +874,18 @@
                     $('.map-icons a').removeClass('on');
                 } else {
                     $( this ).removeClass('on');
+                    $( this ).find('h4').html(
+                        $( this ).find('h4').html().replace('☑', '☐')
+                    );
                 }
             } else {
                 if (icon == 'all') {
                     $('.map-icons a:not(.disable)').addClass('on');
                 } else {
                     $( this ).addClass('on');
+                    $( this ).find('h4').html(
+                        $( this ).find('h4').html().replace('☐', '☑')
+                    );
                 }
             }
 
@@ -989,6 +975,10 @@
                 $($('.map-icons a')[index]).addClass('on');
             }
         }
+
+        $('.map-icons .on h4').each(function(){
+            $( this ).html($( this ).html().replace('☐', '☑'));
+        });
 
         /*
             ===== Leaflet =====
