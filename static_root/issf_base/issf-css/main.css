@@ -3095,7 +3095,7 @@ footer, footer * {
 }
 
 .orangeRedButton {
-    background-color: #F0512C;
+    background-color: #d05245;
     -webkit-transition-property: background;
     -webkit-transition-duration: .3s;
     transition-property: background;
@@ -3104,7 +3104,7 @@ footer, footer * {
 }
 
 .orangeRedButton:hover {
-    background-color: #A31F00;
+    background-color: #d56559;
 }
 
 /* GrowableQualitative Form styles  */
