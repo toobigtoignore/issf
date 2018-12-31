@@ -2,7 +2,9 @@ import ast
 import json
 import re
 import tempfile
+from datetime import datetime
 from urllib.parse import urlparse
+from typing import Any, Dict
 import collections
 
 from django.contrib.auth.decorators import login_required
@@ -10,9 +12,11 @@ from django.contrib.sitemaps import Sitemap
 from django.core.cache import cache
 from django.urls import reverse
 from django.db import connection
+from django.forms import ModelForm
+from django.contrib.gis.db.models import Model
 from django.forms.utils import ErrorList
 from django.template.loader import get_template
-from django.http import HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseNotFound, HttpResponse, HttpRequest
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
@@ -21,7 +25,8 @@ from issf_admin.models import UserProfile
 # replace * with specific references
 from .forms import *
 from issf_admin.forms import ProfileForm
-from issf_admin.views import save_profile, get_redirectname
+from issf_admin.views import save_profile
+from issf_base.utils import get_redirectname
 
 import twitter
 import twitter.error
@@ -35,6 +40,7 @@ api = twitter.Api(
     access_token_key=TWITTER_ACCESS_TOKEN,
     access_token_secret=TWITTER_ACCESS_TOKEN_SECRET
 )
+# Attempt to verify twitter credentials. Sets a variable saying whether or not it was successful
 try:
     TWITTER_AUTHENTICATED = api.VerifyCredentials() is not None
 except twitter.error.TwitterError:
@@ -42,6 +48,10 @@ except twitter.error.TwitterError:
 
 
 class AttributesCreateView(CreateView):
+    """
+    View for creating new attributes.
+    Unused.
+    """
     model = MainAttributeView
     form_class = MainAttributesViewInlineFormSet
     template_name = 'details/test.html'
@@ -49,6 +59,10 @@ class AttributesCreateView(CreateView):
 
 
 class AttributesUpdateView(UpdateView):
+    """
+    View for updating attributes.
+    Unused.
+    """
     model = SSFProfile
     form_class = MainAttributesViewInlineFormSet
     template_name = 'details/test.html'
@@ -57,24 +71,26 @@ class AttributesUpdateView(UpdateView):
 
 # sitemap
 class DetailsSitemap(Sitemap):
+    """
+    Generates a sitemap.
+    No longer used.
+    """
     changefreq = "weekly"
     priority = 0.5
 
     def items(self):
-        return ISSFCore.objects.all()
+        return ISSF_Core.objects.all()
 
-    def lastmod(self, obj):
+    def lastmod(self, obj) -> datetime:
         return obj.edited_date
 
 
-"""
-View for the contribute page. It's initialized with blank forms for each dataset except that
-the contributor is automatically set to the currently logged in user.
-"""
-
-
 @login_required
-def contribute(request, who=''):
+def contribute(request: HttpRequest, who: str = '') -> HttpResponse:
+    """
+    View for the contribute page. It's initialized with blank forms for each dataset except that
+    the contributor is automatically set to the currently logged in user.
+    """
     # determine if the current user already has a person record
     issf_core_id = None
     person = None
@@ -121,7 +137,10 @@ reused code that could be factored out to functions.
 
 
 # display
-def sota_details(request, issf_core_id):
+def sota_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying details for a SOTA record.
+    """
     # knowledge and related instances
     knowledge_instance = SSFKnowledge.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
@@ -194,7 +213,10 @@ def sota_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def who_details(request, issf_core_id):
+def who_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of a Who's Who record.
+    """
     # person and related instances
     profile_form = None
     if request.user.is_authenticated:
@@ -255,7 +277,10 @@ def who_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def organization_details(request, issf_core_id):
+def organization_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of an Organization record.
+    """
     # organization and related instances
     organization_instance = SSFOrganization.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
@@ -278,6 +303,7 @@ def organization_details(request, issf_core_id):
     # check if user has rights to edit (owner or staff)
     editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
+    # check if the contributor has a Who's Who record
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
         who_page = contrib_who[0]
@@ -314,8 +340,11 @@ def organization_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def capacity_details(request, issf_core_id):
-    # data
+def capacity_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of a Capacity Development record.
+    """
+    # Record instances
     capacity_need_instance = SSFCapacityNeed.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
 
@@ -336,6 +365,7 @@ def capacity_details(request, issf_core_id):
     # check if user has rights to edit (owner or staff)
     editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
+    # check if the contributor has a Who's Who record
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
         who_page = contrib_who[0]
@@ -369,8 +399,11 @@ def capacity_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def profile_details(request, issf_core_id):
-    # data
+def profile_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of a SSF Profile record.
+    """
+    # Record instances
     profile_instance = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     main_attributes = MainAttributeView.objects.filter(issf_core_id=issf_core_id)
@@ -405,6 +438,7 @@ def profile_details(request, issf_core_id):
     # check if user has rights to edit (owner or staff)
     editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
+    # check if the contributor has a Who's Who record
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
         who_page = contrib_who[0]
@@ -445,14 +479,18 @@ def profile_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def guidelines_details(request, issf_core_id):
-    # data
+def guidelines_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of a Guidelines record.
+    """
+    # Record instances
     guidelines_instance = SSFGuidelines.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
+    # Generate date strings
     start_year = str(guidelines_instance.start_year) if guidelines_instance.start_year else ''
     start_month = '/' + str(guidelines_instance.start_month) if guidelines_instance.start_month else ''
     start_day = '/' + str(guidelines_instance.start_day) if guidelines_instance.start_day else ''
@@ -460,7 +498,6 @@ def guidelines_details(request, issf_core_id):
     end_month = '/' + str(guidelines_instance.end_month) if guidelines_instance.end_month else ''
     end_day = '/' + str(guidelines_instance.end_day) if guidelines_instance.end_day else ''
 
-    # concatenate dates
     begin_date = start_year + start_month + start_day
     end_date = end_year + end_month + end_day
 
@@ -475,6 +512,7 @@ def guidelines_details(request, issf_core_id):
     # check if user has rights to edit (owner or staff)
     editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
+    # check if the contributor has a Who's Who record
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
         who_page = contrib_who[0]
@@ -509,14 +547,18 @@ def guidelines_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def experiences_details(request, issf_core_id):
-    # data
+def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of an Experiences record.
+    """
+    # Record instances
     experiences_instance = SSFExperiences.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
+    # Get video ids
     video_id = experiences_instance.video_url.split('=')[1].split('&')[0] if experiences_instance.video_url else ''
     vimeo_video_id = experiences_instance.vimeo_video_url.split('/')[3] if experiences_instance.vimeo_video_url else ''
 
@@ -531,6 +573,7 @@ def experiences_details(request, issf_core_id):
     # check if user has rights to edit (owner or staff)
     editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
+    # check if the contributor has a Who's Who record
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
         who_page = contrib_who[0]
@@ -565,8 +608,11 @@ def experiences_details(request, issf_core_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
-def case_study_details(request, issf_core_id):
-    # data
+def case_study_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of a Case Study record.
+    """
+    # Record instances
     case_studies_instance = SSFCaseStudies.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
@@ -586,6 +632,7 @@ def case_study_details(request, issf_core_id):
     # check if user has rights to edit (owner or staff)
     editor = request.user.is_staff or request.user.id == core_instance.contributor_id
 
+    # check if the contributor has a Who's Who record
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
         who_page = contrib_who[0]
@@ -623,7 +670,10 @@ def case_study_details(request, issf_core_id):
 # END DETAILS VIEWS
 
 
-def get_other_theme_issue(themes_issues_form, field, issf_core_id, theme_issue_value_id):
+def get_other_theme_issue(themes_issues_form, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
+    """
+    Unused function to set values in a given themes and issues form based on data already stored in the database.
+    """
     if SelectedThemeIssue.objects.filter(issf_core=issf_core_id, theme_issue_value=theme_issue_value_id).exists():
         selected_theme_issue = SelectedThemeIssue.objects.get(issf_core=issf_core_id, theme_issue_value=theme_issue_value_id)
         if len(selected_theme_issue.other_theme_issue) > 0:
@@ -636,7 +686,10 @@ database.
 """
 
 
-def save_basic(request, model_class, form_class):
+def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) -> HttpResponse:
+    """
+    View which handles the saving of most types of records.
+    """
     if request.method == 'POST':
         if request.is_ajax():
             instance = None
@@ -646,6 +699,7 @@ def save_basic(request, model_class, form_class):
                 issf_core_id = request.POST['issf_core_id']
                 instance = get_object_or_404(model_class, issf_core_id=issf_core_id)
                 existing = True
+
             form = form_class(request.POST, instance=instance)
             if form.is_valid():
                 instance = form.save()
@@ -657,7 +711,15 @@ def save_basic(request, model_class, form_class):
                 instance.editor_id = request.user.id
                 instance.save()
 
-                if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and TWITTER_AUTHENTICATED:
+                # Check if the user selected not to tweet this record
+                if 'tweet' in form.cleaned_data:
+                    tweet_disabled = form.cleaned_data['tweet']
+                else:
+                    tweet_disabled = False
+
+                # Tweet the record if this is a new record that isn't a who's who, twitter is authenticated, and the editor didn't select to not tweet.
+                if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and not tweet_disabled and TWITTER_AUTHENTICATED:
+                    # Get the record name to be used for the tweet and truncate it to 20 characters
                     name = ''
                     if instance.core_record_type == 'Capacity Development':
                         name = instance.capacity_need_title
@@ -669,16 +731,18 @@ def save_basic(request, model_class, form_class):
                         name = instance.name
                     elif instance.core_record_type == 'Case Study':
                         name = instance.name
-
                     name = str(name)[:20]
 
+                    # Get the id and url corresponding to this record
                     issf_id = str(instance.issf_core_id)
-
                     url = 'https://issfcloud.toobigtoignore.net' + reverse(get_redirectname(instance.core_record_type), kwargs={'issf_core_id': issf_id})
 
+                    # Tweet out the record
                     api.PostUpdate('Check out the new #tbtiissf ' + instance.core_record_type + ' record for ' + name + '. ' + url)
 
+                # Update the record's tsvector (now unused) and summary
                 update_tsvector_summary(instance.core_record_type, str(instance.pk))
+
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
                     redirectname = 'geographic-scope-save'
@@ -697,12 +761,17 @@ def save_basic(request, model_class, form_class):
                 return HttpResponse(response)
 
 
-def update_tsvector_summary(core_record_type, issf_core_id):
+def update_tsvector_summary(core_record_type: str, issf_core_id: str) -> None:
+    """
+    Updates the tsrecord (now unused) and summary for a given record.
+    """
     # update summary and full-text search vector using direct db call
     cursor = connection.cursor()
 
     # issf_core_id is the instance pk converted to a string. pk is a value that is auto-generated by django
     # Therefore this should be safe from SQL injection
+
+    # Check the record type and call the corresponding functions on the database
 
     if core_record_type == "State-of-the-Art in SSF Research":
         cursor.execute('SELECT * FROM knowledge_tsvector_update(' + issf_core_id + ')')
@@ -730,7 +799,11 @@ def update_tsvector_summary(core_record_type, issf_core_id):
         cursor.execute('SELECT * FROM casestudies_summary_update(' + issf_core_id + ')')
 
 
-def is_int(s):
+def is_int(s: Any) -> bool:
+    """
+    Checks whether a provided value can be casted to an integer.
+    Unused.
+    """
     try:
         int(s)
         return True
@@ -739,7 +812,10 @@ def is_int(s):
 
 
 @login_required
-def sota_basic(request):
+def sota_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View for saving a SOTA record.
+    """
     # does not use save_basic because the submit includes two django forms
     if request.method == 'POST':
         if request.is_ajax():
@@ -761,6 +837,7 @@ def sota_basic(request):
                     if 'knowledge_core' in frm:
                         author_count = author_count + 1
                 author_count = author_count - len(knowledge_authors_form.deleted_forms)
+            # If all forms are valid and there is at least one author, save the record
             if knowledge_form.is_valid() and knowledge_authors_form.is_valid() and author_count > 0:
                 knowledge_instance = knowledge_form.save()
 
@@ -776,15 +853,24 @@ def sota_basic(request):
                     knowledge_authors_form = AuthorsInlineFormSet(request.POST, instance=knowledge_instance)
                     knowledge_authors_form.is_valid()
 
+                # Save the forms and instances
                 knowledge_authors_form.save()
                 knowledge_instance.editor_id = request.user.id
                 knowledge_instance.save()
 
-                if not existing and TWITTER_AUTHENTICATED:
+                # Check to see if the user set the flag to not tweet
+                if 'tweet' in knowledge_form.cleaned_data:
+                    tweet_disabled = knowledge_form.cleaned_data['tweet']
+                else:
+                    tweet_disabled = False
+
+                # Tweet out the record if it is new, twitter is authenticated, and the user didn't specify to not tweet this record
+                if not existing and TWITTER_AUTHENTICATED and not tweet_disabled:
                     name = str(knowledge_instance.level1_title)[:20]
                     issf_id = str(knowledge_instance.issf_core_id)
                     api.PostUpdate('Check out the new #tbtiissf SOTA record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/sota/' + issf_id)
 
+                # Update tsvector and summary
                 update_tsvector_summary(knowledge_instance.core_record_type, str(knowledge_instance.pk))
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
@@ -798,6 +884,7 @@ def sota_basic(request):
                 })
                 return HttpResponse(response)
             else:
+                # Return errors from all forms
                 if author_count == 0:
                     if '__ALL__' not in knowledge_form._errors:
                         knowledge_form._errors['__ALL__'] = []
@@ -811,9 +898,13 @@ def sota_basic(request):
 
 
 @login_required
-def who_basic(request):
+def who_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View that saves a Who's Who record.
+    """
+    # Attempt to save the profile before saving the record.
+    # If saving the profile fails, return a different response and don't save the record.
     saved, response = save_profile(request)
-
     if saved:
         return save_basic(request, SSFPerson, SSFPersonForm)
     else:
@@ -821,7 +912,10 @@ def who_basic(request):
 
 
 @login_required
-def organization_basic(request):
+def organization_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View for saving an organization record.
+    """
     # cannot use save_basic because of prefix
     # return save_basic(request, SSFOrganization, SSFOrganizationForm)
     if request.method == 'POST':
@@ -845,13 +939,22 @@ def organization_basic(request):
                 instance.save()
 
             if not existing:
-                if TWITTER_AUTHENTICATED:
+
+                # Check to see if the flag to not tweet has been set
+                if 'tweet' in form.cleaned_data:
+                    tweet_disabled = form.cleaned_data['tweet']
+                else:
+                    tweet_disabled = False
+
+                # Tweet if twitter is authenticated and the flag to disable tweeting was not set
+                if TWITTER_AUTHENTICATED and not tweet_disabled:
                     name = str(instance.organization_name)[:20]
 
                     issf_id = str(instance.issf_core_id)
 
                     api.PostUpdate('Check out the new #tbtiissf SSF Organization record for ' + name + '. ' + 'https://issfcloud.toobigtoignore.net/details/organization/' + issf_id)
 
+                # Update tsvector and summary
                 update_tsvector_summary(instance.core_record_type, str(instance.pk))
                 # contributing new record, user must fill out Geographic Scope
                 if not existing:
@@ -870,24 +973,33 @@ def organization_basic(request):
                 return HttpResponse(response)
 
 
-def urlEncodeNonAscii(b):
+def urlEncodeNonAscii(b: str) -> str:
+    """
+    Encodes non-ascii characters in urls so that they can be used.
+    """
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
 
 
-def iriToUri(iri):
+def iriToUri(iri: str) -> str:
+    """
+    Converts an iri to a uri.
+    """
     parts = urlparse.urlparse(iri)
     return urlparse.urlunparse(part.encode('idna') if parti == 1 else urlEncodeNonAscii(part.encode('utf-8')) for parti, part in enumerate(parts))
 
 
 @login_required
-def geocode_address(request):
+def geocode_address(request: HttpRequest) -> HttpResponse:
+    """
+    View that geocodes an address using bing's service.
+    """
     if request.method == 'POST':
         if request.is_ajax():
-            # ensure we have at least one of the address fields
             at_least_one = False
             # get submitted data
             organization_form = SSFOrganizationForm(request.POST)
             geocoding_url = 'http://dev.virtualearth.net/REST/v1/Locations?'
+            # ensure we have at least one of the address fields, and add all components to url
             if len(organization_form.data['country']) > 0:
                 if at_least_one:
                     geocoding_url = geocoding_url + '&'
@@ -916,6 +1028,7 @@ def geocode_address(request):
                 at_least_one = True
                 # geocode address using Bing
             if at_least_one:
+                # Encode url, send request to bing, and parse response to send back to user
                 geocoding_url = geocoding_url + '&maxResults=1&key=Al1mXkJObbAqh8s8TkCwTnIYZOemobAiJZSVaPklNXPS_ErYDtPButHlPDJrznFf'
                 geocoding_dict = ast.literal_eval(request(iriToUri(geocoding_url)).read())
                 if geocoding_dict['statusDescription'] == 'OK':
@@ -931,16 +1044,19 @@ def geocode_address(request):
 
 
 @login_required
-def capacity_basic(request):
+def capacity_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View to save a Capacity Development record.
+    """
     return save_basic(request, SSFCapacityNeed, SSFCapacityNeedForm)
 
 
-"""No longer used.
-"""
-
-
 @login_required
-def capacity_need_rating(request, prev_capacity_need_id):
+def capacity_need_rating(request: HttpRequest, prev_capacity_need_id: int) -> HttpResponse:
+    """
+    View to rate a capacity need.
+    No longer used.
+    """
     if request.method != 'POST':
         # Display
         # Randomly choose any need but the previous one
@@ -1007,17 +1123,23 @@ def capacity_need_rating(request, prev_capacity_need_id):
 
 
 @login_required
-def sota_other(request):
+def sota_other(request: HttpRequest) -> HttpResponse:
+    """
+    View for saving other details for a SOTA record.
+    """
     if request.method == 'POST':
         if request.is_ajax():
+            # Get SOTA instance and create form instance
             issf_core_id = request.POST['issf_core_id']
             knowledge_instance = get_object_or_404(SSFKnowledge, issf_core_id=issf_core_id)
             knowledge_other_details_form = KnowledgeOtherDetailsForm(request.POST, instance=knowledge_instance)
 
             if knowledge_other_details_form.is_valid():
+                # Save form and instance
                 knowledge_other_details_form.save()
                 knowledge_instance.editor_id = request.user.id
                 knowledge_instance.save()
+                # Update tsvector and summary
                 update_tsvector_summary(knowledge_instance.core_record_type, issf_core_id)
                 redirectname = get_redirectname(knowledge_instance.core_record_type)
 
@@ -1040,11 +1162,17 @@ def sota_other(request):
 
 
 @login_required
-def who_researcher(request):
+def who_researcher(request: HttpRequest) -> HttpResponse:
+    """
+    View for saving the record for a researcher who's who
+    """
     return save_basic(request, SSFPerson, PersonResearcherForm)
 
 
-def is_filled(field):
+def is_filled(field: Dict[str, Any]) -> bool:
+    """
+    Ensures that at least one item in the field is filled.
+    """
     for (key, value) in field.items():
         if value and not (key in ['attribute', 'issf_core', 'label_order', 'row_number', 'value_order', 'selected_attribute_id', 'DELETE']):
             return True
@@ -1052,15 +1180,15 @@ def is_filled(field):
     return False
 
 
-"""Separate function to save the characteristics form in SSF Profile. Very very complicated function, don't modify
-unless you know what you're doing. Seriously, this is a house of cards.
-"""
-
-
 @login_required
-def profile_main_attributes(request):
+def profile_main_attributes(request: HttpRequest) -> HttpResponse:
+    """
+    View to save the characteristics form for an SSF Profile.
+    Described as a 'house of cards' by the last person to document it.
+    """
     if request.method == 'POST':
         if request.is_ajax():
+            # Get record and form instances
             issf_core_id = request.POST['issf_core_id']
             profile_instance = get_object_or_404(SSFProfile, issf_core_id=issf_core_id)
             data_end_year = profile_instance.data_end_year
@@ -1143,7 +1271,11 @@ def profile_main_attributes(request):
                 return HttpResponse(response)
 
 
-def main_attributes_save(request, issf_core_id):
+def main_attributes_save(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for saving the main attributes form for an ssf profile.
+    """
+    # Get record and form instances
     profile_instance = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
 
@@ -1170,36 +1302,53 @@ def main_attributes_save(request, issf_core_id):
 
 
 @login_required
-def profile_basic(request):
+def profile_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View to save an SSF profile.
+    """
     return save_basic(request, SSFProfile, SSFProfileForm)
 
 
 @login_required
-def guidelines_basic(request):
+def guidelines_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View to save a Guidelines record.
+    """
     return save_basic(request, SSFGuidelines, SSFGuidelinesForm)
 
 
 @login_required
-def experiences_basic(request):
+def experiences_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View to save an Experiences record.
+    """
     return save_basic(request, SSFExperiences, SSFExperiencesForm)
 
 
 @login_required
-def case_study_basic(request):
+def case_study_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View to save a Case Study record.
+    """
     return save_basic(request, SSFCaseStudies, SSFCaseStudiesForm)
 
 
 # reusable saves attached to issf_core
 @login_required
-def themes_issues(request):
+def themes_issues(request: HttpRequest) -> HttpResponse:
+    """
+    View for saving themes/issues for a record.
+    """
     if request.method == 'POST':
         if request.is_ajax():
+            # Get form and record instances
             issf_core_id = request.POST['issf_core_id']
             core_instance = get_object_or_404(ISSF_Core,
                                               issf_core_id=issf_core_id)
             themes_issues_form = ThemesIssuesForm(request.POST,
                                                   instance=core_instance)
             if themes_issues_form.is_valid():
+                # Save form
                 themes_issues_form.save()
                 core_instance.editor_id = request.user.id
                 core_instance.save()
@@ -1231,8 +1380,10 @@ def themes_issues(request):
                 return HttpResponse(response)
 
 
-def save_other_theme_issue(themes_issues_form, field, issf_core_id,
-                           theme_issue_value_id):
+def save_other_theme_issue(themes_issues_form, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
+    """
+    Saves 'other' values for theme/issue forms.
+    """
     if len(themes_issues_form.cleaned_data[field]) > 0:
         # other text can only be saved if other was checked; otherwise the
         # record does not exist
@@ -1251,7 +1402,10 @@ def save_other_theme_issue(themes_issues_form, field, issf_core_id,
 
 
 @login_required
-def common_themes_issues(request):
+def common_themes_issues(request: HttpRequest) -> HttpResponse:
+    """
+    View to save common themes/issues.
+    """
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
@@ -1275,7 +1429,10 @@ def common_themes_issues(request):
 
 
 @login_required
-def common_attributes(request):
+def common_attributes(request: HttpRequest) -> HttpResponse:
+    """
+    View to save common attributes
+    """
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
@@ -1298,9 +1455,11 @@ def common_attributes(request):
                 return HttpResponse(response)
 
 
-# Function for saving the Geographic Scope form.
 @login_required
-def geographic_scope(request):
+def geographic_scope(request: HttpRequest) -> HttpResponse:
+    """
+    View to save geographic scope form.
+    """
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
@@ -1403,6 +1562,7 @@ def geographic_scope(request):
                 update_tsvector_summary(core_instance.core_record_type,
                                         issf_core_id)
 
+                # If this is an ssf profile that is being created for the first time, redirect to the main attributes form
                 if 'geog-scope' in request.META['HTTP_REFERER'] and core_instance.core_record_type == u'SSF Profile':
                     redirectname = 'main-attributes-save'
                 else:
@@ -1430,9 +1590,11 @@ def geographic_scope(request):
                 return HttpResponse(response)
 
 
-# View function for geog. scope form page that appears only while contributing a record
 @login_required
-def geographic_scope_save(request, issf_core_id):
+def geographic_scope_save(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View that returns the geographic scope forms when creating a new record.
+    """
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
 
     geographic_scope_form = GeographicScopeForm(instance=core_instance)
@@ -1461,9 +1623,11 @@ def geographic_scope_save(request, issf_core_id):
     )
 
 
-# Save organization associated with a SSF Profile
 @login_required()
-def profile_organizations(request):
+def profile_organizations(request: HttpRequest) -> HttpResponse:
+    """
+    View to save organization associated with an SSF Profile.
+    """
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
@@ -1500,9 +1664,11 @@ def profile_organizations(request):
                 return HttpResponse(response)
 
 
-# Save species form (no landings)
 @login_required()
-def species(request):
+def species(request: HttpRequest) -> HttpResponse:
+    """
+    View to save species associated with a record.
+    """
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
@@ -1535,9 +1701,11 @@ def species(request):
                 return HttpResponse(response)
 
 
-# Save species form with landings. Currently only used in SSF Profile
 @login_required()
-def species_landings(request):
+def species_landings(request: HttpRequest) -> HttpResponse:
+    """
+    View to save species form with landings.
+    """
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
@@ -1571,7 +1739,10 @@ def species_landings(request):
 
 
 @login_required()
-def external_links(request):
+def external_links(request: HttpRequest) -> HttpResponse:
+    """
+    View to save external links associated with a record.
+    """
     if request.method == 'POST':
         if request.is_ajax():
             issf_core_id = request.POST['issf_core_id']
@@ -1604,7 +1775,10 @@ def external_links(request):
                 return HttpResponse(response)
 
 
-def changelog(request):
+def changelog(request: HttpRequest) -> HttpResponse:
+    """
+    View to render changelogs for the site.
+    """
     site_versions = SiteVersion.objects.all()
 
     return render(
@@ -1614,15 +1788,11 @@ def changelog(request):
     )
 
 
-"""View function for generating SSF profile reports. Another very complicated function. Could definitely do with
-some refactoring. I made this when I was short on time.
-"""
-
-
-def generate_report(record_type, issf_core_id):
+def generate_report(record_type: str, issf_core_id: int) -> Dict[str, Any]:
     """
     Handles the retrieval and generation of data to be used in reports.
     """
+    # Retrieve the instances associated with this record
     record = SSFProfile.objects.get(issf_core_id=issf_core_id)
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     main_attributes = MainAttributeView.objects.filter(issf_core=issf_core_id)
@@ -1633,11 +1803,13 @@ def generate_report(record_type, issf_core_id):
         if entry.attribute_id == 38 and entry.attribute_value is not None:
             distribution[entry.attribute_value] = (entry.additional if entry.additional else 0)
 
+    # Retrieve geographic scope instances for this record
     geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
     geographic_scope_nation = GeographicScopeNation.objects.filter(issf_core=issf_core_id)
     geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
+    # Get the location name for the geographic scope
     location = ''
     if core_instance.geographic_scope_type == 'Regional':
         geog_scope = geographic_scope_region
@@ -1677,6 +1849,7 @@ def generate_report(record_type, issf_core_id):
     species_colors = zip(species, colors)
 
     attrs = collections.defaultdict(list)
+    # Get the main attributes of the record
     for attr in main_attributes:
         attr.attribute.attribute_label = attr.attribute.attribute_label.split(':')[0]
 
@@ -1688,6 +1861,7 @@ def generate_report(record_type, issf_core_id):
         elif attr.value:
             attrs[attr.attribute.attribute_label] = str(attr.value)
 
+    # Get up to 10 issues for the record
     attrs_issues = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=10)
     issues = []
     for issue in attrs_issues:
@@ -1697,6 +1871,7 @@ def generate_report(record_type, issf_core_id):
             # Refactor
             issues.append(issue.attribute_value.value_label.split('(')[0] + (': ' + issue.other_value if issue.other_value else ''))
 
+    # Get up to 6 key rules & regulations
     key_rules_regs = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=42)
     krr = []
     for rule_reg in key_rules_regs:
@@ -1705,8 +1880,10 @@ def generate_report(record_type, issf_core_id):
         if rule_reg.attribute_value:
             krr.append(rule_reg.attribute_value.value_label + (': ' + rule_reg.other_value if rule_reg.other_value else ''))
 
+    # Get household income
     hh_income = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=13).values()[0]['value']
 
+    # Get up to 4 pieces of governance info
     governance = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=39)
     gov_modes = []
     for gov in governance:
@@ -1715,6 +1892,7 @@ def generate_report(record_type, issf_core_id):
         if gov.attribute_value:
             gov_modes.append(gov.attribute_value.value_label + (': ' + gov.other_value if gov.other_value else ''))
 
+    # Get up to 6 non-fishing livelihood activities
     non_fish = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=23)
     non_fish_act = [None] * 6
     i = 0
@@ -1725,14 +1903,17 @@ def generate_report(record_type, issf_core_id):
             non_fish_act[i] = act.attribute_value.value_label
             i += 1
 
+    # Get the number of fishers
     num_fishers = MainAttributeView.objects.filter(issf_core_id=issf_core_id, attribute_id=7)
     if num_fishers:
         num_fishers = num_fishers[0]
     else:
         num_fishers = None
 
+    # Get the url for the record
     record_url = reverse(get_redirectname(record.core_record_type), kwargs={'issf_core_id': record.issf_core_id})
 
+    # Get the who's who page for the contributor, if it exists
     contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
     if contrib_who:
         who_page = contrib_who[0]
@@ -1759,7 +1940,7 @@ def generate_report(record_type, issf_core_id):
     }
 
 
-def report(request, record_type, issf_core_id):
+def report(request: HttpRequest, record_type: str, issf_core_id: int) -> HttpResponse:
     """
     Renders a webpage containing a report on a given item.
     """
@@ -1770,18 +1951,23 @@ def report(request, record_type, issf_core_id):
     )
 
 
-def render_report_pdf(request, record_type, issf_core_id):
+def render_report_pdf(request: HttpRequest, record_type: str, issf_core_id: int) -> HttpResponse:
     """
     Renders a report for a given item and returns it to the user as a PDF.
     """
+    # Render the template
     template = get_template("details/record_report.html")
     html = template.render(generate_report(record_type, issf_core_id))
+    # Use hardcopy to print html to temporary pdf file, and return said file to the user
     with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
         hardcopy.bytestring_to_pdf(html.encode("utf8"), f)
         return HttpResponse(f.read(), content_type='application/pdf')
 
 
-def get_record_type(record_type):
+def get_record_type(record_type: str) -> Model:
+    """
+    Gets the model object for a record type.
+    """
     record_types = {
         'who': SSFPerson,
         'sota': SSFKnowledge,
@@ -1796,7 +1982,10 @@ def get_record_type(record_type):
 
 
 # Delete specified record
-def delete_record(request, issf_core_id):
+def delete_record(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    Deletes a specified record.
+    """
     record = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     # if record is sota then delete author record first to avoid integrity
     # errors

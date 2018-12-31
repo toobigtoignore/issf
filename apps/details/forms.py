@@ -1,17 +1,30 @@
+from typing import Dict, Any
+
 from django import forms
 from django.forms import ModelForm, RadioSelect, HiddenInput
 from django.forms.models import inlineformset_factory
 from leaflet.forms.widgets import LeafletWidget
-# replace * with specific references
+
 from issf_base.models import *
 
 
 class ISSFMapWidget(LeafletWidget):
+    """
+    Custom map widget based on Leaflet.
+    Used for forms where user is asked to specify a location on a map.
+    """
     geometry_field_class = 'ISSFGeometryField'
 
 
 # django "generated" forms
 class SSFKnowledgeForm(ModelForm):
+    """
+    Form for creating or editing a SSFKnowledge record (more commonly known as a SOTA record.)
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFKnowledge
         fields = ['publication_type', 'other_publication_type', 'level1_title',
@@ -36,7 +49,10 @@ class SSFKnowledgeForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+        """
         cleaned_data = super(SSFKnowledgeForm, self).clean()
         # make safe text entered by user
 
@@ -53,6 +69,13 @@ class SSFKnowledgeForm(ModelForm):
 
 
 class SSFPersonForm(ModelForm):
+    """
+    Form for creating or editing a SSFPerson record (more commonly known as a Who's Who record.)
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFPerson
         fields = ['affiliation', 'address1', 'address2', 'city_town',
@@ -84,6 +107,13 @@ class SSFPersonForm(ModelForm):
 
 
 class SSFOrganizationForm(ModelForm):
+    """
+    Form for creating or editing a SSFOrganization record.
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFOrganization
         fields = (
@@ -125,13 +155,18 @@ class SSFOrganizationForm(ModelForm):
             'obstacles': forms.Textarea(attrs={'rows': 3})
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+        """
         cleaned_data = super(SSFOrganizationForm, self).clean()
 
+        # Ensures that if a user has selected that they apply a ssf definition, they explain it
         if 'ssf_defined' in cleaned_data:
             if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data['ssf_definition']:
                 raise forms.ValidationError('Please provide an SSF defintion.')
 
+        # Ensures that if a user selected other for a field, they write something in the other textfield
         if not confirm_other_text('organization_type_other_text', 'organization_type_other',
                                   cleaned_data):
             raise forms.ValidationError(
@@ -152,6 +187,13 @@ class SSFOrganizationForm(ModelForm):
 
 
 class SSFCapacityNeedForm(ModelForm):
+    """
+    Form for creating or editing a SSFCapacityNeed record (more commonly known as a Capacity Development record.)
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFCapacityNeed
         fields = ['capacity_need_category', 'capacity_need_type',
@@ -169,6 +211,13 @@ class SSFCapacityNeedForm(ModelForm):
 
 
 class SSFProfileForm(ModelForm):
+    """
+    Form for creating or editing a SSFProfile record.
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFProfile
         fields = ['ssf_name', 'ssf_defined', 'ssf_definition', 'data_year',
@@ -194,11 +243,21 @@ class SSFProfileForm(ModelForm):
             'img_url': 'Image URL (direct links only)'
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, any]:
+        """
+        Cleans and verifies the data entered by the user.
+        """
         return super(SSFProfileForm, self).clean()
 
 
 class SSFGuidelinesForm(ModelForm):
+    """
+    Form for creating or editing a SSFGuidelines record.
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFGuidelines
         fields = ['title', 'activity_type', 'activity_coverage', 'location',
@@ -228,6 +287,13 @@ class SSFGuidelinesForm(ModelForm):
 
 
 class SSFExperiencesForm(ModelForm):
+    """
+    Form for creating or editing a SSFExperiences record.
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFExperiences
         fields = [
@@ -247,6 +313,13 @@ class SSFExperiencesForm(ModelForm):
 
 
 class SSFCaseStudiesForm(ModelForm):
+    """
+    Form for creating or editing a SSFCaseStudies record.
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
     class Meta:
         model = SSFCaseStudies
         fields = [
@@ -282,6 +355,9 @@ class SSFCaseStudiesForm(ModelForm):
 
 
 class CapacityNeedRatingForm(ModelForm):
+    """
+    Form for rating capacity need. No longer used.
+    """
     class Meta:
         fields = '__all__'
         model = CapacityNeedRating
@@ -292,15 +368,23 @@ class CapacityNeedRatingForm(ModelForm):
             'capacity_need': HiddenInput, 'rater': HiddenInput
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data entered by the user.
+        """
         cleaned_data = super(CapacityNeedRatingForm, self).clean()
         if cleaned_data['rating'] == 0:
             raise forms.ValidationError('Please select a rating between 1 and 5')
 
 
 class MainAttributeForm(ModelForm):
-    def __init__(self, *args, **kwargs):
+    """
+    Form for entering a main attribute.
+    Not used on it's own, but rather used as a part of a formset.
+    """
+    def __init__(self, *args, **kwargs) -> None:
         super(MainAttributeForm, self).__init__(*args, **kwargs)
+        # If the form has an initial value supplied, autopopulate the fields based on the initial value
         if len(self.initial) > 0:
             self.fields['attribute_value'] = forms.ModelChoiceField(
                 label='',
@@ -327,7 +411,10 @@ class MainAttributeForm(ModelForm):
             'other_value': HiddenInput
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data entered by the user.
+        """
         cleaned_data = super(MainAttributeForm, self).clean()
 
         if not cleaned_data['value'] and not cleaned_data['attribute_value']:
@@ -350,8 +437,13 @@ class MainAttributeForm(ModelForm):
 
 
 class CommonThemeIssueForm(ModelForm):
-    def __init__(self, *args, **kwargs):
+    """
+    Form for entering a common theme issue.
+    Not used on it's own, but rather used as a part of a formset.
+    """
+    def __init__(self, *args, **kwargs) -> None:
         super(CommonThemeIssueForm, self).__init__(*args, **kwargs)
+        # If the form has an initial value supplied, autopopulate the fields based on the initial value
         if len(self.initial) > 0:
             self.fields['theme_issue_value'] = forms.ModelChoiceField(
                 label='',
@@ -371,6 +463,9 @@ class CommonThemeIssueForm(ModelForm):
         }
 
     def clean(self):
+        """
+        Clean and validate the data entered by the user.
+        """
         cleaned_data = super(CommonThemeIssueForm, self).clean()
 
         # if a field has no data, mark it for deletion
@@ -385,6 +480,10 @@ class CommonThemeIssueForm(ModelForm):
 
 
 class ProfileOrganizationForm(ModelForm):
+    """
+    Form for entering a profile organization.
+    Not used on it's own, but rather used as a part of a formset.
+    """
     class Meta:
         model = ProfileOrganization
         fields = '__all__'
@@ -396,13 +495,14 @@ class ProfileOrganizationForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
         cleaned_data = super(ProfileOrganizationForm, self).clean()
         # either select organizaton or type a name
         if not cleaned_data['ssforganization'] and not cleaned_data['organization_name']:
             raise forms.ValidationError('Please select or name an organization.')
         if cleaned_data['ssforganization'] and cleaned_data['organization_name']:
             raise forms.ValidationError('Please select or name an organization, but not both.')
+        # Ensure the user has selected and organization type and geographic scope if they provided an organization name
         if cleaned_data['organization_name'] and not cleaned_data['organization_type']:
             raise forms.ValidationError('Please select an organization type.')
         if cleaned_data['organization_name'] and not cleaned_data['geographic_scope']:
@@ -411,8 +511,13 @@ class ProfileOrganizationForm(ModelForm):
 
 
 class CommonAttributeForm(ModelForm):
-    def __init__(self, *args, **kwargs):
+    """
+    Form for entering a common attribute.
+    Not used on it's own, but rather used as a part of a formset.
+    """
+    def __init__(self, *args, **kwargs) -> None:
         super(CommonAttributeForm, self).__init__(*args, **kwargs)
+        # If an initial value is supplied, populate a field based off of it
         if len(self.initial) > 0:
             self.fields['attribute_value'] = forms.ModelChoiceField(
                 label='',
@@ -431,7 +536,10 @@ class CommonAttributeForm(ModelForm):
             'other_value': HiddenInput
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data entered by the user.
+        """
         cleaned_data = super(CommonAttributeForm, self).clean()
 
         # if a field has no data, mark it for deletion
@@ -446,6 +554,9 @@ class CommonAttributeForm(ModelForm):
 
 
 class KnowledgeOtherDetailsForm(ModelForm):
+    """
+    Form for entering other details for a SOTA record.
+    """
     class Meta:
         # model = KnowledgeOtherDetails
         model = SSFKnowledge
@@ -528,17 +639,22 @@ class KnowledgeOtherDetailsForm(ModelForm):
             'employment_details': forms.Textarea(attrs={'rows': 3})
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(KnowledgeOtherDetailsForm, self).__init__(*args, **kwargs)
         self.fields['ssf_defined'].required = True
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data entered by the user.
+        """
         cleaned_data = super(KnowledgeOtherDetailsForm, self).clean()
 
+        # Ensures the user provided an ssf definition if they said that the ssf is defined
         if 'ssf_defined' in cleaned_data:
             if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data['ssf_definition']:
                 raise forms.ValidationError('Please provide an SSF defintion.')
 
+        # Ensure the user selected at least one demographic factor
         demographic_factors = [
             'demographics_na', 'demographics_age', 'demographics_education',
             'demographics_ethnicity', 'demographics_gender', 'demographics_health',
@@ -547,6 +663,7 @@ class KnowledgeOtherDetailsForm(ModelForm):
         if not any(cleaned_data[x] for x in demographic_factors):
             raise forms.ValidationError('Please select at least one demographic factor.')
 
+        # Ensure the user selected at least one employment status
         employment_statuses = [
             'employment_na', 'employment_full_time', 'employment_part_time',
             'employment_seasonal', 'employment_unspecified'
@@ -554,6 +671,7 @@ class KnowledgeOtherDetailsForm(ModelForm):
         if not any(cleaned_data[x] for x in employment_statuses):
             raise forms.ValidationError('Please select at least one employment status.')
 
+        # Ensure the user selected at least one stage
         stages = [
             'stage_na', 'stage_pre_harvest', 'stage_harvest', 'stage_post_harvest'
             'stage_unspecified'
@@ -561,6 +679,7 @@ class KnowledgeOtherDetailsForm(ModelForm):
         if not any(cleaned_data[x] for x in stages):
             raise forms.ValidationError('Please select at least one stage of the fishery chain.')
 
+        # Ensure the user specified the "Other" demographic factor if they selected other
         if not confirm_other_text('demographics_other_text',
                                   'demographics_other', cleaned_data):
             raise forms.ValidationError(
@@ -570,6 +689,10 @@ class KnowledgeOtherDetailsForm(ModelForm):
 
 
 class KnowledgeAuthorsSimpleForm(ModelForm):
+    """
+    Form for specifying the authors of a SOTA record.
+    Not used on it's own, but rather used as part of a formset.
+    """
     class Meta:
         model = KnowledgeAuthorSimple
         fields = '__all__'
@@ -579,6 +702,10 @@ class KnowledgeAuthorsSimpleForm(ModelForm):
 
 
 class PersonResearcherForm(ModelForm):
+    """
+    Form for specifying data for researcher SSFPerson objects.
+    Does not seem to be accessible by users in normal operation.
+    """
     class Meta:
         model = SSFPerson
         fields = ['core_record_type', 'is_researcher', 'number_publications',
@@ -601,7 +728,10 @@ class PersonResearcherForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data provided by the user.
+        """
         cleaned_data = super(PersonResearcherForm, self).clean()
         # other level of education and text must be provided in combination
         other_text = len(cleaned_data['other_education_level']) > 0
@@ -615,6 +745,10 @@ class PersonResearcherForm(ModelForm):
 
 
 class ExternalLinkForm(ModelForm):
+    """
+    Form for entering links to external sites.
+    Not used on it's own, but rather as a part of a formset.
+    """
     class Meta:
         model = ExternalLink
         fields = '__all__'
@@ -625,6 +759,9 @@ class ExternalLinkForm(ModelForm):
 
 
 class GeographicScopeForm(ModelForm):
+    """
+    Form for selecting what type of geographic scope form to display and record.
+    """
     class Meta:
         model = ISSF_Core
         fields = ['geographic_scope_type']
@@ -637,6 +774,9 @@ class GeographicScopeForm(ModelForm):
 
 
 class GeographicScopeLocalAreaForm(ModelForm):
+    """
+    Form for recording a Local geographic scope.
+    """
     class Meta:
         model = GeographicScopeLocalArea
         fields = '__all__'
@@ -652,7 +792,10 @@ class GeographicScopeLocalAreaForm(ModelForm):
         widgets = {'local_area_point': ISSFMapWidget()}
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data provided by the user. 
+        """
         cleaned_data = super(GeographicScopeLocalAreaForm, self).clean()
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['local_area_setting_other']) > 0
@@ -660,8 +803,10 @@ class GeographicScopeLocalAreaForm(ModelForm):
         if 'local_area_setting' in cleaned_data:
             if cleaned_data['local_area_setting'] == 'Other':
                 other_selected = True
+        # Ensures the user provided other text if other was selected
         if not other_text and other_selected:
             raise forms.ValidationError('Please specify other local area setting, or unselect Other.')
+        # Ensures the user placed a point on the map
         if 'local_area_point' in cleaned_data:
             if cleaned_data['local_area_point'] is None:
                 raise forms.ValidationError('Please place a point on the map.')
@@ -669,6 +814,9 @@ class GeographicScopeLocalAreaForm(ModelForm):
 
 
 class GeographicScopeSubnationForm(ModelForm):
+    """
+    Form for recording a Subnational geographic scope.
+    """
     class Meta:
         model = GeographicScopeSubnation
         fields = '__all__'
@@ -682,13 +830,17 @@ class GeographicScopeSubnationForm(ModelForm):
         widgets = {'subnation_point': ISSFMapWidget()}
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data provided by the user.
+        """
         cleaned_data = super(GeographicScopeSubnationForm, self).clean()
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['subnation_type_other']) > 0
         other_selected = cleaned_data['subnation_type'] == 'Other'
         if not other_text and other_selected:
             raise forms.ValidationError('Please specify other sub-national area type, or uncheck Other.')
+        # Ensure the user placed a point on the map
         if 'subnation_point' in cleaned_data:
             if cleaned_data['subnation_point'] is None:
                 raise forms.ValidationError('Please place a point on the map.')
@@ -696,6 +848,9 @@ class GeographicScopeSubnationForm(ModelForm):
 
 
 class GeographicScopeNationForm(ModelForm):
+    """
+    Form for recording a National geographic scope.
+    """
     class Meta:
         model = GeographicScopeNation
         fields = ['country']
@@ -705,6 +860,9 @@ class GeographicScopeNationForm(ModelForm):
 
 
 class GeographicScopeRegionForm(ModelForm):
+    """
+    Form for recording a Regional geographic scope.
+    """
     class Meta:
         model = Geographic_Scope_Region
         fields = '__all__'
@@ -715,11 +873,15 @@ class GeographicScopeRegionForm(ModelForm):
         }
 
     # override clean to check combinations of fields
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data provided by the user.
+        """
         cleaned_data = super(GeographicScopeRegionForm, self).clean()
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['region_name_other']) > 0
         other_selected = False
+        # Ensures that if the user selected other, they also provided a value for other
         if 'region' in cleaned_data:
             if cleaned_data['region'].region_name == 'Other':
                 other_selected = True
@@ -729,6 +891,10 @@ class GeographicScopeRegionForm(ModelForm):
 
 
 class SpeciesForm(ModelForm):
+    """
+    Form for recording a species.
+    Not used on it's own, but rather as a part of a formset.
+    """
     class Meta:
         model = Species
 
@@ -741,6 +907,10 @@ class SpeciesForm(ModelForm):
 
 
 class SpeciesLandingsForm(ModelForm):
+    """
+    Form for recording a species landing.
+    Not used on it's own, but rather as a part of a formset.
+    """
     class Meta:
         model = Species
 
@@ -752,9 +922,13 @@ class SpeciesLandingsForm(ModelForm):
             'landings': 'Landings (t)'
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and validates the data provided by the user.
+        """
         cleaned_data = super(SpeciesLandingsForm, self).clean()
 
+        # Ensures the user provided either a common or scientific name
         species_specified = cleaned_data['species_scientific'] or cleaned_data['species_common']
         if cleaned_data['landings'] and not species_specified:
             raise forms.ValidationError('Please provide either a common or scientific name for the species.')
@@ -823,7 +997,13 @@ GeographicScopeRegionInlineFormSet = inlineformset_factory(ISSF_Core,
                                                            extra=1)
 
 
-def confirm_other_text(other_text_field, other_check_field, cleaned_data):
+def confirm_other_text(other_text_field: str, other_check_field: str, cleaned_data: Dict[str, Any]) -> bool:
+    """
+    Ensures that if a user selected other, that the other value is provided.
+    :param other_text_field: The name of the field for other text.
+    :param other_check_field: The name of the field for selecting other.
+    :param cleaned_data: The cleaned data object from the form.
+    """
     other_text = False
     if other_text_field in cleaned_data:
         if len(cleaned_data[other_text_field]) > 0:

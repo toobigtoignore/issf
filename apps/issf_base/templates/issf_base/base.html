@@ -101,7 +101,9 @@
                         }
                         </style>
                         <div id="google_translate_element" style="display: inline-block;"></div>
-                        |
+
+                        ｜
+
                         <i class="fi-torso"></i>
                         {% if user.is_anonymous %}
                             <a href="{% url 'account_login' %}?next={{ request.path }}">Login</a> |
@@ -144,14 +146,13 @@
                                     </li>
                                 {% endif %}
                             </ul>
-                            |
+                            ｜
                         {% endif %}
-
                         <span
                             data-tooltip aria-haspopup="true" class="has-tip"
                             title="ISSF Help Page" style="padding-left: 3px;"
                         >
-                            <a href="{% url 'help' %}" style="padding:0;">HELP</a>
+                            <a href="{% url 'help' %}" style="padding: 0;">HELP</a>
                         </span>
 
                     </div>

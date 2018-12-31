@@ -19,6 +19,7 @@ data/postgres/misc
 data/postgres/sessions
 data/postgres/logs
 data/postgres/storage
+data/postgres/backups
 
 # Testing
 .pytest_cache/
@@ -64,3 +65,5 @@ issf_prod/settings/__pycache__/
 issf_prod/settings/debug.py
 issf_prod/settings/prod.py
 issf_prod/settings/secret.py
+
+issf_prod/.env
