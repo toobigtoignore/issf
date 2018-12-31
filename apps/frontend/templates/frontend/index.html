@@ -787,6 +787,8 @@
                 }
             };
 
+            $("#full-country-select-container").children('select').removeAttr('placeholder');
+
             var quickCountrySelect = $('#quick-country-select').children('select')[0];
             $(quickCountrySelect).removeAttr("multiple");
             $(quickCountrySelect).selectize();
