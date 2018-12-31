@@ -519,7 +519,6 @@ footer {
 }
 
 .map-icons {
-    padding-top: 14px;
     position: absolute;
     top: 14px;
     right: 12px;
@@ -1018,7 +1017,7 @@ footer {
 
 #advance-search .main-wrapper {
     display: none;
-    margin: -12px 0 0;
+    margin: -14px 0 0;
     padding-top: 24px;
     background: #37516F;
 }
