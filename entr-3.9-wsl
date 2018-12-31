@@ -1,0 +1,20 @@
+diff -r 876a554a1efc missing/kqueue_inotify.c
+--- a/missing/kqueue_inotify.c	Fri Sep 22 10:59:30 2017 -0400
++++ b/missing/kqueue_inotify.c	Mon Sep 25 13:28:44 2017 -0400
+@@ -57,7 +57,7 @@
+ 
+ #define EVENT_SIZE (sizeof (struct inotify_event))
+ #define EVENT_BUF_LEN (32 * (EVENT_SIZE + 16))
+-#define IN_ALL IN_CLOSE_WRITE|IN_DELETE_SELF|IN_MOVE_SELF|IN_ATTRIB|IN_CREATE
++#define IN_ALL IN_CLOSE_WRITE|IN_DELETE_SELF|IN_MOVE_SELF|IN_ATTRIB|IN_CREATE|IN_MODIFY
+ 
+ /*
+  * Conveniently inotify and kqueue ids both have the type `int`
+@@ -162,6 +162,7 @@
+ 				if (iev->mask & IN_CREATE)      fflags |= NOTE_WRITE;
+ 				if (iev->mask & IN_MOVE_SELF)   fflags |= NOTE_RENAME;
+ 				if (iev->mask & IN_ATTRIB)      fflags |= NOTE_ATTRIB;
++				if (iev->mask & IN_MODIFY)      fflags |= NOTE_WRITE;
+ 				if (fflags == 0) continue;
+ 
+ 				/* merge events if we're not acting on a new file descriptor */
