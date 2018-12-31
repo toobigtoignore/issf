@@ -1774,11 +1774,17 @@
                     })),
                     "Case Study": L.icon(Object.assign(defaultIconProps, {
                         iconUrl: '{% static "img/icon-casestudies.png" %}'
+                    })),
+                    "Unknown": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-unknown.png" %}'
                     }))
                 };
 
                 currentRecords = [];
-                var notShown = 0;
+                var notShown = {
+                    "Global": 0,
+                    "Not specific": 0
+                };
 
                 for (newRow in mapDataSource) {
                     var row = mapDataSource[newRow];
@@ -1790,18 +1796,17 @@
                     }
 
                     if (row[1] === "Global" || row[1] === "Not specific") {
-                        notShown += 1;
+                        notShown[row[1]] += 1;
                         continue;
                     }
 
-                    var hiddenmapdata = hiddenmapdata + rowAsJsonString + mapDataTokenSeperator;
-                    var mrk;
+                    hiddenmapdata = hiddenmapdata + rowAsJsonString + mapDataTokenSeperator;
 
                     for (var i = 0; i < activeFilters.length; i++) {
                         if (row[0] == activeFilters[i]) {
                             var currentIcon = icons[row[0]];
 
-                            mrk = L.marker([row[5], row[4]], {icon: currentIcon});
+                            var mrk = L.marker([row[5], row[4]], {icon: currentIcon});
                             mrk.bindPopup(
                                 '<b>Record type:</b> ' + row[0] +
                                 '<br><b>Geographic scope:</b> ' + row[1] +
@@ -1815,16 +1820,22 @@
                     }
                 }
 
-                var notShownLatLng = L.latLng(-25, -10)
+                var notShownGlobalLatLng = L.latLng(-22.5, -10)
+                var notShownGlobalMarker = L.marker(notShownGlobalLatLng, {icon: icons["Unknown"]});
+                notShownGlobalMarker.bindPopup(
+                    'Some items have a location of "Global"<br /><a onclick="goToTable();">Find them in the table</a>'
+                );
+                if (notShown["Global"] > 0) {
+                    markers.addLayer(notShownGlobalMarker);
+                }
 
-                var notShownMarker = L.marker(notShownLatLng);
-
-                notShownMarker.bindPopup(
+                var notShownNotSpecLatLng = L.latLng(-35, 50)
+                var notShownNotSpecMarker = L.marker(notShownNotSpecLatLng, {icon: icons["Unknown"]});
+                notShownNotSpecMarker.bindPopup(
                     'Some items don\'t have a specific location<br /><a onclick="goToTable();">Find them in the table</a>'
                 );
-
-                if (notShown > 0) {
-                    map.addLayer(notShownMarker);
+                if (notShown["Not specific"] > 0) {
+                    markers.addLayer(notShownNotSpecMarker);
                 }
 
                 // Remove the trailing mapDataTokenSeperator from hiddenmapdata
@@ -1897,7 +1908,9 @@
                 localStorage.setItem('searchTerms', searchterms);
                 $('#searchTerms').html("");
                 if (searchterms !== null && searchterms !== "null" && searchterms !== "undefined" && typeof searchterms !== "undefined") {
-                    var notShownText = notShown > 0 ? ', ' + String(notShown) + ' not plotted on map' : '';
+                    var totalNotShown = notShown["Global"] + notShown["Not specific"];
+                    var notShownText = totalNotShown > 0 ? ', ' + String(totalNotShown) + ' not plotted on map' : '';
+
                     var searchTerms = "<strong>Current Search Terms:</strong> " + searchterms + tableDataSource.length + " records" + notShownText + ")";
                     $('#searchTerms').html(searchTerms);
                 }
