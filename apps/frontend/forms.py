@@ -1,18 +1,24 @@
 from django import forms
 from django.db.models import Q
-from django.forms import ModelForm, Select
+from django.forms import ModelForm, Select, TextInput
 from django.forms.models import formset_factory
 from issf_admin.models import UserProfile
-from issf_base.models import Country, ISSFCore, SelectedAttribute, SelectedThemeIssue, DidYouKnow, FAQ, WhoFeature, SSFPerson, SSFKnowledge
+from issf_base.models import Country, ISSF_Core, SelectedAttribute, SelectedThemeIssue, DidYouKnow, FAQ, WhoFeature, SSFPerson, SSFKnowledge
 
 
 class SearchForm(forms.Form):
     """
     Form for searching for records.
     """
-    keywords = forms.CharField(label='Full text', required=False)
+    fulltext_keywords = forms.CharField(
+        label='Search by full text',
+        required=False,
+        widget=TextInput(attrs={'placeholder': 'Search'})
+    )
+    keywords = forms.CharField(label='Search by title', required=False)
+
     # contributor_id=1 is the ISSF Staff account
-    existing_contributors = ISSFCore.objects.all().values('contributor')
+    existing_contributors = ISSF_Core.objects.all().values('contributor')
     contributor_choices = [
         (u.id, '%s (%s %s %s)' % (u.username, u.first_name, u.initials, u.last_name)) for u in UserProfile.objects.filter(
             Q(id__in=existing_contributors)
@@ -24,12 +30,12 @@ class SearchForm(forms.Form):
         label='Contributor/editor',
         required=False
     )
-    contribution_begin_date = forms.DateField(required=False)
-    contribution_end_date = forms.DateField(required=False)
+    contribution_begin_date = forms.IntegerField(label='Contribution year begin', required=False)
+    contribution_end_date = forms.IntegerField(label='Contribution year end', required=False)
     countries = forms.MultipleChoiceField(
-        choices=[(c.country_id, c.short_name) for c in Country.objects.order_by('short_name')],
-        help_text='Hold down "Control", or "Command" on a Mac, to select more than one.',
-        required=False
+        choices=[(c.country_id, c.short_name) for c in Country.objects.order_by('short_name')] + [("", "")],
+        required=False,
+        widget=Select(attrs={'placeholder': 'Country'})
     )
 
 
@@ -52,7 +58,7 @@ class SelectedThemeIssueForm(ModelForm):
     class Meta:
         model = SelectedThemeIssue
         fields = '__all__'
-        widgets = {'theme_issue_value': Select}
+        # widgets = {'theme_issue_value': Select}
 
 
 class TipForm(ModelForm):
@@ -112,4 +118,4 @@ class GeoJSONUploadForm(forms.Form):
 
 
 SelectedAttributesFormSet = formset_factory(SelectedAttributeForm, extra=1)
-SelectedThemesIssuesFormSet = formset_factory(SelectedThemeIssueForm, extra=1)
+SelectedThemesIssuesFormSet = formset_factory(SelectedThemeIssueForm, extra=6)

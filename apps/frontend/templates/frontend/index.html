@@ -14,8 +14,8 @@
         href="{% static 'issf_base/DataTables-1.10.2/media/css/jquery.dataTables.min.css' %}"
     >
     <link rel="stylesheet" href="{% static 'frontend/css/frontend.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.min.css">
 {% endblock additional_css_scripts %}
-
 {% block body %}
     <section id="info-section">
         <div class="row">
@@ -207,47 +207,62 @@
                 <div class="large-12 columns main-wrapper">
                     <div class="search-wrapper">
                         <div class="row row-fit" id="quick-search">
-                            <div class="large-9 left">
-                                <input id="q-search" name="q-search" type="text">
+                            <div class="large-6 left" id="quick-search-fulltext-container">
+                                {{ searchForm.fulltext_keywords }}
                             </div>
 
-                            <div class="large-3 right BtnCol">
-                                <button
-                                    class="medium radius issf-scroll-button" id="quick-search-button"
-                                    scrollto="#info-map" onclick="quickSearch()"
-                                >
-                                    Search
-                                </button>
+                            <div id="quick-country-select" class="large-3 left">
+                                {{ searchForm.countries }}
+                            </div>
 
-                                <div
-                                    id="exportModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle"
-                                    aria-hidden="true" role="dialog" style="width:60%; margin-left: -30%;"
-                                >
-                                    <h3 id="modalTitle">Export Data</h3>
-                                    <p>
-                                        ISSF is an online collaborative database, developed and administered by TBTI. As
-                                        a crowdsourcing
+                            <div class="large-3 right BtnCol" id="quick-area">
+                                <div id="quick-button-floaty">
+                                    <button
+                                        type="submit"
+                                        id="quick-search-button"
+                                        class="medium radius issf-scroll-button"
+                                        scrollto="#info-map"
+                                    >
+                                        Search
+                                    </button>
+                                    <button
+                                        type="button"
+                                        id="quick-reset-button"
+                                        class="medium radius"
+                                    >
+                                        Reset
+                                    </button>
 
-                                        platform, ISSF data have been uploaded by individuals but have not been verified
-                                        by TBTI or SSF experts.
+                                    <div
+                                        id="exportModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle"
+                                        aria-hidden="true" role="dialog" style="width:60%; margin-left: -30%;"
+                                    >
+                                        <h3 id="modalTitle">Export Data</h3>
+                                        <p>
+                                            ISSF is an online collaborative database, developed and administered by TBTI. As
+                                            a crowdsourcing
 
-                                        Caution should be exercised when using data. The ownership and responsibility
-                                        for the information
+                                            platform, ISSF data have been uploaded by individuals but have not been verified
+                                            by TBTI or SSF experts.
 
-                                        provided belongs to the contributors.
-                                        <br>
-                                        <br>
-                                        When using ISSF content, please provide
-                                        appropriate citation,
+                                            Caution should be exercised when using data. The ownership and responsibility
+                                            for the information
 
-                                        following the format described in the README file.
-                                    </p>
+                                            provided belongs to the contributors.
+                                            <br>
+                                            <br>
+                                            When using ISSF content, please provide
+                                            appropriate citation,
 
-                                    <a href="#" class="button radius" onclick="exportData();">
-                                        I agree
-                                    </a>
+                                            following the format described in the README file.
+                                        </p>
 
-                                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                                        <a href="#" class="button radius" onclick="exportData();">
+                                            I agree
+                                        </a>
+
+                                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -272,42 +287,38 @@
                                         <a href="#panel-character">Characteristics</a>
                                     </li>
                                 </ul>
+                                <button class="reset-button generic-shadow">
+                                    <p>Reset</p>
+                                </button>
                             </div>
 
                             <div class="tabs-content">
                                 <div class="content active" id="panel-basic">
-                                    {{ searchForm }}
+                                    {{ searchForm.keywords.label }}{{ searchForm.keywords }}
+                                    {{ searchForm.contributor.label }}{{ searchForm.contributor }}
+                                    {{ searchForm.contribution_begin_date.label }}{{ searchForm.contribution_begin_date }}
+                                    {{ searchForm.contribution_end_date.label }}{{ searchForm.contribution_end_date }}
+                                    <div id="full-country-select-container">
+                                        {{ searchForm.countries.label }}{{ searchForm.countries }}
+                                    </div>
                                 </div>
 
                                 <div class="content" id="panel-theme">
-                                    <div class="TITab FormSet FormSetGrowable advancedSearchPanelTab">
+                                    <div>
                                         {{ selected_themes_issues_formset.management_form }}
-                                        <table style="width:100%; background-color: inherit; border: none;"
-                                               class="advancedSearchPanelTabTable">
-                                            <tr style="background-color: inherit;">
-                                                <td>
-                                                    <label>Theme/Issue</label>
-                                                </td>
-                                                <td>
-                                                    <label>Value</label>
-                                                </td>
-                                                <td></td>
-                                            </tr>
+                                        <tr style="background-color: inherit;">
+                                            <td>
+                                                <label>Search by themes/issues</label>
+                                            </td>
+                                        </tr>
+                                        <table
+                                            style="width:100%; background-color: inherit; border: none;"
+                                            class="advancedSearchPanelTabTable"
+                                        >
                                             {% for form in selected_themes_issues_formset %}
                                                 <tr style="background-color: inherit;">
-                                                    <td id="ti-attr" style="width:40%;">
-                                                        {{ form.theme_issue }}
-                                                    </td>
-                                                    <td id="ti-attr-val" style="width: 40%;">
+                                                    <td id="ti-attr-val">
                                                         {{ form.theme_issue_value }}
-                                                    </td>
-                                                    <td style="width: 20%;">
-                                                        <button
-                                                            class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
-                                                            type="button"
-                                                        >
-                                                            Remove
-                                                        </button>
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -365,14 +376,6 @@
                                 </button>
 
                                 <div class="BtnCol" style="display:inline;"></div>
-
-                                <button
-                                    class="medium radius reset-button"
-                                    type="reset"
-                                    value="Reset"
-                                >
-                                    Reset
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -423,7 +426,7 @@
                                         {% if contribution.core_record_type == "Who's Who in SSF" %}
                                             <span class="icon cont-who"></span>
                                             <p>
-                                                <strong> Who's Who:</strong>
+                                                <strong>Who's Who:</strong>
                                                 {{ contribution.contribution_count }}
                                             </p>
                                         {% elif contribution.core_record_type == "State-of-the-Art in SSF Research" %}
@@ -784,6 +787,16 @@
                 }
             };
 
+            var quickCountrySelect = $('#quick-country-select').children('select')[0];
+            $(quickCountrySelect).removeAttr("multiple");
+            $(quickCountrySelect).selectize();
+            quickCountrySelect.selectize.clear();
+            $('#quick-country-select').show();
+
+            var fullCountrySelectContainer = $('#full-country-select-container').children('select')[0]
+            $(fullCountrySelectContainer).selectize();
+            fullCountrySelectContainer.selectize.clear();
+
             /* Restore Page State */
 
             // Restore tab
@@ -857,18 +870,59 @@
                 });
             });
 
+            $('#quick-reset-button').on('click', function () {
+                $('#quick-area').children('input').val('');
+                quickCountrySelect.selectize.clear();
+                $('.reset-button').trigger('click');
+            });
+
             // Reset themes/issues and attributes in advanced search panel
             $('.reset-button').on('click', function () {
+                $('#home-search-form')[0].reset();
+
+                fullCountrySelectContainer.selectize.clear();
                 tiVals.empty();
                 attrVals.empty();
             });
+
+            $('#tosearch').on('click', function () {
+                $('#id_fulltext_keywords').val('');
+                quickCountrySelect.selectize.clear();
+                if ($(this).hasClass('on')) {
+                    $('#advance-search #full-search').stop().slideUp(300, function () {
+                        $('#tosearch').removeClass('on');
+                    });
+                    $('#advance-search').addClass('quick');
+                    $('#advance-search #quick-search').stop().slideDown(100);
+                    $('#tosearch').animate({bottom: -29}, 50);
+                } else {
+                    $('#advance-search #full-search').stop().slideDown(500, function () {
+                        $('#tosearch').addClass('on');
+                    });
+                    $('#advance-search').removeClass('quick');
+                    $('#advance-search #quick-search').stop().slideUp(200);
+                    $('#tosearch').animate({bottom: -30}, 50);
+                }
+            });
+
+            $('#quick-search-button').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                fullCountrySelectContainer.selectize.clear();
+                $('#panel-basic').children('input, select').val("");
+                $('#panel-theme').children('input, select').val("");
+                $('#panel-character').children('input, select').val("");
+                $('#default').trigger('click');
+            });
         });
 
+        $('#default').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#home-search-form').submit();
+        });
 
-        /*
-            ==== Map/Data Filter Buttons ====
-        */
-
+        /* Map/Data Filter Buttons */
         $(window).load(is.verticalResize);
 
         $('.content-section .bt-prev').addClass('disable');
@@ -945,38 +999,10 @@
                 $('.btn_popup').remove();
             })
             .mousemove(function (e) {
-                var mouseX = e.pageX, //X coordinates of mouse
-                    mouseY = e.pageY; //Y coordinates of mouse
+                var mouseX = e.pageX, // X coordinates of mouse
+                    mouseY = e.pageY; // Y coordinates of mouse
                 $('.btn_popup').css({top: mouseY - 28, left: mouseX + 4});
             });
-        $('#tosearch').on('click', function () {
-            if ($(this).hasClass('on')) {
-                $('#advance-search #full-search').stop().slideUp(300, function () {
-                    $('#tosearch').removeClass('on');
-                });
-                $('#advance-search').addClass('quick');
-                $('#advance-search #quick-search').stop().slideDown(100);
-                $('#tosearch').animate({bottom: -29}, 50);    //original bottom value was -42.  Ji.
-            } else {
-                $('#advance-search #full-search').stop().slideDown(500, function () {
-                    $('#tosearch').addClass('on');
-                });
-                $('#advance-search').removeClass('quick');
-                $('#advance-search #quick-search').stop().slideUp(200);
-                $('#tosearch').animate({bottom: -30}, 50);
-            }
-        });
-
-        $('#q-search').on('focusout', function () {
-            var keywords = $('#q-search').val();
-            $('#home-search-form')[0].reset();
-            $('#q-search').val(keywords);
-            $('#id_keywords').val($('#q-search').val());
-        });
-
-        $('#id_keywords').on('focusout', function () {
-            $('#q-search').val($('#id_keywords').val());
-        });
 
         $('.accordion a').on('click', function (e) {
             e.preventDefault();
@@ -1622,7 +1648,7 @@
         // If user is not signed in then disable button and have tooltip asking them to login.
         // Have to "fake-disable" the button with onclick="return false because the tooltip will
         // not appear if it is actually disabled.
-        $('div.BtnCol').append('<span data-tooltip aria-haspopup="true" class="has-tip exp-tip" title="Please login to use the export feature." style="border:none;"><button class="medium radius exportButton" onclick="return false;">Export Data</button></span>');
+        $('#quick-button-floaty').append('<span data-tooltip aria-haspopup="true" class="has-tip exp-tip" title="Please login to use the export feature." style="border:none;"><button class="medium radius exportButton" onclick="return false;">Export</button></span>');
 
         {% if user.is_authenticated %}
             $('span.exp-tip').prop('title', "Export selected data in CSV format.");
@@ -1636,34 +1662,21 @@
             $('.dataTables_scrollHeadInner, .dataTables_scrollHeadInner table').width('100%');
         });
 
-        function quickSearch() {
-            var keywords = $('#q-search').val();
-            $('#home-search-form')[0].reset();
-            $('#q-search').val(keywords);
-            $('#id_keywords').val($('#q-search').val());
-
-            $('#default').trigger('click');
-        }
-
         $('#home-search-form').keydown(function (e) {
             if (e.keyCode === 13) {
-                if ($('#q-search').is(":focus")) {
-                    $('#q-search').trigger("focusout");
-                }
-                else if ($('#id_keywords').is(":focus")) {
-                    $('#id_keywords').trigger("focusout");
-                }
-                $('#default').trigger("click");
-                return false;
+                e.preventDefault();
+                e.stopPropagation();
+                $('#home-search-form').submit();
             }
         });
 
         // Search submit
         $('#home-search-form').submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
             // Showing Loading Overlay
             $("#map-loading-overlay").fadeIn(100);
-
-            e.preventDefault();
 
             var form = $(this);
             search = true;
@@ -1869,7 +1882,7 @@
                 $('#searchTerms').html("");
                 if (searchterms !== null && searchterms !== "null" && searchterms !== "undefined" && typeof searchterms !== "undefined") {
                     var notShownText = notShown > 0 ? ', ' + String(notShown) + ' not plotted on map' : '';
-                    var searchTerms = "<strong>Current Search Terms:</strong> " + searchterms + " " + tableDataSource.length + " records" + notShownText + ")";
+                    var searchTerms = "<strong>Current Search Terms:</strong> " + searchterms + tableDataSource.length + " records" + notShownText + ")";
                     $('#searchTerms').html(searchTerms);
                 }
 
@@ -2012,5 +2025,5 @@
         });
     </script>
     <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=r6zHiLKHtnlqqDuyu2YBfU2JxAnowqE5"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 {% endblock additional_js_scripts %}

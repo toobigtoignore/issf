@@ -3,6 +3,8 @@ from typing import Dict, Any
 from django import forms
 from django.forms import ModelForm
 
+import bleach
+
 # replace * with specific references
 from .models import *
 
@@ -18,6 +20,11 @@ class ProfileForm(ModelForm):
         cleaned_data = super(ProfileForm, self).clean()
         # check for required fields, it cannot be done in the model because it inherits from
         # Django's AbstractUser (auth app)
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         if len(cleaned_data['first_name']) == 0 or len(cleaned_data['last_name']) == 0:
             raise forms.ValidationError('Please specify a first name and last name.')
 

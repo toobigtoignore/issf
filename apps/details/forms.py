@@ -4,6 +4,7 @@ from django import forms
 from django.forms import ModelForm, RadioSelect, HiddenInput
 from django.forms.models import inlineformset_factory
 from leaflet.forms.widgets import LeafletWidget
+import bleach
 
 from issf_base.models import *
 
@@ -56,6 +57,10 @@ class SSFKnowledgeForm(ModelForm):
         cleaned_data = super(SSFKnowledgeForm, self).clean()
         # make safe text entered by user
 
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         # other publication type and text must be provided in combination
         other_text = len(cleaned_data['other_publication_type']) > 0
         other_selected = False
@@ -104,6 +109,15 @@ class SSFPersonForm(ModelForm):
             'person_point': ISSFMapWidget(),
             'contributor': forms.widgets.HiddenInput
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFOrganizationForm(ModelForm):
@@ -161,6 +175,10 @@ class SSFOrganizationForm(ModelForm):
         """
         cleaned_data = super(SSFOrganizationForm, self).clean()
 
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         # Ensures that if a user has selected that they apply a ssf definition, they explain it
         if 'ssf_defined' in cleaned_data:
             if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data['ssf_definition']:
@@ -212,6 +230,15 @@ class SSFCapacityNeedForm(ModelForm):
                            'who can edit the record)'
         }
         widgets = {'capacity_need_description': forms.Textarea(attrs={'rows': 3})}
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFProfileForm(ModelForm):
@@ -251,7 +278,13 @@ class SSFProfileForm(ModelForm):
         """
         Cleans and verifies the data entered by the user.
         """
-        return super(SSFProfileForm, self).clean()
+        cleaned_data = super(SSFProfileForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFGuidelinesForm(ModelForm):
@@ -288,6 +321,15 @@ class SSFGuidelinesForm(ModelForm):
             'organizer': '*Organizer',
             'purpose': '*Purpose'
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFExperiencesForm(ModelForm):
@@ -314,6 +356,15 @@ class SSFExperiencesForm(ModelForm):
                            'who can edit the record)',
             'vimeo_video_url': 'Vimeo video URL (no shortened links)'
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class SSFCaseStudiesForm(ModelForm):
@@ -360,6 +411,15 @@ class SSFCaseStudiesForm(ModelForm):
             'background_context': forms.Textarea(attrs={'rows': 4}),
             'activities_innovation': forms.Textarea(attrs={'rows': 4}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
 
 
 class CapacityNeedRatingForm(ModelForm):
@@ -805,6 +865,11 @@ class GeographicScopeLocalAreaForm(ModelForm):
         Cleans and validates the data provided by the user. 
         """
         cleaned_data = super(GeographicScopeLocalAreaForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+        
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['local_area_setting_other']) > 0
         other_selected = False
@@ -843,6 +908,11 @@ class GeographicScopeSubnationForm(ModelForm):
         Cleans and validates the data provided by the user.
         """
         cleaned_data = super(GeographicScopeSubnationForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['subnation_type_other']) > 0
         other_selected = cleaned_data['subnation_type'] == 'Other'
@@ -886,6 +956,11 @@ class GeographicScopeRegionForm(ModelForm):
         Cleans and validates the data provided by the user.
         """
         cleaned_data = super(GeographicScopeRegionForm, self).clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['region_name_other']) > 0
         other_selected = False

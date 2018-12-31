@@ -20,31 +20,17 @@ from djgeojson.views import GeoJSONLayerView
 from django.views.decorators.gzip import gzip_page
 
 from issf_base.models import *
+from issf_admin.views import get_redirectname
+from issf_admin.models import UserProfile
+
+import bleach
 
 from .forms import SearchForm, TipForm, FAQForm, WhosWhoForm, GeoJSONUploadForm
-from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet
+from frontend.forms import SelectedAttributesFormSet, SelectedThemesIssuesFormSet, SearchForm
 
 from django.middleware.gzip import GZipMiddleware
 
 gzip_middleware = GZipMiddleware()
-
-
-def parse_search_terms(input_search_terms: str) -> str:
-    """
-        Strip away special characters because they would cause the tsquery to fail
-        and the search to hang.
-    """
-
-    for char in ":'|!&%\"()":
-        input_search_terms = input_search_terms.replace(char, " ")
-    search_array = input_search_terms.split()
-    for idx in range(0, len(search_array)):
-        search_array[idx] = search_array[idx] + u":*"
-    parsed_search_terms = u" ".join(search_array)
-
-    if '"' in input_search_terms:
-        return parsed_search_terms.replace(u" ", u" & ")
-    return parsed_search_terms.replace(u" ", u" | ")
 
 
 @gzip_page
@@ -94,183 +80,243 @@ def index(request: HttpRequest) -> HttpResponse:
     )
 
 
+def get_map_points(issf_core_ids):
+    """
+    Returns map points for all given IDs, if they exist.
+    :param issf_core_ids: An iterator containing core ids.
+    """
+    points = []
+    for core_id in issf_core_ids:
+        points += list(ISSFCoreMapPointUnique.objects.filter(issf_core_id__exact=core_id))
+    return points
+
+
 @gzip_page
 def frontend_data(request: HttpRequest) -> HttpResponse:
-    map_queryset = None
-    search_terms = u""
-    map_results = []
 
-    if request.method != 'POST':  # Could cause bugs, should be == 'GET'?
+    search_terms = []
 
-        # default page load with all records
+    if request.method == 'GET':
         cached_map_data = cache.get('cached_map_data')
-
         if cached_map_data:
             map_queryset = cached_map_data
         else:
-            map_queryset = ISSFCoreMapPointUnique.objects.extra(select={"relevance": "0"})
+            map_queryset = ISSFCoreMapPointUnique.objects.all()
             cache.set('cached_map_data', map_queryset, 86400)
     else:
-        # user hit search
-        select = {}
-        where = []
-
-        keywords = request.POST['keywords']
-        if len(keywords) > 0:
-            # append to search_terms display string
-            if len(search_terms) > 0:
-                search_terms = search_terms + u" AND "
-            parsed_keywords = parse_search_terms(keywords)
-
-            where.append(u"core_record_tsvector @@ to_tsquery('english', unaccent('{" u"0}'))".format(parsed_keywords))
-
-            select = {
-                "relevance": u"round(CAST(ts_rank(core_record_tsvector, " u"to_tsquery('{0}')) AS " u"NUMERIC), 3)".format(parsed_keywords)
-            }
-
-            search_terms = search_terms + u"(Full text = " + parsed_keywords.replace(u" | ", u" OR ").replace(u" & ", u" AND ") + u"; returned "
-            search_terms = search_terms.replace(u":*", u"")
+        form = SearchForm(request.POST)
+        themes_form = SelectedThemesIssuesFormSet(request.POST)
+        attributes_form = SelectedAttributesFormSet(request.POST)
+        map_queryset = []
+        if form.is_valid():
+            keywords = form.cleaned_data['keywords']
+            fulltext_keywords = form.cleaned_data['fulltext_keywords']
+            contributor = form.cleaned_data['contributor']
+            countries = form.cleaned_data['countries']
+            contribution_begin_date = form.cleaned_data['contribution_begin_date']
+            contribution_end_date = form.cleaned_data['contribution_end_date']
         else:
-            select = {"relevance": u"0"}
+            keywords = None
+            fulltext_keywords = None
+            contributor = None
+            countries = None
+            contribution_begin_date = None
+            contribution_end_date = None
 
-        if len(request.POST['contributor']) > 0:
-            contributor_id = request.POST['contributor']
-            user_profile = UserProfile.objects.get(pk=contributor_id)
-            # append to search_terms display string
-            if len(search_terms) > 0:
-                search_terms = search_terms + u" AND "
+        themes = []
+        if themes_form.is_valid():
+            for subform in themes_form.forms:
+                try:
+                    themes.append(subform.cleaned_data['theme_issue_value'])
+                except KeyError:
+                    # Occurs when form doesn't have a theme_issue_value value, meaning it isn't valid
+                    pass
 
-            # Refactor!
-            search_terms = search_terms + u"(Contributor/editor = " + (
-                user_profile.username + u" (" + user_profile.first_name + u" " + user_profile.initials + u" " +
-                user_profile.last_name + u")").replace(u"  ", u" ") + u")"
-            where.append(u"contributor_id = " + contributor_id + u" OR editor_id = " + contributor_id)
+        attributes = []
+        if attributes_form.is_valid():
+            for subform in attributes_form:
+                try:
+                    attributes.append({
+                        'attribute': subform.cleaned_data['attribute'],
+                        'attribute_value': subform.cleaned_data['attribute_value']
+                    })
+                except KeyError:
+                    # Occurs when form doesn't have an attribute set, meaning it actually isn't valid
+                    pass
 
-        r = re.compile('.*/.*/.*')
-        if len(request.POST['contribution_begin_date']) > 0:
-            date_string = request.POST['contribution_begin_date']
-            if r.match(date_string) is not None:
-                # append to search_terms display string
-                if len(search_terms) > 0:
-                    search_terms = search_terms + u" AND "
-                search_terms = search_terms + u"(Contribution begin date = " + date_string + u")"
-                date_string = datetime.datetime.strptime(date_string, '%m/%d/%Y').strftime('%Y-%m-%d')
-                where.append(u"contribution_date >= date '" + date_string + u"'")
-        if len(request.POST['contribution_end_date']) > 0:
-            date_string = request.POST['contribution_end_date']
-            if r.match(date_string) is not None:
-                # append to search_terms display string
-                if len(search_terms) > 0:
-                    search_terms = search_terms + u" AND "
-                search_terms = search_terms + u"(Contribution end date = " + date_string + u")"
-                date_string = datetime.datetime.strptime(date_string, '%m/%d/%Y').strftime('%Y-%m-%d')
-                where.append(u"contribution_date <= date '" + date_string + u"'")
-        if 'countries' in request.POST:
-            # append to search_terms display string
-            if len(search_terms) > 0:
-                search_terms = search_terms + u" AND "
-            country_list = request.POST.getlist('countries')
-            search_terms = search_terms + u"(Country = "
-            country_where = (u"country_id IN (" + u",".join(country_list) + u")")
-            inner_where = []
-            inner_where.append(country_where)
-            countries = Country.objects.extra(where=inner_where)
-            first = True
-            for country in countries:
-                if not first:
-                    search_terms = search_terms + u" OR "
-                search_terms = search_terms + country.short_name
-                first = False
-            search_terms = search_terms + u")"
-            where.append(u"issf_core_id IN (SELECT issf_core_id FROM " u"issf_core_map_point_unique WHERE " + country_where + u")")
+        models = [
+            SSFPerson,
+            SSFKnowledge,
+            SSFProfile,
+            SSFOrganization,
+            SSFCapacityNeed,
+            SSFGuidelines,
+            SSFCaseStudies,
+            SSFExperiences
+        ]
 
-        # Qualitative and ordinal characteristics
-        selected_themes_issues_formset = SelectedThemesIssuesFormSet(
-            request.POST)
-        theme_issue_value_ids = []
-        if selected_themes_issues_formset.is_valid():
-            for form in selected_themes_issues_formset.forms:
-                if len(form.cleaned_data) > 0:
-                    theme_issue_value_ids.append(str(form.cleaned_data['theme_issue_value']))
+        if keywords:
+            if keywords == "":
+                cached_map_data = cache.get('cached_map_data')
+                if cached_map_data:
+                    map_queryset = cached_map_data
+                else:
+                    map_queryset = ISSFCoreMapPointUnique.objects.all()
+                    cache.set('cached_map_data', map_queryset, 86400)
+                map_queryset = list(map_queryset)
+            else:
+                search_terms.append('Title: {}'.format(str(bleach.clean(keywords))))
+                for model in models:
+                    # Every object has different variables for "title"
+                    if model == SSFPerson:
+                        # SSFPerson has no name or title, so we retrieve all matching users from the map points and remove them from the users
+                        results = list(model.objects.all())
+                        filtered_ids = [i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=keywords)]
+                        for result in results[:]:
+                            if result.issf_core_id not in filtered_ids:
+                                results.remove(result)
+                    elif model == SSFKnowledge:
+                        results = model.objects.filter(level1_title__icontains=keywords)
+                    elif model == SSFProfile:
+                        results = model.objects.filter(ssf_name__icontains=keywords)
+                    elif model == SSFOrganization:
+                        results = model.objects.filter(organization_name__icontains=keywords)
+                    elif model == SSFCapacityNeed:
+                        results = model.objects.filter(capacity_need_title__icontains=keywords)
+                    elif model == SSFCaseStudies:
+                        results = model.objects.filter(name__icontains=keywords)
+                    else:
+                        results = model.objects.filter(title__icontains=keywords)
+                    ids = [result.issf_core_id for result in results]
+                    map_queryset += get_map_points(ids)
+        else:
+            map_queryset = list(ISSFCoreMapPointUnique.objects.all())
 
-            if theme_issue_value_ids:
-                theme_issue_value_ids = ','.join(theme_issue_value_ids)
+        if fulltext_keywords:
+            if fulltext_keywords != '':
+                search_terms.append('Full text: {}'.format(fulltext_keywords))
+                fulltext_matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=fulltext_keywords))
+                for item in map_queryset[:]:
+                    if item.issf_core_id not in fulltext_matches:
+                        map_queryset.remove(item)
 
-                # Refactor!
-                where.append(u"issf_core_id IN (SELECT issf_core_id FROM "
-                             u"selected_theme_issue WHERE " +
-                             u"theme_issue_value_id IN (" +
-                             theme_issue_value_ids + u"))")
+        if contributor:
+            contributor = int(contributor)
+            contributor_instance = tuple(UserProfile.objects.filter(id__exact=contributor))[0]
+            contributor_name = contributor_instance.username
+            # If the user has defined a name, choose all components of the name that aren't none and add them to the username
+            if any([contributor_instance.first_name, contributor_instance.initials, contributor_instance.last_name]):
+                components = (i for i in [contributor_instance.first_name, contributor_instance.initials, contributor_instance.last_name] if i != None)
+                contributor_name += ' ({})'.format(' '.join(components))
+            search_terms.append('Contributor: {}'.format(contributor_name))
+            for item in map_queryset[:]:
+                if item.contributor_id != contributor:
+                    map_queryset.remove(item)
 
-        selected_attributes_formset = SelectedAttributesFormSet(request.POST)
-        attribute_value_ids = []
-        if selected_attributes_formset.is_valid():
-            for form in selected_attributes_formset.forms:
-                if len(form.cleaned_data) > 0:
-                    attribute_value_ids.append(str(form.cleaned_data['attribute_value']))
+        if countries:
+            unprocessed_countries = countries
+            countries = []
+            for country in unprocessed_countries:
+                try:
+                    countries.append(int(country))
+                except ValueError:
+                    pass
 
-            if attribute_value_ids:
-                attribute_value_ids = ','.join(attribute_value_ids)
-                where.append(u"issf_core_id IN (SELECT issf_core_id FROM "
-                             u"selected_attribute WHERE " +
-                             u"attribute_value_id IN (" +
-                             attribute_value_ids + u"))")
+            if len(countries) != 0:
+                countries = [int(i) for i in countries]
+                country_names = [list(Country.objects.filter(country_id__exact=country))[0].short_name for country in countries]
+                # Underlying DB has a column for country id, but model itself doesn't
+                # Therefore, we need to fall back to using plain SQL
+                country_matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.raw(
+                    'SELECT row_number, issf_core_id, contribution_date, contributor_id, edited_date, editor_id, \
+                    core_record_type, core_record_summary, core_record_status geographic_scope_type,\
+                    map_point::bytea, lat, lon FROM issf_core_map_point_unique WHERE country_id = ANY(%(countries)s)',
+                    {'countries': countries}
+                ))
+                if len(countries) <= 5:
+                    search_terms.append('Countries: {}'.format(', '.join(country_names)))
+                else:
+                    search_terms.append('Countries: {} (and {} more)'.format(
+                        ', '.join(country_names[0:5]),
+                        len(countries) - 5
+                    ))
+                for item in map_queryset[:]:
+                    if item.issf_core_id not in country_matches:
+                        map_queryset.remove(item)
 
-        map_queryset = ISSFCoreMapPointUnique.objects.extra(where=where, select=select)
+        if contribution_begin_date:
+            search_terms.append('Contribution year begin: {}'.format(contribution_begin_date))
+            date = datetime.date(contribution_begin_date, 1, 1)
+            matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__gt=date))
+            for item in map_queryset[:]:
+                if item.issf_core_id not in matches:
+                    map_queryset.remove(item)
 
-    if map_queryset:
-        """The following code block is commented out because the table on the homepage now uses the same data as the
-        map. This is a significant reduce in the amount of data being transferred. It could probably be removed but
-        I've left it for posterity.
-        """
-        # data found
+        if contribution_end_date:
+            search_terms.append('Contribution year end: {}'.format(contribution_end_date))
+            date = datetime.date(contribution_end_date, 12, 31)
+            matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__lt=date))
+            for item in map_queryset[:]:
+                if item.issf_core_id not in matches:
+                    map_queryset.remove(item)
 
-        # Put data for each record into map data array. This probably won't scale well. Would probably be better off
-        # calculating a record's URL when it's contributed and then storing it as a column in the database.
-        for row in map_queryset:
-            temp = []
-            temp.append(row.core_record_type)
-            temp.append(row.geographic_scope_type)
-            lines = row.core_record_summary.split('\\n')
-            summary = ''
-            for line in lines:
-                summary += line + '<br/>'
-            temp.append(summary)
-            url = ''
-            if row.core_record_type == "Who's Who in SSF":
-                url = reverse('who-details', kwargs={'issf_core_id': row.issf_core_id})
-            elif row.core_record_type == "State-of-the-Art in SSF Research":
-                url = reverse('sota-details', kwargs={'issf_core_id': row.issf_core_id})
-            elif row.core_record_type == "Capacity Development":
-                url = reverse('capacity-details', kwargs={'issf_core_id': row.issf_core_id})
-            elif row.core_record_type == "SSF Organization":
-                url = reverse('organization-details', kwargs={'issf_core_id': row.issf_core_id})
-            elif row.core_record_type == "SSF Profile":
-                url = reverse('profile-details', kwargs={'issf_core_id': row.issf_core_id})
-            elif row.core_record_type == "SSF Guidelines":
-                url = reverse('guidelines-details', kwargs={'issf_core_id': row.issf_core_id})
-            elif row.core_record_type == "SSF Experiences":
-                url = reverse('experiences-details', kwargs={'issf_core_id': row.issf_core_id})
-            elif row.core_record_type == "Case Study":
-                url = reverse('case-studies-details', kwargs={'issf_core_id': row.issf_core_id})
-            temp.append('<a href="' + url + '">Details</a>')
-            temp.append(str(row.lon))
-            temp.append(str(row.lat))
-            temp.append(row.edited_date.strftime("%Y-%m-%d"))
-            temp.append(str(row.relevance))
-            map_results.append(temp)
+        if len(themes) > 0:
+            theme_ids = [theme.theme_issue_value_id for theme in themes]
+            search_terms.append('Themes / Issues: {}'.format(', '.join((theme.theme_issue_label for theme in themes))))
+            matches = set(i.issf_core_id for i in SelectedThemeIssue.objects.filter(theme_issue_value__in=theme_ids))
+            for item in map_queryset[:]:
+                if item.issf_core_id not in matches:
+                    map_queryset.remove(item)
+
+        if len(attributes) > 0:
+            attribute_value_ids = []
+            for attribute in attributes:
+                search_terms.append(
+                    '{} {}'.format(
+                        attribute['attribute'].attribute_label,
+                        attribute['attribute_value']
+                    )
+                )
+                attribute_value_ids.append(attribute['attribute_value'].attribute_value_id)
+            matches = set(i.issf_core_id for i in SelectedAttribute.objects.filter(attribute_value__in=attribute_value_ids))
+            for item in map_queryset[:]:
+                if item.issf_core_id not in matches:
+                    map_queryset.remove(item)
+
+    map_results = []
+
+    for row in map_queryset:
+        # This code was copied from the previous function
+        temp = []
+        temp.append(row.core_record_type)
+        temp.append(row.geographic_scope_type)
+        lines = row.core_record_summary.split('\\n')
+        summary = ''
+        for line in lines:
+            if 'Timeframe: ' in line:
+                line = line.replace('-0', '')
+            summary += line + '<br/>'
+        temp.append(summary)
+        url = reverse(get_redirectname(row.core_record_type), kwargs={'issf_core_id': row.issf_core_id})
+        temp.append('<a href="' + url + '">Details</a>')
+        temp.append(str(row.lon))
+        temp.append(str(row.lat))
+        temp.append(row.edited_date.strftime("%Y-%m-%d"))
+        # The table originally was sorted by the "relevance", which we no longer have, so we just use a value of 0
+        # Removing this value results in errors with the DataTable library
+        temp.append("0")
+        map_results.append(temp)
 
     if len(search_terms) == 0:
-        search_terms = u"None (all "
+        search_terms = ["None"]
 
-    if not map_queryset and len(search_terms) > 0:
-        search_terms = u"No records found."
+    joined_terms = ", ".join(search_terms)
 
     response = json.dumps({
-        'success': 'true',  # 'data': search_results,
-        'mapData': map_results,
-        'searchTerms': search_terms,
-        'msg': 'OK'
+        'success': 'true',
+        'msg': 'OK',
+        'searchTerms': joined_terms[0].capitalize() + joined_terms[1:] + ' (',
+        'mapData': map_results
     })
     return gzip_middleware.process_response(request, HttpResponse(response))
 
