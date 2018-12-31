@@ -245,7 +245,7 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
                         map_queryset.remove(item)
 
         if contribution_begin_date:
-            search_terms.append('Contribution date begin: {}'.format(contribution_begin_date))
+            search_terms.append('Contribution year begin: {}'.format(contribution_begin_date))
             date = datetime.date(contribution_begin_date, 1, 1)
             matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__gt=date))
             for item in map_queryset[:]:
@@ -253,7 +253,7 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
                     map_queryset.remove(item)
 
         if contribution_end_date:
-            search_terms.append('Contribution date end: {}'.format(contribution_end_date))
+            search_terms.append('Contribution year end: {}'.format(contribution_end_date))
             date = datetime.date(contribution_end_date, 12, 31)
             matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__lt=date))
             for item in map_queryset[:]:
