@@ -118,7 +118,6 @@ footer {
     width: 760px;
 }
 
-/* Update Sept05 */
 .header-right {
     padding-top: 58px;
     text-align: right;
@@ -249,7 +248,6 @@ footer {
     position: relative;
 }
 
-/* Update Sept05 */
 #info-section .tabs {
     position: absolute;
     display: inline-block;
@@ -262,7 +260,6 @@ footer {
     z-index: 7;
 }
 
-/* Update Sept05 */
 #info-section .tabs .tab-title {
     display: inline-block;
     float: none;
@@ -394,7 +391,6 @@ footer {
     background: #275D97;
 }
 
-/* Update Sept05 */
 .info-ctn {
     position: relative;
     width: 924px;
@@ -425,7 +421,7 @@ footer {
 }
 
 .headline {
-    width: 100%;
+    width: 950px;
     height: 14px;
     padding: .25rem .5rem;
     background: #5385bb;
@@ -472,19 +468,16 @@ footer {
     padding: 0.25rem 0.5rem;
 }
 
-/* Update Sept05 */
 .dataTables_length, .dataTables_filter {
     width: 40%;
     margin: 0 2%;
 }
 
-/* Update Sept05 */
 .dataTables_info {
     width: 26%;
     margin: 0 2%;
 }
 
-/* Update Sept05 */
 .dataTables_paginate {
     width: 66%;
     margin: 0 2%;
@@ -535,15 +528,12 @@ footer {
     color: #008cba;
 }
 
-/* Update Sept05 */
 .map-icons {
-    padding-top: 16px;
     position: absolute;
     top: 12px;
     right: 12px;
     bottom: 12px;
-    width: 52px;
-    background: #d0d0d0;
+    width: 50px;
     z-index: 10;
 }
 
@@ -578,7 +568,7 @@ footer {
     display: none;
     position: absolute;
     right: 52px;
-    max-width: 180px; /* Update Sept05 - change this number for more text space */
+    max-width: 180px; /* change this number for more text space */
     min-width: 85px;
     margin: 0;
     padding: 7px 10px;
@@ -665,10 +655,10 @@ footer {
 .map-icons .on span, .map-icons .on:hover span {
     background-position: left center;
 }
-
+/*
 .map-icons a.disable {
     background: #0d415e;
-}
+}*/
 
 .map-icons #organize h3, .map-icons #expe h3, .map-icons #project h3 {
     top: 12px;
@@ -1765,12 +1755,10 @@ form sup {
     background-color: #ffd132;
 }
 
-/* Update Sept05 */
 #content-profile .accordion .bt-edit {
     background-color: #ddb52b;
 }
 
-/* Update Sept05 */
 #content-profile .bt-edit:hover {
     background-color: #275D97;
 }
@@ -1791,12 +1779,10 @@ form sup {
     background-color: #bcd745;
 }
 
-/* Update Sept05 */
 #content-case .accordion .bt-edit {
     background-color: #a3ba3c;
 }
 
-/* Update Sept05 */
 #content-case .bt-edit:hover {
     background-color: #275D97;
 }
@@ -1893,7 +1879,6 @@ nav .tabs .tab-title > a span {
     z-index: 3;
 }
 
-/* Update Sept05 */
 nav .tabs .tab-title .pop {
     display: none;
     position: absolute;
@@ -1918,7 +1903,6 @@ nav .tabs .tab-title .pop p {
     margin: 0;
 }
 
-/* Update Sept05 */
 nav .tabs .tab-title .pop:after {
     content: '';
     display: block;
@@ -2214,7 +2198,6 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .accordion-navigation > a {
-    /* Update Sept05 - add '>' */
     position: relative;
     padding: 6px 20px;
     -webkit-border-radius: 4px;
@@ -2231,7 +2214,6 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .accordion-navigation.active > a {
-    /* Update Sept05 - add '>' */
     color: #fbcd04;
     background-image: url(../img/bt-cont-close.png);
     background-repeat: no-repeat;
@@ -2393,7 +2375,6 @@ nav .tabs .active a[tabindex="11"] span {
     visibility: hidden;
 }
 
-/* Update Sept05 */
 .button.add-formset {
     color: #fff;
     margin: 0;
@@ -2401,12 +2382,10 @@ nav .tabs .active a[tabindex="11"] span {
     background: #668ebe url(../img/bt-open.png) no-repeat 8px center;
 }
 
-/* Update Sept05 */
 .button.add-formset:before {
     display: none;
 }
 
-/* Update Sept05 */
 .button.add-formset:hover {
     background-color: #335D93;
     -webkit-text-shadow: 0 1px 1px #45454585;
@@ -2709,8 +2688,7 @@ form ul {
     color: #0D415E !important;
 }
 
-.map-icons #all.on, .map-icons,
-.map-icons {
+.map-icons #all.on {
     background: #0d415e;
 }
 
