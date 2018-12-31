@@ -246,14 +246,16 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
 
         if contribution_begin_date:
             search_terms.append('Contribution date begin: {}'.format(contribution_begin_date))
-            matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__gt=contribution_begin_date))
+            date = datetime.date(contribution_begin_date, 1, 1)
+            matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__gt=date))
             for item in map_queryset[:]:
                 if item.issf_core_id not in matches:
                     map_queryset.remove(item)
 
         if contribution_end_date:
             search_terms.append('Contribution date end: {}'.format(contribution_end_date))
-            matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__lt=contribution_end_date))
+            date = datetime.date(contribution_end_date, 12, 31)
+            matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(contribution_date__lt=date))
             for item in map_queryset[:]:
                 if item.issf_core_id not in matches:
                     map_queryset.remove(item)

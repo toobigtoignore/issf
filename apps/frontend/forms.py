@@ -26,8 +26,8 @@ class SearchForm(forms.Form):
         label='Contributor/editor',
         required=False
     )
-    contribution_begin_date = forms.DateField(required=False)
-    contribution_end_date = forms.DateField(required=False)
+    contribution_begin_date = forms.IntegerField(required=False)
+    contribution_end_date = forms.IntegerField(required=False)
     countries = forms.MultipleChoiceField(
         choices=[(c.country_id, c.short_name) for c in Country.objects.order_by('short_name')] + [("", "")],
         help_text='Hold down "Control", or "Command" on a Mac, to select more than one.',
