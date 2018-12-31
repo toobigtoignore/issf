@@ -1,97 +1,80 @@
-
-/******************************************************************
-*		Dynamic Forms
-******************************************************************/
-.FormSet{
-	margin-top:5px;	
-	border: 4px solid rgba(200,200,200, 0.75);
+/* Dynamic Forms */
+.FormSet {
+	margin-top: 5px;
 	margin-bottom: 3px;
 	padding: 3px;
 }
 
-.FormSet:nth-child(odd){
-	/*background-color: #eee;*/
-}
-
-
-/*-------- Controller -------*/
-.FormSetController{
-}
-
-/*-------- Toggler -------*/
-.FormSetToggler{
+/* Toggler */
+.FormSetToggler {
 	padding-left: 5px;
 }
-.FormSetToggler > p{
+.FormSetToggler > p {
 	font-size: 2em;
 }
-.FormSetToggler > ul{
-	list-style:none;
+.FormSetToggler > ul {
+	list-style: none;
 	padding: 0;
 }
-.FormSetToggler > input{
-	display: inline-block;	
+.FormSetToggler > input {
+	display: inline-block;
 }
 
-
-/*-------- Toggable -------*/
-.FormSetTogglable{
-	display:none;
+/* Toggable */
+.FormSetTogglable {
+	display: none;
 }
 
-/*-------- Growable -------*/
-.FormSetGrowable{
-}
-
-
-/*-------- Growable Qualitative Selection (Profile Page: Main Characteritics)-------*/
+/* Growable Qualitative Selection (Profile Page: Main Characteritics) */
 table.profile-attributes-table input[type="text"],
 table.profile-attributes-table select,
 table.profile-attributes-table .mainCharacteristicsUnitsWrapper,
-table.profile-attributes-table button{
+table.profile-attributes-table button {
     height: 30px !important;
     margin: 0px !important;
     margin-bottom: 5px !important;
 }
 
 table.profile-attributes-table .mainCharacteristicsUnitsWrapper,
-table.profile-attributes-table .QualitativeButton{
+table.profile-attributes-table .QualitativeButton {
     width: 35px !important;
 }
 
-table.profile-attributes-table .mainCharacteristicsUnitsWrapper{
+table.profile-attributes-table .mainCharacteristicsUnitsWrapper {
     padding-top:8px !important;
 }
 
-table.profile-attributes-table .mainCharacteristicsRowHover>td:nth-child(1){
+table.profile-attributes-table .mainCharacteristicsRowHover>td:nth-child(1) {
     color: gray;
 }
 
-
 table.profile-attributes-table button,
-select[name^='mainattributeview'], 
-input[name^='mainattributeview']{
+select[name^='mainattributeview'],
+input[name^='mainattributeview'] {
     margin-bottom: 3px !important;
 }
 
-.otherInputOnFocus, .otherSelectOnFocus{
+.otherInputOnFocus, .otherSelectOnFocus {
     -webkit-box-shadow: 0 0 3px 3px #FF9317 !important;
     box-shadow: 0 0 3px 3px #FF9317 !important;
 }
 
-.deleteCheckBoxContainer{
-    /**hides the delete checkboxes **/
+/* Hides the delete checkboxes */
+.deleteCheckBoxContainer {
     height:0px;
     overflow: hidden;
 }
 
-/*---------- Line break --------*/
-.issf-linebreak{
+/* Line break */
+.issf-linebreak {
 	-webkit-box-shadow: 1px 1px 0px 1px #ccc;
 	box-shadow: 1px 1px 0px 1px #ccc;
 }
 
-
-.hidden{
+.hidden {
     display: none !important;
+}
+
+.addFormSetButton {
+    margin-top: 12px;
 }
