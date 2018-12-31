@@ -614,10 +614,6 @@ footer {
     margin: 0;
 }
 
-.map-icons #expe.on .pop p,#guidelines.on .pop p {
-    color: #fff !important;
-} 
-
 .map-icons a:hover {
     background: #646b72;
     background: -webkit-gradient(linear, left top, right top, from(#FF646B72), to(#FFC9D7E5));
