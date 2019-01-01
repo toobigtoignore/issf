@@ -152,6 +152,9 @@
                             <p><strong>{{ num_guide_records }} records.</strong></p>
                         </div>
                     </a>
+
+                    <div id="spacer"/>
+
                     <a id="all" tabindex="11">
                         <h3>Show/Hide All</h3>
                         <span></span>
@@ -550,15 +553,15 @@
                         </p>
 
                         <div style="height:50px; padding-left: 10px;">
-                            <div style="background-image: url({% static 'issf_base/img/icon-who.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-who.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-sota.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-sota.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-profile.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-profile.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-organize.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-organize.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-guidelines.png' %}); background-position: right center; float: left; height:48px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-guidelines.png' %}); background-position: right center; float: left; height:48px; width:60px;">
                             </div>
                         </div>
 
@@ -1901,6 +1904,15 @@
 
                 // Hide Loading Overlay
                 $("#map-loading-overlay").fadeOut(100);
+
+                var contained = [];
+
+                map.eachLayer(function(l) {
+                    if( l instanceof L.Marker )
+                        contained.push(l.getLatLng());
+                });
+                var bounds = new L.LatLngBounds(contained);
+                map.fitBounds(bounds);
             }
             exportCallBack = true;
         }
