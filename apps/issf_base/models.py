@@ -25,6 +25,8 @@ class Theme_Issue(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of this theme/issue.
+
+        :return: The string representation.
         """
         return '%s' % (self.theme_issue_category)
 
@@ -46,6 +48,8 @@ class Theme_Issue_Value(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of this theme/issue value.
+
+        :return: The string representation.
         """
         return '%s' % (self.theme_issue_label)
 
@@ -74,6 +78,8 @@ class Country(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a country.
+
+        :return: The string representation.
         """
         return '%s' % (self.short_name)
 
@@ -93,6 +99,8 @@ class PublicationType(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a publication type.
+
+        :return: The string representation.
         """
         return '%s' % (self.publication_type)
 
@@ -113,6 +121,8 @@ class Language(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a language.
+
+        :return: The string representation.
         """
         return '%s' % (self.language_name)
 
@@ -205,6 +215,8 @@ class SSFKnowledge(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a SOTA record.
+
+        :return: The string representation.
         """
         return '%s %s' % (self.level2_title, self.level1_title)
 
@@ -278,6 +290,8 @@ class Attribute(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of an attribute.
+
+        :return: The string representation.
         """
         return '%s' % (self.attribute_label)
 
@@ -320,6 +334,8 @@ class SSFProfile(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a SSF Profile.
+
+        :return: The string representation.
         """
         return '%s' % (self.ssf_name)
 
@@ -341,6 +357,8 @@ class AttributeValue(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of an attribute value.
+
+        :return: The string representation.
         """
         return '%s' % (self.value_label)
 
@@ -362,6 +380,8 @@ class AdditionalValue(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of an additional value.
+
+        :return: The string representation.
         """
         return '%s' % (self.value_label)
 
@@ -439,6 +459,8 @@ class SSFOrganization(models.Model):
     def __str__(self) -> str:
         """
         Generate a string representation of a SSF Organization.
+
+        :return: The string representation.
         """
         return '%s' % (self.organization_name)
 
@@ -501,6 +523,8 @@ class SSFPerson(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a SSF Person.
+
+        :return: The string representation.
         """
         return '%s %s %s' % (self.contributor.first_name, self.contributor.initials, self.contributor.last_name)
 
@@ -548,6 +572,8 @@ class SSFCapacityNeed(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a capacity need record.
+
+        :return: The string representation.
         """
         return '%s' % (self.capacity_need_title)
 
@@ -615,6 +641,8 @@ class SSFGuidelines(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a SSF Guidelines record.
+
+        :return: The string representation.
         """
         return '%s' % self.title
 
@@ -657,6 +685,8 @@ class SSFExperiences(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a SSF Experiences record.
+
+        :return: The string representation.
         """
         return '%s' % self.title
 
@@ -702,6 +732,8 @@ class SSFCaseStudies(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a SSF Case Studies record.
+
+        :return: The string representation.
         """
         return '%s' % self.name
 
@@ -740,6 +772,8 @@ class CapacityNeedRating(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a capacity need rating.
+
+        :return: The string representation.
         """
         return '%s' % (self.rating)
 
@@ -807,9 +841,11 @@ class ISSF_Core(models.Model):
         managed = False
         db_table = 'issf_core'
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         """
-        Gets the url for a given record.
+        Gets the URL for a given record.
+
+        :return: The URL for the record.
         """
         try:
             return reverse(get_redirectname(self.core_record_type), kwargs={'issf_core_id': self.issf_core_id})
@@ -1094,6 +1130,8 @@ class ExternalLink(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of an external link.
+
+        :return: The string representation.
         """
         return '%s %s' % (self.link_type, self.link_address)
 
@@ -1115,6 +1153,8 @@ class Species(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a species.
+
+        :return: The string representation.
         """
         return '%s(%s)' % (self.species_common, self.species_scientific)
 
@@ -1137,6 +1177,8 @@ class Region(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a region.
+
+        :return: The string representation.
         """
         return '%s' % (self.region_name)
 
@@ -1169,6 +1211,8 @@ class GeographicScopeLocalArea(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a local geographic scope.
+
+        :return: The string representation.
         """
         return '%s' % (self.local_area_name)
 
@@ -1205,6 +1249,8 @@ class GeographicScopeSubnation(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a subnational geographic scope.
+
+        :return: The string representation.
         """
         return '%s' % (self.subnation_name)
 
@@ -1224,6 +1270,8 @@ class GeographicScopeNation(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a national geographic scope.
+
+        :return: The string representation.
         """
         return '%s' % (self.country.short_name)
 
@@ -1248,6 +1296,8 @@ class Geographic_Scope_Region(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a regional geographic scope.
+
+        :return: The string representation.
         """
         return '%s' % (self.country.region_name)
 
@@ -1291,6 +1341,8 @@ class FAQCategory(models.Model):
     def __str__(self) -> str:
         """
         Generates a string representation of a FAQ category.
+
+        :return: The string representation.
         """
         return self.faq_category
 
