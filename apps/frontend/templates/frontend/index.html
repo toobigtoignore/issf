@@ -1904,6 +1904,15 @@
 
                 // Hide Loading Overlay
                 $("#map-loading-overlay").fadeOut(100);
+
+                var contained = [];
+
+                map.eachLayer(function(l) {
+                    if( l instanceof L.Marker )
+                        contained.push(l.getLatLng());
+                });
+                var bounds = new L.LatLngBounds(contained);
+                map.fitBounds(bounds);
             }
             exportCallBack = true;
         }
