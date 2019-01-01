@@ -1909,9 +1909,10 @@
                 var contained = [];
 
                 map.eachLayer(function(l) {
-                    if( l instanceof L.Marker ){}
+                    if( l instanceof L.Marker )
                         contained.push(l.getLatLng());
                 });
+                if(contained.length < 100)
                 var bounds = new L.LatLngBounds(contained);
                 map.fitBounds(bounds);
             }
