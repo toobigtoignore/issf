@@ -182,38 +182,6 @@
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">CapacityNeedRatingForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.CapacityNeedRatingForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for rating capacity need. No longer used.</p>
-<dl class="class">
-<dt id="details.forms.CapacityNeedRatingForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.CapacityNeedRatingForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CapacityNeedRatingForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'rating': '*Your rating'}</em><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CapacityNeedRatingForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.CapacityNeedRating" title="issf_base.models.CapacityNeedRating"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.CapacityNeedRating</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CapacityNeedRatingForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'capacity_need': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'rater': &lt;class 'django.forms.widgets.HiddenInput'&gt;}</em><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CapacityNeedRatingForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'capacity_need': &lt;django.forms.models.ModelChoiceField object&gt;, 'rater': &lt;django.forms.models.ModelChoiceField object&gt;, 'rating': &lt;django.forms.fields.TypedChoiceField object&gt;}</em><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.CapacityNeedRatingForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -232,16 +200,6 @@
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.CapacityNeedRatingForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CapacityNeedRatingForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.CapacityNeedRatingForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -250,32 +208,19 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for entering a common attribute.
 Not used on it’s own, but rather used as a part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.CommonAttributeForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.CommonAttributeForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.CommonAttributeForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.CommonAttributeForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonAttributeForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.CommonAttributeForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.CommonAttributeView" title="issf_base.models.CommonAttributeView"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.CommonAttributeView</span></code></a></p>
+<dl class="method">
+<dt id="details.forms.CommonAttributeForm.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.CommonAttributeForm.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonAttributeForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'attribute': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'issf_core': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'other_value': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'row_number': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'selected_attribute_id': &lt;class 'django.forms.widgets.HiddenInput'&gt;}</em><a class="headerlink" href="#details.forms.CommonAttributeForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonAttributeForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'attribute': &lt;django.forms.models.ModelChoiceField object&gt;, 'attribute_value': &lt;django.forms.models.ModelChoiceField object&gt;, 'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'label_order': &lt;django.forms.fields.IntegerField object&gt;, 'other_value': &lt;django.forms.fields.CharField object&gt;, 'row_number': &lt;django.forms.fields.IntegerField object&gt;, 'selected_attribute_id': &lt;django.forms.fields.IntegerField object&gt;, 'value_order': &lt;django.forms.fields.IntegerField object&gt;}</em><a class="headerlink" href="#details.forms.CommonAttributeForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="method">
 <dt id="details.forms.CommonAttributeForm.clean">
@@ -295,16 +240,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.CommonAttributeForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.CommonAttributeForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonAttributeForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.CommonAttributeForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -313,32 +248,19 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for entering a common theme issue.
 Not used on it’s own, but rather used as a part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.CommonThemeIssueForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.CommonThemeIssueForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.CommonThemeIssueForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.CommonThemeIssueForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonThemeIssueForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.CommonThemeIssueForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.CommonThemeIssueView" title="issf_base.models.CommonThemeIssueView"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.CommonThemeIssueView</span></code></a></p>
+<dl class="method">
+<dt id="details.forms.CommonThemeIssueForm.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.CommonThemeIssueForm.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonThemeIssueForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'issf_core': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'other_theme_issue': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'row_number': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'selected_theme_issue_id': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'theme_issue': &lt;class 'django.forms.widgets.HiddenInput'&gt;}</em><a class="headerlink" href="#details.forms.CommonThemeIssueForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonThemeIssueForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'category_order': &lt;django.forms.fields.IntegerField object&gt;, 'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'label_order': &lt;django.forms.fields.IntegerField object&gt;, 'other_theme_issue': &lt;django.forms.fields.CharField object&gt;, 'row_number': &lt;django.forms.fields.IntegerField object&gt;, 'selected_theme_issue_id': &lt;django.forms.fields.IntegerField object&gt;, 'theme_issue': &lt;django.forms.models.ModelChoiceField object&gt;, 'theme_issue_value': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#details.forms.CommonThemeIssueForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="method">
 <dt id="details.forms.CommonThemeIssueForm.clean">
@@ -356,16 +278,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.CommonThemeIssueForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.CommonThemeIssueForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.CommonThemeIssueForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.CommonThemeIssueForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -374,43 +286,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for entering links to external sites.
 Not used on it’s own, but rather as a part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.ExternalLinkForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.ExternalLinkForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.ExternalLinkForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.ExternalLinkForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ExternalLinkForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'link_address': '*Link address', 'link_type': '*Link type'}</em><a class="headerlink" href="#details.forms.ExternalLinkForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ExternalLinkForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.ExternalLinkForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.ExternalLink" title="issf_base.models.ExternalLink"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.ExternalLink</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ExternalLinkForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'link_address': &lt;django.forms.fields.URLField object&gt;, 'link_type': &lt;django.forms.fields.TypedChoiceField object&gt;}</em><a class="headerlink" href="#details.forms.ExternalLinkForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ExternalLinkForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.ExternalLinkForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ExternalLinkForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.ExternalLinkForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -418,48 +293,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">GeographicScopeForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for selecting what type of geographic scope form to display and record.</p>
-<dl class="class">
-<dt id="details.forms.GeographicScopeForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.GeographicScopeForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['geographic_scope_type']</em><a class="headerlink" href="#details.forms.GeographicScopeForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'geographic_scope_type': '*Geographic scope'}</em><a class="headerlink" href="#details.forms.GeographicScopeForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.GeographicScopeForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.ISSF_Core" title="issf_base.models.ISSF_Core"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.ISSF_Core</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'geographic_scope_type': &lt;class 'django.forms.widgets.RadioSelect'&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'geographic_scope_type': &lt;django.forms.fields.TypedChoiceField object&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.GeographicScopeForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.GeographicScopeForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -467,38 +300,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">GeographicScopeLocalAreaForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for recording a Local geographic scope.</p>
-<dl class="class">
-<dt id="details.forms.GeographicScopeLocalAreaForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeLocalAreaForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeLocalAreaForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'country': '*Specify country for local area', 'local_area_alternate_name': 'Alternate name', 'local_area_name': '*Name of local area', 'local_area_point': 'Local area location (use the draw, edit and delete controls to set/modify)', 'local_area_setting': '*Local area setting', 'local_area_setting_other': 'Other local area setting'}</em><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeLocalAreaForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.GeographicScopeLocalArea" title="issf_base.models.GeographicScopeLocalArea"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.GeographicScopeLocalArea</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeLocalAreaForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'local_area_point': &lt;details.forms.ISSFMapWidget object&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeLocalAreaForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'country': &lt;django.forms.models.ModelChoiceField object&gt;, 'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'local_area_alternate_name': &lt;django.forms.fields.CharField object&gt;, 'local_area_name': &lt;django.forms.fields.CharField object&gt;, 'local_area_point': &lt;django.contrib.gis.forms.fields.PointField object&gt;, 'local_area_setting': &lt;django.forms.fields.TypedChoiceField object&gt;, 'local_area_setting_other': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.GeographicScopeLocalAreaForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -517,16 +318,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeLocalAreaForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeLocalAreaForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.GeographicScopeLocalAreaForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -534,43 +325,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">GeographicScopeNationForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeNationForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for recording a National geographic scope.</p>
-<dl class="class">
-<dt id="details.forms.GeographicScopeNationForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.GeographicScopeNationForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeNationForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['country']</em><a class="headerlink" href="#details.forms.GeographicScopeNationForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeNationForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'country': '*Select country'}</em><a class="headerlink" href="#details.forms.GeographicScopeNationForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeNationForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.GeographicScopeNationForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.GeographicScopeNation" title="issf_base.models.GeographicScopeNation"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.GeographicScopeNation</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeNationForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'country': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeNationForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeNationForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.GeographicScopeNationForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeNationForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.GeographicScopeNationForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -578,33 +332,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">GeographicScopeRegionForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeRegionForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for recording a Regional geographic scope.</p>
-<dl class="class">
-<dt id="details.forms.GeographicScopeRegionForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeRegionForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeRegionForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'countries': 'Select country(ies) (if applicable)', 'region': '*Name of region', 'region_name_other': 'Other region name'}</em><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeRegionForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.Geographic_Scope_Region" title="issf_base.models.Geographic_Scope_Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.Geographic_Scope_Region</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeRegionForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'countries': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'region': &lt;django.forms.models.ModelChoiceField object&gt;, 'region_name_other': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.GeographicScopeRegionForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -623,16 +350,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeRegionForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeRegionForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.GeographicScopeRegionForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -640,38 +357,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">GeographicScopeSubnationForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for recording a Subnational geographic scope.</p>
-<dl class="class">
-<dt id="details.forms.GeographicScopeSubnationForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeSubnationForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeSubnationForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'country': '*Specify country for sub-national area', 'subnation_name': '*Name of sub-national area', 'subnation_point': 'Sub-national area location (use the draw, edit and delete controls to set/modify)', 'subnation_type': '*Sub-national area type (select one)', 'subnation_type_other': 'Other sub-national area type'}</em><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeSubnationForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.GeographicScopeSubnation" title="issf_base.models.GeographicScopeSubnation"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.GeographicScopeSubnation</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeSubnationForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'subnation_point': &lt;details.forms.ISSFMapWidget object&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeSubnationForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'country': &lt;django.forms.models.ModelChoiceField object&gt;, 'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'subnation_name': &lt;django.forms.fields.CharField object&gt;, 'subnation_point': &lt;django.contrib.gis.forms.fields.PointField object&gt;, 'subnation_type': &lt;django.forms.fields.TypedChoiceField object&gt;, 'subnation_type_other': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.GeographicScopeSubnationForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -690,16 +375,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeSubnationForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.GeographicScopeSubnationForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.GeographicScopeSubnationForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -708,16 +383,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">leaflet.forms.widgets.LeafletWidget</span></code></p>
 <p>Custom map widget based on Leaflet.
 Used for forms where user is asked to specify a location on a map.</p>
-<dl class="attribute">
-<dt id="details.forms.ISSFMapWidget.geometry_field_class">
-<code class="descname">geometry_field_class</code><em class="property"> = 'ISSFGeometryField'</em><a class="headerlink" href="#details.forms.ISSFMapWidget.geometry_field_class" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ISSFMapWidget.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.ISSFMapWidget.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -726,43 +391,6 @@ Used for forms where user is asked to specify a location on a map.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for specifying the authors of a SOTA record.
 Not used on it’s own, but rather used as part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.KnowledgeAuthorsSimpleForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.KnowledgeAuthorsSimpleForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.KnowledgeAuthorsSimpleForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.KnowledgeAuthorsSimpleForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeAuthorsSimpleForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'author_name': '*Author'}</em><a class="headerlink" href="#details.forms.KnowledgeAuthorsSimpleForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeAuthorsSimpleForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.KnowledgeAuthorsSimpleForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.KnowledgeAuthorSimple" title="issf_base.models.KnowledgeAuthorSimple"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.KnowledgeAuthorSimple</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeAuthorsSimpleForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'author_name': &lt;django.forms.fields.CharField object&gt;, 'knowledge_core': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#details.forms.KnowledgeAuthorsSimpleForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeAuthorsSimpleForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.KnowledgeAuthorsSimpleForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeAuthorsSimpleForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.KnowledgeAuthorsSimpleForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -770,37 +398,19 @@ Not used on it’s own, but rather used as part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">KnowledgeOtherDetailsForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for entering other details for a SOTA record.</p>
-<dl class="class">
-<dt id="details.forms.KnowledgeOtherDetailsForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.KnowledgeOtherDetailsForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['core_record_type', 'demographics_na', 'demographics_age', 'demographics_education', 'demographics_ethnicity', 'demographics_gender', 'demographics_health', 'demographics_income', 'demographics_religion', 'demographics_unspecified', 'demographics_other', 'demographics_other_text', 'demographic_details', 'employment_na', 'employment_full_time', 'employment_part_time', 'employment_seasonal', 'employment_unspecified', 'employment_details', 'stage_na', 'stage_pre_harvest', 'stage_harvest', 'stage_post_harvest', 'stage_unspecified', 'ssf_defined', 'ssf_definition', 'lsf_considered', 'research_method', 'aim_purpose_question', 'solutions_offered', 'solution_details', 'explicit_implications_recommendations', 'implication_details', 'comments']</em><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeOtherDetailsForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'aim_purpose_question': '*What is the overall aim(s)/purpose or research question addressed in the study?', 'comments': 'Additional details/comments', 'core_record_type': 'Record type', 'demographic_details': 'Demographic details (if applicable)', 'demographics_age': 'Age', 'demographics_education': 'Education', 'demographics_ethnicity': 'Ethnicity', 'demographics_gender': 'Gender', 'demographics_health': 'Health', 'demographics_income': 'Income', 'demographics_na': 'Not applicable', 'demographics_other': 'Other', 'demographics_other_text': 'Other demographic factor', 'demographics_religion': 'Religion', 'demographics_unspecified': 'Unspecified', 'employment_details': 'Employment details (if applicable)', 'employment_full_time': 'Full-time', 'employment_na': 'Not applicable', 'employment_part_time': 'Part-time', 'employment_seasonal': 'Seasonal', 'employment_unspecified': 'Unspecified', 'explicit_implications_recommendations': '*Are research implications and/or policy recommendations made explicit?', 'implication_details': 'Please provide details about the research implications identified in the study (if applicable)', 'lsf_considered': '*Are large-scale fisheries also considered?', 'research_method': 'Research method(s) or approach(es) applied in the study (e.g. ethnographic, survey, etc.)', 'solution_details': 'Please provide details about the solutions identified in the study (if applicable)', 'solutions_offered': '*Does the study offer solutions to the above issues (select one)? (Please note: Solutions are regarded as central topics that were elaborated or justified throughout the article in repsonse to certain issues, rather than recommendations tacked on at the end of the article)', 'ssf_defined': '*Are small-scale fisheries defined?', 'ssf_definition': 'Provide definition of small-scale fisheries (if applicable)', 'stage_harvest': 'Harvest', 'stage_na': 'Not applicable', 'stage_post_harvest': 'Post-harvest', 'stage_pre_harvest': 'Pre-harvest', 'stage_unspecified': 'Unspecified'}</em><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeOtherDetailsForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFKnowledge" title="issf_base.models.SSFKnowledge"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFKnowledge</span></code></a></p>
+<dl class="method">
+<dt id="details.forms.KnowledgeOtherDetailsForm.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeOtherDetailsForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'aim_purpose_question': &lt;django.forms.widgets.Textarea object&gt;, 'comments': &lt;django.forms.widgets.Textarea object&gt;, 'core_record_type': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'demographic_details': &lt;django.forms.widgets.Textarea object&gt;, 'ecosystem_type_details': &lt;django.forms.widgets.Textarea object&gt;, 'employment_details': &lt;django.forms.widgets.Textarea object&gt;, 'fishery_type_details': &lt;django.forms.widgets.Textarea object&gt;, 'gear_type_details': &lt;django.forms.widgets.Textarea object&gt;, 'governance_details': &lt;django.forms.widgets.Textarea object&gt;, 'implication_details': &lt;django.forms.widgets.Textarea object&gt;, 'management_details': &lt;django.forms.widgets.Textarea object&gt;, 'market_details': &lt;django.forms.widgets.Textarea object&gt;, 'research_method': &lt;django.forms.widgets.Textarea object&gt;, 'solution_details': &lt;django.forms.widgets.Textarea object&gt;, 'ssf_definition': &lt;django.forms.widgets.Textarea object&gt;, 'theme_issue_details': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeOtherDetailsForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'aim_purpose_question': &lt;django.forms.fields.CharField object&gt;, 'comments': &lt;django.forms.fields.CharField object&gt;, 'core_record_type': &lt;django.forms.fields.CharField object&gt;, 'demographic_details': &lt;django.forms.fields.CharField object&gt;, 'demographics_age': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_education': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_ethnicity': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_gender': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_health': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_income': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_na': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_other': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_other_text': &lt;django.forms.fields.CharField object&gt;, 'demographics_religion': &lt;django.forms.fields.BooleanField object&gt;, 'demographics_unspecified': &lt;django.forms.fields.BooleanField object&gt;, 'employment_details': &lt;django.forms.fields.CharField object&gt;, 'employment_full_time': &lt;django.forms.fields.BooleanField object&gt;, 'employment_na': &lt;django.forms.fields.BooleanField object&gt;, 'employment_part_time': &lt;django.forms.fields.BooleanField object&gt;, 'employment_seasonal': &lt;django.forms.fields.BooleanField object&gt;, 'employment_unspecified': &lt;django.forms.fields.BooleanField object&gt;, 'explicit_implications_recommendations': &lt;django.forms.fields.TypedChoiceField object&gt;, 'implication_details': &lt;django.forms.fields.CharField object&gt;, 'lsf_considered': &lt;django.forms.fields.TypedChoiceField object&gt;, 'research_method': &lt;django.forms.fields.CharField object&gt;, 'solution_details': &lt;django.forms.fields.CharField object&gt;, 'solutions_offered': &lt;django.forms.fields.TypedChoiceField object&gt;, 'ssf_defined': &lt;django.forms.fields.TypedChoiceField object&gt;, 'ssf_definition': &lt;django.forms.fields.CharField object&gt;, 'stage_harvest': &lt;django.forms.fields.BooleanField object&gt;, 'stage_na': &lt;django.forms.fields.BooleanField object&gt;, 'stage_post_harvest': &lt;django.forms.fields.BooleanField object&gt;, 'stage_pre_harvest': &lt;django.forms.fields.BooleanField object&gt;, 'stage_unspecified': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="method">
 <dt id="details.forms.KnowledgeOtherDetailsForm.clean">
@@ -820,16 +430,6 @@ Not used on it’s own, but rather used as part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.KnowledgeOtherDetailsForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.KnowledgeOtherDetailsForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.KnowledgeOtherDetailsForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -838,32 +438,19 @@ Not used on it’s own, but rather used as part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for entering a main attribute.
 Not used on it’s own, but rather used as a part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.MainAttributeForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.MainAttributeForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.MainAttributeForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.MainAttributeForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.MainAttributeForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.MainAttributeForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.MainAttributeView" title="issf_base.models.MainAttributeView"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.MainAttributeView</span></code></a></p>
+<dl class="method">
+<dt id="details.forms.MainAttributeForm.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.MainAttributeForm.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.MainAttributeForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'attribute': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'issf_core': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'other_value': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'row_number': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'selected_attribute_id': &lt;class 'django.forms.widgets.HiddenInput'&gt;}</em><a class="headerlink" href="#details.forms.MainAttributeForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.MainAttributeForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'additional': &lt;django.forms.fields.IntegerField object&gt;, 'additional_value': &lt;django.forms.models.ModelChoiceField object&gt;, 'attribute': &lt;django.forms.models.ModelChoiceField object&gt;, 'attribute_value': &lt;django.forms.models.ModelChoiceField object&gt;, 'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'label_order': &lt;django.forms.fields.IntegerField object&gt;, 'other_value': &lt;django.forms.fields.CharField object&gt;, 'row_number': &lt;django.forms.fields.IntegerField object&gt;, 'selected_attribute_id': &lt;django.forms.fields.IntegerField object&gt;, 'value': &lt;django.forms.fields.IntegerField object&gt;, 'value_order': &lt;django.forms.fields.IntegerField object&gt;}</em><a class="headerlink" href="#details.forms.MainAttributeForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="method">
 <dt id="details.forms.MainAttributeForm.clean">
@@ -883,16 +470,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.MainAttributeForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.MainAttributeForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.MainAttributeForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.MainAttributeForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -901,38 +478,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for specifying data for researcher SSFPerson objects.
 Does not seem to be accessible by users in normal operation.</p>
-<dl class="class">
-<dt id="details.forms.PersonResearcherForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.PersonResearcherForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.PersonResearcherForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['core_record_type', 'is_researcher', 'number_publications', 'education_level', 'other_education_level', 'research_method', 'issues_addressed']</em><a class="headerlink" href="#details.forms.PersonResearcherForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.PersonResearcherForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'core_record_type': 'Record type', 'education_level': 'Highest level of education', 'is_researcher': 'Are you a SSF researcher?', 'issues_addressed': 'List up three main issues your research aims to address', 'number_publications': 'Number of publications in the last 10 years', 'other_education_level': 'Other level of education', 'research_method': 'Research method(s) or approach(es) most commonly applied (e.g. ethnographic, survey, etc.)'}</em><a class="headerlink" href="#details.forms.PersonResearcherForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.PersonResearcherForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.PersonResearcherForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFPerson" title="issf_base.models.SSFPerson"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFPerson</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.PersonResearcherForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'core_record_type': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'issues_addressed': &lt;django.forms.widgets.Textarea object&gt;, 'research_method': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.PersonResearcherForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.PersonResearcherForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'core_record_type': &lt;django.forms.fields.CharField object&gt;, 'education_level': &lt;django.forms.fields.TypedChoiceField object&gt;, 'is_researcher': &lt;django.forms.fields.TypedChoiceField object&gt;, 'issues_addressed': &lt;django.forms.fields.CharField object&gt;, 'number_publications': &lt;django.forms.fields.IntegerField object&gt;, 'other_education_level': &lt;django.forms.fields.CharField object&gt;, 'research_method': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#details.forms.PersonResearcherForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.PersonResearcherForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.PersonResearcherForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -951,16 +496,6 @@ Does not seem to be accessible by users in normal operation.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.PersonResearcherForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.PersonResearcherForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.PersonResearcherForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.PersonResearcherForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -969,33 +504,6 @@ Does not seem to be accessible by users in normal operation.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for entering a profile organization.
 Not used on it’s own, but rather used as a part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.ProfileOrganizationForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.ProfileOrganizationForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.ProfileOrganizationForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#details.forms.ProfileOrganizationForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ProfileOrganizationForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'geographic_scope': 'Other organization geographic scope', 'organization_name': 'Other organization name', 'organization_type': 'Other organization type', 'ssforganization': 'SSF Organization already in ISSF'}</em><a class="headerlink" href="#details.forms.ProfileOrganizationForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ProfileOrganizationForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.ProfileOrganizationForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.ProfileOrganization" title="issf_base.models.ProfileOrganization"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.ProfileOrganization</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ProfileOrganizationForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'geographic_scope': &lt;django.forms.fields.TypedChoiceField object&gt;, 'organization_name': &lt;django.forms.fields.CharField object&gt;, 'organization_type': &lt;django.forms.fields.TypedChoiceField object&gt;, 'ssforganization': &lt;django.forms.models.ModelChoiceField object&gt;, 'ssfprofile': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#details.forms.ProfileOrganizationForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.ProfileOrganizationForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.ProfileOrganizationForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1014,16 +522,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.ProfileOrganizationForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.ProfileOrganizationForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.ProfileOrganizationForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.ProfileOrganizationForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1031,38 +529,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFCapacityNeedForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFCapacityNeedForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFCapacityNeed record (more commonly known as a Capacity Development record.)</p>
-<dl class="class">
-<dt id="details.forms.SSFCapacityNeedForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFCapacityNeedForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['capacity_need_category', 'capacity_need_type', 'capacity_need_title', 'capacity_need_description', 'contributor']</em><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCapacityNeedForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'capacity_need_category': '*Category', 'capacity_need_description': '*Description', 'capacity_need_title': '*Short title', 'capacity_need_type': '*Type', 'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)'}</em><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCapacityNeedForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFCapacityNeed" title="issf_base.models.SSFCapacityNeed"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFCapacityNeed</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCapacityNeedForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'capacity_need_description': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCapacityNeedForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'capacity_need_category': &lt;django.forms.fields.TypedChoiceField object&gt;, 'capacity_need_description': &lt;django.forms.fields.CharField object&gt;, 'capacity_need_title': &lt;django.forms.fields.CharField object&gt;, 'capacity_need_type': &lt;django.forms.fields.TypedChoiceField object&gt;, 'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFCapacityNeedForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1079,16 +545,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFCapacityNeedForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCapacityNeedForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFCapacityNeedForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1096,38 +552,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFCaseStudiesForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFCaseStudiesForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFCaseStudies record.</p>
-<dl class="class">
-<dt id="details.forms.SSFCaseStudiesForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFCaseStudiesForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['name', 'role', 'description_area', 'description_fishery', 'description_issues', 'issues_challenges', 'stakeholders', 'transdisciplinary', 'background_context', 'activities_innovation', 'contributor']</em><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCaseStudiesForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'activities_innovation': '*Key activities/innovation', 'background_context': '*Background and context', 'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)', 'description_area': '*Describe case study area', 'description_fishery': '*Describe case study fishery', 'description_issues': '*Describe case study issues', 'issues_challenges': '*Issues addressed?/Remaining challenges', 'major_issues': '*Major issues', 'name': '*Case study name', 'role': '*Your role in the case study', 'stakeholders': '*Stakeholders involved', 'transdisciplinary': '*Was the transdisciplinary perspective applied? Explain how.'}</em><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCaseStudiesForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFCaseStudies" title="issf_base.models.SSFCaseStudies"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFCaseStudies</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCaseStudiesForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'activities_innovation': &lt;django.forms.widgets.Textarea object&gt;, 'background_context': &lt;django.forms.widgets.Textarea object&gt;, 'description_area': &lt;django.forms.widgets.Textarea object&gt;, 'description_fishery': &lt;django.forms.widgets.Textarea object&gt;, 'description_issues': &lt;django.forms.widgets.Textarea object&gt;, 'issues_challenges': &lt;django.forms.widgets.Textarea object&gt;, 'stakeholders': &lt;django.forms.widgets.Textarea object&gt;, 'transdisciplinary': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCaseStudiesForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'activities_innovation': &lt;django.forms.fields.CharField object&gt;, 'background_context': &lt;django.forms.fields.CharField object&gt;, 'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'description_area': &lt;django.forms.fields.CharField object&gt;, 'description_fishery': &lt;django.forms.fields.CharField object&gt;, 'description_issues': &lt;django.forms.fields.CharField object&gt;, 'issues_challenges': &lt;django.forms.fields.CharField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;, 'role': &lt;django.forms.fields.CharField object&gt;, 'stakeholders': &lt;django.forms.fields.CharField object&gt;, 'transdisciplinary': &lt;django.forms.fields.CharField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFCaseStudiesForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1144,16 +568,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFCaseStudiesForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFCaseStudiesForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFCaseStudiesForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1161,33 +575,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFExperiencesForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFExperiencesForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFExperiences record.</p>
-<dl class="class">
-<dt id="details.forms.SSFExperiencesForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFExperiencesForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFExperiencesForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['name', 'title', 'video_url', 'vimeo_video_url', 'description', 'img_url', 'contributor']</em><a class="headerlink" href="#details.forms.SSFExperiencesForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFExperiencesForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)', 'description': '*Describe the experience', 'img_url': 'Image URL (direct links only)', 'name': '*Presenter name', 'title': 'Video title', 'video_url': 'YouTube video URL (no shortened links)', 'vimeo_video_url': 'Vimeo video URL (no shortened links)'}</em><a class="headerlink" href="#details.forms.SSFExperiencesForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFExperiencesForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFExperiencesForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFExperiences" title="issf_base.models.SSFExperiences"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFExperiences</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFExperiencesForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'description': &lt;django.forms.fields.CharField object&gt;, 'img_url': &lt;django.forms.fields.URLField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;, 'title': &lt;django.forms.fields.CharField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;, 'video_url': &lt;django.forms.fields.URLField object&gt;, 'vimeo_video_url': &lt;django.forms.fields.URLField object&gt;}</em><a class="headerlink" href="#details.forms.SSFExperiencesForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFExperiencesForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFExperiencesForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1204,16 +591,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFExperiencesForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFExperiencesForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFExperiencesForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFExperiencesForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1221,38 +598,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFGuidelinesForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFGuidelinesForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFGuidelines record.</p>
-<dl class="class">
-<dt id="details.forms.SSFGuidelinesForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFGuidelinesForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFGuidelinesForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['title', 'activity_type', 'activity_coverage', 'location', 'start_day', 'start_month', 'start_year', 'end_day', 'end_month', 'end_year', 'ongoing', 'organizer', 'purpose', 'link', 'contributor']</em><a class="headerlink" href="#details.forms.SSFGuidelinesForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFGuidelinesForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'activity_coverage': '*Activity coverage', 'activity_type': '*Activity type', 'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)', 'end_day': 'Day', 'end_month': 'Month', 'end_year': 'Year', 'location': '*Location', 'ongoing': '*Ongoing?', 'organizer': '*Organizer', 'purpose': '*Purpose', 'start_day': 'Day', 'start_month': 'Month', 'start_year': '*Year', 'title': '*Title'}</em><a class="headerlink" href="#details.forms.SSFGuidelinesForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFGuidelinesForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFGuidelinesForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFGuidelines" title="issf_base.models.SSFGuidelines"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFGuidelines</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFGuidelinesForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'purpose': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.SSFGuidelinesForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFGuidelinesForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'activity_coverage': &lt;django.forms.fields.TypedChoiceField object&gt;, 'activity_type': &lt;django.forms.fields.TypedChoiceField object&gt;, 'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'end_day': &lt;django.forms.fields.IntegerField object&gt;, 'end_month': &lt;django.forms.fields.IntegerField object&gt;, 'end_year': &lt;django.forms.fields.IntegerField object&gt;, 'link': &lt;django.forms.fields.URLField object&gt;, 'location': &lt;django.forms.fields.CharField object&gt;, 'ongoing': &lt;django.forms.fields.TypedChoiceField object&gt;, 'organizer': &lt;django.forms.fields.CharField object&gt;, 'purpose': &lt;django.forms.fields.CharField object&gt;, 'start_day': &lt;django.forms.fields.IntegerField object&gt;, 'start_month': &lt;django.forms.fields.IntegerField object&gt;, 'start_year': &lt;django.forms.fields.IntegerField object&gt;, 'title': &lt;django.forms.fields.CharField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFGuidelinesForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFGuidelinesForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFGuidelinesForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1269,16 +614,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFGuidelinesForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFGuidelinesForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFGuidelinesForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFGuidelinesForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1286,38 +621,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFKnowledgeForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFKnowledgeForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFKnowledge record (more commonly known as a SOTA record.)</p>
-<dl class="class">
-<dt id="details.forms.SSFKnowledgeForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFKnowledgeForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFKnowledgeForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['publication_type', 'other_publication_type', 'level1_title', 'level2_title', 'nonenglish_language', 'nonenglish_title', 'year', 'contributor']</em><a class="headerlink" href="#details.forms.SSFKnowledgeForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFKnowledgeForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)', 'level1_title': '*Journal/book/report/newsletter/conference', 'level2_title': '*Article/chapter/item title', 'nonenglish_language': 'If the study was published in a language other than English, please specify', 'nonenglish_title': 'Title in original language', 'publication_type': '*Publication type', 'year': '*Year'}</em><a class="headerlink" href="#details.forms.SSFKnowledgeForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFKnowledgeForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFKnowledgeForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFKnowledge" title="issf_base.models.SSFKnowledge"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFKnowledge</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFKnowledgeForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'level1_title': &lt;django.forms.widgets.Textarea object&gt;, 'level2_title': &lt;django.forms.widgets.Textarea object&gt;, 'nonenglish_title': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.SSFKnowledgeForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFKnowledgeForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'level1_title': &lt;django.forms.fields.CharField object&gt;, 'level2_title': &lt;django.forms.fields.CharField object&gt;, 'nonenglish_language': &lt;django.forms.models.ModelChoiceField object&gt;, 'nonenglish_title': &lt;django.forms.fields.CharField object&gt;, 'other_publication_type': &lt;django.forms.fields.CharField object&gt;, 'publication_type': &lt;django.forms.models.ModelChoiceField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;, 'year': &lt;django.forms.fields.IntegerField object&gt;}</em><a class="headerlink" href="#details.forms.SSFKnowledgeForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFKnowledgeForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFKnowledgeForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1336,16 +639,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFKnowledgeForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFKnowledgeForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFKnowledgeForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFKnowledgeForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1353,38 +646,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFOrganizationForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFOrganizationForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFOrganization record.</p>
-<dl class="class">
-<dt id="details.forms.SSFOrganizationForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFOrganizationForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFOrganizationForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ('organization_name', 'year_established', 'organization_type_union', 'organization_type_support', 'organization_type_coop', 'organization_type_flag', 'organization_type_other', 'organization_type_other_text', 'ssf_defined', 'ssf_definition', 'motivation_voice', 'motivation_market', 'motivation_sustainability', 'motivation_economics', 'motivation_rights', 'motivation_collaboration', 'motivation_other', 'motivation_other_text', 'mission', 'activities_capacity', 'activities_sustainability', 'activities_networking', 'activities_marketing', 'activities_collaboration', 'activities_other', 'activities_other_text', 'network_types_state', 'network_types_ssfos', 'network_types_community', 'network_types_society', 'network_types_ngos', 'network_types_other', 'network_types_other_text', 'achievements', 'success_factors', 'obstacles', 'address1', 'address2', 'city_town', 'prov_state', 'postal_code', 'country', 'organization_point', 'contributor')</em><a class="headerlink" href="#details.forms.SSFOrganizationForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFOrganizationForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'address1': 'Address', 'address2': 'Address', 'city_town': 'City/town', 'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)', 'organization_name': '*Organization name', 'organization_point': 'Address location (use the draw, edit and delete controls to set/modify)', 'prov_state': 'Province/state'}</em><a class="headerlink" href="#details.forms.SSFOrganizationForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFOrganizationForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFOrganizationForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFOrganization" title="issf_base.models.SSFOrganization"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFOrganization</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFOrganizationForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'achievements': &lt;django.forms.widgets.Textarea object&gt;, 'mission': &lt;django.forms.widgets.Textarea object&gt;, 'obstacles': &lt;django.forms.widgets.Textarea object&gt;, 'organization_point': &lt;details.forms.ISSFMapWidget object&gt;, 'ssf_definition': &lt;django.forms.widgets.Textarea object&gt;, 'success_factors': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.SSFOrganizationForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFOrganizationForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'achievements': &lt;django.forms.fields.CharField object&gt;, 'activities_capacity': &lt;django.forms.fields.BooleanField object&gt;, 'activities_collaboration': &lt;django.forms.fields.BooleanField object&gt;, 'activities_marketing': &lt;django.forms.fields.BooleanField object&gt;, 'activities_networking': &lt;django.forms.fields.BooleanField object&gt;, 'activities_other': &lt;django.forms.fields.BooleanField object&gt;, 'activities_other_text': &lt;django.forms.fields.CharField object&gt;, 'activities_sustainability': &lt;django.forms.fields.BooleanField object&gt;, 'address1': &lt;django.forms.fields.CharField object&gt;, 'address2': &lt;django.forms.fields.CharField object&gt;, 'city_town': &lt;django.forms.fields.CharField object&gt;, 'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'country': &lt;django.forms.models.ModelChoiceField object&gt;, 'mission': &lt;django.forms.fields.CharField object&gt;, 'motivation_collaboration': &lt;django.forms.fields.BooleanField object&gt;, 'motivation_economics': &lt;django.forms.fields.BooleanField object&gt;, 'motivation_market': &lt;django.forms.fields.BooleanField object&gt;, 'motivation_other': &lt;django.forms.fields.BooleanField object&gt;, 'motivation_other_text': &lt;django.forms.fields.CharField object&gt;, 'motivation_rights': &lt;django.forms.fields.BooleanField object&gt;, 'motivation_sustainability': &lt;django.forms.fields.BooleanField object&gt;, 'motivation_voice': &lt;django.forms.fields.BooleanField object&gt;, 'network_types_community': &lt;django.forms.fields.BooleanField object&gt;, 'network_types_ngos': &lt;django.forms.fields.BooleanField object&gt;, 'network_types_other': &lt;django.forms.fields.BooleanField object&gt;, 'network_types_other_text': &lt;django.forms.fields.CharField object&gt;, 'network_types_society': &lt;django.forms.fields.BooleanField object&gt;, 'network_types_ssfos': &lt;django.forms.fields.BooleanField object&gt;, 'network_types_state': &lt;django.forms.fields.BooleanField object&gt;, 'obstacles': &lt;django.forms.fields.CharField object&gt;, 'organization_name': &lt;django.forms.fields.CharField object&gt;, 'organization_point': &lt;django.contrib.gis.forms.fields.PointField object&gt;, 'organization_type_coop': &lt;django.forms.fields.BooleanField object&gt;, 'organization_type_flag': &lt;django.forms.fields.BooleanField object&gt;, 'organization_type_other': &lt;django.forms.fields.BooleanField object&gt;, 'organization_type_other_text': &lt;django.forms.fields.CharField object&gt;, 'organization_type_support': &lt;django.forms.fields.BooleanField object&gt;, 'organization_type_union': &lt;django.forms.fields.BooleanField object&gt;, 'postal_code': &lt;django.forms.fields.CharField object&gt;, 'prov_state': &lt;django.forms.fields.CharField object&gt;, 'ssf_defined': &lt;django.forms.fields.TypedChoiceField object&gt;, 'ssf_definition': &lt;django.forms.fields.CharField object&gt;, 'success_factors': &lt;django.forms.fields.CharField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;, 'year_established': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#details.forms.SSFOrganizationForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFOrganizationForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFOrganizationForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1403,16 +664,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFOrganizationForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFOrganizationForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFOrganizationForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFOrganizationForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1420,43 +671,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFPersonForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFPersonForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFPerson record (more commonly known as a Who’s Who record.)</p>
-<dl class="class">
-<dt id="details.forms.SSFPersonForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFPersonForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['affiliation', 'address1', 'address2', 'city_town', 'prov_state', 'postal_code', 'country', 'person_point', 'url', 'organizations', 'contributor', 'img_url']</em><a class="headerlink" href="#details.forms.SSFPersonForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.Meta.help_texts">
-<code class="descname">help_texts</code><em class="property"> = {'organizations': 'Hold down &quot;Control&quot;, or &quot;Command&quot; on a Mac, to select more than one.'}</em><a class="headerlink" href="#details.forms.SSFPersonForm.Meta.help_texts" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'address1': 'Address', 'address2': 'Address', 'affiliation': 'Primary institutional/organizational affiliation', 'city_town': 'City/town', 'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)', 'img_url': 'Your picture (direct links only)', 'organizations': 'Select all SSF Organizations/Networks/Associations that you are a member of (use Contribute to add)', 'person_point': 'Address location (use the draw, edit and delete controls to set/modify)', 'prov_state': 'Province/state', 'url': 'Please include a link to your homepage or online profile (Google Scholar, LinkedIn, etc.)'}</em><a class="headerlink" href="#details.forms.SSFPersonForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFPersonForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFPerson" title="issf_base.models.SSFPerson"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFPerson</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'contributor': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'person_point': &lt;details.forms.ISSFMapWidget object&gt;}</em><a class="headerlink" href="#details.forms.SSFPersonForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'address1': &lt;django.forms.fields.CharField object&gt;, 'address2': &lt;django.forms.fields.CharField object&gt;, 'affiliation': &lt;django.forms.fields.CharField object&gt;, 'city_town': &lt;django.forms.fields.CharField object&gt;, 'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'country': &lt;django.forms.models.ModelChoiceField object&gt;, 'img_url': &lt;django.forms.fields.URLField object&gt;, 'organizations': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'person_point': &lt;django.contrib.gis.forms.fields.PointField object&gt;, 'postal_code': &lt;django.forms.fields.CharField object&gt;, 'prov_state': &lt;django.forms.fields.CharField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;, 'url': &lt;django.forms.fields.URLField object&gt;}</em><a class="headerlink" href="#details.forms.SSFPersonForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFPersonForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFPersonForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1471,16 +685,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFPersonForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFPersonForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFPersonForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1488,38 +692,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">details.forms.</code><code class="descname">SSFProfileForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFProfileForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for creating or editing a SSFProfile record.</p>
-<dl class="class">
-<dt id="details.forms.SSFProfileForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SSFProfileForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SSFProfileForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['ssf_name', 'ssf_defined', 'ssf_definition', 'data_year', 'data_end_year', 'sources', 'comments', 'contributor', 'img_url']</em><a class="headerlink" href="#details.forms.SSFProfileForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFProfileForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'comments': 'Comments', 'contributor': '*Contributor (note: this is the only person, other than ISSF staff, who can edit the record)', 'description': 'Description/history of the fishery', 'img_url': 'Image URL (direct links only)', 'sources': 'Sources', 'ssf_defined': '4B. *SSF defined?', 'ssf_definition': 'SSF Definition (if applicable)', 'ssf_name': '1A. *Name of fishery'}</em><a class="headerlink" href="#details.forms.SSFProfileForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFProfileForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SSFProfileForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SSFProfile" title="issf_base.models.SSFProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SSFProfile</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFProfileForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'comments': &lt;django.forms.widgets.Textarea object&gt;, 'data_end_year': &lt;django.forms.widgets.NumberInput object&gt;, 'data_year': &lt;django.forms.widgets.NumberInput object&gt;, 'sources': &lt;django.forms.widgets.Textarea object&gt;, 'ssf_definition': &lt;django.forms.widgets.Textarea object&gt;}</em><a class="headerlink" href="#details.forms.SSFProfileForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFProfileForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'comments': &lt;django.forms.fields.CharField object&gt;, 'contributor': &lt;django.forms.models.ModelChoiceField object&gt;, 'data_end_year': &lt;django.forms.fields.IntegerField object&gt;, 'data_year': &lt;django.forms.fields.IntegerField object&gt;, 'img_url': &lt;django.forms.fields.URLField object&gt;, 'sources': &lt;django.forms.fields.CharField object&gt;, 'ssf_defined': &lt;django.forms.fields.TypedChoiceField object&gt;, 'ssf_definition': &lt;django.forms.fields.CharField object&gt;, 'ssf_name': &lt;django.forms.fields.CharField object&gt;, 'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFProfileForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SSFProfileForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SSFProfileForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1536,16 +708,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="details.forms.SSFProfileForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'tweet': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#details.forms.SSFProfileForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SSFProfileForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SSFProfileForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1554,43 +716,6 @@ Not used on it’s own, but rather used as a part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for recording a species.
 Not used on it’s own, but rather as a part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.SpeciesForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SpeciesForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SpeciesForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['species_common', 'species_scientific']</em><a class="headerlink" href="#details.forms.SpeciesForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'species_common': 'Common species name', 'species_scientific': 'Scientific/Latin name'}</em><a class="headerlink" href="#details.forms.SpeciesForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SpeciesForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.Species" title="issf_base.models.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.Species</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'species_common': &lt;django.forms.fields.CharField object&gt;, 'species_scientific': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#details.forms.SpeciesForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.SpeciesForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SpeciesForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1599,33 +724,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for recording a species landing.
 Not used on it’s own, but rather as a part of a formset.</p>
-<dl class="class">
-<dt id="details.forms.SpeciesLandingsForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#details.forms.SpeciesLandingsForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="details.forms.SpeciesLandingsForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['species_common', 'species_scientific', 'landings']</em><a class="headerlink" href="#details.forms.SpeciesLandingsForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesLandingsForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'landings': 'Landings (t)', 'species_common': 'Common species name', 'species_scientific': 'Scientific/Latin name'}</em><a class="headerlink" href="#details.forms.SpeciesLandingsForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesLandingsForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#details.forms.SpeciesLandingsForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.Species" title="issf_base.models.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.Species</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesLandingsForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'landings': &lt;django.forms.fields.IntegerField object&gt;, 'species_common': &lt;django.forms.fields.CharField object&gt;, 'species_scientific': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#details.forms.SpeciesLandingsForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="details.forms.SpeciesLandingsForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#details.forms.SpeciesLandingsForm.clean" title="Permalink to this definition">¶</a></dt>
@@ -1643,16 +741,6 @@ Not used on it’s own, but rather as a part of a formset.</p>
 </tbody>
 </table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesLandingsForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#details.forms.SpeciesLandingsForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="details.forms.SpeciesLandingsForm.media">
-<code class="descname">media</code><a class="headerlink" href="#details.forms.SpeciesLandingsForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 

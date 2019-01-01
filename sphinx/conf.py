@@ -179,5 +179,21 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
+autodoc_default_flags = ['members', 'special-members', 'show-inheritance']
 
-# -- Extension configuration -------------------------------------------------
+
+def decide_skip_member(app, what, name, obj, skip, options):
+    exclusions = ('__weakref__',  # special-members
+                  '__doc__', '__module__', '__dict__',  # undoc-members
+                  'contributor_choices', 'base_fields', 'Meta', 'media', 'declared_fields', 'existing_contributors', 'geometry_field', 'queryset', 'properties',  # frontend.forms clutter
+                  '__slotnames__', 'geometry_field_class',  # details.forms clutter
+                  'DoesNotExist', 'MultipleObjectsReturned',  # issf_admin.models clutter
+                  'STARS', 'objects', 'LINK_TYPE', 'LOCAL_AREA_SETTING', 'SUBNATION_TYPE', 'GEOGRAPHIC_SCOPE_TYPE', 'GEOG_SCOPE', 'ORG_TYPE', 'CAPACITY_NEED_CATEGORY', 'CAPACITY_NEED_TYPE',  # issf_base clutter
+                  'ACTIVITY_COVERAGE', 'ACTIVITY_TYPE', 'ONGOING_STATUS', 'SSF_DEFINED', 'YES_NO', 'EDUCATION_LEVEL'  # issf_base clutter
+                  )
+    exclude = name in exclusions
+    return skip or exclude
+
+
+def setup(app):
+    app.connect('autodoc-skip-member', decide_skip_member)

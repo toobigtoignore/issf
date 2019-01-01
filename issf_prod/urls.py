@@ -1,3 +1,5 @@
+from typing import List
+
 from issf_admin.views import return_robots, return_google_site_verification, update_profile, \
     profile_saved, account_verified, custom_password_change, help_page, fact_archive, contributed_records, logout_view
 
@@ -6,6 +8,7 @@ from details.views import DetailsSitemap
 
 from django.conf.urls import include, url
 from django.urls import reverse
+from django.http import HttpResponse, HttpRequest
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import Sitemap
 
@@ -16,13 +19,27 @@ admin.autodiscover()
 
 
 class StaticSitemap(Sitemap):
+    """
+    Sitemap for static URLs.
+    """
     priority = 0.5
     changefreq = 'weekly'
 
-    def items(self):
+    def items(self) -> List[str]:
+        """
+        Returns a list of all items included in this sitemap.
+
+        :return: All items included in this sitemap.
+        """
         return ['help', 'fact-archive', 'index', 'contribute', 'changelog']
 
-    def location(self, item):
+    def location(self, item: str) -> str:
+        """
+        Gets the URL for a sitemap item.
+
+        :param item: The sitemap item to get the URL for.
+        :return: The URL for the item.
+        """
         return reverse(item)
 
 
@@ -32,7 +49,13 @@ sitemaps = {
 }
 
 
-def return_sitemap(request):
+def return_sitemap(request: HttpRequest) -> HttpResponse:
+    """
+    View that returns the sitemap for the site.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
+    """
     response = sitemap(request, sitemaps)
     response.render()
     response.content = response.content.replace(b"http://dory.creait.mun.ca", b"https://issfcloud.toobigtoignore.net")

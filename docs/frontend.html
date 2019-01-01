@@ -162,38 +162,6 @@
 <em class="property">class </em><code class="descclassname">frontend.forms.</code><code class="descname">FAQForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.forms.FAQForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for submitting new FAQ entries.</p>
-<dl class="class">
-<dt id="frontend.forms.FAQForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#frontend.forms.FAQForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="frontend.forms.FAQForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#frontend.forms.FAQForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.FAQForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#frontend.forms.FAQForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.FAQ" title="issf_base.models.FAQ"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.FAQ</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.FAQForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'answer': &lt;django.forms.fields.CharField object&gt;, 'faq_category': &lt;django.forms.models.ModelChoiceField object&gt;, 'question': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#frontend.forms.FAQForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.FAQForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#frontend.forms.FAQForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.FAQForm.media">
-<code class="descname">media</code><a class="headerlink" href="#frontend.forms.FAQForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -201,21 +169,6 @@
 <em class="property">class </em><code class="descclassname">frontend.forms.</code><code class="descname">GeoJSONUploadForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>field_order=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.forms.GeoJSONUploadForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
 <p>Form for uploading a new GeoJSON file.</p>
-<dl class="attribute">
-<dt id="frontend.forms.GeoJSONUploadForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'file': &lt;django.forms.fields.FileField object&gt;}</em><a class="headerlink" href="#frontend.forms.GeoJSONUploadForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.GeoJSONUploadForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'file': &lt;django.forms.fields.FileField object&gt;}</em><a class="headerlink" href="#frontend.forms.GeoJSONUploadForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.GeoJSONUploadForm.media">
-<code class="descname">media</code><a class="headerlink" href="#frontend.forms.GeoJSONUploadForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -223,31 +176,6 @@
 <em class="property">class </em><code class="descclassname">frontend.forms.</code><code class="descname">SearchForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>field_order=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.forms.SearchForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
 <p>Form for searching for records.</p>
-<dl class="attribute">
-<dt id="frontend.forms.SearchForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'contribution_begin_date': &lt;django.forms.fields.IntegerField object&gt;, 'contribution_end_date': &lt;django.forms.fields.IntegerField object&gt;, 'contributor': &lt;django.forms.fields.ChoiceField object&gt;, 'countries': &lt;django.forms.fields.MultipleChoiceField object&gt;, 'fulltext_keywords': &lt;django.forms.fields.CharField object&gt;, 'keywords': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#frontend.forms.SearchForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SearchForm.contributor_choices">
-<code class="descname">contributor_choices</code><em class="property"> = [('', '------------------'), (1, 'harold000001 (Harold H H000001)'), (7, 'harold000007 (Harold H H000007)'), (8, 'harold000008 (Harold H H000008)'), (9, 'harold000009 (Harold H H000009)'), (10, 'harold000010 (Harold H H000010)'), (11, 'harold000011 (Harold H H000011)'), (13, 'harold000013 (Harold H H000013)'), (14, 'harold000014 (Harold H H000014)'), (15, 'harold000015 (Harold H H000015)'), (16, 'harold000016 (Harold H H000016)'), (17, 'harold000017 (Harold H H000017)'), (18, 'harold000018 (Harold H H000018)'), (19, 'harold000019 (Harold H H000019)'), (20, 'harold000020 (Harold H H000020)'), (21, 'harold000021 (Harold H H000021)'), (22, 'harold000022 (Harold H H000022)'), (23, 'harold000023 (Harold H H000023)'), (24, 'harold000024 (Harold H H000024)'), (25, 'harold000025 (Harold H H000025)'), (26, 'harold000026 (Harold H H000026)'), (27, 'harold000027 (Harold H H000027)'), (28, 'harold000028 (Harold H H000028)'), (29, 'harold000029 (Harold H H000029)'), (30, 'harold000030 (Harold H H000030)'), (31, 'harold000031 (Harold H H000031)'), (32, 'harold000032 (Harold H H000032)'), (33, 'harold000033 (Harold H H000033)'), (34, 'harold000034 (Harold H H000034)'), (35, 'harold000035 (Harold H H000035)'), (36, 'harold000036 (Harold H H000036)'), (38, 'harold000038 (Harold H H000038)'), (39, 'harold000039 (Harold H H000039)'), (40, 'harold000040 (Harold H H000040)'), (41, 'harold000041 (Harold H H000041)'), (42, 'harold000042 (Harold H H000042)'), (43, 'harold000043 (Harold H H000043)'), (44, 'harold000044 (Harold H H000044)'), (45, 'harold000045 (Harold H H000045)'), (46, 'harold000046 (Harold H H000046)'), (47, 'harold000047 (Harold H H000047)'), (48, 'harold000048 (Harold H H000048)'), (49, 'harold000049 (Harold H H000049)'), (50, 'harold000050 (Harold H H000050)'), (51, 'harold000051 (Harold H H000051)'), (52, 'harold000052 (Harold H H000052)'), (53, 'harold000053 (Harold H H000053)'), (54, 'harold000054 (Harold H H000054)'), (55, 'harold000055 (Harold H H000055)'), (56, 'harold000056 (Harold H H000056)'), (57, 'harold000057 (Harold H H000057)'), (58, 'harold000058 (Harold H H000058)'), (59, 'harold000059 (Harold H H000059)'), (60, 'harold000060 (Harold H H000060)'), (61, 'harold000061 (Harold H H000061)'), (62, 'harold000062 (Harold H H000062)'), (63, 'harold000063 (Harold H H000063)'), (64, 'harold000064 (Harold H H000064)'), (65, 'harold000065 (Harold H H000065)'), (66, 'harold000066 (Harold H H000066)'), (67, 'harold000067 (Harold H H000067)'), (68, 'harold000068 (Harold H H000068)'), (69, 'harold000069 (Harold H H000069)'), (70, 'harold000070 (Harold H H000070)'), (71, 'harold000071 (Harold H H000071)'), (72, 'harold000072 (Harold H H000072)'), (73, 'harold000073 (Harold H H000073)'), (74, 'harold000074 (Harold H H000074)'), (75, 'harold000075 (Harold H H000075)'), (76, 'harold000076 (Harold H H000076)'), (77, 'harold000077 (Harold H H000077)'), (78, 'harold000078 (Harold H H000078)'), (79, 'harold000079 (Harold H H000079)'), (80, 'harold000080 (Harold H H000080)'), (81, 'harold000081 (Harold H H000081)'), (82, 'harold000082 (Harold H H000082)'), (83, 'harold000083 (Harold H H000083)'), (84, 'harold000084 (Harold H H000084)'), (85, 'harold000085 (Harold H H000085)'), (86, 'harold000086 (Harold H H000086)'), (87, 'harold000087 (Harold H H000087)'), (88, 'harold000088 (Harold H H000088)'), (89, 'harold000089 (Harold H H000089)'), (90, 'harold000090 (Harold H H000090)'), (91, 'harold000091 (Harold H H000091)'), (92, 'harold000092 (Harold H H000092)'), (93, 'harold000093 (Harold H H000093)'), (94, 'harold000094 (Harold H H000094)'), (95, 'harold000095 (Harold H H000095)'), (96, 'harold000096 (Harold H H000096)'), (97, 'harold000097 (Harold H H000097)'), (98, 'harold000098 (Harold H H000098)'), (99, 'harold000099 (Harold H H000099)'), (100, 'harold000100 (Harold H H000100)'), (101, 'harold000101 (Harold H H000101)'), (102, 'harold000102 (Harold H H000102)'), (103, 'harold000103 (Harold H H000103)'), (104, 'harold000104 (Harold H H000104)'), (105, 'harold000105 (Harold H H000105)'), (106, 'harold000106 (Harold H H000106)'), (107, 'harold000107 (Harold H H000107)'), (108, 'harold000108 (Harold H H000108)'), (109, 'harold000109 (Harold H H000109)'), (110, 'harold000110 (Harold H H000110)'), (111, 'harold000111 (Harold H H000111)'), (112, 'harold000112 (Harold H H000112)'), (113, 'harold000113 (Harold H H000113)'), (114, 'harold000114 (Harold H H000114)'), (115, 'harold000115 (Harold H H000115)'), (116, 'harold000116 (Harold H H000116)'), (117, 'harold000117 (Harold H H000117)'), (118, 'harold000118 (Harold H H000118)'), (119, 'harold000119 (Harold H H000119)'), (120, 'harold000120 (Harold H H000120)'), (121, 'harold000121 (Harold H H000121)'), (122, 'harold000122 (Harold H H000122)'), (123, 'harold000123 (Harold H H000123)'), (124, 'harold000124 (Harold H H000124)'), (125, 'harold000125 (Harold H H000125)'), (126, 'harold000126 (Harold H H000126)'), (127, 'harold000127 (Harold H H000127)'), (128, 'harold000128 (Harold H H000128)'), (129, 'harold000129 (Harold H H000129)'), (130, 'harold000130 (Harold H H000130)'), (131, 'harold000131 (Harold H H000131)'), (132, 'harold000132 (Harold H H000132)'), (133, 'harold000133 (Harold H H000133)'), (134, 'harold000134 (Harold H H000134)'), (135, 'harold000135 (Harold H H000135)'), (136, 'harold000136 (Harold H H000136)'), (137, 'harold000137 (Harold H H000137)'), (138, 'harold000138 (Harold H H000138)'), (139, 'harold000139 (Harold H H000139)'), (140, 'harold000140 (Harold H H000140)'), (141, 'harold000141 (Harold H H000141)'), (142, 'harold000142 (Harold H H000142)'), (143, 'harold000143 (Harold H H000143)'), (144, 'harold000144 (Harold H H000144)'), (145, 'harold000145 (Harold H H000145)'), (146, 'harold000146 (Harold H H000146)'), (147, 'harold000147 (Harold H H000147)'), (148, 'harold000148 (Harold H H000148)'), (149, 'harold000149 (Harold H H000149)'), (150, 'harold000150 (Harold H H000150)'), (151, 'harold000151 (Harold H H000151)'), (152, 'harold000152 (Harold H H000152)'), (153, 'harold000153 (Harold H H000153)'), (154, 'harold000154 (Harold H H000154)'), (155, 'harold000155 (Harold H H000155)'), (156, 'harold000156 (Harold H H000156)'), (157, 'harold000157 (Harold H H000157)'), (158, 'harold000158 (Harold H H000158)'), (159, 'harold000159 (Harold H H000159)'), (160, 'harold000160 (Harold H H000160)'), (161, 'harold000161 (Harold H H000161)'), (162, 'harold000162 (Harold H H000162)'), (163, 'harold000163 (Harold H H000163)'), (164, 'harold000164 (Harold H H000164)'), (165, 'harold000165 (Harold H H000165)'), (166, 'harold000166 (Harold H H000166)'), (167, 'harold000167 (Harold H H000167)'), (168, 'harold000168 (Harold H H000168)'), (169, 'harold000169 (Harold H H000169)'), (170, 'harold000170 (Harold H H000170)'), (171, 'harold000171 (Harold H H000171)'), (172, 'harold000172 (Harold H H000172)'), (173, 'harold000173 (Harold H H000173)'), (174, 'harold000174 (Harold H H000174)'), (175, 'harold000175 (Harold H H000175)'), (176, 'harold000176 (Harold H H000176)'), (177, 'harold000177 (Harold H H000177)'), (178, 'harold000178 (Harold H H000178)'), (179, 'harold000179 (Harold H H000179)'), (180, 'harold000180 (Harold H H000180)'), (181, 'harold000181 (Harold H H000181)'), (182, 'harold000182 (Harold H H000182)'), (183, 'harold000183 (Harold H H000183)'), (184, 'harold000184 (Harold H H000184)'), (185, 'harold000185 (Harold H H000185)'), (186, 'harold000186 (Harold H H000186)'), (187, 'harold000187 (Harold H H000187)'), (188, 'harold000188 (Harold H H000188)'), (189, 'harold000189 (Harold H H000189)'), (190, 'harold000190 (Harold H H000190)'), (191, 'harold000191 (Harold H H000191)'), (192, 'harold000192 (Harold H H000192)'), (193, 'harold000193 (Harold H H000193)'), (194, 'harold000194 (Harold H H000194)'), (195, 'harold000195 (Harold H H000195)'), (196, 'harold000196 (Harold H H000196)'), (197, 'harold000197 (Harold H H000197)'), (198, 'harold000198 (Harold H H000198)'), (199, 'harold000199 (Harold H H000199)'), (200, 'harold000200 (Harold H H000200)'), (201, 'harold000201 (Harold H H000201)'), (202, 'harold000202 (Harold H H000202)'), (203, 'harold000203 (Harold H H000203)'), (204, 'harold000204 (Harold H H000204)'), (205, 'harold000205 (Harold H H000205)'), (206, 'harold000206 (Harold H H000206)'), (207, 'harold000207 (Harold H H000207)'), (208, 'harold000208 (Harold H H000208)'), (209, 'harold000209 (Harold H H000209)'), (210, 'harold000210 (Harold H H000210)'), (211, 'harold000211 (Harold H H000211)'), (212, 'harold000212 (Harold H H000212)'), (213, 'harold000213 (Harold H H000213)'), (214, 'harold000214 (Harold H H000214)'), (215, 'harold000215 (Harold H H000215)'), (216, 'harold000216 (Harold H H000216)'), (217, 'harold000217 (Harold H H000217)'), (218, 'harold000218 (Harold H H000218)'), (219, 'harold000219 (Harold H H000219)'), (220, 'harold000220 (Harold H H000220)'), (221, 'harold000221 (Harold H H000221)'), (222, 'harold000222 (Harold H H000222)'), (223, 'harold000223 (Harold H H000223)'), (224, 'harold000224 (Harold H H000224)'), (225, 'harold000225 (Harold H H000225)'), (226, 'harold000226 (Harold H H000226)'), (227, 'harold000227 (Harold H H000227)'), (228, 'harold000228 (Harold H H000228)'), (229, 'harold000229 (Harold H H000229)'), (230, 'harold000230 (Harold H H000230)'), (231, 'harold000231 (Harold H H000231)'), (232, 'harold000232 (Harold H H000232)'), (233, 'harold000233 (Harold H H000233)'), (234, 'harold000234 (Harold H H000234)'), (235, 'harold000235 (Harold H H000235)'), (236, 'harold000236 (Harold H H000236)'), (237, 'harold000237 (Harold H H000237)'), (238, 'harold000238 (Harold H H000238)'), (239, 'harold000239 (Harold H H000239)'), (240, 'harold000240 (Harold H H000240)'), (241, 'harold000241 (Harold H H000241)'), (242, 'harold000242 (Harold H H000242)'), (243, 'harold000243 (Harold H H000243)'), (244, 'harold000244 (Harold H H000244)'), (245, 'harold000245 (Harold H H000245)'), (246, 'harold000246 (Harold H H000246)'), (247, 'harold000247 (Harold H H000247)'), (248, 'harold000248 (Harold H H000248)'), (249, 'harold000249 (Harold H H000249)'), (250, 'harold000250 (Harold H H000250)'), (251, 'harold000251 (Harold H H000251)'), (252, 'harold000252 (Harold H H000252)'), (253, 'harold000253 (Harold H H000253)'), (254, 'harold000254 (Harold H H000254)'), (255, 'harold000255 (Harold H H000255)'), (256, 'harold000256 (Harold H H000256)'), (257, 'harold000257 (Harold H H000257)'), (258, 'harold000258 (Harold H H000258)'), (259, 'harold000259 (Harold H H000259)'), (260, 'harold000260 (Harold H H000260)'), (261, 'harold000261 (Harold H H000261)'), (262, 'harold000262 (Harold H H000262)'), (263, 'harold000263 (Harold H H000263)'), (264, 'harold000264 (Harold H H000264)'), (265, 'harold000265 (Harold H H000265)'), (266, 'harold000266 (Harold H H000266)'), (267, 'harold000267 (Harold H H000267)'), (268, 'harold000268 (Harold H H000268)'), (269, 'harold000269 (Harold H H000269)'), (270, 'harold000270 (Harold H H000270)'), (271, 'harold000271 (Harold H H000271)'), (272, 'harold000272 (Harold H H000272)'), (273, 'harold000273 (Harold H H000273)'), (274, 'harold000274 (Harold H H000274)'), (275, 'harold000275 (Harold H H000275)'), (276, 'harold000276 (Harold H H000276)'), (277, 'harold000277 (Harold H H000277)'), (278, 'harold000278 (Harold H H000278)'), (279, 'harold000279 (Harold H H000279)'), (280, 'harold000280 (Harold H H000280)'), (281, 'harold000281 (Harold H H000281)'), (282, 'harold000282 (Harold H H000282)'), (283, 'harold000283 (Harold H H000283)'), (284, 'harold000284 (Harold H H000284)'), (285, 'harold000285 (Harold H H000285)'), (286, 'harold000286 (Harold H H000286)'), (287, 'harold000287 (Harold H H000287)'), (288, 'harold000288 (Harold H H000288)'), (289, 'harold000289 (Harold H H000289)'), (290, 'harold000290 (Harold H H000290)'), (291, 'harold000291 (Harold H H000291)'), (292, 'harold000292 (Harold H H000292)'), (293, 'harold000293 (Harold H H000293)'), (294, 'harold000294 (Harold H H000294)'), (295, 'harold000295 (Harold H H000295)'), (296, 'harold000296 (Harold H H000296)'), (297, 'harold000297 (Harold H H000297)'), (298, 'harold000298 (Harold H H000298)'), (299, 'harold000299 (Harold H H000299)'), (300, 'harold000300 (Harold H H000300)'), (301, 'harold000301 (Harold H H000301)'), (302, 'harold000302 (Harold H H000302)'), (303, 'harold000303 (Harold H H000303)'), (304, 'harold000304 (Harold H H000304)'), (305, 'harold000305 (Harold H H000305)'), (306, 'harold000306 (Harold H H000306)'), (307, 'harold000307 (Harold H H000307)'), (308, 'harold000308 (Harold H H000308)'), (309, 'harold000309 (Harold H H000309)'), (310, 'harold000310 (Harold H H000310)'), (311, 'harold000311 (Harold H H000311)'), (312, 'harold000312 (Harold H H000312)'), (313, 'harold000313 (Harold H H000313)'), (331, 'harold000331 (Harold H H000331)'), (335, 'harold000335 (Harold H H000335)'), (337, 'harold000337 (Harold H H000337)'), (338, 'harold000338 (Harold H H000338)'), (343, 'harold000343 (Harold H H000343)'), (344, 'harold000344 (Harold H H000344)'), (352, 'harold000352 (Harold H H000352)'), (355, 'harold000355 (Harold H H000355)'), (370, 'harold000370 (Harold H H000370)'), (371, 'harold000371 (Harold H H000371)'), (375, 'harold000375 (Harold H H000375)'), (385, 'harold000385 (Harold H H000385)'), (389, 'harold000389 (Harold H H000389)'), (394, 'harold000394 (Harold H H000394)'), (397, 'harold000397 (Harold H H000397)'), (398, 'harold000398 (Harold H H000398)'), (402, 'harold000402 (Harold H H000402)'), (409, 'harold000409 (Harold H H000409)'), (410, 'harold000410 (Harold H H000410)'), (420, 'harold000420 (Harold H H000420)'), (422, 'harold000422 (Harold H H000422)'), (425, 'harold000425 (Harold H H000425)'), (430, 'harold000430 (Harold H H000430)'), (451, 'harold000451 (Harold H H000451)'), (458, 'harold000458 (Harold H H000458)'), (468, 'harold000468 (Harold H H000468)'), (470, 'harold000470 (Harold H H000470)'), (471, 'harold000471 (Harold H H000471)'), (474, 'harold000474 (Harold H H000474)'), (488, 'harold000488 (Harold H H000488)'), (499, 'harold000499 (Harold H H000499)'), (500, 'harold000500 (Harold H H000500)'), (504, 'harold000504 (Harold H H000504)'), (507, 'harold000507 (Harold H H000507)'), (509, 'harold000509 (Harold H H000509)'), (518, 'harold000518 (Harold H H000518)'), (521, 'harold000521 (Harold H H000521)'), (549, 'harold000549 (Harold H H000549)'), (554, 'harold000554 (Harold H H000554)'), (555, 'harold000555 (Harold H H000555)'), (563, 'harold000563 (Harold H H000563)'), (575, 'harold000575 (Harold H H000575)'), (580, 'harold000580 (Harold H H000580)'), (593, 'harold000593 (Harold H H000593)'), (602, 'harold000602 (Harold H H000602)'), (612, 'harold000612 (Harold H H000612)'), (616, 'harold000616 (Harold H H000616)'), (625, 'harold000625 (Harold H H000625)'), (630, 'harold000630 (Harold H H000630)'), (637, 'harold000637 (Harold H H000637)'), (652, 'harold000652 (Harold H H000652)'), (655, 'harold000655 (Harold H H000655)'), (668, 'harold000668 (Harold H H000668)'), (677, 'harold000677 (Harold H H000677)'), (681, 'harold000681 (Harold H H000681)'), (686, 'harold000686 (Harold H H000686)'), (688, 'harold000688 (Harold H H000688)'), (689, 'harold000689 (Harold H H000689)'), (690, 'harold000690 (Harold H H000690)'), (691, 'harold000691 (Harold H H000691)'), (694, 'harold000694 (Harold H H000694)'), (695, 'harold000695 (Harold H H000695)'), (697, 'harold000697 (Harold H H000697)'), (698, 'harold000698 (Harold H H000698)'), (699, 'harold000699 (Harold H H000699)'), (702, 'harold000702 (Harold H H000702)'), (707, 'harold000707 (Harold H H000707)'), (709, 'harold000709 (Harold H H000709)'), (712, 'harold000712 (Harold H H000712)'), (716, 'harold000716 (Harold H H000716)'), (717, 'harold000717 (Harold H H000717)'), (720, 'harold000720 (Harold H H000720)'), (727, 'harold000727 (Harold H H000727)'), (729, 'harold000729 (Harold H H000729)'), (733, 'harold000733 (Harold H H000733)'), (734, 'harold000734 (Harold H H000734)'), (737, 'harold000737 (Harold H H000737)'), (740, 'harold000740 (Harold H H000740)'), (741, 'harold000741 (Harold H H000741)'), (745, 'harold000745 (Harold H H000745)'), (746, 'harold000746 (Harold H H000746)'), (747, 'harold000747 (Harold H H000747)'), (750, 'harold000750 (Harold H H000750)'), (751, 'harold000751 (Harold H H000751)'), (753, 'harold000753 (Harold H H000753)'), (754, 'harold000754 (Harold H H000754)'), (755, 'harold000755 (Harold H H000755)'), (756, 'harold000756 (Harold H H000756)'), (758, 'harold000758 (Harold H H000758)'), (760, 'harold000760 (Harold H H000760)'), (763, 'harold000763 (Harold H H000763)'), (767, 'harold000767 (Harold H H000767)'), (768, 'harold000768 (Harold H H000768)'), (798, 'harold000798 (Harold H H000798)'), (799, 'harold000799 (Harold H H000799)'), (802, 'harold000802 (Harold H H000802)'), (804, 'harold000804 (Harold H H000804)'), (806, 'harold000806 (Harold H H000806)'), (808, 'harold000808 (Harold H H000808)'), (809, 'harold000809 (Harold H H000809)'), (810, 'harold000810 (Harold H H000810)'), (811, 'harold000811 (Harold H H000811)'), (813, 'harold000813 (Harold H H000813)'), (814, 'harold000814 (Harold H H000814)'), (815, 'harold000815 (Harold H H000815)'), (825, 'harold000825 (Harold H H000825)'), (826, 'harold000826 (Harold H H000826)'), (827, 'harold000827 (Harold H H000827)'), (828, 'harold000828 (Harold H H000828)'), (829, 'harold000829 (Harold H H000829)'), (830, 'harold000830 (Harold H H000830)'), (831, 'harold000831 (Harold H H000831)'), (832, 'harold000832 (Harold H H000832)'), (833, 'harold000833 (Harold H H000833)'), (838, 'harold000838 (Harold H H000838)'), (839, 'harold000839 (Harold H H000839)'), (841, 'harold000841 (Harold H H000841)'), (843, 'harold000843 (Harold H H000843)'), (844, 'harold000844 (Harold H H000844)'), (845, 'harold000845 (Harold H H000845)'), (846, 'harold000846 (Harold H H000846)'), (847, 'harold000847 (Harold H H000847)'), (848, 'harold000848 (Harold H H000848)'), (849, 'harold000849 (Harold H H000849)'), (850, 'harold000850 (Harold H H000850)'), (852, 'harold000852 (Harold H H000852)'), (853, 'harold000853 (Harold H H000853)'), (854, 'harold000854 (Harold H H000854)'), (855, 'harold000855 (Harold H H000855)'), (856, 'harold000856 (Harold H H000856)'), (857, 'harold000857 (Harold H H000857)'), (858, 'harold000858 (Harold H H000858)'), (859, 'harold000859 (Harold H H000859)'), (860, 'harold000860 (Harold H H000860)'), (861, 'harold000861 (Harold H H000861)'), (862, 'harold000862 (Harold H H000862)'), (863, 'harold000863 (Harold H H000863)'), (867, 'harold000867 (Harold H H000867)'), (870, 'harold000870 (Harold H H000870)'), (871, 'harold000871 (Harold H H000871)'), (872, 'harold000872 (Harold H H000872)'), (873, 'harold000873 (Harold H H000873)'), (874, 'harold000874 (Harold H H000874)'), (875, 'harold000875 (Harold H H000875)'), (878, 'harold000878 (Harold H H000878)'), (880, 'harold000880 (Harold H H000880)'), (882, 'harold000882 (Harold H H000882)'), (883, 'harold000883 (Harold H H000883)'), (887, 'harold000887 (Harold H H000887)'), (889, 'harold000889 (Harold H H000889)'), (891, 'harold000891 (Harold H H000891)'), (892, 'harold000892 (Harold H H000892)'), (893, 'harold000893 (Harold H H000893)'), (894, 'harold000894 (Harold H H000894)'), (895, 'harold000895 (Harold H H000895)'), (897, 'harold000897 (Harold H H000897)'), (898, 'harold000898 (Harold H H000898)'), (899, 'harold000899 (Harold H H000899)'), (900, 'harold000900 (Harold H H000900)'), (901, 'harold000901 (Harold H H000901)'), (902, 'harold000902 (Harold H H000902)'), (903, 'harold000903 (Harold H H000903)'), (904, 'harold000904 (Harold H H000904)'), (905, 'harold000905 (Harold H H000905)'), (906, 'harold000906 (Harold H H000906)'), (907, 'harold000907 (Harold H H000907)'), (910, 'harold000910 (Harold H H000910)'), (912, 'harold000912 (Harold H H000912)'), (913, 'harold000913 (Harold H H000913)'), (914, 'harold000914 (Harold H H000914)'), (915, 'harold000915 (Harold H H000915)'), (916, 'harold000916 (Harold H H000916)'), (917, 'harold000917 (Harold H H000917)'), (919, 'harold000919 (Harold H H000919)'), (920, 'harold000920 (Harold H H000920)'), (922, 'harold000922 (Harold H H000922)'), (923, 'harold000923 (Harold H H000923)'), (924, 'harold000924 (Harold H H000924)'), (925, 'harold000925 (Harold H H000925)'), (927, 'harold000927 (Harold H H000927)'), (928, 'harold000928 (Harold H H000928)'), (929, 'harold000929 (Harold H H000929)'), (930, 'harold000930 (Harold H H000930)'), (931, 'harold000931 (Harold H H000931)'), (932, 'harold000932 (Harold H H000932)'), (934, 'harold000934 (Harold H H000934)'), (935, 'harold000935 (Harold H H000935)'), (938, 'harold000938 (Harold H H000938)'), (939, 'harold000939 (Harold H H000939)'), (940, 'harold000940 (Harold H H000940)'), (941, 'harold000941 (Harold H H000941)'), (945, 'harold000945 (Harold H H000945)'), (946, 'harold000946 (Harold H H000946)'), (951, 'harold000951 (Harold H H000951)'), (952, 'harold000952 (Harold H H000952)'), (955, 'harold000955 (Harold H H000955)'), (956, 'harold000956 (Harold H H000956)'), (957, 'harold000957 (Harold H H000957)'), (961, 'harold000961 (Harold H H000961)'), (962, 'harold000962 (Harold H H000962)'), (964, 'harold000964 (Harold H H000964)'), (967, 'harold000967 (Harold H H000967)'), (971, 'harold000971 (Harold H H000971)'), (974, 'harold000974 (Harold H H000974)'), (977, 'harold000977 (Harold H H000977)'), (978, 'harold000978 (Harold H H000978)'), (979, 'harold000979 (Harold H H000979)'), (980, 'harold000980 (Harold H H000980)'), (982, 'harold000982 (Harold H H000982)'), (984, 'harold000984 (Harold H H000984)'), (986, 'harold000986 (Harold H H000986)'), (988, 'harold000988 (Harold H H000988)'), (989, 'harold000989 (Harold H H000989)'), (990, 'harold000990 (Harold H H000990)'), (991, 'harold000991 (Harold H H000991)'), (994, 'harold000994 (Harold H H000994)'), (995, 'harold000995 (Harold H H000995)'), (996, 'harold000996 (Harold H H000996)'), (998, 'harold000998 (Harold H H000998)'), (1000, 'harold001000 (Harold H H001000)'), (1001, 'harold001001 (Harold H H001001)'), (1004, 'harold001004 (Harold H H001004)'), (1007, 'harold001007 (Harold H H001007)'), (1008, 'harold001008 (Harold H H001008)'), (1010, 'harold001010 (Harold H H001010)'), (1012, 'harold001012 (Harold H H001012)'), (1013, 'harold001013 (Harold H H001013)'), (1016, 'harold001016 (Harold H H001016)'), (1021, 'harold001021 (Harold H H001021)'), (1024, 'harold001024 (Harold H H001024)'), (1027, 'harold001027 (Harold H H001027)'), (1033, 'harold001033 (Harold H H001033)'), (1034, 'harold001034 (Harold H H001034)'), (1037, 'harold001037 (Harold H H001037)'), (1038, 'harold001038 (Harold H H001038)'), (1041, 'harold001041 (Harold H H001041)'), (1044, 'harold001044 (Harold H H001044)'), (1048, 'harold001048 (Harold H H001048)'), (1050, 'harold001050 (Harold H H001050)'), (1053, 'harold001053 (Harold H H001053)'), (1075, 'harold001075 (Harold H H001075)'), (1076, 'harold001076 (Harold H H001076)'), (1077, 'harold001077 (Harold H H001077)'), (1078, 'harold001078 (Harold H H001078)'), (1081, 'harold001081 (Harold H H001081)'), (1084, 'harold001084 (Harold H H001084)'), (1085, 'harold001085 (Harold H H001085)'), (1086, 'harold001086 (Harold H H001086)'), (1087, 'harold001087 (Harold H H001087)'), (1088, 'harold001088 (Harold H H001088)'), (1089, 'harold001089 (Harold H H001089)'), (1090, 'harold001090 (Harold H H001090)'), (1091, 'harold001091 (Harold H H001091)'), (1092, 'harold001092 (Harold H H001092)'), (1094, 'harold001094 (Harold H H001094)'), (1098, 'harold001098 (Harold H H001098)'), (1099, 'harold001099 (Harold H H001099)'), (1101, 'harold001101 (Harold H H001101)'), (1103, 'harold001103 (Harold H H001103)'), (1109, 'harold001109 (Harold H H001109)'), (1113, 'harold001113 (Harold H H001113)'), (1118, 'harold001118 (Harold H H001118)'), (1119, 'harold001119 (Harold H H001119)'), (1120, 'harold001120 (Harold H H001120)'), (1121, 'harold001121 (Harold H H001121)'), (1122, 'harold001122 (Harold H H001122)'), (1126, 'harold001126 (Harold H H001126)'), (1127, 'harold001127 (Harold H H001127)'), (1128, 'harold001128 (Harold H H001128)'), (1129, 'harold001129 (Harold H H001129)'), (1130, 'harold001130 (Harold H H001130)'), (1137, 'harold001137 (Harold H H001137)')]</em><a class="headerlink" href="#frontend.forms.SearchForm.contributor_choices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SearchForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'contribution_begin_date': &lt;django.forms.fields.IntegerField object&gt;, 'contribution_end_date': &lt;django.forms.fields.IntegerField object&gt;, 'contributor': &lt;django.forms.fields.ChoiceField object&gt;, 'countries': &lt;django.forms.fields.MultipleChoiceField object&gt;, 'fulltext_keywords': &lt;django.forms.fields.CharField object&gt;, 'keywords': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#frontend.forms.SearchForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SearchForm.existing_contributors">
-<code class="descname">existing_contributors</code><em class="property"> = &lt;QuerySet [{'contributor': 7}, {'contributor': 7}, {'contributor': 7}, {'contributor': 7}, {'contributor': 270}, {'contributor': 7}, {'contributor': 7}, {'contributor': 244}, {'contributor': 7}, {'contributor': 7}, {'contributor': 7}, {'contributor': 7}, {'contributor': 7}, {'contributor': 7}, {'contributor': 251}, {'contributor': 138}, {'contributor': 158}, {'contributor': 53}, {'contributor': 630}, {'contributor': 7}, '...(remaining elements truncated)...']&gt;</em><a class="headerlink" href="#frontend.forms.SearchForm.existing_contributors" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SearchForm.media">
-<code class="descname">media</code><a class="headerlink" href="#frontend.forms.SearchForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -256,43 +184,6 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for searching for selected attributes.
 Not used on it’s own, rather used as a part of a formset.</p>
-<dl class="class">
-<dt id="frontend.forms.SelectedAttributeForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#frontend.forms.SelectedAttributeForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="frontend.forms.SelectedAttributeForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#frontend.forms.SelectedAttributeForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedAttributeForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#frontend.forms.SelectedAttributeForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SelectedAttribute" title="issf_base.models.SelectedAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SelectedAttribute</span></code></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedAttributeForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'attribute_value': &lt;class 'django.forms.widgets.Select'&gt;}</em><a class="headerlink" href="#frontend.forms.SelectedAttributeForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedAttributeForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'attribute': &lt;django.forms.models.ModelChoiceField object&gt;, 'attribute_value': &lt;django.forms.models.ModelChoiceField object&gt;, 'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#frontend.forms.SelectedAttributeForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedAttributeForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#frontend.forms.SelectedAttributeForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedAttributeForm.media">
-<code class="descname">media</code><a class="headerlink" href="#frontend.forms.SelectedAttributeForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -301,38 +192,6 @@ Not used on it’s own, rather used as a part of a formset.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for searching for selected themes/issues.
 Not used on it’s own, rather used as a part of a formset.</p>
-<dl class="class">
-<dt id="frontend.forms.SelectedThemeIssueForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#frontend.forms.SelectedThemeIssueForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="frontend.forms.SelectedThemeIssueForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#frontend.forms.SelectedThemeIssueForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedThemeIssueForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#frontend.forms.SelectedThemeIssueForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.SelectedThemeIssue" title="issf_base.models.SelectedThemeIssue"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.SelectedThemeIssue</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedThemeIssueForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'issf_core': &lt;django.forms.models.ModelChoiceField object&gt;, 'other_theme_issue': &lt;django.forms.fields.CharField object&gt;, 'theme_issue_value': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#frontend.forms.SelectedThemeIssueForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedThemeIssueForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#frontend.forms.SelectedThemeIssueForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.SelectedThemeIssueForm.media">
-<code class="descname">media</code><a class="headerlink" href="#frontend.forms.SelectedThemeIssueForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -340,38 +199,6 @@ Not used on it’s own, rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">frontend.forms.</code><code class="descname">TipForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.forms.TipForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for submitting new tips.</p>
-<dl class="class">
-<dt id="frontend.forms.TipForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#frontend.forms.TipForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="frontend.forms.TipForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#frontend.forms.TipForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.TipForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#frontend.forms.TipForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.DidYouKnow" title="issf_base.models.DidYouKnow"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.DidYouKnow</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.TipForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'fact': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#frontend.forms.TipForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.TipForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'fact': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#frontend.forms.TipForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.TipForm.media">
-<code class="descname">media</code><a class="headerlink" href="#frontend.forms.TipForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -379,47 +206,19 @@ Not used on it’s own, rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">frontend.forms.</code><code class="descname">WhosWhoForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.forms.WhosWhoForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Form for changing the who feature on the front page.</p>
-<dl class="class">
-<dt id="frontend.forms.WhosWhoForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#frontend.forms.WhosWhoForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="frontend.forms.WhosWhoForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = '__all__'</em><a class="headerlink" href="#frontend.forms.WhosWhoForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.WhosWhoForm.Meta.labels">
-<code class="descname">labels</code><em class="property"> = {'ssf_knowledge': 'Select Publication', 'ssf_person': &quot;Who's Who Page&quot;}</em><a class="headerlink" href="#frontend.forms.WhosWhoForm.Meta.labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.WhosWhoForm.Meta.model">
-<code class="descname">model</code><a class="headerlink" href="#frontend.forms.WhosWhoForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="issf_base.html#issf_base.models.WhoFeature" title="issf_base.models.WhoFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">issf_base.models.WhoFeature</span></code></a></p>
+<dl class="method">
+<dt id="frontend.forms.WhosWhoForm.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.forms.WhosWhoForm.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.WhosWhoForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'ssf_knowledge': &lt;django.forms.widgets.Select object&gt;, 'ssf_person': &lt;django.forms.widgets.Select object&gt;}</em><a class="headerlink" href="#frontend.forms.WhosWhoForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.WhosWhoForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'about': &lt;django.forms.fields.CharField object&gt;, 'img_url': &lt;django.forms.fields.URLField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;, 'ssf_knowledge': &lt;django.forms.models.ModelChoiceField object&gt;, 'ssf_person': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#frontend.forms.WhosWhoForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.WhosWhoForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'about': &lt;django.forms.fields.CharField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#frontend.forms.WhosWhoForm.declared_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.forms.WhosWhoForm.media">
-<code class="descname">media</code><a class="headerlink" href="#frontend.forms.WhosWhoForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -434,11 +233,6 @@ Not used on it’s own, rather used as a part of a formset.</p>
 <em class="property">class </em><code class="descclassname">frontend.views.</code><code class="descname">MapLayer</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.views.MapLayer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">djgeojson.views.GeoJSONLayerView</span></code></p>
 <p>Map layer containing all map points.</p>
-<dl class="attribute">
-<dt id="frontend.views.MapLayer.geometry_field">
-<code class="descname">geometry_field</code><em class="property"> = 'map_point'</em><a class="headerlink" href="#frontend.views.MapLayer.geometry_field" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="frontend.views.MapLayer.get_context_data">
 <code class="descname">get_context_data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.views.MapLayer.get_context_data" title="Permalink to this definition">¶</a></dt>
@@ -454,16 +248,6 @@ Not used on it’s own, rather used as a part of a formset.</p>
 </tbody>
 </table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.views.MapLayer.properties">
-<code class="descname">properties</code><em class="property"> = ['issf_core_id', 'core_record_type', 'core_record_summary', 'geographic_scope_type']</em><a class="headerlink" href="#frontend.views.MapLayer.properties" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="frontend.views.MapLayer.queryset">
-<code class="descname">queryset</code><em class="property"> = &lt;QuerySet [&lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (1)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (2)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (3)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (4)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (5)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (6)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (7)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (8)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (9)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (10)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (11)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (12)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (13)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (14)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (15)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (16)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (17)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (18)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (19)&gt;, &lt;ISSFCoreMapPointUnique: ISSFCoreMapPointUnique object (20)&gt;, '...(remaining elements truncated)...']&gt;</em><a class="headerlink" href="#frontend.views.MapLayer.queryset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 

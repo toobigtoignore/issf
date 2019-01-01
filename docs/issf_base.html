@@ -161,16 +161,20 @@
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">AdditionalValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.AdditionalValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing an additional value.</p>
-<dl class="exception">
-<dt id="issf_base.models.AdditionalValue.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.AdditionalValue.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.AdditionalValue.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.AdditionalValue.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.AdditionalValue.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.AdditionalValue.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of an additional value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -216,11 +220,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.AdditionalValue.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.AdditionalValue.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.AdditionalValue.value_label">
 <code class="descname">value_label</code><a class="headerlink" href="#issf_base.models.AdditionalValue.value_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -241,16 +240,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Attribute</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Attribute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing an attribute.</p>
-<dl class="exception">
-<dt id="issf_base.models.Attribute.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Attribute.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Attribute.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Attribute.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Attribute.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Attribute.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of an attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -391,11 +394,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.Attribute.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Attribute.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.Attribute.question_number">
 <code class="descname">question_number</code><a class="headerlink" href="#issf_base.models.Attribute.question_number" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -431,16 +429,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">AttributeValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.AttributeValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing an attribute value.</p>
-<dl class="exception">
-<dt id="issf_base.models.AttributeValue.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.AttributeValue.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.AttributeValue.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.AttributeValue.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.AttributeValue.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.AttributeValue.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of an attribute value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -501,11 +503,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.AttributeValue.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.AttributeValue.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.AttributeValue.selectedattribute_set">
 <code class="descname">selectedattribute_set</code><a class="headerlink" href="#issf_base.models.AttributeValue.selectedattribute_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accessor to the related objects manager on the reverse side of a
@@ -541,22 +538,21 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">CapacityNeedRating</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.CapacityNeedRating" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a capacity need rating.</p>
-<dl class="exception">
-<dt id="issf_base.models.CapacityNeedRating.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.CapacityNeedRating.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.CapacityNeedRating.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.CapacityNeedRating.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a capacity need rating.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.CapacityNeedRating.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.CapacityNeedRating.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.CapacityNeedRating.STARS">
-<code class="descname">STARS</code><em class="property"> = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]</em><a class="headerlink" href="#issf_base.models.CapacityNeedRating.STARS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.CapacityNeedRating.capacity_need">
@@ -588,11 +584,6 @@ object the first time, the query is executed.</p>
 <dl class="method">
 <dt id="issf_base.models.CapacityNeedRating.get_rating_display">
 <code class="descname">get_rating_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.IntegerField: rating&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.CapacityNeedRating.get_rating_display" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.CapacityNeedRating.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.CapacityNeedRating.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -629,18 +620,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Change</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Change" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a change in the site.</p>
-<dl class="exception">
-<dt id="issf_base.models.Change.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Change.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Change.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Change.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.Change.change_desc">
 <code class="descname">change_desc</code><a class="headerlink" href="#issf_base.models.Change.change_desc" title="Permalink to this definition">¶</a></dt>
@@ -654,11 +633,6 @@ object the first time, the query is executed.</p>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.Change.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Change.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.Change.site_version">
@@ -687,18 +661,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">CommonAttributeView</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.CommonAttributeView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a common attribute view.</p>
-<dl class="exception">
-<dt id="issf_base.models.CommonAttributeView.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.CommonAttributeView.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.CommonAttributeView.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.CommonAttributeView.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.CommonAttributeView.attribute">
 <code class="descname">attribute</code><a class="headerlink" href="#issf_base.models.CommonAttributeView.attribute" title="Permalink to this definition">¶</a></dt>
@@ -767,11 +729,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.CommonAttributeView.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.CommonAttributeView.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.CommonAttributeView.other_value">
 <code class="descname">other_value</code><a class="headerlink" href="#issf_base.models.CommonAttributeView.other_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -806,18 +763,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">CommonThemeIssueView</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.CommonThemeIssueView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a common theme issue view.</p>
-<dl class="exception">
-<dt id="issf_base.models.CommonThemeIssueView.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.CommonThemeIssueView.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.CommonThemeIssueView.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.CommonThemeIssueView.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.CommonThemeIssueView.category_order">
 <code class="descname">category_order</code><a class="headerlink" href="#issf_base.models.CommonThemeIssueView.category_order" title="Permalink to this definition">¶</a></dt>
@@ -851,11 +796,6 @@ object the first time, the query is executed.</p>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.CommonThemeIssueView.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.CommonThemeIssueView.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.CommonThemeIssueView.other_theme_issue">
@@ -925,29 +865,12 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">ContributionsByCountry</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ContributionsByCountry" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing contributions by country.</p>
-<dl class="exception">
-<dt id="issf_base.models.ContributionsByCountry.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ContributionsByCountry.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ContributionsByCountry.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ContributionsByCountry.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.ContributionsByCountry.contribution_count">
 <code class="descname">contribution_count</code><a class="headerlink" href="#issf_base.models.ContributionsByCountry.contribution_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.ContributionsByCountry.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ContributionsByCountry.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.ContributionsByCountry.short_name">
@@ -963,18 +886,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">ContributionsByGeographicScope</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ContributionsByGeographicScope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing contributions by geographic scope.</p>
-<dl class="exception">
-<dt id="issf_base.models.ContributionsByGeographicScope.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ContributionsByGeographicScope.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ContributionsByGeographicScope.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ContributionsByGeographicScope.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.ContributionsByGeographicScope.contribution_count">
 <code class="descname">contribution_count</code><a class="headerlink" href="#issf_base.models.ContributionsByGeographicScope.contribution_count" title="Permalink to this definition">¶</a></dt>
@@ -990,11 +901,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.ContributionsByGeographicScope.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ContributionsByGeographicScope.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.ContributionsByGeographicScope.scope_order">
 <code class="descname">scope_order</code><a class="headerlink" href="#issf_base.models.ContributionsByGeographicScope.scope_order" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -1008,18 +914,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">ContributionsByRecordType</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ContributionsByRecordType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing contributions by record type.</p>
-<dl class="exception">
-<dt id="issf_base.models.ContributionsByRecordType.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ContributionsByRecordType.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ContributionsByRecordType.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ContributionsByRecordType.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.ContributionsByRecordType.contribution_count">
 <code class="descname">contribution_count</code><a class="headerlink" href="#issf_base.models.ContributionsByRecordType.contribution_count" title="Permalink to this definition">¶</a></dt>
@@ -1035,11 +929,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.ContributionsByRecordType.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ContributionsByRecordType.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.ContributionsByRecordType.row_number">
 <code class="descname">row_number</code><a class="headerlink" href="#issf_base.models.ContributionsByRecordType.row_number" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -1053,16 +942,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Country</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Country" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a country.</p>
-<dl class="exception">
-<dt id="issf_base.models.Country.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Country.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Country.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Country.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Country.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Country.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a country.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1183,11 +1076,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.Country.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Country.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.Country.official_name">
 <code class="descname">official_name</code><a class="headerlink" href="#issf_base.models.Country.official_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -1267,18 +1155,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">DidYouKnow</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.DidYouKnow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a Did you Know entry.</p>
-<dl class="exception">
-<dt id="issf_base.models.DidYouKnow.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.DidYouKnow.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.DidYouKnow.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.DidYouKnow.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.DidYouKnow.fact">
 <code class="descname">fact</code><a class="headerlink" href="#issf_base.models.DidYouKnow.fact" title="Permalink to this definition">¶</a></dt>
@@ -1293,11 +1169,6 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.DidYouKnow.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.DidYouKnow.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1305,21 +1176,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">ExternalLink</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ExternalLink" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing an external link.</p>
-<dl class="exception">
-<dt id="issf_base.models.ExternalLink.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ExternalLink.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.ExternalLink.LINK_TYPE">
-<code class="descname">LINK_TYPE</code><em class="property"> = (('URL Link', 'URL Link'), ('Image Link', 'Image Link'), ('YouTube Video Link', 'YouTube Video Link'))</em><a class="headerlink" href="#issf_base.models.ExternalLink.LINK_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ExternalLink.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ExternalLink.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.ExternalLink.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ExternalLink.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of an external link.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1368,11 +1238,6 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.ExternalLink.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ExternalLink.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1380,18 +1245,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">FAQ</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.FAQ" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a FAQ entry.</p>
-<dl class="exception">
-<dt id="issf_base.models.FAQ.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.FAQ.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.FAQ.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.FAQ.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.FAQ.answer">
 <code class="descname">answer</code><a class="headerlink" href="#issf_base.models.FAQ.answer" title="Permalink to this definition">¶</a></dt>
@@ -1427,11 +1280,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.FAQ.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.FAQ.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.FAQ.question">
 <code class="descname">question</code><a class="headerlink" href="#issf_base.models.FAQ.question" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -1445,16 +1293,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">FAQCategory</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.FAQCategory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a FAQ category.</p>
-<dl class="exception">
-<dt id="issf_base.models.FAQCategory.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.FAQCategory.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.FAQCategory.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.FAQCategory.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.FAQCategory.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.FAQCategory.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a FAQ category.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1486,11 +1338,6 @@ many-to-one relation.</p>
 class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.FAQCategory.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.FAQCategory.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1498,21 +1345,20 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">GeographicScopeLocalArea</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.GeographicScopeLocalArea" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a local geographic scope.</p>
-<dl class="exception">
-<dt id="issf_base.models.GeographicScopeLocalArea.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.GeographicScopeLocalArea.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.GeographicScopeLocalArea.LOCAL_AREA_SETTING">
-<code class="descname">LOCAL_AREA_SETTING</code><em class="property"> = (('Urban', 'Urban'), ('Rural, developed', 'Rural, developed'), ('Rural, less developed', 'Rural, less developed'), ('Unspecified', 'Unspecified'), ('Other', 'Other'))</em><a class="headerlink" href="#issf_base.models.GeographicScopeLocalArea.LOCAL_AREA_SETTING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.GeographicScopeLocalArea.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.GeographicScopeLocalArea.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.GeographicScopeLocalArea.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.GeographicScopeLocalArea.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a local geographic scope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1600,11 +1446,6 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.GeographicScopeLocalArea.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.GeographicScopeLocalArea.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1612,16 +1453,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">GeographicScopeNation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.GeographicScopeNation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a national geographic scope.</p>
-<dl class="exception">
-<dt id="issf_base.models.GeographicScopeNation.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.GeographicScopeNation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.GeographicScopeNation.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.GeographicScopeNation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.GeographicScopeNation.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.GeographicScopeNation.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a national geographic scope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1671,11 +1516,6 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.GeographicScopeNation.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.GeographicScopeNation.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -1683,22 +1523,21 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">GeographicScopeSubnation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.GeographicScopeSubnation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a subnational geographic scope.</p>
-<dl class="exception">
-<dt id="issf_base.models.GeographicScopeSubnation.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.GeographicScopeSubnation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.GeographicScopeSubnation.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.GeographicScopeSubnation.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a subnational geographic scope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.GeographicScopeSubnation.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.GeographicScopeSubnation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.GeographicScopeSubnation.SUBNATION_TYPE">
-<code class="descname">SUBNATION_TYPE</code><em class="property"> = (('Canton', 'Canton'), ('Commune', 'Commune'), ('County', 'County'), ('Department', 'Department'), ('District', 'District'), ('Province', 'Province'), ('State', 'State'), ('Territory', 'Territory'), ('Unspecified', 'Unspecified'), ('Other', 'Other'))</em><a class="headerlink" href="#issf_base.models.GeographicScopeSubnation.SUBNATION_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.GeographicScopeSubnation.country">
@@ -1753,11 +1592,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.GeographicScopeSubnation.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.GeographicScopeSubnation.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.GeographicScopeSubnation.subnation_name">
 <code class="descname">subnation_name</code><a class="headerlink" href="#issf_base.models.GeographicScopeSubnation.subnation_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -1790,16 +1624,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Geographic_Scope_Region</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Geographic_Scope_Region" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a regional geographic scope.</p>
-<dl class="exception">
-<dt id="issf_base.models.Geographic_Scope_Region.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Geographic_Scope_Region.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Geographic_Scope_Region.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Geographic_Scope_Region.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Geographic_Scope_Region.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Geographic_Scope_Region.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a regional geographic scope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1846,11 +1684,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.Geographic_Scope_Region.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Geographic_Scope_Region.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.Geographic_Scope_Region.region">
 <code class="descname">region</code><a class="headerlink" href="#issf_base.models.Geographic_Scope_Region.region" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accessor to the related object on the forward side of a many-to-one or
@@ -1885,23 +1718,6 @@ object the first time, the query is executed.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Core model used as a base for SSF records.
 No longer used. ISSF_Core is now the core model used.</p>
-<dl class="exception">
-<dt id="issf_base.models.ISSFCore.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ISSFCore.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.ISSFCore.GEOGRAPHIC_SCOPE_TYPE">
-<code class="descname">GEOGRAPHIC_SCOPE_TYPE</code><em class="property"> = (('Local', 'Local'), ('Sub-national', 'Sub-national'), ('National', 'National'), ('Regional', 'Regional'), ('Global', 'Global'), ('Not specific', 'Not specific'))</em><a class="headerlink" href="#issf_base.models.ISSFCore.GEOGRAPHIC_SCOPE_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ISSFCore.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ISSFCore.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.ISSFCore.contribution_date">
 <code class="descname">contribution_date</code><a class="headerlink" href="#issf_base.models.ISSFCore.contribution_date" title="Permalink to this definition">¶</a></dt>
@@ -2016,11 +1832,6 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.ISSFCore.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ISSFCore.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -2028,18 +1839,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">ISSFCoreMapPointUnique</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ISSFCoreMapPointUnique" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a unique map point for an ISSF Core record.</p>
-<dl class="exception">
-<dt id="issf_base.models.ISSFCoreMapPointUnique.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ISSFCoreMapPointUnique.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ISSFCoreMapPointUnique.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ISSFCoreMapPointUnique.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.ISSFCoreMapPointUnique.contribution_date">
 <code class="descname">contribution_date</code><a class="headerlink" href="#issf_base.models.ISSFCoreMapPointUnique.contribution_date" title="Permalink to this definition">¶</a></dt>
@@ -2169,11 +1968,6 @@ object the first time, the query is executed.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.ISSFCoreMapPointUnique.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ISSFCoreMapPointUnique.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.ISSFCoreMapPointUnique.row_number">
 <code class="descname">row_number</code><a class="headerlink" href="#issf_base.models.ISSFCoreMapPointUnique.row_number" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -2187,23 +1981,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">ISSF_Core</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ISSF_Core" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Core model used as base for all SSF records.</p>
-<dl class="exception">
-<dt id="issf_base.models.ISSF_Core.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ISSF_Core.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.ISSF_Core.GEOGRAPHIC_SCOPE_TYPE">
-<code class="descname">GEOGRAPHIC_SCOPE_TYPE</code><em class="property"> = (('Local', 'Local'), ('Sub-national', 'Sub-national'), ('National', 'National'), ('Regional', 'Regional'), ('Global', 'Global'), ('Not specific', 'Not specific'))</em><a class="headerlink" href="#issf_base.models.ISSF_Core.GEOGRAPHIC_SCOPE_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ISSF_Core.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ISSF_Core.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.ISSF_Core.commonattributeview_set">
 <code class="descname">commonattributeview_set</code><a class="headerlink" href="#issf_base.models.ISSF_Core.commonattributeview_set" title="Permalink to this definition">¶</a></dt>
@@ -2471,11 +2248,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.ISSF_Core.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ISSF_Core.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.ISSF_Core.selectedattribute_set">
 <code class="descname">selectedattribute_set</code><a class="headerlink" href="#issf_base.models.ISSF_Core.selectedattribute_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accessor to the related objects manager on the reverse side of a
@@ -2527,18 +2299,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">KnowledgeAuthor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.KnowledgeAuthor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing an author of a SOTA record.</p>
-<dl class="exception">
-<dt id="issf_base.models.KnowledgeAuthor.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.KnowledgeAuthor.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.KnowledgeAuthor.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.KnowledgeAuthor.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.KnowledgeAuthor.knowledge_author_id">
 <code class="descname">knowledge_author_id</code><a class="headerlink" href="#issf_base.models.KnowledgeAuthor.knowledge_author_id" title="Permalink to this definition">¶</a></dt>
@@ -2566,11 +2326,6 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.KnowledgeAuthor.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.KnowledgeAuthor.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -2578,18 +2333,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">KnowledgeAuthorSimple</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.KnowledgeAuthorSimple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing an author of a SOTA record.</p>
-<dl class="exception">
-<dt id="issf_base.models.KnowledgeAuthorSimple.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.KnowledgeAuthorSimple.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.KnowledgeAuthorSimple.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.KnowledgeAuthorSimple.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.KnowledgeAuthorSimple.author_name">
 <code class="descname">author_name</code><a class="headerlink" href="#issf_base.models.KnowledgeAuthorSimple.author_name" title="Permalink to this definition">¶</a></dt>
@@ -2624,11 +2367,6 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.KnowledgeAuthorSimple.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.KnowledgeAuthorSimple.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="issf_base.models.KnowledgeAuthorSimple.save">
 <code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.KnowledgeAuthorSimple.save" title="Permalink to this definition">¶</a></dt>
@@ -2650,16 +2388,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Language</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Language" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a language.</p>
-<dl class="exception">
-<dt id="issf_base.models.Language.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Language.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Language.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Language.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Language.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Language.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a language.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -2684,11 +2426,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.Language.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Language.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.Language.ssfknowledge_set">
 <code class="descname">ssfknowledge_set</code><a class="headerlink" href="#issf_base.models.Language.ssfknowledge_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accessor to the related objects manager on the reverse side of a
@@ -2710,18 +2447,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">MainAttributeView</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.MainAttributeView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a main attribute view.</p>
-<dl class="exception">
-<dt id="issf_base.models.MainAttributeView.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.MainAttributeView.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.MainAttributeView.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.MainAttributeView.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.MainAttributeView.additional">
 <code class="descname">additional</code><a class="headerlink" href="#issf_base.models.MainAttributeView.additional" title="Permalink to this definition">¶</a></dt>
@@ -2817,11 +2542,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.MainAttributeView.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.MainAttributeView.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.MainAttributeView.other_value">
 <code class="descname">other_value</code><a class="headerlink" href="#issf_base.models.MainAttributeView.other_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -2863,28 +2583,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">ProfileOrganization</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ProfileOrganization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a profile organization.</p>
-<dl class="exception">
-<dt id="issf_base.models.ProfileOrganization.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.ProfileOrganization.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.ProfileOrganization.GEOG_SCOPE">
-<code class="descname">GEOG_SCOPE</code><em class="property"> = (('Local', 'Local'), ('Sub-national', 'Sub-national'), ('National', 'National'), ('Regional', 'Regional'), ('Global', 'Global'))</em><a class="headerlink" href="#issf_base.models.ProfileOrganization.GEOG_SCOPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.ProfileOrganization.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.ProfileOrganization.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.ProfileOrganization.ORG_TYPE">
-<code class="descname">ORG_TYPE</code><em class="property"> = (('State/government department', 'State/government department'), ('Union/association', 'Union/association'), ('Support organization', 'Support organization'), ('Fisheries local action group', 'Fisheries local action group'), ('Market organization', 'Market organization'), ('Co-op/society', 'Co-op/society'), ('Other', 'Other'))</em><a class="headerlink" href="#issf_base.models.ProfileOrganization.ORG_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.ProfileOrganization.geographic_scope">
 <code class="descname">geographic_scope</code><a class="headerlink" href="#issf_base.models.ProfileOrganization.geographic_scope" title="Permalink to this definition">¶</a></dt>
@@ -2900,11 +2598,6 @@ object the first time, the query is executed.</p>
 <dl class="method">
 <dt id="issf_base.models.ProfileOrganization.get_organization_type_display">
 <code class="descname">get_organization_type_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: organization_type&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.ProfileOrganization.get_organization_type_display" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.ProfileOrganization.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.ProfileOrganization.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2975,22 +2668,21 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">PublicationType</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.PublicationType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a publication type.</p>
-<dl class="exception">
-<dt id="issf_base.models.PublicationType.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.PublicationType.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.PublicationType.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.PublicationType.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a publication type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.PublicationType.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.PublicationType.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.PublicationType.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.PublicationType.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.PublicationType.publication_type">
@@ -3028,18 +2720,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">RecentContributions</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.RecentContributions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing recent contributions.</p>
-<dl class="exception">
-<dt id="issf_base.models.RecentContributions.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.RecentContributions.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.RecentContributions.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.RecentContributions.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.RecentContributions.core_record_summary">
 <code class="descname">core_record_summary</code><a class="headerlink" href="#issf_base.models.RecentContributions.core_record_summary" title="Permalink to this definition">¶</a></dt>
@@ -3061,11 +2741,6 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.RecentContributions.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.RecentContributions.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -3073,16 +2748,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Region</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Region" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a region.</p>
-<dl class="exception">
-<dt id="issf_base.models.Region.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Region.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Region.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Region.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Region.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Region.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -3099,11 +2778,6 @@ many-to-one relation.</p>
 <p>Most of the implementation is delegated to a dynamically defined manager
 class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.Region.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Region.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.Region.region_id">
@@ -3126,26 +2800,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFCapacityNeed</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFCapacityNeed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a capacity need.</p>
-<dl class="attribute">
-<dt id="issf_base.models.SSFCapacityNeed.CAPACITY_NEED_CATEGORY">
-<code class="descname">CAPACITY_NEED_CATEGORY</code><em class="property"> = (('Economic', 'Economic'), ('Ecological', 'Ecological'), ('Social/Cultural', 'Social/Cultural'), ('Governance', 'Governance'))</em><a class="headerlink" href="#issf_base.models.SSFCapacityNeed.CAPACITY_NEED_CATEGORY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFCapacityNeed.CAPACITY_NEED_TYPE">
-<code class="descname">CAPACITY_NEED_TYPE</code><em class="property"> = (('Existing', 'Existing'), ('Need', 'Need'))</em><a class="headerlink" href="#issf_base.models.SSFCapacityNeed.CAPACITY_NEED_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFCapacityNeed.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFCapacityNeed.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFCapacityNeed.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFCapacityNeed.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFCapacityNeed.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFCapacityNeed.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a capacity need record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -3296,11 +2964,6 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.SSFCapacityNeed.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFCapacityNeed.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="issf_base.models.SSFCapacityNeed.save">
 <code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFCapacityNeed.save" title="Permalink to this definition">¶</a></dt>
@@ -3322,16 +2985,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFCaseStudies</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFCaseStudies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a SSF Case Studies record.</p>
-<dl class="exception">
-<dt id="issf_base.models.SSFCaseStudies.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFCaseStudies.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFCaseStudies.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFCaseStudies.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFCaseStudies.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFCaseStudies.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a SSF Case Studies record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -3479,11 +3146,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SSFCaseStudies.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFCaseStudies.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SSFCaseStudies.role">
 <code class="descname">role</code><a class="headerlink" href="#issf_base.models.SSFCaseStudies.role" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -3525,16 +3187,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFExperiences</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFExperiences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a SSF Experiences record.</p>
-<dl class="exception">
-<dt id="issf_base.models.SSFExperiences.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFExperiences.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFExperiences.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFExperiences.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFExperiences.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFExperiences.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a SSF Experiences record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -3653,11 +3319,6 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="issf_base.models.SSFExperiences.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFExperiences.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="issf_base.models.SSFExperiences.save">
 <code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFExperiences.save" title="Permalink to this definition">¶</a></dt>
@@ -3700,32 +3361,21 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFGuidelines</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFGuidelines" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a SSF Guidelines record.</p>
-<dl class="attribute">
-<dt id="issf_base.models.SSFGuidelines.ACTIVITY_COVERAGE">
-<code class="descname">ACTIVITY_COVERAGE</code><em class="property"> = (('Regional', 'Regional'), ('National', 'National'), ('International', 'International'), ('Global', 'Global'))</em><a class="headerlink" href="#issf_base.models.SSFGuidelines.ACTIVITY_COVERAGE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFGuidelines.ACTIVITY_TYPE">
-<code class="descname">ACTIVITY_TYPE</code><em class="property"> = (('Conference', 'Conference'), ('Journal Article', 'Journal Article'), ('Meeting', 'Meeting'), ('National Plan', 'National Plan'), ('Network', 'Network'), ('Newsletter', 'Newsletter'), ('Regional Programme', 'Regional Programme'), ('Workshop', 'Workshop'), ('Research', 'Research'))</em><a class="headerlink" href="#issf_base.models.SSFGuidelines.ACTIVITY_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFGuidelines.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFGuidelines.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFGuidelines.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFGuidelines.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a SSF Guidelines record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFGuidelines.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFGuidelines.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFGuidelines.ONGOING_STATUS">
-<code class="descname">ONGOING_STATUS</code><em class="property"> = (('Yes', 'Yes'), ('No', 'No'))</em><a class="headerlink" href="#issf_base.models.SSFGuidelines.ONGOING_STATUS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.SSFGuidelines.activity_coverage">
@@ -3887,11 +3537,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SSFGuidelines.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFGuidelines.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SSFGuidelines.ongoing">
 <code class="descname">ongoing</code><a class="headerlink" href="#issf_base.models.SSFGuidelines.ongoing" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -3961,27 +3606,21 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFKnowledge</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFKnowledge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a SOTA record.</p>
-<dl class="exception">
-<dt id="issf_base.models.SSFKnowledge.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFKnowledge.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFKnowledge.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFKnowledge.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a SOTA record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFKnowledge.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFKnowledge.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFKnowledge.SSF_DEFINED">
-<code class="descname">SSF_DEFINED</code><em class="property"> = (('Yes', 'Yes'), ('No', 'No'), ('Not explicitly', 'Not explicitly'))</em><a class="headerlink" href="#issf_base.models.SSFKnowledge.SSF_DEFINED" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFKnowledge.YES_NO">
-<code class="descname">YES_NO</code><em class="property"> = ((True, 'Yes'), (False, 'No'))</em><a class="headerlink" href="#issf_base.models.SSFKnowledge.YES_NO" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.SSFKnowledge.aim_purpose_question">
@@ -4416,11 +4055,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SSFKnowledge.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFKnowledge.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SSFKnowledge.other_publication_type">
 <code class="descname">other_publication_type</code><a class="headerlink" href="#issf_base.models.SSFKnowledge.other_publication_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -4567,22 +4201,21 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFOrganization</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFOrganization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a SSF Organization.</p>
-<dl class="exception">
-<dt id="issf_base.models.SSFOrganization.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFOrganization.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFOrganization.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFOrganization.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a string representation of a SSF Organization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFOrganization.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFOrganization.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFOrganization.SSF_DEFINED">
-<code class="descname">SSF_DEFINED</code><em class="property"> = (('Yes', 'Yes'), ('No', 'No'), ('Not explicitly', 'Not explicitly'))</em><a class="headerlink" href="#issf_base.models.SSFOrganization.SSF_DEFINED" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.SSFOrganization.achievements">
@@ -4894,11 +4527,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SSFOrganization.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFOrganization.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SSFOrganization.obstacles">
 <code class="descname">obstacles</code><a class="headerlink" href="#issf_base.models.SSFOrganization.obstacles" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -5053,27 +4681,21 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFPerson</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFPerson" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a SSF Person.</p>
-<dl class="exception">
-<dt id="issf_base.models.SSFPerson.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFPerson.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFPerson.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFPerson.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a SSF Person.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFPerson.EDUCATION_LEVEL">
-<code class="descname">EDUCATION_LEVEL</code><em class="property"> = (('Bachelor', 'Bachelor'), ('Master', 'Master'), ('PhD', 'PhD'), ('Other', 'Other'))</em><a class="headerlink" href="#issf_base.models.SSFPerson.EDUCATION_LEVEL" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFPerson.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFPerson.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFPerson.YES_NO">
-<code class="descname">YES_NO</code><em class="property"> = ((True, 'Yes'), (False, 'No'))</em><a class="headerlink" href="#issf_base.models.SSFPerson.YES_NO" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.SSFPerson.address1">
@@ -5264,11 +4886,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SSFPerson.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFPerson.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SSFPerson.organizations">
 <code class="descname">organizations</code><a class="headerlink" href="#issf_base.models.SSFPerson.organizations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accessor to the related objects manager on the forward and reverse sides of
@@ -5360,22 +4977,21 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SSFProfile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFProfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a SSF Profile.</p>
-<dl class="exception">
-<dt id="issf_base.models.SSFProfile.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SSFProfile.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.SSFProfile.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SSFProfile.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a SSF Profile.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SSFProfile.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SSFProfile.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SSFProfile.SSF_DEFINED">
-<code class="descname">SSF_DEFINED</code><em class="property"> = (('Yes', 'Yes'), ('No', 'No'), ('Not explicitly', 'Not explicitly'))</em><a class="headerlink" href="#issf_base.models.SSFProfile.SSF_DEFINED" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.SSFProfile.comments">
@@ -5534,11 +5150,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SSFProfile.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SSFProfile.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SSFProfile.percent">
 <code class="descname">percent</code><a class="headerlink" href="#issf_base.models.SSFProfile.percent" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -5595,18 +5206,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SelectedAttribute</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SelectedAttribute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a selected attribute.</p>
-<dl class="exception">
-<dt id="issf_base.models.SelectedAttribute.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SelectedAttribute.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SelectedAttribute.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SelectedAttribute.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.SelectedAttribute.attribute">
 <code class="descname">attribute</code><a class="headerlink" href="#issf_base.models.SelectedAttribute.attribute" title="Permalink to this definition">¶</a></dt>
@@ -5668,11 +5267,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SelectedAttribute.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SelectedAttribute.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SelectedAttribute.selected_attribute_id">
 <code class="descname">selected_attribute_id</code><a class="headerlink" href="#issf_base.models.SelectedAttribute.selected_attribute_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -5686,18 +5280,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SelectedThemeIssue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SelectedThemeIssue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a selected theme issue.</p>
-<dl class="exception">
-<dt id="issf_base.models.SelectedThemeIssue.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SelectedThemeIssue.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SelectedThemeIssue.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SelectedThemeIssue.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.SelectedThemeIssue.issf_core">
 <code class="descname">issf_core</code><a class="headerlink" href="#issf_base.models.SelectedThemeIssue.issf_core" title="Permalink to this definition">¶</a></dt>
@@ -5717,11 +5299,6 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.SelectedThemeIssue.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SelectedThemeIssue.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.SelectedThemeIssue.other_theme_issue">
@@ -5764,18 +5341,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">SiteVersion</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.SiteVersion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a version of the site.</p>
-<dl class="exception">
-<dt id="issf_base.models.SiteVersion.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.SiteVersion.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.SiteVersion.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.SiteVersion.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.SiteVersion.change_set">
 <code class="descname">change_set</code><a class="headerlink" href="#issf_base.models.SiteVersion.change_set" title="Permalink to this definition">¶</a></dt>
@@ -5816,11 +5381,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.SiteVersion.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.SiteVersion.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.SiteVersion.release_date">
 <code class="descname">release_date</code><a class="headerlink" href="#issf_base.models.SiteVersion.release_date" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -5848,16 +5408,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Species</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Species" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a species.</p>
-<dl class="exception">
-<dt id="issf_base.models.Species.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Species.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Species.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Species.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Species.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Species.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of a species.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -5888,11 +5452,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="issf_base.models.Species.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Species.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="issf_base.models.Species.species_common">
 <code class="descname">species_common</code><a class="headerlink" href="#issf_base.models.Species.species_common" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -5920,16 +5479,20 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Theme_Issue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Theme_Issue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a theme/issue.</p>
-<dl class="exception">
-<dt id="issf_base.models.Theme_Issue.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Theme_Issue.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Theme_Issue.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Theme_Issue.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Theme_Issue.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Theme_Issue.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of this theme/issue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -5953,11 +5516,6 @@ many-to-one relation.</p>
 <p>Most of the implementation is delegated to a dynamically defined manager
 class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.Theme_Issue.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Theme_Issue.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.Theme_Issue.selectedthemeissue_set">
@@ -6010,16 +5568,20 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">Theme_Issue_Value</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Theme_Issue_Value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a theme/issue value.</p>
-<dl class="exception">
-<dt id="issf_base.models.Theme_Issue_Value.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.Theme_Issue_Value.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.Theme_Issue_Value.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.Theme_Issue_Value.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dl class="method">
+<dt id="issf_base.models.Theme_Issue_Value.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.Theme_Issue_Value.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a string representation of this theme/issue value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string representation.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -6043,11 +5605,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.Theme_Issue_Value.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.Theme_Issue_Value.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.Theme_Issue_Value.selectedthemeissue_set">
@@ -6105,18 +5662,6 @@ object the first time, the query is executed.</p>
 <em class="property">class </em><code class="descclassname">issf_base.models.</code><code class="descname">WhoFeature</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#issf_base.models.WhoFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>Model representing a front-page who feature.</p>
-<dl class="exception">
-<dt id="issf_base.models.WhoFeature.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#issf_base.models.WhoFeature.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="issf_base.models.WhoFeature.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#issf_base.models.WhoFeature.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="issf_base.models.WhoFeature.about">
 <code class="descname">about</code><a class="headerlink" href="#issf_base.models.WhoFeature.about" title="Permalink to this definition">¶</a></dt>
@@ -6144,11 +5689,6 @@ object the first time, the query is executed.</p>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="issf_base.models.WhoFeature.objects">
-<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#issf_base.models.WhoFeature.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="issf_base.models.WhoFeature.ssf_knowledge">
