@@ -10,6 +10,11 @@ Welcome to ISSF's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   details
+   frontend
+   issf_admin
+   issf_base
+
 
 
 Indices and tables
