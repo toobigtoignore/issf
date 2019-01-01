@@ -625,6 +625,20 @@ footer {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF646B72', endColorstr='#FFC9D7E5', GradientType=1);
 }
 
+.map-icons #spacer {
+    width: 100%;
+    height: 100%;
+    background: #6b7279;
+    background: -webkit-gradient(linear, left top, right top, from(#FF6B7279), to(#FFD7E4F2));
+    background: -moz-linear-gradient(left, #6b7279 0%, #d7e4f2 12%);
+    background: -moz-gradient(center top, #6b7279 0%, #d7e4f2 12%);
+    background: -webkit-linear-gradient(left, #6b7279 0%, #d7e4f2 12%);
+    background: -o-linear-gradient(left, #6b7279 0%, #d7e4f2 12%);
+    background: -ms-linear-gradient(left, #6b7279 0%, #d7e4f2 12%);
+    background: linear-gradient(to right, #6b7279 0%, #d7e4f2 12%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF6B7279', endColorstr='#FFD7E4F2', GradientType=1);
+ }
+
 .map-icons a:hover span {
     background-position: right center;
 }
