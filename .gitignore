@@ -67,3 +67,9 @@ issf_prod/settings/prod.py
 issf_prod/settings/secret.py
 
 issf_prod/.env
+
+# sphinx
+
+docs/_sources/
+docs/.doctrees/
+docs/objects.inv
