@@ -932,6 +932,9 @@ footer {
 .map-icons #guidelines.on .pop {
     background-color: #1c1c77;
 }
+.map-icons #guidelines.on .pop p {
+    color: #fff !important;
+}
 
 .map-icons #project.on .pop {
     background-color: #7cd3d7;
