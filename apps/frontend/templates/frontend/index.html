@@ -1712,6 +1712,7 @@
 
                 markers.clearLayers();
                 map = markers._map;
+                map.options.minZoom = 2;
                 map.removeLayer(markers);
 
                 var mapDataSource = jsonData.mapData;
@@ -1908,7 +1909,7 @@
                 var contained = [];
 
                 map.eachLayer(function(l) {
-                    if( l instanceof L.Marker )
+                    if( l instanceof L.Marker ){}
                         contained.push(l.getLatLng());
                 });
                 var bounds = new L.LatLngBounds(contained);
