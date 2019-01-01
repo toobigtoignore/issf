@@ -72,7 +72,7 @@
                     </a>
 
                     <a id="sota" tabindex="1">
-                        <h3>State-of-the-Art<br>in SSF Research</h3>
+                        <h3>State-of-the-Art in SSF Research</h3>
                         <span></span>
 
                         <div class="pop">
@@ -120,7 +120,7 @@
                     </a>
 
                     <a id="capacity" tabindex="5">
-                        <h3>Capacity<br>Development</h3>
+                        <h3>Capacity Development</h3>
                         <span></span>
 
                         <div class="pop">
@@ -1712,6 +1712,7 @@
 
                 markers.clearLayers();
                 map = markers._map;
+                map.options.minZoom = 2;
                 map.removeLayer(markers);
 
                 var mapDataSource = jsonData.mapData;
@@ -1911,6 +1912,7 @@
                     if( l instanceof L.Marker )
                         contained.push(l.getLatLng());
                 });
+                if(contained.length < 100)
                 var bounds = new L.LatLngBounds(contained);
                 map.fitBounds(bounds);
             }
