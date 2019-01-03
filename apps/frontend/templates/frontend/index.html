@@ -59,16 +59,6 @@
                 </div>
 
                 <nav class="map-icons">
-                    <a id="toexpand">
-                        <div class="pop">
-                            <h4>Dataset Filters</h4>
-                            <p>
-                                click icon to hide/show dataset; hover icon to popup dataset description; click here to
-                                show dataset names
-                            </p>
-                        </div>
-                    </a>
-
                     <a id="who" tabindex="0">
                         <h3>Who's Who in SSF</h3>
                         <span></span>
@@ -148,12 +138,8 @@
                         <span></span>
 
                         <div class="pop">
-                            <p style="color: #FFFFFF;">
-                                Stories, lessons and knowledge about small-scale fisheries
-                            </p>
-                            <p style="color: #FFFFFF;">
-                                <strong>{{ num_expe_records }} records.</strong>
-                            </p>
+                            <p>Stories, lessons and knowledge about small-scale fisheries</p>
+                            <p><strong>{{ num_expe_records }} records.</strong></p>
                         </div>
                     </a>
 
@@ -162,27 +148,12 @@
                         <span></span>
 
                         <div class="pop">
-                            <p style="color: #FFFFFF;">Tracking of the SSF Guidelines implementation worldwide</p>
-                            <p style="color: #FFFFFF;">
-                                <strong>{{ num_guide_records }} records.</strong>
-                            </p>
+                            <p>Tracking of the SSF Guidelines implementation worldwide</p>
+                            <p><strong>{{ num_guide_records }} records.</strong></p>
                         </div>
                     </a>
 
-                    <a class="disable" id="no-hover" tabindex="8" style="border-bottom: 0;">
-                        <h3></h3>
-                        <span></span>
-                    </a>
-
-                    <a class="disable" id="no-hover" tabindex="9" style="border-bottom: 0;">
-                        <h3></h3>
-                        <span></span>
-                    </a>
-
-                    <a class="disable" id="no-hover" tabindex="10" style="border-bottom: 0;">
-                        <h3></h3>
-                        <span></span>
-                    </a>
+                    <div id="spacer"/>
 
                     <a id="all" tabindex="11">
                         <h3>Show/Hide All</h3>
@@ -582,15 +553,15 @@
                         </p>
 
                         <div style="height:50px; padding-left: 10px;">
-                            <div style="background-image: url({% static 'issf_base/img/icon-who.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-who.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-sota.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-sota.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-profile.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-profile.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-organize.png' %}); background-position: right center; float: left; height:50px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-organize.png' %}); background-position: right center; float: left; height:50px; width:60px;">
                             </div>
-                            <div style="background-image: url({% static 'issf_base/img/icon-guidelines.png' %}); background-position: right center; float: left; height:48px; width:60px;">
+                            <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-guidelines.png' %}); background-position: right center; float: left; height:48px; width:60px;">
                             </div>
                         </div>
 
@@ -787,7 +758,7 @@
                 }
             };
 
-            $("#full-country-select-container").children('select').removeAttr('placeholder');
+            $("#quick-country-select").children('select').attr('placeholder', 'Country');
 
             var quickCountrySelect = $('#quick-country-select').children('select')[0];
             $(quickCountrySelect).removeAttr("multiple");
@@ -928,19 +899,21 @@
         $(window).load(is.verticalResize);
 
         $('.content-section .bt-prev').addClass('disable');
-
+        
         $('.map-icons a:not(#toexpand)').each(function () {
             var tt = $(this).find('h3').html(),
                 title = tt.replace('<br>', ' ');
+            title = '☐ ' + title;
             $(this).find('.pop').prepend('<h4>' + title + '</h4>');
         });
 
-        $('.map-icons a').on('mouseenter', function () {
+        $('.map-icons a:not(.disable)').on('mouseenter', function () {
             if (!$('.map-icons').hasClass('on')) {
                 $(this).find('.pop').show().css({opacity: 0}).animate({right: 66, opacity: 1}, 300);
             }
         });
-        $('.map-icons a').on('mouseleave', function () {
+        $('.map-icons a:not(.disable)').on('mouseleave', function () {
+            $('.map-icons .pop').fadeOut(50);
             if (!$('.map-icons').hasClass('on')) {
                 $(this).find('.pop').animate({right: 52, opacity: 0}, 100, function () {
                     $(this).removeAttr('style');
@@ -949,62 +922,64 @@
         });
 
         /*
-            ==== Icon filter button click listener ====
+            ==== Icon filter button click listener ==== 
         */
 
-        $('.map-icons a:not(#toexpand,.disable)').on('click', function () {
+        $('.map-icons a:not(.disable)').on('click', function () {
             var icon = $(this).attr('id');
             if ($(this).hasClass('on')) {
-                $(this).removeClass('on');
-                $('#all').removeClass('on');
+                // Turn off the "show all" button
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    $('.map-icons a').removeClass('on');
+                } else {
+                    $( this ).removeClass('on');
+                    $( this ).find('h4').html(
+                        $( this ).find('h4').html().replace('☑', '☐')
+                    );
                 }
             } else {
-                $(this).addClass('on');
                 if (icon == 'all') {
-                    $('.map-icons a:not(#toexpand,.disable)').addClass('on');
+                    $('.map-icons a:not(.disable)').addClass('on');
+                } else {
+                    $( this ).addClass('on');
+                    $( this ).find('h4').html(
+                        $( this ).find('h4').html().replace('☐', '☑')
+                    );
                 }
             }
+
             loadData2();
             SaveFilterButtonStatus();
         });
 
-        $('#toexpand').on('click', function () {
+        $('#tosearch').on('click', function () {
             if ($(this).hasClass('on')) {
-                $('.map-icons').animate({width: 52}, 200, function () {
-                    $('#toexpand,.map-icons').removeClass('on');
+                $('#advance-search #full-search').stop().slideUp(300, function () {
+                    $('#tosearch').removeClass('on');
                 });
-                $('.map-icons h3').fadeOut(200);
+                $('#advance-search').addClass('quick');
+                $('#advance-search #quick-search').stop().slideDown(100);
+                $('#tosearch').animate({bottom: -29}, 50);    //original bottom value was -42.  Ji.
             } else {
-                // If you want more space for longer text you can change 200 to more number
-                $('.map-icons').animate({width: 200}, 300, function () {
-                    $('#toexpand,.map-icons').addClass('on');
+                $('#advance-search #full-search').stop().slideDown(500, function () {
+                    $('#tosearch').addClass('on');
                 });
-                $('.map-icons h3').fadeIn(300, function () {
-                    var hi = $(this).height();
-                    $(this).css({marginTop: (42 - hi) / 2, top: 'auto'});
-                });
-                $('.map-icons .pop').fadeOut(50);
+                $('#advance-search').removeClass('quick');
+                $('#advance-search #quick-search').stop().slideUp(200);
+                $('#tosearch').animate({bottom: -30}, 50);
             }
-            setTimeout(function () {
-                $('.map-icons').animate({width: 52}, 300, function () {
-                    $('#toexpand,.map-icons').removeClass('on');
-                });
-                $('.map-icons h3').fadeOut(300);
-            }, 10000);
         });
-        $('.map-icons a:not(a#no-hover):not(#toexpand)').mouseover(function () {
-            $('<div class="btn_popup">Click to show/hide</div>').appendTo('body');
-        })
-            .mouseleave(function () {
-                $('.btn_popup').remove();
-            })
-            .mousemove(function (e) {
-                var mouseX = e.pageX, // X coordinates of mouse
-                    mouseY = e.pageY; // Y coordinates of mouse
-                $('.btn_popup').css({top: mouseY - 28, left: mouseX + 4});
-            });
+
+        $('#q-search').on('focusout', function () {
+            var keywords = $('#q-search').val();
+            $('#home-search-form')[0].reset();
+            $('#q-search').val(keywords);
+            $('#id_keywords').val($('#q-search').val());
+        });
+
+        $('#id_keywords').on('focusout', function () {
+            $('#q-search').val($('#id_keywords').val());
+        });
 
         $('.accordion a').on('click', function (e) {
             e.preventDefault();
@@ -1047,16 +1022,9 @@
         // Turn on all filters
         if (GlobalNewLoad) {
             // Loading default filter buttons'
-            $('nav.map-icons a:nth-child(2)').addClass('on'); //who
-            $('nav.map-icons a:nth-child(3)').addClass('on'); //sota
-            $('nav.map-icons a:nth-child(4)').addClass('on'); //profile
-            $('nav.map-icons a:nth-child(5)').addClass('on'); //orgs
-            $('nav.map-icons a:nth-child(6)').addClass('on'); //case studies
-            $('nav.map-icons a:nth-child(7)').addClass('on'); //capacity
-            $('nav.map-icons a:nth-child(8)').addClass('on'); //experiences
-            $('nav.map-icons a:nth-child(9)').addClass('on'); //guidelines
-            $('nav.map-icons a:nth-child(10)').addClass('on'); //choropleth layer
-            $('nav.map-icons a:last-child').addClass('on'); //toggle all
+            for(i = 0; i < 10; i++)
+                $('nav.map-icons a:nth-child(' + i + ')').addClass('on');
+            $('nav.map-icons a:last-child').addClass('on');
             SaveFilterButtonStatus();
         } else {
             // Loading saved filter buttons
@@ -1066,6 +1034,10 @@
                 $($('.map-icons a')[index]).addClass('on');
             }
         }
+
+        $('.map-icons .on h4').each(function(){
+            $( this ).html($( this ).html().replace('☐', '☑'));
+        });
 
         /*
             ===== Leaflet =====
@@ -1460,7 +1432,7 @@
                         map.removeControl(choroControl);
                         map.removeControl(legend);
 
-                        $('.map-icons a:not(#toexpand)').addClass('on');
+                        $('.map-icons a').addClass('on');
                         loadData2();
                     } else {
                         loadChoropleth();
@@ -1489,7 +1461,7 @@
                     map.removeLayer(geojson);
                     map.removeControl(choroControl);
                     map.removeControl(legend);
-                    $('.map-icons a:not(#toexpand)').addClass('on');
+                    $('.map-icons a').addClass('on');
                     loadData2();
                 }
             });
@@ -1499,7 +1471,7 @@
 
             function loadChoropleth() {
                 if (isReady) {
-                    $('.map-icons a:not(#toexpand)').removeClass('on');
+                    $('.map-icons a').removeClass('on');
                     loadData2();
                     if (geojson) {
                         map.removeLayer(geojson);
@@ -1740,6 +1712,7 @@
 
                 markers.clearLayers();
                 map = markers._map;
+                map.options.minZoom = 2;
                 map.removeLayer(markers);
 
                 var mapDataSource = jsonData.mapData;
@@ -1932,6 +1905,16 @@
 
                 // Hide Loading Overlay
                 $("#map-loading-overlay").fadeOut(100);
+
+                var contained = [];
+
+                map.eachLayer(function(l) {
+                    if( l instanceof L.Marker )
+                        contained.push(l.getLatLng());
+                });
+                if(contained.length < 100)
+                var bounds = new L.LatLngBounds(contained);
+                map.fitBounds(bounds);
             }
             exportCallBack = true;
         }
