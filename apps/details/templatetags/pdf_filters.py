@@ -8,9 +8,12 @@ register = template.Library()
 
 
 @register.filter
-def get64(url):
+def get64(url: str) -> str:
     """
-    Method returning base64 image data instead of URL
+    Method returning base64 image data instead of URL.
+
+    :param url: The URL to retrieve the image from.
+    :return: A base64-encoded image.
     """
     if url.startswith("http"):
         image = StringIO.StringIO(urllib.urlopen(url).read())

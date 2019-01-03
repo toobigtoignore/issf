@@ -2,7 +2,7 @@ import datetime
 import json
 import re
 import os.path
-from typing import Generator, List, Iterator
+from typing import Generator, List, Iterable, List
 
 from zipfile import ZipFile
 
@@ -35,6 +35,12 @@ gzip_middleware = GZipMiddleware()
 
 @gzip_page
 def index(request: HttpRequest) -> HttpResponse:
+    """
+    View for rendering the index page of the site.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
+    """
     # get data for dashboard panels
     recent_contributions = RecentContributions.objects.all()
     for recent_contribution in recent_contributions:
@@ -80,10 +86,12 @@ def index(request: HttpRequest) -> HttpResponse:
     )
 
 
-def get_map_points(issf_core_ids):
+def get_map_points(issf_core_ids: Iterable[int]) -> List[ISSFCoreMapPointUnique]:
     """
     Returns map points for all given IDs, if they exist.
-    :param issf_core_ids: An iterator containing core ids.
+
+    :param issf_core_ids: An iterable containing core ids.
+    :return: A list of map points.
     """
     points = []
     for core_id in issf_core_ids:
@@ -93,6 +101,12 @@ def get_map_points(issf_core_ids):
 
 @gzip_page
 def frontend_data(request: HttpRequest) -> HttpResponse:
+    """
+    View that handles retrieving and searching map points for the front page.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
+    """
 
     search_terms = []
 
@@ -330,6 +344,11 @@ class MapLayer(GeoJSONLayerView):
     properties = ['issf_core_id', 'core_record_type', 'core_record_summary', 'geographic_scope_type']
 
     def get_context_data(self, **kwargs) -> Context:
+        """
+        Gets the context data for this map.
+
+        :return: The context data.
+        """
         # this case is called from details to show map points for one record
         context = super(MapLayer, self).get_context_data(**kwargs)
         issf_core_id = self.request.GET['issf_core_id']
@@ -342,6 +361,9 @@ class MapLayer(GeoJSONLayerView):
 def table_data_export(request: HttpRequest) -> HttpResponse:
     """
     View that handles generating and returning zip files containing csv files full of records.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     table_data_file_name = "/tmp/tabledata.zip"
 
@@ -700,6 +722,7 @@ def table_data_export(request: HttpRequest) -> HttpResponse:
 def write_file_csv(filename: str, records: QuerySet, zipfile: ZipFile) -> None:
     """
     Writes records to a specified file in a zipfile.
+
     :param filename: The filename to write to
     :param records: The records to write
     :param zipfile: The zipfile to write to
@@ -720,6 +743,9 @@ def profile_csv(request: HttpRequest) -> HttpResponse:
     """
     URL that generates and returns a zipfile of csv files for GCPC.
     Now unused.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     profile_records = SSFProfile.objects.all().values(
         'issf_core_id',
@@ -805,6 +831,9 @@ def profile_csv(request: HttpRequest) -> HttpResponse:
 def unique_chain(*iterables: List[Model]) -> Generator[int, None, None]:
     """
     Generator that returns all unique issf_core_ids
+
+    :param iterables: The models to get the unique IDs for.
+    :return: A generator of unique IDs.
     """
     known_ids = set()
     for it in iterables:
@@ -814,9 +843,12 @@ def unique_chain(*iterables: List[Model]) -> Generator[int, None, None]:
                 yield element['issf_core_id']
 
 
-def convert_records(records: Iterator[Model]) -> List[Model]:
+def convert_records(records: Iterable[Model]) -> List[Model]:
     """
     Converts records to a format that is more easily usable for most purposes.
+
+    :param records: The records to convert.
+    :return: The converted records.
     """
     records = list(records)
     for i, record in enumerate(records):
@@ -862,7 +894,11 @@ def convert_records(records: Iterator[Model]) -> List[Model]:
 
 def country_records(request: HttpRequest, country_id: int) -> HttpResponse:
     """
-    Gets all records for a given country.
+    View that handles getting all records for a given country.
+
+    :param request: The incoming HTTP request.
+    :param country_id: The ID of the country to get the records for.
+    :return: The HTTP response to return to the user.
     """
     nation_records = GeographicScopeNation.objects.filter(country_id=country_id).values()
     region_records = Geographic_Scope_Region.objects.filter(countries__country_id=country_id).values()
@@ -888,6 +924,9 @@ def country_records(request: HttpRequest, country_id: int) -> HttpResponse:
 def new_tip(request: HttpRequest) -> HttpResponse:
     """
     View to submit a new tip.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     is_staff = False
     if request.user.is_staff:
@@ -927,6 +966,9 @@ def new_tip(request: HttpRequest) -> HttpResponse:
 def new_faq(request: HttpRequest) -> HttpResponse:
     """
     View to submit a new FAQ entry.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
 
     if request.method == 'POST':
@@ -946,6 +988,9 @@ def new_faq(request: HttpRequest) -> HttpResponse:
 def who_feature(request: HttpRequest) -> HttpResponse:
     """
     View for setting the who feature on the front page.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     is_staff = False
     if request.user.is_staff:
@@ -971,6 +1016,9 @@ def who_feature(request: HttpRequest) -> HttpResponse:
 def geojson_upload(request: HttpRequest) -> HttpResponse:
     """
     View for uploading a new geojson file.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     is_staff = False
     if request.user.is_staff:

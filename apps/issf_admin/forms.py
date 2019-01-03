@@ -16,6 +16,9 @@ class ProfileForm(ModelForm):
     def clean(self) -> Dict[str, Any]:
         """
         Cleans and validates the data entered by the user.
+
+        :return: The cleaned data.
+        :raises forms.ValidationError: When the form data provided is invalid.
         """
         cleaned_data = super(ProfileForm, self).clean()
         # check for required fields, it cannot be done in the model because it inherits from

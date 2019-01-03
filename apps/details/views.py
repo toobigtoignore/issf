@@ -12,6 +12,7 @@ from django.contrib.sitemaps import Sitemap
 from django.core.cache import cache
 from django.urls import reverse
 from django.db import connection
+from django.db.models.query import QuerySet
 from django.forms import ModelForm
 from django.contrib.gis.db.models import Model
 from django.forms.utils import ErrorList
@@ -73,15 +74,25 @@ class AttributesUpdateView(UpdateView):
 class DetailsSitemap(Sitemap):
     """
     Generates a sitemap.
-    No longer used.
     """
     changefreq = "weekly"
     priority = 0.5
 
-    def items(self):
+    def items(self) -> QuerySet:
+        """
+        Gets all items to be displayed under the details part of the sitemap.
+
+        :return: A queryset containing all ISSF_Core objects.
+        """
         return ISSF_Core.objects.all()
 
-    def lastmod(self, obj) -> datetime:
+    def lastmod(self, obj: ISSF_Core) -> datetime:
+        """
+        Gets the last modified date of an object.
+
+        :param obj: The object to get the last modified date of.
+        :return: The last modified date of the object.
+        """
         return obj.edited_date
 
 
@@ -90,6 +101,10 @@ def contribute(request: HttpRequest, who: str = '') -> HttpResponse:
     """
     View for the contribute page. It's initialized with blank forms for each dataset except that
     the contributor is automatically set to the currently logged in user.
+
+    :param request: The incoming HTTP request.
+    :param who: String provided in URL parameter. If set to \"who\", the contribute organization page will open by default.
+    :return: The HTTP response to return to the user.
     """
     # determine if the current user already has a person record
     issf_core_id = None
@@ -147,6 +162,10 @@ reused code that could be factored out to functions.
 def sota_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying details for a SOTA record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the SOTA record to display.
+    :return: The HTTP response to return to the user.
     """
     # knowledge and related instances
     knowledge_instance = SSFKnowledge.objects.get(issf_core_id=issf_core_id)
@@ -223,6 +242,10 @@ def sota_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 def who_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Who's Who record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
     """
     # person and related instances
     profile_form = None
@@ -287,6 +310,10 @@ def who_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 def organization_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of an Organization record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
     """
     # organization and related instances
     organization_instance = SSFOrganization.objects.get(issf_core_id=issf_core_id)
@@ -350,6 +377,10 @@ def organization_details(request: HttpRequest, issf_core_id: int) -> HttpRespons
 def capacity_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Capacity Development record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
     """
     # Record instances
     capacity_need_instance = SSFCapacityNeed.objects.get(issf_core_id=issf_core_id)
@@ -410,6 +441,10 @@ def capacity_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 def profile_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a SSF Profile record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
     """
     # Record instances
     profile_instance = SSFProfile.objects.get(issf_core_id=issf_core_id)
@@ -490,6 +525,10 @@ def profile_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 def guidelines_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Guidelines record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
     """
     # Record instances
     guidelines_instance = SSFGuidelines.objects.get(issf_core_id=issf_core_id)
@@ -558,6 +597,10 @@ def guidelines_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of an Experiences record.
+    
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
     """
     # Record instances
     experiences_instance = SSFExperiences.objects.get(issf_core_id=issf_core_id)
@@ -619,6 +662,10 @@ def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse
 def case_study_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Case Study record.
+    
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
     """
     # Record instances
     case_studies_instance = SSFCaseStudies.objects.get(issf_core_id=issf_core_id)
@@ -682,6 +729,11 @@ def case_study_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 def get_other_theme_issue(themes_issues_form, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
     """
     Unused function to set values in a given themes and issues form based on data already stored in the database.
+
+    :param theme_issues_form: The form to set values on.
+    :param field: The field to set.
+    :param issf_core_id: The ID of the record to use to set values.
+    :param theme_value_id: The ID of the SelectedThemeIssue record to use.
     """
     if SelectedThemeIssue.objects.filter(issf_core=issf_core_id, theme_issue_value=theme_issue_value_id).exists():
         selected_theme_issue = SelectedThemeIssue.objects.get(issf_core=issf_core_id, theme_issue_value=theme_issue_value_id)
@@ -698,6 +750,11 @@ database.
 def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) -> HttpResponse:
     """
     View which handles the saving of most types of records.
+    
+    :param request: The incoming HTTP request.
+    :param model_class: The class of the record we want to save.
+    :param form_class: The class of the form we will be retrieving data from.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -773,6 +830,9 @@ def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) 
 def update_tsvector_summary(core_record_type: str, issf_core_id: str) -> None:
     """
     Updates the tsrecord (now unused) and summary for a given record.
+
+    :param core_record_type: The type of record to update the tsrecord and summary for.
+    :param issf_core_id: The ID of the record we want to update.
     """
     # update summary and full-text search vector using direct db call
     cursor = connection.cursor()
@@ -812,6 +872,9 @@ def is_int(s: Any) -> bool:
     """
     Checks whether a provided value can be casted to an integer.
     Unused.
+
+    :param s: The value to check.
+    :return: Whether or not the value can be cast to int.
     """
     try:
         int(s)
@@ -824,6 +887,9 @@ def is_int(s: Any) -> bool:
 def sota_basic(request: HttpRequest) -> HttpResponse:
     """
     View for saving a SOTA record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     # does not use save_basic because the submit includes two django forms
     if request.method == 'POST':
@@ -910,6 +976,9 @@ def sota_basic(request: HttpRequest) -> HttpResponse:
 def who_basic(request: HttpRequest) -> HttpResponse:
     """
     View that saves a Who's Who record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     # Attempt to save the profile before saving the record.
     # If saving the profile fails, return a different response and don't save the record.
@@ -924,6 +993,9 @@ def who_basic(request: HttpRequest) -> HttpResponse:
 def organization_basic(request: HttpRequest) -> HttpResponse:
     """
     View for saving an organization record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     # cannot use save_basic because of prefix
     # return save_basic(request, SSFOrganization, SSFOrganizationForm)
@@ -985,6 +1057,9 @@ def organization_basic(request: HttpRequest) -> HttpResponse:
 def urlEncodeNonAscii(b: str) -> str:
     """
     Encodes non-ascii characters in urls so that they can be used.
+
+    :param b: The string to encode.
+    :return: The encoded string.
     """
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
 
@@ -992,6 +1067,9 @@ def urlEncodeNonAscii(b: str) -> str:
 def iriToUri(iri: str) -> str:
     """
     Converts an iri to a uri.
+
+    :param iri: The iri to convert.
+    :return: The converted uri.
     """
     parts = urlparse.urlparse(iri)
     return urlparse.urlunparse(part.encode('idna') if parti == 1 else urlEncodeNonAscii(part.encode('utf-8')) for parti, part in enumerate(parts))
@@ -1001,6 +1079,9 @@ def iriToUri(iri: str) -> str:
 def geocode_address(request: HttpRequest) -> HttpResponse:
     """
     View that geocodes an address using bing's service.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1056,6 +1137,9 @@ def geocode_address(request: HttpRequest) -> HttpResponse:
 def capacity_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save a Capacity Development record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return save_basic(request, SSFCapacityNeed, SSFCapacityNeedForm)
 
@@ -1065,6 +1149,10 @@ def capacity_need_rating(request: HttpRequest, prev_capacity_need_id: int) -> Ht
     """
     View to rate a capacity need.
     No longer used.
+
+    :param request: The incoming HTTP request.
+    :param prev_capacity_need_id: The ID of the previous capacity need.
+    :return: The HTTP response to return to the user.
     """
     if request.method != 'POST':
         # Display
@@ -1135,6 +1223,9 @@ def capacity_need_rating(request: HttpRequest, prev_capacity_need_id: int) -> Ht
 def sota_other(request: HttpRequest) -> HttpResponse:
     """
     View for saving other details for a SOTA record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1173,7 +1264,10 @@ def sota_other(request: HttpRequest) -> HttpResponse:
 @login_required
 def who_researcher(request: HttpRequest) -> HttpResponse:
     """
-    View for saving the record for a researcher who's who
+    View for saving the record for a researcher who's who.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return save_basic(request, SSFPerson, PersonResearcherForm)
 
@@ -1181,6 +1275,9 @@ def who_researcher(request: HttpRequest) -> HttpResponse:
 def is_filled(field: Dict[str, Any]) -> bool:
     """
     Ensures that at least one item in the field is filled.
+
+    :param field: The field to check.
+    :return bool: Whether or not at least one item in the field is filled.
     """
     for (key, value) in field.items():
         if value and not (key in ['attribute', 'issf_core', 'label_order', 'row_number', 'value_order', 'selected_attribute_id', 'DELETE']):
@@ -1194,6 +1291,9 @@ def profile_main_attributes(request: HttpRequest) -> HttpResponse:
     """
     View to save the characteristics form for an SSF Profile.
     Described as a 'house of cards' by the last person to document it.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1283,6 +1383,10 @@ def profile_main_attributes(request: HttpRequest) -> HttpResponse:
 def main_attributes_save(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for saving the main attributes form for an ssf profile.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to save the main attributes for.
+    :return: The HTTP response to return to the user.
     """
     # Get record and form instances
     profile_instance = SSFProfile.objects.get(issf_core_id=issf_core_id)
@@ -1314,6 +1418,9 @@ def main_attributes_save(request: HttpRequest, issf_core_id: int) -> HttpRespons
 def profile_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save an SSF profile.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return save_basic(request, SSFProfile, SSFProfileForm)
 
@@ -1322,6 +1429,9 @@ def profile_basic(request: HttpRequest) -> HttpResponse:
 def guidelines_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save a Guidelines record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return save_basic(request, SSFGuidelines, SSFGuidelinesForm)
 
@@ -1330,6 +1440,9 @@ def guidelines_basic(request: HttpRequest) -> HttpResponse:
 def experiences_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save an Experiences record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return save_basic(request, SSFExperiences, SSFExperiencesForm)
 
@@ -1338,6 +1451,9 @@ def experiences_basic(request: HttpRequest) -> HttpResponse:
 def case_study_basic(request: HttpRequest) -> HttpResponse:
     """
     View to save a Case Study record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return save_basic(request, SSFCaseStudies, SSFCaseStudiesForm)
 
@@ -1347,6 +1463,9 @@ def case_study_basic(request: HttpRequest) -> HttpResponse:
 def themes_issues(request: HttpRequest) -> HttpResponse:
     """
     View for saving themes/issues for a record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1392,6 +1511,11 @@ def themes_issues(request: HttpRequest) -> HttpResponse:
 def save_other_theme_issue(themes_issues_form, field: str, issf_core_id: int, theme_issue_value_id: int) -> None:
     """
     Saves 'other' values for theme/issue forms.
+
+    :param themes_issues_form: The form to save other values from.
+    :param field: The name of the other field.
+    :param issf_core_id: The ID of the record to save to.
+    :param theme_issue_value_id: The ID of the SelectedThemeIssue record to save to.
     """
     if len(themes_issues_form.cleaned_data[field]) > 0:
         # other text can only be saved if other was checked; otherwise the
@@ -1414,6 +1538,9 @@ def save_other_theme_issue(themes_issues_form, field: str, issf_core_id: int, th
 def common_themes_issues(request: HttpRequest) -> HttpResponse:
     """
     View to save common themes/issues.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1440,7 +1567,10 @@ def common_themes_issues(request: HttpRequest) -> HttpResponse:
 @login_required
 def common_attributes(request: HttpRequest) -> HttpResponse:
     """
-    View to save common attributes
+    View to save common attributes.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1468,6 +1598,9 @@ def common_attributes(request: HttpRequest) -> HttpResponse:
 def geographic_scope(request: HttpRequest) -> HttpResponse:
     """
     View to save geographic scope form.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1603,6 +1736,10 @@ def geographic_scope(request: HttpRequest) -> HttpResponse:
 def geographic_scope_save(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View that returns the geographic scope forms when creating a new record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display geographic scope forms for.
+    :return: The HTTP response to return to the user.
     """
     core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
 
@@ -1636,6 +1773,9 @@ def geographic_scope_save(request: HttpRequest, issf_core_id: int) -> HttpRespon
 def profile_organizations(request: HttpRequest) -> HttpResponse:
     """
     View to save organization associated with an SSF Profile.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1677,6 +1817,9 @@ def profile_organizations(request: HttpRequest) -> HttpResponse:
 def species(request: HttpRequest) -> HttpResponse:
     """
     View to save species associated with a record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1714,6 +1857,9 @@ def species(request: HttpRequest) -> HttpResponse:
 def species_landings(request: HttpRequest) -> HttpResponse:
     """
     View to save species form with landings.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1751,6 +1897,9 @@ def species_landings(request: HttpRequest) -> HttpResponse:
 def external_links(request: HttpRequest) -> HttpResponse:
     """
     View to save external links associated with a record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     if request.method == 'POST':
         if request.is_ajax():
@@ -1787,6 +1936,9 @@ def external_links(request: HttpRequest) -> HttpResponse:
 def changelog(request: HttpRequest) -> HttpResponse:
     """
     View to render changelogs for the site.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     site_versions = SiteVersion.objects.all()
 
@@ -1800,6 +1952,10 @@ def changelog(request: HttpRequest) -> HttpResponse:
 def generate_report(record_type: str, issf_core_id: int) -> Dict[str, Any]:
     """
     Handles the retrieval and generation of data to be used in reports.
+
+    :param record_type: The type of record to generate a report for.
+    :param issf_core_id: The ID of the record to generate a report for.
+    :return: A dict containing parameters to be passed in when rendering the report template.
     """
     # Retrieve the instances associated with this record
     record = SSFProfile.objects.get(issf_core_id=issf_core_id)
@@ -1952,6 +2108,11 @@ def generate_report(record_type: str, issf_core_id: int) -> Dict[str, Any]:
 def report(request: HttpRequest, record_type: str, issf_core_id: int) -> HttpResponse:
     """
     Renders a webpage containing a report on a given item.
+
+    :param request: The incoming HTTP request.
+    :param record_type: The type of record to generate a report for.
+    :param issf_core id: The ID of the record to generate a report for.
+    :return: The HTTP response to return to the user.
     """
     return render(
         request,
@@ -1963,6 +2124,11 @@ def report(request: HttpRequest, record_type: str, issf_core_id: int) -> HttpRes
 def render_report_pdf(request: HttpRequest, record_type: str, issf_core_id: int) -> HttpResponse:
     """
     Renders a report for a given item and returns it to the user as a PDF.
+
+    :param request: The incoming HTTP request.
+    :param record_type: The type of record to generate a report for.
+    :param issf_core id: The ID of the record to generate a report for.
+    :return: The HTTP response to return to the user.
     """
     # Render the template
     template = get_template("details/record_report.html")
@@ -1976,6 +2142,9 @@ def render_report_pdf(request: HttpRequest, record_type: str, issf_core_id: int)
 def get_record_type(record_type: str) -> Model:
     """
     Gets the model object for a record type.
+
+    :param record_type: The record type to get the model object for.
+    :return: The model object for the specified record type.
     """
     record_types = {
         'who': SSFPerson,
@@ -1994,6 +2163,10 @@ def get_record_type(record_type: str) -> Model:
 def delete_record(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     Deletes a specified record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core id: The ID of the record to delete.
+    :return: The HTTP response to return to the user.
     """
     record = ISSF_Core.objects.get(issf_core_id=issf_core_id)
     # if record is sota then delete author record first to avoid integrity

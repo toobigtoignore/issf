@@ -53,6 +53,9 @@ class SSFKnowledgeForm(ModelForm):
     def clean(self) -> Dict[str, Any]:
         """
         Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(SSFKnowledgeForm, self).clean()
         # make safe text entered by user
@@ -111,6 +114,11 @@ class SSFPersonForm(ModelForm):
         }
 
     def clean(self):
+        """
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        """
         cleaned_data = super().clean()
 
         for key in cleaned_data:
@@ -172,6 +180,9 @@ class SSFOrganizationForm(ModelForm):
     def clean(self) -> Dict[str, Any]:
         """
         Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(SSFOrganizationForm, self).clean()
 
@@ -230,8 +241,13 @@ class SSFCapacityNeedForm(ModelForm):
                            'who can edit the record)'
         }
         widgets = {'capacity_need_description': forms.Textarea(attrs={'rows': 3})}
-    
-    def clean(self):
+
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        """
         cleaned_data = super().clean()
 
         for key in cleaned_data:
@@ -277,6 +293,8 @@ class SSFProfileForm(ModelForm):
     def clean(self) -> Dict[str, any]:
         """
         Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
         """
         cleaned_data = super(SSFProfileForm, self).clean()
 
@@ -321,8 +339,13 @@ class SSFGuidelinesForm(ModelForm):
             'organizer': '*Organizer',
             'purpose': '*Purpose'
         }
-    
-    def clean(self):
+
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        """
         cleaned_data = super().clean()
 
         for key in cleaned_data:
@@ -356,8 +379,13 @@ class SSFExperiencesForm(ModelForm):
                            'who can edit the record)',
             'vimeo_video_url': 'Vimeo video URL (no shortened links)'
         }
-    
-    def clean(self):
+
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        """
         cleaned_data = super().clean()
 
         for key in cleaned_data:
@@ -412,7 +440,12 @@ class SSFCaseStudiesForm(ModelForm):
             'activities_innovation': forms.Textarea(attrs={'rows': 4}),
         }
 
-    def clean(self):
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        """
         cleaned_data = super().clean()
 
         for key in cleaned_data:
@@ -438,7 +471,10 @@ class CapacityNeedRatingForm(ModelForm):
 
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data entered by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(CapacityNeedRatingForm, self).clean()
         if cleaned_data['rating'] == 0:
@@ -481,7 +517,10 @@ class MainAttributeForm(ModelForm):
 
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data entered by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(MainAttributeForm, self).clean()
 
@@ -532,7 +571,10 @@ class CommonThemeIssueForm(ModelForm):
 
     def clean(self):
         """
-        Clean and validate the data entered by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(CommonThemeIssueForm, self).clean()
 
@@ -564,6 +606,12 @@ class ProfileOrganizationForm(ModelForm):
 
     # override clean to check combinations of fields
     def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
+        """
         cleaned_data = super(ProfileOrganizationForm, self).clean()
         # either select organizaton or type a name
         if not cleaned_data['ssforganization'] and not cleaned_data['organization_name']:
@@ -606,7 +654,10 @@ class CommonAttributeForm(ModelForm):
 
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data entered by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(CommonAttributeForm, self).clean()
 
@@ -713,7 +764,10 @@ class KnowledgeOtherDetailsForm(ModelForm):
 
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data entered by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(KnowledgeOtherDetailsForm, self).clean()
 
@@ -798,7 +852,10 @@ class PersonResearcherForm(ModelForm):
     # override clean to check combinations of fields
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data provided by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(PersonResearcherForm, self).clean()
         # other level of education and text must be provided in combination
@@ -862,14 +919,17 @@ class GeographicScopeLocalAreaForm(ModelForm):
     # override clean to check combinations of fields
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data provided by the user. 
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(GeographicScopeLocalAreaForm, self).clean()
 
         for key in cleaned_data:
             if isinstance(cleaned_data[key], str):
                 cleaned_data[key] = bleach.clean(cleaned_data[key])
-        
+
         # other local area setting and text must be provided in combination
         other_text = len(cleaned_data['local_area_setting_other']) > 0
         other_selected = False
@@ -905,7 +965,10 @@ class GeographicScopeSubnationForm(ModelForm):
     # override clean to check combinations of fields
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data provided by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(GeographicScopeSubnationForm, self).clean()
 
@@ -953,7 +1016,10 @@ class GeographicScopeRegionForm(ModelForm):
     # override clean to check combinations of fields
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data provided by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(GeographicScopeRegionForm, self).clean()
 
@@ -1007,7 +1073,10 @@ class SpeciesLandingsForm(ModelForm):
 
     def clean(self) -> Dict[str, Any]:
         """
-        Cleans and validates the data provided by the user.
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        :raise forms.ValidationError: When the form is invalid.
         """
         cleaned_data = super(SpeciesLandingsForm, self).clean()
 
@@ -1083,6 +1152,7 @@ GeographicScopeRegionInlineFormSet = inlineformset_factory(ISSF_Core,
 def confirm_other_text(other_text_field: str, other_check_field: str, cleaned_data: Dict[str, Any]) -> bool:
     """
     Ensures that if a user selected other, that the other value is provided.
+
     :param other_text_field: The name of the field for other text.
     :param other_check_field: The name of the field for selecting other.
     :param cleaned_data: The cleaned data object from the form.

@@ -21,6 +21,10 @@ from .forms import ProfileForm
 def update_profile(request: HttpRequest, template_name: str = 'issf_admin/user_profile.html') -> HttpResponse:
     """
     View to update a user's profile.
+
+    :param request: The incoming HTTP request.
+    :param template_name: The path of the template to use to render the form for the user to update their profile.
+    :return: The HTTP response to return to the user.
     """
     # Save changes to profile
     if request.method == "POST":
@@ -53,6 +57,9 @@ def update_profile(request: HttpRequest, template_name: str = 'issf_admin/user_p
 def save_profile(request: HttpRequest) -> HttpResponse:
     """
     Saves changes to a user's profile.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     # save
     profile_form = ProfileForm(data=request.POST, instance=request.user)
@@ -93,6 +100,9 @@ def save_profile(request: HttpRequest) -> HttpResponse:
 def temp(request: HttpRequest) -> HttpResponse:
     """
     Unused function that seems to set the password for a set user to 'temp'.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     user_profile = UserProfile.objects.get(id=325)
     user_profile.set_password('temp')
@@ -103,6 +113,9 @@ def temp(request: HttpRequest) -> HttpResponse:
 def account_verified(request: HttpRequest) -> HttpResponse:
     """
     View that notifies a user that their account was verified successfully.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return render(request, 'issf_admin/verification_successful.html')
 
@@ -110,6 +123,9 @@ def account_verified(request: HttpRequest) -> HttpResponse:
 def profile_saved(request: HttpRequest) -> HttpResponse:
     """
     View that notifies a user that their profile was saved successfully.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return render(request, 'issf_admin/user_profile_saved.html')
 
@@ -127,6 +143,9 @@ custom_password_change = login_required(CustomPasswordChangeView.as_view())
 def logout_view(request: HttpRequest) -> HttpResponse:
     """
     Custom logout view. Logs out the user, and then redirects them to the front page.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     logout(request)
     return HttpResponseRedirect('/')
@@ -135,6 +154,9 @@ def logout_view(request: HttpRequest) -> HttpResponse:
 def return_google_site_verification(request: HttpRequest) -> HttpResponse:
     """
     View that returns Google's site verification key.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return HttpResponse('google-site-verification: googlee9690f8983b8a350.html', content_type="text/plain")
 
@@ -142,6 +164,9 @@ def return_google_site_verification(request: HttpRequest) -> HttpResponse:
 def return_robots(request):
     """
     View that returns a robots.txt file.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     retstr = 'User-agent: *\r\n'
     retstr = retstr + 'Disallow: /admin/\r\n'
@@ -156,6 +181,9 @@ def return_robots(request):
 def contributed_records(request: HttpRequest) -> HttpResponse:
     """
     View that shows the user all the records that they have contributed.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     user = request.user
     records = ISSF_Core.objects.filter(contributor_id=user.id)
@@ -180,6 +208,9 @@ def contributed_records(request: HttpRequest) -> HttpResponse:
 def help_page(request):
     """
     View that renders the help page with a random fact contained within it.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     faqs = FAQ.objects.all()
     categories = FAQCategory.objects.all()
@@ -202,6 +233,9 @@ def help_page(request):
 def fact_archive(request: HttpRequest) -> HttpResponse:
     """
     View that displays the complete list of facts.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
     """
     return render(
         request,

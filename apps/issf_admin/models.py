@@ -19,4 +19,9 @@ class UserProfile(AbstractUser):
         ordering = ['username']
 
     def __str__(self) -> str:
+        """
+        Generates a string representation of this user profile.
+
+        :return: The string representation.
+        """
         return '%s (%s %s %s)' % (self.username, self.first_name, self.initials, self.last_name)
