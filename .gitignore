@@ -67,3 +67,5 @@ issf_prod/settings/prod.py
 issf_prod/settings/secret.py
 
 issf_prod/.env
+
+desktop.ini
