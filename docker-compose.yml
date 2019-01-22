@@ -58,12 +58,14 @@ services:
     image: nginx:alpine
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - web
     volumes:
       - "./:/src:Z"
       - "./data/nginx:/etc/nginx/conf.d:Z"
       - "./static:/static:Z"
+      - "/etc/letsencrypt/live/issfcloud.toobigtoignore.net:/certs"
     logging:
       driver: json-file
       options:
