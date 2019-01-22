@@ -1979,7 +1979,7 @@ def generate_report(record_type: str, issf_core_id: int) -> Dict[str, Any]:
     if core_instance.geographic_scope_type == 'Regional':
         geog_scope = geographic_scope_region
         for geo_record in geographic_scope_region:
-            location = geo_record.country.short_name
+            location = geo_record.region.region_name
         zoom_level = 3
     elif core_instance.geographic_scope_type == 'National':
         geog_scope = geographic_scope_nation

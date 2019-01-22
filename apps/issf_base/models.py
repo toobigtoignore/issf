@@ -1299,7 +1299,7 @@ class Geographic_Scope_Region(models.Model):
 
         :return: The string representation.
         """
-        return '%s' % (self.country.region_name)
+        return '%s' % (self.region.region_name)
 
 
 class SiteVersion(models.Model):
