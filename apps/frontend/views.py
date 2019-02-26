@@ -309,6 +309,12 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
         for line in lines:
             if 'Timeframe: ' in line:
                 line = line.replace('-0', '')
+            if row.core_record_type == "State-of-the-Art in SSF Research":
+                # Fix for out-of-order authors in summary
+                if line.startswith("<strong>Authors:"):
+                    line = "<strong>Authors:</strong> "
+                    authors = [author.author_name for author in KnowledgeAuthorSimple.objects.filter(knowledge_core=row.issf_core_id)]
+                    line += ", ".join(authors)
             summary += line + '<br/>'
         temp.append(summary)
         url = reverse(get_redirectname(row.core_record_type), kwargs={'issf_core_id': row.issf_core_id})
