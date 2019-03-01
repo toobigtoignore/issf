@@ -311,11 +311,32 @@
         <script type="text/javascript">
             var labels = [];
             var values = [];
+            var niceColors = [
+                '#D8334A',
+                '#A0D468',
+                '#4FC1E9',
+                '#AC92EC',
+                '#FFCE54',
+                '#FC6E51',
+                '#A0CECB',
+                '#EC87C0',
+                '#48CFAD'
+            ];
+            // this is an abuse of syntax but this is the world we live in;
+            // it's either commit or be comitted out of work
+            var colorId = -1;
             var colors = [];
             {% for key, slice in distribution.items %}
+                colorId += 1;
+                if (niceColors[colorId] !== undefined) {
+                    colors.push(niceColors[colorId]);
+                }
+                else {
+                    colors.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+                }
+
                 labels.push('{{key}}');
                 values.push({{ slice }});
-                colors.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
             {% endfor %}
         </script>
         <script src="{% static 'reports/js/recordreport.js' %}"></script>

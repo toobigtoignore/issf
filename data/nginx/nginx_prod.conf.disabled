@@ -4,6 +4,11 @@ upstream web {
 }
 
 server {
+  listen 443 ssl;
+
+  ssl_certificate /home/ubuntu/issf_certs/live/issfcloud.toobigtoignore.net/fullchain.pem;
+  ssl_certificate_key /home/ubuntu/issf_certs/live/issfcloud.toobigtoignore.net/privkey.pem;
+
   location / {
     proxy_set_header Host $http_host;
     proxy_pass http://web/;
