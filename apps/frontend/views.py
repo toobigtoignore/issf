@@ -49,6 +49,12 @@ def index(request: HttpRequest) -> HttpResponse:
         for line in lines:
             if 'Timeframe: ' in line:
                 line = line.replace('-0', '')
+            if recent_contribution.core_record_type == "State-of-the-Art in SSF Research":
+                # Fix for out-of-order authors in summary
+                if line.startswith("<strong>Authors:"):
+                    line = "<strong>Authors:</strong> "
+                    authors = [author.author_name for author in KnowledgeAuthorSimple.objects.filter(knowledge_core=recent_contribution.issf_core_id)]
+                    line += ", ".join(authors)
             summary += line + '<br/>'
         recent_contribution.core_record_summary = summary
     contributions_by_record_type = ContributionsByRecordType.objects.all()
