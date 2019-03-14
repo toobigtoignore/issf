@@ -47,6 +47,8 @@ def index(request: HttpRequest) -> HttpResponse:
         lines = recent_contribution.core_record_summary.split('\\n')
         summary = ''
         for line in lines:
+            if 'Timeframe: ' in line:
+                line = line.replace('-0', '')
             summary += line + '<br/>'
         recent_contribution.core_record_summary = summary
     contributions_by_record_type = ContributionsByRecordType.objects.all()
