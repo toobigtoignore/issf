@@ -14,6 +14,7 @@ services:
     #build: "."
     #command: "/bin/bash -c 'yes'"
     command: "/bin/sh -c 'npm i && python manage.py collectstatic --noinput && gunicorn issf_prod.wsgi -b 0.0.0.0:80'"
+    restart: always
     depends_on: 
       - db
     environment: 
@@ -34,6 +35,7 @@ services:
     image: mdillon/postgis:9.5-alpine
     ports:
       - "5432:5432"
+    restart: always
     volumes:
       - "./scripts:/scripts:Z"
       - "./data/postgres:/data/postgres/:Z"  
@@ -61,6 +63,7 @@ services:
       - "443:443"
     depends_on:
       - web
+    restart: always
     volumes:
       - "./:/src:Z"
       - "./data/nginx:/etc/nginx/conf.d:Z"
