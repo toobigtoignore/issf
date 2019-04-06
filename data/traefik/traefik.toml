@@ -22,7 +22,7 @@ exposedByDefault = false
 
 [acme]
 email = "raflynn@mun.ca"
-storage = "acme.json"
+storage = "/traefik_data/acme.json"
 entryPoint = "https"
 onHostRule = true
   [acme.httpChallenge]

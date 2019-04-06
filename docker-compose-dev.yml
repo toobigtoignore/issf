@@ -84,10 +84,8 @@ services:
     ports:
       - "80:80"     # The HTTP port
       - "443:443"
-    depends_on:
-      - nginx
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
-      - "./data/traefik/traefik.toml:/traefik.toml"
-      - "./data/traefik/acme.json:/acme.json"
+      - ./data/traefik/traefik.toml:/traefik.toml
+      - ./data/traefik:/traefik_data/
