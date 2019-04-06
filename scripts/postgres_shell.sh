@@ -1,1 +1,1 @@
-docker-compose exec db /bin/bash
+docker-compose -f $1 exec db /bin/bash
