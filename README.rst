@@ -23,6 +23,10 @@ Clone the git repository with:
 
 ``git clone https://github.com/toobigtoignore/issf``
 
+Symlink (Or copy) the development compose file
+
+``ln -s docker-compose-dev.yml docker-compose.yml``
+
 Create a dummy .env file
 
 ``cp issf_prod/.env.dist issf_prod/.env``

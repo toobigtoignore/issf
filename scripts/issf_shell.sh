@@ -1,1 +1,1 @@
-docker-compose -f $1 exec web /bin/sh
+docker-compose exec web /bin/sh
