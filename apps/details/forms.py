@@ -4,6 +4,7 @@ from django import forms
 from django.forms import ModelForm, RadioSelect, HiddenInput
 from django.forms.models import inlineformset_factory
 from leaflet.forms.widgets import LeafletWidget
+from django.core.validators import RegexValidator
 import bleach
 
 from issf_base.models import *
@@ -500,6 +501,12 @@ class MainAttributeForm(ModelForm):
                 required=False,
                 queryset=AdditionalValue.objects.filter(attribute=self.initial['attribute'])
             )
+            # If the units are percent, we use integer fields, because they're added up later to ensure
+            # multiple percent fields don't exceed 100
+            if 'Percent' in self.instance.attribute.units_label:
+                self.fields['value'] = forms.IntegerField(label='', required=False)
+            if 'Percent' in self.instance.attribute.additional_field:
+                self.fields['additional'] = forms.IntegerField(label='', required=False)
             self.fields['value'].widget.attrs['placeholder'] = self.instance.attribute.units_label
             self.fields['additional'].widget.attrs['placeholder'] = \
                 self.instance.attribute.additional_field

@@ -387,6 +387,10 @@
                                                     {% if main_attr.value %}
                                                         {{ main_attr.value }}
                                                     {% endif %}
+                                                {% elif main_attr.attribute.attribute_type == "Range" %}
+                                                    {% if main_attr.value %}
+                                                        {{ main_attr.value }}
+                                                    {% endif %}
                                                 {% else %}
 
                                                     {% if main_attr.attribute_value.value_label == "Other" %}
@@ -400,6 +404,9 @@
                                                 {% endif %}
                                                 {% if main_attr.attribute.additional_field and main_attr.additional %}
                                                     {% if main_attr.attribute.additional_field_type == "Integer" %}
+                                                        - {{ main_attr.additional }}
+                                                        {{ main_attr.attribute.additional_field }}
+                                                    {% elif main_attr.attribute.additional_field_type == "Range" %}
                                                         - {{ main_attr.additional }}
                                                         {{ main_attr.attribute.additional_field }}
                                                     {% else %}
@@ -434,12 +441,11 @@
                                     <form class="accordionFormsetGrowable" action="{% url 'profile-main-attributes' %}"
                                           method="post">
 
-                                        <h6>Please provide values for the characteristics below.
+                                        <h6>
+                                            <br> 
+                                            Please provide values for the characteristics below.
                                             <br>
-                                            If you have a range of values, please enter an average that best represents
-                                            the
-                                            range and specify the exact range for the question in the comments box
-                                            below.
+                                            <br>
                                         </h6>
                                         {% csrf_token %}
 
@@ -487,6 +493,10 @@
                                                                     {{ form.attribute.value|lookup_max_min:form.value }}
                                                                     <div style="display:none">{{ form.attribute_value }}</div>
                                                                 {% else %}
+                                                                    {% ifequal form.attribute.value|lookup_attribute_type "Range" %}
+                                                                        {{ form.attribute.value|lookup_max_min:form.value }}
+                                                                        <div style="display:none">{{ form.attribute_value }}</div>
+                                                                    {% endifequal %}
                                                                     {{ form.attribute_value }}
                                                                     <div style="display:none">{{ form.value }}</div>
                                                                 {% endifequal %}
@@ -494,6 +504,10 @@
                                                                 {% if form.attribute.value|lookup_additional_field_type == "Integer" %}
                                                                     <div style="margin-top:5px;">{{ form.additional }}</div>
                                                                 {% elif form.attribute.value|lookup_additional_field_type %}
+                                                                    {% ifequal form.attribute.value|lookup_attribute_type "Range" %}
+                                                                        {{ form.attribute.value|lookup_max_min:form.value }}
+                                                                        <div style="display:none">{{ form.attribute_value }}</div>
+                                                                    {% endifequal %}
                                                                     <br>
                                                                     <div style="margin-top:5px;">{{ form.additional_value }}</div>
                                                                 {% endif %}

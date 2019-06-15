@@ -1,6 +1,6 @@
 from django.contrib.gis.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db.models import Q
 from django.utils.html import conditional_escape
 from django.urls import reverse
@@ -995,10 +995,14 @@ class MainAttributeView(models.Model):
         limit_choices_to=Q(attribute_category='Main') | Q(attribute_category='Common'),
         on_delete=models.CASCADE
     )
-    value = models.IntegerField(verbose_name='', blank=True, null=True)
+    value = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+    ])
     attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
-    additional = models.IntegerField(blank=True)
+    additional = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+    ])
     additional_value = models.ForeignKey(AdditionalValue, blank=True, null=True, on_delete=models.CASCADE)
     label_order = models.IntegerField(blank=True)
     value_order = models.IntegerField(blank=True)
