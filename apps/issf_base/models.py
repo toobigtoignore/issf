@@ -996,11 +996,13 @@ class MainAttributeView(models.Model):
         on_delete=models.CASCADE
     )
     value = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        # This is a simple regex for texting number or number-number validity (for ranges)
         RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
     ])
     attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
     additional = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        # This is a simple regex for texting number or number-number validity (for ranges)
         RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
     ])
     additional_value = models.ForeignKey(AdditionalValue, blank=True, null=True, on_delete=models.CASCADE)
@@ -1148,7 +1150,10 @@ class Species(models.Model):
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
     species_scientific = models.CharField(max_length=100, blank=True)
     species_common = models.CharField(max_length=100, blank=True)
-    landings = models.IntegerField(null=True, blank=True)
+    landings = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        # This is a simple regex for texting number or number-number validity (for ranges)
+        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+    ])
 
     class Meta:
         managed = False

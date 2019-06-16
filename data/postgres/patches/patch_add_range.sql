@@ -11,6 +11,9 @@ DROP VIEW main_attributes;
 ALTER TABLE public.selected_attribute ALTER COLUMN value SET DATA TYPE text;
 ALTER TABLE public.selected_attribute ALTER COLUMN additional SET DATA TYPE text;
 
+/* Allow ranges for landings too */
+ALTER TABLE public.species ALTER COLUMN landings SET DATA TYPE text;
+
 /* Recreate the view using the same code as before, copied verbatim from old DB */
 CREATE VIEW main_attributes AS WITH all_main_attributes AS (
          SELECT profile.issf_core_id,
