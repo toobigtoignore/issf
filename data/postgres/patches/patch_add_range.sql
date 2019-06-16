@@ -2,7 +2,8 @@
 UPDATE public.attribute SET attribute_type='Ordinal', attribute_label='Weakest and most powerful motor', additional_field='Horsepower' WHERE question_number='6C';
 INSERT INTO public.attribute_value(attribute_id, value_label, value_order) VALUES (3, 'None in Use', 1), 
                                                                                   (3, 'Not applicable', 2),
-                                                                                  (3, 'Gas or Electric Engines', 3);
+                                                                                  (3, 'Gas or Electric Engines', 3),
+                                                                                  (23, 'Other', 7);
 
 /* Value column must be converted to string, so we drop the old main_attributes view as it cannot point to something we're modifying */ 
 DROP VIEW main_attributes;
@@ -13,6 +14,8 @@ ALTER TABLE public.selected_attribute ALTER COLUMN additional SET DATA TYPE text
 
 /* Allow ranges for landings too */
 ALTER TABLE public.species ALTER COLUMN landings SET DATA TYPE text;
+
+ALTER TABLE public.profile_organization ADD COLUMN organization_type_other_text text;
 
 /* Recreate the view using the same code as before, copied verbatim from old DB */
 CREATE VIEW main_attributes AS WITH all_main_attributes AS (

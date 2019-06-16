@@ -863,6 +863,7 @@ class ProfileOrganization(models.Model):
     organization_name = models.CharField(max_length=200, blank=True)
     ORG_TYPE = (
         ('State/government department', 'State/government department'),
+        ('Non government organization', 'Non government organization'),
         ('Union/association', 'Union/association'),
         ('Support organization', 'Support organization'),
         ('Fisheries local action group', 'Fisheries local action group'),
@@ -871,6 +872,7 @@ class ProfileOrganization(models.Model):
         ('Other', 'Other')
     )
     organization_type = models.CharField(choices=ORG_TYPE, max_length=100, blank=True)
+    organization_type_other_text = models.CharField(max_length=100, blank=True)
     GEOG_SCOPE = (
         ('Local', 'Local'),
         ('Sub-national', 'Sub-national'),

@@ -620,7 +620,12 @@
                                                 </td>
                                                 <td>
                                                     Type:
-                                                    {{ profile_organization.organization_type }}</td>
+                                                    {% if profile_organization.organization_type == "Other" %}
+                                                        {{ profile_organization.organization_type_other_text }}
+                                                    {% else %}
+                                                        {{ profile_organization.organization_type }}
+                                                    {% endif %}
+                                                </td>
                                                 <td>
                                                     Scope:
                                                     {{ profile_organization.geographic_scope }}</td>

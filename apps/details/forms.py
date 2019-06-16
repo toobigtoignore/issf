@@ -608,6 +608,7 @@ class ProfileOrganizationForm(ModelForm):
             'ssforganization': 'SSF Organization already in ISSF',
             'organization_name': 'Other organization name',
             'organization_type': 'Other organization type',
+            'organization_other_value': 'Specify organization type',
             'geographic_scope': 'Other organization geographic scope'
         }
 
