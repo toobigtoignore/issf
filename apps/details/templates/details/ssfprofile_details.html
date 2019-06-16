@@ -387,10 +387,6 @@
                                                     {% if main_attr.value %}
                                                         {{ main_attr.value }}
                                                     {% endif %}
-                                                {% elif main_attr.attribute.attribute_type == "Range" %}
-                                                    {% if main_attr.value %}
-                                                        {{ main_attr.value }}
-                                                    {% endif %}
                                                 {% else %}
 
                                                     {% if main_attr.attribute_value.value_label == "Other" %}
@@ -406,15 +402,11 @@
                                                     {% if main_attr.attribute.additional_field_type == "Integer" %}
                                                         - {{ main_attr.additional }}
                                                         {{ main_attr.attribute.additional_field }}
-                                                    {% elif main_attr.attribute.additional_field_type == "Range" %}
-                                                        - {{ main_attr.additional }}
-                                                        {{ main_attr.attribute.additional_field }}
                                                     {% else %}
                                                         - {{ main_attr.attribute.additional_field }}
                                                         {{ main_attr.additional_value }}
                                                     {% endif %}
                                                 {% endif %}
-                                            </td>
                                             <td>
                                                 {{ main_attr.attribute.units_label }}
                                             </td>

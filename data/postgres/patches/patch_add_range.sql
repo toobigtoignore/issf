@@ -1,8 +1,8 @@
 /* Apply required fields to have range */
-UPDATE public.attribute SET attribute_type='Ordinal', attribute_label='Weakest and most powerful motor', additional_field='Horsepower', additional_field_type='Range' WHERE question_number='6C';
-UPDATE public.attribute SET attribute_type='Range', attribute_label='Smallest and largest SSF Vessel' WHERE question_number='6B';
-UPDATE public.attribute SET attribute_type='Range', attribute_label='Smallest and largest crew' WHERE question_number='6D';
-INSERT INTO public.attribute_value(attribute_id, value_label, value_order) VALUES (3, 'No Engines in Use', 1), (3, 'Gas or Electric Engines', 2);
+UPDATE public.attribute SET attribute_type='Ordinal', attribute_label='Weakest and most powerful motor', additional_field='Horsepower' WHERE question_number='6C';
+INSERT INTO public.attribute_value(attribute_id, value_label, value_order) VALUES (3, 'None in Use', 1), 
+                                                                                  (3, 'Not applicable', 2),
+                                                                                  (3, 'Gas or Electric Engines', 3);
 
 /* Value column must be converted to string, so we drop the old main_attributes view as it cannot point to something we're modifying */ 
 DROP VIEW main_attributes;
@@ -11,7 +11,7 @@ DROP VIEW main_attributes;
 ALTER TABLE public.selected_attribute ALTER COLUMN value SET DATA TYPE text;
 ALTER TABLE public.selected_attribute ALTER COLUMN additional SET DATA TYPE text;
 
-/* Recreate the view using the same code as before, verbatim */
+/* Recreate the view using the same code as before, copied verbatim from old DB */
 CREATE VIEW main_attributes AS WITH all_main_attributes AS (
          SELECT profile.issf_core_id,
             attribute.attribute_id,

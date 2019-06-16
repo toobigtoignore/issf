@@ -28,7 +28,7 @@
 
                                 <div class="FormSet">
 
-                                    <!- Layout for Main Characteristics section's editor.
+                                    <!-- Layout for Main Characteristics section's editor.
                                     Had to implement manually because crispy_forms wouldn't
                                     work.-->
                                     <table class="profile-attributes-table">
@@ -70,24 +70,15 @@
                                                             {{ form.attribute.value|lookup_max_min:form.value }}
                                                             <div style="display:none">{{ form.attribute_value }}</div>
                                                         {% else %}
-                                                            {% ifequal form.attribute.value|lookup_attribute_type "Range" %}
-                                                                {{ form.attribute.value|lookup_max_min:form.value }}
-                                                                <div style="display:none">{{ form.attribute_value }}</div>
-                                                            {% else %}
-                                                                {{ form.attribute_value }}
-                                                                <div style="display:none">{{ form.value }}</div>
-                                                            {% endifequal %}
+                                                            {{ form.attribute_value }}
+                                                            <div style="display:none">{{ form.value }}</div>
                                                         {% endifequal %}
 
                                                         {% if form.attribute.value|lookup_additional_field_type == "Integer" %}
                                                             <div style="margin-top:5px;">{{ form.additional }}</div>
-                                                        {% else %} 
-                                                            {% if form.attribute.value|lookup_additional_field_type == "Range" %}
-                                                                <div style="margin-top:5px;">{{ form.additional }}</div>
-                                                            {% elif form.attribute.value|lookup_additional_field_type %}
-                                                                <br>
-                                                                <div style="margin-top:5px;">{{ form.additional_value }}</div>
-                                                            {% endif %}
+                                                        {% elif form.attribute.value|lookup_additional_field_type %}
+                                                            <br>
+                                                            <div style="margin-top:5px;">{{ form.additional_value }}</div>
                                                         {% endif %}
                                                     </td>
 
