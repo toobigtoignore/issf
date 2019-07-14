@@ -1,9 +1,5 @@
 /* Apply required fields to have range */
-UPDATE public.attribute SET attribute_type='Ordinal', attribute_label='Weakest and most powerful motor', additional_field='Horsepower', additional_field_type='Integer' WHERE question_number='6C';
-INSERT INTO public.attribute_value(attribute_id, value_label, value_order) VALUES (3, 'None in Use', 1), 
-                                                                                  (3, 'Not applicable', 2),
-                                                                                  (3, 'Gas or Electric Engines', 3),
-                                                                                  (23, 'Other', 7);
+INSERT INTO public.attribute_value(attribute_id, value_label, value_order) VALUES (23, 'Other', 7);
 
 /* Value column must be converted to string, so we drop the old main_attributes view as it cannot point to something we're modifying */ 
 DROP VIEW main_attributes;
