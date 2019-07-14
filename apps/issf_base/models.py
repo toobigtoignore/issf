@@ -1,6 +1,6 @@
 from django.contrib.gis.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db.models import Q
 from django.utils.html import conditional_escape
 from django.urls import reverse
@@ -863,6 +863,7 @@ class ProfileOrganization(models.Model):
     organization_name = models.CharField(max_length=200, blank=True)
     ORG_TYPE = (
         ('State/government department', 'State/government department'),
+        ('Non government organization', 'Non government organization'),
         ('Union/association', 'Union/association'),
         ('Support organization', 'Support organization'),
         ('Fisheries local action group', 'Fisheries local action group'),
@@ -871,6 +872,7 @@ class ProfileOrganization(models.Model):
         ('Other', 'Other')
     )
     organization_type = models.CharField(choices=ORG_TYPE, max_length=100, blank=True)
+    organization_type_other_text = models.CharField(max_length=100, blank=True)
     GEOG_SCOPE = (
         ('Local', 'Local'),
         ('Sub-national', 'Sub-national'),
@@ -995,10 +997,16 @@ class MainAttributeView(models.Model):
         limit_choices_to=Q(attribute_category='Main') | Q(attribute_category='Common'),
         on_delete=models.CASCADE
     )
-    value = models.IntegerField(verbose_name='', blank=True, null=True)
+    value = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        # This is a simple regex for texting number or number-number validity (for ranges)
+        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+    ])
     attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
-    additional = models.IntegerField(blank=True)
+    additional = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        # This is a simple regex for texting number or number-number validity (for ranges)
+        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+    ])
     additional_value = models.ForeignKey(AdditionalValue, blank=True, null=True, on_delete=models.CASCADE)
     label_order = models.IntegerField(blank=True)
     value_order = models.IntegerField(blank=True)
@@ -1144,7 +1152,10 @@ class Species(models.Model):
     issf_core = models.ForeignKey(ISSF_Core, on_delete=models.CASCADE)
     species_scientific = models.CharField(max_length=100, blank=True)
     species_common = models.CharField(max_length=100, blank=True)
-    landings = models.IntegerField(null=True, blank=True)
+    landings = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
+        # This is a simple regex for texting number or number-number validity (for ranges)
+        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+    ])
 
     class Meta:
         managed = False

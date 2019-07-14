@@ -18,15 +18,17 @@
                             <form class="accordionFormsetGrowable" action="{% url 'profile-main-attributes' %}"
                                   method="post" style="display: block">
 
-                                <h6>Please provide values for the characteristics below.
+                                <h6>
                                     <br>
-                                    If you have a range of values, please enter an average that best represents the range and specify the exact range for the question in the comments box below.
+                                    Please provide values for the characteristics below.
+                                    <br>
+                                    <br>
                                 </h6>
                                 {% csrf_token %}
 
                                 <div class="FormSet">
 
-                                    <!- Layout for Main Characteristics section's editor.
+                                    <!-- Layout for Main Characteristics section's editor.
                                     Had to implement manually because crispy_forms wouldn't
                                     work.-->
                                     <table class="profile-attributes-table">

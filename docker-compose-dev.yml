@@ -35,22 +35,12 @@ services:
     image: mdillon/postgis:9.5-alpine
     expose:
       - 5432
+    ports:
+      - "5432:5432"
     restart: always
     volumes:
       - "./scripts:/scripts:Z"
       - "./data/postgres:/data/postgres/:Z"  
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "10"
-  pgadmin: 
-    image: nphung/pgadmin:latest
-    ports:
-      - "5050:5050"
-    volumes:
-      - "./data/postgres:/data/postgres/:Z"
-      - "./data/pgadmin:/data/pgadmin:Z"
     logging:
       driver: json-file
       options:

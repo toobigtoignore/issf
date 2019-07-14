@@ -1324,9 +1324,7 @@ def profile_main_attributes(request: HttpRequest) -> HttpResponse:
                     if form.cleaned_data and form.cleaned_data['attribute'].attribute_id == 38:
                         if form.cleaned_data['DELETE'] is False:
                             if form.cleaned_data['additional']:
-                                percent += form.cleaned_data['additional']
-                            else:
-                                percent += 0
+                                percent += int(form.cleaned_data['additional'])
                             flag = True
                             index = i
                     i += 1
