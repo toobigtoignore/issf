@@ -999,17 +999,27 @@ class MainAttributeView(models.Model):
     )
     value = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
         # This is a simple regex for texting number or number-number validity (for ranges)
-        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+        RegexValidator(r'^(?:([0-9]*\s*-\s*[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
     ])
     attribute_value = models.ForeignKey(AttributeValue, blank=True, null=True, on_delete=models.CASCADE)
     other_value = models.CharField(max_length=100, blank=True)
     additional = models.CharField(verbose_name='', max_length=100, blank=True, null=True, validators=[
         # This is a simple regex for texting number or number-number validity (for ranges)
-        RegexValidator(r'^(?:([0-9]*-[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
+        RegexValidator(r'^(?:([0-9]*\s*-\s*[0-9]*)|([0-9]*)|)$', "Enter a single number '0', or range of numbers '0-100'")
     ])
     additional_value = models.ForeignKey(AdditionalValue, blank=True, null=True, on_delete=models.CASCADE)
     label_order = models.IntegerField(blank=True)
     value_order = models.IntegerField(blank=True)
+
+    def clean(self):
+        """
+        Number charfields shouldn't have any whitespace
+        in them, this clean method gets rid of all whitespace
+        """
+        if self.value:
+            self.value = self.value.strip()
+        if self.additional:
+            self.additional = self.additional.strip()
 
     class Meta:
         managed = False
