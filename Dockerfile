@@ -12,7 +12,7 @@ ENV LD_LIBRARY_PATH=/usr/lib
 RUN apk update && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main openssl && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing gdal-dev && \
-    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing proj4 && \
+    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing proj && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing geos && \
     apk add --update libressl2.7-libcrypto &&  \
     apk add --no-cache \
