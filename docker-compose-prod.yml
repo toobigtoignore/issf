@@ -66,7 +66,7 @@ services:
       traefik.port: 80
       traefik.frontend.entryPoints: "https"
   traefik:
-    image: traefik # The official Traefik docker image
+    image: traefik:1.7 # The official Traefik docker image
     ports:
       - "80:80"     # The HTTP port
       - "443:443"
