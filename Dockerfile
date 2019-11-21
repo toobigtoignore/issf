@@ -35,12 +35,19 @@ RUN apk update && \
     postgresql-dev \
     && pip install --no-cache-dir psycopg2
 
-RUN mkdir /issf
-COPY gdal-2.3.0.tar.gz /issf
-COPY requirements.txt /issf
-COPY package.json /issf
-COPY package-lock.json /issf
+WORKDIR /gdal
+RUN wget https://github.com/OSGeo/gdal/archive/v2.3.0.tar.gz
+RUN tar xzf v2.3.0.tar.gz && \
+    cd gdal-2.3.0/gdal && \
+    ./configure --with-python && \
+    make && \
+    sudo make install
+
+RUN apk del g++ make linux-headers wget sudo
 
 WORKDIR /issf
+RUN rm -rf /gdal
+COPY requirements.txt .
+COPY package.json .
+COPY package-lock.json .
 RUN pip install -r requirements.txt && pip install --upgrade pip && npm install
-RUN tar xzf gdal-2.3.0.tar.gz && cd gdal-2.3.0 && ./configure --with-python && make && sudo make install && cd ..
