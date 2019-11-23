@@ -5,7 +5,7 @@
 
 # Docker file to build the ISSF software inside a Docker container 
 
-FROM python:3.8-alpine3.10
+FROM python:3.7-alpine
 ENV PYTHONUNBUFFERED 1
 ENV LD_LIBRARY_PATH=/usr/lib
 
