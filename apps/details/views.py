@@ -1987,7 +1987,7 @@ def generate_report(record_type: str, issf_core_id: int) -> Dict[str, Any]:
     elif core_instance.geographic_scope_type == 'Sub-national':
         geog_scope = geographic_scope_subnation
         for geo_record in geographic_scope_subnation:
-            location = geo_record.subnation_name + ', ' + geo_record.country.short_name
+            location = geo_record.subnation_name
         zoom_level = 5
     elif core_instance.geographic_scope_type == 'Local':
         geog_scope = geographic_scope_local_area
