@@ -1975,31 +1975,26 @@ def generate_report(record_type: str, issf_core_id: int) -> Dict[str, Any]:
     # Get the location name for the geographic scope
     location = ''
     if core_instance.geographic_scope_type == 'Regional':
-        geog_scope = geographic_scope_region
         for geo_record in geographic_scope_region:
-            location = geo_record.region.region_name
+            location = geo_record.region.region_name + ", "
         zoom_level = 3
     elif core_instance.geographic_scope_type == 'National':
-        geog_scope = geographic_scope_nation
         for geo_record in geographic_scope_nation:
-            location = geo_record.country.short_name
+            location = geo_record.country.short_name + ", "
         zoom_level = 5
     elif core_instance.geographic_scope_type == 'Sub-national':
-        geog_scope = geographic_scope_subnation
         for geo_record in geographic_scope_subnation:
-            location = geo_record.subnation_name + ', ' + geo_record.country.short_name
+            location = geo_record.subnation_name + ", "
         zoom_level = 5
     elif core_instance.geographic_scope_type == 'Local':
-        geog_scope = geographic_scope_local_area
         for geo_record in geographic_scope_local_area:
-            location = geo_record.country.short_name
+            location = ""
         zoom_level = 6
     else:
-        geog_scope = None
         zoom_level = 3
 
     try:
-        location += (', ' + str(geo_record.country.short_name))
+        location += str(geo_record.country.short_name)
     except UnboundLocalError:
         location = 'No location provided.'
     except AttributeError:
