@@ -597,7 +597,7 @@ def guidelines_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
 def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of an Experiences record.
-    
+
     :param request: The incoming HTTP request.
     :param issf_core_id: The ID of the record to display.
     :return: The HTTP response to return to the user.
@@ -662,7 +662,7 @@ def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse
 def case_study_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of a Case Study record.
-    
+
     :param request: The incoming HTTP request.
     :param issf_core_id: The ID of the record to display.
     :return: The HTTP response to return to the user.
@@ -750,7 +750,7 @@ database.
 def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) -> HttpResponse:
     """
     View which handles the saving of most types of records.
-    
+
     :param request: The incoming HTTP request.
     :param model_class: The class of the record we want to save.
     :param form_class: The class of the form we will be retrieving data from.
