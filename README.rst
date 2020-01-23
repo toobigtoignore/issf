@@ -35,7 +35,7 @@ Then spin up the database container. From within the `issf` directory run:
 
 ``docker-compose up -d db``
 
-Next, acquire the test database so we can import it. There is an automated script to handle the process of importing and populating the database with the data dump called ``./scripts/postgres_setup.sh``
+Next, acquire the test database so we can import it. There is an automated script to handle the process of importing and populating the database with the data dump called ``./scripts/postgres_setup.sh``; then run ``./scripts/postgres_patches.sh``
 
 After that, launch the existing containers with:
 
