@@ -20,6 +20,16 @@
 	display: inline-block;
 }
 
+/* Geog Scope Specific*/
+.FormSetGeog {
+    margin-bottom: -25px;
+}
+
+.FormSetGeogLabel > label {
+    color: #335D93;
+    font-weight: bold;
+}
+
 /* Toggable */
 .FormSetTogglable {
 	display: none;

@@ -14,17 +14,14 @@
                 <dl class="accordion" data-accordion>
                     <dd class="accordion-navigation active">
                         {% if editor %}
-                            <h6>Step 2. Please indicate the geographic scope of the record.</h6>
-
-                            <div class="FormSet FormSetToggler">
-                                {{ geographic_scope_form }}
-                            </div>
-
+                            <h6>Step 2/2. Please indicate the geographic scope of the record.</h6>
                             <p class="alert">
                                 <label>*</label>
                                 indicates required fields
                             </p>
-
+                            <div class="FormSetGeog FormSetToggler FormSetGeogLabel">
+                                {{ geographic_scope_form }}
+                            </div>
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
                                 <div class="FormSet FormSetTogglable FormSetGrowable">

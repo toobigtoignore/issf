@@ -2233,10 +2233,11 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .button-bar {
-    margin: 20px 0 -27px;
-    padding: 8px;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 -10px 0;
     text-align: center;
-    background: #7D7D7D;
+    background-color: #7d7d7d;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
