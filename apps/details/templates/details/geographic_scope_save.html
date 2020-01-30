@@ -14,17 +14,19 @@
                 <dl class="accordion" data-accordion>
                     <dd class="accordion-navigation active">
                         {% if editor %}
-                            <h6>Step 2/2. Please indicate the geographic scope of the record.</h6>
-                            <p class="alert">
-                                <label>*</label>
-                                indicates required fields
-                            </p>
-                            <div class="FormSetGeog FormSetToggler FormSetGeogLabel">
+                            <div class="FormSetSection FormSetSectionBanner">
+                                <h3 style="text-align: center; color: #FBCD06">Step 2/2: Please indicate the geographic scope of the record.</h3>
+                                <p class="alert" style="text-align: center">
+                                    <label>*</label>
+                                    indicates a required field
+                                </p>
+                            </div>
+                            <div class="FormSetGeog FormSetToggler FormSetGeogLabel FormSetSection">
                                 {{ geographic_scope_form }}
                             </div>
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                <div class="FormSetTogglable FormSetGrowable FormSetSection">
                                     {{ local_area_form }}
                                 </div>
                                 <input
@@ -46,7 +48,7 @@
 
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                <div class="FormSetTogglable FormSetGrowable FormSetSection">
                                     {{ subnation_form }}
                                 </div>
                                 <input
@@ -68,7 +70,7 @@
 
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable">
+                                <div class="FormSetTogglable FormSetSection">
                                     {{ nation_form }}
                                 </div>
                                 <input
@@ -90,7 +92,7 @@
 
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                <div class="FormSetTogglable FormSetGrowable FormSetSection">
                                     {{ region_form }}
                                 </div>
                                 <input

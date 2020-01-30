@@ -5,29 +5,39 @@
 	padding: 3px;
 }
 
-/* Toggler */
-.FormSetToggler {
-	padding-left: 5px;
+.FormSetSection {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px rgba(0,0,0,.4);
+    background-color: #d0d0d0;
 }
-.FormSetToggler > p {
-	font-size: 2em;
-}
-.FormSetToggler > ul {
-	list-style: none;
-	padding: 0;
-}
-.FormSetToggler > input {
-	display: inline-block;
+
+.FormSetSectionBanner {
+    background-color: #1D4D9B;
 }
 
 /* Geog Scope Specific*/
 .FormSetGeog {
-    margin-bottom: -15px;
 }
 
 .FormSetGeogLabel > label {
     color: #335D93;
     font-weight: bold;
+}
+
+/* Toggler */
+.FormSetToggler > p {
+	font-size: 2em;
+}
+.FormSetToggler > ul {
+	list-style: none;
+    padding: 5px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.FormSetToggler > input {
+	display: inline-block;
 }
 
 /* Toggable */
