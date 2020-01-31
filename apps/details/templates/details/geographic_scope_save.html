@@ -15,11 +15,12 @@
                     <dd class="accordion-navigation active">
                         {% if editor %}
                             <div class="FormSetSection FormSetSectionBanner">
-                                <h3 style="text-align: center; color: #FBCD06">Step 2/2: Please indicate the geographic scope of the record.</h3>
-                                <p class="alert" style="text-align: center">
-                                    <label>*</label>
-                                    indicates a required field
-                                </p>
+                                <h3 style="text-align: center; color: #FBCD06">Please indicate the geographic scope of the record.</h3>
+                                <img 
+                                    class="FormSetProgressBar" 
+                                    src="{% static "/img/progress_geo.png" %}"
+                                    alt="Progress Bar, Geographic Scope"
+                                >
                             </div>
                             <div class="FormSetGeog FormSetToggler FormSetGeogLabel FormSetSection">
                                 {{ geographic_scope_form }}

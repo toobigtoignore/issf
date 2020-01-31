@@ -15,6 +15,14 @@
 
 .FormSetSectionBanner {
     background-color: #1D4D9B;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.FormSetProgressBar {
+    height: 120%;
+    margin: -8px auto;
 }
 
 /* Geog Scope Specific*/
