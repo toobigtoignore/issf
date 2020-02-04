@@ -27,11 +27,86 @@
 
 /* Geog Scope Specific*/
 .FormSetGeog {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+/* until i can figure out how to remove the asterisks */
+.FormSetGeog sup { 
+    visibility: hidden;
+}
+
+/* the scope buttons list */
+.FormSetGeog > ul {
+    display: flex;
+    margin: 0;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* the scope buttons */
+.FormSetGeog > ul > li {
+    background-color: #1D4D9B;
+    border-radius: 25px;
+    padding: 5px 25px;
+    border: 3px solid #fbcd04;
+    transition: all 0.3s ease;
+}
+
+.FormSetGeog > ul > li:hover {
+    transform: scale(1.1);
+}
+
+.FormSetGeog > ul > li:active {
+    transform: scale(0.99);
+}
+
+.FormSetGeog > ul > li > label {
+    display: flex;
+    margin: -20px;
+    padding: 20px;
+    color: #fbcd04;
+    align-items: center;
+}
+
+ul#id_geographic_scope_type input[type="radio"] {
+    margin-right: 10px;
+    visibility: hidden;
+}
+
+ul#id_geographic_scope_type input[type="radio"]:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    padding-right: 5px;
+    margin-left: -5px;
+    margin-top: 7px;
+    background-color: #1D4D9B;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+ul#id_geographic_scope_type input[type="radio"]:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    padding-right: 5px;
+    margin-left: -5px;
+    margin-top: 7px;
+    background-color: #fbcd04;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
 }
 
 .FormSetGeogLabel > label {
-    color: #335D93;
+    color: #1D4D9B!important;
     font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: underline;
 }
 
 /* Toggler */
