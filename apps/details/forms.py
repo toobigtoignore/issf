@@ -897,7 +897,7 @@ class GeographicScopeForm(ModelForm):
         model = ISSF_Core
         fields = ['geographic_scope_type']
         labels = {
-            'geographic_scope_type': '*Geographic scope'
+            'geographic_scope_type': 'Geographic Scope'
         }
         widgets = {
             'geographic_scope_type': RadioSelect
