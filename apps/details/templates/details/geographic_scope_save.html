@@ -28,6 +28,7 @@
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
                                 <div class="FormSetTogglable FormSetGrowable FormSetSection">
+                                    <div class="FormSetGeogLabel"><label>Details:</label></div>
                                     {{ local_area_form }}
                                 </div>
                                 <input
@@ -50,6 +51,7 @@
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
                                 <div class="FormSetTogglable FormSetGrowable FormSetSection">
+                                <div class="FormSetGeogLabel"><label>Details:</label></div>
                                     {{ subnation_form }}
                                 </div>
                                 <input
@@ -72,6 +74,7 @@
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
                                 <div class="FormSetTogglable FormSetSection">
+                                    <div class="FormSetGeogLabel"><label>Details:</label></div>
                                     {{ nation_form }}
                                 </div>
                                 <input
@@ -94,6 +97,7 @@
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
                                 <div class="FormSetTogglable FormSetGrowable FormSetSection">
+                                    <div class="FormSetGeogLabel"><label>Details:</label></div>
                                     {{ region_form }}
                                 </div>
                                 <input
