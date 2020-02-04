@@ -4,7 +4,6 @@ from django import forms
 from django.forms import ModelForm, RadioSelect, HiddenInput
 from django.forms.models import inlineformset_factory
 from leaflet.forms.widgets import LeafletWidget
-from django.core.validators import RegexValidator
 import bleach
 
 from issf_base.models import *
