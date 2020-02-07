@@ -5,7 +5,7 @@
 	padding: 3px;
 }
 
-.FormSetSection {
+.FormSection {
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
@@ -13,31 +13,31 @@
     background-color: #d0d0d0;
 }
 
-.FormSetSectionBanner {
+.FormSectionBanner {
     background-color: #1D4D9B;
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-gap: 15px;
 }
 
-.FormSetProgressBar {
+.FormProgressBar {
     height: 120%;
     margin: -8px auto;
 }
 
 /* Geog Scope Specific*/
-.FormSetGeog {
+.FormGeog {
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
 
 /* until i can figure out how to remove the asterisks */
-.FormSetGeog sup { 
+.FormGeog sup { 
     visibility: hidden;
 }
 
 /* the scope buttons list */
-.FormSetGeog > ul {
+.FormGeog > ul {
     display: flex;
     margin: 0;
     width: 100%;
@@ -45,7 +45,7 @@
 }
 
 /* the scope buttons */
-.FormSetGeog > ul > li {
+.FormGeog > ul > li {
     background-color: #1D4D9B;
     border-radius: 25px;
     padding: 5px 25px;
@@ -53,15 +53,15 @@
     transition: all 0.3s ease;
 }
 
-.FormSetGeog > ul > li:hover {
+.FormGeog > ul > li:hover {
     transform: scale(1.1);
 }
 
-.FormSetGeog > ul > li:active {
+.FormGeog > ul > li:active {
     transform: scale(0.99);
 }
 
-.FormSetGeog > ul > li > label {
+.FormGeog > ul > li > label {
     display: flex;
     margin: -20px;
     padding: 20px;
@@ -102,7 +102,7 @@ ul#id_geographic_scope_type input[type="radio"]:checked:after {
     border: 2px solid white;
 }
 
-.FormSetGeogLabel > label {
+.FormGeogLabel > label {
     color: #1D4D9B!important;
     font-weight: bold;
     font-size: 1.5rem;
