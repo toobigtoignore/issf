@@ -1852,11 +1852,15 @@ form sup {
 }
 
 #contribute-title {
-    background: #1d4d9b url(../img/logo-contribute.png) no-repeat 16px -2px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    float: left;
+    background: #1d4d9b;
 }
 
 #contribute-title h1 {
-    margin: 0 0 0 100px;
+    margin-left: 15px;
     color: #fbcd04;
 }
 
@@ -3011,4 +3015,10 @@ table p {
 /* fix index problem with HomePage Map/Index tabs having higher index than the map container resulting in unclickable area on top of map. */
 #map {
     z-index: 5000;
+}
+
+/* some helper classes */
+.m0p0 {
+    margin: 0!important;
+    padding: 0!important;
 }

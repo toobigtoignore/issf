@@ -11,28 +11,24 @@
     <title>{% block title %}ISSF: Contribute - enter new information{% endblock %}</title>
     <section class="content-section" id="content-contribute">
         <div class="row">
-            <div class="large-12 columns page-title" id="contribute-title">
+            <div class="page-title" id="contribute-title">
+                <img src={% static "issf_base/img/logo-contribute.png" %} alt="">
                 <h1>Contribute</h1>
             </div>
         </div>
-        <div class="row">
+        <div class="FormSection FormSectionBanner-contribute">
             <h6>
                 Please select the dataset associated with the information you would like to
                 contribute.
             </h6>
-        </div>
-        <div class="row">
             <h6>
                 Before contributing a new record, please explore/search using the
                 <a href="{% url 'index' %}">table and map </a> to see if it it already exists.
             </h6>
-        </div>
-        <div class="row">
             <h6>
                 After submitting, you will be redirected to the record's page where you can add additional information.
             </h6>
         </div>
-        <br>
 
         <div class="row">
             <nav class="col-200 left contributenav">
@@ -113,7 +109,7 @@
                             <p>Stories, lessons and knowledge about small-scale fisheries</p>
                         </div>
                     </li>
-                    <li class="tab-title" style="margin-bottom: 3px !important;">
+                    <li class="tab-title">
                         <a id="guidelines" tabindex="7" href="#panel-guidelines">
                             <span></span>
                             <h3>SSF Guidelines</h3>
@@ -131,12 +127,17 @@
                         <!-- Who's who -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel11">Who's Who in SSF</a>
-
-                                <div id="panel11" class="content">
-
-                                    <h6>
-                                        Step 1. {{ request.user }}, if you are directly involved in SSF
+                                <div id="panel11" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details for your Who's Who record</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <h6 style="width: 96%; margin: 0 auto; font-size: inherit">
+                                        Note: If you are directly involved in SSF
                                         please provide
                                         your
                                         basic details here. Name, email, and country of residence
@@ -150,115 +151,111 @@
                                         on the Who's
                                         Who
                                         page
-                                        after you Submit this page. Note that you can only
+                                        after you Submit this page. You can only
                                         contribute Who's Who
                                         information about yourself.
                                     </h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'who-basic' %}" method="post">
-                                        {% csrf_token %}
-                                        <div class="FormSet">
-                                            {{ profile_form.username }}
-                                            <span style="display: none;">
-                                            {{ profile_form.email }}
-                                        </span>
-                                            <label>*First Name:</label>
-                                            {{ profile_form.first_name }}
-                                            <label>Middle initial(s):</label>
-                                            {{ profile_form.initials }}
-                                            <label>*Last Name:</label>
-                                            {{ profile_form.last_name }}
-                                            {{ person_form.img_url.label_tag }}{{ person_form.img_url }}
-                                            <label for="id_affiliation">Primary
-                                                institutional/organizational
-                                                affiliation:
-                                            </label>
-                                            {{ person_form.affiliation }}
-                                            <label for="id_address1">Address line 1:</label>
-                                            {{ person_form.address1 }}
-                                            <label for="id_address2">Address line 2:</label>
-                                            {{ person_form.address2 }}
-                                            <label for="id_city_town">City/town:</label>
-                                            {{ person_form.city_town }}
-                                            <label for="id_prov_state">Province/state:</label>
-                                            {{ person_form.prov_state }}
-                                            <label for="id_postal_code">Postal code:</label>
-                                            {{ person_form.postal_code }}
-                                            <label for="id_country">Country:</label>
-                                            {% if profile_form.country %}
-                                                {{ profile_form.country }}
-                                            {% else %}
-                                                {{ person_form.country }}
-                                            {% endif %}
-                                            <button
-                                                class="medium radius blueOrangeButton"
-                                                id="getPersonAddress"
-                                            >
-                                                Locate
-                                                Address using Bing
-                                            </button>
-                                            <br/>
-                                            <label for="id_person_point">
-                                                Address location (use the
-                                                draw, edit
-                                                and
-                                                delete
-                                                controls to set/modify; if you don't specify a
-                                                location here,
-                                                you
-                                                will
-                                                be mapped based on your country of
-                                                residence):
-                                            </label>
-                                            {{ person_form.person_point }}
-                                            <label for="id_url">Please include a link to your
-                                                homepage or
-                                                online
-                                                profile
-                                                (Google Scholar, LinkedIn, etc.):
-                                            </label>
-                                            {{ person_form.url }}
-                                            <label for="id_organizations">Select all SSF
-                                                Organizations/Networks/Associations that you are a
-                                                member of
-                                                (use
-                                                <a href="/details/contribute/who">Contribute
-                                                </a>
-                                                to add)
-                                                :
-                                            </label>
-                                            {{ person_form.organizations }}
-                                            Hold down "Control", or "Command" on a Mac, to select
-                                            more than
-                                            one.
-                                            {{ person_form.contributor }}
-                                        </div>
-                                        <input
-                                            id="issf_core_id"
-                                            type="hidden"
-                                            value="{{ issf_core_id }}"
-                                            name="issf_core_id"
-                                        >
-
-                                        {% if user.is_staff %}
-                                            <div class="staffbox">
-                                                <h5>Staff only:</h5>
-                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
-                                                {{ person_form.tweet }}
+                                    <div class="FormSection">
+                                        <form action="{% url 'who-basic' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet">
+                                                {{ profile_form.username }}
+                                                <span style="display: none;">
+                                                {{ profile_form.email }}
+                                            </span>
+                                                <label>*First Name:</label>
+                                                {{ profile_form.first_name }}
+                                                <label>Middle initial(s):</label>
+                                                {{ profile_form.initials }}
+                                                <label>*Last Name:</label>
+                                                {{ profile_form.last_name }}
+                                                {{ person_form.img_url.label_tag }}{{ person_form.img_url }}
+                                                <label for="id_affiliation">Primary
+                                                    institutional/organizational
+                                                    affiliation:
+                                                </label>
+                                                {{ person_form.affiliation }}
+                                                <label for="id_address1">Address line 1:</label>
+                                                {{ person_form.address1 }}
+                                                <label for="id_address2">Address line 2:</label>
+                                                {{ person_form.address2 }}
+                                                <label for="id_city_town">City/town:</label>
+                                                {{ person_form.city_town }}
+                                                <label for="id_prov_state">Province/state:</label>
+                                                {{ person_form.prov_state }}
+                                                <label for="id_postal_code">Postal code:</label>
+                                                {{ person_form.postal_code }}
+                                                <label for="id_country">Country:</label>
+                                                {% if profile_form.country %}
+                                                    {{ profile_form.country }}
+                                                {% else %}
+                                                    {{ person_form.country }}
+                                                {% endif %}
+                                                <button
+                                                    class="medium radius blueOrangeButton"
+                                                    id="getPersonAddress"
+                                                >
+                                                    Locate
+                                                    Address using Bing
+                                                </button>
+                                                <br/>
+                                                <label for="id_person_point">
+                                                    Address location (use the
+                                                    draw, edit
+                                                    and
+                                                    delete
+                                                    controls to set/modify; if you don't specify a
+                                                    location here,
+                                                    you
+                                                    will
+                                                    be mapped based on your country of
+                                                    residence):
+                                                </label>
+                                                {{ person_form.person_point }}
+                                                <label for="id_url">Please include a link to your
+                                                    homepage or
+                                                    online
+                                                    profile
+                                                    (Google Scholar, LinkedIn, etc.):
+                                                </label>
+                                                {{ person_form.url }}
+                                                <label for="id_organizations">Select all SSF
+                                                    Organizations/Networks/Associations that you are a
+                                                    member of
+                                                    (use
+                                                    <a href="/details/contribute/who">Contribute
+                                                    </a>
+                                                    to add)
+                                                    :
+                                                </label>
+                                                {{ person_form.organizations }}
+                                                Hold down "Control", or "Command" on a Mac, to select
+                                                more than
+                                                one.
+                                                {{ person_form.contributor }}
                                             </div>
-                                        {% endif %}
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+                                            <input
+                                                id="issf_core_id"
+                                                type="hidden"
+                                                value="{{ issf_core_id }}"
+                                                name="issf_core_id"
+                                            >
+    
+                                            {% if user.is_staff %}
+                                                <div class="staffbox">
+                                                    <h5>Staff only:</h5>
+                                                    <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                    {{ person_form.tweet }}
+                                                </div>
+                                            {% endif %}
+    
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>
@@ -269,45 +266,46 @@
                         <!-- State-of-the-Art -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel21">State-of-the-Art in SSF Research</a>
-
-                                <div id="panel21" class="content">
-                                    <h6>Step 1. Please provide basic details of the publication</h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'sota-basic' %}" method="post">
-                                        {% csrf_token %}
-                                        <div class="FormSet">
-                                            {{ knowledge_form.publication_type.label_tag }}{{ knowledge_form.publication_type }}
-                                            {{ knowledge_form.level1_title.label_tag }}{{ knowledge_form.level1_title }}
-                                            {{ knowledge_form.level2_title.label_tag }}{{ knowledge_form.level2_title}}
-                                            {{ knowledge_form.nonenglish_language.label_tag }}{{ knowledge_form.nonenglish_language }}
-                                            {{ knowledge_form.nonenglish_title.label_tag }}{{ knowledge_form.nonenglish_title }}
-                                            {{ knowledge_form.year.label_tag }}{{ knowledge_form.year }}
-                                            {{ knowledge_form.contributor.label_tag }}{{ knowledge_form.contributor }}
-                                        </div>
-                                        <div class="FormSet FormSetGrowable">
-                                            {{ knowledge_authors_form }}
-                                        </div>
-
-                                        {% if user.is_staff %}
-                                            <div class="staffbox">
-                                                <h5>Staff only:</h5>
-                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
-                                                {{ knowledge_form.tweet }}
+                                <div id="panel21" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the SOTA Publication</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <div class="FormSection">
+                                        <form action="{% url 'sota-basic' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet">
+                                                {{ knowledge_form.publication_type.label_tag }}{{ knowledge_form.publication_type }}
+                                                {{ knowledge_form.level1_title.label_tag }}{{ knowledge_form.level1_title }}
+                                                {{ knowledge_form.level2_title.label_tag }}{{ knowledge_form.level2_title}}
+                                                {{ knowledge_form.nonenglish_language.label_tag }}{{ knowledge_form.nonenglish_language }}
+                                                {{ knowledge_form.nonenglish_title.label_tag }}{{ knowledge_form.nonenglish_title }}
+                                                {{ knowledge_form.year.label_tag }}{{ knowledge_form.year }}
+                                                {{ knowledge_form.contributor.label_tag }}{{ knowledge_form.contributor }}
                                             </div>
-                                        {% endif %}
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+                                            <div class="FormSet FormSetGrowable">
+                                                {{ knowledge_authors_form }}
+                                            </div>
+    
+                                            {% if user.is_staff %}
+                                                <div class="staffbox">
+                                                    <h5>Staff only:</h5>
+                                                    <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                    {{ knowledge_form.tweet }}
+                                                </div>
+                                            {% endif %}
+    
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>
@@ -318,48 +316,49 @@
                         <!-- Fishery Profile -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel31">SSF Profiles</a>
-
-                                <div id="panel61" class="content">
-                                    <h6> Step 1. Please provide basic details of the profile</h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'profile-basic' %}" method="post">
-                                        {% csrf_token %}
-                                        <div class="FormSet">
-                                            {{ fishery_profile_form.ssf_name.label_tag }}{{ fishery_profile_form.ssf_name }}
-                                            <div class="data-dates">
-                                                <label for="id_data_year">2B. *Time frame begin year:</label>
-                                                {{ fishery_profile_form.data_year }}
-                                                <label for="id_data_end_year"
-                                                       style="padding-left: 5px;">Time frame end year (leave at 0 for ongoing):
-                                                </label>
-                                                {{ fishery_profile_form.data_end_year }}
+                                <div id="panel61" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details for the SSF Profile</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <div class="FormSection">
+                                        <form action="{% url 'profile-basic' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet">
+                                                {{ fishery_profile_form.ssf_name.label_tag }}{{ fishery_profile_form.ssf_name }}
+                                                <div class="data-dates">
+                                                    <label for="id_data_year">2B. *Time frame begin year:</label>
+                                                    {{ fishery_profile_form.data_year }}
+                                                    <label for="id_data_end_year"
+                                                        style="padding-left: 5px;">Time frame end year (leave at 0 for ongoing):
+                                                    </label>
+                                                    {{ fishery_profile_form.data_end_year }}
+                                                </div>
+                                                {{ fishery_profile_form.ssf_defined.label_tag }}{{ fishery_profile_form.ssf_defined }}
+                                                {{ fishery_profile_form.ssf_definition.label_tag }}{{ fishery_profile_form.ssf_definition }}
+                                                {{ fishery_profile_form.img_url.label_tag }}{{ fishery_profile_form.img_url }}
+                                                {{ fishery_profile_form.contributor.label_tag }}{{ fishery_profile_form.contributor }}
                                             </div>
-                                            {{ fishery_profile_form.ssf_defined.label_tag }}{{ fishery_profile_form.ssf_defined }}
-                                            {{ fishery_profile_form.ssf_definition.label_tag }}{{ fishery_profile_form.ssf_definition }}
-                                            {{ fishery_profile_form.img_url.label_tag }}{{ fishery_profile_form.img_url }}
-                                            {{ fishery_profile_form.contributor.label_tag }}{{ fishery_profile_form.contributor }}
-                                        </div>
 
-                                        {% if user.is_staff %}
-                                            <div class="staffbox">
-                                                <h5>Staff only:</h5>
-                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
-                                                {{ fishery_profile_form.tweet }}
+                                            {% if user.is_staff %}
+                                                <div class="staffbox">
+                                                    <h5>Staff only:</h5>
+                                                    <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                    {{ fishery_profile_form.tweet }}
+                                                </div>
+                                            {% endif %}
+
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
                                             </div>
-                                        {% endif %}
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>
@@ -370,302 +369,299 @@
                         <!-- Organizations -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel41">SSF Organization</a>
-
-                                <div id="panel41" class="content">
-                                    <h6> Step 1. Please provide the basic organization information. Only
-                                        organizations
-                                        directly
-                                        involved in small-scale fisheries should be added.
-                                    </h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'organization-basic' %}" method="post">
-                                        {% csrf_token %}
-                                        <div class="FormSet">
-                                            {#                                {{ organization_form }}#}
-                                            <label for="id_org-organization_name">*Organization
-                                                name:
-                                            </label>
-                                            {{ organization_form.organization_name }}
-                                            <label for="id_org-address1">Address line 1:</label>
-                                            {{ organization_form.address1 }}
-                                            <label for="id_org-address2">Address line 2:</label>
-                                            {{ organization_form.address2 }}
-                                            <label for="id_org-city_town">City/town:</label>
-                                            {{ organization_form.city_town }}
-                                            <label for="id_org-prov_state">Province/state:</label>
-                                            {{ organization_form.prov_state }}
-                                            <label for="id_org-postal_code">Postal code:</label>
-                                            {{ organization_form.postal_code }}
-                                            <label for="id_org-country">*Country:</label>
-                                            {{ organization_form.country }}
-                                            <button class="medium radius blueOrangeButton"
-                                                    id="getOrgAddress">
-                                                Locate
-                                                Address using Bing
-                                            </button>
-                                            <br/>
-                                            <label for="id_org-organization_point">Address location
-                                                (use the draw,
-                                                edit
-                                                and delete controls to set/modify; if you don't
-                                                specify a location
-                                                here,
-                                                the organization will be mapped based on the
-                                                country):
-                                            </label>
-                                            {{ organization_form.organization_point }}
-                                            <label for="id_org-year_established">Year
-                                                established:
-                                            </label>
-                                            {{ organization_form.year_established }}
-                                            <label>Organization type (check all that
-                                                apply):
-                                            </label>
-                                            <ul>
-                                                <li>{{ organization_form.organization_type_union }}
-                                                    <label
-                                                            for="id_org-organization_type_union">Union/association
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.organization_type_support }}
-                                                    <label
-                                                            for="id_org-organization_type_support">Support
-                                                        organization
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.organization_type_coop }}
-                                                    <label
-                                                            for="id_org-organization_type_coop">Cooperative/society
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.organization_type_flag }}
-                                                    <label
-                                                            for="id_org-organization_type_flag">Fisheries
-                                                        local action
-                                                        group
-                                                    </label>
-                                                </li>
-                                                {#                                            incorrect label id used to allow other hide/show js code to work#}
-                                                <li>{{ organization_form.organization_type_other }}
-                                                    <label
-                                                            for="id_organization_type_other">Other
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                            <label for="id_org-organization_type_other_text">Other
-                                                organization
-                                                type:
-                                            </label>
-                                            {{ organization_form.organization_type_other_text }}
-                                            <label for="id_org-ssf_defined">*Does the organization
-                                                apply a
-                                                small-scale
-                                                fisheries definition?
-                                            </label>
-                                            {{ organization_form.ssf_defined }}
-                                            <label for="id_org-ssf_definition">Provide working
-                                                definition of
-                                                small-scale
-                                                fisheries (if applicable):
-                                            </label>
-                                            {{ organization_form.ssf_definition }}
-                                            <label>Motivation/goals (check all that apply):</label>
-                                            <ul>
-                                                <li>{{ organization_form.motivation_voice }}
-                                                    <label
-                                                            for="id_org-motivation_voice">Increase
-                                                        voice/representation
-                                                        in
-                                                        decision-making
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.motivation_market }}
-                                                    <label
-                                                            for="id_org-motivation_market">Improve
-                                                        market
-                                                        opportunities
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.motivation_sustainability }}
-                                                    <label
-                                                            for="id_org-motivation_sustainability">Enhance
-                                                        sustainability
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.motivation_economics }}
-                                                    <label
-                                                            for="id_org-motivation_economics">Address
-                                                        economic
-                                                        concerns
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.motivation_rights }}
-                                                    <label
-                                                            for="id_org-motivation_rights">Promote/uphold
-                                                        SSF
-                                                        rights
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.motivation_collaboration }}
-                                                    <label
-                                                            for="id_org-motivation_collaboration">Facilitate
-                                                        collaboration
-                                                        and networking
-                                                    </label>
-                                                </li>
-                                                {#                                            incorrect label id used to allow other hide/show js code to work#}
-                                                <li>{{ organization_form.motivation_other }}
-                                                    <label
-                                                            for="id_motivation_other">Other
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                            <label for="id_org-motivation_other_text">Other
-                                                motivation/goal:
-                                            </label>
-                                            {{ organization_form.motivation_other_text }}
-                                            <label for="id_org-mission">Mission:</label>
-                                            {{ organization_form.mission }}
-                                            <label>Main activities (check all that apply):</label>
-                                            <ul>
-                                                <li>{{ organization_form.activities_capacity }}
-                                                    <label
-                                                            for="id_org-activities_capacity">Capacity
-                                                        building and
-                                                        knowledge
-                                                        mobilization
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.activities_sustainability }}
-                                                    <label
-                                                            for="id_org-activities_sustainability">Promotion
-                                                        of
-                                                        sustainable
-                                                        practices
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.activities_networking }}
-                                                    <label
-                                                            for="id_org-activities_networking">Development
-                                                        of
-                                                        networks/linkages
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.activities_marketing }}
-                                                    <label
-                                                            for="id_org-activities_marketing">Marketing
-                                                        and business
-                                                        development
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.activities_collaboration }}
-                                                    <label
-                                                            for="id_org-activities_collaboration">Facilitating
-                                                        collaboration
-                                                        with scientists and/or officials
-                                                    </label>
-                                                </li>
-                                                {#                                            incorrect label id used to allow other hide/show js code to work#}
-                                                <li>{{ organization_form.activities_other }}
-                                                    <label
-                                                            for="id_activities_other">Other
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                            <label for="id_org-activities_other_text">Other
-                                                activity:
-                                            </label>
-                                            {{ organization_form.activities_other_text }}
-                                            <label>Networks/partnerships/collaborations with other
-                                                organizations
-                                                (check
-                                                all that apply):
-                                            </label>
-                                            <ul>
-                                                <li>{{ organization_form.network_types_state }}
-                                                    <label
-                                                            for="id_org-network_types_state">State/government
-                                                        agencies
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.network_types_ssfos }}
-                                                    <label
-                                                            for="id_org-network_types_ssfos">Small-scale
-                                                        fishery
-                                                        organizations
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.network_types_community }}
-                                                    <label
-                                                            for="id_org-network_types_community">Community
-                                                        groups
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.network_types_society }}
-                                                    <label
-                                                            for="id_org-activities_marketing">Civil
-                                                        society
-                                                        organizations
-                                                    </label>
-                                                </li>
-                                                <li>{{ organization_form.network_types_ngos }}
-                                                    <label
-                                                            for="id_org-network_types_ngos">Non-governmental
-                                                        organizations
-                                                    </label>
-                                                </li>
-                                                <!-- Incorrect label id used to allow other hide/show js code to work -->
-                                                <li>{{ organization_form.network_types_other }}
-                                                    <label
-                                                            for="id_network_types_other">Other
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                            <label for="id_org-network_types_other_text">Other
-                                                networks/partnerships/collaborations:
-                                            </label>
-                                            {{ organization_form.network_types_other_text }}
-                                            <label for="id_org-achievements">Primary
-                                                achievements:
-                                            </label>
-                                            {{ organization_form.achievements }}
-                                            <label for="id_org-success_factors">Main success
-                                                factors:
-                                            </label>
-                                            {{ organization_form.success_factors }}
-                                            <label for="id_org-obstacles">Key obstacles to
-                                                achieving goals:
-                                            </label>
-                                            {{ organization_form.obstacles }}
-                                            <label for="id_org-contributor">*Contributor (note:
-                                                this is the only
-                                                person,
-                                                other than ISSF staff, who can edit the
-                                                record):
-                                            </label>
-                                            {{ organization_form.contributor }}
-                                        </div>
-
-                                        {% if user.is_staff %}
-                                            <div class="staffbox">
-                                                <h5>Staff only:</h5>
-                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
-                                                {{ organization_form.tweet }}
+                                <div id="panel41" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the SSF-related organization</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <div class="FormSection">
+                                        <form action="{% url 'organization-basic' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet">
+                                                {#                                {{ organization_form }}#}
+                                                <label for="id_org-organization_name">*Organization
+                                                    name:
+                                                </label>
+                                                {{ organization_form.organization_name }}
+                                                <label for="id_org-address1">Address line 1:</label>
+                                                {{ organization_form.address1 }}
+                                                <label for="id_org-address2">Address line 2:</label>
+                                                {{ organization_form.address2 }}
+                                                <label for="id_org-city_town">City/town:</label>
+                                                {{ organization_form.city_town }}
+                                                <label for="id_org-prov_state">Province/state:</label>
+                                                {{ organization_form.prov_state }}
+                                                <label for="id_org-postal_code">Postal code:</label>
+                                                {{ organization_form.postal_code }}
+                                                <label for="id_org-country">*Country:</label>
+                                                {{ organization_form.country }}
+                                                <button class="medium radius blueOrangeButton"
+                                                        id="getOrgAddress">
+                                                    Locate
+                                                    Address using Bing
+                                                </button>
+                                                <br/>
+                                                <label for="id_org-organization_point">Address location
+                                                    (use the draw,
+                                                    edit
+                                                    and delete controls to set/modify; if you don't
+                                                    specify a location
+                                                    here,
+                                                    the organization will be mapped based on the
+                                                    country):
+                                                </label>
+                                                {{ organization_form.organization_point }}
+                                                <label for="id_org-year_established">Year
+                                                    established:
+                                                </label>
+                                                {{ organization_form.year_established }}
+                                                <label>Organization type (check all that
+                                                    apply):
+                                                </label>
+                                                <ul>
+                                                    <li>{{ organization_form.organization_type_union }}
+                                                        <label
+                                                                for="id_org-organization_type_union">Union/association
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.organization_type_support }}
+                                                        <label
+                                                                for="id_org-organization_type_support">Support
+                                                            organization
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.organization_type_coop }}
+                                                        <label
+                                                                for="id_org-organization_type_coop">Cooperative/society
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.organization_type_flag }}
+                                                        <label
+                                                                for="id_org-organization_type_flag">Fisheries
+                                                            local action
+                                                            group
+                                                        </label>
+                                                    </li>
+                                                    {#                                            incorrect label id used to allow other hide/show js code to work#}
+                                                    <li>{{ organization_form.organization_type_other }}
+                                                        <label
+                                                                for="id_organization_type_other">Other
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                                <label for="id_org-organization_type_other_text">Other
+                                                    organization
+                                                    type:
+                                                </label>
+                                                {{ organization_form.organization_type_other_text }}
+                                                <label for="id_org-ssf_defined">*Does the organization
+                                                    apply a
+                                                    small-scale
+                                                    fisheries definition?
+                                                </label>
+                                                {{ organization_form.ssf_defined }}
+                                                <label for="id_org-ssf_definition">Provide working
+                                                    definition of
+                                                    small-scale
+                                                    fisheries (if applicable):
+                                                </label>
+                                                {{ organization_form.ssf_definition }}
+                                                <label>Motivation/goals (check all that apply):</label>
+                                                <ul>
+                                                    <li>{{ organization_form.motivation_voice }}
+                                                        <label
+                                                                for="id_org-motivation_voice">Increase
+                                                            voice/representation
+                                                            in
+                                                            decision-making
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.motivation_market }}
+                                                        <label
+                                                                for="id_org-motivation_market">Improve
+                                                            market
+                                                            opportunities
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.motivation_sustainability }}
+                                                        <label
+                                                                for="id_org-motivation_sustainability">Enhance
+                                                            sustainability
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.motivation_economics }}
+                                                        <label
+                                                                for="id_org-motivation_economics">Address
+                                                            economic
+                                                            concerns
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.motivation_rights }}
+                                                        <label
+                                                                for="id_org-motivation_rights">Promote/uphold
+                                                            SSF
+                                                            rights
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.motivation_collaboration }}
+                                                        <label
+                                                                for="id_org-motivation_collaboration">Facilitate
+                                                            collaboration
+                                                            and networking
+                                                        </label>
+                                                    </li>
+                                                    {#                                            incorrect label id used to allow other hide/show js code to work#}
+                                                    <li>{{ organization_form.motivation_other }}
+                                                        <label
+                                                                for="id_motivation_other">Other
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                                <label for="id_org-motivation_other_text">Other
+                                                    motivation/goal:
+                                                </label>
+                                                {{ organization_form.motivation_other_text }}
+                                                <label for="id_org-mission">Mission:</label>
+                                                {{ organization_form.mission }}
+                                                <label>Main activities (check all that apply):</label>
+                                                <ul>
+                                                    <li>{{ organization_form.activities_capacity }}
+                                                        <label
+                                                                for="id_org-activities_capacity">Capacity
+                                                            building and
+                                                            knowledge
+                                                            mobilization
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.activities_sustainability }}
+                                                        <label
+                                                                for="id_org-activities_sustainability">Promotion
+                                                            of
+                                                            sustainable
+                                                            practices
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.activities_networking }}
+                                                        <label
+                                                                for="id_org-activities_networking">Development
+                                                            of
+                                                            networks/linkages
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.activities_marketing }}
+                                                        <label
+                                                                for="id_org-activities_marketing">Marketing
+                                                            and business
+                                                            development
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.activities_collaboration }}
+                                                        <label
+                                                                for="id_org-activities_collaboration">Facilitating
+                                                            collaboration
+                                                            with scientists and/or officials
+                                                        </label>
+                                                    </li>
+                                                    {#                                            incorrect label id used to allow other hide/show js code to work#}
+                                                    <li>{{ organization_form.activities_other }}
+                                                        <label
+                                                                for="id_activities_other">Other
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                                <label for="id_org-activities_other_text">Other
+                                                    activity:
+                                                </label>
+                                                {{ organization_form.activities_other_text }}
+                                                <label>Networks/partnerships/collaborations with other
+                                                    organizations
+                                                    (check
+                                                    all that apply):
+                                                </label>
+                                                <ul>
+                                                    <li>{{ organization_form.network_types_state }}
+                                                        <label
+                                                                for="id_org-network_types_state">State/government
+                                                            agencies
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.network_types_ssfos }}
+                                                        <label
+                                                                for="id_org-network_types_ssfos">Small-scale
+                                                            fishery
+                                                            organizations
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.network_types_community }}
+                                                        <label
+                                                                for="id_org-network_types_community">Community
+                                                            groups
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.network_types_society }}
+                                                        <label
+                                                                for="id_org-activities_marketing">Civil
+                                                            society
+                                                            organizations
+                                                        </label>
+                                                    </li>
+                                                    <li>{{ organization_form.network_types_ngos }}
+                                                        <label
+                                                                for="id_org-network_types_ngos">Non-governmental
+                                                            organizations
+                                                        </label>
+                                                    </li>
+                                                    <!-- Incorrect label id used to allow other hide/show js code to work -->
+                                                    <li>{{ organization_form.network_types_other }}
+                                                        <label
+                                                                for="id_network_types_other">Other
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                                <label for="id_org-network_types_other_text">Other
+                                                    networks/partnerships/collaborations:
+                                                </label>
+                                                {{ organization_form.network_types_other_text }}
+                                                <label for="id_org-achievements">Primary
+                                                    achievements:
+                                                </label>
+                                                {{ organization_form.achievements }}
+                                                <label for="id_org-success_factors">Main success
+                                                    factors:
+                                                </label>
+                                                {{ organization_form.success_factors }}
+                                                <label for="id_org-obstacles">Key obstacles to
+                                                    achieving goals:
+                                                </label>
+                                                {{ organization_form.obstacles }}
+                                                <label for="id_org-contributor">*Contributor (note:
+                                                    this is the only
+                                                    person,
+                                                    other than ISSF staff, who can edit the
+                                                    record):
+                                                </label>
+                                                {{ organization_form.contributor }}
                                             </div>
-                                        {% endif %}
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+    
+                                            {% if user.is_staff %}
+                                                <div class="staffbox">
+                                                    <h5>Staff only:</h5>
+                                                    <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                    {{ organization_form.tweet }}
+                                                </div>
+                                            {% endif %}
+    
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>
@@ -676,29 +672,30 @@
                         <!-- Case studies -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel41">Case Studies</a>
-                                <div id="panel41" class="content">
-                                    <h6> Step 1. Please provide details of the case study
-                                    </h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'case-studies-basic' %}" method="post">
-                                        {% csrf_token %}
-
-                                        <div class="FormSet">
-                                            {{ case_study_form }}
-                                        </div>
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+                                <div id="panel41" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the case study</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <div class="FormSection">
+                                        <form action="{% url 'case-studies-basic' %}" method="post">
+                                            {% csrf_token %}
+    
+                                            <div class="FormSet">
+                                                {{ case_study_form }}
+                                            </div>
+    
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>
@@ -709,31 +706,31 @@
                         <!-- Capacity Development -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel61">Capacity Development</a>
-
-                                <div id="panel61" class="content">
-                                    <h6> Step 1. Please provide details of the existing or needed capacity
-                                        development
-                                    </h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'capacity-basic' %}" method="post">
-                                        {% csrf_token %}
-
-                                        <div class="FormSet">
-                                            {{ capacity_need_form }}
-                                        </div>
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+                                <div id="panel61" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the existing or needed capacity
+                                            development</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <div class="FormSection">
+                                        <form action="{% url 'capacity-basic' %}" method="post">
+                                            {% csrf_token %}
+    
+                                            <div class="FormSet">
+                                                {{ capacity_need_form }}
+                                            </div>
+    
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>
@@ -744,42 +741,44 @@
                         <!-- Experiences -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel71">Experiences</a>
-                                <div id="panel81" class="content">
-                                    <h6>Step 1. Please provide details of the Experiences.</h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'experiences-basic' %}" method="post">
-                                        {% csrf_token %}
-
-                                        <div class="FormSet">
-                                            {{ experiences_form.name.label_tag }}{{ experiences_form.name }}
-                                            {{ experiences_form.title.label_tag }}{{ experiences_form.title }}
-                                            {{ experiences_form.video_url.label_tag }}{{ experiences_form.video_url }}
-                                            {{ experiences_form.vimeo_video_url.label_tag }}{{ experiences_form.vimeo_video_url }}
-                                            {{ experiences_form.description.label_tag }}{{ experiences_form.description }}
-                                            {{ experiences_form.img_url.label_tag }}{{ experiences_form.img_url }}
-                                            {{ experiences_form.contributor.label_tag }}{{ experiences_form.contributor }}
-                                        </div>
-
-                                        {% if user.is_staff %}
-                                            <div class="staffbox">
-                                                <h5>Staff only:</h5>
-                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
-                                                {{ experiences_form.tweet }}
+                                <div id="panel81" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the experience(s)</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <div class="FormSection">
+                                        <form action="{% url 'experiences-basic' %}" method="post">
+                                            {% csrf_token %}
+    
+                                            <div class="FormSet">
+                                                {{ experiences_form.name.label_tag }}{{ experiences_form.name }}
+                                                {{ experiences_form.title.label_tag }}{{ experiences_form.title }}
+                                                {{ experiences_form.video_url.label_tag }}{{ experiences_form.video_url }}
+                                                {{ experiences_form.vimeo_video_url.label_tag }}{{ experiences_form.vimeo_video_url }}
+                                                {{ experiences_form.description.label_tag }}{{ experiences_form.description }}
+                                                {{ experiences_form.img_url.label_tag }}{{ experiences_form.img_url }}
+                                                {{ experiences_form.contributor.label_tag }}{{ experiences_form.contributor }}
                                             </div>
-                                        {% endif %}
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+    
+                                            {% if user.is_staff %}
+                                                <div class="staffbox">
+                                                    <h5>Staff only:</h5>
+                                                    <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                    {{ experiences_form.tweet }}
+                                                </div>
+                                            {% endif %}
+    
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>
@@ -790,56 +789,58 @@
                         <!-- Guidelines -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
-                                <a href="#panel81">SSF Guidelines</a>
-                                <div id="panel81" class="content">
-                                    <h6>Step 1. Please provide details of the SSF Guidelines documentation.</h6>
-
-                                    <p class="alert">
-                                        <label>*</label>
-                                        indicates required fields
-                                    </p>
-
-                                    <form action="{% url 'guidelines-basic' %}" method="post">
-                                        {% csrf_token %}
-                                        <div class="FormSet">
-                                            {{ guidelines_form.title.label_tag }}{{ guidelines_form.title }}
-                                            {{ guidelines_form.activity_type.label_tag }}{{ guidelines_form.activity_type }}
-                                            {{ guidelines_form.activity_coverage.label_tag }}{{ guidelines_form.activity_coverage }}
-                                            {{ guidelines_form.location.label_tag }}{{ guidelines_form.location }}
-                                            {{ guidelines_form.organizer.label_tag }}{{ guidelines_form.organizer }}
-                                            {{ guidelines_form.purpose.label_tag }}{{ guidelines_form.purpose }}
-                                            <div class="data-dates">
-                                                <label style="padding-right: 5px;">Start date:</label>
-                                                {{ guidelines_form.start_year.label_tag }}{{ guidelines_form.start_year }}
-                                                {{ guidelines_form.start_month.label_tag }}{{ guidelines_form.start_month }}
-                                                {{ guidelines_form.start_day.label_tag }}{{ guidelines_form.start_day }}
+                                <div id="panel81" class="content m0p0">
+                                    <div class="FormSection FormSectionBanner">
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the SSF Guidelines documentation</h5>
+                                        <img 
+                                            class="FormProgressBar" 
+                                            src="{% static "issf_base/img/progress-basic.png" %}"
+                                            alt="Progress Bar, Geographic Scope"
+                                        >
+                                    </div>
+                                    <div class="FormSection">
+                                        <form action="{% url 'guidelines-basic' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="FormSet">
+                                                {{ guidelines_form.title.label_tag }}{{ guidelines_form.title }}
+                                                {{ guidelines_form.activity_type.label_tag }}{{ guidelines_form.activity_type }}
+                                                {{ guidelines_form.activity_coverage.label_tag }}{{ guidelines_form.activity_coverage }}
+                                                {{ guidelines_form.location.label_tag }}{{ guidelines_form.location }}
+                                                {{ guidelines_form.organizer.label_tag }}{{ guidelines_form.organizer }}
+                                                {{ guidelines_form.purpose.label_tag }}{{ guidelines_form.purpose }}
+                                                <div class="data-dates">
+                                                    <label style="padding-right: 5px;">Start date:</label>
+                                                    {{ guidelines_form.start_year.label_tag }}{{ guidelines_form.start_year }}
+                                                    {{ guidelines_form.start_month.label_tag }}{{ guidelines_form.start_month }}
+                                                    {{ guidelines_form.start_day.label_tag }}{{ guidelines_form.start_day }}
+                                                </div>
+    
+                                                <div class="data-dates">
+                                                    <label style="padding-right: 5px;">End date:</label>
+                                                    {{ guidelines_form.end_year.label_tag }}{{ guidelines_form.end_year }}
+                                                    {{ guidelines_form.end_month.label_tag }}{{ guidelines_form.end_month }}
+                                                    {{ guidelines_form.end_day.label_tag }}{{ guidelines_form.end_day }}
+                                                </div>
+                                                {{ guidelines_form.ongoing.label_tag }}{{ guidelines_form.ongoing }}
+                                                {{ guidelines_form.link.label_tag }}{{ guidelines_form.link }}
+                                                {{ guidelines_form.contributor.label_tag }}{{ guidelines_form.contributor }}
                                             </div>
-
-                                            <div class="data-dates">
-                                                <label style="padding-right: 5px;">End date:</label>
-                                                {{ guidelines_form.end_year.label_tag }}{{ guidelines_form.end_year }}
-                                                {{ guidelines_form.end_month.label_tag }}{{ guidelines_form.end_month }}
-                                                {{ guidelines_form.end_day.label_tag }}{{ guidelines_form.end_day }}
+    
+                                            {% if user.is_staff %}
+                                                <div class="staffbox">
+                                                    <h5>Staff only:</h5>
+                                                    <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
+                                                    {{ guidelines_form.tweet }}
+                                                </div>
+                                            {% endif %}
+    
+                                            <div class="button-bar">
+                                                <button class="medium bt-submit " value="Submit">
+                                                    Submit
+                                                </button>
                                             </div>
-                                            {{ guidelines_form.ongoing.label_tag }}{{ guidelines_form.ongoing }}
-                                            {{ guidelines_form.link.label_tag }}{{ guidelines_form.link }}
-                                            {{ guidelines_form.contributor.label_tag }}{{ guidelines_form.contributor }}
-                                        </div>
-
-                                        {% if user.is_staff %}
-                                            <div class="staffbox">
-                                                <h5>Staff only:</h5>
-                                                <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
-                                                {{ guidelines_form.tweet }}
-                                            </div>
-                                        {% endif %}
-
-                                        <div class="button-bar">
-                                            <button class="medium bt-submit " value="Submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </dd>
                         </dl>

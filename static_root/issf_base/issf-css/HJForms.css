@@ -20,6 +20,12 @@
     grid-gap: 15px;
 }
 
+.FormSectionBanner-contribute {
+    width: 1000px;
+    margin: -10px auto 0 auto;
+    box-shadow: none;
+}
+
 .FormProgressBar {
     height: 120%;
     margin: -8px auto;
