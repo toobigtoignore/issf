@@ -1657,7 +1657,7 @@ blockquote p {
     margin-left: 0;
 }
 
-.tabs > li:last-of-type > a {
+.contributenav .tabs > li:last-of-type > a {
     margin-bottom: 10px;
 }
 
