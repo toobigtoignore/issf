@@ -126,7 +126,7 @@ footer {
 }
 
 .header-right {
-    padding-top: 58px;
+    padding-top: 40px;
     text-align: right;
 }
 
@@ -172,20 +172,66 @@ footer {
     vertical-align: middle;
 }
 
-.bt-contribute {
-    display: inline-block;
-    width: 203px;
-    height: 45px;
-    margin: 0;
-    vertical-align: middle;
-    background: url(../img/btn-contribute-sm.png) no-repeat;
-    background-size: contain;
+.contribution-bts {
+    display: flex;
+    justify-content: space-around;
+    float: right;
+    margin-right: -15px;
 }
 
-#tbti:hover, .bt-contribute:hover {
+.bt-contribute {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    width: 200px;
+    height: 45px;
+    margin-right: 5px;
+    border-radius: 3px;
+    background: #1D4D9C;
+}
+
+#tbti:hover, .bt-contribute:hover, .bt-my_contributions:hover {
     opacity: 0.9;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
     filter: alpha(opacity=90);
+}
+
+.tbti-logo-homepage {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 80%;
+    margin-top: 5px;
+}
+
+.bt-contribute-logo {
+    height: 100%;
+    float: left;
+    padding: 6px;
+}
+
+.bt-contribute-text {
+    display: flex;
+    font-size: 22px;
+    margin: 0;
+    padding-right: 15px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 2px 2px rgba(0,0,0,.6);
+}
+
+.bt-contributions-text {
+    font-size: 20px;
+    padding-right: 0;
+    padding: 8px;
+}
+
+.bt-my_contributions {
+    display: block;
+    width: 200px;
+    height: 45px;
+    background: #1D4D9C;
+    border-radius: 3px;
 }
 
 .account-bar {
@@ -193,8 +239,7 @@ footer {
     top: 0;
     right: 10px;
     width: 390px;
-    padding: 2px 8px 4px;
-    text-align: center;
+    padding: 4px 0;
     -webkit-border-radius: 0 0 6px 6px;
     -moz-border-radius: 0 0 6px 6px;
     -ms-border-radius: 0 0 6px 6px;
@@ -243,10 +288,6 @@ footer {
     color: #f6893c;
 }
 
-.account-bar:hover {
-    background-color: #c8c8c8;
-}
-
 .f-dropdown:before, .f-dropdown:after {
     display: none;
 }
@@ -262,7 +303,7 @@ footer {
     right: 0;
     top: -60px;
     width: 100%;
-    padding-right: 140px;
+    padding-right: 205px;
     text-align: center;
     z-index: 7;
 }

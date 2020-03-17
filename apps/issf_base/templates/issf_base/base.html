@@ -155,10 +155,41 @@
                         </span>
 
                     </div>
-                    <a class="bt-contribute" href="{% url 'contribute' %}"></a>
-                    <a href="http://toobigtoignore.net/" target="_blank">
-                        <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
-                    </a>
+
+                    {% if user.is_anonymous %}
+                        <a class="bt-contribute" style="margin: 5px 0px 5px auto" href="{% url 'contribute' %}">
+                            <img
+                                class="bt-contribute-logo"
+                                src="{% static "issf_base/img/logo-contribute.png" %}"
+                                alt=""
+                            >
+                            <h2 class="bt-contribute-text">Contribute</h2>
+                        </a>
+                        <a href="http://toobigtoignore.net/" target="_blank">
+                            <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
+                        </a>
+
+                        {% else %}
+                        <div class="contribution-bts">
+                            <a class="bt-contribute" href="{% url 'contribute' %}">
+                                <img
+                                    class="bt-contribute-logo"
+                                    src="{% static "issf_base/img/logo-contribute.png" %}"
+                                    alt=""
+                                >
+                                <h2 class="bt-contribute-text">Contribute</h2>
+                            </a>
+                            <a class="bt-my_contributions" href="{% url 'contributed-records' %}">
+                                <h2 class="bt-contribute-text bt-contributions-text">My Contributions</h2>
+                            </a>
+                        </div>
+                        <div class="tbti-logo-homepage">
+                            <a href="http://toobigtoignore.net/" target="_blank">
+                                <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
+                            </a>
+                        </div>
+                        
+                        {% endif %}
                 </div>
             </div>
         </header>
@@ -171,7 +202,7 @@
             <div class="row">
                 <div class="large-8 columns">
                     <p class="copy">
-                        &copy;2019 TBTI, all rights reserved. Hosted by
+                        &copy;2020 TBTI, all rights reserved. Hosted by
                         <a
                             href="https://www.computecanada.ca/"
                             target="_blank"
