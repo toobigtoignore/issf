@@ -1893,11 +1893,15 @@ form sup {
 }
 
 #contribute-title {
-    background: #1d4d9b url(../img/logo-contribute.png) no-repeat 16px -2px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    float: left;
+    background: #1d4d9b;
 }
 
 #contribute-title h1 {
-    margin: 0 0 0 100px;
+    margin-left: 15px;
     color: #fbcd04;
 }
 
@@ -2274,10 +2278,11 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .button-bar {
-    margin: 20px 0 -27px;
-    padding: 8px;
+    width: 98%;
+    padding: 10px;
+    margin: 0px auto -10px auto;
     text-align: center;
-    background: #7D7D7D;
+    background-color: #7d7d7d;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -3051,4 +3056,10 @@ table p {
 /* fix index problem with HomePage Map/Index tabs having higher index than the map container resulting in unclickable area on top of map. */
 #map {
     z-index: 5000;
+}
+
+/* some helper classes */
+.m0p0 {
+    margin: 0!important;
+    padding: 0!important;
 }

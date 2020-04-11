@@ -14,20 +14,22 @@
                 <dl class="accordion" data-accordion>
                     <dd class="accordion-navigation active">
                         {% if editor %}
-                            <h6>Step 2. Please indicate the geographic scope of the record.</h6>
-
-                            <div class="FormSet FormSetToggler">
+                            <div class="FormSection FormSectionBanner">
+                                <h3 style="text-align: center; color: #FBCD06">Please indicate the geographic scope of the record.</h3>
+                                <img 
+                                    class="FormProgressBar" 
+                                    src="{% static "issf_base/img/progress-geo.png" %}"
+                                    alt="Progress Bar, Geographic Scope"
+                                >
+                            </div>
+                            <div class="FormGeog FormSetToggler FormGeogLabel FormSection">
                                 {{ geographic_scope_form }}
                             </div>
 
-                            <p class="alert">
-                                <label>*</label>
-                                indicates required fields
-                            </p>
-
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                <div class="FormSetTogglable FormSetGrowable FormSection">
+                                    <div class="FormGeogLabel"><label>Details:</label></div>
                                     {{ local_area_form }}
                                 </div>
                                 <input
@@ -49,7 +51,8 @@
 
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                <div class="FormSetTogglable FormSetGrowable FormSection">
+                                <div class="FormGeogLabel"><label>Details:</label></div>
                                     {{ subnation_form }}
                                 </div>
                                 <input
@@ -71,7 +74,8 @@
 
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable">
+                                <div class="FormSetTogglable FormSection">
+                                    <div class="FormGeogLabel"><label>Details:</label></div>
                                     {{ nation_form }}
                                 </div>
                                 <input
@@ -93,7 +97,8 @@
 
                             <form action="{% url 'geographic-scope' %}" method="post" style="display: block">
                                 {% csrf_token %}
-                                <div class="FormSet FormSetTogglable FormSetGrowable">
+                                <div class="FormSetTogglable FormSetGrowable FormSection">
+                                    <div class="FormGeogLabel"><label>Details:</label></div>
                                     {{ region_form }}
                                 </div>
                                 <input
@@ -108,7 +113,6 @@
                                     value="{{ core_instance.issf_core_id }}"
                                     name="issf_core_id"
                                 >
-                                </div>
                                 <div class="FormButtonBar button-bar">
                                     <button class="medium radius submit bt-submit">Submit</button>
                                 </div>

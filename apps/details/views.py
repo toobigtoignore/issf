@@ -1704,11 +1704,7 @@ def geographic_scope(request: HttpRequest) -> HttpResponse:
                 update_tsvector_summary(core_instance.core_record_type,
                                         issf_core_id)
 
-                # If this is an ssf profile that is being created for the first time, redirect to the main attributes form
-                if 'geog-scope' in request.META['HTTP_REFERER'] and core_instance.core_record_type == u'SSF Profile':
-                    redirectname = 'main-attributes-save'
-                else:
-                    redirectname = get_redirectname(core_instance.core_record_type)
+                redirectname = get_redirectname(core_instance.core_record_type)
                 response = json.dumps({
                     'success': 'true',
                     'redirectname': redirectname,

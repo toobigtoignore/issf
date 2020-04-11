@@ -4,9 +4,7 @@ from django import forms
 from django.forms import ModelForm, RadioSelect, HiddenInput
 from django.forms.models import inlineformset_factory
 from leaflet.forms.widgets import LeafletWidget
-from django.core.validators import RegexValidator
 import bleach
-
 from issf_base.models import *
 
 
@@ -33,15 +31,15 @@ class SSFKnowledgeForm(ModelForm):
                   'level2_title', 'nonenglish_language', 'nonenglish_title',
                   'year', 'contributor', ]
         labels = {
-            'publication_type': '*Publication type',
-            'level1_title': '*Journal/book/report/newsletter/conference',
-            'level2_title': '*Article/chapter/item title',
+            'publication_type': 'Publication type',
+            'level1_title': 'Journal/book/report/newsletter/conference',
+            'level2_title': 'Article/chapter/item title',
             'nonenglish_language': 'If the study was published in a language '
                                    'other than English, '
                                    'please specify',
             'nonenglish_title': 'Title in original language',
             'year': '*Year',
-            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+            'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
                            'who can edit the record)'
         }
         widgets = {
@@ -102,7 +100,7 @@ class SSFPersonForm(ModelForm):
                    'LinkedIn, etc.)',
             'organizations': 'Select all SSF Organizations/Networks/Associations that you are a '
                              'member of (use Contribute to add)',
-            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+            'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
                            'who can edit the record)',
             'img_url': 'Your picture (direct links only)'
         }
@@ -234,11 +232,11 @@ class SSFCapacityNeedForm(ModelForm):
                   'capacity_need_title', 'capacity_need_description',
                   'contributor', ]
         labels = {
-            'capacity_need_category': '*Category',
-            'capacity_need_type': '*Type',
-            'capacity_need_title': '*Short title',
-            'capacity_need_description': '*Description',
-            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+            'capacity_need_category': 'Category',
+            'capacity_need_type': 'Type',
+            'capacity_need_title': 'Short title',
+            'capacity_need_description': 'Description',
+            'contributor': '8Contributor (note: this is the only person, other than ISSF staff, '
                            'who can edit the record)'
         }
         widgets = {'capacity_need_description': forms.Textarea(attrs={'rows': 3})}
@@ -280,13 +278,13 @@ class SSFProfileForm(ModelForm):
         }
 
         labels = {
-            'ssf_name': '1A. *Name of fishery',
-            'ssf_defined': '4B. *SSF defined?',
+            'ssf_name': '1A. Name of fishery',
+            'ssf_defined': '4B. SSF defined?',
             'ssf_definition': 'SSF Definition (if applicable)',
             'sources': 'Sources',
             'comments': 'Comments',
             'description': 'Description/history of the fishery',
-            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+            'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
                            'who can edit the record)',
             'img_url': 'Image URL (direct links only)'
         }
@@ -487,6 +485,7 @@ class MainAttributeForm(ModelForm):
     Form for entering a main attribute.
     Not used on it's own, but rather used as a part of a formset.
     """
+
     def __init__(self, *args, **kwargs) -> None:
         super(MainAttributeForm, self).__init__(*args, **kwargs)
         # If the form has an initial value supplied, autopopulate the fields based on the initial value
@@ -555,6 +554,7 @@ class CommonThemeIssueForm(ModelForm):
     Form for entering a common theme issue.
     Not used on it's own, but rather used as a part of a formset.
     """
+
     def __init__(self, *args, **kwargs) -> None:
         super(CommonThemeIssueForm, self).__init__(*args, **kwargs)
         # If the form has an initial value supplied, autopopulate the fields based on the initial value
@@ -639,6 +639,7 @@ class CommonAttributeForm(ModelForm):
     Form for entering a common attribute.
     Not used on it's own, but rather used as a part of a formset.
     """
+
     def __init__(self, *args, **kwargs) -> None:
         super(CommonAttributeForm, self).__init__(*args, **kwargs)
         # If an initial value is supplied, populate a field based off of it
@@ -692,8 +693,7 @@ class KnowledgeOtherDetailsForm(ModelForm):
                   'demographics_gender', 'demographics_health',
                   'demographics_income', 'demographics_religion',
                   'demographics_unspecified', 'demographics_other',
-                  'demographics_other_text', 'demographic_details',
-                  'employment_na', 'employment_full_time',
+                  'demographic_details', 'employment_na', 'employment_full_time',
                   'employment_part_time', 'employment_seasonal',
                   'employment_unspecified', 'employment_details', 'stage_na',
                   'stage_pre_harvest', 'stage_harvest', 'stage_post_harvest',
@@ -714,7 +714,6 @@ class KnowledgeOtherDetailsForm(ModelForm):
             'demographics_religion': 'Religion',
             'demographics_unspecified': 'Unspecified',
             'demographics_other': 'Other',
-            'demographics_other_text': 'Other demographic factor',
             'demographic_details': 'Demographic details (if applicable)',
             'employment_na': 'Not applicable',
             'employment_full_time': 'Full-time',
@@ -899,7 +898,7 @@ class GeographicScopeForm(ModelForm):
         model = ISSF_Core
         fields = ['geographic_scope_type']
         labels = {
-            'geographic_scope_type': '*Geographic scope'
+            'geographic_scope_type': 'Geographic Scope'
         }
         widgets = {
             'geographic_scope_type': RadioSelect
