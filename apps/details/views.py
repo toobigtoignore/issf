@@ -612,8 +612,8 @@ def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
     # Get video ids
-    video_id = experiences_instance.video_url.split('=')[1].split('&')[0] if experiences_instance.video_url else ''
-    vimeo_video_id = experiences_instance.vimeo_video_url.split('/')[3] if experiences_instance.vimeo_video_url else ''
+    # video_id = experiences_instance.video_url.split('=')[1].split('&')[0] if experiences_instance.video_url else ''
+    # vimeo_video_id = experiences_instance.vimeo_video_url.split('/')[3] if experiences_instance.vimeo_video_url else ''
 
     # forms
     experiences_form = SSFExperiencesForm(instance=experiences_instance)
@@ -652,9 +652,7 @@ def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse
                 "nation_form": nation_form,
                 "region_form": region_form,
                 "editor": editor,
-                'who_page': who_page,
-                "video_id": video_id,
-                "vimeo_video_id": vimeo_video_id
+                'who_page': who_page
             }
         )
     else:

@@ -10,7 +10,7 @@
     {% autoescape off %}
         {% include "issf_base/loading-spinner.html" %}
 
-        <title>{% block title %}ISSF: Experiences - {{ experiences_instance.title }}{% endblock %}</title>
+        <title>{% block title %}ISSF: Blue Justice {% endblock %}</title>
 
         <section class="content-section report" id="content-experience">
             <div class="row" id="main">
@@ -25,11 +25,11 @@
                         </a>
                     </span>
 
-                    <h1>Experiences</h1>
+                    <h1>Blue Justice</h1>
 
                     <div class="basic-info">
                         <strong>{{ experiences_instance.name }}</strong>
-                        | {{ experiences_instance.title }}
+                        | Blue Justice
                     </div>
                 </div>
             </div>
@@ -47,12 +47,69 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <strong>Presenter name</strong>
+                                            <strong>Name of the contributor</strong>
                                         </td>
                                         <td>{{ experiences_instance.name }}</td>
                                     </tr>
+
                                     <tr>
                                         <td>
+                                            <strong>E-mail Address</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.email }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Affiliation</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.affiliation }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Country</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.country }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Role and involvement in SSF</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.role }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Image URL (direct links only)</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.img_url }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Where this photo was taken</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.photo_location }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>When this photo was taken (Date)</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.date_of_photo }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Name of the photographer</strong>
+                                        </td>
+                                        <td>{{ experiences_instance.photographer }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <!-- <td>
                                             <strong>Video title</strong>
                                         </td>
                                         <td>{{ experiences_instance.title }}</td>
@@ -81,7 +138,8 @@
                                             <strong>Contribution date</strong>
                                         </td>
                                         <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
-                                    </tr>
+                                    </tr> -->
+
                                 </table>
                                 {% if editor %}
                                     <form action="{% url 'experiences-basic' %}" method="post">
@@ -94,10 +152,629 @@
 
                                         {% csrf_token %}
                                         <div class="FormSet">
-                                            {{ experiences_form }}
-                                        </div>
-                                        <div style="display: none">
-                                            {{ experiences_form.editor }}
+                                            {{ experiences_form.name.label_tag }}{{ experiences_form.name }}
+                                            {{ experiences_form.email.label_tag }}{{ experiences_form.email }}
+                                            {{ experiences_form.affiliation.label_tag }}{{ experiences_form.affiliation }}
+                                            {{ experiences_form.country.label_tag }}{{ experiences_form.country }}
+                                            {{ experiences_form.role.label_tag }}{{ experiences_form.role }}
+                                            {{ experiences_form.img_url.label_tag }}{{ experiences_form.img_url }}
+                                            {{ experiences_form.photo_location.label_tag }}{{ experiences_form.photo_location }}
+                                            {{ experiences_form.date_of_photo.label_tag }}{{ experiences_form.date_of_photo }}
+                                            {{ experiences_form.photographer.label_tag }}{{ experiences_form.photographer }}
+                                            {{ experiences_form.contributor.label_tag }}{{ experiences_form.contributor }}
+
+
+                                            <br><br>
+                                            <h5>Name and Type of SSF:</h5>
+                                            
+                                            <label for="ssf-name">A. SSF Name:</label>
+                                            <input type="text" name="ssf_name" value="{{ experiences_instance.ssf_name }}" />
+                                            
+                                            <label>B. SSF type(s): (select all that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label>
+                                                        {% if experiences_instance.ssf_type_aquaculture %}
+                                                            <input type="checkbox" id="ssf_type_aquaculture" name="ssf_type_aquaculture" checked> Aquaculture
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_aquaculture" name="ssf_type_aquaculture"> Aquaculture
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                
+                                                <li>
+                                                    <label>
+                                                        {% if experiences_instance.ssf_type_recreational %}
+                                                            <input type="checkbox" id="ssf_type_recreational" name="ssf_type_recreational" checked> Recreational
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_recreational" name="ssf_type_recreational"> Recreational
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label>
+                                                        {% if experiences_instance.ssf_type_subsistence %}
+                                                            <input type="checkbox" id="ssf_type_subsistence" name="ssf_type_subsistence" checked> Subsistence
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_subsistence" name="ssf_type_subsistence"> Subsistence
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label>
+                                                        {% if experiences_instance.ssf_type_commercial %}
+                                                            <input type="checkbox" id="ssf_type_commercial" name="ssf_type_commercial" checked> Commercial
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_commercial" name="ssf_type_commercial"> Commercial
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                
+                                                <li>
+                                                    <label>
+                                                        {% if experiences_instance.ssf_type_indigenous %}
+                                                            <input type="checkbox" id="ssf_type_indigenous" name="ssf_type_indigenous" checked> Indigenous
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_indigenous" name="ssf_type_indigenous"> Indigenous
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                
+                                                <li>
+                                                    <label>
+                                                        {% if experiences_instance.ssf_type_other %}
+                                                            <input type="checkbox" id="ssf-ssf_type_other" checked> Other (Please Specify):
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-ssf_type_other" > Other (Please Specify):
+                                                        {% endif %}
+
+
+                                                        <div id="ssf-text-value">
+                                                            {% if experiences_instance.ssf_type_other %}
+                                                                <input type="text" name="ssf_type_other" value="{{ experiences_instance.ssf_type_other }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                            <br>
+                                            <h5>Dominant ecosystems in the location:</h5>
+                                            
+                                            <label>A. Ecosystem type(s): (select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="ecosystem-type_marine">
+                                                        {% if experiences_instance.ecosystem_type_marine %}
+                                                            <input type="checkbox" id="ecosystem-type_marine" name="ecosystem_type_marine" checked> Marine
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-type_marine" name="ecosystem_type_marine"> Marine
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ecosystem-type_freshwater">
+                                                        {% if experiences_instance.ecosystem_type_freshwater %}
+                                                            <input type="checkbox" id="ecosystem-type_freshwater" name="ecosystem_type_freshwater" checked> Freshwater
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-type_freshwater" name="ecosystem_type_freshwater"> Freshwater
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ecosystem-type_brackish">
+                                                        {% if experiences_instance.ecosystem_type_brackish %}
+                                                            <input type="checkbox" id="ecosystem-type_brackish" name="ecosystem_type_brackish" checked> Brackish
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-type_brackish" name="ecosystem_type_brackish"> Brackish
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+                                            
+                                            <label>B. Ecosystem detailed type(s): (select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="ecosystem-detailed_archipelago">
+                                                        {% if experiences_instance.ecosystem_detailed_archipelago %}
+                                                            <input type="checkbox" id="ecosystem-detailed_archipelago" name="ecosystem_detailed_archipelago" checked> Archipelago
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_archipelago" name="ecosystem_detailed_archipelago"> Archipelago
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_beach">
+                                                        {% if experiences_instance.ecosystem_detailed_beach %}
+                                                            <input type="checkbox" id="ecosystem-detailed_beach" name="ecosystem_detailed_beach" checked> Beach
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_beach" name="ecosystem_detailed_beach"> Beach
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_coastal">
+                                                        {% if experiences_instance.ecosystem_detailed_coastal %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coastal" name="ecosystem_detailed_coastal" checked> Coastal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coastal" name="ecosystem_detailed_coastal"> Coastal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_coral_reef">
+                                                        {% if experiences_instance.ecosystem_detailed_coral_reef %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coral_reef" name="ecosystem_detailed_coral_reef" checked> Coral Reef
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coral_reef" name="ecosystem_detailed_coral_reef"> Coral Reef
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_deep_sea">
+                                                        {% if experiences_instance.ecosystem_detailed_deep_sea %}
+                                                            <input type="checkbox" id="ecosystem-detailed_deep_sea" name="ecosystem_detailed_deep_sea" checked> Deep Sea
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_deep_sea" name="ecosystem_detailed_deep_sea"> Deep Sea
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_estuary">
+                                                        {% if experiences_instance.ecosystem_detailed_estuary %}
+                                                            <input type="checkbox" id="ecosystem-detailed_estuary" name="ecosystem_detailed_estuary" checked> Estuary
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_estuary" name="ecosystem_detailed_estuary"> Estuary
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_fjord">
+                                                        {% if experiences_instance.ecosystem_detailed_fjord %}
+                                                            <input type="checkbox" id="ecosystem-detailed_fjord" name="ecosystem_detailed_fjord" checked> Fjord
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_fjord" name="ecosystem_detailed_fjord"> Fjord
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_intertidal">
+                                                        {% if experiences_instance.ecosystem_detailed_intertidal %}
+                                                            <input type="checkbox" id="ecosystem-detailed_intertidal" name="ecosystem_detailed_intertidal" checked> Intertidal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_intertidal" name="ecosystem_detailed_intertidal"> Intertidal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_lagoon">
+                                                        {% if experiences_instance.ecosystem_detailed_lagoon %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lagoon" name="ecosystem_detailed_lagoon" checked> Lagoon
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lagoon" name="ecosystem_detailed_lagoon"> Lagoon
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_lake">
+                                                        {% if experiences_instance.ecosystem_detailed_lake %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lake" name="ecosystem_detailed_lake" checked> Lake
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lake" name="ecosystem_detailed_lake"> Lake
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_mangrove">
+                                                        {% if experiences_instance.ecosystem_detailed_mangrove %}
+                                                            <input type="checkbox" id="ecosystem-detailed_mangrove" name="ecosystem_detailed_mangrove" checked> Mangrove
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_mangrove" name="ecosystem_detailed_mangrove"> Mangrove
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_open_ocean">
+                                                        {% if experiences_instance.ecosystem_detailed_open_ocean %}
+                                                            <input type="checkbox" id="ecosystem-detailed_open_ocean" name="ecosystem_detailed_open_ocean" checked> Open Ocean
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_open_ocean" name="ecosystem_detailed_open_ocean"> Open Ocean
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_river">
+                                                        {% if experiences_instance.ecosystem_detailed_river %}
+                                                            <input type="checkbox" id="ecosystem-detailed_river" name="ecosystem_detailed_river" checked> River
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_river" name="ecosystem_detailed_river"> River
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_salt_marsh">
+                                                        {% if experiences_instance.ecosystem_detailed_salt_marsh %}
+                                                            <input type="checkbox" id="ecosystem-detailed_salt_marsh" name="ecosystem_detailed_salt_marsh" checked> Salt Marsh
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_salt_marsh" name="ecosystem_detailed_salt_marsh"> Salt Marsh
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_other">
+                                                        {% if experiences_instance.ecosystem_detailed_other %}
+                                                            <input type="checkbox" id="ecosystem-detailed_other" checked> Other
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_other" > Other
+                                                        {% endif %}
+
+
+                                                        <div id="ecosystem-text-value">
+                                                            {% if experiences_instance.ecosystem_detailed_other %}
+                                                                <input type="text" name="ecosystem_detailed_other" value="{{ experiences_instance.ecosystem_detailed_other }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                            <br>
+                                            <h5>SSF term and definition:</h5>
+                                            
+                                            <label>A. Term(s) used to refer to SSF: (select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="ssf-terms-artisanal">
+                                                        {% if experiences_instance.ssf_terms_artisanal %}
+                                                            <input type="checkbox" id="ssf-terms-artisanal" name="ssf_terms_artisanal" checked> Artisanal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-artisanal" name="ssf_terms_artisanal"> Artisanal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ssf-terms-coastal">
+                                                        {% if experiences_instance.ssf_terms_coastal %}
+                                                            <input type="checkbox" id="ssf-terms-coastal" name="ssf_terms_coastal" checked> Coastal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-coastal" name="ssf_terms_coastal"> Coastal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ssf-terms-indigenous">
+                                                        {% if experiences_instance.ssf_terms_indigenous %}
+                                                            <input type="checkbox" id="ssf-terms-indigenous" name="ssf_terms_indigenous" checked> indigenous
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-indigenous" name="ssf_terms_indigenous"> indigenous
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-inland">
+                                                        {% if experiences_instance.ssf_terms_inland %}
+                                                            <input type="checkbox" id="ssf-terms-inland" name="ssf_terms_inland" checked> Inland
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-inland" name="ssf_terms_inland"> Inland
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-inshore">
+                                                        {% if experiences_instance.ssf_terms_inshore %}
+                                                            <input type="checkbox" id="ssf-terms-inshore" name="ssf_terms_inshore" checked> Inshore
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-inshore" name="ssf_terms_inshore"> Inshore
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-small_boat">
+                                                        {% if experiences_instance.ssf_terms_small_boat %}
+                                                            <input type="checkbox" id="ssf-terms-small_boat" name="ssf_terms_small_boat" checked> Small boat
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-small_boat" name="ssf_terms_small_boat"> Small boat
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-small_scale">
+                                                        {% if experiences_instance.ssf_terms_small_scale %}
+                                                            <input type="checkbox" id="ssf-terms-small_scale" name="ssf_terms_small_scale" checked> Small Scale
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-small_scale" name="ssf_terms_small_scale"> Small Scale
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-subsistence">
+                                                        {% if experiences_instance.ssf_terms_subsistence %}
+                                                            <input type="checkbox" id="ssf-terms-subsistence" name="ssf_terms_subsistence" checked> Subsistence
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-subsistence" name="ssf_terms_subsistence"> Subsistence
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-traditional">
+                                                        {% if experiences_instance.ssf_terms_traditional %}
+                                                            <input type="checkbox" id="ssf-terms-traditional" name="ssf_terms_traditional" checked> Traditional
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-traditional" name="ssf_terms_traditional"> Traditional
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-others">
+                                                        {% if experiences_instance.ssf_terms_others %}
+                                                            <input type="checkbox" id="ssf-terms-others" checked> Other(s): (Please Specify)
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-others"> Other(s): (Please Specify)
+                                                        {% endif %}
+
+
+                                                        <div id="ssf-terms-text">
+                                                            {% if experiences_instance.ssf_terms_others %}
+                                                                <input type="text" name="ssf_terms_others" value="{{ experiences_instance.ssf_terms_others }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+                                            
+                                            <label>B. Are small-scale fisheries defined?</label>
+                                            <select name="ssf_terms_fisheries">
+                                                <option value="">---</option>
+                                                {% if experiences_instance.ssf_terms_fisheries == "Yes" %}
+                                                    <option value="Yes" selected>Yes</option>
+                                                {% else %}
+                                                    <option value="Yes">Yes</option>
+                                                {% endif %}
+
+                                                {% if experiences_instance.ssf_terms_fisheries == "No" %}
+                                                    <option value="No" selected>No</option>
+                                                {% else %}
+                                                    <option value="No">No</option>
+                                                {% endif %}
+
+                                                {% if experiences_instance.ssf_terms_fisheries == "Not Explicitly" %}
+                                                    <option value="Not Explicitly" selected>Not Explicitly</option>
+                                                {% else %}
+                                                    <option value="Not Explicitly">Not Explicitly</option>
+                                                {% endif %}
+                                            </select>
+
+
+                                            <label for="ssf-terms-definition">Provide SSF definition, if applicable:</label>
+                                            <input type="text" name="ssf_terms_fisheries_definition" value="{{ experiences_instance.ssf_terms_fisheries_definition}}">
+
+
+                                            <br>
+                                            <h5>Main gears type(s):</h5>
+                                            <label>(select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="main-gears-dredge">
+                                                        {% if experiences_instance.main_gears_dredge %}
+                                                            <input type="checkbox" id="main-gears-dredge" name="main_gears_dredge" checked> Dredge
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-dredge" name="main_gears_dredge"> Dredge
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-lift_net">
+                                                        {% if experiences_instance.main_gears_lift_net %}
+                                                            <input type="checkbox" id="main-gears-lift_net" name="main_gears_lift_net" checked> Lift Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-lift_net" name="main_gears_lift_net"> Lift Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-cast_net">
+                                                        {% if experiences_instance.main_gears_cast_net %}
+                                                            <input type="checkbox" id="main-gears-cast_net" name="main_gears_cast_net" checked> Cast Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-cast_net" name="main_gears_cast_net"> Cast Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-gears_poison">
+                                                        {% if experiences_instance.main_gears_gears_poison %}
+                                                            <input type="checkbox" id="main-gears-gears_poison" name="main_gears_gears_poison" checked> Gears Poison
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-gears_poison" name="main_gears_gears_poison"> Gears Poison
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-gears_gillnet">
+                                                        {% if experiences_instance.main_gears_gears_gillnet %}
+                                                            <input type="checkbox" id="main-gears-gears_gillnet" name="main_gears_gears_gillnet" checked> Gears Gillnet
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-gears_gillnet" name="main_gears_gears_gillnet"> Gears Gillnet
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-recreational_fishing_gears">
+                                                        {% if experiences_instance.main_gears_recreational_fishing_gears %}
+                                                            <input type="checkbox" id="main-gears-recreational_fishing_gears" name="main_gears_recreational_fishing_gears" checked> Recreational Fishing Gears
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-recreational_fishing_gears" name="main_gears_recreational_fishing_gears"> Recreational Fishing Gears
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-gears_gleaning">
+                                                        {% if experiences_instance.main_gears_gears_gleaning %}
+                                                            <input type="checkbox" id="main-gears-gears_gleaning" name="main_gears_gears_gleaning" checked> Gears Gleaning
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-gears_gleaning" name="main_gears_lift_net"> Gears Gleaning
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-seine_net">
+                                                        {% if experiences_instance.main_gears_seine_net %}
+                                                            <input type="checkbox" id="main-gears-seine_net" name="main_gears_seine_net" checked> Seine Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-seine_net" name="main_gears_seine_net"> Seine Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-harpoon">
+                                                        {% if experiences_instance.main_gears_harpoon %}
+                                                            <input type="checkbox" id="main-gears-harpoon" name="main_gears_harpoon" checked> Harpoon
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-harpoon" name="main_gears_harpoon"> Harpoon
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-surrounding_net">
+                                                        {% if experiences_instance.main_gears_surrounding_net %}
+                                                            <input type="checkbox" id="main-gears-surrounding_net" name="main_gears_surrounding_net" checked> Sorrounding Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-surrounding_net" name="main_gears_surrounding_net"> Sorrounding Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-harvesting_machines">
+                                                        {% if experiences_instance.main_gears_harvesting_machines %}
+                                                            <input type="checkbox" id="main-gears-harvesting_machines" name="main_gears_harvesting_machines" checked> Harvesting Machines
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-harvesting_machines" name="main_gears_harvesting_machines"> Harvesting Machines
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-traps">
+                                                        {% if experiences_instance.main_gears_traps %}
+                                                            <input type="checkbox" id="main-gears-traps" name="main_gears_traps" checked> Traps
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-traps" name="main_gears_traps"> Traps
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-hook_line">
+                                                        {% if experiences_instance.main_gears_hook_line %}
+                                                            <input type="checkbox" id="main-gears-hook_line" name="main_gears_hook_line" checked> Hook and Line
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-hook_line" name="main_gears_hook_line"> Hook and Line
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-trawls">
+                                                        {% if experiences_instance.main_gears_trawls %}
+                                                            <input type="checkbox" id="main-gears-trawls" name="main_gears_trawls" checked> Trawls
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-trawls" name="main_gears_trawls"> Trawls
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-others">
+                                                        {% if experiences_instance.main_gears_others %}
+                                                            <input type="checkbox" id="main-gears-others" checked> Others (Please Specify):
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-others"> Others (Please Specify):
+                                                        {% endif %}
+
+                                                        <div id="main-gears-others-text">
+                                                            {% if experiences_instance.main_gears_others %}
+                                                                <input type="text" name="main_gears_others" value="{{ experiences_instance.main_gears_others }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                            <br>
+                                            <h5>Main vessel type(s),number(s) and engine size:</h5>
+                                            <label for="main-vessel-type">Type:</label>
+                                            <input type="text" id="main-vessel-type" name="main_vessel_type" value="{{ experiences_instance.main_vessel_type }}">
+                                            <label for="main-vessel-number">Number:</label>
+                                            <input type="number" id="main-vessel-number" name="main_vessel_number" value="{{ experiences_instance.main_vessel_number }}">
+                                            <label for="main-vessel-engine">Engine (HP):</label>
+                                            <input type="text" id="main-vessel-engine" name="main_vessel_engine" value="{{ experiences_instance.main_vessel_engine }}">
+
+
+                                            <br>
+                                            <h5>Number of SS fishers:</h5>
+                                            <label for="ss-fishers-numbers">A. Total number of SS fishers:</label>
+                                            <input type="number" id="ss-fishers-numbers" name="ss_fishers_numbers" value="{{ experiences_instance.ss_fishers_numbers }}">
+                                            <label for="ss-fishers-full-time">B. % of full-time:</label>
+                                            <input type="number" id="ss-fishers-full-time" name="ss_fishers_full_time" value="{{ experiences_instance.ss_fishers_full_time }}">
+                                            <label for="ss-fishers-women">C. % of fisher women:</label>
+                                            <input type="number" id="ss-fishers-women" name="ss_fishers_women" value="{{ experiences_instance.ss_fishers_women }}">
+
+
+                                            <br>
+                                            <h5>Number of all households and SS households in the location:</h5>
+                                            <label for="total-number-households">A. Total number of households in the location:</label>
+                                            <input type="number" id="total-number-households" name="total_number_households" value="{{ experiences_instance.total_number_households }}">
+                                            <label for="households-participation-percentage">B. % of households participating in SSF:</label>
+                                            <input type="number" id="households-participation-percentage" name="households_participation_percentage" value="{{ experiences_instance.households_participation_percentage }}">
+                                            
                                         </div>
 
                                         <input
@@ -114,49 +791,14 @@
                                 {% endif %}
                             </div>
                         </dd>
-                        {% if video_id or vimeo_video_id %}
-                            <dd class="accordion-navigation active">
-                                <a class="accordion-nav" href="#panel1x">Video</a>
 
-                                <div
-                                    id="panel1x"
-                                    class="content"
-                                    align="center"
-                                    style="padding-left: 0; padding-right: 0;"
-                                >
-                                    {% if video_id %}
-                                        <iframe
-                                            width="700"
-                                            height="400"
-                                            src="https://www.youtube.com/embed/{{ video_id }}"
-                                            frameborder="0"
-                                            webkitallowfullscreen
-                                            mozallowfullscreen
-                                            allowfullscreen
-                                        >
-                                        </iframe>
-                                    {% endif %}
-                                    {% if vimeo_video_id %}
-                                        <iframe
-                                            src="https://player.vimeo.com/video/{{ vimeo_video_id }}"
-                                            width="700"
-                                            height="400"
-                                            frameborder="0"
-                                            webkitallowfullscreen
-                                            mozallowfullscreen
-                                            allowfullscreen
-                                        >
-                                        </iframe>
-                                    {% endif %}
-                                </div>
-                            </dd>
-                        {% endif %}
                         <dd class="accordion-navigation active">
-                            <a class="accordion-nav" href="#panel1z">Description</a>
+                            <a class="accordion-nav" href="#panel1z">General Information</a>
                             <div id="panel1z" class="content" style="padding-left: 0; padding-right: 0;">
                                 <p style="background-color: white; white-space: pre-line;">{{ experiences_instance.description }}</p>
                             </div>
                         </dd>
+                        
                         {% if experiences_instance.img_url %}
                             <dd class="accordion-navigation active">
                                 <a class="accordion-nav" href="#panel1t">Image</a>
@@ -403,5 +1045,30 @@
         // This function handles all form errors; both field- and form-level.
         // It can be found in error-handling.js
         error_handler();
+
+
+        // Text box appear/disappear when other checkbox is ticked
+        function otherTextbox(checkbox,textbox,textboxName){
+            if(checkbox.attr('checked')){
+                textbox.show();
+            }
+
+            checkbox.on('click',function(){
+                if(checkbox.attr('checked')){
+                    checkbox.removeAttr('checked');
+                    textbox.children('input').remove();
+                }
+                else{
+                    checkbox.attr('checked','checked');
+                    textbox.append("<input type='text' name='" + textboxName +"' required>");  
+                }
+            });
+        }
+
+        otherTextbox($('#ssf-ssf_type_other'), $('#ssf-text-value'), 'ssf_type_other');
+        otherTextbox($('#ecosystem-detailed_other'), $('#ecosystem-text-value'), 'ecosystem_detailed_other');
+        otherTextbox($('#ssf-terms-others'), $('#ssf-terms-text'), 'ssf_terms_others'); 
+        otherTextbox($('#main-gears-others'), $('#main-gears-others-text'), 'main_gears_others'); 
+
     </script>
 {% endblock additional_js_scripts %}

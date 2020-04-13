@@ -672,11 +672,88 @@ class SSFExperiences(models.Model):
 
     # model-specific fields
     title = models.CharField(max_length=256, blank=True)
-    name = models.CharField(max_length=256, blank=False)
     video_url = models.URLField(blank=True)
-    description = models.TextField(max_length=5000, blank=False)
-    img_url = models.URLField(blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     vimeo_video_url = models.URLField(blank=True)
+
+    name = models.CharField(max_length=256, blank=False)
+    email = models.CharField(max_length=256, blank=True)
+    affiliation = models.CharField(max_length=256, blank=True)
+    country = models.CharField(max_length=256, blank=True)
+    role = models.CharField(max_length=512, blank=True)
+    img_url = models.URLField(blank=True)
+    photo_location = models.CharField(max_length=512, blank=True)
+    date_of_photo = models.CharField(max_length=256, blank=True)
+    photographer = models.CharField(max_length=256, blank=True)
+
+    ssf_name = models.CharField(max_length=500, blank=True)
+    ssf_type_aquaculture = models.CharField(max_length=256, blank=True)
+    ssf_type_recreational = models.CharField(max_length=256, blank=True)
+    ssf_type_commercial = models.CharField(max_length=256, blank=True)
+    ssf_type_subsistence = models.CharField(max_length=256, blank=True)
+    ssf_type_indigenous = models.CharField(max_length=256, blank=True)
+    ssf_type_other = models.CharField(max_length=256, blank=True)
+
+    ecosystem_type_marine = models.CharField(max_length=256, blank=True)
+    ecosystem_type_freshwater = models.CharField(max_length=256, blank=True)
+    ecosystem_type_brackish = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_archipelago = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_beach = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_coastal = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_coral_reef = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_deep_sea = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_estuary = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_fjord = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_intertidal = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_lagoon = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_lake = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_mangrove = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_open_ocean = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_river = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_salt_marsh = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_other = models.CharField(max_length=256, blank=True)
+
+    ssf_terms_artisanal = models.CharField(max_length=256, blank=True)
+    ssf_terms_coastal = models.CharField(max_length=256, blank=True)
+    ssf_terms_indigenous = models.CharField(max_length=256, blank=True)
+    ssf_terms_inland = models.CharField(max_length=256, blank=True)
+    ssf_terms_inshore = models.CharField(max_length=256, blank=True)
+    ssf_terms_small_boat = models.CharField(max_length=256, blank=True)
+    ssf_terms_small_scale = models.CharField(max_length=256, blank=True)
+    ssf_terms_subsistence = models.CharField(max_length=256, blank=True)
+    ssf_terms_traditional = models.CharField(max_length=256, blank=True)
+    ssf_terms_others = models.CharField(max_length=256, blank=True)
+    ssf_terms_fisheries = models.CharField(max_length=256, blank=True)
+    ssf_terms_fisheries_definiton = models.TextField(blank=True)
+
+    main_gears_dredge  = models.CharField(max_length=256, blank=True)
+    main_gears_lift_net = models.CharField(max_length=256, blank=True)  
+    main_gears_cast_net  = models.CharField(max_length=256, blank=True)
+    main_gears_poison = models.CharField(max_length=256, blank=True)
+    main_gears_gillnet  = models.CharField(max_length=256, blank=True)
+    main_gears_recreational_fishing_gears = models.CharField(max_length=256, blank=True)
+    main_gears_gleaning  = models.CharField(max_length=256, blank=True)
+    main_gears_seine_net = models.CharField(max_length=256, blank=True)
+    main_gears_harpoon  = models.CharField(max_length=256, blank=True)
+    main_gears_surrounding_net = models.CharField(max_length=256, blank=True)
+    main_gears_harvesting_machines  = models.CharField(max_length=256, blank=True)
+    main_gears_traps = models.CharField(max_length=256, blank=True)
+    main_gears_hook_line  = models.CharField(max_length=256, blank=True)
+    main_gears_trawls = models.CharField(max_length=256, blank=True)
+    main_gears_others = models.CharField(max_length=256, blank=True)
+
+    main_vessel_type = models.CharField(max_length=256, blank=True)
+    main_vessel_number = models.CharField(max_length=256, blank=True)
+    main_vessel_engine = models.CharField(max_length=256, blank=True)
+
+    ss_fishers_numbers = models.CharField(max_length=256, blank=True)
+    ss_fishers_full_time = models.CharField(max_length=256, blank=True)
+    ss_fishers_women = models.CharField(max_length=256, blank=True)
+
+    total_number_households = models.CharField(max_length=256, blank=True)
+    households_participation_percentage = models.CharField(max_length=256, blank=True)
+
+    
 
     class Meta:
         managed = False
@@ -688,15 +765,14 @@ class SSFExperiences(models.Model):
 
         :return: The string representation.
         """
-        return '%s' % self.title
+        return '%s' % self.name
 
     def save(self, *args, **kwargs) -> None:
         """
         Saves an instance of a SSF Experiences record.
         """
-        self.title = conditional_escape(self.title)
+        
         self.name = conditional_escape(self.name)
-        self.description = conditional_escape(self.description)
         super(SSFExperiences, self).save(*args, **kwargs)
 
 
