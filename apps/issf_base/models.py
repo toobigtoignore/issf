@@ -694,6 +694,10 @@ class SSFExperiences(models.Model):
     ssf_type_indigenous = models.CharField(max_length=256, blank=True)
     ssf_type_other = models.CharField(max_length=256, blank=True)
 
+    ssf_location = models.CharField(max_length=256, blank=True)
+    ssf_country = models.CharField(max_length=256, blank=True)
+    ssf_main_species = models.CharField(max_length=600, blank=True)
+
     ecosystem_type_marine = models.CharField(max_length=256, blank=True)
     ecosystem_type_freshwater = models.CharField(max_length=256, blank=True)
     ecosystem_type_brackish = models.CharField(max_length=256, blank=True)
@@ -752,6 +756,21 @@ class SSFExperiences(models.Model):
 
     total_number_households = models.CharField(max_length=256, blank=True)
     households_participation_percentage = models.CharField(max_length=256, blank=True)
+
+    background_about_ssf = models.TextField(blank=True)
+    justice_in_context = models.TextField(blank=True)
+    types_of_justice_distributive = models.CharField(max_length=256, blank=True)
+    types_of_justice_social = models.CharField(max_length=256, blank=True)
+    types_of_justice_economic = models.CharField(max_length=256, blank=True)
+    types_of_justice_market = models.CharField(max_length=256, blank=True)
+    types_of_justice_infrastructure = models.CharField(max_length=256, blank=True)
+    types_of_justice_regulatory = models.CharField(max_length=256, blank=True)
+    types_of_justice_procedural = models.CharField(max_length=256, blank=True)
+    types_of_justice_environmental = models.CharField(max_length=256, blank=True)
+    types_of_justice_others = models.CharField(max_length=256, blank=True)
+    dealing_with_justice = models.TextField(blank=True)
+
+
 
     
 

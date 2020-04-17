@@ -368,9 +368,9 @@ class SSFExperiencesForm(ModelForm):
             'name', 'email', 'affiliation',
             'country', 'role', 'img_url', 'photo_location', 'date_of_photo', 'photographer',
             'title', 'video_url', 'vimeo_video_url','description', 'contributor', 'ssf_name', 
-            'ssf_type_aquaculture', 'ssf_type_recreational','ssf_type_commercial',
-            'ssf_type_subsistence','ssf_type_indigenous', 'ssf_type_other',
-            'ecosystem_type_marine', 'ecosystem_type_freshwater', 'ecosystem_type_brackish', 
+            'ssf_location', 'ssf_country', 'ssf_main_species', 'ssf_type_aquaculture', 
+            'ssf_type_recreational','ssf_type_commercial', 'ssf_type_subsistence','ssf_type_indigenous', 
+            'ssf_type_other','ecosystem_type_marine', 'ecosystem_type_freshwater', 'ecosystem_type_brackish', 
             'ecosystem_detailed_archipelago', 'ecosystem_detailed_beach', 'ecosystem_detailed_coastal', 
             'ecosystem_detailed_coral_reef', 'ecosystem_detailed_deep_sea', 'ecosystem_detailed_estuary', 
             'ecosystem_detailed_fjord', 'ecosystem_detailed_intertidal', 'ecosystem_detailed_lagoon', 
@@ -383,7 +383,10 @@ class SSFExperiencesForm(ModelForm):
             'main_gears_gleaning','main_gears_seine_net','main_gears_harpoon','main_gears_surrounding_net',
             'main_gears_harvesting_machines','main_gears_traps','main_gears_hook_line','main_gears_trawls', 'main_gears_others',
             'main_vessel_type', 'main_vessel_number', 'main_vessel_engine', 'ss_fishers_numbers', 'ss_fishers_full_time',
-            'ss_fishers_women', 'total_number_households', 'households_participation_percentage'
+            'ss_fishers_women', 'total_number_households', 'households_participation_percentage','background_about_ssf', 
+            'justice_in_context' , 'types_of_justice_distributive', 'types_of_justice_social', 'types_of_justice_economic', 
+            'types_of_justice_market', 'types_of_justice_infrastructure', 'types_of_justice_regulatory', 'types_of_justice_procedural', 
+            'types_of_justice_environmental', 'types_of_justice_others' , 'dealing_with_justice'
         ]
         labels = {
             'name': 'Name of the contributor',
