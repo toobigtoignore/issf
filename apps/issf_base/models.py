@@ -657,6 +657,144 @@ class SSFGuidelines(models.Model):
         super(SSFGuidelines, self).save(*args, **kwargs)
 
 
+class SSFBlueJustice(models.Model):
+    """
+    Model representing a SSF BlueJustice record.
+    """
+    # core (inherited from issf_core) fields
+    issf_core_id = models.AutoField(primary_key=True)
+    contribution_date = models.DateField(auto_now_add=True)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    edited_date = models.DateField(auto_now=True)
+    editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
+    core_record_type = models.TextField(default='SSF Blue Justice')
+    geographic_scope_type = models.CharField(max_length=100, default='Local')
+
+    # model-specific fields
+    title = models.CharField(max_length=256, blank=True)
+    video_url = models.URLField(blank=True)
+    description = models.TextField(max_length=5000, blank=True)
+    vimeo_video_url = models.URLField(blank=True)
+
+    name = models.CharField(max_length=256, blank=False)
+    email = models.CharField(max_length=256, blank=True)
+    affiliation = models.CharField(max_length=256, blank=True)
+    country = models.CharField(max_length=256, blank=False)
+    role = models.CharField(max_length=512, blank=False)
+    img_url = models.URLField(blank=True)
+    photo_location = models.CharField(max_length=512, blank=True)
+    date_of_photo = models.CharField(max_length=256, blank=True)
+    photographer = models.CharField(max_length=256, blank=True)
+
+    ssf_name = models.CharField(max_length=500, blank=True)
+    ssf_type_aquaculture = models.CharField(max_length=256, blank=True)
+    ssf_type_recreational = models.CharField(max_length=256, blank=True)
+    ssf_type_commercial = models.CharField(max_length=256, blank=True)
+    ssf_type_subsistence = models.CharField(max_length=256, blank=True)
+    ssf_type_indigenous = models.CharField(max_length=256, blank=True)
+    ssf_type_other = models.CharField(max_length=256, blank=True)
+
+    ssf_location = models.CharField(max_length=256, blank=True)
+    ssf_country = models.CharField(max_length=256, blank=True)
+    ssf_main_species = models.CharField(max_length=600, blank=True)
+
+    ecosystem_type_marine = models.CharField(max_length=256, blank=True)
+    ecosystem_type_freshwater = models.CharField(max_length=256, blank=True)
+    ecosystem_type_brackish = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_archipelago = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_beach = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_coastal = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_coral_reef = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_deep_sea = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_estuary = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_fjord = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_intertidal = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_lagoon = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_lake = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_mangrove = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_open_ocean = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_river = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_salt_marsh = models.CharField(max_length=256, blank=True)
+    ecosystem_detailed_other = models.CharField(max_length=256, blank=True)
+
+    ssf_terms_artisanal = models.CharField(max_length=256, blank=True)
+    ssf_terms_coastal = models.CharField(max_length=256, blank=True)
+    ssf_terms_indigenous = models.CharField(max_length=256, blank=True)
+    ssf_terms_inland = models.CharField(max_length=256, blank=True)
+    ssf_terms_inshore = models.CharField(max_length=256, blank=True)
+    ssf_terms_small_boat = models.CharField(max_length=256, blank=True)
+    ssf_terms_small_scale = models.CharField(max_length=256, blank=True)
+    ssf_terms_subsistence = models.CharField(max_length=256, blank=True)
+    ssf_terms_traditional = models.CharField(max_length=256, blank=True)
+    ssf_terms_others = models.CharField(max_length=256, blank=True)
+    ssf_terms_fisheries = models.CharField(max_length=256, blank=True)
+    ssf_terms_fisheries_definiton = models.TextField(blank=True)
+
+    main_gears_dredge = models.CharField(max_length=256, blank=True)
+    main_gears_lift_net = models.CharField(max_length=256, blank=True)
+    main_gears_cast_net = models.CharField(max_length=256, blank=True)
+    main_gears_poison = models.CharField(max_length=256, blank=True)
+    main_gears_gillnet = models.CharField(max_length=256, blank=True)
+    main_gears_recreational_fishing_gears = models.CharField(max_length=256, blank=True)
+    main_gears_gleaning = models.CharField(max_length=256, blank=True)
+    main_gears_seine_net = models.CharField(max_length=256, blank=True)
+    main_gears_harpoon = models.CharField(max_length=256, blank=True)
+    main_gears_surrounding_net = models.CharField(max_length=256, blank=True)
+    main_gears_harvesting_machines = models.CharField(max_length=256, blank=True)
+    main_gears_traps = models.CharField(max_length=256, blank=True)
+    main_gears_hook_line = models.CharField(max_length=256, blank=True)
+    main_gears_trawls = models.CharField(max_length=256, blank=True)
+    main_gears_others = models.CharField(max_length=256, blank=True)
+
+    main_vessel_type = models.CharField(max_length=256, blank=True)
+    main_vessel_number = models.CharField(max_length=256, blank=True)
+    main_vessel_engine = models.CharField(max_length=256, blank=True)
+
+    ss_fishers_numbers = models.CharField(max_length=256, blank=True)
+    ss_fishers_full_time = models.CharField(max_length=256, blank=True)
+    ss_fishers_women = models.CharField(max_length=256, blank=True)
+
+    total_number_households = models.CharField(max_length=256, blank=True)
+    households_participation_percentage = models.CharField(max_length=256, blank=True)
+
+    background_about_ssf = models.TextField(blank=True)
+    justice_in_context = models.TextField(blank=True)
+    types_of_justice_distributive = models.CharField(max_length=256, blank=True)
+    types_of_justice_social = models.CharField(max_length=256, blank=True)
+    types_of_justice_economic = models.CharField(max_length=256, blank=True)
+    types_of_justice_market = models.CharField(max_length=256, blank=True)
+    types_of_justice_infrastructure = models.CharField(max_length=256, blank=True)
+    types_of_justice_regulatory = models.CharField(max_length=256, blank=True)
+    types_of_justice_procedural = models.CharField(max_length=256, blank=True)
+    types_of_justice_environmental = models.CharField(max_length=256, blank=True)
+    types_of_justice_others = models.CharField(max_length=256, blank=True)
+    dealing_with_justice = models.TextField(blank=True)
+    covid_19_related = models.TextField(blank=False)
+
+    class Meta:
+        managed = False
+        db_table = 'ssf_bluejustice'
+
+    def __str__(self) -> str:
+        """
+        Generates a string representation of a SSF BlueJustice record.
+
+        :return: The string representation.
+        """
+        return '%s' % self.name
+
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves an instance of a SSF BlueJustice record.
+        """
+
+        self.name = conditional_escape(self.name)
+        self.country = conditional_escape(self.country)
+        self.role = conditional_escape(self.role)
+        self.covid_19_related = conditional_escape(self.covid_19_related)
+        super(SSFBlueJustice, self).save(*args, **kwargs)
+
+
 class SSFExperiences(models.Model):
     """
     Model representing a SSF Experiences record.

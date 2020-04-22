@@ -1,0 +1,1227 @@
+{% extends 'issf_base/base.html' %}{% load leaflet_tags %}
+{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    {% leaflet_css %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block body %}
+    {% autoescape off %}
+        {% include "issf_base/loading-spinner.html" %}
+
+        <title>{% block title %}ISSF: Blue Justice Alert {% endblock %}</title>
+
+        <section class="content-section report" id="content-bluejustice">
+            <div class="row" id="main">
+                <div class="large-12 columns page-title">
+                    <span>
+                        <a
+                            href="https://twitter.com?screen_name=TBTInetwork&hashtags=tbtiissf&text=Your Comments!"
+                            class="twitter-share-button"
+                            data-lang="en"
+                            data-size="large"
+                        >
+                        </a>
+                    </span>
+
+                    <h1>Blue Justice Alert</h1>
+
+                    <div class="basic-info">
+                        <strong>{{ bluejustice_instance.name }}</strong>
+                        | Blue Justice Alert
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-9 columns">
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation active">
+                            {% if editor %}
+                                <button class="bt-edit">Edit</button>
+                            {% endif %}
+
+                            <a class="accordion-nav" href="#panel1">General Information about SSF</a>
+
+                            <div id="panel1" class="content">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Name of the contributor</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.name }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>E-mail Address</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.email }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Affiliation</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.affiliation }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Country</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.country }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Role and involvement in SSF</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.role }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Image URL (direct links only)</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.img_url }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Where this photo was taken</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.photo_location }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>When this photo was taken (Date)</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.date_of_photo }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Name of the photographer</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.photographer }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <!-- <td>
+                                            <strong>Video title</strong>
+                                        </td>
+                                        <td>{{ bluejustice_instance.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contributor</strong>
+                                        </td>
+                                        <td>
+                                            {% autoescape on %}
+                                            {% if who_page %}
+                                                <a href="{% url 'who-details' who_page.issf_core_id %}">{{ core_instance.contributor }}</a>
+                                            {% else %}
+                                                <a
+                                                    href="mailto:{{ core_instance.contributor.email }}"
+                                                    target="_blank"
+                                                >
+                                                    {{ core_instance.contributor }}
+                                                </a>
+                                            {% endif %}
+                                            {% endautoescape %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Contribution date</strong>
+                                        </td>
+                                        <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    </tr> -->
+
+                                </table>
+                                {% if editor %}
+                                    <form action="{% url 'bluejustice-basic' %}" method="post">
+                                        <h6>Please provide details of the video subject's bluejustice.</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+
+                                        {% csrf_token %}
+                                        <div class="FormSet" id="bluejustice-basic-form">
+                                            {{ bluejustice_form.name.label_tag }}{{ bluejustice_form.name }}
+                                            {{ bluejustice_form.email.label_tag }}{{ bluejustice_form.email }}
+                                            {{ bluejustice_form.affiliation.label_tag }}{{ bluejustice_form.affiliation }}
+                                            {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
+                                            {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
+                                            {{ bluejustice_form.img_url.label_tag }}{{ bluejustice_form.img_url }}
+                                            {{ bluejustice_form.photo_location.label_tag }}{{ bluejustice_form.photo_location }}
+                                            {{ bluejustice_form.date_of_photo.label_tag }}{{ bluejustice_form.date_of_photo }}
+                                            {{ bluejustice_form.photographer.label_tag }}{{ bluejustice_form.photographer }}
+                                            {{ bluejustice_form.contributor.label_tag }}{{ bluejustice_form.contributor }}
+                                            
+                                            <br><br>
+                                            <h5>Name and Type of SSF:</h5>
+                                            
+                                            <label for="ssf-name">A. SSF Name:</label>
+                                            <input type="text" name="ssf_name" value="{{ bluejustice_instance.ssf_name }}" />
+                                            
+                                            <label>B. SSF type(s): (select all that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label>
+                                                        {% if bluejustice_instance.ssf_type_aquaculture %}
+                                                            <input type="checkbox" id="ssf_type_aquaculture" name="ssf_type_aquaculture" checked> Aquaculture
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_aquaculture" name="ssf_type_aquaculture"> Aquaculture
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                
+                                                <li>
+                                                    <label>
+                                                        {% if bluejustice_instance.ssf_type_recreational %}
+                                                            <input type="checkbox" id="ssf_type_recreational" name="ssf_type_recreational" checked> Recreational
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_recreational" name="ssf_type_recreational"> Recreational
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label>
+                                                        {% if bluejustice_instance.ssf_type_subsistence %}
+                                                            <input type="checkbox" id="ssf_type_subsistence" name="ssf_type_subsistence" checked> Subsistence
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_subsistence" name="ssf_type_subsistence"> Subsistence
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label>
+                                                        {% if bluejustice_instance.ssf_type_commercial %}
+                                                            <input type="checkbox" id="ssf_type_commercial" name="ssf_type_commercial" checked> Commercial
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_commercial" name="ssf_type_commercial"> Commercial
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                
+                                                <li>
+                                                    <label>
+                                                        {% if bluejustice_instance.ssf_type_indigenous %}
+                                                            <input type="checkbox" id="ssf_type_indigenous" name="ssf_type_indigenous" checked> Indigenous
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf_type_indigenous" name="ssf_type_indigenous"> Indigenous
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                
+                                                <li>
+                                                    <label>
+                                                        {% if bluejustice_instance.ssf_type_other %}
+                                                            <input type="checkbox" id="ssf-ssf_type_other" checked> Other (Please Specify):
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-ssf_type_other" > Other (Please Specify):
+                                                        {% endif %}
+
+
+                                                        <div id="ssf-text-value">
+                                                            {% if bluejustice_instance.ssf_type_other %}
+                                                                <input type="text" name="ssf_type_other" value="{{ bluejustice_instance.ssf_type_other }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                            <br>
+                                            <h5>Location and main species:</h5>
+                                            <label for="ssf-location">A. Location: </label>
+                                            <input type="text" id="ssf-location" name="ssf_location" value="{{ bluejustice_instance.ssf_location }}">
+                                            <label for="ssf-country">B. Country:</label>
+                                            <input type="text" id="ssf-country" name="ssf_country" value="{{ bluejustice_instance.ssf_country }}">
+                                            <label for="ssf-main-species">C. SSF Main Species:</label>
+                                            <input type="text" id="ssf-main-species" name="ssf_main_species" value="{{ bluejustice_instance.ssf_main_species }}">
+
+
+                                            <br>
+                                            <h5>Dominant ecosystems in the location:</h5>
+                                            
+                                            <label>A. Ecosystem type(s): (select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="ecosystem-type_marine">
+                                                        {% if bluejustice_instance.ecosystem_type_marine %}
+                                                            <input type="checkbox" id="ecosystem-type_marine" name="ecosystem_type_marine" checked> Marine
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-type_marine" name="ecosystem_type_marine"> Marine
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ecosystem-type_freshwater">
+                                                        {% if bluejustice_instance.ecosystem_type_freshwater %}
+                                                            <input type="checkbox" id="ecosystem-type_freshwater" name="ecosystem_type_freshwater" checked> Freshwater
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-type_freshwater" name="ecosystem_type_freshwater"> Freshwater
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ecosystem-type_brackish">
+                                                        {% if bluejustice_instance.ecosystem_type_brackish %}
+                                                            <input type="checkbox" id="ecosystem-type_brackish" name="ecosystem_type_brackish" checked> Brackish
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-type_brackish" name="ecosystem_type_brackish"> Brackish
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+                                            
+                                            <label>B. Ecosystem detailed type(s): (select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="ecosystem-detailed_archipelago">
+                                                        {% if bluejustice_instance.ecosystem_detailed_archipelago %}
+                                                            <input type="checkbox" id="ecosystem-detailed_archipelago" name="ecosystem_detailed_archipelago" checked> Archipelago
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_archipelago" name="ecosystem_detailed_archipelago"> Archipelago
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_beach">
+                                                        {% if bluejustice_instance.ecosystem_detailed_beach %}
+                                                            <input type="checkbox" id="ecosystem-detailed_beach" name="ecosystem_detailed_beach" checked> Beach
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_beach" name="ecosystem_detailed_beach"> Beach
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_coastal">
+                                                        {% if bluejustice_instance.ecosystem_detailed_coastal %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coastal" name="ecosystem_detailed_coastal" checked> Coastal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coastal" name="ecosystem_detailed_coastal"> Coastal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_coral_reef">
+                                                        {% if bluejustice_instance.ecosystem_detailed_coral_reef %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coral_reef" name="ecosystem_detailed_coral_reef" checked> Coral Reef
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_coral_reef" name="ecosystem_detailed_coral_reef"> Coral Reef
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_deep_sea">
+                                                        {% if bluejustice_instance.ecosystem_detailed_deep_sea %}
+                                                            <input type="checkbox" id="ecosystem-detailed_deep_sea" name="ecosystem_detailed_deep_sea" checked> Deep Sea
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_deep_sea" name="ecosystem_detailed_deep_sea"> Deep Sea
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_estuary">
+                                                        {% if bluejustice_instance.ecosystem_detailed_estuary %}
+                                                            <input type="checkbox" id="ecosystem-detailed_estuary" name="ecosystem_detailed_estuary" checked> Estuary
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_estuary" name="ecosystem_detailed_estuary"> Estuary
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_fjord">
+                                                        {% if bluejustice_instance.ecosystem_detailed_fjord %}
+                                                            <input type="checkbox" id="ecosystem-detailed_fjord" name="ecosystem_detailed_fjord" checked> Fjord
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_fjord" name="ecosystem_detailed_fjord"> Fjord
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_intertidal">
+                                                        {% if bluejustice_instance.ecosystem_detailed_intertidal %}
+                                                            <input type="checkbox" id="ecosystem-detailed_intertidal" name="ecosystem_detailed_intertidal" checked> Intertidal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_intertidal" name="ecosystem_detailed_intertidal"> Intertidal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_lagoon">
+                                                        {% if bluejustice_instance.ecosystem_detailed_lagoon %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lagoon" name="ecosystem_detailed_lagoon" checked> Lagoon
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lagoon" name="ecosystem_detailed_lagoon"> Lagoon
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_lake">
+                                                        {% if bluejustice_instance.ecosystem_detailed_lake %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lake" name="ecosystem_detailed_lake" checked> Lake
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_lake" name="ecosystem_detailed_lake"> Lake
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_mangrove">
+                                                        {% if bluejustice_instance.ecosystem_detailed_mangrove %}
+                                                            <input type="checkbox" id="ecosystem-detailed_mangrove" name="ecosystem_detailed_mangrove" checked> Mangrove
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_mangrove" name="ecosystem_detailed_mangrove"> Mangrove
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_open_ocean">
+                                                        {% if bluejustice_instance.ecosystem_detailed_open_ocean %}
+                                                            <input type="checkbox" id="ecosystem-detailed_open_ocean" name="ecosystem_detailed_open_ocean" checked> Open Ocean
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_open_ocean" name="ecosystem_detailed_open_ocean"> Open Ocean
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_river">
+                                                        {% if bluejustice_instance.ecosystem_detailed_river %}
+                                                            <input type="checkbox" id="ecosystem-detailed_river" name="ecosystem_detailed_river" checked> River
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_river" name="ecosystem_detailed_river"> River
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_salt_marsh">
+                                                        {% if bluejustice_instance.ecosystem_detailed_salt_marsh %}
+                                                            <input type="checkbox" id="ecosystem-detailed_salt_marsh" name="ecosystem_detailed_salt_marsh" checked> Salt Marsh
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_salt_marsh" name="ecosystem_detailed_salt_marsh"> Salt Marsh
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+
+                                                <li>
+                                                    <label for="ecosystem-detailed_other">
+                                                        {% if bluejustice_instance.ecosystem_detailed_other %}
+                                                            <input type="checkbox" id="ecosystem-detailed_other" checked> Other
+                                                        {% else %}
+                                                            <input type="checkbox" id="ecosystem-detailed_other" > Other
+                                                        {% endif %}
+
+
+                                                        <div id="ecosystem-text-value">
+                                                            {% if bluejustice_instance.ecosystem_detailed_other %}
+                                                                <input type="text" name="ecosystem_detailed_other" value="{{ bluejustice_instance.ecosystem_detailed_other }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                            <br>
+                                            <h5>SSF term and definition:</h5>
+                                            
+                                            <label>A. Term(s) used to refer to SSF: (select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="ssf-terms-artisanal">
+                                                        {% if bluejustice_instance.ssf_terms_artisanal %}
+                                                            <input type="checkbox" id="ssf-terms-artisanal" name="ssf_terms_artisanal" checked> Artisanal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-artisanal" name="ssf_terms_artisanal"> Artisanal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ssf-terms-coastal">
+                                                        {% if bluejustice_instance.ssf_terms_coastal %}
+                                                            <input type="checkbox" id="ssf-terms-coastal" name="ssf_terms_coastal" checked> Coastal
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-coastal" name="ssf_terms_coastal"> Coastal
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="ssf-terms-indigenous">
+                                                        {% if bluejustice_instance.ssf_terms_indigenous %}
+                                                            <input type="checkbox" id="ssf-terms-indigenous" name="ssf_terms_indigenous" checked> indigenous
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-indigenous" name="ssf_terms_indigenous"> indigenous
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-inland">
+                                                        {% if bluejustice_instance.ssf_terms_inland %}
+                                                            <input type="checkbox" id="ssf-terms-inland" name="ssf_terms_inland" checked> Inland
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-inland" name="ssf_terms_inland"> Inland
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-inshore">
+                                                        {% if bluejustice_instance.ssf_terms_inshore %}
+                                                            <input type="checkbox" id="ssf-terms-inshore" name="ssf_terms_inshore" checked> Inshore
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-inshore" name="ssf_terms_inshore"> Inshore
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-small_boat">
+                                                        {% if bluejustice_instance.ssf_terms_small_boat %}
+                                                            <input type="checkbox" id="ssf-terms-small_boat" name="ssf_terms_small_boat" checked> Small boat
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-small_boat" name="ssf_terms_small_boat"> Small boat
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-small_scale">
+                                                        {% if bluejustice_instance.ssf_terms_small_scale %}
+                                                            <input type="checkbox" id="ssf-terms-small_scale" name="ssf_terms_small_scale" checked> Small Scale
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-small_scale" name="ssf_terms_small_scale"> Small Scale
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-subsistence">
+                                                        {% if bluejustice_instance.ssf_terms_subsistence %}
+                                                            <input type="checkbox" id="ssf-terms-subsistence" name="ssf_terms_subsistence" checked> Subsistence
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-subsistence" name="ssf_terms_subsistence"> Subsistence
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-traditional">
+                                                        {% if bluejustice_instance.ssf_terms_traditional %}
+                                                            <input type="checkbox" id="ssf-terms-traditional" name="ssf_terms_traditional" checked> Traditional
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-traditional" name="ssf_terms_traditional"> Traditional
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="ssf-terms-others">
+                                                        {% if bluejustice_instance.ssf_terms_others %}
+                                                            <input type="checkbox" id="ssf-terms-others" checked> Other(s): (Please Specify)
+                                                        {% else %}
+                                                            <input type="checkbox" id="ssf-terms-others"> Other(s): (Please Specify)
+                                                        {% endif %}
+
+
+                                                        <div id="ssf-terms-text">
+                                                            {% if bluejustice_instance.ssf_terms_others %}
+                                                                <input type="text" name="ssf_terms_others" value="{{ bluejustice_instance.ssf_terms_others }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+                                            
+                                            <label>B. Are small-scale fisheries defined?</label>
+                                            <select name="ssf_terms_fisheries">
+                                                <option value="">---</option>
+                                                {% if bluejustice_instance.ssf_terms_fisheries == "Yes" %}
+                                                    <option value="Yes" selected>Yes</option>
+                                                {% else %}
+                                                    <option value="Yes">Yes</option>
+                                                {% endif %}
+
+                                                {% if bluejustice_instance.ssf_terms_fisheries == "No" %}
+                                                    <option value="No" selected>No</option>
+                                                {% else %}
+                                                    <option value="No">No</option>
+                                                {% endif %}
+
+                                                {% if bluejustice_instance.ssf_terms_fisheries == "Not Explicitly" %}
+                                                    <option value="Not Explicitly" selected>Not Explicitly</option>
+                                                {% else %}
+                                                    <option value="Not Explicitly">Not Explicitly</option>
+                                                {% endif %}
+                                            </select>
+
+
+                                            <label for="ssf-terms-definition">Provide SSF definition, if applicable:</label>
+                                            <input type="text" name="ssf_terms_fisheries_definition" value="{{ bluejustice_instance.ssf_terms_fisheries_definition}}">
+
+
+                                            <br>
+                                            <h5>Main gears type(s):</h5>
+                                            <label>(select ALL that apply)</label>
+                                            <ul>
+                                                <li>
+                                                    <label for="main-gears-dredge">
+                                                        {% if bluejustice_instance.main_gears_dredge %}
+                                                            <input type="checkbox" id="main-gears-dredge" name="main_gears_dredge" checked> Dredge
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-dredge" name="main_gears_dredge"> Dredge
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-lift_net">
+                                                        {% if bluejustice_instance.main_gears_lift_net %}
+                                                            <input type="checkbox" id="main-gears-lift_net" name="main_gears_lift_net" checked> Lift Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-lift_net" name="main_gears_lift_net"> Lift Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-cast_net">
+                                                        {% if bluejustice_instance.main_gears_cast_net %}
+                                                            <input type="checkbox" id="main-gears-cast_net" name="main_gears_cast_net" checked> Cast Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-cast_net" name="main_gears_cast_net"> Cast Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-gears_poison">
+                                                        {% if bluejustice_instance.main_gears_gears_poison %}
+                                                            <input type="checkbox" id="main-gears-gears_poison" name="main_gears_gears_poison" checked> Gears Poison
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-gears_poison" name="main_gears_gears_poison"> Gears Poison
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-gears_gillnet">
+                                                        {% if bluejustice_instance.main_gears_gears_gillnet %}
+                                                            <input type="checkbox" id="main-gears-gears_gillnet" name="main_gears_gears_gillnet" checked> Gears Gillnet
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-gears_gillnet" name="main_gears_gears_gillnet"> Gears Gillnet
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-recreational_fishing_gears">
+                                                        {% if bluejustice_instance.main_gears_recreational_fishing_gears %}
+                                                            <input type="checkbox" id="main-gears-recreational_fishing_gears" name="main_gears_recreational_fishing_gears" checked> Recreational Fishing Gears
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-recreational_fishing_gears" name="main_gears_recreational_fishing_gears"> Recreational Fishing Gears
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-gears_gleaning">
+                                                        {% if bluejustice_instance.main_gears_gears_gleaning %}
+                                                            <input type="checkbox" id="main-gears-gears_gleaning" name="main_gears_gears_gleaning" checked> Gears Gleaning
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-gears_gleaning" name="main_gears_lift_net"> Gears Gleaning
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-seine_net">
+                                                        {% if bluejustice_instance.main_gears_seine_net %}
+                                                            <input type="checkbox" id="main-gears-seine_net" name="main_gears_seine_net" checked> Seine Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-seine_net" name="main_gears_seine_net"> Seine Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-harpoon">
+                                                        {% if bluejustice_instance.main_gears_harpoon %}
+                                                            <input type="checkbox" id="main-gears-harpoon" name="main_gears_harpoon" checked> Harpoon
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-harpoon" name="main_gears_harpoon"> Harpoon
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-surrounding_net">
+                                                        {% if bluejustice_instance.main_gears_surrounding_net %}
+                                                            <input type="checkbox" id="main-gears-surrounding_net" name="main_gears_surrounding_net" checked> Sorrounding Net
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-surrounding_net" name="main_gears_surrounding_net"> Sorrounding Net
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-harvesting_machines">
+                                                        {% if bluejustice_instance.main_gears_harvesting_machines %}
+                                                            <input type="checkbox" id="main-gears-harvesting_machines" name="main_gears_harvesting_machines" checked> Harvesting Machines
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-harvesting_machines" name="main_gears_harvesting_machines"> Harvesting Machines
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-traps">
+                                                        {% if bluejustice_instance.main_gears_traps %}
+                                                            <input type="checkbox" id="main-gears-traps" name="main_gears_traps" checked> Traps
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-traps" name="main_gears_traps"> Traps
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-hook_line">
+                                                        {% if bluejustice_instance.main_gears_hook_line %}
+                                                            <input type="checkbox" id="main-gears-hook_line" name="main_gears_hook_line" checked> Hook and Line
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-hook_line" name="main_gears_hook_line"> Hook and Line
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-trawls">
+                                                        {% if bluejustice_instance.main_gears_trawls %}
+                                                            <input type="checkbox" id="main-gears-trawls" name="main_gears_trawls" checked> Trawls
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-trawls" name="main_gears_trawls"> Trawls
+                                                        {% endif %}
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label for="main-gears-others">
+                                                        {% if bluejustice_instance.main_gears_others %}
+                                                            <input type="checkbox" id="main-gears-others" checked> Others (Please Specify):
+                                                        {% else %}
+                                                            <input type="checkbox" id="main-gears-others"> Others (Please Specify):
+                                                        {% endif %}
+
+                                                        <div id="main-gears-others-text">
+                                                            {% if bluejustice_instance.main_gears_others %}
+                                                                <input type="text" name="main_gears_others" value="{{ bluejustice_instance.main_gears_others }}" required>
+                                                            {% endif %}
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                            <br>
+                                            <h5>Main vessel type(s),number(s) and engine size:</h5>
+                                            <label for="main-vessel-type">Type:</label>
+                                            <input type="text" id="main-vessel-type" name="main_vessel_type" value="{{ bluejustice_instance.main_vessel_type }}">
+                                            <label for="main-vessel-number">Number:</label>
+                                            <input type="number" id="main-vessel-number" name="main_vessel_number" value="{{ bluejustice_instance.main_vessel_number }}">
+                                            <label for="main-vessel-engine">Engine (HP):</label>
+                                            <input type="text" id="main-vessel-engine" name="main_vessel_engine" value="{{ bluejustice_instance.main_vessel_engine }}">
+
+
+                                            <br>
+                                            <h5>Number of SS fishers:</h5>
+                                            <label for="ss-fishers-numbers">A. Total number of SS fishers:</label>
+                                            <input type="number" id="ss-fishers-numbers" name="ss_fishers_numbers" value="{{ bluejustice_instance.ss_fishers_numbers }}">
+                                            <label for="ss-fishers-full-time">B. % of full-time:</label>
+                                            <input type="number" id="ss-fishers-full-time" name="ss_fishers_full_time" value="{{ bluejustice_instance.ss_fishers_full_time }}">
+                                            <label for="ss-fishers-women">C. % of fisher women:</label>
+                                            <input type="number" id="ss-fishers-women" name="ss_fishers_women" value="{{ bluejustice_instance.ss_fishers_women }}">
+
+
+                                            <br>
+                                            <h5>Number of all households and SS households in the location:</h5>
+                                            <label for="total-number-households">A. Total number of households in the location:</label>
+                                            <input type="number" id="total-number-households" name="total_number_households" value="{{ bluejustice_instance.total_number_households }}">
+                                            <label for="households-participation-percentage">B. % of households participating in SSF:</label>
+                                            <input type="number" id="households-participation-percentage" name="households_participation_percentage" value="{{ bluejustice_instance.households_participation_percentage }}">
+                                            
+                                        </div>
+
+
+                                        <!-- load missing fields from basic info div -->
+                                        <div id="get-loaded-equity-form-data" style="display: none;"></div>
+                                        <input
+                                            id="issf_core_id"
+                                            type="hidden"
+                                            value="{{ bluejustice_instance.issf_core_id }}"
+                                            name="issf_core_id"
+                                        >
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+
+
+
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panelsj">Social Justice/Equity Issues</a>
+                            <div id="panelsj" class="content" style="padding-left: 0; padding-right: 0;">
+                                
+                                <form action="{% url 'bluejustice-basic' %}" method="post" style="display: block;">
+                                {% csrf_token %}
+                                
+                                    <div class="FormSet" id="bluejustice-equity-form">
+                                        <label for="background-about-ssf">Background about SSF</label>
+                                        <textarea rows="5" id="background-about-ssf" name="background_about_ssf">{{ bluejustice_instance.background_about_ssf }}</textarea>
+
+                                        <label for="justice-in_context">Justice in context</label>
+                                        <textarea rows="5" id="justice-in-context" name="justice_in_context">{{ bluejustice_instance.justice_in_context }}</textarea>
+
+                                        <label>Types of justice: (select ALL that apply)</label>
+                                        <ul>
+                                            <li>
+                                                <label for="types-of-justice-distributive">
+                                                {% if bluejustice_instance.types_of_justice_distributive %}
+                                                    <input type="checkbox" id="types-of-justice-distributive" name="types_of_justice_distributive" checked>Distributive justice (e.g. restricted access to space and resources due, for instance, to other ocean uses like tourism, aquaculture, mining, shipping, MPAs, etc.)
+                                                {% else %}
+                                                    <input type="checkbox" id="types-of-justice-distributive" name="types_of_justice_distributive"> Distributive justice (e.g. restricted access to space and resources due, for instance, to other ocean uses like tourism, aquaculture, mining, shipping, MPAs, etc.)
+                                                {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            <li>
+                                                <label for="types-of-justice-social">
+                                                    {% if bluejustice_instance.types_of_justice_social %}
+                                                        <input type="checkbox" id="types-of-justice-social" name="types_of_justice_social" checked> Social justice (e.g. imbalanced power and relationship due, for instance, to systems that favors certain sectors and discriminate others in the society)
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-social" name="types_of_justice_social">  Social justice (e.g. imbalanced power and relationship due, for instance, to systems that favors certain sectors and discriminate others in the society)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            <li>
+                                                <label for="types-of-justice-economic">
+                                                    {% if bluejustice_instance.types_of_justice_economic %}
+                                                        <input type="checkbox" id="types-of-justice-economic" name="types_of_justice_economic" checked> Economic justice (e.g. inequitable opportunities for growth due, for instance, to unfair distribution of subsidies, credit restriction, product certification schemes, limited access to land, productive assets, and alternative livelihood opportunities, etc.)
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-economic" name="types_of_justice_economic">  Economic justice (e.g. inequitable opportunities for growth due, for instance, to unfair distribution of subsidies, credit restriction, product certification schemes, limited access to land, productive assets, and alternative livelihood opportunities, etc.)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            <li>
+                                                <label for="types-of-justice-market">
+                                                    {% if bluejustice_instance.types_of_justice_market %}
+                                                        <input type="checkbox" id="types-of-justice-market" name="types_of_justice_market" checked> Market justice (e.g. limited access to trade and markets, due to market certification schemes, or product standards developed without due consideration to SSF context)
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-market" name="types_of_justice_market">  Market justice (e.g. limited access to trade and markets, due to market certification schemes, or product standards developed without due consideration to SSF context)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            <li>
+                                                <label for="types-of-justice-infrastructure">
+                                                    {% if bluejustice_instance.types_of_justice_infrastructure %}
+                                                        <input type="checkbox" id="types-of-justice-infrastructure" name="types_of_justice_infrastructure" checked>Infrastructure/wellbeing justice (e.g. exclusion from access to health, education, judicial services, safe drinking water, and sanitation, poor roads, transportation and lack of IT and communication links, etc.)
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-infrastructure" name="types_of_justice_infrastructure">  Infrastructure/wellbeing justice (e.g. exclusion from access to health, education, judicial services, safe drinking water, and sanitation, poor roads, transportation and lack of IT and communication links, etc.)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            <li>
+                                                <label for="types-of-justice-regulatory">
+                                                    {% if bluejustice_instance.types_of_justice_regulatory %}
+                                                        <input type="checkbox" id="types-of-justice-regulatory" name="types_of_justice_regulatory" checked> Regulatory justice (e.g. regulations that lead to unfair competition, including those related to quota allocation, gear use control, legal status, etc.)
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-regulatory" name="types_of_justice_regulatory"> Regulatory justice (e.g. regulations that lead to unfair competition, including those related to quota allocation, gear use control, legal status, etc.)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            <li>
+                                                <label for="types-of-justice-procedural">
+                                                    {% if bluejustice_instance.types_of_justice_procedural %}
+                                                        <input type="checkbox" id="types-of-justice-procedural" name="types_of_justice_procedural" checked> Procedural justice (e.g. restricted access to decision-making due, for instance, to the process that designs without due consideration to the SSF context)
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-procedural" name="types_of_justice_procedural"> Procedural justice (e.g. restricted access to decision-making due, for instance, to the process that designs without due consideration to the SSF context)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            <li>
+                                                <label for="types-of-justice-environmental">
+                                                    {% if bluejustice_instance.types_of_justice_environmental %}
+                                                        <input type="checkbox" id="types-of-justice-environmental" name="types_of_justice_environmental" checked> Environmental justice (e.g. disproportionate effects of industrial pollutant, hazard or waste disposal on low-income, and marginalized communities, compromising the health and wellbeing of their members, etc.)
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-environmental" name="types_of_justice_environmental"> Environmental justice (e.g. disproportionate effects of industrial pollutant, hazard or waste disposal on low-income, and marginalized communities, compromising the health and wellbeing of their members, etc.)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+                                            
+                                            
+                                            <li>
+                                                <label for="types-of-justice-others">
+                                                    {% if bluejustice_instance.types_of_justice_others %}
+                                                        <input type="checkbox" id="types-of-justice-others" checked> Other (Please Specify):
+                                                    {% else %}
+                                                        <input type="checkbox" id="types-of-justice-others" > Other (Please Specify):
+                                                    {% endif %}
+
+
+                                                    <div id="types-of-justice-text-value">
+                                                        {% if bluejustice_instance.types_of_justice_others %}
+                                                            <input type="text" name="types_of_justice_others" value="{{ bluejustice_instance.types_of_justice_others }}" required>
+                                                        {% endif %}
+                                                    </div>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+                                        <label for="dealing-with-justice">Dealing with justice</label>
+                                        <textarea rows="5" id="dealing-with-justice" name="dealing_with_justice">{{ bluejustice_instance.dealing_with_justice }}</textarea>
+
+                                        <label for="covid-19-related">Is this story related to the Covid-19 emergency?</label>
+                                        <textarea rows="5" id="covid-19-related" name="covid_19_related">{{ bluejustice_instance.covid_19_related }}</textarea>
+
+                                    </div>
+
+                                    <!-- load missing fields from basic info div -->
+                                    <div id="get-loaded-basic-form-data" style="display: none;"></div>
+                                    <input
+                                        id="issf_core_id"
+                                        type="hidden"
+                                        value="{{ bluejustice_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+
+                                    <div class="button-bar">
+                                        <button type="submit" class="medium radius submit bt-submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </dd>
+                        
+
+                        {% if bluejustice_instance.img_url %}
+                            <dd class="accordion-navigation">
+                                <a class="accordion-nav" href="#panel1t">Image</a>
+
+                                <div
+                                    id="panel1t"
+                                    class="content"
+                                    align="center"
+                                    style="padding-left: 0; padding-right: 0;"
+                                >
+                                    {% if bluejustice_instance.img_url %}
+                                        <img src="{{ bluejustice_instance.img_url }}">
+                                    {% endif %}
+                                </div>
+                            </dd>
+                        {% endif %}
+
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">Edit</button>
+                            {% endif %}
+
+                            <a class="accordion-nav" href="#panel4">Geographic scope</a>
+
+                            <div id="panel4" class="content">
+                                <table>
+                                    {% if core_instance.geographic_scope_type == 'Regional' %}
+                                        {% for gsregion in geographic_scope_region %}
+                                            <tr>
+                                                <td>
+                                                    {% ifchanged core_instance.geographic_scope_type %}
+                                                        <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                                    {% endifchanged %}
+                                                </td>
+                                                <td>
+                                                    {{ gsregion.region.region_name }}
+                                                    {% if gsregion.region.region_name == 'Other' %}
+                                                        : {{ gsregion.region_name_other }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% for gsregioncountry in gsregion.countries.all %}
+                                                        {{ gsregioncountry.short_name }},
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'National' %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                            </td>
+                                            <td>
+                                                {% for country in core_instance.countries.all %}
+                                                    {{ country.short_name }},
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                    {% elif core_instance.geographic_scope_type == 'Sub-national' %}
+                                        {% for gssubnation in geographic_scope_subnation %}
+                                            <tr>
+                                                <td>
+                                                    {% ifchanged core_instance.geographic_scope_type %}
+                                                        <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                                    {% endifchanged %}
+                                                </td>
+                                                <td>{{ gssubnation.subnation_name }}</td>
+                                                <td>
+                                                    {% if gssubnation.subnation_type == 'Other' %}
+                                                        {{ gssubnation.subnation_type_other }}
+                                                    {% else %}
+                                                        {{ gssubnation.subnation_type }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ gssubnation.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif core_instance.geographic_scope_type == 'Local' %}
+                                        {% for gslocal in geographic_scope_local_area %}
+                                            <tr>
+                                                <td>
+                                                    {% ifchanged core_instance.geographic_scope_type %}
+                                                        <strong>{{ core_instance.geographic_scope_type }}</strong>
+                                                    {% endifchanged %}
+                                                </td>
+                                                <td>
+                                                    {{ gslocal.local_area_name }}
+                                                    {% if gslocal.local_area_alternate_name|length > 0 %}
+                                                        ({{ gslocal.local_area_alternate_name }})
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if gslocal.local_area_setting == 'Other' %}
+                                                        {{ gslocal.local_area_setting_other }}
+                                                    {% else %}
+                                                        {{ gslocal.local_area_setting }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ gslocal.country.short_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>{{ core_instance.geographic_scope_type }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                {% if editor %}
+                                    <form action="{% url 'geographic-scope' %}" method="post">
+                                        <h6>Please indicate the geographic scope of the bluejustice.</h6>
+
+                                        <p class="alert">
+                                            <label>*</label>
+                                            indicates required fields
+                                        </p>
+                                        {% csrf_token %}
+
+                                        <div class="FormSet FormSetToggler">
+                                            {{ geographic_scope_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ local_area_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ subnation_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable">
+                                            {{ nation_form }}
+                                        </div>
+                                        <div class="FormSet FormSetTogglable FormSetGrowable">
+                                            {{ region_form }}
+                                        </div>
+
+                                        <input
+                                            id="issf_core_id" type="hidden"
+                                            value="{{ core_instance.issf_core_id }}"
+                                            name="issf_core_id"
+                                        >
+
+                                        <div class="button-bar">
+                                            <button class="medium radius submit bt-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel1b">Map</a>
+
+                            <div id="panel1" class="content">
+                                {% leaflet_map "report-map" callback="window.map_init_basic" %}
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="large-3 columns">
+                    <div
+                        class="fb-comments"
+                        data-href="https://issfcloud.toobigtoignore.net{% url 'bluejustice-details' issf_core_id=core_instance.issf_core_id %}"
+                        data-width="220" data-numposts="3" data-colorscheme="light"
+                    >
+                    </div>
+                </div>
+                {% if editor %}
+                    <a
+                        href="#"
+                        data-reveal-id="deleteModal"
+                        class="button radius"
+                        style="background-color: #525252; position: absolute; right:5px; bottom:-10px;"
+                    >
+                        Delete Record
+                    </a>
+
+                    <div
+                        id="deleteModal"
+                        class="reveal-modal small"
+                        data-reveal aria-labelledby="modalTitle"
+                        aria-hidden="true"
+                        role="dialog"
+                    >
+                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
+                            <div class="row">
+                                <div class="large-5 columns">
+                                    <p>WARNING</p>
+
+                                    <p>
+                                        Are you sure you want to <b style="color:red;">PERMANENTLY</b> delete this record?
+                                        <br>
+                                        Once deleted, the record content cannot be recovered.
+                                    </p>
+
+                                    <button
+                                        class="button radius"
+                                        style="background-color: #B70000; margin-right:10px;"
+                                        type="submit"
+                                    >
+                                        DELETE
+                                    </button>
+
+                                    <a
+                                        href="#"
+                                        class="button radius close-reveal-modal"
+                                        style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color: white;"
+                                    >
+                                        CANCEL
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    {% endautoescape %}
+{% endblock body %}
+
+{% block additional_js_scripts %}
+    {% leaflet_js %}
+
+    <script src="{% static "details/js/map-setup.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/error-handling.js" %}" type="text/javascript"></script>
+    <script src="{% static "details/js/page-functions.js" %}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        // This function serves as a junction between the Leaflet map and
+        // The initialization functionality in map_init_basic_ext() can be found in map-setup.js
+        function map_init_basic(map, options) {
+            var dataurl = '{% url "map-data" %}?issf_core_id={{ core_instance.issf_core_id }}';
+            var bluejusticeIcon = L.icon({
+                iconUrl: '{% static "img/icon-bluejustice.png" %}',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, 0]
+            });
+
+            map_init_basic_ext(map, options, dataurl, bluejusticeIcon);
+        }
+
+        // All the map initialization functionality is handled by this function call.
+        // he function can be found in map-setup.js
+        map_handler();
+
+        // This function handles all form errors; both field- and form-level.
+        // It can be found in error-handling.js
+        error_handler();
+
+
+        // Text box appear/disappear when other checkbox is ticked
+        function otherTextbox(checkbox,textbox,textboxName){
+            if(checkbox.attr('checked')){
+                textbox.show();
+            }
+
+            checkbox.on('click',function(){
+                if(checkbox.attr('checked')){
+                    checkbox.removeAttr('checked');
+                    textbox.children('input').remove();
+                }
+                else{
+                    checkbox.attr('checked','checked');
+                    textbox.append("<input type='text' name='" + textboxName +"' required>");  
+                }
+            });
+        }
+
+        otherTextbox($('#ssf-ssf_type_other'), $('#ssf-text-value'), 'ssf_type_other');
+        otherTextbox($('#ecosystem-detailed_other'), $('#ecosystem-text-value'), 'ecosystem_detailed_other');
+        otherTextbox($('#ssf-terms-others'), $('#ssf-terms-text'), 'ssf_terms_others'); 
+        otherTextbox($('#main-gears-others'), $('#main-gears-others-text'), 'main_gears_others'); 
+        otherTextbox($('#types-of-justice-others'), $('#types-of-justice-text-value'), 'types_of_justice_others'); 
+
+
+        // Load data of the basic form to social injustice form and equity form to basic form
+        $('#get-loaded-basic-form-data').html($('#bluejustice-basic-form').html());
+        $('#get-loaded-equity-form-data').html($('#bluejustice-equity-form').html());
+
+    </script>
+{% endblock additional_js_scripts %}

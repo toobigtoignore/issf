@@ -90,6 +90,7 @@ def index(request: HttpRequest) -> HttpResponse:
             'num_guide_records': SSFGuidelines.objects.all().count(),
             'num_case_records': SSFCaseStudies.objects.all().count(),
             'num_expe_records': SSFExperiences.objects.all().count(),
+            'num_bluejustice_records': SSFBlueJustice.objects.all().count(),
         }
     )
 
@@ -174,7 +175,8 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
             SSFCapacityNeed,
             SSFGuidelines,
             SSFCaseStudies,
-            SSFExperiences
+            SSFExperiences,
+            SSFBlueJustice
         ]
 
         if keywords:
@@ -419,6 +421,8 @@ def table_data_export(request: HttpRequest) -> HttpResponse:
                 case_items.append(issf_core_id)
             elif type == 'SSF Experiences':
                 expe_items.append(issf_core_id)
+            elif type == 'SSF Blue Justice':
+                expe_items.append(issf_core_id)
 
         # Generate the zipfile containing all the records
         zipfile = ZipFile(table_data_file_name, 'w')
@@ -603,6 +607,16 @@ def table_data_export(request: HttpRequest) -> HttpResponse:
             'name',
             'description'
         )
+        expe_records = SSFBlueJustice.objects.filter(issf_core_id__in=expe_items).values(
+            'issf_core_id',
+            'contributor_id__first_name',
+            'contributor_id__last_name',
+            'contribution_date',
+            'geographic_scope_type',
+            'name',
+            'role'
+            # TODO: this will need to be completed
+        )
         who_records = SSFPerson.objects.filter(issf_core_id__in=who_items).values(
             'issf_core_id',
             'contributor_id__first_name',
@@ -633,6 +647,7 @@ def table_data_export(request: HttpRequest) -> HttpResponse:
         write_file_csv('state_of_the_art.csv', sota_records, zipfile)
         write_file_csv('case_studies.csv', case_records, zipfile)
         write_file_csv('experiences.csv', expe_records, zipfile)
+        write_file_csv('bluejustice.csv', bluejustice_records, zipfile)
         write_file_csv('whos_who.csv', who_records, zipfile)
 
         main_attrs = MainAttributeView.objects.filter(issf_core_id__in=profile_items).values(
@@ -896,6 +911,10 @@ def convert_records(records: Iterable[Model]) -> List[Model]:
             record['url'] = 'experiences'
             record['title'] = SSFExperiences.objects.get(issf_core_id=record['issf_core_id'])
             record['record_type'] = 'SSF Experiences'
+        elif type == "SSF Blue Justice":
+            record['url'] = 'bluejustice'
+            record['title'] = SSFBlueJustice.objects.get(issf_core_id=record['issf_core_id'])
+            record['record_type'] = 'SSF BlueJustice'
         elif type == "SSF Guidelines":
             record['url'] = 'guidelines'
             record['title'] = SSFGuidelines.objects.get(issf_core_id=record['issf_core_id'])

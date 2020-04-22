@@ -1844,6 +1844,14 @@ form sup {
     background-color: #ca9174;
 }
 
+#content-bluejustice .page-title {
+    background-position: 17px -360px;
+}
+
+#content-bluejustice .page-title, #content-bluejustice .mapbox, #content-bluejustice .accordion-navigation.active > a {
+    background-color: #4D9DE0;
+}
+
 #content-experience .page-title {
     background-position: 17px -360px;
 }
@@ -2864,6 +2872,10 @@ form ul {
 
 #content-capacity .page-title {
     background-position: 18px -550px;
+}
+
+#content-bluejustice .page-title {
+    background-position: 18px -660px;
 }
 
 #content-experience .page-title {

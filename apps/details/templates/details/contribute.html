@@ -100,7 +100,7 @@
                         </div>
                     </li>
                     <li class="tab-title">
-                        <a id="expe" tabindex="6" href="#panel-expe">
+                        <a id="bluejustice" tabindex="6" href="#panel-bluejustice">
                             <span></span>
                             <h3>Blue Justice Alert</h3>
                         </a>
@@ -109,6 +109,16 @@
                             <p>Stories, lessons and knowledge about small-scale fisheries</p>
                         </div>
                     </li>
+                    <!-- <li class="tab-title">
+                        <a id="expe" tabindex="6" href="#panel-expe">
+                            <span></span>
+                            <h3>Blue Justice Alert</h3>
+                        </a>
+
+                        <div class="pop">
+                            <p>Stories, lessons and knowledge about small-scale fisheries</p>
+                        </div>
+                    </li> -->
                     <li class="tab-title">
                         <a id="guidelines" tabindex="7" href="#panel-guidelines">
                             <span></span>
@@ -455,7 +465,7 @@
                         <!-- Capacity Development -- end -->
                     </div>
 
-                    <div class="content" id="panel-expe">
+                    <div class="content" id="panel-bluejustice">
                         <!-- Blue Justice Alert -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
@@ -469,21 +479,22 @@
                                         >
                                     </div>
                                     <div class="FormSection">
-                                        <form action="{% url 'experiences-basic' %}" method="post">
+                                        <form action="{% url 'bluejustice-basic' %}" method="post">
                                             {% csrf_token %}
     
                                             <div class="FormSet">
-                                                {{ experiences_form.name.label_tag }}{{ experiences_form.name }}
-                                                {{ experiences_form.country.label_tag }}{{ experiences_form.country }}
-                                                {{ experiences_form.role.label_tag }}{{ experiences_form.role }}
-                                                {{ experiences_form.contributor.label_tag }}{{ experiences_form.contributor }}
+                                                {{ bluejustice_form.name.label_tag }}{{ bluejustice_form.name }}
+                                                {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
+                                                {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
+                                                {{ bluejustice_form.covid_19_related.label_tag }}{{ bluejustice_form.covid_19_related }}
+                                                {{ bluejustice_form.contributor.label_tag }}{{ bluejustice_form.contributor }}
                                             </div>
-    
+
                                             {% if user.is_staff %}
                                                 <div class="staffbox">
                                                     <h5>Staff only:</h5>
                                                     <label style="padding-right: 5px;">Prevent posting to @TBTInetwork on Twitter</label>
-                                                    {{ experiences_form.tweet }}
+                                                    {{ bluejustice_form.tweet }}
                                                 </div>
                                             {% endif %}
     
@@ -497,7 +508,7 @@
                                 </div>
                             </dd>
                         </dl>
-                        <!-- Experiences -- end -->
+                        <!-- Blue Justice -- end -->
                     </div>
 
                     <div class="content" id="panel-guidelines">
