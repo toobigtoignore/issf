@@ -710,7 +710,7 @@ footer {
     background: #0d415e;
 }*/
 
-.map-icons #organize h3, .map-icons #expe h3, .map-icons #project h3 {
+.map-icons #organize h3, .map-icons #expe h3, .map-icons #bluejustice h3, .map-icons #project h3 {
     top: 12px;
 }
 
@@ -744,6 +744,10 @@ footer {
 
 .map-icons #capacity h3, .map-icons #capacity h4 {
     color: #ca9174;
+}
+
+.map-icons #bluejustice h3, .map-icons #bluejustice h4 {
+    color: #4D9DE0;
 }
 
 .map-icons #expe h3, .map-icons #expe h4 {
@@ -799,6 +803,10 @@ footer {
 }
 
 .map-icons #expe span {
+    background-image: url(../img/icon-expe.png);
+}
+
+.map-icons #bluejustice span {
     background-image: url(../img/icon-expe.png);
 }
 
@@ -906,6 +914,18 @@ footer {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00506aff', endColorstr='#008cbaff', GradientType=1);
 }
 
+.map-icons #bluejustice.on {
+    background: #00506a;
+    background: -webkit-gradient(linear, left top, right top, from(#00506aff), to(#008cbaff));
+    background: -moz-linear-gradient(left, #00506a 0%, #008cba 12%);
+    background: -moz-gradient(center top, #00506a 0%, #008cba 12%);
+    background: -webkit-linear-gradient(left, #00506a 0%, #008cba 12%);
+    background: -o-linear-gradient(left, #00506a 0%, #008cba 12%);
+    background: -ms-linear-gradient(left, #00506a 0%, #008cba 12%);
+    background: linear-gradient(to right, #00506a 0%, #008cba 12%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00506aff', endColorstr='#008cbaff', GradientType=1);
+}
+
 .map-icons #guidelines.on {
     background: #1c1c77;
     background: -webkit-gradient(linear, left top, right top, from(#1c1c77), to(#1d1da5));
@@ -966,6 +986,10 @@ footer {
     background-color: #ca9174;
 }
 
+.map-icons #bluejustice.on .pop {
+    background-color: #4D9DE0;
+}
+
 .map-icons #expe.on .pop {
     background-color: #4D9DE0;
 }
@@ -1017,6 +1041,10 @@ footer {
     border-right-color: #5e3014;
 }
 
+.map-icons #bluejustice.on:hover:before {
+    border-right-color: #392c52;
+}
+
 .map-icons #expe.on:hover:before {
     border-right-color: #392c52;
 }
@@ -1054,7 +1082,7 @@ footer {
 
 .map-icons.on #who.on h3, .map-icons.on #sota.on h3, .map-icons.on #profile.on h3,
 .map-icons.on #organize.on h3, .map-icons.on #case.on h3, .map-icons.on #capacity.on h3,
-.map-icons.on #expe.on h3, .map-icons.on #guidelines.on h3, .map-icons.on #project.on h3,
+.map-icons.on #expe.on h3,.map-icons.on #bluejustice.on h3, .map-icons.on #guidelines.on h3, .map-icons.on #project.on h3,
 .map-icons.on #training.on h3, .map-icons.on #choropleth.on h3, .map-icons.on #all.on h3 {
     background: none;
 }
@@ -1424,6 +1452,10 @@ form sup {
     background-position: -144px -36px;
 }
 
+.box-contribute ul .cont-bluejustice {
+    background-position: -72px -72px;
+}
+
 .box-contribute ul .cont-expe {
     background-position: -72px -72px;
 }
@@ -1478,6 +1510,10 @@ form sup {
 
 .box-capacity header {
     background-image: url(../img/header-capacity.png);
+}
+
+.box-bluejustice header {
+    background-image: url(../img/header-expe.png);
 }
 
 .box-expe header {
@@ -2066,6 +2102,10 @@ nav .tabs .active #capacity {
     background-color: #ca9174;
 }
 
+nav .tabs .active #bluejustice {
+    background-color: #4D9DE0;
+}
+
 nav .tabs .active #expe {
     background-color: #4D9DE0;
 }
@@ -2121,6 +2161,10 @@ nav .tabs .active #case:after {
 
 nav .tabs .active #capacity:after {
     border-left-color: #ca9174;
+}
+
+nav .tabs .active #bluejustice:after {
+    border-left-color: #4D9DE0;
 }
 
 nav .tabs .active #expe:after {
