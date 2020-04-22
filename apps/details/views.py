@@ -146,6 +146,7 @@ def contribute(request: HttpRequest, who: str = '') -> HttpResponse:
             "fishery_profile_form": SSFProfileForm(initial={'contributor': request.user.id, 'data_end_year': 0}),
             "guidelines_form": SSFGuidelinesForm(initial={'contributor': request.user.id}),
             "experiences_form": SSFExperiencesForm(initial={'contributor': request.user.id}),
+            "bluejustice_form": SSFBlueJusticeForm(initial={'contributor': request.user.id}),
             "case_study_form": case_study_form,
             "is_active": is_active
         }
@@ -596,6 +597,69 @@ def guidelines_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
+def bluejustice_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
+    """
+    View for displaying the details of a Blue Justice record.
+
+    :param request: The incoming HTTP request.
+    :param issf_core_id: The ID of the record to display.
+    :return: The HTTP response to return to the user.
+    """
+    # Record instances
+    bluejustice_instance = SSFBlueJustice.objects.get(issf_core_id=issf_core_id)
+    core_instance = ISSF_Core.objects.get(issf_core_id=issf_core_id)
+    geographic_scope_region = Geographic_Scope_Region.objects.filter(issf_core=issf_core_id)
+    geographic_scope_subnation = GeographicScopeSubnation.objects.filter(issf_core=issf_core_id)
+    geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
+
+    # Get video ids
+    # video_id = bluejustice_instance.video_url.split('=')[1].split('&')[0] if bluejustice_instance.video_url else ''
+    # vimeo_video_id = bluejustice_instance.vimeo_video_url.split('/')[3] if bluejustice_instance.vimeo_video_url else ''
+
+    # forms
+    bluejustice_form = SSFBlueJusticeForm(instance=bluejustice_instance)
+    geographic_scope_form = GeographicScopeForm(instance=core_instance)
+    local_area_form = GeographicScopeLocalAreaInlineFormSet(instance=core_instance)
+    subnation_form = GeographicScopeSubnationInlineFormSet(instance=core_instance)
+    nation_form = GeographicScopeNationForm(instance=core_instance)
+    region_form = GeographicScopeRegionInlineFormSet(instance=core_instance)
+
+    # check if user has rights to edit (owner or staff)
+    editor = request.user.is_staff or request.user.id == core_instance.contributor_id
+
+    # check if the contributor has a Who's Who record
+    contrib_who = SSFPerson.objects.filter(contributor_id=core_instance.contributor_id)
+    if contrib_who:
+        who_page = contrib_who[0]
+    else:
+        who_page = None
+
+    # ensure record is of type bluejustice
+    if "SSF Blue Justice" in bluejustice_instance.core_record_type:
+        return render(
+            request,
+            "details/ssfbluejustice_details.html",
+            {
+                "bluejustice_instance": bluejustice_instance,
+                "core_instance": core_instance,
+                "geographic_scope_region": geographic_scope_region,
+                "geographic_scope_subnation": geographic_scope_subnation,
+                "geographic_scope_local_area": geographic_scope_local_area,
+                "external_links": external_links,
+                "bluejustice_form": bluejustice_form,
+                "geographic_scope_form": geographic_scope_form,
+                "local_area_form": local_area_form,
+                "subnation_form": subnation_form,
+                "nation_form": nation_form,
+                "region_form": region_form,
+                "editor": editor,
+                'who_page': who_page
+            }
+        )
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
+
 def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
     """
     View for displaying the details of an Experiences record.
@@ -612,8 +676,8 @@ def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse
     geographic_scope_local_area = GeographicScopeLocalArea.objects.filter(issf_core=issf_core_id)
 
     # Get video ids
-    video_id = experiences_instance.video_url.split('=')[1].split('&')[0] if experiences_instance.video_url else ''
-    vimeo_video_id = experiences_instance.vimeo_video_url.split('/')[3] if experiences_instance.vimeo_video_url else ''
+    # video_id = experiences_instance.video_url.split('=')[1].split('&')[0] if experiences_instance.video_url else ''
+    # vimeo_video_id = experiences_instance.vimeo_video_url.split('/')[3] if experiences_instance.vimeo_video_url else ''
 
     # forms
     experiences_form = SSFExperiencesForm(instance=experiences_instance)
@@ -652,9 +716,7 @@ def experiences_details(request: HttpRequest, issf_core_id: int) -> HttpResponse
                 "nation_form": nation_form,
                 "region_form": region_form,
                 "editor": editor,
-                'who_page': who_page,
-                "video_id": video_id,
-                "vimeo_video_id": vimeo_video_id
+                'who_page': who_page
             }
         )
     else:
@@ -797,6 +859,8 @@ def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) 
                         name = instance.title
                     elif instance.core_record_type == 'SSF Experiences':
                         name = instance.name
+                    elif instance.core_record_type == 'SSF Blue Justice':
+                        name = instance.name
                     elif instance.core_record_type == 'Case Study':
                         name = instance.name
                     name = str(name)[:20]
@@ -865,6 +929,8 @@ def update_tsvector_summary(core_record_type: str, issf_core_id: str) -> None:
     elif core_record_type == "SSF Experiences":
         cursor.execute('SELECT * FROM experiences_tsvector_update(' + issf_core_id + ')')
         cursor.execute('SELECT * FROM experiences_summary_update(' + issf_core_id + ')')
+    elif core_record_type == "SSF Blue Justice":
+        cursor.execute('SELECT * FROM bluejustice_summary_update(' + issf_core_id + ')')
     elif core_record_type == "Case Study":
         cursor.execute('SELECT * FROM casestudies_tsvector_update(' + issf_core_id + ')')
         cursor.execute('SELECT * FROM casestudies_summary_update(' + issf_core_id + ')')
@@ -1434,6 +1500,17 @@ def guidelines_basic(request: HttpRequest) -> HttpResponse:
     :return: The HTTP response to return to the user.
     """
     return save_basic(request, SSFGuidelines, SSFGuidelinesForm)
+
+
+@login_required
+def bluejustice_basic(request: HttpRequest) -> HttpResponse:
+    """
+    View to save an Blue Justice record.
+
+    :param request: The incoming HTTP request.
+    :return: The HTTP response to return to the user.
+    """
+    return save_basic(request, SSFBlueJustice, SSFBlueJusticeForm)
 
 
 @login_required

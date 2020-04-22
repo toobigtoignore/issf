@@ -354,6 +354,75 @@ class SSFGuidelinesForm(ModelForm):
         return cleaned_data
 
 
+class SSFBlueJusticeForm(ModelForm):
+    """
+    Form for creating or editing an SSFBlueJustice record.
+    """
+
+    # Custom field for supressing tweets
+    tweet = forms.BooleanField(initial=False, required=False)
+
+    class Meta:
+        model = SSFBlueJustice
+        fields = [
+            'name', 'email', 'affiliation',
+            'country', 'role', 'img_url', 'photo_location', 'date_of_photo', 'photographer',
+            'title', 'video_url', 'vimeo_video_url', 'description', 'contributor', 'ssf_name',
+            'ssf_location', 'ssf_country', 'ssf_main_species', 'ssf_type_aquaculture',
+            'ssf_type_recreational', 'ssf_type_commercial', 'ssf_type_subsistence', 'ssf_type_indigenous',
+            'ssf_type_other', 'ecosystem_type_marine', 'ecosystem_type_freshwater', 'ecosystem_type_brackish',
+            'ecosystem_detailed_archipelago', 'ecosystem_detailed_beach', 'ecosystem_detailed_coastal',
+            'ecosystem_detailed_coral_reef', 'ecosystem_detailed_deep_sea', 'ecosystem_detailed_estuary',
+            'ecosystem_detailed_fjord', 'ecosystem_detailed_intertidal', 'ecosystem_detailed_lagoon',
+            'ecosystem_detailed_lake', 'ecosystem_detailed_mangrove', 'ecosystem_detailed_open_ocean',
+            'ecosystem_detailed_river', 'ecosystem_detailed_salt_marsh', 'ecosystem_detailed_other',
+            'ssf_terms_artisanal', 'ssf_terms_coastal', 'ssf_terms_indigenous', 'ssf_terms_inland', 'ssf_terms_inshore',
+            'ssf_terms_small_boat', 'ssf_terms_small_scale', 'ssf_terms_subsistence', 'ssf_terms_traditional',
+            'ssf_terms_others', 'ssf_terms_fisheries', 'ssf_terms_fisheries_definiton', 'main_gears_dredge', 'main_gears_lift_net',
+            'main_gears_cast_net', 'main_gears_poison', 'main_gears_gillnet', 'main_gears_recreational_fishing_gears',
+            'main_gears_gleaning', 'main_gears_seine_net', 'main_gears_harpoon', 'main_gears_surrounding_net',
+            'main_gears_harvesting_machines', 'main_gears_traps', 'main_gears_hook_line', 'main_gears_trawls', 'main_gears_others',
+            'main_vessel_type', 'main_vessel_number', 'main_vessel_engine', 'ss_fishers_numbers', 'ss_fishers_full_time',
+            'ss_fishers_women', 'total_number_households', 'households_participation_percentage', 'background_about_ssf',
+            'justice_in_context', 'types_of_justice_distributive', 'types_of_justice_social', 'types_of_justice_economic',
+            'types_of_justice_market', 'types_of_justice_infrastructure', 'types_of_justice_regulatory', 'types_of_justice_procedural',
+            'types_of_justice_environmental', 'types_of_justice_others', 'dealing_with_justice', 'covid_19_related'
+        ]
+        labels = {
+            'name': 'Name of Contributor',
+            'email': 'E-mail Address',
+            'affiliation': 'Affiliation',
+            'country': 'Country',
+            'role': 'Role and involvement in SSF',
+            'covid_19_related': 'Is this story related to the Covid-19 emergency?',
+            'img_url': 'Image URL (direct links only)',
+            'photo_location': 'Where this photo was taken',
+            'date_of_photo': 'When this photo was taken (Date)',
+            'photographer': 'Name of the photographer',
+
+            'title': 'Video title',
+            'video_url': 'YouTube video URL (no shortened links)',
+            'description': 'Describe the experience',
+            'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
+                           'who can edit the record)',
+            'vimeo_video_url': 'Vimeo video URL (no shortened links)'
+        }
+
+    def clean(self) -> Dict[str, Any]:
+        """
+        Cleans and verifies the data entered by the user.
+
+        :return: The cleaned data.
+        """
+        cleaned_data = super().clean()
+
+        for key in cleaned_data:
+            if isinstance(cleaned_data[key], str):
+                cleaned_data[key] = bleach.clean(cleaned_data[key])
+
+        return cleaned_data
+
+
 class SSFExperiencesForm(ModelForm):
     """
     Form for creating or editing a SSFExperiences record.
@@ -365,16 +434,44 @@ class SSFExperiencesForm(ModelForm):
     class Meta:
         model = SSFExperiences
         fields = [
-            'name', 'title', 'video_url', 'vimeo_video_url',
-            'description', 'img_url', 'contributor'
+            'name', 'email', 'affiliation',
+            'country', 'role', 'img_url', 'photo_location', 'date_of_photo', 'photographer',
+            'title', 'video_url', 'vimeo_video_url', 'description', 'contributor', 'ssf_name',
+            'ssf_location', 'ssf_country', 'ssf_main_species', 'ssf_type_aquaculture',
+            'ssf_type_recreational', 'ssf_type_commercial', 'ssf_type_subsistence', 'ssf_type_indigenous',
+            'ssf_type_other', 'ecosystem_type_marine', 'ecosystem_type_freshwater', 'ecosystem_type_brackish',
+            'ecosystem_detailed_archipelago', 'ecosystem_detailed_beach', 'ecosystem_detailed_coastal',
+            'ecosystem_detailed_coral_reef', 'ecosystem_detailed_deep_sea', 'ecosystem_detailed_estuary',
+            'ecosystem_detailed_fjord', 'ecosystem_detailed_intertidal', 'ecosystem_detailed_lagoon',
+            'ecosystem_detailed_lake', 'ecosystem_detailed_mangrove', 'ecosystem_detailed_open_ocean',
+            'ecosystem_detailed_river', 'ecosystem_detailed_salt_marsh', 'ecosystem_detailed_other',
+            'ssf_terms_artisanal', 'ssf_terms_coastal', 'ssf_terms_indigenous', 'ssf_terms_inland', 'ssf_terms_inshore',
+            'ssf_terms_small_boat', 'ssf_terms_small_scale', 'ssf_terms_subsistence', 'ssf_terms_traditional',
+            'ssf_terms_others', 'ssf_terms_fisheries', 'ssf_terms_fisheries_definiton', 'main_gears_dredge', 'main_gears_lift_net',
+            'main_gears_cast_net', 'main_gears_poison', 'main_gears_gillnet', 'main_gears_recreational_fishing_gears',
+            'main_gears_gleaning', 'main_gears_seine_net', 'main_gears_harpoon', 'main_gears_surrounding_net',
+            'main_gears_harvesting_machines', 'main_gears_traps', 'main_gears_hook_line', 'main_gears_trawls', 'main_gears_others',
+            'main_vessel_type', 'main_vessel_number', 'main_vessel_engine', 'ss_fishers_numbers', 'ss_fishers_full_time',
+            'ss_fishers_women', 'total_number_households', 'households_participation_percentage', 'background_about_ssf',
+            'justice_in_context', 'types_of_justice_distributive', 'types_of_justice_social', 'types_of_justice_economic',
+            'types_of_justice_market', 'types_of_justice_infrastructure', 'types_of_justice_regulatory', 'types_of_justice_procedural',
+            'types_of_justice_environmental', 'types_of_justice_others', 'dealing_with_justice'
         ]
         labels = {
-            'name': '*Presenter name',
+            'name': 'Name of Contributor',
+            'email': 'E-mail Address',
+            'affiliation': 'Affiliation',
+            'country': 'Country',
+            'role': 'Role and involvement in SSF',
+            'img_url': 'Image URL (direct links only)',
+            'photo_location': 'Where this photo was taken',
+            'date_of_photo': 'When this photo was taken (Date)',
+            'photographer': 'Name of the photographer',
+
             'title': 'Video title',
             'video_url': 'YouTube video URL (no shortened links)',
-            'description': '*Describe the experience',
-            'img_url': 'Image URL (direct links only)',
-            'contributor': '*Contributor (note: this is the only person, other than ISSF staff, '
+            'description': 'Describe the experience',
+            'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
                            'who can edit the record)',
             'vimeo_video_url': 'Vimeo video URL (no shortened links)'
         }

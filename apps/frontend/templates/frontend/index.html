@@ -134,12 +134,12 @@
                     </a>
 
                     <a id="expe" tabindex="6">
-                        <h3>Experiences</h3>
+                        <h3>Blue Justice Alerts</h3>
                         <span></span>
 
                         <div class="pop">
                             <p>Stories, lessons and knowledge about small-scale fisheries</p>
-                            <p><strong>{{ num_expe_records }} records.</strong></p>
+                            <p><strong>{{ num_bluejustice_records }} records.</strong></p>
                         </div>
                     </a>
 
@@ -426,6 +426,12 @@
                                                 <strong>Capacity Developmet:</strong>
                                                 {{ contribution.contribution_count }}
                                             </p>
+                                            {% elif contribution.core_record_type == "SSF Blue Justice" %}
+                                            <span class="icon cont-expe"></span>
+                                            <p>
+                                                <strong>Blue Justice Alert:</strong>
+                                                {{ contribution.contribution_count }}
+                                            </p>
                                         {% elif contribution.core_record_type == "SSF Experiences" %}
                                             <span class="icon cont-expe"></span>
                                             <p>
@@ -504,6 +510,11 @@
                                                 <span class="icon cont-guidelines"></span>
                                                 <p>
                                                     <a href="{% url 'guidelines-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                </p>
+                                                {% elif recent_contribution.core_record_type == "SSF Blue Justice" %}
+                                                <span class="icon cont-expe"></span>
+                                                <p>
+                                                    <a href="{% url 'bluejustice-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                 </p>
                                             {% elif recent_contribution.core_record_type == "SSF Experiences" %}
                                                 <span class="icon cont-expe"></span>
@@ -1692,6 +1703,9 @@
                     if (filterTitle == "Experiences") {
                         filterTitle = "SSF Experiences";
                     }
+                    if (filterTitle == "Blue Justice Alerts") {
+                        filterTitle = "SSF Blue Justice";
+                    }
                     if (filterTitle == "Case Studies") {
                         filterTitle = "Case Study";
                     }
@@ -1741,6 +1755,9 @@
                         iconUrl: '{% static "img/icon-guidelines.png" %}'
                     })),
                     "SSF Experiences": L.icon(Object.assign(defaultIconProps, {
+                        iconUrl: '{% static "img/icon-experiences.png" %}'
+                    })),
+                    "SSF Blue Justice": L.icon(Object.assign(defaultIconProps, {
                         iconUrl: '{% static "img/icon-experiences.png" %}'
                     })),
                     "Case Study": L.icon(Object.assign(defaultIconProps, {
