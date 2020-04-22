@@ -102,7 +102,7 @@
                     <li class="tab-title">
                         <a id="expe" tabindex="6" href="#panel-expe">
                             <span></span>
-                            <h3>Blue Justice</h3>
+                            <h3>Blue Justice Alert</h3>
                         </a>
 
                         <div class="pop">
@@ -456,12 +456,12 @@
                     </div>
 
                     <div class="content" id="panel-expe">
-                        <!-- Experiences -- form -->
+                        <!-- Blue Justice Alert -- form -->
                         <dl class="accordion" data-accordion>
                             <dd class="accordion-navigation active">
                                 <div id="panel81" class="content m0p0">
                                     <div class="FormSection FormSectionBanner">
-                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the experience(s)</h5>
+                                        <h5 style="text-align: center; color: #FBCD06">Please provide the basic details of the Blue Justice Alert</h5>
                                         <img 
                                             class="FormProgressBar" 
                                             src="{% static "issf_base/img/progress-basic.png" %}"
@@ -474,14 +474,8 @@
     
                                             <div class="FormSet">
                                                 {{ experiences_form.name.label_tag }}{{ experiences_form.name }}
-                                                {{ experiences_form.email.label_tag }}{{ experiences_form.email }}
-                                                {{ experiences_form.affiliation.label_tag }}{{ experiences_form.affiliation }}
                                                 {{ experiences_form.country.label_tag }}{{ experiences_form.country }}
                                                 {{ experiences_form.role.label_tag }}{{ experiences_form.role }}
-                                                {{ experiences_form.img_url.label_tag }}{{ experiences_form.img_url }}
-                                                {{ experiences_form.photo_location.label_tag }}{{ experiences_form.photo_location }}
-                                                {{ experiences_form.date_of_photo.label_tag }}{{ experiences_form.date_of_photo }}
-                                                {{ experiences_form.photographer.label_tag }}{{ experiences_form.photographer }}
                                                 {{ experiences_form.contributor.label_tag }}{{ experiences_form.contributor }}
                                             </div>
     

@@ -679,8 +679,8 @@ class SSFExperiences(models.Model):
     name = models.CharField(max_length=256, blank=False)
     email = models.CharField(max_length=256, blank=True)
     affiliation = models.CharField(max_length=256, blank=True)
-    country = models.CharField(max_length=256, blank=True)
-    role = models.CharField(max_length=512, blank=True)
+    country = models.CharField(max_length=256, blank=False)
+    role = models.CharField(max_length=512, blank=False)
     img_url = models.URLField(blank=True)
     photo_location = models.CharField(max_length=512, blank=True)
     date_of_photo = models.CharField(max_length=256, blank=True)
@@ -730,19 +730,19 @@ class SSFExperiences(models.Model):
     ssf_terms_fisheries = models.CharField(max_length=256, blank=True)
     ssf_terms_fisheries_definiton = models.TextField(blank=True)
 
-    main_gears_dredge  = models.CharField(max_length=256, blank=True)
-    main_gears_lift_net = models.CharField(max_length=256, blank=True)  
-    main_gears_cast_net  = models.CharField(max_length=256, blank=True)
+    main_gears_dredge = models.CharField(max_length=256, blank=True)
+    main_gears_lift_net = models.CharField(max_length=256, blank=True)
+    main_gears_cast_net = models.CharField(max_length=256, blank=True)
     main_gears_poison = models.CharField(max_length=256, blank=True)
-    main_gears_gillnet  = models.CharField(max_length=256, blank=True)
+    main_gears_gillnet = models.CharField(max_length=256, blank=True)
     main_gears_recreational_fishing_gears = models.CharField(max_length=256, blank=True)
-    main_gears_gleaning  = models.CharField(max_length=256, blank=True)
+    main_gears_gleaning = models.CharField(max_length=256, blank=True)
     main_gears_seine_net = models.CharField(max_length=256, blank=True)
-    main_gears_harpoon  = models.CharField(max_length=256, blank=True)
+    main_gears_harpoon = models.CharField(max_length=256, blank=True)
     main_gears_surrounding_net = models.CharField(max_length=256, blank=True)
-    main_gears_harvesting_machines  = models.CharField(max_length=256, blank=True)
+    main_gears_harvesting_machines = models.CharField(max_length=256, blank=True)
     main_gears_traps = models.CharField(max_length=256, blank=True)
-    main_gears_hook_line  = models.CharField(max_length=256, blank=True)
+    main_gears_hook_line = models.CharField(max_length=256, blank=True)
     main_gears_trawls = models.CharField(max_length=256, blank=True)
     main_gears_others = models.CharField(max_length=256, blank=True)
 
@@ -770,10 +770,6 @@ class SSFExperiences(models.Model):
     types_of_justice_others = models.CharField(max_length=256, blank=True)
     dealing_with_justice = models.TextField(blank=True)
 
-
-
-    
-
     class Meta:
         managed = False
         db_table = 'ssf_experience'
@@ -790,8 +786,10 @@ class SSFExperiences(models.Model):
         """
         Saves an instance of a SSF Experiences record.
         """
-        
+
         self.name = conditional_escape(self.name)
+        self.country = conditional_escape(self.country)
+        self.role = conditional_escape(self.role)
         super(SSFExperiences, self).save(*args, **kwargs)
 
 

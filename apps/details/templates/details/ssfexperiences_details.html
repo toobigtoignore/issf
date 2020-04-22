@@ -10,7 +10,7 @@
     {% autoescape off %}
         {% include "issf_base/loading-spinner.html" %}
 
-        <title>{% block title %}ISSF: Blue Justice {% endblock %}</title>
+        <title>{% block title %}ISSF: Blue Justice Alert {% endblock %}</title>
 
         <section class="content-section report" id="content-experience">
             <div class="row" id="main">
@@ -25,11 +25,11 @@
                         </a>
                     </span>
 
-                    <h1>Blue Justice</h1>
+                    <h1>Blue Justice Alert</h1>
 
                     <div class="basic-info">
                         <strong>{{ experiences_instance.name }}</strong>
-                        | Blue Justice
+                        | Blue Justice Alert
                     </div>
                 </div>
             </div>
@@ -807,7 +807,7 @@
 
 
                         <dd class="accordion-navigation">
-                            <a class="accordion-nav" href="#panelsj">Social justice/equity issues</a>
+                            <a class="accordion-nav" href="#panelsj">Social Justice/Equity Issues</a>
                             <div id="panelsj" class="content" style="padding-left: 0; padding-right: 0;">
                                 
                                 <form action="{% url 'experiences-basic' %}" method="post" style="display: block;">
