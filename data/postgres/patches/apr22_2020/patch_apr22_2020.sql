@@ -1,3 +1,5 @@
+-- PATCH APPLIED TO PROD DB ON APRIL 22 AT ~3PM.
+
 -- Create Blue Justice Table
 
 CREATE TABLE public.ssf_bluejustice
