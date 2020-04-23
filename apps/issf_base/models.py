@@ -767,9 +767,9 @@ class SSFBlueJustice(models.Model):
     types_of_justice_regulatory = models.CharField(max_length=256, blank=True)
     types_of_justice_procedural = models.CharField(max_length=256, blank=True)
     types_of_justice_environmental = models.CharField(max_length=256, blank=True)
+    covid_19_related = models.CharField(max_length=256, blank=True)
     types_of_justice_others = models.CharField(max_length=256, blank=True)
     dealing_with_justice = models.TextField(blank=True)
-    covid_19_related = models.TextField(blank=False)
 
     class Meta:
         managed = False
@@ -791,7 +791,6 @@ class SSFBlueJustice(models.Model):
         self.name = conditional_escape(self.name)
         self.country = conditional_escape(self.country)
         self.role = conditional_escape(self.role)
-        self.covid_19_related = conditional_escape(self.covid_19_related)
         super(SSFBlueJustice, self).save(*args, **kwargs)
 
 

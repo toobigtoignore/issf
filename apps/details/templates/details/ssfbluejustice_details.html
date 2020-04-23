@@ -901,6 +901,16 @@
                                                     {% endif %}
                                                 </label>
                                             </li>
+
+                                            <li>
+                                                <label for="covid_19_related">
+                                                    {% if bluejustice_instance.covid_19_related %}
+                                                        <input type="checkbox" id="covid_19_related" name="covid_19_related" checked> COVID-19 related justice (e.g. disproportionate effects of COVID-19 pandemic on SSF, lack of recognition about the effects of COVID-19 on SSF; insufficient attention to examine the impacts on SSF communities, inadequate funding or support to mitigate impacts on SSF compared to other sectors, etc.)
+                                                    {% else %}
+                                                        <input type="checkbox" id="covid_19_related" name="covid_19_related"> COVID-19 related justice (e.g. disproportionate effects of COVID-19 pandemic on SSF, lack of recognition about the effects of COVID-19 on SSF; insufficient attention to examine the impacts on SSF communities, inadequate funding or support to mitigate impacts on SSF compared to other sectors, etc.)
+                                                    {% endif %}
+                                                </label>
+                                            </li>
                                             
                                             
                                             <li>
@@ -923,9 +933,6 @@
 
                                         <label for="dealing-with-justice">Dealing with justice</label>
                                         <textarea rows="5" id="dealing-with-justice" name="dealing_with_justice">{{ bluejustice_instance.dealing_with_justice }}</textarea>
-
-                                        <label for="covid-19-related">Is this story related to the Covid-19 emergency?</label>
-                                        <textarea rows="5" id="covid-19-related" name="covid_19_related">{{ bluejustice_instance.covid_19_related }}</textarea>
 
                                     </div>
 

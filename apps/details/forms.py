@@ -394,7 +394,6 @@ class SSFBlueJusticeForm(ModelForm):
             'affiliation': 'Affiliation',
             'country': 'Country',
             'role': 'Role and involvement in SSF',
-            'covid_19_related': 'Is this story related to the Covid-19 emergency?',
             'img_url': 'Image URL (direct links only)',
             'photo_location': 'Where this photo was taken',
             'date_of_photo': 'When this photo was taken (Date)',
