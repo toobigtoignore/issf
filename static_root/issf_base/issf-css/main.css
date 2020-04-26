@@ -63,11 +63,32 @@ hr {
 
 #body-section {
     display: grid;
-    grid-gap: 1rem;
 }
 
 .map-section {
-    margin-bottom: 1rem;
+}
+
+.map-and-visual {
+    display: grid;
+}
+
+@media only screen and (min-width: 1850px) {
+    .map-and-visual {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+.visual-section {
+    background-color: rgba(59, 134, 255, 0.05);
+}
+
+.visual-carousel {
+    margin: 1rem auto 0 auto;
+    height: 755px;
+    width: 800px;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 2px 2px 4px -1px rgba(0,0,0,.4);
 }
 
 #info-section, .content-section {
@@ -356,8 +377,7 @@ footer {
 }
 
 #info-section .tabs .tab-title.active > a {
-    /* color: #333;
-    background-color: #5385BB; */
+    transition: all 0.3s ease;
 }
 
 #info-section .tabs .tab-title.active > a.tomap {
@@ -415,6 +435,11 @@ footer {
 #info-section .main-wrapper {
     background: #fff;
     box-shadow: 5px 2px 5px -5px rgba(0,0,0,.4);
+    margin-left: 20px;
+}
+
+#home-search-form {
+    margin-left: 20px;
 }
 
 #info-map {
@@ -2702,6 +2727,15 @@ form ul {
 
 #quick-search button {
     margin: 0 .5rem;
+    transition: all 0.3s;
+    background-color: #2699FB;
+}
+
+#quick-search button:hover {
+    background-color: #2699FB;
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
 }
 
 .btn-container:before, .btn-container:after {

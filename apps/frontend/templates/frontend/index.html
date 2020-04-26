@@ -20,349 +20,353 @@
 
     <section id="body-section">
 
-        <div class="map-section">
+        <div class="map-and-visual">
+            <div class="map-section">
 
-            <div id="info-section">
-                <div class="row">
-                    <div class="large-12 columns main-wrapper" id="info-map">
-                        <h3 style="margin: 0; padding: 0;">ISSF Records</h3>
-                        <ul class="tabs" data-tab>
-                            <li class="tab-title active">
-                                <a class="tomap" href="#tab-map">Map View</a>
-                            </li>
-                            <li class="tab-title">
-                                <a class="totable" href="#tab-table">Table View</a>
-                            </li>
-                        </ul>
-                        <div class="info-ctn tabs-content">
-                            <!-- Main Map -->
-                            <div class="map-holder content active" id="tab-map">
-                                <div id="map-loading-overlay"></div>
-                                <div class="headline"></div>
-                                {% leaflet_map "map" callback="window.map_init_basic" %}
-                            </div>
-        
-                            <!-- Table Tab -->
-                            <div class="table-holder content" id="tab-table">
-                                <div class="headline"></div>
-                                <div>
-                                    <table id="record-table-result" class="display compact stripe">
-                                        <thead>
-                                            <tr>
-                                                <th width="180px">Record Type</th>
-                                                <th width="600px">Content Summary</th>
-                                                <th width="150px">Edited Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                <div id="info-section">
+                    <div class="row">
+                        <div class="large-12 columns main-wrapper" id="info-map">
+                            <h3 style="margin: 0; padding: 0;">ISSF Records</h3>
+                            <ul class="tabs" data-tab>
+                                <li class="tab-title active">
+                                    <a class="tomap" href="#tab-map">Map View</a>
+                                </li>
+                                <li class="tab-title">
+                                    <a class="totable" href="#tab-table">Table View</a>
+                                </li>
+                            </ul>
+                            <div class="info-ctn tabs-content">
+                                <!-- Main Map -->
+                                <div class="map-holder content active" id="tab-map">
+                                    <div id="map-loading-overlay"></div>
+                                    <div class="headline"></div>
+                                    {% leaflet_map "map" callback="window.map_init_basic" %}
+                                </div>
+            
+                                <!-- Table Tab -->
+                                <div class="table-holder content" id="tab-table">
+                                    <div class="headline"></div>
+                                    <div>
+                                        <table id="record-table-result" class="display compact stripe">
+                                            <thead>
+                                                <tr>
+                                                    <th width="180px">Record Type</th>
+                                                    <th width="600px">Content Summary</th>
+                                                    <th width="150px">Edited Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
+            
+                            <nav class="map-icons">
+                                <a id="who" tabindex="0">
+                                    <h3>Who's Who in SSF</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Information about small-scale fisheries people.</p>
+                                        <p>
+                                            <strong>{{ num_who_records }} records.</strong>
+                                        </p>
+                                    </div>
+                                </a>
+            
+                                <a id="sota" tabindex="1">
+                                    <h3>State-of-the-Art in SSF Research</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Existing published information about small-scale fisheries</p>
+                                        <p>
+                                            <strong>{{ num_sota_records }} records.</strong>
+                                        </p>
+                                    </div>
+                                </a>
+            
+                                <a id="profile" tabindex="2">
+                                    <h3>SSF Profile</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Information about a specific small-scale fishery</p>
+                                        <p>
+                                            <strong>{{ num_profile_records }} records.</strong>
+                                        </p>
+                                    </div>
+                                </a>
+            
+                                <a id="organize" tabindex="3">
+                                    <h3>SSF Organization</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Organizations directly involved in small-scale fisheries</p>
+                                        <p>
+                                            <strong>{{ num_org_records }} records.</strong>
+                                        </p>
+                                    </div>
+                                </a>
+            
+                                <a id="case" tabindex="4">
+                                    <h3>Case Studies</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Examples of issues/challenges affecting small-scale fisheries</p>
+                                        <p>
+                                            <strong>{{ num_case_records }} records.</strong>
+                                        </p>
+                                    </div>
+                                </a>
+            
+                                <a id="capacity" tabindex="5">
+                                    <h3>Capacity Development</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>
+                                            What capacity needs to be developed for small-scale fisheries
+                                        </p>
+                                        <p>
+                                            <strong>{{ num_cap_records }} records.</strong>
+                                        </p>
+                                    </div>
+                                </a>
+            
+                                <a id="expe" tabindex="6">
+                                    <h3>Blue Justice Alerts</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Alerting the world to injustice and other threats to SSF</p>
+                                        <p><strong>{{ num_bluejustice_records }} records.</strong></p>
+                                    </div>
+                                </a>
+            
+                                <a id="guidelines" tabindex="7">
+                                    <h3>SSF Guidelines</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Tracking of the SSF Guidelines implementation worldwide</p>
+                                        <p><strong>{{ num_guide_records }} records.</strong></p>
+                                    </div>
+                                </a>
+            
+                                <div id="spacer"/>
+            
+                                <a id="all" tabindex="11">
+                                    <h3>Show/Hide All</h3>
+                                    <span></span>
+            
+                                    <div class="pop">
+                                        <p>Show or hide all available datasets</p>
+                                    </div>
+                                </a>
+                            </nav>
                         </div>
-        
-                        <nav class="map-icons">
-                            <a id="who" tabindex="0">
-                                <h3>Who's Who in SSF</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Information about small-scale fisheries people.</p>
-                                    <p>
-                                        <strong>{{ num_who_records }} records.</strong>
-                                    </p>
-                                </div>
-                            </a>
-        
-                            <a id="sota" tabindex="1">
-                                <h3>State-of-the-Art in SSF Research</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Existing published information about small-scale fisheries</p>
-                                    <p>
-                                        <strong>{{ num_sota_records }} records.</strong>
-                                    </p>
-                                </div>
-                            </a>
-        
-                            <a id="profile" tabindex="2">
-                                <h3>SSF Profile</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Information about a specific small-scale fishery</p>
-                                    <p>
-                                        <strong>{{ num_profile_records }} records.</strong>
-                                    </p>
-                                </div>
-                            </a>
-        
-                            <a id="organize" tabindex="3">
-                                <h3>SSF Organization</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Organizations directly involved in small-scale fisheries</p>
-                                    <p>
-                                        <strong>{{ num_org_records }} records.</strong>
-                                    </p>
-                                </div>
-                            </a>
-        
-                            <a id="case" tabindex="4">
-                                <h3>Case Studies</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Examples of issues/challenges affecting small-scale fisheries</p>
-                                    <p>
-                                        <strong>{{ num_case_records }} records.</strong>
-                                    </p>
-                                </div>
-                            </a>
-        
-                            <a id="capacity" tabindex="5">
-                                <h3>Capacity Development</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>
-                                        What capacity needs to be developed for small-scale fisheries
-                                    </p>
-                                    <p>
-                                        <strong>{{ num_cap_records }} records.</strong>
-                                    </p>
-                                </div>
-                            </a>
-        
-                            <a id="expe" tabindex="6">
-                                <h3>Blue Justice Alerts</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Alerting the world to injustice and other threats to SSF</p>
-                                    <p><strong>{{ num_bluejustice_records }} records.</strong></p>
-                                </div>
-                            </a>
-        
-                            <a id="guidelines" tabindex="7">
-                                <h3>SSF Guidelines</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Tracking of the SSF Guidelines implementation worldwide</p>
-                                    <p><strong>{{ num_guide_records }} records.</strong></p>
-                                </div>
-                            </a>
-        
-                            <div id="spacer"/>
-        
-                            <a id="all" tabindex="11">
-                                <h3>Show/Hide All</h3>
-                                <span></span>
-        
-                                <div class="pop">
-                                    <p>Show or hide all available datasets</p>
-                                </div>
-                            </a>
-                        </nav>
                     </div>
                 </div>
-            </div>
-        
-            <div id="advance-search" class="quick">
-                <a id="tosearch">
-                    <h5>Advanced Search</h5>
-                </a>
-                <div class="row">
-                    <form id="home-search-form">
-                        {% csrf_token %}
-                        <div class="large-12 columns main-wrapper">
-                            <div class="search-wrapper">
-                                <div class="row row-fit" id="quick-search">
-                                    <div class="large-4 left" id="quick-search-fulltext-container">
-                                        {{ searchForm.fulltext_keywords }}
+            
+                <div id="advance-search" class="quick">
+                    <a id="tosearch">
+                        <h5>Advanced Search</h5>
+                    </a>
+                    <div class="row">
+                        <form id="home-search-form">
+                            {% csrf_token %}
+                            <div class="large-12 columns main-wrapper">
+                                <div class="search-wrapper">
+                                    <div class="row row-fit" id="quick-search">
+                                        <div class="large-4 left" id="quick-search-fulltext-container">
+                                            {{ searchForm.fulltext_keywords }}
+                                        </div>
+            
+                                        <div id="quick-country-select" class="large-4 left">
+                                            {{ searchForm.countries }}
+                                        </div>
+            
+                                        <div class="large-4 right BtnCol" id="quick-area">
+                                            <div id="quick-button-floaty">
+                                                <button
+                                                    type="submit"
+                                                    id="quick-search-button"
+                                                    class="medium radius issf-scroll-button"
+                                                    scrollto="#info-map"
+                                                >
+                                                    Search
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    id="quick-reset-button"
+                                                    class="medium radius"
+                                                >
+                                                    Reset
+                                                </button>
+            
+                                                <div
+                                                    id="exportModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle"
+                                                    aria-hidden="true" role="dialog" style="width:60%; margin-left: -30%;"
+                                                >
+                                                    <h3 id="modalTitle">Export Data</h3>
+                                                    <p>
+                                                        ISSF is an online collaborative database, developed and administered by TBTI. As
+                                                        a crowdsourcing
+            
+                                                        platform, ISSF data have been uploaded by individuals but have not been verified
+                                                        by TBTI or SSF experts.
+            
+                                                        Caution should be exercised when using data. The ownership and responsibility
+                                                        for the information
+            
+                                                        provided belongs to the contributors.
+                                                        <br>
+                                                        <br>
+                                                        When using ISSF content, please provide
+                                                        appropriate citation,
+            
+                                                        following the format described in the README file.
+                                                    </p>
+            
+                                                    <a href="#" class="button radius" onclick="exportData();">
+                                                        I agree
+                                                    </a>
+            
+                                                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-        
-                                    <div id="quick-country-select" class="large-4 left">
-                                        {{ searchForm.countries }}
+            
+                                    <div class="row row-fit" id="term-search">
+                                        <div class="search-term">
+                                            <p id="searchTerms" class="EmptyContainer">
+                                            </p>
+                                        </div>
                                     </div>
-        
-                                    <div class="large-4 right BtnCol" id="quick-area">
-                                        <div id="quick-button-floaty">
+            
+                                    <div id="full-search">
+                                        <div class="row row-fit">
+                                            <ul id="search-tabs" class="tabs" data-tab>
+                                                <li class="tab-title active">
+                                                    <a href="#panel-basic">Basic</a>
+                                                </li>
+                                                <li class="tab-title">
+                                                    <a href="#panel-theme">Themes/Issues</a>
+                                                </li>
+                                                <li class="tab-title">
+                                                    <a href="#panel-character">Characteristics</a>
+                                                </li>
+                                            </ul>
+                                            <button class="reset-button generic-shadow">
+                                                <p>Reset</p>
+                                            </button>
+                                        </div>
+            
+                                        <div class="tabs-content">
+                                            <div class="content active" id="panel-basic">
+                                                {{ searchForm.keywords.label }}{{ searchForm.keywords }}
+                                                {{ searchForm.contributor.label }}{{ searchForm.contributor }}
+                                                {{ searchForm.contribution_begin_date.label }}{{ searchForm.contribution_begin_date }}
+                                                {{ searchForm.contribution_end_date.label }}{{ searchForm.contribution_end_date }}
+                                                <div id="full-country-select-container">
+                                                    {{ searchForm.countries.label }}{{ searchForm.countries }}
+                                                </div>
+                                            </div>
+            
+                                            <div class="content" id="panel-theme">
+                                                <div>
+                                                    {{ selected_themes_issues_formset.management_form }}
+                                                    <tr style="background-color: inherit;">
+                                                        <td>
+                                                            <label>Search by themes/issues</label>
+                                                        </td>
+                                                    </tr>
+                                                    <table
+                                                        style="width:100%; background-color: inherit; border: none;"
+                                                        class="advancedSearchPanelTabTable"
+                                                    >
+                                                        {% for form in selected_themes_issues_formset %}
+                                                            <tr style="background-color: inherit;">
+                                                                <td id="ti-attr-val">
+                                                                    {{ form.theme_issue_value }}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                            </div>
+            
+                                            <div class="content" id="panel-character">
+                                                <div class="FormSet FormSetGrowable advancedSearchPanelTab">
+                                                    {{ selected_attributes_formset.management_form }}
+                                                    <table
+                                                        class="advancedSearchPanelTabTable"
+                                                        style="width:100%; background-color: inherit; border: none;"
+                                                    >
+                                                        <tr style="background-color: inherit;">
+                                                            <td>
+                                                                <label>Characteristic</label>
+                                                            </td>
+                                                            <td>
+                                                                <label>Value</label>
+                                                            </td>
+                                                        </tr>
+            
+                                                        {% for form in selected_attributes_formset %}
+                                                            <tr style="background-color: inherit;">
+                                                                <td id="char-attr" style="width: 40%;">
+                                                                    {{ form.attribute }}
+                                                                </td>
+                                                                <td id="char-attr-val" style="width: 40%;">
+                                                                    {{ form.attribute_value }}
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <button
+                                                                        class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
+                                                                        type="button"
+                                                                    >
+                                                                        Remove
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+            
+                                        <div class="large-12 btn-container">
                                             <button
-                                                type="submit"
-                                                id="quick-search-button"
                                                 class="medium radius issf-scroll-button"
+                                                id="default"
                                                 scrollto="#info-map"
+                                                type="submit"
                                             >
                                                 Search
                                             </button>
-                                            <button
-                                                type="button"
-                                                id="quick-reset-button"
-                                                class="medium radius"
-                                            >
-                                                Reset
-                                            </button>
-        
-                                            <div
-                                                id="exportModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle"
-                                                aria-hidden="true" role="dialog" style="width:60%; margin-left: -30%;"
-                                            >
-                                                <h3 id="modalTitle">Export Data</h3>
-                                                <p>
-                                                    ISSF is an online collaborative database, developed and administered by TBTI. As
-                                                    a crowdsourcing
-        
-                                                    platform, ISSF data have been uploaded by individuals but have not been verified
-                                                    by TBTI or SSF experts.
-        
-                                                    Caution should be exercised when using data. The ownership and responsibility
-                                                    for the information
-        
-                                                    provided belongs to the contributors.
-                                                    <br>
-                                                    <br>
-                                                    When using ISSF content, please provide
-                                                    appropriate citation,
-        
-                                                    following the format described in the README file.
-                                                </p>
-        
-                                                <a href="#" class="button radius" onclick="exportData();">
-                                                    I agree
-                                                </a>
-        
-                                                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-                                            </div>
+            
+                                            <div class="BtnCol" style="display:inline;"></div>
                                         </div>
                                     </div>
                                 </div>
-        
-                                <div class="row row-fit" id="term-search">
-                                    <div class="search-term">
-                                        <p id="searchTerms" class="EmptyContainer">
-                                        </p>
-                                    </div>
-                                </div>
-        
-                                <div id="full-search">
-                                    <div class="row row-fit">
-                                        <ul id="search-tabs" class="tabs" data-tab>
-                                            <li class="tab-title active">
-                                                <a href="#panel-basic">Basic</a>
-                                            </li>
-                                            <li class="tab-title">
-                                                <a href="#panel-theme">Themes/Issues</a>
-                                            </li>
-                                            <li class="tab-title">
-                                                <a href="#panel-character">Characteristics</a>
-                                            </li>
-                                        </ul>
-                                        <button class="reset-button generic-shadow">
-                                            <p>Reset</p>
-                                        </button>
-                                    </div>
-        
-                                    <div class="tabs-content">
-                                        <div class="content active" id="panel-basic">
-                                            {{ searchForm.keywords.label }}{{ searchForm.keywords }}
-                                            {{ searchForm.contributor.label }}{{ searchForm.contributor }}
-                                            {{ searchForm.contribution_begin_date.label }}{{ searchForm.contribution_begin_date }}
-                                            {{ searchForm.contribution_end_date.label }}{{ searchForm.contribution_end_date }}
-                                            <div id="full-country-select-container">
-                                                {{ searchForm.countries.label }}{{ searchForm.countries }}
-                                            </div>
-                                        </div>
-        
-                                        <div class="content" id="panel-theme">
-                                            <div>
-                                                {{ selected_themes_issues_formset.management_form }}
-                                                <tr style="background-color: inherit;">
-                                                    <td>
-                                                        <label>Search by themes/issues</label>
-                                                    </td>
-                                                </tr>
-                                                <table
-                                                    style="width:100%; background-color: inherit; border: none;"
-                                                    class="advancedSearchPanelTabTable"
-                                                >
-                                                    {% for form in selected_themes_issues_formset %}
-                                                        <tr style="background-color: inherit;">
-                                                            <td id="ti-attr-val">
-                                                                {{ form.theme_issue_value }}
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </table>
-                                            </div>
-                                        </div>
-        
-                                        <div class="content" id="panel-character">
-                                            <div class="FormSet FormSetGrowable advancedSearchPanelTab">
-                                                {{ selected_attributes_formset.management_form }}
-                                                <table
-                                                    class="advancedSearchPanelTabTable"
-                                                    style="width:100%; background-color: inherit; border: none;"
-                                                >
-                                                    <tr style="background-color: inherit;">
-                                                        <td>
-                                                            <label>Characteristic</label>
-                                                        </td>
-                                                        <td>
-                                                            <label>Value</label>
-                                                        </td>
-                                                    </tr>
-        
-                                                    {% for form in selected_attributes_formset %}
-                                                        <tr style="background-color: inherit;">
-                                                            <td id="char-attr" style="width: 40%;">
-                                                                {{ form.attribute }}
-                                                            </td>
-                                                            <td id="char-attr-val" style="width: 40%;">
-                                                                {{ form.attribute_value }}
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <button
-                                                                    class="orangeRedButton advancedSearchPanelTabRemoveButton medium radius"
-                                                                    type="button"
-                                                                >
-                                                                    Remove
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-        
-                                    <div class="large-12 btn-container">
-                                        <button
-                                            class="medium radius issf-scroll-button"
-                                            id="default"
-                                            scrollto="#info-map"
-                                            type="submit"
-                                        >
-                                            Search
-                                        </button>
-        
-                                        <div class="BtnCol" style="display:inline;"></div>
-                                    </div>
-                                </div>
+            
                             </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
         
-                        </div>
-                    </form>
+            <div class="visual-section">
+                <div class="visual-carousel">
+                    <h3 style="padding: 1rem">Latest Visualizations</h3>
                 </div>
             </div>
-            
-        </div>
-    
-        <div class="visual-section">
-            <h2>hello from visual section</h2>
         </div>
     
         <div class="info-section">

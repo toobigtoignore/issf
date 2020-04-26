@@ -152,17 +152,16 @@ button, .button {
     padding-left: .75rem;
     font-size: 1rem;
     background-color: #2699FB;
-    border-color: #007095;
     color: white;
-    transition: background-color 300ms ease-out;
+    transition: all 0.3s ease;
 }
 
 button:hover, button:focus, .button:hover, .button:focus {
-    background-color: #007095;
-}
+    background-color: #2699FB;
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
 
-button:hover, button:focus, .button:hover, .button:focus {
-    color: white;
 }
 
 button.radius, .button.radius {
