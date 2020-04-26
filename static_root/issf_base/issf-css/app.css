@@ -28,11 +28,10 @@ html, body {
 }
 
 body {
-    background: #d0d0d0;
     color: #3e3e3e;
     padding: 0;
     margin: 0;
-    font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-family: 'Montserrat', "Source Sans Pro", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
     font-weight: normal;
     font-style: normal;
     line-height: 150%;
@@ -128,12 +127,17 @@ select {
     background-color: transparent;
 }
 
+.BtnCol {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 button, .button {
     border-style: solid;
     border-width: 0px;
     cursor: pointer;
-    font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-    font-weight: normal;
+    font-family: "Montserrat", "Source Sans Pro", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-weight: 600;
     line-height: normal;
     margin: 0 0 0.75rem;
     position: relative;
@@ -143,11 +147,11 @@ button, .button {
     -webkit-border-radius: 0;
     display: inline-block;
     padding-top: 0.4375rem;
-    padding-right: 0.875rem;
+    padding-right: .75rem;
     padding-bottom: 0.5rem;
-    padding-left: 0.875rem;
+    padding-left: .75rem;
     font-size: 1rem;
-    background-color: #1D4D9B;
+    background-color: #2699FB;
     border-color: #007095;
     color: white;
     transition: background-color 300ms ease-out;
@@ -1681,7 +1685,7 @@ blockquote p {
     display: block;
     background: #efefef;
     color: #222222;
-    padding: 1rem 2rem;
+    padding: .5rem 1rem;
     font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
     font-size: 1rem;
 }
