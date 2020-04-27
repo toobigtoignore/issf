@@ -376,7 +376,7 @@
             <textarea id="hiddentabledata" style="display:none"></textarea>
         
             <section id="contribute-panel">
-                <div style="width: 1600px; margin: 0 auto;">
+                <div style="width: 100%; display: flex; justify-content: center;">
                     <div class="col-580 left">
                         <div class="box box-info welcome">
                             <header>
@@ -531,8 +531,71 @@
                         <a class="twitter-timeline" data-height="512" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
                         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
-                    <div class="right">
-                        <div class="left" style="width: 300px; margin-right: 20px;">
+                    <div class="left">
+                        <div class="left" style="width: 300px; margin-left: 20px;">
+                            <div id="recent-contributions" class="box box-contribute">
+                                <header>
+                                    <h2>Most Recent Contributions</h2>
+                                </header>
+                                <div class="body-contribute">
+                                    <ul>
+                                        {# already escaped in view #}
+                                        {% autoescape off %}
+                                            {% for recent_contribution in recent_contributions %}
+                                                <li>
+                                                    {% if recent_contribution.core_record_type == "Who's Who in SSF" %}
+                                                        <span class="icon cont-who"></span>
+                                                        <p>
+                                                            <a href="{% url 'who-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% elif recent_contribution.core_record_type == "State-of-the-Art in SSF Research" %}
+                                                        <span class="icon cont-sota"></span>
+                                                        <p>
+                                                            <a href="{% url 'sota-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% elif recent_contribution.core_record_type == "Capacity Development" %}
+                                                        <span class="icon cont-capacity"></span>
+                                                        <p>
+                                                            <a href="{% url 'capacity-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% elif recent_contribution.core_record_type == "SSF Organization" %}
+                                                        <span class="icon cont-organize"></span>
+                                                        <p>
+                                                            <a href="{% url 'organization-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% elif recent_contribution.core_record_type == "SSF Profile" %}
+                                                        <span class="icon cont-profile"></span>
+                                                        <p>
+                                                            <a href="{% url 'profile-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% elif recent_contribution.core_record_type == "SSF Guidelines" %}
+                                                        <span class="icon cont-guidelines"></span>
+                                                        <p>
+                                                            <a href="{% url 'guidelines-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                        {% elif recent_contribution.core_record_type == "SSF Blue Justice" %}
+                                                        <span class="icon cont-expe"></span>
+                                                        <p>
+                                                            <a href="{% url 'bluejustice-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% elif recent_contribution.core_record_type == "SSF Experiences" %}
+                                                        <span class="icon cont-expe"></span>
+                                                        <p>
+                                                            <a href="{% url 'experiences-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% elif recent_contribution.core_record_type == "Case Study" %}
+                                                        <span class="icon cont-case"></span>
+                                                        <p>
+                                                            <a href="{% url 'case-studies-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
+                                                        </p>
+                                                    {% endif %}
+                                                </li>
+                                            {% endfor %}
+                                        {% endautoescape %}
+                                    </ul>
+                                </div>
+                            </div>
+
                             <div id="recent-contributions" class="box box-contribute">
                                 <header>
                                     <h2>Recent Contributions by Type</h2>
@@ -601,7 +664,7 @@
                                     </ul>
                                 </div>
                             </div>
-        
+
                             <div id="recent-contributions" class="box box-contribute">
                                 <header>
                                     <h2>Recent Contributions by Country</h2>
@@ -618,74 +681,9 @@
                                     </ul>
                                 </div>
                             </div>
+
                             <p></p>
-        
                         </div>
-                        <div class="right" style="width: 300px">
-                            <div id="recent-contributions" class="box box-contribute">
-                                <header>
-                                    <h2>Most Recent Contributions</h2>
-                                </header>
-                                <div class="body-contribute">
-                                    <ul>
-                                        {# already escaped in view #}
-                                        {% autoescape off %}
-                                            {% for recent_contribution in recent_contributions %}
-                                                <li>
-                                                    {% if recent_contribution.core_record_type == "Who's Who in SSF" %}
-                                                        <span class="icon cont-who"></span>
-                                                        <p>
-                                                            <a href="{% url 'who-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% elif recent_contribution.core_record_type == "State-of-the-Art in SSF Research" %}
-                                                        <span class="icon cont-sota"></span>
-                                                        <p>
-                                                            <a href="{% url 'sota-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% elif recent_contribution.core_record_type == "Capacity Development" %}
-                                                        <span class="icon cont-capacity"></span>
-                                                        <p>
-                                                            <a href="{% url 'capacity-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% elif recent_contribution.core_record_type == "SSF Organization" %}
-                                                        <span class="icon cont-organize"></span>
-                                                        <p>
-                                                            <a href="{% url 'organization-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% elif recent_contribution.core_record_type == "SSF Profile" %}
-                                                        <span class="icon cont-profile"></span>
-                                                        <p>
-                                                            <a href="{% url 'profile-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% elif recent_contribution.core_record_type == "SSF Guidelines" %}
-                                                        <span class="icon cont-guidelines"></span>
-                                                        <p>
-                                                            <a href="{% url 'guidelines-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                        {% elif recent_contribution.core_record_type == "SSF Blue Justice" %}
-                                                        <span class="icon cont-expe"></span>
-                                                        <p>
-                                                            <a href="{% url 'bluejustice-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% elif recent_contribution.core_record_type == "SSF Experiences" %}
-                                                        <span class="icon cont-expe"></span>
-                                                        <p>
-                                                            <a href="{% url 'experiences-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% elif recent_contribution.core_record_type == "Case Study" %}
-                                                        <span class="icon cont-case"></span>
-                                                        <p>
-                                                            <a href="{% url 'case-studies-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
-                                                        </p>
-                                                    {% endif %}
-                                                </li>
-                                            {% endfor %}
-                                        {% endautoescape %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-        
                         <div>
                         </div>
                     </div>

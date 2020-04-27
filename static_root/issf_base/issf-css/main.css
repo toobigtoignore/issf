@@ -143,6 +143,9 @@ footer {
 .twitter-box {
     margin-left: 20px;
     border-radius: 3px;
+    height: fit-content;
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
     box-shadow: 3px 3px 5px rgba(0,0,0,.4);
 }
 
@@ -291,12 +294,13 @@ footer {
     border-radius: 3px;
     padding: 0.5rem;
     background: rgb(111, 231, 169);
+    transition: all 0.3s ease;
 }
 
 #tbti:hover, .bt-contribute:hover, .bt-my_contributions:hover {
-    opacity: 0.9;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
-    filter: alpha(opacity=90);
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
 }
 
 .tbti-logo-homepage {
@@ -421,6 +425,7 @@ footer {
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     border-radius: 3px;
+    transition: all 0.3s ease;
 }
 
 #info-section .tabs .tab-title > a.tomap {
