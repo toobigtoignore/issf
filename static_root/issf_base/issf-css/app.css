@@ -37,6 +37,7 @@ body {
     line-height: 150%;
     position: relative;
     cursor: default;
+    overflow-x: hidden;
 }
 
 img {

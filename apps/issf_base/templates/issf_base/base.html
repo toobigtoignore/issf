@@ -79,8 +79,24 @@
         }(document, 'script', 'facebook-jssdk'));</script>
 
         <header id="header">
-            <div class="row">
-                <div class="large-5 columns">
+            <div class="header-left-large">
+                <div class="logo" id="issf">
+                    <h1>ISSF : Information System on Small Scale Fisheries</h1>
+                    <a href="/">
+                        <img
+                            src="{% static "issf_base/img/logo-issf.png" %}"
+                            alt="Information System on Small Scale Fisheries"
+                        >
+                    </a>
+                </div>
+                <div class="tbti-logo-homepage">
+                    <a href="http://toobigtoignore.net/" target="_blank">
+                        <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
+                    </a>
+                </div>
+            </div>
+            <div class="row" style="width: 100%">
+                <div class="large-5 columns header-left">
                     <div class="logo" id="issf">
                         <h1>ISSF : Information System on Small Scale Fisheries</h1>
                         <a href="/">
@@ -88,6 +104,11 @@
                                 src="{% static "issf_base/img/logo-issf.png" %}"
                                 alt="Information System on Small Scale Fisheries"
                             >
+                        </a>
+                    </div>
+                    <div class="tbti-logo-homepage">
+                        <a href="http://toobigtoignore.net/" target="_blank">
+                            <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
                         </a>
                     </div>
                 </div>
@@ -157,39 +178,21 @@
                     </div>
 
                     {% if user.is_anonymous %}
-                        <a class="bt-contribute" style="margin: 5px 0px 5px auto" href="{% url 'contribute' %}">
-                            <img
-                                class="bt-contribute-logo"
-                                src="{% static "issf_base/img/logo-contribute.png" %}"
-                                alt=""
-                            >
-                            <h2 class="bt-contribute-text">Contribute</h2>
-                        </a>
-                        <a href="http://toobigtoignore.net/" target="_blank">
-                            <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
-                        </a>
-
-                        {% else %}
+                        <div class="contribution-bts">
+                            <a class="bt-contribute" style="margin: 5px 0px 5px auto" href="{% url 'contribute' %}">
+                                <h2 class="bt-contribute-text bt-contributions-text">Contribute Data</h2>
+                            </a>
+                        </div>
+                    {% else %}
                         <div class="contribution-bts">
                             <a class="bt-contribute" href="{% url 'contribute' %}">
-                                <img
-                                    class="bt-contribute-logo"
-                                    src="{% static "issf_base/img/logo-contribute.png" %}"
-                                    alt=""
-                                >
-                                <h2 class="bt-contribute-text">Contribute</h2>
+                                <h2 class="bt-contribute-text">Contribute Data</h2>
                             </a>
                             <a class="bt-my_contributions" href="{% url 'contributed-records' %}">
                                 <h2 class="bt-contribute-text bt-contributions-text">My Contributions</h2>
                             </a>
                         </div>
-                        <div class="tbti-logo-homepage">
-                            <a href="http://toobigtoignore.net/" target="_blank">
-                                <img src="{% static "issf_base/img/logo-tbti.png" %}" alt="Too Big To Ignore">
-                            </a>
-                        </div>
-                        
-                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </header>

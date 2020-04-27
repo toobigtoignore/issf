@@ -6,14 +6,14 @@ h1, h2, h3, h4, h5 {
 }
 
 a {
-    color: #008cba;
+    color: #2699FB;
     text-decoration: none;
     line-height: inherit;
     cursor: pointer;
 }
 
 a:hover, a:focus {
-    color: #F16923;
+    color: #6CB9FC;
 }
 
 a, a:hover, a:active, a:focus {
@@ -82,10 +82,23 @@ hr {
     background-color: rgba(59, 134, 255, 0.05);
 }
 
+/* greater than 1850px */
+@media only screen and (min-width: 1850px) {
+    .visual-carousel {
+        width: 850px;
+        margin: 1rem auto 0 45px;
+    }
+  }
+/* less than 1850px */
+  @media only screen and (max-width: 1850px) {
+    .visual-carousel {
+        width: 1000px;
+        margin: 1rem auto;
+    }
+  }
+
 .visual-carousel {
-    margin: 1rem auto 0 auto;
     height: 755px;
-    width: 800px;
     background-color: #fff;
     border-radius: 3px;
     box-shadow: 2px 2px 4px -1px rgba(0,0,0,.4);
@@ -119,7 +132,7 @@ footer {
 }
 
 #contribute-panel {
-    padding: 80px 0 68px;
+    padding: 1rem;
 }
 
 #content-bottom {
@@ -158,9 +171,63 @@ footer {
     width: 760px;
 }
 
-.header-right {
-    padding-top: 40px;
-    text-align: right;
+.header-row {
+    position: relative;
+}
+
+/* for screen greater than 1850px */
+.header-left-large {
+    height: 0;
+}
+
+/* less than 1850px */
+@media only screen and (max-width:1850px) {
+    .header-left-large {
+        display: none;
+    }
+}
+
+/* greater than 1850px */
+@media only screen and (min-width:1850px) {
+    .header-left-large {
+        display: block;
+    }
+}
+
+/* less than 1850px */
+@media only screen and (max-width:1850px) {
+    .header-left {
+        visibility: visible;
+        margin-left: -30px;
+    }
+}
+
+/* greater than 1850px */
+@media only screen and (min-width:1850px) {
+    .header-left {
+        visibility: hidden;
+    }
+}
+
+/* less than 1850px */
+@media only screen and (max-width:1850px) {
+    .header-right {
+        text-align: right;
+        padding-top: 40px;
+        top: 15px;
+    }
+}
+
+/* greater than 1850px */
+@media only screen and (min-width:1850px) {
+    .header-right {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        margin-left: -190px;
+        text-align: right;
+        padding-top: 40px;
+    }
 }
 
 .logo {
@@ -183,7 +250,7 @@ footer {
 #issf {
     float: left;
     margin: 0;
-    padding: 32px 0 54px;
+    padding: 25px;
 }
 
 .home {
@@ -213,13 +280,10 @@ footer {
 }
 
 .bt-contribute {
-    display: grid;
-    grid-template-columns: 2fr 5fr;
-    width: 200px;
-    height: 45px;
     margin-right: 5px;
     border-radius: 3px;
-    background: #1D4D9C;
+    padding: 0.5rem;
+    background: rgb(111, 231, 169);
 }
 
 #tbti:hover, .bt-contribute:hover, .bt-my_contributions:hover {
@@ -229,11 +293,9 @@ footer {
 }
 
 .tbti-logo-homepage {
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 80%;
-    margin-top: 5px;
+    position: relative;
+    top: 55px;
+    left: 5px;
 }
 
 .bt-contribute-logo {
@@ -244,27 +306,23 @@ footer {
 
 .bt-contribute-text {
     display: flex;
-    font-size: 22px;
-    margin: 0;
-    padding-right: 15px;
+    font-size: 1rem;
     align-items: center;
     justify-content: center;
     color: white;
-    text-shadow: 2px 2px rgba(0,0,0,.6);
+    margin: 0px;
 }
 
 .bt-contributions-text {
-    font-size: 20px;
-    padding-right: 0;
-    padding: 8px;
+    font-size: 1rem;
+    padding-right: 0px;
 }
 
 .bt-my_contributions {
     display: block;
-    width: 200px;
-    height: 45px;
-    background: #1D4D9C;
+    background: rgb(38, 153, 251);
     border-radius: 3px;
+    padding: 0.5rem;
 }
 
 .account-bar {
@@ -401,23 +459,14 @@ footer {
     display: none;
 }
 
-/* #info-section .tabs:after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 24px;
-    width: 100%;
-    height: 14px;
-    background: #275d97;
-    z-index: 3;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-} */
-
 #info-section .tabs-content > .content {
     padding: 0;
+}
+
+@media only screen and (min-width: 1850px) {
+    .main-wrapper {
+        margin-left: 20px;
+    }
 }
 
 .main-wrapper {
@@ -435,11 +484,15 @@ footer {
 #info-section .main-wrapper {
     background: #fff;
     box-shadow: 5px 2px 5px -5px rgba(0,0,0,.4);
-    margin-left: 20px;
+}
+
+@media only screen and (min-width: 1850px) {
+    .home-search-form-class {
+        margin-left: 20px;
+    }
 }
 
 #home-search-form {
-    margin-left: 20px;
 }
 
 #info-map {
