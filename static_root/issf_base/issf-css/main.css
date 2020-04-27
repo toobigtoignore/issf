@@ -79,7 +79,7 @@ hr {
   }
 
 .visual-section {
-    background-color: rgba(59, 134, 255, 0.05);
+    /* background-color: rgba(59, 134, 255, 0.05); */
 }
 
 /* greater than 1850px */
@@ -105,11 +105,11 @@ hr {
 }
 
 #info-section, .content-section {
-    background-color: rgba(59, 134, 255, 0.05);
+    /* background-color: rgba(59, 134, 255, 0.05); */
 }
 
 #advance-search, #contribute-panel, #content-bottom {
-    background-color: rgba(59, 134, 255, 0.05);
+    /* background-color: rgba(59, 134, 255, 0.05); */
 }
 
 footer {
@@ -2323,53 +2323,36 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .button-bar {
-    width: 98%;
-    padding: 10px;
-    margin: 0px auto -10px auto;
+    width: 99%;
+    padding-bottom: 1rem;
     text-align: center;
-    background-color: #7d7d7d;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .button-bar .button, .button-bar button {
     width: 110px;
-    color: #3e3e3e;
+    color: #fff;
     font-weight: bold;
     margin: 0 10px;
-    background: #d9d9d9;
-    background: -webkit-gradient(linear, left top, left bottom, from(#FFD9D9D9), to(#FFC4C4C4));
-    background: -moz-linear-gradient(center top, #d9d9d9 0%, #c4c4c4 100%);
-    background: -moz-gradient(center top, #d9d9d9 0%, #c4c4c4 100%);
-    background: -webkit-linear-gradient(top, #d9d9d9 0%, #c4c4c4 100%);
-    background: -o-linear-gradient(top, #d9d9d9 0%, #c4c4c4 100%);
-    background: -ms-linear-gradient(top, #d9d9d9 0%, #c4c4c4 100%);
-    background: linear-gradient(to bottom, #d9d9d9 0%, #c4c4c4 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFD9D9D9', endColorstr='#FFC4C4C4', GradientType=0);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
+    background: #6FE7A9;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
 }
 
 .button-bar button {
-    -webkit-box-shadow: 1px 1px 2px #515151;
-    -moz-box-shadow: 1px 1px 2px #515151;
-    box-shadow: 1px 1px 2px #515151;
+    margin-top: 20px;
 }
 
 .button-bar button:hover {
-    background: #c4c4c4;
-    background: -webkit-gradient(linear, left top, left bottom, from(#FFC4C4C4), to(#FFD9D9D9));
-    background: -moz-linear-gradient(center top, #c4c4c4 0%, #d9d9d9 100%);
-    background: -moz-gradient(center top, #c4c4c4 0%, #d9d9d9 100%);
-    background: -webkit-linear-gradient(top, #c4c4c4 0%, #d9d9d9 100%);
-    background: -o-linear-gradient(top, #c4c4c4 0%, #d9d9d9 100%);
-    background: -ms-linear-gradient(top, #c4c4c4 0%, #d9d9d9 100%);
-    background: linear-gradient(to bottom, #c4c4c4 0%, #d9d9d9 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFC4C4C4', endColorstr='#FFD9D9D9', GradientType=0);
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
 }
 
 .button-bar .bt-save:before {
@@ -2386,7 +2369,7 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 /* draws arrow */
-.button-bar .bt-submit:after {
+/* .button-bar .bt-submit:after {
     content: '';
     display: inline-block;
     position: relative;
@@ -2397,7 +2380,7 @@ nav .tabs .active a[tabindex="11"] span {
     border-bottom: 11px solid #335D93;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
-}
+} */
 
 .button-bar .bt-submit.loading {
     padding: 7px 7px 8px 7px;
@@ -2493,7 +2476,7 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 form label {
-    color: #335D93 !important;
+    color: #4D4F5C !important;
     font-weight: bold;
 }
 
@@ -3019,11 +3002,12 @@ footer, footer * {
 
 /* Styling account pages */
 .accountFormContainer {
-    background-color: #bababa;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .accountFormContainer form a {
@@ -3072,18 +3056,19 @@ footer, footer * {
 
 /* page titles similar to Contribute title but no background image */
 .page-title2 {
-    background-color: #1d4d9b;
-    margin: -12px 0 20px;
-    padding: 14px 16px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
+    background-color: #2699FB;
+    margin: 1rem 0;
+    text-align: left;
+    padding: .75rem;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
     height: 60px;
 }
 
 .page-title2 > h1 {
-    color: #fbcd04;
+    color: #fff;
     font-size: 2rem;
     line-height: 1;
 }
