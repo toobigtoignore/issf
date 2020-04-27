@@ -322,6 +322,7 @@ footer {
     justify-content: center;
     color: white;
     margin: 0px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
 }
 
 .bt-contributions-text {
@@ -1623,13 +1624,15 @@ form sup {
 }
 
 .page-title {
-    margin: -12px 0 10px;
-    padding: 14px 16px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    border-radius: 6px;
-    background: url(../img/icon-lg2.png) no-repeat;
+    background-color: #2699FB;
+    margin: 1rem 0;
+    text-align: left;
+    padding: .75rem;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    height: inherit;
 }
 
 .page-title h1 {
@@ -1934,12 +1937,12 @@ form sup {
     width: 100%;
     align-items: center;
     float: left;
-    background: #1d4d9b;
+    background-color: #2699FB;
 }
 
 #contribute-title h1 {
     margin-left: 15px;
-    color: #fbcd04;
+    color: #fff;
 }
 
 nav .tabs .tab-title {
@@ -1950,12 +1953,20 @@ nav .tabs .tab-title {
 nav .tabs .tab-title > a {
     position: relative;
     padding: .75rem 0 .75rem 16px;
-    background: #bbb;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    border-radius: 6px;
+    margin-bottom: 10px;
+    background: #fff;
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
     z-index: 1;
+}
+
+.tab-title.active a > h3 {
+    color: #fff!important;
 }
 
 nav .tabs .tab-title > a span {
@@ -2008,13 +2019,10 @@ nav .tabs .tab-title .pop:after {
 }
 
 nav .tabs .tab-title h3 {
-    color: #fff;
-    font-size: 0.9375rem;
+    color: #4D4F5C;
+    font-size: 0.9rem;
     font-weight: normal;
     margin-left: 36px;
-    -webkit-text-shadow: 1px 1px 4px #33333385;
-    -moz-text-shadow: 1px 1px 4px #33333385;
-    text-shadow: 1px 1px 4px #33333385;
 }
 
 nav .tabs .tab-title a[tabindex="0"] span {
@@ -2231,18 +2239,21 @@ nav .tabs .active a[tabindex="11"] span {
 .content-section h1 {
     font-size: 2rem;
     line-height: 1;
+    text-align: center;
 }
 
 .content-section h2 {
-    color: #1D4D9B;
+    color: #2699FB;
     font-size: 1.625rem;
     line-height: 1;
 }
 
 .content-section h3 {
-    color: #565656;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
     font-size: 1.25rem;
     line-height: 1;
+    text-align: center;
 }
 
 .content-section h4 {
@@ -2252,9 +2263,12 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .content-section h5 {
-    color: #275D97;
     font-size: 1rem;
     margin: 0.2rem 0;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
+    
 }
 
 .content-section h6 {
@@ -2308,7 +2322,7 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .accordion-navigation.active {
-    background-color: #bababa;
+    /* background-color: #bababa; */
 }
 
 .accordion-navigation.active > a {
@@ -2338,6 +2352,7 @@ nav .tabs .active a[tabindex="11"] span {
     font-weight: bold;
     margin: 0 10px;
     background: #6FE7A9;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
@@ -2915,6 +2930,7 @@ form ul {
 
 .accordion .accordion-navigation, .accordion dd {
     margin-bottom: 5px !important;
+    background-color: transparent;
 }
 
 /* Ji's override for advanced search */
@@ -2963,7 +2979,7 @@ form ul {
 
 /* Active Accordion background color */
 .report .accordion-navigation.active {
-    background-color: #bababa;
+    background-color: transparent;
 }
 
 /*
@@ -3020,7 +3036,7 @@ footer, footer * {
 
 /* Adding styles for AddAnother/HelpRate buttons */
 .blueOrangeButton {
-    background-color: #1D4D9B;
+    /* background-color: #1D4D9B; */
     -webkit-transition-property: background;
     -webkit-transition-duration: .3s;
     transition-property: background;
