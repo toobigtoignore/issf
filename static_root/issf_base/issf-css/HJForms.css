@@ -8,13 +8,15 @@
 .FormSection {
     margin: 10px;
     padding: 10px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 10px rgba(0,0,0,.4);
-    background-color: #d0d0d0;
+    border-radius: 3px;
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    background-color: #fff;
 }
 
 .FormSectionBanner {
-    background-color: #1D4D9B;
+    background-color: #2699FB;
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-gap: 15px;
@@ -22,12 +24,12 @@
 
 .FormSectionBanner-contribute {
     width: 1000px;
-    margin: -10px auto 0 auto;
-    box-shadow: none;
+    margin: .25rem auto 1rem auto;
 }
 
 .FormProgressBar {
-    height: 120%;
+    height: 40px;
+    width: auto;
     margin: -8px auto;
 }
 
@@ -52,7 +54,7 @@
 
 /* the scope buttons */
 .FormGeog > ul > li {
-    background-color: #1D4D9B;
+    background-color: #2699FB;
     border-radius: 25px;
     padding: 5px 25px;
     border: 3px solid #fbcd04;
@@ -71,6 +73,7 @@
     display: flex;
     margin: -20px;
     padding: 20px;
+    font-weight: bold;
     color: #fbcd04;
     align-items: center;
 }
@@ -80,21 +83,20 @@ ul#id_geographic_scope_type input[type="radio"] {
     visibility: hidden;
 }
 
-ul#id_geographic_scope_type input[type="radio"]:after {
+ul#id_geographic_scope_type input[type="radio"]::after {
     width: 15px;
     height: 15px;
     border-radius: 15px;
     padding-right: 5px;
     margin-left: -5px;
     margin-top: 7px;
-    background-color: #1D4D9B;
     content: '';
     display: inline-block;
     visibility: visible;
-    border: 2px solid white;
+    border: 2px solid #4D4F5C;
 }
 
-ul#id_geographic_scope_type input[type="radio"]:checked:after {
+ul#id_geographic_scope_type input[type="radio"]:checked::after {
     width: 15px;
     height: 15px;
     border-radius: 15px;
@@ -105,14 +107,13 @@ ul#id_geographic_scope_type input[type="radio"]:checked:after {
     content: '';
     display: inline-block;
     visibility: visible;
-    border: 2px solid white;
+    border: 2px solid #4D4F5C;
 }
 
 .FormGeogLabel > label {
-    color: #1D4D9B!important;
+    color: #4D4F5C;
     font-weight: bold;
     font-size: 1.5rem;
-    text-decoration: underline;
 }
 
 /* Toggler */
