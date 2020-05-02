@@ -15,6 +15,20 @@
     >
     <link rel="stylesheet" href="{% static 'frontend/css/frontend.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.min.css">
+    <!-- for D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
+
+    <style>
+    .tooltip {
+        position: absolute;
+        font-size: 15px;
+        width:  auto;
+        height: auto;
+        pointer-events: none;
+        background-color: #feffeb;
+    }
+    </style>
 {% endblock additional_css_scripts %}
 {% block body %}
 
@@ -364,9 +378,26 @@
         
             <div class="visual-section">
                 <div class="visual-carousel">
-                    <h3 style="padding: 1rem">Latest Visualizations</h3>
+                    <h3 style="padding: 1rem">Latest Visualization</h3>
+                    <div class="slideshow-container">
+                        <div id="visual1" style="display: block;" class="visual-slides fade">
+                        </div>
+                        <!-- <div class="visual-slides fade">
+                                <img src="https://media.vanityfair.com/photos/5dd70131e78810000883f587/master/w_2560%2Cc_limit/baby-yoda-craze.jpg">
+                        </div>
+                        <div class="visual-slides fade">
+                                <img src="https://media.vanityfair.com/photos/5dd70131e78810000883f587/master/w_2560%2Cc_limit/baby-yoda-craze.jpg">
+                        </div> -->
+                    </div>
+                    <!-- <div style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div> -->
                 </div>
+                
             </div>
+
         </div>
     
         <div class="info-section">
@@ -710,6 +741,211 @@
     <script src="https://d3js.org/d3-format.v1.min.js"></script>
     <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
     <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+
+    <!-- visual 1 -->
+    <script>
+        // set the dimensions and margins of the graph
+        var margin = {top: 30, right: 30, bottom: 30, left: 30}
+        var width = 600;
+        var height = 650;
+            
+        // append the svg object to the body of the page
+        var svg = d3.select("#visual1")
+          .append("svg")
+            .attr("width", width + 200)
+            .attr("height", height + 100)
+            
+        var g_scroll =	svg.call(d3.zoom().scaleExtent([1, 3]).on("zoom", function () {
+               g_scroll.attr("transform", d3.event.transform)
+            }))
+            .append("g")
+            .attr("id","scroll group")
+            
+        var innerRadius = 130,
+            outerRadius = Math.min(width, height) / 2
+        
+        var g = g_scroll.append("g")
+            .attr("id","main group")
+            .attr("transform",
+                  "translate(" + width / 2 + "," + height / 2 + ")")
+                  
+        var x = d3.scaleBand()
+            .range([0, 2 * Math.PI])
+            .align(0);
+        
+        var y = d3.scaleRadial()
+            .range([innerRadius, outerRadius]);
+        
+        var z = d3.scaleOrdinal()
+            .range(["#0000FF", "#FF4500", "#008000", "#964b00", "#696969"]);
+            
+        var tooltip = d3.select("#visual1").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+        
+        var mouseover = function(d) {
+                              var html  = "Country : " + d.data.country + "<br/>"; 
+                              html  = html + "<font color=#0000FF>Top-down/hierarchical governance : " + d.data["Top-down/hierarchical governance"] + "<br/>"; 
+                              html  = html + "</font><font color=#FF4500>Co-management/co-governance : " + d.data["Co-management/co-governance"] + "<br/>"; 
+                              html  = html + "</font><font color=#008000>Community-based management : " + d.data["Community-based management"] + "<br/>"; 
+                              html  = html + "</font><font color=#964b00>Self governance : " + d.data["Self governance"] + "<br/>"; 
+                              html  = html + "</font><font color=#696969>Other : " + d.data["Other"]; 
+                            console.log(d.data['total']); 
+                              tooltip.html(html)
+                                  .style("left", (d3.event.pageX + 15) + "px")
+                                  .style("top", (d3.event.pageY - 28) + "px")
+                                .transition()
+                                  .duration(200) 
+                                  .style("opacity", .9) 
+                            d3.select(this)
+                              .style("stroke", "black")
+                              .style("opacity", 1)
+                          };
+                          
+        var mouseleave = function(d) {
+                              tooltip.transition()
+                                  .duration(300) // ms
+                                  .style("opacity", 0); // don't care about position!
+                            d3.select(this)
+                              .style("stroke", "none")
+                              .style("opacity", 1)
+                          };
+                          
+        var rotate = 0;
+
+        d3.csv("{% static "issf_base/csv/data.csv" %}", function(d, i, columns) {
+          for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+          d.total = t;
+          return d;
+        }, function(error, data) {
+          if (error) throw error;
+         
+          x.domain(data.map(function(d) { return d.country; }));
+          y.domain([0, d3.max(data, function(d) { return d.total; })]);
+          z.domain(data.columns.slice(1));
+        var arc = g.append("g")
+                .attr("id", "arc");
+                
+            arc.append("g")
+                .selectAll("g")
+                .data(d3.stack().keys(data.columns.slice(1))(data))
+                .enter()
+                    .append("g")
+                    .attr("fill", function(d) { return z(d.key); })
+                    .selectAll("path")
+                    .data(function(d) { return d; })
+                    .enter()
+                        .append("path")
+                        .on("mouseover", mouseover)
+                        .on("mouseleave", mouseleave)
+                        .attr("id", function(d) { return d; })
+                        .attr("d", d3.arc()
+                              .innerRadius(function(d) { return y(d[0]); })
+                              .outerRadius(function(d) { return y(d[1]); })
+                              .startAngle(function(d) { return x(d.data.country); })
+                              .endAngle(function(d) { return x(d.data.country) + x.bandwidth(); })
+                              //.cornerRadius(3)
+                              //.value(function(d) {return d.data.country;})
+                              .padAngle(0.01)
+                              .padRadius(innerRadius));
+            
+        var gg = g
+            .selectAll("g")	
+            
+        var label_dr = d3.arc()
+            .outerRadius(500)
+            .innerRadius(0);
+            
+        d3.select("#visual1")
+            .on("click",function(d) { 
+                                rotate = rotate + 8;
+                                
+                                gg.transition()
+                                    .attr("transform",  "rotate(" + rotate + ")")
+                                    .duration(1000);
+                                
+                                 label.transition()
+                                      .attr("text-anchor", "right")																					//"translate(" + (y(d['Value'])+10) + ",0)"; })
+                                      .attr("transform", function(d) { return "rotate(" + (2*rotate+(x(d.country) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (y(d['total'])+10) + ",-10)"; })
+                                        .duration(1000);				
+                                });
+        
+        var label = arc.append("g")
+            .attr("id","label")
+            .selectAll("g")
+            .data(data)
+            .enter().append("g")
+                .attr("id","labels")
+                .attr("text-anchor", "right")																					//"translate(" + (y(d['Value'])+10) + ",0)"; })
+                .attr("transform", function(d) { return "rotate(" + ((x(d.country) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (y(d['total'])+10) + ",-10)"; });
+        
+        var text =  label.append("text")
+              .attr("transform", function(d) { return (x(d.country) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(0)translate(0,15)" : "rotate(-0)translate(0,15)"; })
+              .text(function(d) { return d.country+" "+d.total; })
+              .attr("font-weight","normal")
+              .style("font-size", "13px")
+              .style("font-family", "sans-serif");  
+          
+          var yAxis = g.append("g")
+            .attr("id","yAxis")
+            .attr("text-anchor", "middle");
+        
+          var yTick = yAxis
+            .selectAll("g")
+            .data(y.ticks(5).slice(1))
+            .enter().append("g")
+            .attr("id","yTick");
+        
+          yTick.append("circle")
+              .attr("fill", "none")
+              .attr("stroke", "#000")
+              .attr("stroke-width", 0.4)
+              .attr("r", y);
+        
+          yTick.append("text")
+              .attr("y", function(d) { return -y(d); })
+              .attr("dy", "0.35em")
+              .attr("fill", "none")
+              //.attr("stroke", "#fff")
+              .attr("stroke-width", 5)
+              .text(y.tickFormat(5, "s"));
+        
+          yTick.append("text")
+              .attr("y", function(d) { return -y(d); })
+              .attr("dy", "0.35em")
+              .text(y.tickFormat(5, "s"))
+              .style("opacity", 0.4);;
+        
+          yAxis.append("text")
+              .attr("y", function(d) { return -y(y.ticks(5).pop()); })
+              .attr("dy", "-1em")
+              .text("No. of cases");
+              
+          var legend = g.append("g")
+            .attr("id","legend")
+            .selectAll("g")
+            .data(data.columns.slice(1))
+            .enter().append("g")
+            .attr("id","legends")
+            .attr("transform", function(d, i) { return "translate(-95," + (i - (data.columns.length - 1) / 2) * 20 + ")"; });
+        
+          legend.append("rect")
+              .attr("width", 18)
+              .attr("height", 18)
+              .attr("fill", z);
+        
+          legend.append("text")
+              .attr("x", 24)
+              .attr("y", 9)
+              .attr("dy", "0.35em")
+              .style("font-size", "13px")
+              .style("font-family", "sans-serif")
+              .text(function(d) { return d; }); 
+
+            g.style('transform', 'translate(50%, 50%)');
+        });
+        
+    </script>
 
     <script type="text/javascript">
         var mapDataTokenSeperator = "~~^~~%|%~~^~~";

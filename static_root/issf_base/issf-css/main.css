@@ -40,7 +40,6 @@ hr {
 
 .row.row-fit {
     margin: 0;
-    padding: .25rem 0;
 }
 
 .generic-shadow {
@@ -59,6 +58,7 @@ hr {
 #header {
     position: relative;
     background-color: #fff;
+    min-width: 1280px;
 }
 
 #body-section {
@@ -76,7 +76,7 @@ hr {
     .map-and-visual {
       grid-template-columns: 1fr 1fr;
     }
-  }
+}
 
 .visual-section {
     /* background-color: rgba(59, 134, 255, 0.05); */
@@ -103,6 +103,65 @@ hr {
     border-radius: 3px;
     box-shadow: 2px 2px 4px -1px rgba(0,0,0,.4);
 }
+
+@media only screen and (min-width: 1850px) {
+    .slideshow-container {
+        width: 650px;
+    }
+}
+
+@media only screen and (max-width: 1850px) {
+    .slideshow-container {
+        width: 800px;
+    }
+}
+
+.slideshow-container {
+    height: 600px;
+    margin: 1.25rem auto;
+    display: flex;
+    align-items: center;
+}
+
+.visual-slides {
+    display: none;
+    height: 450px; 
+    width: 100%;
+}
+
+.visual-slides > img {
+    height: inherit;
+}
+
+.visual-slides > svg {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.visual-slides > svg:hover {
+    cursor: grab;
+}
+
+.visual-slides > svg:active {
+    cursor: grabbing;
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #6CB9FC;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+  
+  .dot .active, .dot:hover {
+    background-color: #2699FB;
+  }
 
 #info-section, .content-section {
     /* background-color: rgba(59, 134, 255, 0.05); */
@@ -629,7 +688,7 @@ footer {
 .table-holder {
     width: 924px;
     min-height: 652px;
-    background: #577DA7;
+    background: #6CB9FC;
     border-radius: 3px;
     margin-top: 15px;
 }
@@ -1648,8 +1707,8 @@ form sup {
 .report .accordion-navigation > a {
     position: relative;
     padding: 2px 14px;
-    color: #275D97;
-    background-color: #d9d9d9;
+    color: #4D4F5C;
+    background-color: rgba(59, 134, 255, 0.05);
     background-image: url(../img/bt-reopen.png);
     background-position: 98% 10px;
 }
@@ -1790,10 +1849,9 @@ form sup {
 }
 
 .bt-edit:hover {
-    background-color: #275D97;
-    -webkit-box-shadow: 1px 1px 2px #515151;
-    -moz-box-shadow: 1px 1px 2px #515151;
-    box-shadow: 1px 1px 2px #515151;
+    -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.4);
+    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,.4);
+    box-shadow: 1px 1px 2px rgba(0,0,0,.4);
 }
 
 .infobox .bt-edit {
@@ -1841,7 +1899,6 @@ form sup {
 }
 
 #content-profile .bt-edit:hover {
-    background-color: #275D97;
 }
 
 #content-organize .page-title {
@@ -1865,7 +1922,6 @@ form sup {
 }
 
 #content-case .bt-edit:hover {
-    background-color: #275D97;
 }
 
 #content-capacity .page-title {
@@ -2023,6 +2079,7 @@ nav .tabs .tab-title h3 {
     font-size: 0.9rem;
     font-weight: normal;
     margin-left: 36px;
+    text-shadow: none;
 }
 
 nav .tabs .tab-title a[tabindex="0"] span {
@@ -2302,11 +2359,15 @@ nav .tabs .active a[tabindex="11"] span {
     position: relative;
     margin: 0 0 5px;
     padding: 5px;
+    background-color: #fff!important;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
     border-radius: 6px;
-    background-color: #e9e9e9;
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    -ms-box-shadow: 3px 3px 5px rgba(0,0,0,.4);
+    box-shadow: 3px 3px 5px rgba(0,0,0,.4);
 }
 
 .accordion-navigation > a {
@@ -2399,15 +2460,15 @@ nav .tabs .active a[tabindex="11"] span {
 
 .button-bar .bt-submit.loading {
     padding: 7px 7px 8px 7px;
-    color: #000000;
+    background-color: #6FE7A9;
 }
 
 .button-bar .bt-submit.loading:after {
     border: none !important;
     margin: 4px 0 4px 0px;
 }
-
 .button-bar .pagenav {
+
     width: 90px;
     margin: 0;
     color: #d9d9d9;
@@ -2484,7 +2545,6 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .button.add-formset:hover {
-    background-color: #335D93;
     -webkit-text-shadow: 0 1px 1px #45454585;
     -moz-text-shadow: 0 1px 1px #45454585;
     text-shadow: 0 1px 1px #45454585;
@@ -2745,7 +2805,7 @@ form ul {
 }
 
 #advance-search .search-wrapper {
-    padding: 10px 15px 0;
+    padding: 0px 15px 0;
 }
 
 #advance-search .main-wrapper {
@@ -3044,7 +3104,7 @@ footer, footer * {
 }
 
 .blueOrangeButton:hover {
-    background-color: #f6893c;
+    /* background-color: #f6893c; */
 }
 
 .orangeRedButton {
