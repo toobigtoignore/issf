@@ -43,6 +43,10 @@ After that, launch the existing containers with:
 
 Once the other containers are running, you will still need to install the `npm` packages on the ISSF container. Open a shell with ``./scripts/issf_shell.sh`` and run the npm installation commands.
 
+Lastly, apply the necessary patches for the database
+
+``./scripts/postgres_patches.sh``
+
 Roadmap
 -------
 
