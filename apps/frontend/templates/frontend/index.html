@@ -1326,10 +1326,12 @@
         function map_init_basic(map, options) {
             GlobalMapHandle = map;
 
+            console.log(map.options);
+
             // Showing Loading Overlay on map init.
             $("#map-loading-overlay").fadeIn(100);
 
-            map.setMaxBounds(null);
+
 
             // Remove default layers
             map.eachLayer(function (Layer) {

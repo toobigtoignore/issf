@@ -137,7 +137,7 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 1,
     'MAX_ZOOM': 13,
     'RESET_VIEW': False,
-    'SCALE': None,
+    'SCALE': None
 }
 EMAIL_USE_TLS = config('EMAIL_TLS')
 EMAIL_HOST = config('EMAIL_HOST')
