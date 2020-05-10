@@ -84,7 +84,7 @@
                                     <div class="pop">
                                         <p>Information about small-scale fisheries people.</p>
                                         <p>
-                                            <strong>{{ num_who_records }} records.</strong>
+                                            <strong>No records.</strong>
                                         </p>
                                     </div>
                                 </a>
@@ -96,7 +96,7 @@
                                     <div class="pop">
                                         <p>Existing published information about small-scale fisheries</p>
                                         <p>
-                                            <strong>{{ num_sota_records }} records.</strong>
+                                            <strong>No records.</strong>
                                         </p>
                                     </div>
                                 </a>
@@ -108,7 +108,7 @@
                                     <div class="pop">
                                         <p>Information about a specific small-scale fishery</p>
                                         <p>
-                                            <strong>{{ num_profile_records }} records.</strong>
+                                            <strong>No records.</strong>
                                         </p>
                                     </div>
                                 </a>
@@ -120,7 +120,7 @@
                                     <div class="pop">
                                         <p>Organizations directly involved in small-scale fisheries</p>
                                         <p>
-                                            <strong>{{ num_org_records }} records.</strong>
+                                            <strong>No records.</strong>
                                         </p>
                                     </div>
                                 </a>
@@ -132,7 +132,7 @@
                                     <div class="pop">
                                         <p>Examples of issues/challenges affecting small-scale fisheries</p>
                                         <p>
-                                            <strong>{{ num_case_records }} records.</strong>
+                                            <strong>No records.</strong>
                                         </p>
                                     </div>
                                 </a>
@@ -146,7 +146,7 @@
                                             What capacity needs to be developed for small-scale fisheries
                                         </p>
                                         <p>
-                                            <strong>{{ num_cap_records }} records.</strong>
+                                            <strong>No records.</strong>
                                         </p>
                                     </div>
                                 </a>
@@ -157,7 +157,7 @@
             
                                     <div class="pop">
                                         <p>Alerting the world to injustice and other threats to SSF</p>
-                                        <p><strong>{{ num_bluejustice_records }} records.</strong></p>
+                                        <p><strong>No records.</strong></p>
                                     </div>
                                 </a>
             
@@ -167,7 +167,7 @@
             
                                     <div class="pop">
                                         <p>Tracking of the SSF Guidelines implementation worldwide</p>
-                                        <p><strong>{{ num_guide_records }} records.</strong></p>
+                                        <p><strong>0 records.</strong></p>
                                     </div>
                                 </a>
             
@@ -952,7 +952,7 @@
 
         /* Page State */
 
-        var GlobalNewLoad = false;
+        var GlobalNewLoad = true;
         var GlobalMapChangeFlag = false;
 
         if ($("#newload").val().length > 0) {
@@ -1326,7 +1326,6 @@
         function map_init_basic(map, options) {
             GlobalMapHandle = map;
 
-            console.log(map.options);
 
             // Showing Loading Overlay on map init.
             $("#map-loading-overlay").fadeIn(100);
@@ -2014,6 +2013,53 @@
                     "Not specific": 0
                 };
 
+                // Loops through map data and uses the dupe object to identify and remove any duplicate record entries
+                var dupe = {};
+                //var tableDataSource = mapDataSource;
+                for (var i = 0; i < mapDataSource.length; i++) {
+                    // The summary of the record that appears in the table, used to determine duplicates
+                    var tableItem = mapDataSource[i];
+                    var summary = tableItem[2];
+                    if (dupe[summary]) {
+                        mapDataSource.splice(i, 1);
+                        i--;
+                    } else {
+                        dupe[summary] = true;
+                    }
+                }
+
+
+                //Update the record count in the buttons
+                var records_counts = {};
+                console.log(mapDataSource);
+
+                for (var i = 0; i < mapDataSource.length; i++) {
+                    var row = mapDataSource[i]
+                    var recordType = row[0];
+
+                    if(records_counts[recordType] == undefined){
+                        records_counts[recordType] = 1;
+                    }else{
+                        records_counts[recordType] = records_counts[recordType] + 1;
+                    }
+                }
+
+                for (var property in records_counts) {
+                    if (records_counts.hasOwnProperty(property)) {
+                        var prop_to_replace;
+
+                        if(property == "Case Study"){
+                            prop_to_replace = "Case Studies";
+                        }else{
+                            prop_to_replace = property;
+                        }
+
+                        $("h3:contains("+prop_to_replace+")").siblings().find('strong').text(records_counts[property]+" records.");
+                    }
+                }
+
+                console.log(records_counts);
+
                 for (newRow in mapDataSource) {
                     var row = mapDataSource[newRow];
                     var rowAsJsonString = JSON.stringify(row);
@@ -2031,19 +2077,26 @@
                     hiddenmapdata = hiddenmapdata + rowAsJsonString + mapDataTokenSeperator;
 
                     for (var i = 0; i < activeFilters.length; i++) {
+
                         if (row[0] == activeFilters[i]) {
                             var currentIcon = icons[row[0]];
 
-                            var mrk = L.marker([row[5], row[4]], {icon: currentIcon});
-                            mrk.bindPopup(
-                                '<b>Record type:</b> ' + row[0] +
-                                '<br><b>Geographic scope:</b> ' + row[1] +
-                                '<br><br>' + row[2] +
-                                '<br><br>' + row[3]
-                            );
-                            markers.addLayer(mrk);
-                            var urlString = row[3].split('/');
-                            currentRecords.push(row[0] + '&' + urlString[3]);
+                            //FIXME: As some records in the database do not have a map point specified we need to ignore records with (None, None) coords.
+                            if(row[5] != "None" && row[4] != "None") {
+
+                                var mrk = L.marker([row[5], row[4]], {icon: currentIcon});
+                                mrk.bindPopup(
+                                    '<b>Record type:</b> ' + row[0] +
+                                    '<br><b>Geographic scope:</b> ' + row[1] +
+                                    '<br><br>' + row[2] +
+                                    '<br><br>' + row[3]
+                                );
+                                markers.addLayer(mrk);
+                                var urlString = row[3].split('/');
+                                currentRecords.push(row[0] + '&' + urlString[3]);
+
+                            }
+
                         }
                     }
                 }
@@ -2091,33 +2144,20 @@
                 }
                 GlobalTableHandle = table;
 
-                // Loops through map data and uses the dupe object to identify and remove any duplicate record entries
-                var dupe = {};
-                var tableDataSource = mapDataSource;
-                for (var i = 0; i < tableDataSource.length; i++) {
-                    // The summary of the record that appears in the table, used to determine duplicates
-                    var tableItem = tableDataSource[i];
-                    var summary = tableItem[2];
-                    if (dupe[summary]) {
-                        tableDataSource.splice(i, 1);
-                        i--;
-                    } else {
-                        dupe[summary] = true;
-                    }
-                }
 
-                for (newRow in tableDataSource) {
-                    if (typeof JSON.stringify(tableDataSource[newRow]) === "undefined") {
+                for (newRow in mapDataSource) {
+                    
+                    if (typeof JSON.stringify(mapDataSource[newRow]) === "undefined") {
                         break;
                     }
 
                     for (var i = 0; i < activeFilters.length; i++) {
-                        if (tableDataSource[newRow][0] == activeFilters[i]) {
-                            var url = tableDataSource[newRow][3];
+                        if (mapDataSource[newRow][0] == activeFilters[i]) {
+                            var url = mapDataSource[newRow][3];
                             url = url.split('"');
-                            var summary = '<a href="' + url[1] + '">' + tableDataSource[newRow][2] + '</a>';
+                            var summary = '<a href="' + url[1] + '">' + mapDataSource[newRow][2] + '</a>';
                             // Retrieve table data from map data to reduce amount of data transferred
-                            table.row.add([tableDataSource[newRow][0], summary, tableDataSource[newRow][6], tableDataSource[newRow][7]]);
+                            table.row.add([mapDataSource[newRow][0], summary, mapDataSource[newRow][6], mapDataSource[newRow][7]]);
                         }
                     }
                 }
@@ -2139,7 +2179,7 @@
                     var totalNotShown = notShown["Global"] + notShown["Not specific"];
                     var notShownText = totalNotShown > 0 ? ', ' + String(totalNotShown) + ' not plotted on map' : '';
 
-                    var searchTerms = "<strong>Current Search Terms:</strong> " + searchterms + tableDataSource.length + " records" + notShownText + ")";
+                    var searchTerms = "<strong>Current Search Terms:</strong> " + searchterms + mapDataSource.length + " records" + notShownText + ")";
                     $('#searchTerms').html(searchTerms);
                 }
 

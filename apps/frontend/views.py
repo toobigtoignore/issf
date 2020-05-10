@@ -81,16 +81,7 @@ def index(request: HttpRequest) -> HttpResponse:
             'selected_attributes_formset': SelectedAttributesFormSet,
             'attribute_values': attribute_values,
             'theme_issue_values': theme_issue_values,
-            'who_feature': who_feature,
-            'num_who_records': SSFPerson.objects.all().count(),
-            'num_sota_records': SSFKnowledge.objects.all().count(),
-            'num_profile_records': SSFProfile.objects.all().count(),
-            'num_org_records': SSFOrganization.objects.all().count(),
-            'num_cap_records': SSFCapacityNeed.objects.all().count(),
-            'num_guide_records': SSFGuidelines.objects.all().count(),
-            'num_case_records': SSFCaseStudies.objects.all().count(),
-            'num_expe_records': SSFExperiences.objects.all().count(),
-            'num_bluejustice_records': SSFBlueJustice.objects.all().count(),
+            'who_feature': who_feature
         }
     )
 
