@@ -156,10 +156,6 @@
 
                                         {% csrf_token %}
                                         <div class="FormSet" id="bluejustice-basic-form">
-                                            {{ bluejustice_form.name.label_tag }}{{ bluejustice_form.name }}
-                                            {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
-                                            {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
-                                            
 
                                             <h5>Name and Type of SSF:</h5>
                                             <label class="section-label" for="ssf-name">A. SSF Name:</label>
@@ -776,8 +772,11 @@
                                             <h5>Other Information:</h5>
 
 
+                                            {{ bluejustice_form.name.label_tag }}{{ bluejustice_form.name }}
                                             {{ bluejustice_form.email.label_tag }}{{ bluejustice_form.email }}
                                             {{ bluejustice_form.affiliation.label_tag }}{{ bluejustice_form.affiliation }}
+                                            {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
+                                            {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
                                             {{ bluejustice_form.img_url.label_tag }}{{ bluejustice_form.img_url }}
                                             {{ bluejustice_form.photo_location.label_tag }}{{ bluejustice_form.photo_location }}
                                             {{ bluejustice_form.date_of_photo.label_tag }}{{ bluejustice_form.date_of_photo }}

@@ -379,21 +379,21 @@
             <div class="visual-section">
                 <div class="visual-carousel">
                     <h3 style="padding: 1rem">Latest Visualization</h3>
-                    <div class="slideshow-container">
-                        <div id="visual1" style="display: block;" class="visual-slides fade">
+                    <div class="cycle-slideshow slideshow-container" 
+                         data-cycle-fx=scrollHorz
+                         data-cycle-timeout=0
+                         data-cycle-slides="> div"
+                         data-cycle-prev="#prev-slide"
+                         data-cycle-next="#next-slide">
+                        <div id="visual1" class="visual-slides"></div>
+                        <div class="visual-slides" style="height: 95%; text-align: center;">
+                            <img src="http://malsup.github.io/images/p2.jpg">
                         </div>
-                        <!-- <div class="visual-slides fade">
-                                <img src="https://media.vanityfair.com/photos/5dd70131e78810000883f587/master/w_2560%2Cc_limit/baby-yoda-craze.jpg">
-                        </div>
-                        <div class="visual-slides fade">
-                                <img src="https://media.vanityfair.com/photos/5dd70131e78810000883f587/master/w_2560%2Cc_limit/baby-yoda-craze.jpg">
-                        </div> -->
                     </div>
-                    <!-- <div style="text-align:center">
-                        <span class="dot" onclick="currentSlide(1)"></span>
-                        <span class="dot" onclick="currentSlide(2)"></span>
-                        <span class="dot" onclick="currentSlide(3)"></span>
-                    </div> -->
+                    <div class="visual-carousel-control">
+                        <button id="prev-slide">&#8617;</button>
+                        <button id="next-slide">&#8618;</button>
+                    </div>
                 </div>
                 
             </div>
@@ -750,7 +750,7 @@
             .attr("height", height + 100)
             
         var g_scroll =	svg.call(d3.zoom().scaleExtent([1, 3]).on("zoom", function () {
-               g_scroll.attr("transform", d3.event.transform)
+               // g_scroll.attr("transform", d3.event.transform)
             }))
             .append("g")
             .attr("id","scroll group")
@@ -2285,4 +2285,5 @@
     </script>
     <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=r6zHiLKHtnlqqDuyu2YBfU2JxAnowqE5"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <script src="https://malsup.github.io/min/jquery.cycle2.min.js"></script>
 {% endblock additional_js_scripts %}
