@@ -90,7 +90,7 @@ def index(request: HttpRequest) -> HttpResponse:
             'num_guide_records': SSFGuidelines.objects.all().count(),
             'num_case_records': SSFCaseStudies.objects.all().count(),
             'num_expe_records': SSFExperiences.objects.all().count(),
-            'num_bluejustice_records': SSFBlueJustice.objects.all().count(),
+            'num_bluejustice_records': SSFBlueJustice.objects.all().count()
         }
     )
 
