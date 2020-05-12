@@ -11,7 +11,7 @@ django-eztables==0.3.2
 django-generic-aggregation==0.4.0
 django-geojson==2.12.0
 django-google-analytics==2
-django-leaflet==0.24.0
+django-leaflet==0.26.0
 django-queryset-csv==1.0.1
 django-tables2==2.0.3
 django-timedeltafield==0.7.10
