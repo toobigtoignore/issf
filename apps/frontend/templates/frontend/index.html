@@ -784,7 +784,7 @@
                               html  = html + "</font><font color=#008000>Community-based management : " + d.data["Community-based management"] + "<br/>"; 
                               html  = html + "</font><font color=#964b00>Self governance : " + d.data["Self governance"] + "<br/>"; 
                               html  = html + "</font><font color=#696969>Other : " + d.data["Other"]; 
-                            console.log(d.data['total']); 
+
                               tooltip.html(html)
                                   .style("left", (d3.event.pageX + 15) + "px")
                                   .style("top", (d3.event.pageY - 28) + "px")
@@ -2025,7 +2025,7 @@
 
                 //Update the record count in the buttons
                 var records_counts = {};
-                console.log(mapDataSource);
+
 
                 for (var i = 0; i < mapDataSource.length; i++) {
                     var row = mapDataSource[i]
@@ -2052,7 +2052,7 @@
                     }
                 }
 
-                console.log(records_counts);
+
 
                 for (newRow in mapDataSource) {
                     var row = mapDataSource[newRow];
