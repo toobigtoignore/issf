@@ -85,7 +85,7 @@ hr {
 /* greater than 1850px */
 @media only screen and (min-width: 1850px) {
     .visual-carousel {
-        width: 850px;
+        width: 775px;
         margin: 1rem auto 0 45px;
     }
   }
@@ -98,10 +98,46 @@ hr {
   }
 
 .visual-carousel {
-    height: 755px;
+    height: 728px;
     background-color: #fff;
     border-radius: 3px;
     box-shadow: 2px 2px 4px -1px rgba(0,0,0,.4);
+    position: relative;
+}
+
+
+.visual-carousel-control {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    z-index: 999;
+    position: absolute;
+    top: 45%;
+}
+
+
+.visual-carousel-control button{
+    width: 45px;
+    border-radius: 3px;
+}
+
+
+.visual-carousel-control button {
+    position: absolute;
+    font-size: 25px;
+}
+
+
+.visual-carousel-control #prev-slide{
+    left: -11px;
+    box-shadow: -1px 1px 3px 1px rgba(0,0,0,.3);
+}
+
+
+.visual-carousel-control #next-slide{
+    right: -11px;
+    box-shadow: 1px 1px 3px 1px rgba(0,0,0,.3);
+
 }
 
 @media only screen and (min-width: 1850px) {
@@ -117,16 +153,18 @@ hr {
 }
 
 .slideshow-container {
-    height: 600px;
-    margin: 1.25rem auto;
+    width: 95%;
+    height: 650px;
+    margin: 0 2.5%;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .visual-slides {
-    display: none;
-    height: 450px; 
+    /*display: none; */
     width: 100%;
+    height: 100%;
 }
 
 .visual-slides > img {
@@ -140,12 +178,8 @@ hr {
     transform: translate(-50%, -50%);
 }
 
-.visual-slides > svg:hover {
-    cursor: grab;
-}
-
-.visual-slides > svg:active {
-    cursor: grabbing;
+.visual-slides > svg:hover,.visual-slides > svg:active {
+    cursor: pointer;
 }
 
 .dot {
@@ -650,13 +684,15 @@ footer {
 }
 
 .dataTables_info {
-    width: 26%;
-    margin: 0 2%;
+    width: 33%;
+    margin: 0 1.5%;
+    margin-right: 0;
 }
 
 .dataTables_paginate {
-    width: 66%;
-    margin: 0 2%;
+    width: 64%;
+    margin: 0 1.5%;
+    margin-left: 0;
 }
 
 .dataTables_length {
@@ -2322,9 +2358,9 @@ nav .tabs .active a[tabindex="11"] span {
 .content-section h5 {
     font-size: 1rem;
     margin: 0.2rem 0;
-    text-align: center;
+    /*text-align: center;
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);*/
     
 }
 
