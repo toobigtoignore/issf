@@ -20,7 +20,7 @@
     <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
 
     <style>
-    .tooltipPopsup {
+    .tooltip {
         position: absolute;
         font-size: 15px;
         width:  auto;
@@ -773,8 +773,8 @@
         var z = d3.scaleOrdinal()
             .range(["#0000FF", "#FF4500", "#008000", "#964b00", "#696969"]);
             
-        var tooltipPopsup = d3.select("#visual1").append("div")
-            .attr("class", "tooltipPopsup")
+        var tooltip = d3.select("#visual1").append("div")
+            .attr("class", "tooltip")
             .style("opacity", 0);
         
         var mouseover = function(d) {
@@ -785,7 +785,7 @@
                               html  = html + "</font><font color=#964b00>Self governance : " + d.data["Self governance"] + "<br/>"; 
                               html  = html + "</font><font color=#696969>Other : " + d.data["Other"]; 
                             console.log(d.data['total']); 
-                              tooltipPopsup.html(html)
+                              tooltip.html(html)
                                   .style("left", (d3.event.pageX + 15) + "px")
                                   .style("top", (d3.event.pageY - 28) + "px")
                                 .transition()
@@ -797,7 +797,7 @@
                           };
                           
         var mouseleave = function(d) {
-                              tooltipPopsup.transition()
+                              tooltip.transition()
                                   .duration(300) // ms
                                   .style("opacity", 0); // don't care about position!
                             d3.select(this)
