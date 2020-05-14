@@ -167,6 +167,3 @@ AS $BODY$
 
 ALTER FUNCTION public.bluejustice_summary_update(integer)
     OWNER TO postgres;
-
-ALTER TABLE public.ssf_bluejustice
-    ADD social_justice_source TEXT NULL;
