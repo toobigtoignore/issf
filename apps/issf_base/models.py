@@ -770,7 +770,6 @@ class SSFBlueJustice(models.Model):
     covid_19_related = models.CharField(max_length=256, blank=True)
     types_of_justice_others = models.CharField(max_length=256, blank=True)
     dealing_with_justice = models.TextField(blank=True)
-    social_justice_source = models.TextField(blank=True)
 
     class Meta:
         managed = False
