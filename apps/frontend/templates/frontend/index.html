@@ -403,8 +403,6 @@
         <div class="info-section">
             <input id="newload" type="text" style="display:none"/>
             <input id="filterbuttondata" type="text" style="display:none"/>
-            <textarea id="hiddenmapdata" initial="true" style="display:none"></textarea>
-            <textarea id="hiddentabledata" style="display:none"></textarea>
         
             <section id="contribute-panel">
                 <div style="width: 100%; display: flex; justify-content: center;">
@@ -942,11 +940,10 @@
     </script>
 
     <script type="text/javascript">
-        var mapDataTokenSeperator = "~~^~~%|%~~^~~";
 
         /* Page State */
 
-        var GlobalNewLoad = true;
+        var GlobalNewLoad = false;
         var GlobalMapChangeFlag = false;
 
         if ($("#newload").val().length > 0) {
@@ -1801,37 +1798,17 @@
                     url: "{% url 'frontend-data' %}",
                     dataType: "json",
                     data: null,
-                    success: loadData
+                    success: (data) => {
+                        loadData(data)
+                    }
                 });
             } else {
                 var tempJsonData = {};
                 tempJsonData.success = 'true';
                 tempJsonData.mapData = [];
-                tempJsonData.data = [];
 
                 // Restore map data
-                var md = localStorage.getItem("mapDataCache");
-                var mdtokens = md.split(mapDataTokenSeperator);
-                for (var i = 0; i < mdtokens.length; i++) {
-                    try {
-                        tempJsonData.mapData.push(JSON.parse(mdtokens[i]));
-                    } catch (err) {
-                        console.log("Error: " + err.message + " @ restore map data loop -> i=" + i);
-                        console.log(err);
-                    }
-                }
-
-                // Restore table data
-                var td = localStorage.getItem("tableDataCache");
-                var tdtokens = td.split(mapDataTokenSeperator);
-                for (var j = 0; j < tdtokens.length; j++) {
-                    try {
-                        tempJsonData.data.push(JSON.parse(tdtokens[j]));
-                    } catch (err) {
-                        console.log("Error: " + err.message + " @ restore table data loop -> j=" + j);
-                        console.log(err);
-                    }
-                }
+                tempJsonData.mapData = JSON.parse(window.sessionStorage.getItem('cache_map_data'));
 
                 // Restore search data
                 tempJsonData.searchTerms = localStorage.getItem('searchTerms');
@@ -1960,8 +1937,6 @@
 
                 var mapDataSource = jsonData.mapData;
 
-                var hiddenmapdata = "";
-
                 var defaultIconProps = {
                     iconSize: [24, 24],
                     iconAnchor: [12, 12],
@@ -2070,6 +2045,8 @@
                     }
                 }
 
+                var current_map_state = []
+
                 for (newRow in mapDataSource) {
                     var row = mapDataSource[newRow];
                     var rowAsJsonString = JSON.stringify(row);
@@ -2081,10 +2058,9 @@
 
                     if (row[1] === "Global" || row[1] === "Not specific") {
                         notShown[row[1]] += 1;
-                        continue;
                     }
 
-                    hiddenmapdata = hiddenmapdata + rowAsJsonString + mapDataTokenSeperator;
+                    current_map_state.push(row)
 
                     for (var i = 0; i < activeFilters.length; i++) {
 
@@ -2111,6 +2087,9 @@
                     }
                 }
 
+                //Set map data in cache
+                window.sessionStorage.setItem('cache_map_data', JSON.stringify(current_map_state));
+
                 var notShownGlobalLatLng = L.latLng(-22.5, -10)
                 var notShownGlobalMarker = L.marker(notShownGlobalLatLng, {icon: icons["Unknown"]});
                 notShownGlobalMarker.bindPopup(
@@ -2129,13 +2108,6 @@
                     markers.addLayer(notShownNotSpecMarker);
                 }
 
-                // Remove the trailing mapDataTokenSeperator from hiddenmapdata
-                if (hiddenmapdata.length > 0) {
-                    hiddenmapdata = hiddenmapdata.substring(0, hiddenmapdata.length - mapDataTokenSeperator.length);
-                }
-
-                localStorage.setItem("mapDataCache", hiddenmapdata);
-                var mapdatalength = localStorage.getItem("mapDataCache").split(mapDataTokenSeperator).length;
 
                 map.addLayer(markers);
 
@@ -2171,13 +2143,6 @@
                         }
                     }
                 }
-
-                // Remove trailing mapDataTokenSeperator from hiddentabledata
-                if (hiddentabledata.length > 0) {
-                    hiddentabledata = hiddentabledata.substring(0, hiddentabledata.length - mapDataTokenSeperator.length);
-                }
-                localStorage.setItem("tableDataCache", hiddentabledata);
-                var tabledatalength = localStorage.getItem("tableDataCache").split(mapDataTokenSeperator).length;
 
                 table.draw();
 
