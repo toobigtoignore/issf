@@ -41,15 +41,7 @@ After that, launch the existing containers with:
 
 ``docker-compose up -d``
 
-Once the other containers are running, you will still need to install the `npm` packages on the ISSF container. Open a shell with ``./scripts/issf_shell.sh`` and run the npm installation commands.
-
-Import a database dump
-
-``./scripts/postgres_setup.sh``
-
-Lastly, apply the necessary patches for the database
-
-``./scripts/postgres_patches.sh``
+Once the other containers are running, you will still need to install the `npm` packages on the ISSF container. Open a shell with ``./scripts/issf_shell.sh`` and run the npm installation commands ``npm install``.
 
 Roadmap
 -------
