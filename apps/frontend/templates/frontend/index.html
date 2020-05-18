@@ -1321,7 +1321,8 @@
             // Showing Loading Overlay on map init.
             $("#map-loading-overlay").fadeIn(100);
 
-
+            //Set bounds for the map
+            map.setMaxBounds([[-70,-180],[90,180]]);
 
             // Remove default layers
             map.eachLayer(function (Layer) {
