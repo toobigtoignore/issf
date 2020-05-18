@@ -784,7 +784,7 @@
                               html  = html + "</font><font color=#008000>Community-based management : " + d.data["Community-based management"] + "<br/>"; 
                               html  = html + "</font><font color=#964b00>Self governance : " + d.data["Self governance"] + "<br/>"; 
                               html  = html + "</font><font color=#696969>Other : " + d.data["Other"]; 
-                            console.log(d.data['total']); 
+
                               tooltip.html(html)
                                   .style("left", (d3.event.pageX + 15) + "px")
                                   .style("top", (d3.event.pageY - 28) + "px")
@@ -2007,25 +2007,43 @@
                     "Not specific": 0
                 };
 
-                // Loops through map data and uses the dupe object to identify and remove any duplicate record entries
-                var dupe = {};
-                //var tableDataSource = mapDataSource;
+                //Removes duplicates and merges entries in case they are dupe but one of them does not have coordinate points to be shown in the map.
+                var dupe_hashmap = {};
                 for (var i = 0; i < mapDataSource.length; i++) {
                     // The summary of the record that appears in the table, used to determine duplicates
                     var tableItem = mapDataSource[i];
                     var summary = tableItem[2];
-                    if (dupe[summary]) {
-                        mapDataSource.splice(i, 1);
-                        i--;
+
+                    if (summary in dupe_hashmap) {
+                        //Fill missing coordinates (if any) in the selected entry
+                        if((tableItem[3] != undefined && tableItem[4] != undefined) && 
+                        (dupe_hashmap[summary][3] == undefined && dupe_hashmap[summary][3] == undefined)){
+                            //Assign values to the current entry
+                            dupe_hashmap[summary][3] = tableItem[3];
+                            dupe_hashmap[summary][4] = tableItem[4];
+                        }
                     } else {
-                        dupe[summary] = true;
+                        dupe_hashmap[summary] = tableItem
                     }
                 }
 
 
+                mapDataSourceClean = [];
+
+                for (var key in dupe_hashmap) {
+
+                    if (dupe_hashmap.hasOwnProperty(key)) {           
+                        mapDataSourceClean.push(dupe_hashmap[key]);
+                    }
+                }
+
+                //Assing the new clean array
+                mapDataSource = mapDataSourceClean;
+
+
+
                 //Update the record count in the buttons
                 var records_counts = {};
-                console.log(mapDataSource);
 
                 for (var i = 0; i < mapDataSource.length; i++) {
                     var row = mapDataSource[i]
@@ -2051,8 +2069,6 @@
                         $("h3:contains("+prop_to_replace+")").siblings().find('strong').text(records_counts[property]+" records.");
                     }
                 }
-
-                console.log(records_counts);
 
                 for (newRow in mapDataSource) {
                     var row = mapDataSource[newRow];
