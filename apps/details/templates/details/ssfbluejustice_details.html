@@ -1205,7 +1205,7 @@
                                         <h5>Justice in context:</h5>
                                         <textarea rows="5" id="justice-in-context" name="justice_in_context">{{ bluejustice_instance.justice_in_context }}</textarea>
 
-                                        <h5>Types of justice: (select ALL that apply)</h5>
+                                        <h5 style="margin-bottom: 15px;">Types of justice: (select ALL that apply)</h5>
                                         <ul>
                                             <li>
                                                 <label  class="bluejustice-label">
@@ -1301,9 +1301,9 @@
                                             <li>
                                                 <label class="bluejustice-label">
                                                     {% if bluejustice_instance.types_of_justice_others %}
-                                                        <input type="checkbox" class="bluejustice-checkbox other-checkbox" checked> <span>Other (Please Specify):</span>
+                                                        <input type="checkbox" class="bluejustice-checkbox other-checkbox" checked> <span style="width: 200px;">Other (Please Specify):</span>
                                                     {% else %}
-                                                        <input type="checkbox" class="bluejustice-checkbox other-checkbox" > <span>Other (Please Specify):</span>
+                                                        <input type="checkbox" class="bluejustice-checkbox other-checkbox" > <span style="width: 200px;">Other (Please Specify):</span>
                                                     {% endif %}
 
 

@@ -392,14 +392,16 @@ class SSFBlueJusticeForm(ModelForm):
             'name': 'Name of Contributor',
             'email': 'E-mail Address',
             'affiliation': 'Affiliation',
-            'country': 'Country',
+            'country': 'Contributor Country',
             'role': 'Role and involvement in SSF',
             'img_url': 'Image URL (direct links only)',
             'photo_location': 'Where this photo was taken',
             'date_of_photo': 'When this photo was taken (Date)',
             'photographer': 'Name of the photographer',
             'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
-                           'who can edit the record)'
+                           'who can edit the record)',
+            'ssf_name': 'Small-scale fisheries (SSF) name',
+            'ssf_country': 'SSF Country'
         }
 
     def clean(self) -> Dict[str, Any]:
