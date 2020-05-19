@@ -2362,7 +2362,6 @@ nav .tabs .active a[tabindex="11"] span {
     /*text-align: center;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0,0,0,.4);*/
-    
 }
 
 .content-section h6 {
@@ -3201,4 +3200,39 @@ table p {
 .m0p0 {
     margin: 0!important;
     padding: 0!important;
+}
+
+
+
+
+/* BLUE JUSTICE LAYER SPECIFIC CSS */
+.content-bluejustice h5 {
+    font-size: 1rem;
+    margin: 1.5rem 0 0.3rem 0;
+}
+
+.bluejustice-section-label {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.bluejustice-label input[type="checkbox"] {
+    width: 19px;
+    height: 20px;
+    float: left;
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+
+.bluejustice-label {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.bluejustice-label span {
+    float: right;
+    width: calc(100% - 30px);
+    margin-top: -3px;
 }

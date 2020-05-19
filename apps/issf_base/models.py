@@ -686,7 +686,7 @@ class SSFBlueJustice(models.Model):
     date_of_photo = models.CharField(max_length=256, blank=True)
     photographer = models.CharField(max_length=256, blank=True)
 
-    ssf_name = models.CharField(max_length=500, blank=True)
+    ssf_name = models.CharField(max_length=500, blank=False)
     ssf_type_aquaculture = models.CharField(max_length=256, blank=True)
     ssf_type_recreational = models.CharField(max_length=256, blank=True)
     ssf_type_commercial = models.CharField(max_length=256, blank=True)
@@ -695,7 +695,7 @@ class SSFBlueJustice(models.Model):
     ssf_type_other = models.CharField(max_length=256, blank=True)
 
     ssf_location = models.CharField(max_length=256, blank=True)
-    ssf_country = models.CharField(max_length=256, blank=True)
+    ssf_country = models.CharField(max_length=256, blank=False)
     ssf_main_species = models.CharField(max_length=600, blank=True)
 
     ecosystem_type_marine = models.CharField(max_length=256, blank=True)
