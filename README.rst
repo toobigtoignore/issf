@@ -23,6 +23,9 @@ Clone the git repository with:
 
 ``git clone https://github.com/toobigtoignore/issf``
 
+cd to the issf directory:
+``cd issf``
+
 Symlink (Or copy) the development compose file
 
 ``ln -s docker-compose-dev.yml docker-compose.yml``
@@ -35,17 +38,19 @@ Then spin up the database container. From within the `issf` directory run:
 
 ``docker-compose up -d db``
 
-After that, launch the existing containers with:
-
-``docker-compose up -d``
-
 Next, acquire the test database so we can import it. There is an automated script to handle the process of importing and populating the database with the data dump called 
 
-``./scripts/postgres_setup.sh``; 
+``./scripts/postgres_setup.sh``
 
 then run 
 
 ``./scripts/postgres_patches.sh``
+
+After that, launch the existing containers with:
+
+``docker-compose up -d``
+
+Go to the browser and type ``issfcloud.localhost``, you should be able to see the site on your local machine.
 
 Once the other containers are running, you will still need to install the `npm` packages on the ISSF container. Open a shell with ``./scripts/issf_shell.sh`` and run the npm installation commands ``npm install``.
 
