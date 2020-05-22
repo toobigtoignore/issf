@@ -28,11 +28,7 @@
                     <h1>Blue Justice Alert</h1>
 
                     <div class="basic-info">
-                        <strong>{{ bluejustice_instance.name }}</strong> | 
-                        <!-- If ssf_name is empty print the text as 'Blue Justice Alert', else print the ssf_name -->
-                        {% if not bluejustice_instance.ssf_name %} Blue Justice Alert   
-                        {% else %} {{ bluejustice_instance.ssf_name }}
-                        {% endif %}
+                        {{ bluejustice_instance.ssf_name }} | {{ bluejustice_instance.ssf_country }}
                     </div>
                         
                 </div>
