@@ -35,11 +35,17 @@ Then spin up the database container. From within the `issf` directory run:
 
 ``docker-compose up -d db``
 
-Next, acquire the test database so we can import it. There is an automated script to handle the process of importing and populating the database with the data dump called ``./scripts/postgres_setup.sh``; then run ``./scripts/postgres_patches.sh``
-
 After that, launch the existing containers with:
 
 ``docker-compose up -d``
+
+Next, acquire the test database so we can import it. There is an automated script to handle the process of importing and populating the database with the data dump called 
+
+``./scripts/postgres_setup.sh``; 
+
+then run 
+
+``./scripts/postgres_patches.sh``
 
 Once the other containers are running, you will still need to install the `npm` packages on the ISSF container. Open a shell with ``./scripts/issf_shell.sh`` and run the npm installation commands ``npm install``.
 
