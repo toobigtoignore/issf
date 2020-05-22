@@ -401,7 +401,7 @@ class SSFBlueJusticeForm(ModelForm):
             'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
                            'who can edit the record)',
             'ssf_name': 'Small-scale fisheries (SSF) name',
-            'ssf_country': 'SSF Country'
+            'ssf_country': 'Small-scale fisheries location'
         }
 
     def clean(self) -> Dict[str, Any]:

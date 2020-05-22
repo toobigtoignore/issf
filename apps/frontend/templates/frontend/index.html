@@ -20,19 +20,24 @@
     <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
 
     <style>
-    .tooltip {
+    .tooltipPopsup {
         position: absolute;
         font-size: 15px;
         width:  auto;
         height: auto;
         pointer-events: none;
         background-color: #feffeb;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid #e3e3e3;
+        border-radius: 3px;
+        z-index: 999;
     }
     </style>
 {% endblock additional_css_scripts %}
 {% block body %}
 
-    <section id="body-section">
+    <section id="body-section" onscroll="scrolling()">
 
         <div class="map-and-visual">
             <div class="map-section">
@@ -376,7 +381,7 @@
                 
             </div>
         
-            <div class="visual-section">
+            <div id="visual-section" class="visual-section">
                 <div class="visual-carousel">
                     <h3 style="padding: 1rem">Latest Visualization</h3>
                     <div class="cycle-slideshow slideshow-container" 
@@ -386,14 +391,14 @@
                          data-cycle-prev="#prev-slide"
                          data-cycle-next="#next-slide">
                         <div id="visual1" class="visual-slides"></div>
-                        <div class="visual-slides" style="height: 95%; text-align: center;">
+                        <!-- <div class="visual-slides" style="height: 95%; text-align: center;">
                             <img src="http://malsup.github.io/images/p2.jpg">
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="visual-carousel-control">
+                    <!-- <div class="visual-carousel-control">
                         <button id="prev-slide">&#8617;</button>
                         <button id="next-slide">&#8618;</button>
-                    </div>
+                    </div> -->
                 </div>
                 
             </div>
@@ -406,7 +411,8 @@
         
             <section id="contribute-panel">
                 <div style="width: 100%; display: flex; justify-content: center;">
-                    <div class="col-580 left">
+                    <!-- <div id="left-sticky"> -->
+                    <div id="welcome-note" class="col-580 left">
                         <div class="box box-info welcome">
                             <header>
                                 <h2>Welcome</h2>
@@ -550,11 +556,13 @@
                             </div>
                         -->
                     </div>
-                    <div class="col-360 left twitter-box">       
+                    <div id="twitter-box" class="col-360 left twitter-box">       
                         <a class="twitter-timeline" data-height="524" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
                         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
-                    <div class="left">
+                    <!-- </div> left-sticky end -->
+
+                    <div class="left" id="most-recent-right">
                         <div class="left" style="width: 300px; margin-left: 20px;">
                             <div id="recent-contributions" class="box box-contribute">
                                 <header>
@@ -771,11 +779,12 @@
         var z = d3.scaleOrdinal()
             .range(["#0000FF", "#FF4500", "#008000", "#964b00", "#696969"]);
             
-        var tooltip = d3.select("#visual1").append("div")
-            .attr("class", "tooltip")
+        var tooltipPopsup = d3.select("body").append("div")
+            .attr("class", "tooltipPopsup")
             .style("opacity", 0);
         
         var mouseover = function(d) {
+                              var visualSection = document.getElementById("visual-section");
                               var html  = "Country : " + d.data.country + "<br/>"; 
                               html  = html + "<font color=#0000FF>Top-down/hierarchical governance : " + d.data["Top-down/hierarchical governance"] + "<br/>"; 
                               html  = html + "</font><font color=#FF4500>Co-management/co-governance : " + d.data["Co-management/co-governance"] + "<br/>"; 
@@ -783,19 +792,19 @@
                               html  = html + "</font><font color=#964b00>Self governance : " + d.data["Self governance"] + "<br/>"; 
                               html  = html + "</font><font color=#696969>Other : " + d.data["Other"]; 
 
-                              tooltip.html(html)
-                                  .style("left", (d3.event.pageX + 15) + "px")
-                                  .style("top", (d3.event.pageY - 28) + "px")
+                              tooltipPopsup.html(html)
+                                  .style("left", (d3.event.pageX) + "px")
+                                  .style("top", (d3.event.pageY) + "px")
                                 .transition()
                                   .duration(200) 
-                                  .style("opacity", .9) 
+                                  .style("opacity", 1) 
                             d3.select(this)
                               .style("stroke", "black")
                               .style("opacity", 1)
                           };
                           
         var mouseleave = function(d) {
-                              tooltip.transition()
+                              tooltipPopsup.transition()
                                   .duration(300) // ms
                                   .style("opacity", 0); // don't care about position!
                             d3.select(this)
@@ -919,7 +928,7 @@
             .data(data.columns.slice(1))
             .enter().append("g")
             .attr("id","legends")
-            .attr("transform", function(d, i) { return "translate(-95," + (i - (data.columns.length - 1) / 2) * 20 + ")"; });
+            .attr("transform", function(d, i) { return "translate(-110," + (i - (data.columns.length - 1) / 2) * 20 + ")"; });
         
           legend.append("rect")
               .attr("width", 18)
@@ -1742,7 +1751,7 @@
             }
 
 
-            // Add transparent tooltip markers for key geographic scopes
+            // Add transparent tooltipPopsup markers for key geographic scopes
             // they are rounded red squares, definitely could be a more visually-pleasing design
             var scopeIcon = new L.DivIcon({
                 className: 'scope-icon', iconSize: [32, 32],
@@ -1837,10 +1846,10 @@
 
         var search = false;
 
-        // If user is not signed in then disable button and have tooltip asking them to login.
-        // Have to "fake-disable" the button with onclick="return false because the tooltip will
+        // If user is not signed in then disable button and have tooltipPopsup asking them to login.
+        // Have to "fake-disable" the button with onclick="return false because the tooltipPopsup will
         // not appear if it is actually disabled.
-        $('#quick-button-floaty').append('<span data-tooltip aria-haspopup="true" class="has-tip exp-tip" title="Please login to use the export feature." style="border:none;"><button class="medium radius exportButton" onclick="return false;">Export</button></span>');
+        $('#quick-button-floaty').append('<span data-tooltipPopsup aria-haspopup="true" class="has-tip exp-tip" title="Please login to use the export feature." style="border:none;"><button class="medium radius exportButton" onclick="return false;">Export</button></span>');
 
         {% if user.is_authenticated %}
             $('span.exp-tip').prop('title', "Export selected data in CSV format.");
@@ -2310,4 +2319,5 @@
     <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=r6zHiLKHtnlqqDuyu2YBfU2JxAnowqE5"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <script src="https://malsup.github.io/min/jquery.cycle2.min.js"></script>
+
 {% endblock additional_js_scripts %}
