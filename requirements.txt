@@ -1,8 +1,9 @@
+psycopg2==2.8.5
 appdirs==1.4. 
 crispy-forms-foundation==0.7.0
 defusedxml==0.5.0
 diff-match-patch==20181111
-Django==2.1.7
+Django==2.2.10
 django-allauth==0.38.0
 django-appconf==1.0.2
 django-compressor==2.2
@@ -15,13 +16,13 @@ django-leaflet==0.26.0
 django-queryset-csv==1.0.1
 django-tables2==2.0.3
 django-timedeltafield==0.7.10
-django-js-reverse==0.8.2
+django-js-reverse==0.9.1
 flickrapi==2.4.0
 foundationform==0.2
 future==0.17.1
 gunicorn==19.9.0
 html5lib==1.0.1
-httplib2==0.12.0
+httplib2==0.18.0
 oauth==1.0.1
 oauth2==1.9.0.post1
 oauthlib==2.1.0
@@ -42,4 +43,5 @@ tablib==0.12.1
 unicodecsv==0.14.1
 Unipath==1.1
 django-hardcopy==0.1.4
-bleach==3.0.2
+bleach==3.1.4
+Pillow==7.1.2
