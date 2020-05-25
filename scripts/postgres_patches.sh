@@ -9,4 +9,7 @@ docker-compose exec -T db \
 docker-compose exec -T db \
 /bin/bash -c "psql -U postgres issf_prod -f /data/postgres/patches/patch_may_10_count.sql"
 
+docker-compose exec -T db \
+/bin/bash -c "psql -U postgres issf_prod -f /data/postgres/patches/patch_may_24.sql"
+
 

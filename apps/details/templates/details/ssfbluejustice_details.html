@@ -1378,11 +1378,6 @@
                                     </tr>
 
                                     <tr>
-                                        <td><strong>Image URL (direct links only)</strong></td>
-                                        <td>{{ bluejustice_instance.img_url }}</td>
-                                    </tr>
-
-                                    <tr>
                                         <td><strong>Where this photo was taken</strong></td>
                                         <td>{{ bluejustice_instance.photo_location }}</td>
                                     </tr>
@@ -1400,7 +1395,7 @@
 
 
                                 {% if editor %}
-                                <form action="{% url 'bluejustice-basic' %}" method="post">
+                                <form action="{% url 'bluejustice-basic' %}" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                     
                                     <div class="FormSet" id="bluejustice-others-form">
@@ -1409,7 +1404,7 @@
                                         {{ bluejustice_form.affiliation.label_tag }}{{ bluejustice_form.affiliation }}
                                         {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
                                         {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
-                                        {{ bluejustice_form.img_url.label_tag }}{{ bluejustice_form.img_url }}
+                                        {{ bluejustice_form.photo_upload.label_tag }}{{ bluejustice_form.photo_upload }}
                                         {{ bluejustice_form.photo_location.label_tag }}{{ bluejustice_form.photo_location }}
                                         {{ bluejustice_form.date_of_photo.label_tag }}{{ bluejustice_form.date_of_photo }}
                                         {{ bluejustice_form.photographer.label_tag }}{{ bluejustice_form.photographer }}
@@ -1440,7 +1435,7 @@
                         </dd>
                         
 
-                        <!-- {% if bluejustice_instance.img_url %}
+                        {% if bluejustice_instance.has_image %}
                             <dd class="accordion-navigation">
                                 <a class="accordion-nav" href="#panel1t">Image</a>
 
@@ -1448,14 +1443,13 @@
                                     id="panel1t"
                                     class="content"
                                     align="center"
-                                    style="padding-left: 0; padding-right: 0;"
-                                >
-                                    {% if bluejustice_instance.img_url %}
-                                        <img src="{{ bluejustice_instance.img_url }}">
+                                    style="padding-left: 0; padding-right: 0;">
+                                    {% if bluejustice_instance.has_image %}
+                                        <img src="{{ bluejustice_instance.uploaded_image_url }}">
                                     {% endif %}
                                 </div>
                             </dd>
-                        {% endif %} -->        
+                        {% endif %}      
                     </dl>
                 </div>
 

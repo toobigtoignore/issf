@@ -830,7 +830,7 @@ def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) 
                 instance = get_object_or_404(model_class, issf_core_id=issf_core_id)
                 existing = True
 
-            form = form_class(request.POST, instance=instance)
+            form = form_class(request.POST, files=request.FILES, instance=instance)
             if form.is_valid():
                 instance = form.save()
 
@@ -889,6 +889,7 @@ def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) 
                 return HttpResponse(response)
             else:
                 errors = form.errors
+                print(errors)
                 response = json.dumps({'success': 'false', 'errors': errors})
                 return HttpResponse(response)
 

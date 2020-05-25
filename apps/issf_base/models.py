@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils.html import conditional_escape
 from django.urls import reverse
 from django.urls.exceptions import NoReverseMatch
+from django.core.exceptions import ValidationError
 
 from issf_base.utils import get_redirectname
 
@@ -656,6 +657,15 @@ class SSFGuidelines(models.Model):
         self.organizer = conditional_escape(self.organizer)
         super(SSFGuidelines, self).save(*args, **kwargs)
 
+#TODO: Move into a new file and import
+def _validate_file_size(value):
+    filesize = value.size
+    
+    if filesize > 10485760:
+        raise ValidationError("The maximum file size that can be uploaded is 10MB")
+    else:
+        return value
+
 
 class SSFBlueJustice(models.Model):
     """
@@ -681,7 +691,10 @@ class SSFBlueJustice(models.Model):
     affiliation = models.CharField(max_length=256, blank=True)
     country = models.CharField(max_length=256, blank=False)
     role = models.CharField(max_length=512, blank=False)
+    #Field depracated - Kept for legacy support
     img_url = models.URLField(blank=True)
+    #Photo upload functionality
+    photo_upload = models.ImageField(blank=True, upload_to="bluejustice/", validators=[_validate_file_size])
     photo_location = models.CharField(max_length=512, blank=True)
     date_of_photo = models.CharField(max_length=256, blank=True)
     photographer = models.CharField(max_length=256, blank=True)
@@ -771,6 +784,17 @@ class SSFBlueJustice(models.Model):
     types_of_justice_others = models.CharField(max_length=256, blank=True)
     dealing_with_justice = models.TextField(blank=True)
     social_justice_source = models.TextField(blank=True)
+
+    #This is to support legacy images as well the new user uploaded ones
+    @property
+    def uploaded_image_url(self):
+        if self.photo_upload.url:
+            return self.img_url
+        elif self.img_url:
+            return self.photo_upload.url
+
+    def has_image(self):
+        return (self.img_url or self.photo_upload.name)
 
     class Meta:
         managed = False

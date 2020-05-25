@@ -76,6 +76,9 @@ MIDDLEWARE = [
 STATIC_ROOT = '/issf/static'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'node_modules/'), APPS_DIR, '/issf/static_root')
+#Media files
+MEDIA_URL = '/static/user_uploads/'
+MEDIA_ROOT = '/static/user_uploads'
 
 CRISPY_TEMPLATE_PACK = 'foundation-5'
 TEMPLATES = [

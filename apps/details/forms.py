@@ -386,7 +386,7 @@ class SSFBlueJusticeForm(ModelForm):
             'ss_fishers_women', 'total_number_households', 'households_participation_percentage', 'background_about_ssf',
             'justice_in_context', 'types_of_justice_distributive', 'types_of_justice_social', 'types_of_justice_economic',
             'types_of_justice_market', 'types_of_justice_infrastructure', 'types_of_justice_regulatory', 'types_of_justice_procedural',
-            'types_of_justice_environmental', 'types_of_justice_others', 'dealing_with_justice', 'covid_19_related', 'social_justice_source'
+            'types_of_justice_environmental', 'types_of_justice_others', 'dealing_with_justice', 'covid_19_related', 'social_justice_source', 'photo_upload'
         ]
         labels = {
             'name': 'Name of Contributor',
@@ -395,6 +395,7 @@ class SSFBlueJusticeForm(ModelForm):
             'country': 'Contributor Country',
             'role': 'Role and involvement in SSF',
             'img_url': 'Image URL (direct links only)',
+            'photo_upload' : "Upload a photo",
             'photo_location': 'Where this photo was taken',
             'date_of_photo': 'When this photo was taken (Date)',
             'photographer': 'Name of the photographer',
