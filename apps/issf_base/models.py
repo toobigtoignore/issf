@@ -789,9 +789,9 @@ class SSFBlueJustice(models.Model):
     @property
     def uploaded_image_url(self):
         if self.photo_upload.url:
-            return self.img_url
-        elif self.img_url:
             return self.photo_upload.url
+        elif self.img_url:
+            return self.img_url
 
     def has_image(self):
         return (self.img_url or self.photo_upload.name)
