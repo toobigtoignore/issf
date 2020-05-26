@@ -1782,12 +1782,3 @@ span.error, small.error {
     font-size: 0.95rem;
     font-weight: bold;
 }
-
-/* Wrong font size in contribute panel */
-div.box-info {
-    font-size: 0.875rem;
-}
-
-div.box-info div.body-contribute ul li {
-    font-size: 0.875rem;
-}
