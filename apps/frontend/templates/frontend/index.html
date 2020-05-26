@@ -410,164 +410,65 @@
             <input id="filterbuttondata" type="text" style="display:none"/>
         
             <section id="contribute-panel">
-                <div style="width: 100%; display: flex; justify-content: center;">
-                    <!-- <div id="left-sticky"> -->
-                    <div id="welcome-note" class="col-580 left">
+                <div id="panel-left">
+                    <div id="welcome-note">
                         <div class="box box-info welcome">
                             <header>
                                 <h2>Welcome</h2>
                             </header>
-        
+                    
                             <div class="body-contribute">
-                                <p align="center">
-                                    ISSF is a global collaborative online database providing information on small-scale fisheries (SSF) to help enhance knowledge about this sector and their overall contributions.
-                                </p>
-        
-                                <div style="height:50px; padding-left: 10px;">
-                                    <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-who.png' %}); background-position: right center; float: left; height:50px; width:60px;">
-                                    </div>
-                                    <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-sota.png' %}); background-position: right center; float: left; height:50px; width:60px;">
-                                    </div>
-                                    <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-profile.png' %}); background-position: right center; float: left; height:50px; width:60px;">
-                                    </div>
-                                    <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-organize.png' %}); background-position: right center; float: left; height:50px; width:60px;">
-                                    </div>
-                                    <div style="background-repeat: no-repeat; background-image: url({% static 'issf_base/img/icon-guidelines.png' %}); background-position: right center; float: left; height:48px; width:60px;">
-                                    </div>
+                                <p align="center">ISSF is a global collaborative online database providing information on small-scale fisheries (SSF) to help enhance knowledge about this sector and their overall contributions.</p>
+                    
+                                <div class="icons-container">
+                                    <div class="icons" style="background-image: url({% static 'issf_base/img/icon-who.png' %});"></div>
+                                    <div class="icons" style="background-image: url({% static 'issf_base/img/icon-sota.png' %});"></div>
+                                    <div class="icons" style="background-image: url({% static 'issf_base/img/icon-profile.png' %});"></div>
+                                    <div class="icons" style="background-image: url({% static 'issf_base/img/icon-organize.png' %});"></div>
+                                    <div class="icons" style="background-image: url({% static 'issf_base/img/icon-guidelines.png' %});"></div>
                                 </div>
-        
-                                <h6 style="margin-top: 20px;">What can you do with ISSF?</h6>
-        
-                                <ul style="margin-left: 25px; margin-bottom: 10px;">
-                                    <li>
-                                        <strong>Learn</strong> about SSF around the world
-                                    </li>
-                                    <li>
-                                        <strong>Search,</strong> discover, and export data
-                                    </li>
-                                    <li>
-                                        <strong>Share</strong> information about yourself, your research and SSF organizations
-                                    </li>
-                                    <li>
-                                        <strong>Contribute</strong> by creating a profile for SSF that you know,
+                
+                                <h6>What can you do with ISSF?</h6>
+                                <ul>
+                                    <li><strong>Learn</strong> about SSF around the world</li>
+                                    <li><strong>Search,</strong> discover, and export data</li>
+                                    <li><strong>Share</strong> information about yourself, your research and SSF organizations</li>
+                                    <li><strong>Contribute</strong> by creating a profile for SSF that you know,
                                         <a href="{% url 'contribute' %}">online,</a> or using a template (available in
-                                        <a
-                                            href="{% static "pdf/ISSF_Profile_English_Template.pdf" %}"
-                                            target="_blank"
-                                        >
-                                            <span>English,</span>
-                                        </a>
-                                        <a
-                                            href="{% static "pdf/ISSF_Profile_French_Template.pdf" %}"
-                                            target="_blank"
-                                        >
-                                            <span>French,</span>
-                                        </a>
+                                        <a href="{% static "pdf/ISSF_Profile_English_Template.pdf" %}" target="_blank"><span>English,</span></a>
+                                        <a href="{% static "pdf/ISSF_Profile_French_Template.pdf" %}" target="_blank"><span>French,</span></a>
                                         <span> and </span>
-                                        <a
-                                            href="{% static "pdf/ISSF_Profile_Spanish_Template.pdf" %}"
-                                            target="_blank"
-                                        >
-                                            <span>Spanish.</span>
-                                        </a>
+                                        <a href="{% static "pdf/ISSF_Profile_Spanish_Template.pdf" %}" target="_blank"><span>Spanish.</span></a>
                                         )
                                     </li>
-        
-                                    <li>
-                                        <strong>Explore</strong> SSF characteristics through charts, tables, and infographics
-                                        with <a href="{% url 'report-pdf' 'profile' 2288 %}" target="_blank">SSF Profile Reports</a>
-                                    </li>
-        
+                                    <li><strong>Explore</strong> SSF characteristics through charts, tables, and infographics with <a href="{% url 'report-pdf' 'profile' 2288 %}" target="_blank">SSF Profile Reports</a></li>
+                
                                     <!--
-                                    <li>
-                                        <strong>Visualize</strong> and compare SSF Profiles around the world using the
-                                        <a href="http://demo.vista.cs.uregina.ca/gcpc-ssf/" target="_blank">GCPC tool</a>
-                                    </li>
+                                    <li><strong>Visualize</strong> and compare SSF Profiles around the world using the<a href="http://demo.vista.cs.uregina.ca/gcpc-ssf/" target="_blank">GCPC tool</a></li>
                                     -->
                                 </ul>
-        
+                        
                                 <div align="center">
-                                    <p style="text-decoration: underline; margin-bottom: 0;">Need help with ISSF?</p>
-        
-                                    <p style="margin-top: 0;">See our
-                                        <a
-                                            href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-basic-tutorial-1.0.1.pdf"
-                                            target="_blank"
-                                        >
-                                            basic
-                                        </a>
-                                        or
-                                        <a
-                                            href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-advanced-tutorial-1.0.1.pdf"
-                                            target="_blank"
-                                        >
-                                            advanced
-                                        </a>
-                                        tutorials.
+                                    <p style="margin-bottom: -15px;"><u>Need help with ISSF?</u></p>
+                                    <p>See our <a href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-basic-tutorial-1.0.1.pdf" target="_blank">basic</a> or <a href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-advanced-tutorial-1.0.1.pdf" target="_blank">advanced</a> tutorials.
                                     </p>
                                 </div>
-                            </div>
-                        </div>
-                        <!--
-                            <div class="box box-info who">
-                                <header>
-                                    <span></span>
-                                    <h2>Who's Who</h2>
-                                </header>
-            
-                                <p>
-                                    <strong>{{ who_feature.name }}</strong>
-                                </p>
-            
-                                {% if who_feature.img_url %}
-                                    <img src="{{ who_feature.img_url }}" style="height:200px;">
-                                {% endif %}
-                                <br/>
-            
-                                {% if who_feature.ssf_person %}
-                                    <strong>
-                                        <a href="{% url 'who-details' who_feature.ssf_person.issf_core_id %}">Who's Who in SSF
-                                            Profile
-                                        </a>
-                                    </strong>
-                                {% endif %}
-                                <br/>
-            
-                                {% if who_feature.about %}
-                                    {{ who_feature.about }}
-                                {% endif %}
-                                <br/>
-            
-                                {% if who_feature.ssf_knowledge %}
-                                    <strong>Select publication:</strong>
-                                    <a
-                                        href="{% url 'sota-details' who_feature.ssf_knowledge.issf_core_id %}">{{ who_feature.ssf_knowledge.level1_title }}: {{ who_feature.ssf_knowledge.level2_title }}
-                                    </a>
-                                {% endif %}
-                            </div>
-                            <div class="box box-info glance">
-                                <header>
-                                    <h2>At-a-Glance</h2>
-                                </header>
-            
-                                <p><strong>State-of-the-Art Regional Reports</strong></p>
-            
-                                <div id="regional"></div>
-                            </div>
-                        -->
-                    </div>
-                    <div id="twitter-box" class="col-360 left twitter-box">       
-                        <a class="twitter-timeline" data-height="524" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
-                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    </div>
-                    <!-- </div> left-sticky end -->
+                            </div> <!-- /body-contribute -->
+                        </div> <!-- /box-info-welcome -->
+                    </div>  <!-- /welcome -->
 
-                    <div class="left" id="most-recent-right">
-                        <div class="left" style="width: 300px; margin-left: 20px;">
-                            <div id="recent-contributions" class="box box-contribute">
-                                <header>
-                                    <h2>Most Recent Contributions</h2>
-                                </header>
+
+                    <div id="most-recent-contributions">
+                        <h3>Most Recent Contributions</h3>
+
+                        <ul class="most-recent-contributions-trigger nav nav-tabs">
+                          <li class="active"><a data-toggle="tab" href="#by-name"><strong>Contributions by Name</strong></a></li>
+                          <li><a data-toggle="tab" href="#by-type"><strong>Contributions by Type</strong></a></li>
+                          <li><a data-toggle="tab" href="#by-countries"><strong>Contributions by Countries</strong></a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="by-name" class="box box-contribute tab-pane fade in active">
                                 <div class="body-contribute">
                                     <ul>
                                         {# already escaped in view #}
@@ -579,41 +480,49 @@
                                                         <p>
                                                             <a href="{% url 'who-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
+
                                                     {% elif recent_contribution.core_record_type == "State-of-the-Art in SSF Research" %}
                                                         <span class="icon cont-sota"></span>
                                                         <p>
                                                             <a href="{% url 'sota-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
+
                                                     {% elif recent_contribution.core_record_type == "Capacity Development" %}
                                                         <span class="icon cont-capacity"></span>
                                                         <p>
                                                             <a href="{% url 'capacity-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
+
                                                     {% elif recent_contribution.core_record_type == "SSF Organization" %}
                                                         <span class="icon cont-organize"></span>
                                                         <p>
                                                             <a href="{% url 'organization-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
+                                                    
                                                     {% elif recent_contribution.core_record_type == "SSF Profile" %}
                                                         <span class="icon cont-profile"></span>
                                                         <p>
                                                             <a href="{% url 'profile-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
+                                                    
                                                     {% elif recent_contribution.core_record_type == "SSF Guidelines" %}
                                                         <span class="icon cont-guidelines"></span>
                                                         <p>
                                                             <a href="{% url 'guidelines-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
-                                                        {% elif recent_contribution.core_record_type == "SSF Blue Justice" %}
+                                                        
+                                                    {% elif recent_contribution.core_record_type == "SSF Blue Justice" %}
                                                         <span class="icon cont-expe"></span>
                                                         <p>
                                                             <a href="{% url 'bluejustice-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
+                                                    
                                                     {% elif recent_contribution.core_record_type == "SSF Experiences" %}
                                                         <span class="icon cont-expe"></span>
                                                         <p>
                                                             <a href="{% url 'experiences-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
+                                                    
                                                     {% elif recent_contribution.core_record_type == "Case Study" %}
                                                         <span class="icon cont-case"></span>
                                                         <p>
@@ -624,103 +533,116 @@
                                             {% endfor %}
                                         {% endautoescape %}
                                     </ul>
-                                </div>
-                            </div>
+                                </div> <!-- /body-contribute -->
+                            </div> <!-- /box-contribute -->
 
-                            <div id="recent-contributions" class="box box-contribute">
-                                <header>
-                                    <h2>Recent Contributions by Type</h2>
-                                </header>
+
+                            <div id="by-type" class="box box-contribute tab-pane fade">
                                 <div class="body-contribute">
                                     <ul>
                                         {% for contribution in contributions_by_record_type %}
-                                            <li>
-                                                {% if contribution.core_record_type == "Who's Who in SSF" %}
-                                                    <span class="icon cont-who"></span>
-                                                    <p>
-                                                        <strong>Who's Who:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% elif contribution.core_record_type == "State-of-the-Art in SSF Research" %}
-                                                    <span class="icon cont-sota"></span>
-                                                    <p>
-                                                        <strong>State-of-the-Art:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% elif contribution.core_record_type == "SSF Profile" %}
-                                                    <span class="icon cont-profile"></span>
-                                                    <p>
-                                                        <strong>Profile:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% elif contribution.core_record_type == "SSF Organization" %}
-                                                    <span class="icon cont-organize"></span>
-                                                    <p>
-                                                        <strong>Organization:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% elif contribution.core_record_type == "SSF Guidelines" %}
-                                                    <span class="icon cont-guidelines"></span>
-                                                    <p>
-                                                        <strong>Guidelines:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% elif contribution.core_record_type == "Capacity Development" %}
-                                                    <span class="icon cont-capacity"></span>
-                                                    <p>
-                                                        <strong>Capacity Developmet:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                    {% elif contribution.core_record_type == "SSF Blue Justice" %}
-                                                    <span class="icon cont-expe"></span>
-                                                    <p>
-                                                        <strong>Blue Justice Alerts:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% elif contribution.core_record_type == "SSF Experiences" %}
-                                                    <span class="icon cont-expe"></span>
-                                                    <p>
-                                                        <strong>Experience:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% elif contribution.core_record_type == "Case Study" %}
-                                                    <span class="icon cont-case"></span>
-                                                    <p>
-                                                        <strong>Case Study:</strong>
-                                                        {{ contribution.contribution_count }}
-                                                    </p>
-                                                {% endif %}
-                                            </li>
+                                        <li>
+                                            {% if contribution.core_record_type == "Who's Who in SSF" %}
+                                                <span class="icon cont-who"></span>
+                                                <p>
+                                                    <strong>Who's Who:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% elif contribution.core_record_type == "State-of-the-Art in SSF Research" %}
+                                                <span class="icon cont-sota"></span>
+                                                <p>
+                                                    <strong>State-of-the-Art:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% elif contribution.core_record_type == "SSF Profile" %}
+                                                <span class="icon cont-profile"></span>
+                                                <p>
+                                                    <strong>Profile:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% elif contribution.core_record_type == "SSF Organization" %}
+                                                <span class="icon cont-organize"></span>
+                                                <p>
+                                                    <strong>Organization:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% elif contribution.core_record_type == "SSF Guidelines" %}
+                                                <span class="icon cont-guidelines"></span>
+                                                <p>
+                                                    <strong>Guidelines:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% elif contribution.core_record_type == "Capacity Development" %}
+                                                <span class="icon cont-capacity"></span>
+                                                <p>
+                                                    <strong>Capacity Developmet:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                                
+                                                {% elif contribution.core_record_type == "SSF Blue Justice" %}
+                                                <span class="icon cont-expe"></span>
+                                                <p>
+                                                    <strong>Blue Justice Alerts:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% elif contribution.core_record_type == "SSF Experiences" %}
+                                                <span class="icon cont-expe"></span>
+                                                <p>
+                                                    <strong>Experience:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% elif contribution.core_record_type == "Case Study" %}
+                                                <span class="icon cont-case"></span>
+                                                <p>
+                                                    <strong>Case Study:</strong> 
+                                                    {{ contribution.contribution_count }}
+                                                </p>
+                                            
+                                            {% endif %}
+                                        </li>
                                         {% endfor %}
                                     </ul>
-                                </div>
-                            </div>
+                                </div> <!-- /body-contribute -->
+                            </div> <!-- /box-contribute -->
 
-                            <div id="recent-contributions" class="box box-contribute">
-                                <header>
-                                    <h2>Recent Contributions by Country</h2>
-                                </header>
+                          
+                            <div id="by-countries" class="box box-contribute tab-pane fade">
                                 <div class="body-contribute">
-                                    <ul style="font-size: 0.875rem;">
+                                    <ul>
                                         {% for contribution in contributions_by_country %}
                                             <li>
                                                 <strong>{{ contribution.short_name }}:</strong>
                                                 {{ contribution.contribution_count }} contributions
                                             </li>
                                         {% endfor %}
-                                        <li><strong>Countries with one contribution:</strong> {{ other_countries.count }}</li>
+                                        <li>
+                                            <strong>Countries with one contribution:</strong> 
+                                            {{ other_countries.count }}
+                                        </li>
                                     </ul>
-                                </div>
-                            </div>
+                                </div> <!-- /body-contribute -->
+                            </div> <!-- /box-contribute -->
 
-                            <p></p>
                         </div>
-                        <div>
-                        </div>
+                    </div> <!-- /most-recent-contributions -->
+                </div> <!-- /panel-left -->
+
+
+                <div id="panel-right">
+                    <div id="twitter-box" class="twitter-box">       
+                        <a class="twitter-timeline" data-height="1293" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
                 </div>
             </section>
-            <div id="images"></div>
+
     
         </div>
 
