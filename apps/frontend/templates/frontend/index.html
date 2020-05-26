@@ -462,12 +462,12 @@
                         <h3>Most Recent Contributions</h3>
 
                         <ul class="most-recent-contributions-trigger nav nav-tabs">
-                          <li class="active"><a data-toggle="tab" href="#by-name"><strong>Contributions by Name</strong></a></li>
-                          <li><a data-toggle="tab" href="#by-type"><strong>Contributions by Type</strong></a></li>
-                          <li><a data-toggle="tab" href="#by-countries"><strong>Contributions by Countries</strong></a></li>
+                          <li class="active"><a data-toggle="tab" data-tab="by-name"><strong>Contributions by Name</strong></a></li>
+                          <li><a data-toggle="tab" data-tab="by-type"><strong>Contributions by Type</strong></a></li>
+                          <li><a data-toggle="tab" data-tab="by-countries"><strong>Contributions by Countries</strong></a></li>
                         </ul>
 
-                        <div class="tab-content">
+                        <div class="tab-content most-recent-contributions-tabs">
                             <div id="by-name" class="box box-contribute tab-pane fade in active">
                                 <div class="body-contribute">
                                     <ul>
@@ -2240,6 +2240,16 @@
             window.location.replace('/details/capacity-need-rating/0/');
         });
     </script>
+
+
+    <script>
+        // $('.most-recent-contributions-trigger li a').on('click',function(){
+        //     let $this = $(this);
+        //     $this.closest('li').addClass('active').siblings('li').removeClass('active');
+        //     $('.most-recent-contributions-tabs #' + $this.data('tab').addClass('active').siblings('.tab-pane').removeClass('active'));
+        // });
+    </script>
+    
     <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=r6zHiLKHtnlqqDuyu2YBfU2JxAnowqE5"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <script src="https://malsup.github.io/min/jquery.cycle2.min.js"></script>
