@@ -2815,8 +2815,25 @@ form ul {
 }
 
 /* Home Page */
+#welcome-note {
+    width: 65%;
+}
+
 .welcome header {
     text-align: center;
+}
+
+#welcome .icons-container {
+    height: 50px; 
+    padding-left: 10px;
+}
+
+.welcome .icons {
+    float: left; 
+    width: 60px;
+    height: 50px;
+    background-repeat: no-repeat; 
+    background-position: right center; 
 }
 
 .map-icons a h3 {
