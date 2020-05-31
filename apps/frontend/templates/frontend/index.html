@@ -20,24 +20,22 @@
     <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
 
     <style>
-    .tooltipPopsup {
-        position: absolute;
-        font-size: 15px;
-        width:  auto;
-        height: auto;
-        pointer-events: none;
-        background-color: #feffeb;
-        box-sizing: border-box;
-        padding: 10px;
-        border: 1px solid #e3e3e3;
-        border-radius: 3px;
-        z-index: 999;
-    }
+        .tooltipPopsup { position: absolute; font-size: 15px; width:  auto; height: auto; pointer-events: none; background-color: #feffeb; box-sizing: border-box; padding: 10px; border: 1px solid #e3e3e3; border-radius: 3px; z-index: 999; }
+        .svgmap { border: 0px solid  black; }
+        .hidden { display: none; }
+        .axis { font: 10px sans-serif; }
+        .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
+        .chart-button { background: white; border-radius: 2; margin-top: -0.5px; margin-right: 0px; margin-bottom: -0.5px; margin-left: 0px; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
+        .button-on { background: #fff; color: #333; border: 1px solid #555; box-shadow: 0 2px 0 0 #555; }
+        .button-off { background: #f3f3f3; color: #555; border: 1px solid #555; }
+        .second-button { background: #fafcd2; border-radius: 2; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
+        .Column { margin-top: 0px; margin-right: 8px; margin-bottom: 9px; margin-left: 0px; display: inline-block; }
     </style>
+
 {% endblock additional_css_scripts %}
 {% block body %}
 
-    <section id="body-section" onscroll="scrolling()">
+    <section id="body-section">
 
         <div class="map-and-visual">
             <div class="map-section">
@@ -383,22 +381,52 @@
         
             <div id="visual-section" class="visual-section">
                 <div class="visual-carousel">
-                    <h3 style="padding: 1rem">Latest Visualization</h3>
+                    <!-- <h3 style="padding: 1rem">Latest Visualization</h3> -->
                     <div class="cycle-slideshow slideshow-container" 
                          data-cycle-fx=scrollHorz
                          data-cycle-timeout=0
                          data-cycle-slides="> div"
                          data-cycle-prev="#prev-slide"
                          data-cycle-next="#next-slide">
+
                         <div id="visual1" class="visual-slides"></div>
-                        <!-- <div class="visual-slides" style="height: 95%; text-align: center;">
-                            <img src="http://malsup.github.io/images/p2.jpg">
-                        </div> -->
+                        <div id="visual2" class="visual-slides">
+                            <div align=left class="Row">
+                                <div class="Column">
+                                    <button name="Gear" class="chart-button button-on">Gear</button><button name="Vessel" class="chart-button button-off">Vessel</button>
+                                </div>
+                                <div class="Column">
+                                    <button id="count" name="Count" class="second-button button-on">Count</button><button id="perc" name="Percentage" class="second-button button-off">Percentage</button>
+                                </div>
+                            </div>
+
+                            <div align=left class="Row2">
+                                <div class="Column">
+                                    <form id="dimensions">
+                                      <input  class='radioinput' type='radio' id="country" name="first" checked>Country</input>
+                                      <input type='radio' id="region" name="first">Region</input>
+                                    </form>
+                                </div>
+                                <input type="checkbox" id="myCheckbox"> Compare
+                                <div id="drop" align=left class="Column"></div>
+                            </div>
+
+                            <div class="svgdiv"></div>
+
+                            <div>
+                                This visualisation shows vessel/gear types by country/region.
+                                <ul>
+                                    <li>"Count" option shows the number of SSF profiles in the database that identified the given vessel/gear types in a certain country/region</li>
+                                    <li>"Percentage" option shows the percentage of the specific vessel/gear type among all available vessel/gear types</li>
+                                </ul>
+                            </div>
+                        </div> <!-- /visual2 -->
                     </div>
-                    <!-- <div class="visual-carousel-control">
+
+                    <div class="visual-carousel-control">
                         <button id="prev-slide">&#8617;</button>
                         <button id="next-slide">&#8618;</button>
-                    </div> -->
+                    </div>
                 </div>
                 
             </div>
@@ -663,6 +691,9 @@
     <script src="https://d3js.org/d3-format.v1.min.js"></script>
     <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
     <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+
 
     <!-- visual 1 -->
     <script>
@@ -869,6 +900,437 @@
         });
         
     </script>
+    <!-- Visual 1 end -->
+
+
+
+    <!-- Visual 2 -->
+    <script>
+        var margin = {top: 20, right: 10, bottom: 150, left: 60, space : 2},
+            width = 650 - margin.left - margin.right,
+            height = 450 - margin.top - margin.bottom;
+                    
+        var svg = d3.select(".svgdiv").append("svg")
+            .attr("class", "svgmap")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            
+        var underConstr = svg.append("g")
+                    .attr("class", "under hidden")
+                    .attr("transform", "translate(100,100)")
+                    
+        underConstr.append("text").text("Under Construction :)")
+
+        d3.csv("{% static "issf_base/csv/gear.csv" %}", function(error, data){   
+        // d3.csv("{% static "issf_base/csv/gear.csv" %}", function(error, data){   
+            //Read data by Gear or Vessel
+            var data = data.filter(function(d){return d.attribute_value__value_label != '';});
+            var main_gear = data.filter(function(d){return d.attribute__attribute_label == 'Main gear type(s):';});
+            var main_vessel = data.filter(function(d){return d.attribute__attribute_label == 'Main SSF vessel type(s):';});
+
+            //Get Types for Gear
+            var types_gear = main_gear.map(function(x) { return x.attribute_value__value_label; }); 
+            types_gear = types_gear.filter(function(elem, pos) {
+              return types_gear.indexOf(elem) == pos;
+            });
+            
+            //Get Types for Vessel
+            var types_vessel = main_vessel.map(function(x) { return x.attribute_value__value_label; }); 
+            types_vessel = types_vessel.filter(function(elem, pos) {
+              return types_vessel.indexOf(elem) == pos;
+            });
+            
+            //Draw Bar Chart
+            function drawGraph(main, drop_selected, types, regionOrCountry){
+                var dG = {};
+                
+                //Groupping data by type for average 
+                data_count = d3.nest()
+                      .key(function(d) { return d.attribute_value__value_label; })
+                      .rollup(function(v) { return {
+                        length: v.length
+                      }; })
+                      .entries(main);
+                      
+                //Groupping data
+                data_gear = d3.nest()
+                      .key(function(d) { return d[regionOrCountry]})
+                      .key(function(d) { return d.attribute_value__value_label; })
+                      .rollup(function(v) { return {
+                        length: v.length
+                      }; })
+                      .entries(main);
+                      
+                data_gear.forEach(function (d) {
+                            d.values.forEach(function (v) {
+                                v.values.perc = +d3.format(".5f")((v.values.length/data_count[types.indexOf(v.key)].values.length))
+                                v.values.total = data_count[types.indexOf(v.key)].values.length
+                            });
+                        });
+                      
+                var format_scale = d3.scale.ordinal()
+                        .domain(["count","perc"])
+                        .range([".0f",".2%"]);
+                
+                var format_scale_yAxis = d3.scale.ordinal()
+                        .domain(["count","perc"])
+                        .range([".0f",".0%"]);
+                
+            //Set Axiss
+                var x0 = d3.scale.ordinal()
+                        .domain(types)
+                        .rangeRoundBands([0, width], .1);
+                        
+                var y = d3.scale.linear()
+                        .range([height, 0]);
+                        
+                var xAxis = d3.svg.axis()
+                    .scale(x0)
+                    .tickSize(3)
+                    .orient("bottom");
+
+                var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .tickFormat(d3.format(format_scale_yAxis(countOrPerc)))
+                    .orient("left");
+
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                        .selectAll("text")
+                        .style("font-size", "13px")
+                        .style("font-family", "sans")
+                        .style("text-anchor", "end")
+                        //.style('font-weight','bold')
+                        .attr("dx", "-.8em")
+                        .attr("dy", ".55em")
+                        .attr("transform", "rotate(-30)" );
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                      .attr("transform", "rotate(-90)")
+                      .attr("y", 6)
+                      .attr("dy", ".71em")
+                      .style("text-anchor", "end")
+                      .style('font-weight','bold')
+                      <!-- .text("Value"); -->
+                      
+                //Updateing by DropDown
+                dG.update = function(drop_selected, types, turn){
+                
+                    //Filtering selected Country
+                    selection = []
+                    selection_new = []
+                    var selection = data_gear.filter(function(d){return d.key == uniqueCountryArray[drop_selected[0]];});
+                    if (selection == "") {selection.push({key : uniqueCountryArray[drop_selected[0]],values : []})}
+                    selection.push(data_gear.filter(function(d){return d.key == uniqueCountryArray[drop_selected[1]];})[0]);
+                    if (!selection[1]) {selection[1] = {key : uniqueCountryArray[drop_selected[1]],values : []}}
+                    
+                    //Adding nonExist Types to Country
+                    for(var i =0;i<types.length;i++){   
+                            var a=0;
+                            for(var j =0;j<selection[0].values.length;j++){ 
+                                if (types[i] == selection[0].values[j].key) {var a=1;}
+                            }
+                            if (a==0){selection[0].values.push({key : types[i],values : {length : 0, perc : 0}})}
+                            
+                            var a=0;
+                            for(var j =0;j<selection[1].values.length;j++){ 
+                                if (types[i] == selection[1].values[j].key) {var a=1;}
+                            }
+                            if (a==0){selection[1].values.push({key : types[i],values : {length : 0, perc : 0}})}
+                            
+                            selection_new.push({key : types[i],values : []})
+                        }
+                    
+                    //Merge two Selected Dropdown
+                    for(var i =0;i<selection_new.length;i++){
+                        for(var j =0;j<2;j++){
+                            length = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].values.length
+                            perc = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].values.perc
+                            selection_new[i].values.push({count : length, perc : perc, country : uniqueCountryArray[drop_selected[j]]})
+                        }
+                    }
+                
+            //Color and Axis
+                var inlineCountry = selection_new[0].values.map(function(d) { return d.country; });
+                
+                var color = d3.scale.ordinal()
+                    .domain(inlineCountry)
+                    .range(["blue","#f25618"]); 
+                
+                var x1 = d3.scale.ordinal()
+                        .domain(inlineCountry)
+                        .rangeRoundBands([0, x0.rangeBand()]);; 
+                
+                var y = d3.scale.linear()
+                        .domain([0, d3.max(selection_new, function(categorie) { return d3.max(categorie.values, function(d) { return d[countOrPerc]; }); })]) //[countOrPerc]
+                        .range([height, 0]);
+
+                yAxis.scale(y)
+                    .tickFormat(d3.format(format_scale_yAxis(countOrPerc)));
+                
+                //Append Slice Group for xAxis
+                var slice = svg.selectAll(".types")
+                  .data(selection_new)
+                  
+                slice.enter().append("g")
+                      .attr("class", "types")
+                      .attr("transform",function(d) { return "translate(" + x0(d.key) + ",0)"; });
+                
+                //Append Country to Slice Group
+                var sliceCountry = slice.selectAll("rect")
+                    .data(function(d) { return d.values; });    
+                
+                sliceCountry.enter().append("rect")
+                    .attr('height', 0);
+            
+                    sliceCountry
+                        .attr("name", function(d,i) {  return d.country; })
+                        .attr("class","rectangle")
+                        .attr("width", x1.rangeBand())
+                        .attr("x", function(d) { return x1(d.country);})
+                        .style("fill", function(d) { return color(d.country) })
+                        .on("mouseover", function(d) {
+                              d3.select(this).style("fill", d3.rgb(color(d.country)).darker(2)); 
+                          })
+                          .on("mouseout", function(d) {
+                              d3.select(this).style("fill", color(d.country));
+                            })
+                        .append("title")
+                            .attr("class", "title")
+                            .text(function(d){
+                                return d.country + " : " + d3.format(format_scale(countOrPerc))(d[countOrPerc]); 
+                            });
+                    
+                    if (turn == 1){
+                        sliceCountry
+                            .attr("y", function(d) { return y(0); })
+                            .attr("height", function(d) { return height - y(0); })
+                    }
+                      slice.selectAll("rect")
+                          .transition()
+                          .duration(1000)
+                          .attr("y", function(d) { return y(d[countOrPerc]); })
+                          .attr("height", function(d) { return height - y(d[countOrPerc]); });
+                  
+                        d3.selectAll("g.y.axis")
+                            .transition()
+                            .duration(1000)
+                            .call(yAxis);
+                }
+                
+                inlineCountryId = []
+                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                        
+                //plot selected button
+                selected_button = d3.select(".chart-button.button-on").attr("name")
+                
+                if (selected_button == "Gear") {dG.update(inlineCountryId, types_gear, 1)}
+                else if (selected_button == "Vessel") {dG.update(inlineCountryId, types_vessel, 1)}
+                else if (selected_button == "GearVessel") {GearVessel("GearVessel")}                                
+                
+                return dG;
+            }
+            
+            
+            /////////Third Steps//////////
+
+            function fillDropdown(uniqueCountryArray){
+                //Clear Dropdown
+                document.querySelectorAll( 
+                      'option').forEach(guardian => guardian.remove()) 
+                      
+                selector.selectAll("option")
+                  .data(uniqueCountryArray)
+                  .enter()
+                  .append("option")
+                      .attr("value", function(d, i){
+                        return i;
+                      })
+                      .text(function(d){
+                        return d;
+                  })
+                  
+                selector2.selectAll("option")
+                  .data(uniqueCountryArray)
+                  .enter()
+                  .append("option")
+                      .attr("value", function(d, i){
+                        return i;
+                      })
+                      .text(function(d){
+                        return d;
+                  })
+            
+                d3.select('#dropdown').property('value',FirstDropId)
+                d3.select('#dropdown2').property('value',SecondDropId)
+                radioCheck = 0
+            }
+            
+            function changeIt(){
+                //clear Visual
+                d3.selectAll(".types").remove()
+                d3.selectAll(".rectangle").remove()
+                d3.selectAll(".axis").remove()
+                        
+            //Calculate uniqueCountryArray by Radio
+                //Select Checked Radio
+                  var form = document.getElementById("dimensions")
+                  
+                    for(var i=0; i<form.length; i++){
+                        
+                    if(form[i].checked){
+                      if (form[i].name == "first") {form_val = form[i].id;}
+                      }}
+                      
+                //Get Countries or Regions
+                var country = data.map(function(x) { return x[form_val]; }); 
+                uniqueCountryArray = country.filter(function(elem, pos) {
+                  return country.indexOf(elem) == pos;
+                });
+                uniqueCountryArray = uniqueCountryArray.sort(d3.ascending)
+
+                //Selected Country Canada & USA
+                if (form_val == "country") {
+                    FirstDropId = uniqueCountryArray.indexOf("Canada")
+                    SecondDropId = uniqueCountryArray.indexOf("United States of America")
+                }
+                else if (form_val == "region") {
+                    FirstDropId = uniqueCountryArray.indexOf("Europe")
+                    SecondDropId = uniqueCountryArray.indexOf("North America and Canada")
+                }
+                
+            if (radioCheck == 1){fillDropdown(uniqueCountryArray)}
+            
+            if(d3.select("#myCheckbox").property("checked")){
+                            d3.select('#dropdown2').classed("hidden", false)
+                        } else {
+                            d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))
+                            d3.select('#dropdown2').classed("hidden", true)     
+                        }
+            
+            //Gear or Vessel
+            selected_button = d3.select(".button-on").attr("name")
+            
+            //Count or Perc
+            countOrPerc = d3.select(".second-button.button-on").attr("id")
+            
+            var inlineCountryId = []
+                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                
+                  if (selected_button == "Gear") {drawGraph(main_gear, inlineCountryId, types_gear, form_val)}
+                    else if (selected_button == "Vessel") {drawGraph(main_vessel, inlineCountryId, types_vessel, form_val)}
+                    else if (selected_button == "GearVessel") {GearVessel("GearVessel")}
+            }
+            
+            
+            /////////Second Steps//////////
+            
+            function button_click() {
+                        underConstr.classed("hidden", true)
+                        if (d3.select(this).classed("chart-button")){selected_tab = "chart-button"}
+                        else if (d3.select(this).classed("second-button")){selected_tab = "second-button"}
+                        
+                        //change button class
+                        d3.selectAll("."+selected_tab).classed("button-on", false)
+                        d3.selectAll("."+selected_tab).classed("button-off", true)
+                        d3.select(this).classed("button-off", false)
+                        d3.select(this).classed("button-on", true)
+                        
+                        changeIt()
+                    }
+            
+            function GearVessel(data) {
+                    underConstr.classed("hidden", false)
+                }
+                
+            function radioChange(){
+                radioCheck = 1
+                changeIt()
+            }
+            
+            function update_checkbox(){
+                        if(d3.select("#myCheckbox").property("checked")){
+                            d3.select('#dropdown2').classed("hidden", false)
+                            if (form_val == "country") {
+                                SecondDropId = uniqueCountryArray.indexOf("United States of America")
+                            }
+                            else if (form_val == "region") {
+                                SecondDropId = uniqueCountryArray.indexOf("North America and Canada")
+                            }
+                            d3.select('#dropdown2').property('value',SecondDropId)
+                        } else {
+                            d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))
+                            d3.select('#dropdown2').classed("hidden", true)     
+                        }
+                dropChange()
+                    }
+                    
+            let dropChange = function(d) {
+                d3.selectAll(".title").remove()
+                
+                if(!d3.select("#myCheckbox").property("checked")){d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))}
+                        
+                inlineCountryId = []
+                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                
+                //Gear or Vessel
+                selected_button = d3.select(".button-on").attr("name")
+                        
+                if (selected_button == "Gear") {dG.update(inlineCountryId, types_gear, 0)}
+                else if (selected_button == "Vessel") {dG.update(inlineCountryId, types_vessel, 0)}
+            }
+            
+            
+            /////////First Steps//////////
+                    
+            //Buttons
+            d3.selectAll("button").on("click", button_click);
+            
+            //Radio Buttons
+            var dataDim = d3.select("#dimensions")
+                dataDim.on("change", radioChange)
+            
+            //CheckBox
+            d3.select("#myCheckbox").on("change",update_checkbox);
+            
+            //First Dropdown
+            var selector = d3.select("#drop")
+                    .append("select")
+                    .attr("id","dropdown")
+                    .style("border", "5px")
+                    .style("border-style", "outset")
+                    .style("border-color", "blue") 
+                    .on("change", dropChange);
+                    
+            //Second Dropdown
+            var selector2 = d3.select("#drop")
+                    .append("select")
+                    .attr("id","dropdown2")
+                    .style("border", "5px")
+                    .style("border-style", "outset")
+                    .style("border-color", "#f25618")
+                    .on("change", dropChange);
+            
+            //Globale Variables
+            var FirstDropId,SecondDropId,form_val,countOrPerc,uniqueCountryArray,inlineCountryId;
+            var radioCheck = 1;
+            
+            changeIt()
+            
+            var dG = drawGraph(main_gear, inlineCountryId, types_gear, form_val)
+            
+        });
+    </script>
+    <!-- Visual 2 end -->
+
+
 
     <script type="text/javascript">
 
