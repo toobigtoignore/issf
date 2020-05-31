@@ -120,7 +120,8 @@
                                         <!-- load missing fields from other info div -->
                                         <div class="get-loaded-general-form-data" style="display: none;"></div>
                                         <div class="get-loaded-equity-form-data" style="display: none;"></div>
-                                        <div class="get-loaded-others-form-data" style="display: none;"></div>
+                                        <div class="get-loaded-contributors-form-data" style="display: none;"></div>
+                                        <div class="get-loaded-image-form-data" style="display: none;"></div>
                                         <!-- end loading -->
 
 
@@ -434,14 +435,14 @@
                                     <tr>
                                         <td><strong>B. Are small-scale fisheries defined?</strong></td>
                                         <td>
-                                            {% if bluejustice_instance.ssf_terms_fisheries %} {{ bluejustice_instance.ssf_terms_fisheries }}, {% endif %}
+                                            {% if bluejustice_instance.ssf_terms_fisheries %} {{ bluejustice_instance.ssf_terms_fisheries }} {% endif %}
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td><strong>Provide SSF definition, if applicable:</strong></td>
                                         <td>
-                                            {% if bluejustice_instance.ssf_terms_fisheries_definiton %} {{ bluejustice_instance.ssf_terms_fisheries_definiton }}, {% endif %}
+                                            {% if bluejustice_instance.ssf_terms_fisheries_definiton %} {{ bluejustice_instance.ssf_terms_fisheries_definiton }} {% endif %}
                                         </td>
                                     </tr>
 
@@ -1102,32 +1103,33 @@
                                         <label for="main-vessel-type">Type:</label>
                                         <input type="text" id="main-vessel-type" name="main_vessel_type" value="{{ bluejustice_instance.main_vessel_type }}">
                                         <label for="main-vessel-number">Number:</label>
-                                        <input type="number" id="main-vessel-number" name="main_vessel_number" value="{{ bluejustice_instance.main_vessel_number }}">
+                                        <input type="number" step="0.01" id="main-vessel-number" name="main_vessel_number" value="{{ bluejustice_instance.main_vessel_number }}">
                                         <label for="main-vessel-engine">Engine (HP):</label>
                                         <input type="text" id="main-vessel-engine" name="main_vessel_engine" value="{{ bluejustice_instance.main_vessel_engine }}">
 
 
                                         <h5>Number of SS fishers:</h5>
                                         <label for="ss-fishers-numbers">A. Total number of SS fishers:</label>
-                                        <input type="number" id="ss-fishers-numbers" name="ss_fishers_numbers" value="{{ bluejustice_instance.ss_fishers_numbers }}">
+                                        <input type="number" step="0.01" id="ss-fishers-numbers" name="ss_fishers_numbers" value="{{ bluejustice_instance.ss_fishers_numbers }}">
                                         <label for="ss-fishers-full-time">B. % of full-time:</label>
-                                        <input type="number" id="ss-fishers-full-time" name="ss_fishers_full_time" value="{{ bluejustice_instance.ss_fishers_full_time }}">
+                                        <input type="number" step="0.01" id="ss-fishers-full-time" name="ss_fishers_full_time" value="{{ bluejustice_instance.ss_fishers_full_time }}">
                                         <label for="ss-fishers-women">C. % of fisher women:</label>
-                                        <input type="number" id="ss-fishers-women" name="ss_fishers_women" value="{{ bluejustice_instance.ss_fishers_women }}">
+                                        <input type="number" step="0.01" id="ss-fishers-women" name="ss_fishers_women" value="{{ bluejustice_instance.ss_fishers_women }}">
 
 
                                         <h5>Number of all households and SS households in the location:</h5>
                                         <label for="total-number-households">A. Total number of households in the location:</label>
-                                        <input type="number" id="total-number-households" name="total_number_households" value="{{ bluejustice_instance.total_number_households }}">
+                                        <input type="number" step="0.01" id="total-number-households" name="total_number_households" value="{{ bluejustice_instance.total_number_households }}">
                                         <label for="households-participation-percentage">B. % of households participating in SSF:</label>
-                                        <input type="number" id="households-participation-percentage" name="households_participation_percentage" value="{{ bluejustice_instance.households_participation_percentage }}">
+                                        <input type="number" step="0.01" id="households-participation-percentage" name="households_participation_percentage" value="{{ bluejustice_instance.households_participation_percentage }}">
                                     </div>
 
 
                                     <!-- load missing fields from other info div -->
                                     <div class="get-loaded-basic-form-data" style="display: none;"></div>
                                     <div class="get-loaded-equity-form-data" style="display: none;"></div>
-                                    <div class="get-loaded-others-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-contributors-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-image-form-data" style="display: none;"></div>
                                     <!-- end loading -->
 
                                     <input
@@ -1324,7 +1326,8 @@
                                     <!-- load missing fields from other info div -->
                                     <div class="get-loaded-basic-form-data" style="display: none;"></div>
                                     <div class="get-loaded-general-form-data" style="display: none;"></div>
-                                    <div class="get-loaded-others-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-contributors-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-image-form-data" style="display: none;"></div>
                                     <!-- end loading -->
 
 
@@ -1349,7 +1352,7 @@
                             {% if editor %}
                                 <button class="bt-edit">Edit</button>
                             {% endif %}
-                            <a class="accordion-nav" href="#panel-other">Other Information</a>
+                            <a class="accordion-nav" href="#panel-other">Contributor's Information</a>
                             <div id="panel-other" class="content">
                                 <table>
                                     <tr>
@@ -1376,6 +1379,64 @@
                                         <td><strong>Role and involvement in SSF</strong></td>
                                         <td>{{ bluejustice_instance.role }}</td>
                                     </tr>
+                                </table>
+
+
+                                {% if editor %}
+                                <form action="{% url 'bluejustice-basic' %}" method="post">
+                                {% csrf_token %}
+                                    
+                                    <div class="FormSet" id="bluejustice-contributors-form">
+                                        {{ bluejustice_form.name.label_tag }}{{ bluejustice_form.name }}
+                                        {{ bluejustice_form.email.label_tag }}{{ bluejustice_form.email }}
+                                        {{ bluejustice_form.affiliation.label_tag }}{{ bluejustice_form.affiliation }}
+                                        {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
+                                        {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
+                                        {{ bluejustice_form.contributor.label_tag }}{{ bluejustice_form.contributor }}
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="get-loaded-basic-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-general-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-equity-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-image-form-data" style="display: none;"></div>
+                                    <!-- end loading -->
+
+
+                                    <input
+                                        class="issf_core_id"
+                                        type="hidden"
+                                        value="{{ bluejustice_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+
+                                    <div class="button-bar">
+                                        <button type="submit" class="medium radius submit bt-submit">Submit</button>
+                                    </div>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+
+
+                        <dd class="accordion-navigation">
+                            {% if editor %}
+                                <button class="bt-edit">Edit</button>
+                            {% endif %}
+                            <a class="accordion-nav" href="#panel-image">Image</a>
+                            <div id="panel-image" class="content">
+                                <table>
+                                    <tr>
+                                        <td><strong>Image</strong></td>
+                                        <td>
+                                            {% if bluejustice_instance.has_image %}
+                                                <img src="{{ bluejustice_instance.uploaded_image_url }}" width="200">
+                                            {% elif core_instance.geographic_scope_type == 'National' %}
+                                                <p>No Image to display</p>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
 
                                     <tr>
                                         <td><strong>Where this photo was taken</strong></td>
@@ -1398,17 +1459,11 @@
                                 <form action="{% url 'bluejustice-basic' %}" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                     
-                                    <div class="FormSet" id="bluejustice-others-form">
-                                        {{ bluejustice_form.name.label_tag }}{{ bluejustice_form.name }}
-                                        {{ bluejustice_form.email.label_tag }}{{ bluejustice_form.email }}
-                                        {{ bluejustice_form.affiliation.label_tag }}{{ bluejustice_form.affiliation }}
-                                        {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
-                                        {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
+                                    <div class="FormSet" id="bluejustice-image-form">
                                         {{ bluejustice_form.photo_upload.label_tag }}{{ bluejustice_form.photo_upload }}
                                         {{ bluejustice_form.photo_location.label_tag }}{{ bluejustice_form.photo_location }}
                                         {{ bluejustice_form.date_of_photo.label_tag }}{{ bluejustice_form.date_of_photo }}
                                         {{ bluejustice_form.photographer.label_tag }}{{ bluejustice_form.photographer }}
-                                        {{ bluejustice_form.contributor.label_tag }}{{ bluejustice_form.contributor }}
                                     </div>
 
 
@@ -1416,6 +1471,7 @@
                                     <div class="get-loaded-basic-form-data" style="display: none;"></div>
                                     <div class="get-loaded-general-form-data" style="display: none;"></div>
                                     <div class="get-loaded-equity-form-data" style="display: none;"></div>
+                                    <div class="get-loaded-contributors-form-data" style="display: none;"></div>
                                     <!-- end loading -->
 
 
@@ -1433,25 +1489,10 @@
                                 {% endif %}
                             </div>
                         </dd>
-                        
-
-                        {% if bluejustice_instance.has_image %}
-                            <dd class="accordion-navigation">
-                                <a class="accordion-nav" href="#panel1t">Image</a>
-
-                                <div
-                                    id="panel1t"
-                                    class="content"
-                                    align="center"
-                                    style="padding-left: 0; padding-right: 0;">
-                                    {% if bluejustice_instance.has_image %}
-                                        <img src="{{ bluejustice_instance.uploaded_image_url }}">
-                                    {% endif %}
-                                </div>
-                            </dd>
-                        {% endif %}      
                     </dl>
                 </div>
+
+
 
                 <div class="large-3 columns">
                     <div
@@ -1577,7 +1618,8 @@
         $('.get-loaded-basic-form-data').html($('#bluejustice-basic-form').html());
         $('.get-loaded-general-form-data').html($('#bluejustice-general-form').html());
         $('.get-loaded-equity-form-data').html($('#bluejustice-equity-form').html());
-        $('.get-loaded-others-form-data').html($('#bluejustice-others-form').html());
+        $('.get-loaded-contributors-form-data').html($('#bluejustice-contributors-form').html());
+        $('.get-loaded-image-form-data').html($('#bluejustice-image-form').html());
 
     </script>
 {% endblock additional_js_scripts %}
