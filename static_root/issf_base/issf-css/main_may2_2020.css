@@ -98,6 +98,7 @@ hr {
   }
 
 .visual-carousel {
+    position: relative;
     height: 728px;
     background-color: #fff;
     border-radius: 3px;
@@ -140,6 +141,16 @@ hr {
 
 }
 
+
+.visual-carousel-control #prev-slide:hover,
+.visual-carousel-control #next-slide:hover{
+    color: #2699FB;
+    background: #fff;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
 @media only screen and (min-width: 1850px) {
     .slideshow-container {
         width: 650px;
@@ -154,9 +165,9 @@ hr {
 
 .slideshow-container {
     width: 95%;
-    height: 650px;
+    max-height: 98.5%;
     margin: 0 2.5%;
-    display: flex;
+    display: none;
     align-items: center;
     position: relative;
 }
@@ -3113,18 +3124,24 @@ form ul {
     background-repeat: no-repeat;
 }
 
-#map-loading-overlay {
+#map-loading-overlay,
+#visual-loading-overlay {
     background-color: rgba(255, 255, 255, 0.4);
     background-image: url('../img/loading.gif');
     background-repeat: no-repeat;
     background-position: center center;
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: -15px;
     z-index: 9999;
-    width: 100%;
+    width: calc(100% + 30px);
     height: 100%;
     display: none;
+}
+
+#visual-loading-overlay {
+    display: block;   
+    background-color: #fff !important;
 }
 
 /* homepage Map dimension */

@@ -18,18 +18,32 @@
     <!-- for D3 -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
+    <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
 
     <style>
+        /* css for visual 1*/
+        #visual1 { padding-top: 50px; }
         .tooltipPopsup { position: absolute; font-size: 15px; width:  auto; height: auto; pointer-events: none; background-color: #feffeb; box-sizing: border-box; padding: 10px; border: 1px solid #e3e3e3; border-radius: 3px; z-index: 999; }
+
+        /* css for visual 2*/
         .svgmap { border: 0px solid  black; }
         .hidden { display: none; }
         .axis { font: 10px sans-serif; }
         .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
         .chart-button { background: white; border-radius: 2; margin-top: -0.5px; margin-right: 0px; margin-bottom: -0.5px; margin-left: 0px; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
-        .button-on { background: #fff; color: #333; border: 1px solid #555; box-shadow: 0 2px 0 0 #555; }
+        .button-on { background: #fff; color: #333; border: 1px solid #555; }
         .button-off { background: #f3f3f3; color: #555; border: 1px solid #555; }
         .second-button { background: #fafcd2; border-radius: 2; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
         .Column { margin-top: 0px; margin-right: 8px; margin-bottom: 9px; margin-left: 0px; display: inline-block; }
+        #drop select { width: 200px; margin-left: 15px; padding-right: 28px; border-radius: 4px; }
+        input#myCheckbox { width: 18px; height: 18px; }
+        #dimensions label { display: inline-block; margin-right: 10px; font-weight: normal; }
+        #dimensions label input { margin-right: 4px; height: 18px; width: 18px; margin-bottom: 0; }
+        #dimensions label span {float: right;}
+        label#myCheckboxLabel { display: inline-block; margin-left: -5px; }
+        #myCheckboxLabel span { float: right; margin-left: 6px; }
+        #visual2 ul { text-align: left; }
+        #visual2 .Row:nth-child(1) { padding-top: 20px; text-align: center; }
     </style>
 
 {% endblock additional_css_scripts %}
@@ -381,9 +395,11 @@
         
             <div id="visual-section" class="visual-section">
                 <div class="visual-carousel">
+                    <div id="visual-loading-overlay"></div>
                     <!-- <h3 style="padding: 1rem">Latest Visualization</h3> -->
                     <div class="cycle-slideshow slideshow-container" 
-                         data-cycle-fx=scrollHorz
+                         data-cycle-fx=fade
+                         data-cycle-manual-speed="10"
                          data-cycle-timeout=0
                          data-cycle-slides="> div"
                          data-cycle-prev="#prev-slide"
@@ -403,11 +419,13 @@
                             <div align=left class="Row2">
                                 <div class="Column">
                                     <form id="dimensions">
-                                      <input  class='radioinput' type='radio' id="country" name="first" checked>Country</input>
-                                      <input type='radio' id="region" name="first">Region</input>
+                                      <label id="country-radio-label" for="country"><input class="radioinput" type="radio" id="country" name="first" checked=""><span>Country</span></label>
+                                      <label id="region-radio-label" for="region"><input type="radio" id="region" name="first"><span>Region</span></label>
                                     </form>
                                 </div>
-                                <input type="checkbox" id="myCheckbox"> Compare
+                                
+                                <label id="myCheckboxLabel" for="myCheckbox"> <input type="checkbox" id="myCheckbox"> <span>Compare</span></label>
+                                
                                 <div id="drop" align=left class="Column"></div>
                             </div>
 
@@ -691,7 +709,6 @@
     <script src="https://d3js.org/d3-format.v1.min.js"></script>
     <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
     <script src="https://d3js.org/d3-scale.v1.min.js"></script>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
 
 
 
@@ -837,7 +854,7 @@
               .attr("transform", function(d) { return (x(d.country) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(0)translate(0,15)" : "rotate(-0)translate(0,15)"; })
               .text(function(d) { return d.country+" "+d.total; })
               .attr("font-weight","normal")
-              .style("font-size", "13px")
+              .style("font-size", "11px")
               .style("font-family", "sans-serif");  
           
           var yAxis = g.append("g")
@@ -1304,7 +1321,7 @@
             var selector = d3.select("#drop")
                     .append("select")
                     .attr("id","dropdown")
-                    .style("border", "5px")
+                    .style("border", "3px")
                     .style("border-style", "outset")
                     .style("border-color", "blue") 
                     .on("change", dropChange);
@@ -1313,7 +1330,7 @@
             var selector2 = d3.select("#drop")
                     .append("select")
                     .attr("id","dropdown2")
-                    .style("border", "5px")
+                    .style("border", "3px")
                     .style("border-style", "outset")
                     .style("border-color", "#f25618")
                     .on("change", dropChange);
@@ -2705,6 +2722,11 @@
 
 
     <script>
+        $(window).load(function(){
+            $('#visual-loading-overlay').fadeOut();
+            $('.slideshow-container').css('display','flex');
+        });
+
         $('.most-recent-contributions-trigger li a').on('click',function(){
             let $this = $(this);
             $this.closest('li').addClass('active').siblings('li').removeClass('active');
