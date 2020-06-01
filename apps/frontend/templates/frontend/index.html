@@ -395,7 +395,7 @@
         
             <div id="visual-section" class="visual-section">
                 <div class="visual-carousel">
-                    <div id="visual-loading-overlay"></div>
+                    <!-- <div id="visual-loading-overlay"></div> -->
                     <!-- <h3 style="padding: 1rem">Latest Visualization</h3> -->
                     <div class="cycle-slideshow slideshow-container" 
                          data-cycle-fx=fade
@@ -405,8 +405,7 @@
                          data-cycle-prev="#prev-slide"
                          data-cycle-next="#next-slide">
 
-                        <div id="visual1" class="visual-slides"></div>
-                        <div id="visual2" class="visual-slides">
+                        <!-- <div id="visual2" class="visual-slides">
                             <div align=left class="Row">
                                 <div class="Column">
                                     <button name="Gear" class="chart-button button-on">Gear</button><button name="Vessel" class="chart-button button-off">Vessel</button>
@@ -438,13 +437,14 @@
                                     <li>"Percentage" option shows the percentage of the specific vessel/gear type among all available vessel/gear types</li>
                                 </ul>
                             </div>
-                        </div> <!-- /visual2 -->
+                        </div> --> <!-- /visual2 -->
+                        <div id="visual1" class="visual-slides"></div>
                     </div>
 
-                    <div class="visual-carousel-control">
+                    <!-- <div class="visual-carousel-control">
                         <button id="prev-slide">&#8617;</button>
                         <button id="next-slide">&#8618;</button>
-                    </div>
+                    </div> -->
                 </div>
                 
             </div>
@@ -941,7 +941,7 @@
         underConstr.append("text").text("Under Construction :)")
 
         d3.csv("{% static "issf_base/csv/gear.csv" %}", function(error, data){   
-        // d3.csv("{% static "issf_base/csv/gear.csv" %}", function(error, data){   
+            // commit with data- "5973352b6b4f3fdb05466493ce06c97271c92408"
             //Read data by Gear or Vessel
             var data = data.filter(function(d){return d.attribute_value__value_label != '';});
             var main_gear = data.filter(function(d){return d.attribute__attribute_label == 'Main gear type(s):';});
