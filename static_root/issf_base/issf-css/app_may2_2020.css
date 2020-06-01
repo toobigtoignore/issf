@@ -1782,3 +1782,12 @@ span.error, small.error {
     font-size: 0.95rem;
     font-weight: bold;
 }
+
+/* Default icon URLs for Leaflet */
+.leaflet-default-icon-path {
+    background-image: url(/static/leaflet/images/marker-icon.png);
+}
+
+.leaflet-default-shadow-path {
+    background-image: url(/static/leaflet/images/marker-shadow.png);
+}
