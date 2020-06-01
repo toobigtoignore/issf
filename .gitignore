@@ -18,6 +18,8 @@ bin/
 include/
 lib/
 
+#User uploads
+user_uploads/**
 data/postgres/misc
 data/postgres/sessions
 data/postgres/logs
