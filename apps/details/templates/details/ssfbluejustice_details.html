@@ -1431,7 +1431,7 @@
                                         <td><strong>Image</strong></td>
                                         <td>
                                             {% if bluejustice_instance.has_image %}
-                                                <img src="{{ bluejustice_instance.uploaded_image_url }}" width="200">
+                                                <a href="{{ bluejustice_instance.uploaded_image_url }}" target="_blank"><img src="{{ bluejustice_instance.uploaded_image_url }}" width="400"></a>
                                             {% elif core_instance.geographic_scope_type == 'National' %}
                                                 <p>No Image to display</p>
                                             {% endif %}
@@ -1460,7 +1460,8 @@
                                 {% csrf_token %}
                                     
                                     <div class="FormSet" id="bluejustice-image-form">
-                                        {{ bluejustice_form.photo_upload.label_tag }}{{ bluejustice_form.photo_upload }}
+                                        <label id="photo-upload-label">Upload a photo:</label><br>
+                                        {{ bluejustice_form.photo_upload }}
                                         {{ bluejustice_form.photo_location.label_tag }}{{ bluejustice_form.photo_location }}
                                         {{ bluejustice_form.date_of_photo.label_tag }}{{ bluejustice_form.date_of_photo }}
                                         {{ bluejustice_form.photographer.label_tag }}{{ bluejustice_form.photographer }}
@@ -1620,6 +1621,6 @@
         $('.get-loaded-equity-form-data').html($('#bluejustice-equity-form').html());
         $('.get-loaded-contributors-form-data').html($('#bluejustice-contributors-form').html());
         $('.get-loaded-image-form-data').html($('#bluejustice-image-form').html());
-
+        
     </script>
 {% endblock additional_js_scripts %}

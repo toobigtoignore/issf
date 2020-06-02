@@ -396,7 +396,7 @@ class SSFBlueJusticeForm(ModelForm):
             'country': 'Contributor Country',
             'role': 'Role and involvement in SSF',
             'img_url': 'Image URL (direct links only)',
-            'photo_upload' : "Upload a photo",
+            'photo_upload' : 'Upload a photo',
             'photo_location': 'Where this photo was taken',
             'date_of_photo': 'When this photo was taken (Date)',
             'photographer': 'Name of the photographer',
