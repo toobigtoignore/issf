@@ -2898,6 +2898,13 @@ form ul {
     line-height: 1;
 }
 
+#video-tutorial {
+    float: left;
+    width: 104%;
+    margin-left: -2%;
+    margin-top: 10px;
+}
+
 #panel-right {
     float: left;
     width: 30%;
@@ -3325,4 +3332,37 @@ table p {
     float: right;
     width: calc(100% - 30px);
     margin-top: -3px;
+}
+
+#bluejustice-image-form {
+    font-size: 15px;
+    line-height: 26px;
+}
+
+#bluejustice-image-form a {
+    width: 65%;
+    position: absolute;
+    left: 100px;
+    padding: 0px 10px;
+    background: oldlace;
+    overflow: hidden;
+}
+
+#bluejustice-image-form #photo_upload-clear_id {
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-top: 2px;
+}
+
+#bluejustice-image-form #photo_upload-clear_id + label {
+    float: right;
+    font-size: 16px;
+}
+
+#bluejustice-image-form #photo-upload-label {
+    float: left;
+    width: 100%;
+    margin-bottom: 12px;
+    cursor: default;
 }
