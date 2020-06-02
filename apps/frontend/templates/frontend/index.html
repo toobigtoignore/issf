@@ -15,10 +15,8 @@
     >
     <link rel="stylesheet" href="{% static 'frontend/css/frontend.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.min.css">
-    <!-- for D3 -->
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
-    <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
+    
+    
 
     <style>
         /* css for visual 1*/
@@ -27,6 +25,7 @@
 
         /* css for visual 2*/
         .svgmap { border: 0px solid  black; }
+        .svgdiv { text-align: center; }
         .hidden { display: none; }
         .axis { font: 10px sans-serif; }
         .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
@@ -42,8 +41,8 @@
         #dimensions label span {float: right;}
         label#myCheckboxLabel { display: inline-block; margin-left: -5px; }
         #myCheckboxLabel span { float: right; margin-left: 6px; }
+        #visual2 { padding-top: 20px; }
         #visual2 ul { text-align: left; }
-        #visual2 .Row:nth-child(1) { padding-top: 20px; text-align: center; }
     </style>
 
 {% endblock additional_css_scripts %}
@@ -395,7 +394,7 @@
         
             <div id="visual-section" class="visual-section">
                 <div class="visual-carousel">
-                    <!-- <div id="visual-loading-overlay"></div> -->
+                    <div id="visual-loading-overlay"></div>
                     <!-- <h3 style="padding: 1rem">Latest Visualization</h3> -->
                     <div class="cycle-slideshow slideshow-container" 
                          data-cycle-fx=fade
@@ -405,8 +404,10 @@
                          data-cycle-prev="#prev-slide"
                          data-cycle-next="#next-slide">
 
-                        <!-- <div id="visual2" class="visual-slides">
-                            <div align=left class="Row">
+
+                        <div id="visual1" class="visual-slides"></div>
+                        <div id="visual2" class="visual-slides">
+                            <div align="center" class="Row">
                                 <div class="Column">
                                     <button name="Gear" class="chart-button button-on">Gear</button><button name="Vessel" class="chart-button button-off">Vessel</button>
                                 </div>
@@ -415,7 +416,7 @@
                                 </div>
                             </div>
 
-                            <div align=left class="Row2">
+                            <div align="center" class="Row2">
                                 <div class="Column">
                                     <form id="dimensions">
                                       <label id="country-radio-label" for="country"><input class="radioinput" type="radio" id="country" name="first" checked=""><span>Country</span></label>
@@ -437,14 +438,13 @@
                                     <li>"Percentage" option shows the percentage of the specific vessel/gear type among all available vessel/gear types</li>
                                 </ul>
                             </div>
-                        </div> --> <!-- /visual2 -->
-                        <div id="visual1" class="visual-slides"></div>
+                        </div> <!-- /visual2 -->
                     </div>
 
-                    <!-- <div class="visual-carousel-control">
+                    <div class="visual-carousel-control">
                         <button id="prev-slide">&#8617;</button>
                         <button id="next-slide">&#8618;</button>
-                    </div> -->
+                    </div>
                 </div>
                 
             </div>
@@ -496,9 +496,16 @@
                         
                                 <div align="center">
                                     <p style="margin-bottom: -15px;"><u>Need help with ISSF?</u></p>
-                                    <p>See our <a href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-basic-tutorial-1.0.1.pdf" target="_blank">basic</a> or <a href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-advanced-tutorial-1.0.1.pdf" target="_blank">advanced</a> tutorials.
+                                    <p>
+                                        See our <a href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-basic-tutorial-1.0.1.pdf" target="_blank">basic</a> or <a href="http://toobigtoignore.net/wp-content/uploads/2014/11/ISSF-advanced-tutorial-1.0.1.pdf" target="_blank">advanced</a> tutorials.
+                                        <br>
+                                        <span>Or perhaps you will find our video tutorial useful.</span>
                                     </p>
                                 </div>
+
+                                <div id="video-tutorial">
+                                    <iframe width="100%" height="400px" src="https://www.youtube.com/embed/P2TUCEAAMrg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div> <!-- /video-tutorial -->
                             </div> <!-- /body-contribute -->
                         </div> <!-- /box-info-welcome -->
                     </div>  <!-- /welcome -->
@@ -683,7 +690,7 @@
 
                 <div id="panel-right">
                     <div id="twitter-box" class="twitter-box">       
-                        <a class="twitter-timeline" data-height="1293" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
+                        <a class="twitter-timeline" data-height="1738" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
                         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
                 </div>
@@ -703,12 +710,19 @@
 
     <!-- Note that the chorodata.json file needs to be prefaced with "var choroData = " in order for it to work-->
     <script src="{% static 'frontend/js/chorodata.json' %}"></script>
+
+    <!-- for D3 -->
     <script src="https://d3js.org/d3-array.v1.min.js"></script>
     <script src="https://d3js.org/d3-collection.v1.min.js"></script>
     <script src="https://d3js.org/d3-color.v1.min.js"></script>
     <script src="https://d3js.org/d3-format.v1.min.js"></script>
     <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
     <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
+    
+    <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
+    
 
 
 
@@ -923,8 +937,9 @@
 
     <!-- Visual 2 -->
     <script>
+
         var margin = {top: 20, right: 10, bottom: 150, left: 60, space : 2},
-            width = 650 - margin.left - margin.right,
+            width = 665 - margin.left - margin.right,
             height = 450 - margin.top - margin.bottom;
                     
         var svg = d3.select(".svgdiv").append("svg")
@@ -940,8 +955,8 @@
                     
         underConstr.append("text").text("Under Construction :)")
 
-        d3.csv("{% static "issf_base/csv/gear.csv" %}", function(error, data){   
-            // commit with data- "5973352b6b4f3fdb05466493ce06c97271c92408"
+        d3.csv("{% static "issf_base/csv/gear.csv" %}", function(error, data){
+            
             //Read data by Gear or Vessel
             var data = data.filter(function(d){return d.attribute_value__value_label != '';});
             var main_gear = data.filter(function(d){return d.attribute__attribute_label == 'Main gear type(s):';});
@@ -979,49 +994,42 @@
                         length: v.length
                       }; })
                       .entries(main);
-                      
+                
                 data_gear.forEach(function (d) {
                             d.values.forEach(function (v) {
-                                v.values.perc = +d3.format(".5f")((v.values.length/data_count[types.indexOf(v.key)].values.length))
-                                v.values.total = data_count[types.indexOf(v.key)].values.length
+                                v.value.perc = +d3.format(".5f")((v.value.length/data_count[types.indexOf(v.key)].value.length))
+                                v.value.total = data_count[types.indexOf(v.key)].value.length
                             });
                         });
                       
-                var format_scale = d3.scale.ordinal()
+                var format_scale = d3.scaleOrdinal()
                         .domain(["count","perc"])
                         .range([".0f",".2%"]);
                 
-                var format_scale_yAxis = d3.scale.ordinal()
+                var format_scale_yAxis = d3.scaleOrdinal()
                         .domain(["count","perc"])
                         .range([".0f",".0%"]);
                 
             //Set Axiss
-                var x0 = d3.scale.ordinal()
+                var x0 = d3.scaleBand()
                         .domain(types)
-                        .rangeRoundBands([0, width], .1);
+                        .rangeRound([0, width])
+                        .paddingInner(0.1); 
                         
-                var y = d3.scale.linear()
+                var y = d3.scaleLinear()
                         .range([height, 0]);
                         
-                var xAxis = d3.svg.axis()
-                    .scale(x0)
-                    .tickSize(3)
-                    .orient("bottom");
-
-                var yAxis = d3.svg.axis()
-                    .scale(y)
-                    .tickFormat(d3.format(format_scale_yAxis(countOrPerc)))
-                    .orient("left");
+                var xAxis = d3.axisBottom(x0)
+                var yAxis = d3.axisLeft(y).tickFormat(d3.format(format_scale_yAxis(countOrPerc)));
 
                 svg.append("g")
                     .attr("class", "x axis")
                     .attr("transform", "translate(0," + height + ")")
                     .call(xAxis)
                         .selectAll("text")
-                        .style("font-size", "13px")
+                        .style("font-size", "11px")
                         .style("font-family", "sans")
                         .style("text-anchor", "end")
-                        //.style('font-weight','bold')
                         .attr("dx", "-.8em")
                         .attr("dy", ".55em")
                         .attr("transform", "rotate(-30)" );
@@ -1035,7 +1043,6 @@
                       .attr("dy", ".71em")
                       .style("text-anchor", "end")
                       .style('font-weight','bold')
-                      <!-- .text("Value"); -->
                       
                 //Updateing by DropDown
                 dG.update = function(drop_selected, types, turn){
@@ -1054,13 +1061,13 @@
                             for(var j =0;j<selection[0].values.length;j++){ 
                                 if (types[i] == selection[0].values[j].key) {var a=1;}
                             }
-                            if (a==0){selection[0].values.push({key : types[i],values : {length : 0, perc : 0}})}
+                            if (a==0){selection[0].values.push({key : types[i],value : {length : 0, perc : 0}})}
                             
                             var a=0;
                             for(var j =0;j<selection[1].values.length;j++){ 
                                 if (types[i] == selection[1].values[j].key) {var a=1;}
                             }
-                            if (a==0){selection[1].values.push({key : types[i],values : {length : 0, perc : 0}})}
+                            if (a==0){selection[1].values.push({key : types[i],value : {length : 0, perc : 0}})}
                             
                             selection_new.push({key : types[i],values : []})
                         }
@@ -1068,8 +1075,8 @@
                     //Merge two Selected Dropdown
                     for(var i =0;i<selection_new.length;i++){
                         for(var j =0;j<2;j++){
-                            length = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].values.length
-                            perc = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].values.perc
+                            length = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].value.length
+                            perc = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].value.perc
                             selection_new[i].values.push({count : length, perc : perc, country : uniqueCountryArray[drop_selected[j]]})
                         }
                     }
@@ -1077,15 +1084,15 @@
             //Color and Axis
                 var inlineCountry = selection_new[0].values.map(function(d) { return d.country; });
                 
-                var color = d3.scale.ordinal()
+                var color = d3.scaleOrdinal()
                     .domain(inlineCountry)
                     .range(["blue","#f25618"]); 
                 
-                var x1 = d3.scale.ordinal()
+                var x1 = d3.scaleBand()
                         .domain(inlineCountry)
-                        .rangeRoundBands([0, x0.rangeBand()]);; 
+                        .rangeRound([0, x0.bandwidth()]);
                 
-                var y = d3.scale.linear()
+                var y = d3.scaleLinear()
                         .domain([0, d3.max(selection_new, function(categorie) { return d3.max(categorie.values, function(d) { return d[countOrPerc]; }); })]) //[countOrPerc]
                         .range([height, 0]);
 
@@ -1102,15 +1109,15 @@
                 
                 //Append Country to Slice Group
                 var sliceCountry = slice.selectAll("rect")
-                    .data(function(d) { return d.values; });    
+                    .data(function(d){return d.values; });  
                 
                 sliceCountry.enter().append("rect")
                     .attr('height', 0);
             
-                    sliceCountry
+                    slice.selectAll("rect")
                         .attr("name", function(d,i) {  return d.country; })
                         .attr("class","rectangle")
-                        .attr("width", x1.rangeBand())
+                        .attr("width", x1.bandwidth())
                         .attr("x", function(d) { return x1(d.country);})
                         .style("fill", function(d) { return color(d.country) })
                         .on("mouseover", function(d) {
@@ -1126,7 +1133,7 @@
                             });
                     
                     if (turn == 1){
-                        sliceCountry
+                        slice.selectAll("rect")
                             .attr("y", function(d) { return y(0); })
                             .attr("height", function(d) { return height - y(0); })
                     }
@@ -1244,6 +1251,10 @@
                   if (selected_button == "Gear") {drawGraph(main_gear, inlineCountryId, types_gear, form_val)}
                     else if (selected_button == "Vessel") {drawGraph(main_vessel, inlineCountryId, types_vessel, form_val)}
                     else if (selected_button == "GearVessel") {GearVessel("GearVessel")}
+                    
+                if (selected_button == "Gear") {drawGraph(main_gear, inlineCountryId, types_gear, form_val)}
+                    else if (selected_button == "Vessel") {drawGraph(main_vessel, inlineCountryId, types_vessel, form_val)}
+                    else if (selected_button == "GearVessel") {GearVessel("GearVessel")}
             }
             
             
@@ -1321,7 +1332,7 @@
             var selector = d3.select("#drop")
                     .append("select")
                     .attr("id","dropdown")
-                    .style("border", "3px")
+                    .style("border", "2px")
                     .style("border-style", "outset")
                     .style("border-color", "blue") 
                     .on("change", dropChange);
@@ -1330,7 +1341,7 @@
             var selector2 = d3.select("#drop")
                     .append("select")
                     .attr("id","dropdown2")
-                    .style("border", "3px")
+                    .style("border", "2px")
                     .style("border-style", "outset")
                     .style("border-color", "#f25618")
                     .on("change", dropChange);
@@ -1344,6 +1355,7 @@
             var dG = drawGraph(main_gear, inlineCountryId, types_gear, form_val)
             
         });
+
     </script>
     <!-- Visual 2 end -->
 
