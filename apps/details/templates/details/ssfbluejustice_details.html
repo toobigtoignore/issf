@@ -1457,12 +1457,11 @@
                             <div id="panel-image" class="content">
                                 <table>
                                     <tr>
-                                        <td><strong>Image</strong></td>
-                                        <td>
+                                        <td colspan="2" style="text-align: center; vertical-align: middle; padding: 15px 10px;">
                                             {% if bluejustice_instance.has_image %}
-                                                <a href="{{ bluejustice_instance.uploaded_image_url }}" target="_blank"><img src="{{ bluejustice_instance.uploaded_image_url }}" width="400"></a>
-                                            {% elif core_instance.geographic_scope_type == 'National' %}
-                                                <p>No Image to display</p>
+                                                <a href="{{ bluejustice_instance.uploaded_image_url }}" target="_blank"><img src="{{ bluejustice_instance.uploaded_image_url }}" style="max-width: 100%;"></a>
+                                            {% else %}
+                                                <p style="text-align: left; font-weight: bold; font-size: 17px; margin-bottom: 0;">No Image to display</p>
                                             {% endif %}
                                         </td>
                                     </tr>
