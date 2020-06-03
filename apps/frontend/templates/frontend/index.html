@@ -30,7 +30,7 @@
         .axis { font: 10px sans-serif; }
         .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
         .chart-button { background: white; border-radius: 2; margin-top: -0.5px; margin-right: 0px; margin-bottom: -0.5px; margin-left: 0px; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
-        .button-on { background: #fff; color: #333; border: 1px solid #555; }
+        .button-on { background: #2699FB !important; color: #fff; border: 1px solid #555; }
         .button-off { background: #f3f3f3; color: #555; border: 1px solid #555; }
         .second-button { background: #fafcd2; border-radius: 2; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
         .Column { margin-top: 0px; margin-right: 8px; margin-bottom: 9px; margin-left: 0px; display: inline-block; }
@@ -1319,7 +1319,7 @@
             /////////First Steps//////////
                     
             //Buttons
-            d3.selectAll("button").on("click", button_click);
+            d3.selectAll("#visual2 button").on("click", button_click);
             
             //Radio Buttons
             var dataDim = d3.select("#dimensions")
@@ -2241,6 +2241,7 @@
 
         // Setup table and options, but don't fill
         var table = $('#record-table-result').dataTable({
+            // "columnDefs": [{"visible": false, "targets": 3}],
             "columnDefs": [{"visible": false, "targets": 3}],
             "paging": true,
             "autoWidth": false,
@@ -2389,7 +2390,7 @@
                         iconUrl: '{% static "img/icon-experiences.png" %}'
                     })),
                     "SSF Blue Justice": L.icon(Object.assign(defaultIconProps, {
-                        iconUrl: '{% static "img/icon-experiences.png" %}'
+                        iconUrl: '{% static "img/icon-bluejustice.png" %}'
                     })),
                     "Case Study": L.icon(Object.assign(defaultIconProps, {
                         iconUrl: '{% static "img/icon-casestudies.png" %}'
