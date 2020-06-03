@@ -442,7 +442,7 @@
                                     <tr>
                                         <td><strong>Provide SSF definition, if applicable:</strong></td>
                                         <td>
-                                            {% if bluejustice_instance.ssf_terms_fisheries_definiton %} {{ bluejustice_instance.ssf_terms_fisheries_definiton }} {% endif %}
+                                            {% if bluejustice_instance.ssf_terms_fisheries_definiton %} {{ bluejustice_instance.ssf_terms_fisheries_definiton | linebreaksbr }} {% endif %}
                                         </td>
                                     </tr>
 
@@ -936,7 +936,7 @@
 
 
                                         <label for="ssf-terms-definition">Provide SSF definition, if applicable:</label>
-                                        <textarea rows="5" id="ssf-terms-definition" name="ssf_terms_fisheries_definition">{{ bluejustice_instance.ssf_terms_fisheries_definition}}</textarea>
+                                        <textarea rows="5" id="ssf-terms-definition" name="ssf_terms_fisheries_definiton">{{ bluejustice_instance.ssf_terms_fisheries_definiton}}</textarea>
 
 
                                         <h5>Main gears type(s): (select ALL that apply)</h5>
@@ -1158,12 +1158,12 @@
                                 <table>
                                     <tr>
                                         <td><strong>Background about SSF:</strong></td>
-                                        <td>{{ bluejustice_instance.background_about_ssf }}</td>
+                                        <td>{{ bluejustice_instance.background_about_ssf | linebreaksbr }}</td>
                                     </tr>
 
                                     <tr>
                                         <td><strong>Justice in context:</strong></td>
-                                        <td>{{ bluejustice_instance.justice_in_context }}</td>
+                                        <td>{{ bluejustice_instance.justice_in_context | linebreaksbr }}</td>
                                     </tr>
 
                                     <tr>
@@ -1184,12 +1184,12 @@
 
                                     <tr>
                                         <td><strong>Dealing with justice:</strong></td>
-                                        <td>{{ bluejustice_instance.dealing_with_justice }}</td>
+                                        <td>{{ bluejustice_instance.dealing_with_justice | linebreaksbr }}</td>
                                     </tr>
 
                                     <tr>
                                         <td><strong>Sources:</strong></td>
-                                        <td>{{ bluejustice_instance.social_justice_source }}</td>
+                                        <td>{{ bluejustice_instance.social_justice_source | linebreaksbr }}</td>
                                     </tr>
                                 </table>
                                 {% if editor %}
@@ -1622,5 +1622,6 @@
         $('.get-loaded-contributors-form-data').html($('#bluejustice-contributors-form').html());
         $('.get-loaded-image-form-data').html($('#bluejustice-image-form').html());
         
+                
     </script>
 {% endblock additional_js_scripts %}
