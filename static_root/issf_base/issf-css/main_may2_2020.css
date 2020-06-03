@@ -1717,6 +1717,11 @@ form sup {
     text-shadow: 2px 2px 4px #23232385;
 }
 
+.accordion-navigation td ul {
+    font-size: 0.875rem;
+    margin-bottom: 0;
+}
+
 .report .accordion-navigation > a {
     position: relative;
     padding: 2px 14px;

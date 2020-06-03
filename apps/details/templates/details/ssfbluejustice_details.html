@@ -1169,16 +1169,45 @@
                                     <tr>
                                         <td><strong>Types of justice:</strong></td>
                                         <td>
-                                            {% if bluejustice_instance.types_of_justice_distributive %} {{ bluejustice_instance.types_of_justice_distributive }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_social %} {{ bluejustice_instance.types_of_justice_social }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_economic %} {{ bluejustice_instance.types_of_justice_economic }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_market %} {{ bluejustice_instance.types_of_justice_market }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_infrastructure %} {{ bluejustice_instance.types_of_justice_infrastructure }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_regulatory %} {{ bluejustice_instance.types_of_justice_regulatory }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_procedural %} {{ bluejustice_instance.types_of_justice_procedural }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_environmental %} {{ bluejustice_instance.types_of_justice_environmental }}, {% endif %}
-                                            {% if bluejustice_instance.covid_19_related %} {{ bluejustice_instance.covid_19_related }}, {% endif %}
-                                            {% if bluejustice_instance.types_of_justice_others %} {{ bluejustice_instance.types_of_justice_others }}, {% endif %}
+                                            <ul>
+                                                {% if bluejustice_instance.types_of_justice_distributive %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_distributive }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_social %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_social }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_economic %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_economic }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_market %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_market }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_infrastructure %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_infrastructure }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_regulatory %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_regulatory }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_procedural %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_procedural }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_environmental %} 
+                                                    <li>{{ bluejustice_instance.types_of_justice_environmental }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.covid_19_related %} 
+                                                    <li>{{ bluejustice_instance.covid_19_related }}</li> 
+                                                {% endif %}
+                                                
+                                                {% if bluejustice_instance.types_of_justice_others %} <li>Other</li> {% endif %}
+                                            </ul>
                                         </td>
                                     </tr>
 
