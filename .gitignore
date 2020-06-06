@@ -10,7 +10,7 @@
 /tabledata.zip
 .idea/
 pip-selfcheck.json
-
+dump_and_notify.sh
 # For those who sym-link docker-compose-dev/-prod
 docker-compose.yml
 
