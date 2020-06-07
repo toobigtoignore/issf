@@ -24,7 +24,7 @@ AS $function$
     WHERE issf_core_id = core_id;
 
 
-    summary_text := summary_text || '<strong> Name: </strong>' || bluejustice.ssf_name;
+    summary_text := summary_text || '<strong> Name: </strong>' || bluejustice.ssf_name || '<br><strong> Country: </strong>' || bluejustice.country;
 
 
     bluejustice.core_record_summary := summary_text;
@@ -44,4 +44,3 @@ AS $function$
 
   $function$
 ;
-
