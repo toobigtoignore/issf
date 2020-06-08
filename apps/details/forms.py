@@ -190,9 +190,9 @@ class SSFOrganizationForm(ModelForm):
                 cleaned_data[key] = bleach.clean(cleaned_data[key])
 
         # Ensures that if a user has selected that they apply a ssf definition, they explain it
-        if 'ssf_defined' in cleaned_data:
-            if cleaned_data['ssf_defined'] == 'Yes' and not cleaned_data['ssf_definition']:
-                raise forms.ValidationError('Please provide an SSF defintion.')
+        # if 'ssf_defined' in cleaned_data:
+        #     if not cleaned_data['ssf_definition']:
+        #         raise forms.ValidationError('Please provide an SSF defintion.')
 
         # Ensures that if a user selected other for a field, they write something in the other textfield
         if not confirm_other_text('organization_type_other_text', 'organization_type_other',

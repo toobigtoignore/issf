@@ -212,7 +212,7 @@
                         >
                             Compute Canada
                         </a>
-                        - Contact <a href="mailto:issf.tbti@gmail.com">ISSF Support</a>
+                        - Contact <a href="mailto:issf.toobigtoignore@gmail.com">ISSF Support</a>
                     </p>
                     <p class="copy">
                         <i>Any use of ISSF data must acknowledge TBTI as the source of contribution.</i>
@@ -292,13 +292,14 @@
         {% endblock additional_js_scripts %}
 
         <script>
-            // console.log('hello');
             $(document).ajaxError(function( event, request, settings ){
-                $('body').append("<div id='error-overlay' style='position:fixed; left:0; top:0; width:100%; height:100%; background: rgba(230,230,230,.7); display: flex; justify-content: center; align-items: center; z-index: 99;'><div class='cancel-overlay' style='position: fixed; width: 100%; height: 100%; left:0; top:0; z-index: 9; cursor: pointer;'></div><div style='width: 40%;height: auto;background: white;box-sizing: border-box;padding: 50px 30px;font-size: 40px;line-height: 50px;color: #1d4d9b;border-radius: 10px;border: 2px solid #1d4d9b;position: relative; z-index:99;'>Oops, Something went wrong. <br>Please try again later!!<span class='cancel-overlay' style='font-size: 20px;font-weight: bold;position: absolute;right: 17px;top: 1px;cursor:pointer;font-family: sans-serif;'>X</span></div></div>");
-                $('.cancel-overlay').on('click',function(){
-                    $('#error-overlay').remove();
-                    $('.loading').removeAttr('data-submit').removeAttr('disabled').removeClass('loading').text('Submit');
-                });
+                setTimeout(function(){
+                    $('body').append("<div id='error-overlay' style='position:fixed; left:0; top:0; width:100%; height:100%; background: rgba(230,230,230,.7); display: flex; justify-content: center; align-items: center; z-index: 99;'><div class='cancel-overlay' style='position: fixed; width: 100%; height: 100%; left:0; top:0; z-index: 9; cursor: pointer;'></div><div style='width: 40%;height: auto;background: white;box-sizing: border-box;padding: 50px 30px;font-size: 40px;line-height: 50px;color: #1d4d9b;border-radius: 10px;border: 2px solid #1d4d9b;position: relative; z-index:99;'>Oops, Something went wrong. <br>Please try again later!!<span class='cancel-overlay' style='font-size: 20px;font-weight: bold;position: absolute;right: 17px;top: 1px;cursor:pointer;font-family: sans-serif;'>X</span></div></div>");
+                    $('.cancel-overlay').on('click',function(){
+                        $('#error-overlay').remove();
+                        $('.loading').removeAttr('data-submit').removeAttr('disabled').removeClass('loading').text('Submit');
+                    });
+                }, 10);
             });
         </script>
     </body>
