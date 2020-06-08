@@ -2127,7 +2127,7 @@ nav .tabs .tab-title a[tabindex="5"] span {
 }
 
 nav .tabs .tab-title a[tabindex="6"] span {
-    background-image: url('../../img/icon-bluejustice.gif');
+    background-image: url('../img/icon-bluejustice-blue.gif');
     background-repeat: no-repeat;
     background-size: 32px 32px;
     background-position: 10px 7px;
