@@ -979,12 +979,14 @@ footer {
     background-image: url(../img/icon-capacity.png);
 }
 
-.map-icons #expe span {
+map-icons #expe span {
     background-image: url(../img/icon-expe.png);
 }
 
 .map-icons #bluejustice span {
-    background-image: url(../img/icon-expe.png);
+    background-image: url(../img/icon-bluejustice-white.gif);
+    background-size: 30px 30px;
+    background-position: center
 }
 
 .map-icons #guidelines span {
@@ -2125,7 +2127,10 @@ nav .tabs .tab-title a[tabindex="5"] span {
 }
 
 nav .tabs .tab-title a[tabindex="6"] span {
-    background-position: -104px -312px;
+    background-image: url('../../img/icon-bluejustice.gif');
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    background-position: 10px 7px;
 }
 
 nav .tabs .tab-title a[tabindex="7"] span {
@@ -2288,7 +2293,10 @@ nav .tabs .active a[tabindex="5"] span {
 }
 
 nav .tabs .active a[tabindex="6"] span {
-    background-position: 0 -312px;
+    background-image: url('../img/icon-bluejustice-white.gif');
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    background-position: 10px 7px;
 }
 
 nav .tabs .active a[tabindex="7"] span {

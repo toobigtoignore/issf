@@ -20,7 +20,11 @@
 
     <style>
         /* css for visual 1*/
-        #visual1 { padding-top: 50px; }
+        #visual1 { padding-top: 15px; text-align: center; }
+        #visual1-info li { display: inline; font-size: 14px; }
+        #visual1-info li:after { content: "|"; font-weight: bold; margin-left: 15px; margin-right: 15px; }
+        #visual1-info li:last-child:after { content: ""; margin-right: 0; }
+
         .tooltipPopsup { position: absolute; font-size: 15px; width:  auto; height: auto; pointer-events: none; background-color: #feffeb; box-sizing: border-box; padding: 10px; border: 1px solid #e3e3e3; border-radius: 3px; z-index: 999; }
 
         /* css for visual 2*/
@@ -405,7 +409,18 @@
                          data-cycle-next="#next-slide">
 
 
-                        <div id="visual1" class="visual-slides"></div>
+                        <div id="visual1" class="visual-slides">
+                            <div id="svg-visual1" style="overflow: hidden;"></div>
+                            <div style="margin-top:-25px;">
+                                <p style="font-size: 14.5px; font-weight: bold; margin-top: 15px; margin-bottom: 0px;">This visualisation shows the number of SSF profiles of various governance modes by countries</p>
+                                <ul id="visual1-info">
+                                    <li>Mouse over the country to see the details</li>
+                                    <li>Click to rotate the wheel </li>
+                                    <li>Scroll to zoom the chart</li>
+                                </ul>
+                            </div>
+                        </div>
+
                         <div id="visual2" class="visual-slides">
                             <div align="center" class="Row">
                                 <div class="Column">
@@ -431,7 +446,7 @@
 
                             <div class="svgdiv"></div>
 
-                            <div>
+                            <div style="margin-top: -20px;">
                                 This visualisation shows vessel/gear types by country/region.
                                 <ul>
                                     <li>"Count" option shows the number of SSF profiles in the database that identified the given vessel/gear types in a certain country/region</li>
@@ -729,18 +744,18 @@
     <!-- visual 1 -->
     <script>
         // set the dimensions and margins of the graph
-        var margin = {top: 30, right: 30, bottom: 30, left: 30}
+        var margin = {top: 30, right: 0, bottom: 0, left: 0}
         var width = 600;
-        var height = 650;
+        var height = 620;
             
         // append the svg object to the body of the page
-        var svg = d3.select("#visual1")
+        var svg = d3.select("#svg-visual1")
           .append("svg")
-            .attr("width", width + 200)
-            .attr("height", height + 100)
+            .attr("width", width)
+            .attr("height", height + 30)
             
         var g_scroll =	svg.call(d3.zoom().scaleExtent([1, 3]).on("zoom", function () {
-               // g_scroll.attr("transform", d3.event.transform)
+               g_scroll.attr("transform", d3.event.transform)
             }))
             .append("g")
             .attr("id","scroll group")
@@ -841,7 +856,7 @@
             .outerRadius(500)
             .innerRadius(0);
             
-        d3.select("#visual1")
+        d3.select("#svg-visual1")
             .on("click",function(d) { 
                                 rotate = rotate + 8;
                                 
@@ -868,7 +883,7 @@
               .attr("transform", function(d) { return (x(d.country) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(0)translate(0,15)" : "rotate(-0)translate(0,15)"; })
               .text(function(d) { return d.country+" "+d.total; })
               .attr("font-weight","normal")
-              .style("font-size", "11px")
+              .style("font-size", "13px")
               .style("font-family", "sans-serif");  
           
           var yAxis = g.append("g")
@@ -1027,7 +1042,7 @@
                     .attr("transform", "translate(0," + height + ")")
                     .call(xAxis)
                         .selectAll("text")
-                        .style("font-size", "11px")
+                        .style("font-size", "13px")
                         .style("font-family", "sans")
                         .style("text-anchor", "end")
                         .attr("dx", "-.8em")
