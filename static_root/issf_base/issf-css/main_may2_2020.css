@@ -984,9 +984,13 @@ map-icons #expe span {
 }
 
 .map-icons #bluejustice span {
-    background-image: url(../img/icon-bluejustice-white.gif);
+    background-image: url(../img/icon-bluejustice-blue.gif);
     background-size: 30px 30px;
     background-position: center
+}
+
+.map-icons #bluejustice.on span {
+    background-image: url(../img/icon-bluejustice-white.gif) !important;
 }
 
 .map-icons #guidelines span {
