@@ -14,7 +14,7 @@
                     {% for url, title in record_items.items %}
                         <li>
                             [{{ title.1 }}]
-                            <a href="{{ url }}" }> {{ title.0 }}</a>
+                            <a href="{{ url }}" }> {{ title.0 | striptags }}</a>
                         </li>
                     {% endfor %}
                 </ul>
