@@ -47,16 +47,16 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <strong>SSF Name</strong>
+                                            <strong>Small-scale fisheries (SSF) name</strong>
                                         </td>
                                         <td>{{ bluejustice_instance.ssf_name }}, {{ bluejustice_instance.ssf_country }}</td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <strong>Location</strong>
+                                            <strong>Small-scale fisheries country</strong>
                                         </td>
-                                        <td>{{ bluejustice_instance.ssf_location }}</td>
+                                        <td>{{ bluejustice_instance.ssf_country }}</td>
                                     </tr>
 
                                     <tr style="border-bottom: 1px solid #ddd;">
@@ -104,14 +104,442 @@
                                         {% csrf_token %}
                                         <div class="FormSet" id="bluejustice-basic-form">
 
-                                            <label class="bluejustice-section-label" for="ssf-name">SSF Name:</label>
+                                            <label class="bluejustice-section-label" for="ssf-name">Small-scale fisheries (SSF) name:</label>
                                             <input type="text" name="ssf_name" id="ssf-name" value="{{ bluejustice_instance.ssf_name }}" />
 
                                             <h5>Location and main species:</h5>
                                             <label for="ssf-location">A. Location: </label>
                                             <input type="text" id="ssf-location" name="ssf_location" value="{{ bluejustice_instance.ssf_location }}">
-                                            <label for="ssf-country">B. Country:</label>
-                                            <input type="text" id="ssf-country" name="ssf_country" value="{{ bluejustice_instance.ssf_country }}">
+                                            <label for="contributor-country">B. Small-scale fisheries (SSF) country:</label>
+                                            <input type="hidden" id="ssf-country-value" value="{{ bluejustice_instance.ssf_country }}">
+                                            <select name="ssf_country" required="" id="ssf-country">
+                                              {%if bluejustice_instance.ssf_country == ""%} <option value="" selected>---------</option>
+                                              {% else %} <option value="">---------</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Afghanistan"%} <option value="Afghanistan" selected>Afghanistan</option>
+                                              {% else %} <option value="Afghanistan">Afghanistan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Albania"%} <option value="Albania" selected>Albania</option>
+                                              {% else %} <option value="Albania">Albania</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Algeria"%} <option value="Algeria" selected>Algeria</option>
+                                              {% else %} <option value="Algeria">Algeria</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Andorra"%} <option value="Andorra" selected>Andorra</option>
+                                              {% else %} <option value="Andorra">Andorra</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Angola"%} <option value="Angola" selected>Angola</option>
+                                              {% else %} <option value="Angola">Angola</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Anguilla"%} <option value="Anguilla" selected>Anguilla</option>
+                                              {% else %} <option value="Anguilla">Anguilla</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Antigua and Barbuda"%} <option value="Antigua and Barbuda" selected>Antigua and Barbuda</option>
+                                              {% else %} <option value="Antigua and Barbuda">Antigua and Barbuda</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Argentina"%} <option value="Argentina" selected>Argentina</option>
+                                              {% else %} <option value="Argentina">Argentina</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Armenia"%} <option value="Armenia" selected>Armenia</option>
+                                              {% else %} <option value="Armenia">Armenia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Australia"%} <option value="Australia" selected>Australia</option>
+                                              {% else %} <option value="Australia">Australia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Austria"%} <option value="Austria" selected>Austria</option>
+                                              {% else %} <option value="Austria">Austria</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Azerbaijan"%} <option value="Azerbaijan" selected>Azerbaijan</option>
+                                              {% else %} <option value="Azerbaijan">Azerbaijan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Bahamas"%} <option value="Bahamas" selected>Bahamas</option>
+                                              {% else %} <option value="Bahamas">Bahamas</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Bahrain"%} <option value="Bahrain" selected>Bahrain</option>
+                                              {% else %} <option value="Bahrain">Bahrain</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Bangladesh"%} <option value="Bangladesh" selected>Bangladesh</option>
+                                              {% else %} <option value="Bangladesh">Bangladesh</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Barbados"%} <option value="Barbados" selected>Barbados</option>
+                                              {% else %} <option value="Barbados">Barbados</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Belarus"%} <option value="Belarus" selected>Belarus</option>
+                                              {% else %} <option value="Belarus">Belarus</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Belgium"%} <option value="Belgium" selected>Belgium</option>
+                                              {% else %} <option value="Belgium">Belgium</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Belize"%} <option value="Belize" selected>Belize</option>
+                                              {% else %} <option value="Belize">Belize</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Benin"%} <option value="Benin" selected>Benin</option>
+                                              {% else %} <option value="Benin">Benin</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Bhutan"%} <option value="Bhutan" selected>Bhutan</option>
+                                              {% else %} <option value="Bhutan">Bhutan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Bolivia (Plurinational State of)"%} <option value="Bolivia (Plurinational State of)" selected>Bolivia (Plurinational State of)</option>
+                                              {% else %} <option value="Bolivia (Plurinational State of)">Bolivia (Plurinational State of)</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Bosnia and Herzegovina"%} <option value="Bosnia and Herzegovina" selected>Bosnia and Herzegovina</option>
+                                              {% else %} <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Botswana"%} <option value="Botswana" selected>Botswana</option>
+                                              {% else %} <option value="Botswana">Botswana</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Brazil"%} <option value="Brazil" selected>Brazil</option>
+                                              {% else %} <option value="Brazil">Brazil</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Brunei Darussalam"%} <option value="Brunei Darussalam" selected>Brunei Darussalam</option>
+                                              {% else %} <option value="Brunei Darussalam">Brunei Darussalam</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Bulgaria"%} <option value="Bulgaria" selected>Bulgaria</option>
+                                              {% else %} <option value="Bulgaria">Bulgaria</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Burkina Faso"%} <option value="Burkina Faso" selected>Burkina Faso</option>
+                                              {% else %} <option value="Burkina Faso">Burkina Faso</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Burundi"%} <option value="Burundi" selected>Burundi</option>
+                                              {% else %} <option value="Burundi">Burundi</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cabo Verde"%} <option value="Cabo Verde" selected>Cabo Verde</option>
+                                              {% else %} <option value="Cabo Verde">Cabo Verde</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cambodia"%} <option value="Cambodia" selected>Cambodia</option>
+                                              {% else %} <option value="Cambodia">Cambodia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cameroon"%} <option value="Cameroon" selected>Cameroon</option>
+                                              {% else %} <option value="Cameroon">Cameroon</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Canada"%} <option value="Canada" selected>Canada</option>
+                                              {% else %} <option value="Canada">Canada</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cape Verde"%} <option value="Cape Verde" selected>Cape Verde</option>
+                                              {% else %} <option value="Cape Verde">Cape Verde</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Central African Republic"%} <option value="Central African Republic" selected>Central African Republic</option>
+                                              {% else %} <option value="Central African Republic">Central African Republic</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Chad"%} <option value="Chad" selected>Chad</option>
+                                              {% else %} <option value="Chad">Chad</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Chile"%} <option value="Chile" selected>Chile</option>
+                                              {% else %} <option value="Chile">Chile</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "China"%} <option value="China" selected>China</option>
+                                              {% else %} <option value="China">China</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Colombia"%} <option value="Colombia" selected>Colombia</option>
+                                              {% else %} <option value="Colombia">Colombia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Comoros"%} <option value="Comoros" selected>Comoros</option>
+                                              {% else %} <option value="Comoros">Comoros</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Congo"%} <option value="Congo" selected>Congo</option>
+                                              {% else %} <option value="Congo">Congo</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cook Islands"%} <option value="Cook Islands" selected>Cook Islands</option>
+                                              {% else %} <option value="Cook Islands">Cook Islands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Costa Rica"%} <option value="Costa Rica" selected>Costa Rica</option>
+                                              {% else %} <option value="Costa Rica">Costa Rica</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cote d'Ivoire"%} <option value="Cote d'Ivoire" selected>Cote d'Ivoire</option>
+                                              {% else %} <option value="Cote d'Ivoire">Cote d'Ivoire</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Croatia"%} <option value="Croatia" selected>Croatia</option>
+                                              {% else %} <option value="Croatia">Croatia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cuba"%} <option value="Cuba" selected>Cuba</option>
+                                              {% else %} <option value="Cuba">Cuba</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Cyprus"%} <option value="Cyprus" selected>Cyprus</option>
+                                              {% else %} <option value="Cyprus">Cyprus</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Czech Republic"%} <option value="Czech Republic" selected>Czech Republic</option>
+                                              {% else %} <option value="Czech Republic">Czech Republic</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Democratic People's Republic of Korea"%} <option value="Democratic People's Republic of Korea" selected>Democratic People's Republic of Korea</option>
+                                              {% else %} <option value="Democratic People's Republic of Korea">Democratic People's Republic of Korea</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Democratic Republic of the Congo"%} <option value="Democratic Republic of the Congo" selected>Democratic Republic of the Congo</option>
+                                              {% else %} <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Denmark"%} <option value="Denmark" selected>Denmark</option>
+                                              {% else %} <option value="Denmark">Denmark</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Djibouti"%} <option value="Djibouti" selected>Djibouti</option>
+                                              {% else %} <option value="Djibouti">Djibouti</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Dominica"%} <option value="Dominica" selected>Dominica</option>
+                                              {% else %} <option value="Dominica">Dominica</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Dominican Republic"%} <option value="Dominican Republic" selected>Dominican Republic</option>
+                                              {% else %} <option value="Dominican Republic">Dominican Republic</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Ecuador"%} <option value="Ecuador" selected>Ecuador</option>
+                                              {% else %} <option value="Ecuador">Ecuador</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Egypt"%} <option value="Egypt" selected>Egypt</option>
+                                              {% else %} <option value="Egypt">Egypt</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "El Salvador"%} <option value="El Salvador" selected>El Salvador</option>
+                                              {% else %} <option value="El Salvador">El Salvador</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Equatorial Guinea"%} <option value="Equatorial Guinea" selected>Equatorial Guinea</option>
+                                              {% else %} <option value="Equatorial Guinea">Equatorial Guinea</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Eritrea"%} <option value="Eritrea" selected>Eritrea</option>
+                                              {% else %} <option value="Eritrea">Eritrea</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Estonia"%} <option value="Estonia" selected>Estonia</option>
+                                              {% else %} <option value="Estonia">Estonia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Ethiopia"%} <option value="Ethiopia" selected>Ethiopia</option>
+                                              {% else %} <option value="Ethiopia">Ethiopia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Faroe Islands"%} <option value="Faroe Islands" selected>Faroe Islands</option>
+                                              {% else %} <option value="Faroe Islands">Faroe Islands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Fiji"%} <option value="Fiji" selected>Fiji</option>
+                                              {% else %} <option value="Fiji">Fiji</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Finland"%} <option value="Finland" selected>Finland</option>
+                                              {% else %} <option value="Finland">Finland</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "France"%} <option value="France" selected>France</option>
+                                              {% else %} <option value="France">France</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "French Guiana"%} <option value="French Guiana" selected>French Guiana</option>
+                                              {% else %} <option value="French Guiana">French Guiana</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Gabon"%} <option value="Gabon" selected>Gabon</option>
+                                              {% else %} <option value="Gabon">Gabon</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Gambia"%} <option value="Gambia" selected>Gambia</option>
+                                              {% else %} <option value="Gambia">Gambia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Georgia"%} <option value="Georgia" selected>Georgia</option>
+                                              {% else %} <option value="Georgia">Georgia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Germany"%} <option value="Germany" selected>Germany</option>
+                                              {% else %} <option value="Germany">Germany</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Ghana"%} <option value="Ghana" selected>Ghana</option>
+                                              {% else %} <option value="Ghana">Ghana</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Greece"%} <option value="Greece" selected>Greece</option>
+                                              {% else %} <option value="Greece">Greece</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Greenland"%} <option value="Greenland" selected>Greenland</option>
+                                              {% else %} <option value="Greenland">Greenland</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Grenada"%} <option value="Grenada" selected>Grenada</option>
+                                              {% else %} <option value="Grenada">Grenada</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Guadeloupe"%} <option value="Guadeloupe" selected>Guadeloupe</option>
+                                              {% else %} <option value="Guadeloupe">Guadeloupe</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Guatemala"%} <option value="Guatemala" selected>Guatemala</option>
+                                              {% else %} <option value="Guatemala">Guatemala</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Guinea"%} <option value="Guinea" selected>Guinea</option>
+                                              {% else %} <option value="Guinea">Guinea</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Guinea-Bissau"%} <option value="Guinea-Bissau" selected>Guinea-Bissau</option>
+                                              {% else %} <option value="Guinea-Bissau">Guinea-Bissau</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Guyana"%} <option value="Guyana" selected>Guyana</option>
+                                              {% else %} <option value="Guyana">Guyana</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Haiti"%} <option value="Haiti" selected>Haiti</option>
+                                              {% else %} <option value="Haiti">Haiti</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Honduras"%} <option value="Honduras" selected>Honduras</option>
+                                              {% else %} <option value="Honduras">Honduras</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Hong Kong"%} <option value="Hong Kong" selected>Hong Kong</option>
+                                              {% else %} <option value="Hong Kong">Hong Kong</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Hungary"%} <option value="Hungary" selected>Hungary</option>
+                                              {% else %} <option value="Hungary">Hungary</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Iceland"%} <option value="Iceland" selected>Iceland</option>
+                                              {% else %} <option value="Iceland">Iceland</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "India"%} <option value="India" selected>India</option>
+                                              {% else %} <option value="India">India</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Indonesia"%} <option value="Indonesia" selected>Indonesia</option>
+                                              {% else %} <option value="Indonesia">Indonesia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Iran (Islamic Republic of)"%} <option value="Iran (Islamic Republic of)" selected>Iran (Islamic Republic of)</option>
+                                              {% else %} <option value="Iran (Islamic Republic of)">Iran (Islamic Republic of)</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Iraq"%} <option value="Iraq" selected>Iraq</option>
+                                              {% else %} <option value="Iraq">Iraq</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Ireland"%} <option value="Ireland" selected>Ireland</option>
+                                              {% else %} <option value="Ireland">Ireland</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Israel"%} <option value="Israel" selected>Israel</option>
+                                              {% else %} <option value="Israel">Israel</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Italy"%} <option value="Italy" selected>Italy</option>
+                                              {% else %} <option value="Italy">Italy</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Jamaica"%} <option value="Jamaica" selected>Jamaica</option>
+                                              {% else %} <option value="Jamaica">Jamaica</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Japan"%} <option value="Japan" selected>Japan</option>
+                                              {% else %} <option value="Japan">Japan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Jordan"%} <option value="Jordan" selected>Jordan</option>
+                                              {% else %} <option value="Jordan">Jordan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Kazakhstan"%} <option value="Kazakhstan" selected>Kazakhstan</option>
+                                              {% else %} <option value="Kazakhstan">Kazakhstan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Kenya"%} <option value="Kenya" selected>Kenya</option>
+                                              {% else %} <option value="Kenya">Kenya</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Kiribati"%} <option value="Kiribati" selected>Kiribati</option>
+                                              {% else %} <option value="Kiribati">Kiribati</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Kuwait"%} <option value="Kuwait" selected>Kuwait</option>
+                                              {% else %} <option value="Kuwait">Kuwait</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Kyrgyzstan"%} <option value="Kyrgyzstan" selected>Kyrgyzstan</option>
+                                              {% else %} <option value="Kyrgyzstan">Kyrgyzstan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Lao People's Democratic Republic"%} <option value="Lao People's Democratic Republic" selected>Lao People's Democratic Republic</option>
+                                              {% else %} <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Latvia"%} <option value="Latvia" selected>Latvia</option>
+                                              {% else %} <option value="Latvia">Latvia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Lebanon"%} <option value="Lebanon" selected>Lebanon</option>
+                                              {% else %} <option value="Lebanon">Lebanon</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Lesotho"%} <option value="Lesotho" selected>Lesotho</option>
+                                              {% else %} <option value="Lesotho">Lesotho</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Liberia"%} <option value="Liberia" selected>Liberia</option>
+                                              {% else %} <option value="Liberia">Liberia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Libya"%} <option value="Libya" selected>Libya</option>
+                                              {% else %} <option value="Libya">Libya</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Lithuania"%} <option value="Lithuania" selected>Lithuania</option>
+                                              {% else %} <option value="Lithuania">Lithuania</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Luxembourg"%} <option value="Luxembourg" selected>Luxembourg</option>
+                                              {% else %} <option value="Luxembourg">Luxembourg</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Madagascar"%} <option value="Madagascar" selected>Madagascar</option>
+                                              {% else %} <option value="Madagascar">Madagascar</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Malawi"%} <option value="Malawi" selected>Malawi</option>
+                                              {% else %} <option value="Malawi">Malawi</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Malaysia"%} <option value="Malaysia" selected>Malaysia</option>
+                                              {% else %} <option value="Malaysia">Malaysia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Maldives"%} <option value="Maldives" selected>Maldives</option>
+                                              {% else %} <option value="Maldives">Maldives</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Mali"%} <option value="Mali" selected>Mali</option>
+                                              {% else %} <option value="Mali">Mali</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Malta"%} <option value="Malta" selected>Malta</option>
+                                              {% else %} <option value="Malta">Malta</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Marshall Islands"%} <option value="Marshall Islands" selected>Marshall Islands</option>
+                                              {% else %} <option value="Marshall Islands">Marshall Islands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Martinique"%} <option value="Martinique" selected>Martinique</option>
+                                              {% else %} <option value="Martinique">Martinique</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Mauritania"%} <option value="Mauritania" selected>Mauritania</option>
+                                              {% else %} <option value="Mauritania">Mauritania</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Mauritius"%} <option value="Mauritius" selected>Mauritius</option>
+                                              {% else %} <option value="Mauritius">Mauritius</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Mexico"%} <option value="Mexico" selected>Mexico</option>
+                                              {% else %} <option value="Mexico">Mexico</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Micronesia (Federated States of)"%} <option value="Micronesia (Federated States of)" selected>Micronesia (Federated States of)</option>
+                                              {% else %} <option value="Micronesia (Federated States of)">Micronesia (Federated States of)</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Monaco"%} <option value="Monaco" selected>Monaco</option>
+                                              {% else %} <option value="Monaco">Monaco</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Mongolia"%} <option value="Mongolia" selected>Mongolia</option>
+                                              {% else %} <option value="Mongolia">Mongolia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Montenegro"%} <option value="Montenegro" selected>Montenegro</option>
+                                              {% else %} <option value="Montenegro">Montenegro</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Montserrat"%} <option value="Montserrat" selected>Montserrat</option>
+                                              {% else %} <option value="Montserrat">Montserrat</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Morocco"%} <option value="Morocco" selected>Morocco</option>
+                                              {% else %} <option value="Morocco">Morocco</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Mozambique"%} <option value="Mozambique" selected>Mozambique</option>
+                                              {% else %} <option value="Mozambique">Mozambique</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Myanmar"%} <option value="Myanmar" selected>Myanmar</option>
+                                              {% else %} <option value="Myanmar">Myanmar</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Namibia"%} <option value="Namibia" selected>Namibia</option>
+                                              {% else %} <option value="Namibia">Namibia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Nauru"%} <option value="Nauru" selected>Nauru</option>
+                                              {% else %} <option value="Nauru">Nauru</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Nepal"%} <option value="Nepal" selected>Nepal</option>
+                                              {% else %} <option value="Nepal">Nepal</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Netherlands"%} <option value="Netherlands" selected>Netherlands</option>
+                                              {% else %} <option value="Netherlands">Netherlands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Netherlands Antilles"%} <option value="Netherlands Antilles" selected>Netherlands Antilles</option>
+                                              {% else %} <option value="Netherlands Antilles">Netherlands Antilles</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "New Caledonia"%} <option value="New Caledonia" selected>New Caledonia</option>
+                                              {% else %} <option value="New Caledonia">New Caledonia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "New Zealand"%} <option value="New Zealand" selected>New Zealand</option>
+                                              {% else %} <option value="New Zealand">New Zealand</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Nicaragua"%} <option value="Nicaragua" selected>Nicaragua</option>
+                                              {% else %} <option value="Nicaragua">Nicaragua</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Niger"%} <option value="Niger" selected>Niger</option>
+                                              {% else %} <option value="Niger">Niger</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Nigeria"%} <option value="Nigeria" selected>Nigeria</option>
+                                              {% else %} <option value="Nigeria">Nigeria</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Niue"%} <option value="Niue" selected>Niue</option>
+                                              {% else %} <option value="Niue">Niue</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Northern Mariana Islands"%} <option value="Northern Mariana Islands" selected>Northern Mariana Islands</option>
+                                              {% else %} <option value="Northern Mariana Islands">Northern Mariana Islands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Norway"%} <option value="Norway" selected>Norway</option>
+                                              {% else %} <option value="Norway">Norway</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Oman"%} <option value="Oman" selected>Oman</option>
+                                              {% else %} <option value="Oman">Oman</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Pakistan"%} <option value="Pakistan" selected>Pakistan</option>
+                                              {% else %} <option value="Pakistan">Pakistan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Palau"%} <option value="Palau" selected>Palau</option>
+                                              {% else %} <option value="Palau">Palau</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Panama"%} <option value="Panama" selected>Panama</option>
+                                              {% else %} <option value="Panama">Panama</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Papua New Guinea"%} <option value="Papua New Guinea" selected>Papua New Guinea</option>
+                                              {% else %} <option value="Papua New Guinea">Papua New Guinea</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Paraguay"%} <option value="Paraguay" selected>Paraguay</option>
+                                              {% else %} <option value="Paraguay">Paraguay</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Peru"%} <option value="Peru" selected>Peru</option>
+                                              {% else %} <option value="Peru">Peru</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Philippines"%} <option value="Philippines" selected>Philippines</option>
+                                              {% else %} <option value="Philippines">Philippines</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Poland"%} <option value="Poland" selected>Poland</option>
+                                              {% else %} <option value="Poland">Poland</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Portugal"%} <option value="Portugal" selected>Portugal</option>
+                                              {% else %} <option value="Portugal">Portugal</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Puerto Rico"%} <option value="Puerto Rico" selected>Puerto Rico</option>
+                                              {% else %} <option value="Puerto Rico">Puerto Rico</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Qatar"%} <option value="Qatar" selected>Qatar</option>
+                                              {% else %} <option value="Qatar">Qatar</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Republic of Korea"%} <option value="Republic of Korea" selected>Republic of Korea</option>
+                                              {% else %} <option value="Republic of Korea">Republic of Korea</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Republic of Moldova"%} <option value="Republic of Moldova" selected>Republic of Moldova</option>
+                                              {% else %} <option value="Republic of Moldova">Republic of Moldova</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Romania"%} <option value="Romania" selected>Romania</option>
+                                              {% else %} <option value="Romania">Romania</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Russian Federation"%} <option value="Russian Federation" selected>Russian Federation</option>
+                                              {% else %} <option value="Russian Federation">Russian Federation</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Rwanda"%} <option value="Rwanda" selected>Rwanda</option>
+                                              {% else %} <option value="Rwanda">Rwanda</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Saint Kitts and Nevis"%} <option value="Saint Kitts and Nevis" selected>Saint Kitts and Nevis</option>
+                                              {% else %} <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Saint Lucia"%} <option value="Saint Lucia" selected>Saint Lucia</option>
+                                              {% else %} <option value="Saint Lucia">Saint Lucia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Saint Vincent and the Grenadines"%} <option value="Saint Vincent and the Grenadines" selected>Saint Vincent and the Grenadines</option>
+                                              {% else %} <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Samoa"%} <option value="Samoa" selected>Samoa</option>
+                                              {% else %} <option value="Samoa">Samoa</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "San Marino"%} <option value="San Marino" selected>San Marino</option>
+                                              {% else %} <option value="San Marino">San Marino</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Sao Tome and Principe"%} <option value="Sao Tome and Principe" selected>Sao Tome and Principe</option>
+                                              {% else %} <option value="Sao Tome and Principe">Sao Tome and Principe</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Saudi Arabia"%} <option value="Saudi Arabia" selected>Saudi Arabia</option>
+                                              {% else %} <option value="Saudi Arabia">Saudi Arabia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Senegal"%} <option value="Senegal" selected>Senegal</option>
+                                              {% else %} <option value="Senegal">Senegal</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Serbia"%} <option value="Serbia" selected>Serbia</option>
+                                              {% else %} <option value="Serbia">Serbia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Seychelles"%} <option value="Seychelles" selected>Seychelles</option>
+                                              {% else %} <option value="Seychelles">Seychelles</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Sierra Leone"%} <option value="Sierra Leone" selected>Sierra Leone</option>
+                                              {% else %} <option value="Sierra Leone">Sierra Leone</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Singapore"%} <option value="Singapore" selected>Singapore</option>
+                                              {% else %} <option value="Singapore">Singapore</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Slovakia"%} <option value="Slovakia" selected>Slovakia</option>
+                                              {% else %} <option value="Slovakia">Slovakia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Slovenia"%} <option value="Slovenia" selected>Slovenia</option>
+                                              {% else %} <option value="Slovenia">Slovenia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Solomon Islands"%} <option value="Solomon Islands" selected>Solomon Islands</option>
+                                              {% else %} <option value="Solomon Islands">Solomon Islands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Somalia"%} <option value="Somalia" selected>Somalia</option>
+                                              {% else %} <option value="Somalia">Somalia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "South Africa"%} <option value="South Africa" selected>South Africa</option>
+                                              {% else %} <option value="South Africa">South Africa</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "South Sudan"%} <option value="South Sudan" selected>South Sudan</option>
+                                              {% else %} <option value="South Sudan">South Sudan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Spain"%} <option value="Spain" selected>Spain</option>
+                                              {% else %} <option value="Spain">Spain</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Sri Lanka"%} <option value="Sri Lanka" selected>Sri Lanka</option>
+                                              {% else %} <option value="Sri Lanka">Sri Lanka</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Sudan"%} <option value="Sudan" selected>Sudan</option>
+                                              {% else %} <option value="Sudan">Sudan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Suriname"%} <option value="Suriname" selected>Suriname</option>
+                                              {% else %} <option value="Suriname">Suriname</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Swaziland"%} <option value="Swaziland" selected>Swaziland</option>
+                                              {% else %} <option value="Swaziland">Swaziland</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Sweden"%} <option value="Sweden" selected>Sweden</option>
+                                              {% else %} <option value="Sweden">Sweden</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Switzerland"%} <option value="Switzerland" selected>Switzerland</option>
+                                              {% else %} <option value="Switzerland">Switzerland</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Syrian Arab Republic"%} <option value="Syrian Arab Republic" selected>Syrian Arab Republic</option>
+                                              {% else %} <option value="Syrian Arab Republic">Syrian Arab Republic</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Taiwan, Province of China"%} <option value="Taiwan, Province of China" selected>Taiwan, Province of China</option>
+                                              {% else %} <option value="Taiwan, Province of China">Taiwan, Province of China</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Tajikistan"%} <option value="Tajikistan" selected>Tajikistan</option>
+                                              {% else %} <option value="Tajikistan">Tajikistan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Thailand"%} <option value="Thailand" selected>Thailand</option>
+                                              {% else %} <option value="Thailand">Thailand</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "The former Yugoslav "%} <option value="The former Yugoslav " selected>The former Yugoslav Republic of Macedonia</option>
+                                              {% else %} <option value="The former Yugoslav">The former Yugoslav Republic of Macedonia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Timor-Leste"%} <option value="Timor-Leste" selected>Timor-Leste</option>
+                                              {% else %} <option value="Timor-Leste">Timor-Leste</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Togo"%} <option value="Togo" selected>Togo</option>
+                                              {% else %} <option value="Togo">Togo</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Tonga"%} <option value="Tonga" selected>Tonga</option>
+                                              {% else %} <option value="Tonga">Tonga</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Trinidad and Tobago"%} <option value="Trinidad and Tobago" selected>Trinidad and Tobago</option>
+                                              {% else %} <option value="Trinidad and Tobago">Trinidad and Tobago</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Tunisia"%} <option value="Tunisia" selected>Tunisia</option>
+                                              {% else %} <option value="Tunisia">Tunisia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Turkey"%} <option value="Turkey" selected>Turkey</option>
+                                              {% else %} <option value="Turkey">Turkey</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Turkmenistan"%} <option value="Turkmenistan" selected>Turkmenistan</option>
+                                              {% else %} <option value="Turkmenistan">Turkmenistan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Turks and Caicos Islands"%} <option value="Turks and Caicos Islands" selected>Turks and Caicos Islands</option>
+                                              {% else %} <option value="Turks and Caicos Islands">Turks and Caicos Islands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Tuvalu"%} <option value="Tuvalu" selected>Tuvalu</option>
+                                              {% else %} <option value="Tuvalu">Tuvalu</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "U.S. Minor Islands"%} <option value="U.S. Minor Islands" selected>U.S. Minor Islands</option>
+                                              {% else %} <option value="U.S. Minor Islands">U.S. Minor Islands</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Uganda"%} <option value="Uganda" selected>Uganda</option>
+                                              {% else %} <option value="Uganda">Uganda</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Ukraine"%} <option value="Ukraine" selected>Ukraine</option>
+                                              {% else %} <option value="Ukraine">Ukraine</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "United Arab Emirates"%} <option value="United Arab Emirates" selected>United Arab Emirates</option>
+                                              {% else %} <option value="United Arab Emirates">United Arab Emirates</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "United Kingdom"%} <option value="United Kingdom" selected>United Kingdom</option>
+                                              {% else %} <option value="United Kingdom">United Kingdom</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "United Republic of Tanzania"%} <option value="United Republic of Tanzania" selected>United Republic of Tanzania</option>
+                                              {% else %} <option value="United Republic of Tanzania">United Republic of Tanzania</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "United States of America"%} <option value="United States of America" selected>United States of America</option>
+                                              {% else %} <option value="United States of America">United States of America</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Uruguay"%} <option value="Uruguay" selected>Uruguay</option>
+                                              {% else %} <option value="Uruguay">Uruguay</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Uzbekistan"%} <option value="Uzbekistan" selected>Uzbekistan</option>
+                                              {% else %} <option value="Uzbekistan">Uzbekistan</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Vanuatu"%} <option value="Vanuatu" selected>Vanuatu</option>
+                                              {% else %} <option value="Vanuatu">Vanuatu</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Venezuela (Bolivarian Republic of)"%} <option value="Venezuela (Bolivarian Republic of)" selected>Venezuela (Bolivarian Republic of)</option>
+                                              {% else %} <option value="Venezuela (Bolivarian Republic of)">Venezuela (Bolivarian Republic of)</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Viet Nam"%} <option value="Viet Nam" selected>Viet Nam</option>
+                                              {% else %} <option value="Viet Nam">Viet Nam</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Virgin Islands (British)"%} <option value="Virgin Islands (British)" selected>Virgin Islands (British)</option>
+                                              {% else %} <option value="Virgin Islands (British)">Virgin Islands (British)</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Virgin Islands (U.S.)"%} <option value="Virgin Islands (U.S.)" selected>Virgin Islands (U.S.)</option>
+                                              {% else %} <option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Yemen"%} <option value="Yemen" selected>Yemen</option>
+                                              {% else %} <option value="Yemen">Yemen</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Zambia"%} <option value="Zambia" selected>Zambia</option>
+                                              {% else %} <option value="Zambia">Zambia</option> {% endif %}
+                                              {%if bluejustice_instance.ssf_country == "Zimbabwe"%} <option value="Zimbabwe" selected>Zimbabwe</option>
+                                              {% else %} <option value="Zimbabwe">Zimbabwe</option> {% endif %}
+                                            </select>
                                             <label for="ssf-main-species">C. SSF Main Species:</label>
                                             <input type="text" id="ssf-main-species" name="ssf_main_species" value="{{ bluejustice_instance.ssf_main_species }}">
                                         </div>
@@ -1419,7 +1847,437 @@
                                         {{ bluejustice_form.name.label_tag }}{{ bluejustice_form.name }}
                                         {{ bluejustice_form.email.label_tag }}{{ bluejustice_form.email }}
                                         {{ bluejustice_form.affiliation.label_tag }}{{ bluejustice_form.affiliation }}
-                                        {{ bluejustice_form.country.label_tag }}{{ bluejustice_form.country }}
+                                        
+                                        <label for="contributor-country">Contributor Country:</label>
+                                        <select name="country" required="" id="contributor-country">
+                                            {%if bluejustice_instance.country == ""%} <option value="" selected>---------</option>
+                                            {% else %} <option value="">---------</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Afghanistan"%} <option value="Afghanistan" selected>Afghanistan</option>
+                                            {% else %} <option value="Afghanistan">Afghanistan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Albania"%} <option value="Albania" selected>Albania</option>
+                                            {% else %} <option value="Albania">Albania</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Algeria"%} <option value="Algeria" selected>Algeria</option>
+                                            {% else %} <option value="Algeria">Algeria</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Andorra"%} <option value="Andorra" selected>Andorra</option>
+                                            {% else %} <option value="Andorra">Andorra</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Angola"%} <option value="Angola" selected>Angola</option>
+                                            {% else %} <option value="Angola">Angola</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Anguilla"%} <option value="Anguilla" selected>Anguilla</option>
+                                            {% else %} <option value="Anguilla">Anguilla</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Antigua and Barbuda"%} <option value="Antigua and Barbuda" selected>Antigua and Barbuda</option>
+                                            {% else %} <option value="Antigua and Barbuda">Antigua and Barbuda</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Argentina"%} <option value="Argentina" selected>Argentina</option>
+                                            {% else %} <option value="Argentina">Argentina</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Armenia"%} <option value="Armenia" selected>Armenia</option>
+                                            {% else %} <option value="Armenia">Armenia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Australia"%} <option value="Australia" selected>Australia</option>
+                                            {% else %} <option value="Australia">Australia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Austria"%} <option value="Austria" selected>Austria</option>
+                                            {% else %} <option value="Austria">Austria</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Azerbaijan"%} <option value="Azerbaijan" selected>Azerbaijan</option>
+                                            {% else %} <option value="Azerbaijan">Azerbaijan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Bahamas"%} <option value="Bahamas" selected>Bahamas</option>
+                                            {% else %} <option value="Bahamas">Bahamas</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Bahrain"%} <option value="Bahrain" selected>Bahrain</option>
+                                            {% else %} <option value="Bahrain">Bahrain</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Bangladesh"%} <option value="Bangladesh" selected>Bangladesh</option>
+                                            {% else %} <option value="Bangladesh">Bangladesh</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Barbados"%} <option value="Barbados" selected>Barbados</option>
+                                            {% else %} <option value="Barbados">Barbados</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Belarus"%} <option value="Belarus" selected>Belarus</option>
+                                            {% else %} <option value="Belarus">Belarus</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Belgium"%} <option value="Belgium" selected>Belgium</option>
+                                            {% else %} <option value="Belgium">Belgium</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Belize"%} <option value="Belize" selected>Belize</option>
+                                            {% else %} <option value="Belize">Belize</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Benin"%} <option value="Benin" selected>Benin</option>
+                                            {% else %} <option value="Benin">Benin</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Bhutan"%} <option value="Bhutan" selected>Bhutan</option>
+                                            {% else %} <option value="Bhutan">Bhutan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Bolivia (Plurinational State of)"%} <option value="Bolivia (Plurinational State of)" selected>Bolivia (Plurinational State of)</option>
+                                            {% else %} <option value="Bolivia (Plurinational State of)">Bolivia (Plurinational State of)</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Bosnia and Herzegovina"%} <option value="Bosnia and Herzegovina" selected>Bosnia and Herzegovina</option>
+                                            {% else %} <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Botswana"%} <option value="Botswana" selected>Botswana</option>
+                                            {% else %} <option value="Botswana">Botswana</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Brazil"%} <option value="Brazil" selected>Brazil</option>
+                                            {% else %} <option value="Brazil">Brazil</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Brunei Darussalam"%} <option value="Brunei Darussalam" selected>Brunei Darussalam</option>
+                                            {% else %} <option value="Brunei Darussalam">Brunei Darussalam</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Bulgaria"%} <option value="Bulgaria" selected>Bulgaria</option>
+                                            {% else %} <option value="Bulgaria">Bulgaria</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Burkina Faso"%} <option value="Burkina Faso" selected>Burkina Faso</option>
+                                            {% else %} <option value="Burkina Faso">Burkina Faso</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Burundi"%} <option value="Burundi" selected>Burundi</option>
+                                            {% else %} <option value="Burundi">Burundi</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cabo Verde"%} <option value="Cabo Verde" selected>Cabo Verde</option>
+                                            {% else %} <option value="Cabo Verde">Cabo Verde</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cambodia"%} <option value="Cambodia" selected>Cambodia</option>
+                                            {% else %} <option value="Cambodia">Cambodia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cameroon"%} <option value="Cameroon" selected>Cameroon</option>
+                                            {% else %} <option value="Cameroon">Cameroon</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Canada"%} <option value="Canada" selected>Canada</option>
+                                            {% else %} <option value="Canada">Canada</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cape Verde"%} <option value="Cape Verde" selected>Cape Verde</option>
+                                            {% else %} <option value="Cape Verde">Cape Verde</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Central African Republic"%} <option value="Central African Republic" selected>Central African Republic</option>
+                                            {% else %} <option value="Central African Republic">Central African Republic</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Chad"%} <option value="Chad" selected>Chad</option>
+                                            {% else %} <option value="Chad">Chad</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Chile"%} <option value="Chile" selected>Chile</option>
+                                            {% else %} <option value="Chile">Chile</option> {% endif %}
+                                            {%if bluejustice_instance.country == "China"%} <option value="China" selected>China</option>
+                                            {% else %} <option value="China">China</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Colombia"%} <option value="Colombia" selected>Colombia</option>
+                                            {% else %} <option value="Colombia">Colombia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Comoros"%} <option value="Comoros" selected>Comoros</option>
+                                            {% else %} <option value="Comoros">Comoros</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Congo"%} <option value="Congo" selected>Congo</option>
+                                            {% else %} <option value="Congo">Congo</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cook Islands"%} <option value="Cook Islands" selected>Cook Islands</option>
+                                            {% else %} <option value="Cook Islands">Cook Islands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Costa Rica"%} <option value="Costa Rica" selected>Costa Rica</option>
+                                            {% else %} <option value="Costa Rica">Costa Rica</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cote d'Ivoire"%} <option value="Cote d'Ivoire" selected>Cote d'Ivoire</option>
+                                            {% else %} <option value="Cote d'Ivoire">Cote d'Ivoire</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Croatia"%} <option value="Croatia" selected>Croatia</option>
+                                            {% else %} <option value="Croatia">Croatia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cuba"%} <option value="Cuba" selected>Cuba</option>
+                                            {% else %} <option value="Cuba">Cuba</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Cyprus"%} <option value="Cyprus" selected>Cyprus</option>
+                                            {% else %} <option value="Cyprus">Cyprus</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Czech Republic"%} <option value="Czech Republic" selected>Czech Republic</option>
+                                            {% else %} <option value="Czech Republic">Czech Republic</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Democratic People's Republic of Korea"%} <option value="Democratic People's Republic of Korea" selected>Democratic People's Republic of Korea</option>
+                                            {% else %} <option value="Democratic People's Republic of Korea">Democratic People's Republic of Korea</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Democratic Republic of the Congo"%} <option value="Democratic Republic of the Congo" selected>Democratic Republic of the Congo</option>
+                                            {% else %} <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Denmark"%} <option value="Denmark" selected>Denmark</option>
+                                            {% else %} <option value="Denmark">Denmark</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Djibouti"%} <option value="Djibouti" selected>Djibouti</option>
+                                            {% else %} <option value="Djibouti">Djibouti</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Dominica"%} <option value="Dominica" selected>Dominica</option>
+                                            {% else %} <option value="Dominica">Dominica</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Dominican Republic"%} <option value="Dominican Republic" selected>Dominican Republic</option>
+                                            {% else %} <option value="Dominican Republic">Dominican Republic</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Ecuador"%} <option value="Ecuador" selected>Ecuador</option>
+                                            {% else %} <option value="Ecuador">Ecuador</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Egypt"%} <option value="Egypt" selected>Egypt</option>
+                                            {% else %} <option value="Egypt">Egypt</option> {% endif %}
+                                            {%if bluejustice_instance.country == "El Salvador"%} <option value="El Salvador" selected>El Salvador</option>
+                                            {% else %} <option value="El Salvador">El Salvador</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Equatorial Guinea"%} <option value="Equatorial Guinea" selected>Equatorial Guinea</option>
+                                            {% else %} <option value="Equatorial Guinea">Equatorial Guinea</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Eritrea"%} <option value="Eritrea" selected>Eritrea</option>
+                                            {% else %} <option value="Eritrea">Eritrea</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Estonia"%} <option value="Estonia" selected>Estonia</option>
+                                            {% else %} <option value="Estonia">Estonia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Ethiopia"%} <option value="Ethiopia" selected>Ethiopia</option>
+                                            {% else %} <option value="Ethiopia">Ethiopia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Faroe Islands"%} <option value="Faroe Islands" selected>Faroe Islands</option>
+                                            {% else %} <option value="Faroe Islands">Faroe Islands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Fiji"%} <option value="Fiji" selected>Fiji</option>
+                                            {% else %} <option value="Fiji">Fiji</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Finland"%} <option value="Finland" selected>Finland</option>
+                                            {% else %} <option value="Finland">Finland</option> {% endif %}
+                                            {%if bluejustice_instance.country == "France"%} <option value="France" selected>France</option>
+                                            {% else %} <option value="France">France</option> {% endif %}
+                                            {%if bluejustice_instance.country == "French Guiana"%} <option value="French Guiana" selected>French Guiana</option>
+                                            {% else %} <option value="French Guiana">French Guiana</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Gabon"%} <option value="Gabon" selected>Gabon</option>
+                                            {% else %} <option value="Gabon">Gabon</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Gambia"%} <option value="Gambia" selected>Gambia</option>
+                                            {% else %} <option value="Gambia">Gambia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Georgia"%} <option value="Georgia" selected>Georgia</option>
+                                            {% else %} <option value="Georgia">Georgia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Germany"%} <option value="Germany" selected>Germany</option>
+                                            {% else %} <option value="Germany">Germany</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Ghana"%} <option value="Ghana" selected>Ghana</option>
+                                            {% else %} <option value="Ghana">Ghana</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Greece"%} <option value="Greece" selected>Greece</option>
+                                            {% else %} <option value="Greece">Greece</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Greenland"%} <option value="Greenland" selected>Greenland</option>
+                                            {% else %} <option value="Greenland">Greenland</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Grenada"%} <option value="Grenada" selected>Grenada</option>
+                                            {% else %} <option value="Grenada">Grenada</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Guadeloupe"%} <option value="Guadeloupe" selected>Guadeloupe</option>
+                                            {% else %} <option value="Guadeloupe">Guadeloupe</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Guatemala"%} <option value="Guatemala" selected>Guatemala</option>
+                                            {% else %} <option value="Guatemala">Guatemala</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Guinea"%} <option value="Guinea" selected>Guinea</option>
+                                            {% else %} <option value="Guinea">Guinea</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Guinea-Bissau"%} <option value="Guinea-Bissau" selected>Guinea-Bissau</option>
+                                            {% else %} <option value="Guinea-Bissau">Guinea-Bissau</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Guyana"%} <option value="Guyana" selected>Guyana</option>
+                                            {% else %} <option value="Guyana">Guyana</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Haiti"%} <option value="Haiti" selected>Haiti</option>
+                                            {% else %} <option value="Haiti">Haiti</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Honduras"%} <option value="Honduras" selected>Honduras</option>
+                                            {% else %} <option value="Honduras">Honduras</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Hong Kong"%} <option value="Hong Kong" selected>Hong Kong</option>
+                                            {% else %} <option value="Hong Kong">Hong Kong</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Hungary"%} <option value="Hungary" selected>Hungary</option>
+                                            {% else %} <option value="Hungary">Hungary</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Iceland"%} <option value="Iceland" selected>Iceland</option>
+                                            {% else %} <option value="Iceland">Iceland</option> {% endif %}
+                                            {%if bluejustice_instance.country == "India"%} <option value="India" selected>India</option>
+                                            {% else %} <option value="India">India</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Indonesia"%} <option value="Indonesia" selected>Indonesia</option>
+                                            {% else %} <option value="Indonesia">Indonesia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Iran (Islamic Republic of)"%} <option value="Iran (Islamic Republic of)" selected>Iran (Islamic Republic of)</option>
+                                            {% else %} <option value="Iran (Islamic Republic of)">Iran (Islamic Republic of)</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Iraq"%} <option value="Iraq" selected>Iraq</option>
+                                            {% else %} <option value="Iraq">Iraq</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Ireland"%} <option value="Ireland" selected>Ireland</option>
+                                            {% else %} <option value="Ireland">Ireland</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Israel"%} <option value="Israel" selected>Israel</option>
+                                            {% else %} <option value="Israel">Israel</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Italy"%} <option value="Italy" selected>Italy</option>
+                                            {% else %} <option value="Italy">Italy</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Jamaica"%} <option value="Jamaica" selected>Jamaica</option>
+                                            {% else %} <option value="Jamaica">Jamaica</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Japan"%} <option value="Japan" selected>Japan</option>
+                                            {% else %} <option value="Japan">Japan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Jordan"%} <option value="Jordan" selected>Jordan</option>
+                                            {% else %} <option value="Jordan">Jordan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Kazakhstan"%} <option value="Kazakhstan" selected>Kazakhstan</option>
+                                            {% else %} <option value="Kazakhstan">Kazakhstan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Kenya"%} <option value="Kenya" selected>Kenya</option>
+                                            {% else %} <option value="Kenya">Kenya</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Kiribati"%} <option value="Kiribati" selected>Kiribati</option>
+                                            {% else %} <option value="Kiribati">Kiribati</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Kuwait"%} <option value="Kuwait" selected>Kuwait</option>
+                                            {% else %} <option value="Kuwait">Kuwait</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Kyrgyzstan"%} <option value="Kyrgyzstan" selected>Kyrgyzstan</option>
+                                            {% else %} <option value="Kyrgyzstan">Kyrgyzstan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Lao People's Democratic Republic"%} <option value="Lao People's Democratic Republic" selected>Lao People's Democratic Republic</option>
+                                            {% else %} <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Latvia"%} <option value="Latvia" selected>Latvia</option>
+                                            {% else %} <option value="Latvia">Latvia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Lebanon"%} <option value="Lebanon" selected>Lebanon</option>
+                                            {% else %} <option value="Lebanon">Lebanon</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Lesotho"%} <option value="Lesotho" selected>Lesotho</option>
+                                            {% else %} <option value="Lesotho">Lesotho</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Liberia"%} <option value="Liberia" selected>Liberia</option>
+                                            {% else %} <option value="Liberia">Liberia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Libya"%} <option value="Libya" selected>Libya</option>
+                                            {% else %} <option value="Libya">Libya</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Lithuania"%} <option value="Lithuania" selected>Lithuania</option>
+                                            {% else %} <option value="Lithuania">Lithuania</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Luxembourg"%} <option value="Luxembourg" selected>Luxembourg</option>
+                                            {% else %} <option value="Luxembourg">Luxembourg</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Madagascar"%} <option value="Madagascar" selected>Madagascar</option>
+                                            {% else %} <option value="Madagascar">Madagascar</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Malawi"%} <option value="Malawi" selected>Malawi</option>
+                                            {% else %} <option value="Malawi">Malawi</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Malaysia"%} <option value="Malaysia" selected>Malaysia</option>
+                                            {% else %} <option value="Malaysia">Malaysia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Maldives"%} <option value="Maldives" selected>Maldives</option>
+                                            {% else %} <option value="Maldives">Maldives</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Mali"%} <option value="Mali" selected>Mali</option>
+                                            {% else %} <option value="Mali">Mali</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Malta"%} <option value="Malta" selected>Malta</option>
+                                            {% else %} <option value="Malta">Malta</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Marshall Islands"%} <option value="Marshall Islands" selected>Marshall Islands</option>
+                                            {% else %} <option value="Marshall Islands">Marshall Islands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Martinique"%} <option value="Martinique" selected>Martinique</option>
+                                            {% else %} <option value="Martinique">Martinique</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Mauritania"%} <option value="Mauritania" selected>Mauritania</option>
+                                            {% else %} <option value="Mauritania">Mauritania</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Mauritius"%} <option value="Mauritius" selected>Mauritius</option>
+                                            {% else %} <option value="Mauritius">Mauritius</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Mexico"%} <option value="Mexico" selected>Mexico</option>
+                                            {% else %} <option value="Mexico">Mexico</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Micronesia (Federated States of)"%} <option value="Micronesia (Federated States of)" selected>Micronesia (Federated States of)</option>
+                                            {% else %} <option value="Micronesia (Federated States of)">Micronesia (Federated States of)</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Monaco"%} <option value="Monaco" selected>Monaco</option>
+                                            {% else %} <option value="Monaco">Monaco</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Mongolia"%} <option value="Mongolia" selected>Mongolia</option>
+                                            {% else %} <option value="Mongolia">Mongolia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Montenegro"%} <option value="Montenegro" selected>Montenegro</option>
+                                            {% else %} <option value="Montenegro">Montenegro</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Montserrat"%} <option value="Montserrat" selected>Montserrat</option>
+                                            {% else %} <option value="Montserrat">Montserrat</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Morocco"%} <option value="Morocco" selected>Morocco</option>
+                                            {% else %} <option value="Morocco">Morocco</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Mozambique"%} <option value="Mozambique" selected>Mozambique</option>
+                                            {% else %} <option value="Mozambique">Mozambique</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Myanmar"%} <option value="Myanmar" selected>Myanmar</option>
+                                            {% else %} <option value="Myanmar">Myanmar</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Namibia"%} <option value="Namibia" selected>Namibia</option>
+                                            {% else %} <option value="Namibia">Namibia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Nauru"%} <option value="Nauru" selected>Nauru</option>
+                                            {% else %} <option value="Nauru">Nauru</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Nepal"%} <option value="Nepal" selected>Nepal</option>
+                                            {% else %} <option value="Nepal">Nepal</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Netherlands"%} <option value="Netherlands" selected>Netherlands</option>
+                                            {% else %} <option value="Netherlands">Netherlands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Netherlands Antilles"%} <option value="Netherlands Antilles" selected>Netherlands Antilles</option>
+                                            {% else %} <option value="Netherlands Antilles">Netherlands Antilles</option> {% endif %}
+                                            {%if bluejustice_instance.country == "New Caledonia"%} <option value="New Caledonia" selected>New Caledonia</option>
+                                            {% else %} <option value="New Caledonia">New Caledonia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "New Zealand"%} <option value="New Zealand" selected>New Zealand</option>
+                                            {% else %} <option value="New Zealand">New Zealand</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Nicaragua"%} <option value="Nicaragua" selected>Nicaragua</option>
+                                            {% else %} <option value="Nicaragua">Nicaragua</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Niger"%} <option value="Niger" selected>Niger</option>
+                                            {% else %} <option value="Niger">Niger</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Nigeria"%} <option value="Nigeria" selected>Nigeria</option>
+                                            {% else %} <option value="Nigeria">Nigeria</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Niue"%} <option value="Niue" selected>Niue</option>
+                                            {% else %} <option value="Niue">Niue</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Northern Mariana Islands"%} <option value="Northern Mariana Islands" selected>Northern Mariana Islands</option>
+                                            {% else %} <option value="Northern Mariana Islands">Northern Mariana Islands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Norway"%} <option value="Norway" selected>Norway</option>
+                                            {% else %} <option value="Norway">Norway</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Oman"%} <option value="Oman" selected>Oman</option>
+                                            {% else %} <option value="Oman">Oman</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Pakistan"%} <option value="Pakistan" selected>Pakistan</option>
+                                            {% else %} <option value="Pakistan">Pakistan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Palau"%} <option value="Palau" selected>Palau</option>
+                                            {% else %} <option value="Palau">Palau</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Panama"%} <option value="Panama" selected>Panama</option>
+                                            {% else %} <option value="Panama">Panama</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Papua New Guinea"%} <option value="Papua New Guinea" selected>Papua New Guinea</option>
+                                            {% else %} <option value="Papua New Guinea">Papua New Guinea</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Paraguay"%} <option value="Paraguay" selected>Paraguay</option>
+                                            {% else %} <option value="Paraguay">Paraguay</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Peru"%} <option value="Peru" selected>Peru</option>
+                                            {% else %} <option value="Peru">Peru</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Philippines"%} <option value="Philippines" selected>Philippines</option>
+                                            {% else %} <option value="Philippines">Philippines</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Poland"%} <option value="Poland" selected>Poland</option>
+                                            {% else %} <option value="Poland">Poland</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Portugal"%} <option value="Portugal" selected>Portugal</option>
+                                            {% else %} <option value="Portugal">Portugal</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Puerto Rico"%} <option value="Puerto Rico" selected>Puerto Rico</option>
+                                            {% else %} <option value="Puerto Rico">Puerto Rico</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Qatar"%} <option value="Qatar" selected>Qatar</option>
+                                            {% else %} <option value="Qatar">Qatar</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Republic of Korea"%} <option value="Republic of Korea" selected>Republic of Korea</option>
+                                            {% else %} <option value="Republic of Korea">Republic of Korea</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Republic of Moldova"%} <option value="Republic of Moldova" selected>Republic of Moldova</option>
+                                            {% else %} <option value="Republic of Moldova">Republic of Moldova</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Romania"%} <option value="Romania" selected>Romania</option>
+                                            {% else %} <option value="Romania">Romania</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Russian Federation"%} <option value="Russian Federation" selected>Russian Federation</option>
+                                            {% else %} <option value="Russian Federation">Russian Federation</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Rwanda"%} <option value="Rwanda" selected>Rwanda</option>
+                                            {% else %} <option value="Rwanda">Rwanda</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Saint Kitts and Nevis"%} <option value="Saint Kitts and Nevis" selected>Saint Kitts and Nevis</option>
+                                            {% else %} <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Saint Lucia"%} <option value="Saint Lucia" selected>Saint Lucia</option>
+                                            {% else %} <option value="Saint Lucia">Saint Lucia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Saint Vincent and the Grenadines"%} <option value="Saint Vincent and the Grenadines" selected>Saint Vincent and the Grenadines</option>
+                                            {% else %} <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Samoa"%} <option value="Samoa" selected>Samoa</option>
+                                            {% else %} <option value="Samoa">Samoa</option> {% endif %}
+                                            {%if bluejustice_instance.country == "San Marino"%} <option value="San Marino" selected>San Marino</option>
+                                            {% else %} <option value="San Marino">San Marino</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Sao Tome and Principe"%} <option value="Sao Tome and Principe" selected>Sao Tome and Principe</option>
+                                            {% else %} <option value="Sao Tome and Principe">Sao Tome and Principe</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Saudi Arabia"%} <option value="Saudi Arabia" selected>Saudi Arabia</option>
+                                            {% else %} <option value="Saudi Arabia">Saudi Arabia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Senegal"%} <option value="Senegal" selected>Senegal</option>
+                                            {% else %} <option value="Senegal">Senegal</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Serbia"%} <option value="Serbia" selected>Serbia</option>
+                                            {% else %} <option value="Serbia">Serbia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Seychelles"%} <option value="Seychelles" selected>Seychelles</option>
+                                            {% else %} <option value="Seychelles">Seychelles</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Sierra Leone"%} <option value="Sierra Leone" selected>Sierra Leone</option>
+                                            {% else %} <option value="Sierra Leone">Sierra Leone</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Singapore"%} <option value="Singapore" selected>Singapore</option>
+                                            {% else %} <option value="Singapore">Singapore</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Slovakia"%} <option value="Slovakia" selected>Slovakia</option>
+                                            {% else %} <option value="Slovakia">Slovakia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Slovenia"%} <option value="Slovenia" selected>Slovenia</option>
+                                            {% else %} <option value="Slovenia">Slovenia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Solomon Islands"%} <option value="Solomon Islands" selected>Solomon Islands</option>
+                                            {% else %} <option value="Solomon Islands">Solomon Islands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Somalia"%} <option value="Somalia" selected>Somalia</option>
+                                            {% else %} <option value="Somalia">Somalia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "South Africa"%} <option value="South Africa" selected>South Africa</option>
+                                            {% else %} <option value="South Africa">South Africa</option> {% endif %}
+                                            {%if bluejustice_instance.country == "South Sudan"%} <option value="South Sudan" selected>South Sudan</option>
+                                            {% else %} <option value="South Sudan">South Sudan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Spain"%} <option value="Spain" selected>Spain</option>
+                                            {% else %} <option value="Spain">Spain</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Sri Lanka"%} <option value="Sri Lanka" selected>Sri Lanka</option>
+                                            {% else %} <option value="Sri Lanka">Sri Lanka</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Sudan"%} <option value="Sudan" selected>Sudan</option>
+                                            {% else %} <option value="Sudan">Sudan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Suriname"%} <option value="Suriname" selected>Suriname</option>
+                                            {% else %} <option value="Suriname">Suriname</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Swaziland"%} <option value="Swaziland" selected>Swaziland</option>
+                                            {% else %} <option value="Swaziland">Swaziland</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Sweden"%} <option value="Sweden" selected>Sweden</option>
+                                            {% else %} <option value="Sweden">Sweden</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Switzerland"%} <option value="Switzerland" selected>Switzerland</option>
+                                            {% else %} <option value="Switzerland">Switzerland</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Syrian Arab Republic"%} <option value="Syrian Arab Republic" selected>Syrian Arab Republic</option>
+                                            {% else %} <option value="Syrian Arab Republic">Syrian Arab Republic</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Taiwan, Province of China"%} <option value="Taiwan, Province of China" selected>Taiwan, Province of China</option>
+                                            {% else %} <option value="Taiwan, Province of China">Taiwan, Province of China</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Tajikistan"%} <option value="Tajikistan" selected>Tajikistan</option>
+                                            {% else %} <option value="Tajikistan">Tajikistan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Thailand"%} <option value="Thailand" selected>Thailand</option>
+                                            {% else %} <option value="Thailand">Thailand</option> {% endif %}
+                                            {%if bluejustice_instance.country == "The former Yugoslav "%} <option value="The former Yugoslav " selected>The former Yugoslav Republic of Macedonia</option>
+                                            {% else %} <option value="The former Yugoslav">The former Yugoslav Republic of Macedonia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Timor-Leste"%} <option value="Timor-Leste" selected>Timor-Leste</option>
+                                            {% else %} <option value="Timor-Leste">Timor-Leste</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Togo"%} <option value="Togo" selected>Togo</option>
+                                            {% else %} <option value="Togo">Togo</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Tonga"%} <option value="Tonga" selected>Tonga</option>
+                                            {% else %} <option value="Tonga">Tonga</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Trinidad and Tobago"%} <option value="Trinidad and Tobago" selected>Trinidad and Tobago</option>
+                                            {% else %} <option value="Trinidad and Tobago">Trinidad and Tobago</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Tunisia"%} <option value="Tunisia" selected>Tunisia</option>
+                                            {% else %} <option value="Tunisia">Tunisia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Turkey"%} <option value="Turkey" selected>Turkey</option>
+                                            {% else %} <option value="Turkey">Turkey</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Turkmenistan"%} <option value="Turkmenistan" selected>Turkmenistan</option>
+                                            {% else %} <option value="Turkmenistan">Turkmenistan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Turks and Caicos Islands"%} <option value="Turks and Caicos Islands" selected>Turks and Caicos Islands</option>
+                                            {% else %} <option value="Turks and Caicos Islands">Turks and Caicos Islands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Tuvalu"%} <option value="Tuvalu" selected>Tuvalu</option>
+                                            {% else %} <option value="Tuvalu">Tuvalu</option> {% endif %}
+                                            {%if bluejustice_instance.country == "U.S. Minor Islands"%} <option value="U.S. Minor Islands" selected>U.S. Minor Islands</option>
+                                            {% else %} <option value="U.S. Minor Islands">U.S. Minor Islands</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Uganda"%} <option value="Uganda" selected>Uganda</option>
+                                            {% else %} <option value="Uganda">Uganda</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Ukraine"%} <option value="Ukraine" selected>Ukraine</option>
+                                            {% else %} <option value="Ukraine">Ukraine</option> {% endif %}
+                                            {%if bluejustice_instance.country == "United Arab Emirates"%} <option value="United Arab Emirates" selected>United Arab Emirates</option>
+                                            {% else %} <option value="United Arab Emirates">United Arab Emirates</option> {% endif %}
+                                            {%if bluejustice_instance.country == "United Kingdom"%} <option value="United Kingdom" selected>United Kingdom</option>
+                                            {% else %} <option value="United Kingdom">United Kingdom</option> {% endif %}
+                                            {%if bluejustice_instance.country == "United Republic of Tanzania"%} <option value="United Republic of Tanzania" selected>United Republic of Tanzania</option>
+                                            {% else %} <option value="United Republic of Tanzania">United Republic of Tanzania</option> {% endif %}
+                                            {%if bluejustice_instance.country == "United States of America"%} <option value="United States of America" selected>United States of America</option>
+                                            {% else %} <option value="United States of America">United States of America</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Uruguay"%} <option value="Uruguay" selected>Uruguay</option>
+                                            {% else %} <option value="Uruguay">Uruguay</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Uzbekistan"%} <option value="Uzbekistan" selected>Uzbekistan</option>
+                                            {% else %} <option value="Uzbekistan">Uzbekistan</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Vanuatu"%} <option value="Vanuatu" selected>Vanuatu</option>
+                                            {% else %} <option value="Vanuatu">Vanuatu</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Venezuela (Bolivarian Republic of)"%} <option value="Venezuela (Bolivarian Republic of)" selected>Venezuela (Bolivarian Republic of)</option>
+                                            {% else %} <option value="Venezuela (Bolivarian Republic of)">Venezuela (Bolivarian Republic of)</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Viet Nam"%} <option value="Viet Nam" selected>Viet Nam</option>
+                                            {% else %} <option value="Viet Nam">Viet Nam</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Virgin Islands (British)"%} <option value="Virgin Islands (British)" selected>Virgin Islands (British)</option>
+                                            {% else %} <option value="Virgin Islands (British)">Virgin Islands (British)</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Virgin Islands (U.S.)"%} <option value="Virgin Islands (U.S.)" selected>Virgin Islands (U.S.)</option>
+                                            {% else %} <option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Yemen"%} <option value="Yemen" selected>Yemen</option>
+                                            {% else %} <option value="Yemen">Yemen</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Zambia"%} <option value="Zambia" selected>Zambia</option>
+                                            {% else %} <option value="Zambia">Zambia</option> {% endif %}
+                                            {%if bluejustice_instance.country == "Zimbabwe"%} <option value="Zimbabwe" selected>Zimbabwe</option>
+                                            {% else %} <option value="Zimbabwe">Zimbabwe</option> {% endif %}
+                                        </select>
+
                                         {{ bluejustice_form.role.label_tag }}{{ bluejustice_form.role }}
                                         {{ bluejustice_form.contributor.label_tag }}{{ bluejustice_form.contributor }}
                                     </div>
@@ -1650,6 +2508,15 @@
         $('.get-loaded-contributors-form-data').html($('#bluejustice-contributors-form').html());
         $('.get-loaded-image-form-data').html($('#bluejustice-image-form').html());
         
-                
+        
+        // go through the options and assign the selected option
+        setTimeout(function(){
+            $('#ssf-country option').each(function(){
+                let $this = $(this);
+                if($this.val() == $('#ssf-country-value').val()){
+                    $this.attr('selected');
+                }
+            })
+        },3000);
     </script>
 {% endblock additional_js_scripts %}
