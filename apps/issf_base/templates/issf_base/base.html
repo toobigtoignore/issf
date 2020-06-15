@@ -301,15 +301,14 @@
                     });
                 }, 10);
             });
+            
 
             // Remove multiple * marks for necessary fields
             setTimeout(function(){
                 $('label').each(function(){
-                    let $this = $(this);
-                    $this.find('sup').first().text(' *').show().siblings().hide();
+                    $(this).find('sup').first().text(' *').show().siblings().hide();
                 });
             },10);
-
         </script>
     </body>
 </html>
