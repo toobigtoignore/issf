@@ -301,12 +301,14 @@
                     });
                 }, 10);
             });
+            
 
             // Remove multiple * marks for necessary fields
-            $('label').each(function(){
-                let $this = $(this);
-                $this.find('sup').first().show().siblings().hide();
-            });
+            setTimeout(function(){
+                $('label').each(function(){
+                    $(this).find('sup').first().text(' *').show().siblings().hide();
+                });
+            },1000);
         </script>
     </body>
 </html>
