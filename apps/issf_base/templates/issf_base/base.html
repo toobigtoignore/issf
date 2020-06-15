@@ -303,10 +303,12 @@
             });
 
             // Remove multiple * marks for necessary fields
-            $('label').each(function(){
-                let $this = $(this);
-                $this.find('sup').first().show().siblings().hide();
-            });
+            setTimeout(function(){
+                $('label').each(function(){
+                    let $this = $(this);
+                    $this.find('sup').first().text(' *').show().siblings().hide();
+                });
+            },10);
         </script>
     </body>
 </html>
