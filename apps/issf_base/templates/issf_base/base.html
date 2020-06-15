@@ -301,6 +301,12 @@
                     });
                 }, 10);
             });
+
+            // Remove multiple * marks for necessary fields
+            $('label').each(function(){
+                let $this = $(this);
+                $this.find('sup').first().show().siblings().hide();
+            });
         </script>
     </body>
 </html>
