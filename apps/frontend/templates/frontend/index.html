@@ -2278,7 +2278,8 @@
         // If user is not signed in then disable button and have tooltipPopsup asking them to login.
         // Have to "fake-disable" the button with onclick="return false because the tooltipPopsup will
         // not appear if it is actually disabled.
-        $('#quick-button-floaty').append('<span data-tooltipPopsup aria-haspopup="true" class="has-tip exp-tip" title="Please login to use the export feature." style="border:none;"><button class="medium radius exportButton" onclick="return false;">Export</button></span>');
+        //TODO: Enable export again
+        //$('#quick-button-floaty').append('<span data-tooltipPopsup aria-haspopup="true" class="has-tip exp-tip" title="Please login to use the export feature." style="border:none;"><button class="medium radius exportButton" onclick="return false;">Export</button></span>');
 
         {% if user.is_authenticated %}
             $('span.exp-tip').prop('title', "Export selected data in CSV format.");
