@@ -1389,14 +1389,35 @@ def profile_main_attributes(request: HttpRequest) -> HttpResponse:
                 #  the percentages
                 # have a value in them
                 flag = False
+                flag_repeated_channel = False
+                processed_channels = []
+
                 for form in main_attributes_formset.forms:
                     if form.cleaned_data and form.cleaned_data['attribute'].attribute_id == 38:
                         if form.cleaned_data['DELETE'] is False:
+
                             if form.cleaned_data['additional']:
                                 percent += int(form.cleaned_data['additional'])
+
+                                if form.cleaned_data['attribute_value'] in processed_channels:
+                                    flag_repeated_channel = True
+                                else:
+                                    processed_channels.append(form.cleaned_data['attribute_value'])
+
                             flag = True
                             index = i
                     i += 1
+
+                if flag_repeated_channel:
+                    errors = main_attributes_formset._errors
+                    errors[index]['__all__'] = ErrorList([u'You can not chose the same market channel twice.'])
+
+                    response = json.dumps({
+                        'success': 'false',
+                        'errors': errors
+                    })
+
+                    return HttpResponse(response)
 
                 if flag and percent is not 100:
                     errors = main_attributes_formset._errors
