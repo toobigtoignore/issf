@@ -126,6 +126,25 @@ ul#id_geographic_scope_type input[type="radio"]:checked::after {
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
+#id_geographic_scope_type li {
+    position: relative;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+
+#id_geographic_scope_type li:before{
+    content: '';
+    position: absolute;
+    border-right:2px solid black;
+    border-bottom:2px solid black;
+    width:10px;
+    height:10px;
+    top: calc(50% - 4px);
+    left: -10px;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
 .FormSetToggler > input {
 	display: inline-block;
 }
