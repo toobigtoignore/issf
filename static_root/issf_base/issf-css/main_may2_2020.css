@@ -58,7 +58,11 @@ hr {
 #header {
     position: relative;
     background-color: #fff;
-    min-width: 1280px;
+    /*min-width: 1280px;*/
+    width: 100%;
+    max-width: 1160px;
+    margin: auto;
+    box-shadow: 2px 2px 4px -1px rgba(0,0,0,.4);
 }
 
 #body-section {
@@ -66,17 +70,24 @@ hr {
 }
 
 .map-section {
+    width: 100%;
+    max-width: 1160px;
+    background: #fff;
+    margin: auto;
+    box-shadow: 2px 2px 4px -1px rgba(0,0,0,.4);
+    border-radius: 5px;
 }
 
-.map-and-visual {
+/*.map-and-visual {
     display: grid;
-}
+}*/
 
-@media only screen and (min-width: 1850px) {
+/*Uncomment this part for making map and visualization appear side by side*/
+/*@media only screen and (min-width: 1850px) {
     .map-and-visual {
       grid-template-columns: 1fr 1fr;
     }
-}
+}*/
 
 .visual-section {
     /* background-color: rgba(59, 134, 255, 0.05); */
@@ -85,8 +96,9 @@ hr {
 /* greater than 1850px */
 @media only screen and (min-width: 1850px) {
     .visual-carousel {
-        width: 775px;
-        margin: 1rem auto 0 45px;
+        width: 100%;
+        max-width: 1160px;
+        margin: 1rem auto;
     }
   }
 /* less than 1850px */
@@ -235,10 +247,9 @@ footer {
 }
 
 #contribute-panel {
-    display: block;
-    width: 70%;
-    padding: 1rem;
-    background-color: transparent;
+    width: 100%;
+    max-width: 1160px;
+    padding: 1rem 0px;
     margin: auto;
 }
 
@@ -362,6 +373,8 @@ footer {
 .logo a {
     display: block;
     float: right;
+    position: relative;
+    z-index: 9;
 }
 
 #issf {
@@ -603,20 +616,22 @@ footer {
 
 #info-section .main-wrapper {
     background: #fff;
-    box-shadow: 5px 2px 5px -5px rgba(0,0,0,.4);
+    /*box-shadow: 5px 2px 5px -5px rgba(0,0,0,.4);*/
 }
 
-@media only screen and (min-width: 1850px) {
+/*@media only screen and (min-width: 1850px) {
     .home-search-form-class {
         margin-left: 20px;
     }
-}
+}*/
 
 #home-search-form {
 }
 
 #info-map {
     background: #275D97;
+    margin: 30px 0px 20px 0px;
+    padding: 0;
 }
 
 #info-table {
@@ -628,6 +643,7 @@ footer {
     width: 924px;
     max-height: 652px;
     margin: 0;
+    margin-bottom: 15px;
     padding-right: 1rem;
     overflow: hidden;
     z-index: 2;
@@ -648,7 +664,8 @@ footer {
 }
 
 #map {
-    width: 100%;
+    min-width: 100%;
+    width: 925px;
     height: 638px;
 }
 
@@ -759,7 +776,7 @@ footer {
 .map-icons {
     position: absolute;
     top: 14px;
-    right: 12px;
+    right: 0px;
     bottom: 12px;
     width: 52px;
     height: 498px;
@@ -1217,13 +1234,12 @@ map-icons #expe span {
 
 #tosearch {
     display: block;
-    bottom: 20px;
     width: 280px;
     height: 30px;
     background: #2699FB;
     position: absolute;
-    left: 50%;
-    margin-left: -470px;
+    left: 7%;
+    bottom: 17px;
     text-align: center;
     z-index: 6;
     border-radius: 3px;
@@ -2622,6 +2638,7 @@ select[multiple] {
     margin: -12px 0 0;
     padding-top: 14px;
     background: #fff;
+    padding-left: 0;
 }
 
 #advance-search .search-wrapper {
@@ -2810,7 +2827,7 @@ form ul {
 /* Home Page */
 #panel-left {
     float: left;
-    width: 68%;
+    width: 70%;
 }
 
 #welcome-note {
@@ -2949,12 +2966,12 @@ form ul {
 }
 
 #advance-search .search-wrapper {
-    padding: 0px 15px 0;
+    padding: 0px;
 }
 
 #advance-search .main-wrapper {
     display: block;
-    box-shadow: 5px 5px 5px -5px rgba(0,0,0,.4);
+    /*box-shadow: 5px 5px 5px -5px rgba(0,0,0,.4);*/
     border-radius: 0 0 3px 3px;
 }
 
@@ -3173,7 +3190,7 @@ form ul {
 }
 
 .map-holder {
-    height: 532px !important;
+    height: 550px !important;
 }
 
 /* Accordion repeating background image fix */
@@ -3308,6 +3325,7 @@ table p {
 #map {
     z-index: 0;
     border-radius: 3px;
+    margin-top: 15px;
 }
 
 /* some helper classes */
