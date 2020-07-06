@@ -3569,3 +3569,49 @@ table p {
         text-align: left !important;
     }
 }
+
+
+
+
+@media only screen and (max-width: 575px)
+{
+    #content-contribute .row {
+        width: 100% !important;
+    }
+    
+    #contribute-title { 
+        width: 100% !important;
+    }
+    
+    #contribute-title h1 { 
+        font-size: 22px;
+        margin-left: 0;
+    }
+    
+    .FormSectionBanner-contribute {
+        width: 100% !important;
+    }
+    
+    .FormSectionBanner-contribute h6 {
+        font-size: 14px;
+    }
+    
+    nav.contributenav {
+        width: 98%;
+        margin-left: 1%;
+    }
+    
+    nav .tabs .tab-title h3 {
+        font-size: 15px;
+        margin-left: 0px;
+    }
+    
+    nav .tabs .tab-title .pop { 
+        right: 5px !important;
+    }
+    
+    
+    #content-contribute main { 
+        width: 100%;
+    }
+}
