@@ -228,6 +228,8 @@ hr {
 }
 
 footer {
+    float: left;
+    width: 100%;
     background-color: #444;
 }
 
@@ -3400,4 +3402,112 @@ table p {
     width: 100%;
     margin-bottom: 12px;
     cursor: default;
+}
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 575px)
+{
+    #body-section {
+        display: block;
+    }
+    
+    .map-icons {
+        width: 100vw;
+        height: auto;
+        display: block;
+        position: relative;
+        margin-top: -10px;
+        box-sizing: border-box;
+        padding: 0px 2% 0 1.5%;
+        text-align: center;
+    }
+    
+    .map-icons a {
+        float: none;
+        display: inline-block;
+        width: auto;
+        margin-left: 0px;
+        margin-right: 1px;
+        position: relative;
+    }
+    
+    .map-icons a:last-child {
+        margin-bottom: 11.5px;
+        margin-left: 3px
+    }
+    
+    .map-icons a .pop {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        z-index: 9;
+    }
+    
+    .info-ctn { 
+        margin-bottom: -0px;
+    }
+    
+    #panel-left {
+        width: 100%;
+    }
+    
+    .box-contribute {
+        height: auto;
+    }
+    
+    #most-recent-contributions h3 {
+        margin-left: 15px;
+    }
+    
+    #most-recent-contributions li {
+        width: 100%;
+    }
+    
+    #most-recent-contributions .nav-tabs > li > a {
+        border-radius: 4px;
+    }
+    
+    .box-contribute .body-contribute {
+        padding: 5px 13px;
+    }
+    
+    .box-contribute ul p {
+        width: calc(100% - 60px);
+    }
+    
+    #panel-right {
+        width: 98.5%;
+    }
+    
+    .twitter-box {
+        margin-top: 10px;
+        margin-left: 1%;
+    }
+
+    footer {
+        padding-bottom: 20px;
+    }
+    
+    footer .row {
+        width: 100% !important;
+    }
+    
+    footer .large-8 {
+        width: 100%;
+    }
+    
+    footer .large-4 {
+        width: 82%;
+    }
+    
+    footer .large-4.columns {
+        text-align: left !important;
+    }
 }
