@@ -3638,7 +3638,6 @@ table p {
     }
     
     #user-options {
-        
         width: 250px !important;
     }
 }
@@ -3683,8 +3682,19 @@ table p {
         right: 5px !important;
     }
     
-    
     #content-contribute main { 
         width: 100%;
+    }
+    
+    #contributed-records { 
+        width: 100vw;
+    }
+    
+    #contributed-records h3 { 
+        font-size: 22px;
+    }
+    
+    #contributed-records li {
+        font-size: 14px;
     }
 }
