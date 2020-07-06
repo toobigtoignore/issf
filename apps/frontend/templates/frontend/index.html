@@ -2229,25 +2229,6 @@
             }
         }
 
-        // Setup table and options, but don't fill
-        var table = $('#record-table-result').dataTable({
-            // "columnDefs": [{"visible": false, "targets": 3}],
-            "columnDefs": [{"visible": false, "targets": 3}],
-            "paging": true,
-            "autoWidth": false,
-            "filter": false,
-            "order": [[2, "desc"]],
-            "deferRender": true,
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            "language": {
-                "search": "Filter within results:",
-                "lengthMenu": "Show _MENU_ records",
-                "info": "Showing _START_ to _END_ of _TOTAL_ records",
-                "infoEmpty": "Showing 0 to 0 of 0 records",
-                "infoFiltered": "(filtered from _MAX_ total records)"
-            }
-        });
-
         var search = false;
 
         // If user is not signed in then disable button and have tooltipPopsup asking them to login.
