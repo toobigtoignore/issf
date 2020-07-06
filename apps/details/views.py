@@ -1410,6 +1410,7 @@ def profile_main_attributes(request: HttpRequest) -> HttpResponse:
 
                 if flag_repeated_channel:
                     errors = main_attributes_formset._errors
+                    
                     errors[index]['__all__'] = ErrorList([u'You can not chose the same market channel twice.'])
 
                     response = json.dumps({
