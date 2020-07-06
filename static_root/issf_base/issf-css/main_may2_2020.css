@@ -1,5 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic|Montserrat:400,700);
 
+html {
+    width: 100vw;
+    overflow-x: hidden;
+}
+
 h1, h2, h3, h4, h5 {
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
@@ -3567,6 +3572,74 @@ table p {
     
     footer .large-4.columns {
         text-align: left !important;
+    }
+}
+
+
+
+
+@media only screen and (max-width: 575px)
+{
+    #issf {
+        padding: 0;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+    
+    header {
+        height: 140px
+    }
+    
+    #issf img {
+        max-width: 120px;
+    }
+    
+    .tbti-logo-homepage {
+        width: 120px;
+        top: -43px;
+        left: 160px;
+    }
+    
+    .header-right {
+        position: absolute;
+        top: 59px;
+        left: 0;
+        padding-top: 0px;
+    }
+    
+    .account-bar {
+        position: absolute;
+        left: 5px;
+        text-align: left;
+    }
+    
+    .contribution-bts {
+        display: inline;
+        position: absolute;
+        left: 5px;
+        top: 40px;
+        margin-right: 0;
+    }
+    
+    .contribution-bts h2 {
+        font-size: 14px;
+    }
+    
+    .bt-contribute { 
+        float: left;
+        width: 145px;
+    }
+    
+    .bt-my_contributions {
+        display: inline;
+        position: absolute;
+        text-align: left;
+        width: 145px;
+    }
+    
+    #user-options {
+        
+        width: 250px !important;
     }
 }
 
