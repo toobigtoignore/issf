@@ -3418,6 +3418,10 @@ table p {
         display: block;
     }
     
+ /*   #info-map {
+        margin-bottom: 10px;
+    }
+    
     .map-icons {
         width: 100vw;
         height: auto;
@@ -3445,10 +3449,64 @@ table p {
     
     .map-icons a .pop {
         position: absolute;
-        right: 0;
+        left: -30px !important;
         top: 100%;
         z-index: 9;
+        min-width: auto;
+        height: auto;
+        width: 120px;
     }
+    
+    .map-icons a:hover:before {
+        display: none;    
+    }
+    
+    .map-icons a .pop h4 {
+        font-size: 13px;
+        font-weight: bold;
+        white-space: normal;
+    }
+    
+    .search-wrapper {
+        width: 100vw;
+        padding: 0;
+    }
+    
+    .search-wrapper #quick-search-fulltext-container,
+    .search-wrapper #quick-country-select {
+        width: 49%;
+        margin-left: 0.5%;
+        margin-right: 0.5%;
+    }
+    
+    .search-wrapper #quick-area {
+        width: 100%;
+    }
+    
+    .search-wrapper .BtnCol {
+        display: inline-block;
+        margin-top: 5px;
+    }
+    
+    .search-wrapper #quick-button-floaty {
+        float: left !important;
+        margin-bottom: 10px;
+    }
+    
+    .search-wrapper #quick-button-floaty button{
+        margin-left: 3px;
+        margin-right: 0;
+    }
+    
+    #advance-search.quick .search-term { 
+        margin-top: 5px;
+        margin-bottom: 25px;
+    }
+    
+    #tosearch { 
+        left: 3px;
+        bottom: 8px;
+    }*/
     
     .info-ctn { 
         margin-bottom: -0px;
