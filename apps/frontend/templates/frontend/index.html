@@ -24,7 +24,7 @@
         #visual1-info li { display: inline; font-size: 14px; }
         #visual1-info li:after { content: "|"; font-weight: bold; margin-left: 15px; margin-right: 15px; }
         #visual1-info li:last-child:after { content: ""; margin-right: 0; }
-
+        #visual1 svg { width: 100%; }
         .tooltipPopsup { position: absolute; font-size: 15px; width:  auto; height: auto; pointer-events: none; background-color: #feffeb; box-sizing: border-box; padding: 10px; border: 1px solid #e3e3e3; border-radius: 3px; z-index: 999; }
 
         /* css for visual 2*/
@@ -45,7 +45,7 @@
         #dimensions label span {float: right;}
         label#myCheckboxLabel { display: inline-block; margin-left: -5px; }
         #myCheckboxLabel span { float: right; margin-left: 6px; }
-        #visual2 { padding-top: 20px; }
+        #visual2 { padding-top: 50px; }
         #visual2 ul { text-align: left; }
     </style>
 
@@ -59,7 +59,7 @@
 
                 <div id="info-section">
                     <div class="row">
-                        <div class="large-12 columns main-wrapper" id="info-map">
+                        <div class="large-12 main-wrapper" id="info-map">
                             <h3 style="margin: 0; padding: 0;">ISSF Records</h3>
                             <ul class="tabs" data-tab>
                                 <li class="tab-title active">
@@ -188,7 +188,7 @@
                     <div class="row header-row">
                         <form id="home-search-form" class="home-search-form-class">
                             {% csrf_token %}
-                            <div class="large-12 columns main-wrapper">
+                            <div class="large-12 main-wrapper">
                                 <div class="search-wrapper">
                                     <div class="row row-fit" id="quick-search">
                                         <div class="large-4 left" id="quick-search-fulltext-container">
@@ -381,11 +381,12 @@
                          data-cycle-timeout=0
                          data-cycle-slides="> div"
                          data-cycle-prev="#prev-slide"
-                         data-cycle-next="#next-slide">
+                         data-cycle-next="#next-slide"
+                         data-cycle-pager="#pager">
 
 
                         <div id="visual1" class="visual-slides">
-                            <div id="svg-visual1" style="overflow: hidden;"></div>
+                            <div id="svg-visual1"></div>
                             <div style="margin-top:-25px;">
                                 <p style="font-size: 14.5px; font-weight: bold; margin-top: 15px; margin-bottom: 0px;">This visualisation shows the number of SSF profiles of various governance modes by countries</p>
                                 <ul id="visual1-info">
@@ -435,6 +436,8 @@
                         <button id="prev-slide">&#8617;</button>
                         <button id="next-slide">&#8618;</button>
                     </div>
+
+                    <div id="pager"></div>
                 </div>
                 
             </div>
@@ -729,8 +732,8 @@
             .attr("width", width)
             .attr("height", height + 30)
             
-        var g_scroll =	svg.call(d3.zoom().scaleExtent([1, 3]).on("zoom", function () {
-               g_scroll.attr("transform", d3.event.transform)
+        var g_scroll =  svg.call(d3.zoom().scaleExtent([1, 3]).on("zoom", function () {
+               // g_scroll.attr("transform", d3.event.transform)
             }))
             .append("g")
             .attr("id","scroll group")
@@ -758,52 +761,82 @@
             .style("opacity", 0);
         
         var mouseover = function(d) {
-                              var visualSection = document.getElementById("visual-section");
-                              var html  = "Country : " + d.data.country + "<br/>"; 
-                              html  = html + "<font color=#0000FF>Top-down/hierarchical governance : " + d.data["Top-down/hierarchical governance"] + "<br/>"; 
-                              html  = html + "</font><font color=#FF4500>Co-management/co-governance : " + d.data["Co-management/co-governance"] + "<br/>"; 
-                              html  = html + "</font><font color=#008000>Community-based management : " + d.data["Community-based management"] + "<br/>"; 
-                              html  = html + "</font><font color=#964b00>Self governance : " + d.data["Self governance"] + "<br/>"; 
-                              html  = html + "</font><font color=#696969>Other : " + d.data["Other"]; 
-
-                              tooltipPopsup.html(html)
-                                  .style("left", (d3.event.pageX) + "px")
-                                  .style("top", (d3.event.pageY) + "px")
-                                .transition()
-                                  .duration(200) 
-                                  .style("opacity", 1) 
-                            d3.select(this)
-                              .style("stroke", "black")
-                              .style("opacity", 1)
-                          };
+            var visualSection = document.getElementById("visual-section");
+            var html  = "Country : " + d.data.country + " | Records : " + d.data.record +"<br/>"; 
+            valueLabel_array.forEach(function (c) { 
+                html  = html + "<font color=" + z(c) + ">" + c + ": " + d.data[c] + "</font><br/>"; 
+            })
+            html  = html + "Total : " + d.data.total + "<br/>"; 
+            <!-- html  = html + "Records : " + d.data.record + "<br/>";  -->
+            tooltipPopsup.html(html)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY) + "px")
+                .transition()
+                .duration(200) 
+                .style("opacity", 1) 
+                
+            d3.select(this)
+            .style("stroke", "black")
+            .style("opacity", 1)
+        };
                           
         var mouseleave = function(d) {
-                              tooltipPopsup.transition()
-                                  .duration(300) // ms
-                                  .style("opacity", 0); // don't care about position!
-                            d3.select(this)
-                              .style("stroke", "none")
-                              .style("opacity", 1)
-                          };
+            tooltipPopsup.transition()
+                .duration(300) // ms
+                .style("opacity", 0); // don't care about position!
+            d3.select(this)
+            .style("stroke", "none")
+            .style("opacity", 1)
+        };
                           
         var rotate = 0;
-
-        d3.csv("{% static "issf_base/csv/data.csv" %}", function(d, i, columns) {
-          for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-          d.total = t;
-          return d;
-        }, function(error, data) {
-          if (error) throw error;
-         
+        
+        
+        d3.csv("{% static "issf_base/csv/data.csv" %}", function(error, data){
+            
+        data_nested = d3.nest()
+              .key(function(d) { return d.country; }).sortKeys(d3.ascending)
+              .key(function(d) { return d.valueLabel; })
+              .rollup(function(v) { return {
+                length: v.length
+              }; })
+              .entries(data);
+        
+        valueLabel_array = d3.map(data, v => v.valueLabel).keys()
+        
+            var new_data = []
+            data_nested.forEach(function (d, i) {
+                new_data.push({country: d.key, total: 0, record: 0})
+                
+                var data_country_filtered = data.filter(m => (m.country == d.key))
+                var count_issf = d3.map(data_country_filtered, function(c){return c.issf_core_id;}).keys().length
+                new_data[i].record = count_issf
+                
+                valueLabel_array.forEach(function (c) { 
+                    new_data[i][c] = 0
+                })
+                
+                var total = 0
+                d.values.forEach(function (v) {
+                    new_data[i][v.key] = v.value.length
+                    total = total + v.value.length
+                })
+                
+                new_data[i].total = total
+                
+            })
+            
+        data = new_data
           x.domain(data.map(function(d) { return d.country; }));
           y.domain([0, d3.max(data, function(d) { return d.total; })]);
-          z.domain(data.columns.slice(1));
+          z.domain(valueLabel_array);
+          
         var arc = g.append("g")
                 .attr("id", "arc");
                 
             arc.append("g")
                 .selectAll("g")
-                .data(d3.stack().keys(data.columns.slice(1))(data))
+                .data(d3.stack().keys(valueLabel_array)(data))
                 .enter()
                     .append("g")
                     .attr("fill", function(d) { return z(d.key); })
@@ -819,13 +852,11 @@
                               .outerRadius(function(d) { return y(d[1]); })
                               .startAngle(function(d) { return x(d.data.country); })
                               .endAngle(function(d) { return x(d.data.country) + x.bandwidth(); })
-                              //.cornerRadius(3)
-                              //.value(function(d) {return d.data.country;})
                               .padAngle(0.01)
                               .padRadius(innerRadius));
             
         var gg = g
-            .selectAll("g")	
+            .selectAll("g") 
             
         var label_dr = d3.arc()
             .outerRadius(500)
@@ -840,9 +871,9 @@
                                     .duration(1000);
                                 
                                  label.transition()
-                                      .attr("text-anchor", "right")																					//"translate(" + (y(d['Value'])+10) + ",0)"; })
+                                      .attr("text-anchor", "right")                                                                                 //"translate(" + (y(d['Value'])+10) + ",0)"; })
                                       .attr("transform", function(d) { return "rotate(" + (2*rotate+(x(d.country) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (y(d['total'])+10) + ",-10)"; })
-                                        .duration(1000);				
+                                        .duration(1000);                
                                 });
         
         var label = arc.append("g")
@@ -851,14 +882,14 @@
             .data(data)
             .enter().append("g")
                 .attr("id","labels")
-                .attr("text-anchor", "right")																					//"translate(" + (y(d['Value'])+10) + ",0)"; })
+                .attr("text-anchor", "right")                                                                                   //"translate(" + (y(d['Value'])+10) + ",0)"; })
                 .attr("transform", function(d) { return "rotate(" + ((x(d.country) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (y(d['total'])+10) + ",-10)"; });
         
         var text =  label.append("text")
               .attr("transform", function(d) { return (x(d.country) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(0)translate(0,15)" : "rotate(-0)translate(0,15)"; })
-              .text(function(d) { return d.country+" "+d.total; })
+              .text(function(d) { return d.country+" "+d.record; })
               .attr("font-weight","normal")
-              .style("font-size", "13px")
+              .style("font-size", "12px")
               .style("font-family", "sans-serif");  
           
           var yAxis = g.append("g")
@@ -875,13 +906,13 @@
               .attr("fill", "none")
               .attr("stroke", "#000")
               .attr("stroke-width", 0.4)
-              .attr("r", y);
+              .attr("r", y)
+              .style("opacity", 1);
         
           yTick.append("text")
               .attr("y", function(d) { return -y(d); })
               .attr("dy", "0.35em")
               .attr("fill", "none")
-              //.attr("stroke", "#fff")
               .attr("stroke-width", 5)
               .text(y.tickFormat(5, "s"));
         
@@ -894,15 +925,15 @@
           yAxis.append("text")
               .attr("y", function(d) { return -y(y.ticks(5).pop()); })
               .attr("dy", "-1em")
-              .text("No. of cases");
+              .text("No. of each type");
               
           var legend = g.append("g")
             .attr("id","legend")
             .selectAll("g")
-            .data(data.columns.slice(1))
+            .data(valueLabel_array)
             .enter().append("g")
             .attr("id","legends")
-            .attr("transform", function(d, i) { return "translate(-110," + (i - (data.columns.length - 1) / 2) * 20 + ")"; });
+            .attr("transform", function(d, i) { return "translate(-112," + (i - (valueLabel_array.length) / 2) * 20 + ")"; });
         
           legend.append("rect")
               .attr("width", 18)
@@ -913,7 +944,7 @@
               .attr("x", 24)
               .attr("y", 9)
               .attr("dy", "0.35em")
-              .style("font-size", "13px")
+              .style("font-size", "12px")
               .style("font-family", "sans-serif")
               .text(function(d) { return d; }); 
 
@@ -929,7 +960,7 @@
     <script>
 
         var margin = {top: 20, right: 10, bottom: 150, left: 60, space : 2},
-            width = 665 - margin.left - margin.right,
+            width = 665,
             height = 450 - margin.top - margin.bottom;
                     
         var svg = d3.select(".svgdiv").append("svg")

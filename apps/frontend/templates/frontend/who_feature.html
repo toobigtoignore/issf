@@ -6,11 +6,12 @@
 {% endblock additional_css_scripts %}
 
 {% block body %}
-    <section class="content-section report">
+    <section id="who-feature-container" class="content-section report">
         <div class="row">
-            <h4>New Who's Who Feature</h4>
-            <h5>NOTE: Once this is changed, the previous Who's Who feature will be erased!</h5>
-            <div class="large-9 columns">
+            <h4 style="margin: 20px 0px 10px; font-size: 22px;">New Who's Who Feature</h4>
+            <p><strong>NOTE:</strong> Once this is changed, the previous Who's Who feature will be erased!</p>
+            
+            <div>
                 <form style="display:initial;" action="{% url 'who-feature' %}" method="post">
                     {% csrf_token %}
                     {{ form }}
