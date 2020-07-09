@@ -250,6 +250,10 @@ hr {
     /* background-color: rgba(59, 134, 255, 0.05); */
 }
 
+#contribute-panel-right {
+    width: calc(100% - 230px);
+}
+
 footer {
     float: left;
     width: 100%;
