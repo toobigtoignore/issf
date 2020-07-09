@@ -6,18 +6,20 @@
 {% endblock additional_css_scripts %}
 
 {% block body %}
-    <section class="content-section report">
+    <section id="geojson-upload-container" class="content-section report">
         <div class="row">
-            <h5>New Choropleth GeoJSON File Upload</h5>
-            <h5 style="color: black;">NOTE: Once this is changed, the previous choropleth data will be erased!</h5>
-            <div class="large-9 columns">
+            <h4>New Choropleth GeoJSON File Upload</h4>
+            <p><strong>NOTE:</strong> Once this is changed, the previous choropleth data will be erased! </p>
+            
+            <div>
                 <form style="display:initial;" action="{% url 'geojson-upload' %}" method="post"
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <h5 style="color: red;">{{ form_error }}</h5>
                     {{ form }}
-                    <div class="button-bar" style="margin-top: 10px; margin-bottom: 10px;">
-                        <button class="medium radius submit bt-submit">Submit</button>
+                    
+                    <div class="button-bar" style="text-align: left;">
+                        <button class="medium radius submit bt-submit" style="margin-left: 0;">Submit</button>
                     </div>
                 </form>
             </div>

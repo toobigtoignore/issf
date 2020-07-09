@@ -6,29 +6,32 @@
 
 {% block body %}
     <title>{% block title %}ISSF: User Profile{% endblock %}</title>
-    <div class="row">
-        <div class="large-12 columns page-title2">
-            <h1>User Profile for {{ userName }}</h1>
+    <div id="user-profile-container">
+        <div class="row">
+            <div class="large-12 columns page-title2">
+                <h1>User Profile for {{ userName }}</h1>
+            </div>
         </div>
-    </div>
-    <div class="row ">
-        <div class="large-12 columns accountFormContainer">
-            &nbsp;
 
-            <form method="post" action="{% url 'update-profile' %}" role="form">
-                {% csrf_token %}
-                {{ userForm }}
-                <div class="button-bar large-12 right">
-                    <button class="medium bt-submit" value="{% trans 'Submit' %}">
-                        {% trans "Submit" %}
-                    </button>
-                </div>
-            </form>
+        <div class="row ">
+            <div class="large-12 columns accountFormContainer">
+                &nbsp;
 
-            <p>&nbsp;</p>
+                <form method="post" action="{% url 'update-profile' %}" role="form">
+                    {% csrf_token %}
+                    {{ userForm }}
+                    <div class="button-bar large-12 right">
+                        <button class="medium bt-submit" value="{% trans 'Submit' %}">
+                            {% trans "Submit" %}
+                        </button>
+                    </div>
+                </form>
+
+                <p>&nbsp;</p>
+            </div>
         </div>
+        <p>&nbsp;</p>
     </div>
-    <p>&nbsp;</p>
 {% endblock body %}
 
 {% block additional_js_scripts %}
