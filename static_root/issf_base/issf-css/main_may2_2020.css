@@ -116,13 +116,12 @@ hr {
 
 .visual-carousel {
     position: relative;
-    height: 728px;
+    height: 770px;
     background-color: #fff;
     border-radius: 3px;
     box-shadow: 2px 2px 4px -1px rgba(0,0,0,.4);
     position: relative;
 }
-
 
 .visual-carousel-control {
     width: 100%;
@@ -133,18 +132,15 @@ hr {
     top: 45%;
 }
 
-
 .visual-carousel-control button{
     width: 45px;
     border-radius: 3px;
 }
 
-
 .visual-carousel-control button {
     position: absolute;
     font-size: 25px;
 }
-
 
 .visual-carousel-control #prev-slide{
     left: -11px;
@@ -209,6 +205,28 @@ hr {
     cursor: pointer;
 }
 
+#pager {
+    float: left;
+    width: 100%;
+    height: 22px;
+    text-align: center;
+    line-height: 10px;
+    position: relative;
+    z-index: 999;
+    margin-top: -30px;
+    overflow: hidden;
+}
+
+#pager span {
+    font-size: 100px;
+    cursor: pointer;
+    color: #888;
+}
+
+#pager .cycle-pager-active {
+    color: #2699FB;   
+}
+
 .dot {
     cursor: pointer;
     height: 15px;
@@ -230,6 +248,10 @@ hr {
 
 #advance-search, #contribute-panel, #content-bottom {
     /* background-color: rgba(59, 134, 255, 0.05); */
+}
+
+#contribute-panel-right {
+    width: calc(100% - 230px);
 }
 
 footer {
@@ -275,7 +297,6 @@ footer {
 
 footer {
     padding: 14px 0;
-    margin-top: 35px;
 }
 
 .col-200 {
@@ -637,7 +658,7 @@ footer {
 
 #info-map {
     background: #275D97;
-    margin: 30px 0px 20px 0px;
+    margin: 30px auto 20px;
     padding: 0;
 }
 
@@ -1229,7 +1250,7 @@ map-icons #expe span {
 
 #advance-search .main-wrapper {
     display: none;
-    margin: -14px 0 0;
+    margin: -14px auto 0;
     padding-top: 24px;
     background: #37516F;
 }
@@ -2642,7 +2663,7 @@ select[multiple] {
 
 #advance-search .main-wrapper {
     display: none;
-    margin: -12px 0 0;
+    margin: -12px auto 0;
     padding-top: 14px;
     background: #fff;
     padding-left: 0;
@@ -3344,6 +3365,66 @@ table p {
 
 
 
+/*  PASSWORD CHANGE CSS */
+#password-change-container {
+    padding: 0px 10px;
+}
+
+
+
+
+/*  PASSWORD RESET CSS */
+#password-reset-container {
+    padding: 0px 10px;
+}
+
+.password-reset-content {
+    padding: 0px 5px;
+}
+
+
+
+
+/*  USER PROFILE */
+#user-profile-container {
+    padding: 0px 10px;
+}
+
+
+
+
+/*  PUBLIC INFORMATION POLICY CSS */
+#public-policy-container {
+    padding: 0px 10px;
+}
+
+
+
+
+/*  PUBLIC INFORMATION POLICY CSS */
+#tip-faq {
+    padding: 10px 10px;
+}
+
+
+
+
+/*  PUBLIC INFORMATION POLICY CSS */
+#who-feature-container {
+    padding: 10px 10px;
+}
+
+
+
+
+/*  GEOJSON UPLOAD CSS */
+#geojson-upload-container {
+    padding: 40px 10px 20px;
+}
+
+
+
+
 /* BLUE JUSTICE LAYER SPECIFIC CSS */
 .content-bluejustice h5 {
     font-size: 1rem;
@@ -3417,6 +3498,7 @@ table p {
 
 
 
+/* RESPONSIVE CSS*/
 @media only screen and (max-width: 575px)
 {
     #body-section {
@@ -3696,5 +3778,20 @@ table p {
     
     #contributed-records li {
         font-size: 14px;
+    }
+}
+
+
+
+
+@media only screen and (max-width: 575px)
+{
+    .page-title2 {
+        height: auto;
+    }
+
+    .page-title2 h1{
+        font-size: 22px;
+        line-height: 1.1;
     }
 }

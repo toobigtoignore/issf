@@ -23,7 +23,8 @@
 }
 
 .FormSectionBanner-contribute {
-    width: 1000px;
+    width: 100%;
+    max-width: 1160px;
     margin: .25rem auto 1rem auto;
 }
 
@@ -77,6 +78,7 @@
     color: #fbcd04;
     align-items: center;
 }
+
 
 .FormGeog ul#id_geographic_scope_type input[type="radio"] {
     margin-bottom: 0px;
@@ -211,7 +213,6 @@ input[name^='mainattributeview'] {
     -webkit-box-shadow: 1px 1px 0px 1px #ccc;
     box-shadow: 1px 1px 0px 1px #ccc;
 }
-
 
 .hidden {
     display: none !important;
