@@ -161,12 +161,9 @@
                                 </table>
                                 {% if editor %}
                                     <form action="{% url 'who-basic' %}" method="post">
-                                        <h6>Please provide your basic details. Name, email and country of residence are
-                                            provided on the
-                                            <a href="{% url 'update-profile' %}">User Profile</a>
-                                            form.
-                                            Additional details, including researcher information, can be provided in
-                                            the sections below.
+                                        <h6>
+                                            Please provide your basic details. Name, email and country of residence are provided on the
+                                            <a href="{% url 'update-profile' %}">User Profile</a> form. Additional details, including researcher information, can be provided in the sections below.
                                         </h6>
 
                                         <p class="alert">
@@ -184,7 +181,7 @@
                                             <label>*Last Name:</label>
                                             {{ profile_form.last_name }}
                                             {{ person_form.img_url.label_tag }}{{ person_form.img_url }}
-                                            <label for="id_affiliation">Primary institutional/organizational
+                                            <label for="id_affiliation" style="float: left; margin-top: 15px;">Primary institutional/organizational
                                                 affiliation:
                                             </label>
                                             {{ person_form.affiliation }}
@@ -209,19 +206,20 @@
                                                 using Bing
                                             </button>
                                             <br/>
-                                            <label for="id_person_point">Address location (use the draw, edit and
-                                                delete
-                                                controls to set/modify; if you don't specify a location here, you will
-                                                be
-                                                mapped based on your country of residence):
+                                            <label for="id_person_point" style="display: block; margin-bottom: 10px;">
+                                                Address location (use the draw, edit and delete controls to set/modify; if you don't specify a location here, you will be mapped based on your country of residence):
                                             </label>
+                                            
                                             {{ person_form.person_point }}
-                                            <label for="id_url">Please include a link to your homepage or online
+                                            
+                                            <label for="id_url" style="float: left; margin: 10px 0px;">Please include a link to your homepage or online
                                                 profile
                                                 (Google Scholar, LinkedIn, etc.):
                                             </label>
+                                            
                                             {{ person_form.url }}
-                                            <label for="id_organizations">Select all SSF
+                                            
+                                            <label for="id_organizations" style="float: left; margin: 10px 0px;">Select all SSF
                                                 Organizations/Networks/Associations
                                                 that you are a member of (use
                                                 <a
@@ -229,6 +227,7 @@
                                                 </a>
                                                 to add):
                                             </label>
+                                            
                                             {{ person_form.organizations }}
                                             Hold down "Control", or "Command" on a Mac, to select more than one.
                                             {{ person_form.contributor }}
@@ -637,7 +636,7 @@
                     {% if person_instance.img_url %}
                         <div style="margin-bottom: 30px;">
                             <img height="400" width="400" src="{{ person_instance.img_url }}"
-                                 style="border: solid 5px #FFF; -moz-box-shadow: 5px 5px 0px #999; -webkit-box-shadow: 5px 5px 0px #999; box-shadow: 5px 5px 0px #999;;">
+                                 style="border: solid 5px #FFF; -moz-box-shadow: 1px 2px 5px 2px rgba(0,0,0,.3); -webkit-box-shadow: 1px 2px 5px 2px rgba(0,0,0,.3); box-shadow: 1px 2px 5px 2px rgba(0,0,0,.3);">
                         </div>
                     {% endif %}
                     {#            domain hard-coded because request.get_host broke under https #}
