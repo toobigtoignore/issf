@@ -646,7 +646,6 @@ footer {
 #info-section .main-wrapper {
     background: #fff;
     /*box-shadow: 5px 2px 5px -5px rgba(0,0,0,.4);*/
-    width: 100%;
 }
 
 /*@media only screen and (min-width: 1850px) {
@@ -2649,7 +2648,6 @@ select[multiple] {
 
 #record-table-result thead {
     display: block;
-    padding-right: 12px;
 }
 
 #record-table-result tbody {
@@ -3525,11 +3523,26 @@ table p {
         padding-left: 10px !important;
     }
     
-    #record-table-result {
-        width: 100vw;
-        margin: 0;
+    .table-holder {
+        height: auto !important;
     }
     
+    #record-table-result_paginate, 
+    #record-table-result_info {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    
+    #record-table-result_paginate { 
+        font-size: 14px;
+    }
+    
+    #record-table-result {
+        width: 99.78%;
+        margin: 0;
+        max-width: 100vw;
+    }
+
     #info-section .tabs {
         display: none;
     }
@@ -3538,7 +3551,7 @@ table p {
         padding-top: 0;
     }
     
-    #record-table-result_filter, 
+    #record-table-result_, 
     #record-table-result_length {
         text-align: left;
     }
@@ -3550,9 +3563,10 @@ table p {
         position: relative;
         box-sizing: border-box;
         padding: 0px 2% 0 1.5%;
-        text-align: center;
+        text-align: left;
         margin-top: 0px;
         margin-bottom: 15px;
+        white-space: wrap;
     }
     
     .map-icons a {
@@ -3566,7 +3580,7 @@ table p {
     
     .map-icons a:last-child {
         margin-bottom: 11.5px;
-        margin-left: 3px
+        margin-left: 4px;
     }
     
     .map-icons a .pop {
@@ -3706,6 +3720,73 @@ table p {
 
 
 @media only screen and (max-width: 575px)
+{
+    #issf {
+        padding: 0;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+    
+    #header {
+        height: 140px
+    }
+    
+    #issf img {
+        max-width: 120px;
+    }
+    
+    .tbti-logo-homepage {
+        width: 120px;
+        top: -43px;
+        left: 160px;
+    }
+    
+    .header-right {
+        position: absolute;
+        top: 59px;
+        left: 0;
+        padding-top: 0px;
+    }
+    
+    .account-bar {
+        position: absolute;
+        left: 5px;
+        text-align: left;
+    }
+    
+    .contribution-bts {
+        display: inline;
+        position: absolute;
+        left: 5px;
+        top: 40px;
+        margin-right: 0;
+    }
+    
+    .contribution-bts h2 {
+        font-size: 14px;
+    }
+    
+    .bt-contribute { 
+        float: left;
+        width: 145px;
+    }
+    
+    .bt-my_contributions {
+        display: inline;
+        position: absolute;
+        text-align: left;
+        width: 145px;
+    }
+    
+    #user-options {
+        width: 250px !important;
+    }
+}
+
+
+
+
+@media only screen and (min-width: 576px) and (max-width: 1023px)
 {
     #issf {
         padding: 0;
