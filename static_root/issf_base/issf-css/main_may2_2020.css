@@ -268,6 +268,7 @@ footer {
 .content-section {
     position: relative;
     z-index: 91;
+    margin-bottom: 35px;
 }
 
 #advance-search {
@@ -645,6 +646,7 @@ footer {
 #info-section .main-wrapper {
     background: #fff;
     /*box-shadow: 5px 2px 5px -5px rgba(0,0,0,.4);*/
+    width: 100%;
 }
 
 /*@media only screen and (min-width: 1850px) {
@@ -2658,7 +2660,7 @@ select[multiple] {
 
 .table-holder {
     min-height: 400px;
-    height: 532px !important;
+    height: 540px !important;
 }
 
 #advance-search .main-wrapper {
@@ -3499,14 +3501,46 @@ table p {
 
 
 /* RESPONSIVE CSS*/
-@media only screen and (max-width: 575px)
-{
+@media only screen and (max-width: 1023px)
+{   
     #body-section {
         display: block;
     }
+
+    #tab-map {
+        display: none;
+    }
+
+    #tab-table {
+        display: block;
+    }
     
-/*    #info-map {
+    #info-map {
         margin-bottom: 10px;
+        margin-top: 20px;
+    }
+    
+    #info-map h3 {
+        font-size: 25px;   
+        padding-left: 10px !important;
+    }
+    
+    #record-table-result {
+        width: 100vw;
+        margin: 0;
+    }
+    
+    #info-section .tabs {
+        display: none;
+    }
+    
+    #record-table-result_wrapper {
+        padding-top: 0;
+    }
+    
+    #record-table-result_filter, 
+    #record-table-result_length {
+        text-align: left;
     }
     
     .map-icons {
@@ -3514,10 +3548,11 @@ table p {
         height: auto;
         display: block;
         position: relative;
-        margin-top: -10px;
         box-sizing: border-box;
         padding: 0px 2% 0 1.5%;
         text-align: center;
+        margin-top: 0px;
+        margin-bottom: 15px;
     }
     
     .map-icons a {
@@ -3593,7 +3628,17 @@ table p {
     #tosearch { 
         left: 3px;
         bottom: 8px;
-    }*/
+    }
+}
+
+
+
+
+@media only screen and (max-width: 575px)
+{
+    #visual-section {
+        display: none;
+    }
     
     .info-ctn { 
         margin-bottom: -0px;
@@ -3668,7 +3713,7 @@ table p {
         margin-top: 10px;
     }
     
-    header {
+    #header {
         height: 140px
     }
     
@@ -3823,7 +3868,7 @@ table p {
         position: absolute;
     }
     
-    .content-section .large-9 {
+    .content-section .large-8 {
         width: 100%;
         padding: 0px 5px;
     }
@@ -3846,17 +3891,17 @@ table p {
         padding-right: 0;
     }
     
-    .content-section .large-3 {
+    .content-section .large-4 {
         width: 100%;
         margin-top: 20px;
         padding-left: 5px;
     }
     
-    .content-section .large-3.columns {
+    .content-section .large-4.columns {
         padding-right: 0 !important;
     }
     
-    .content-section .large-3 + a {
+    .content-section .large-4 + a {
         position: relative !important;
         margin-left: 15px;
         margin-bottom: 20px;
