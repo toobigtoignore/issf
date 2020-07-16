@@ -1,0 +1,153 @@
+{% extends 'issf_base/base.html' %}
+
+{% load staticfiles %}
+
+{% block additional_css_scripts %}
+    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
+{% endblock additional_css_scripts %}
+
+{% block title %}
+    ISSF Help Page
+{% endblock %}
+
+{% block body %}
+    <section class="content-section report">
+        <div class="row">
+            <div class="large-9 columns did-know-container">
+                <h3>Tips</h3>
+
+                <div class="panel callout radius">
+                    <p style="margin-bottom: 0">{{ fact.fact }}</p>
+                    <a
+                        href="{% url 'fact-archive' %}"
+                        style="position:absolute; right:20px; font-size: 0.75em;"
+                    >
+                        Archive
+                    </a>
+                </div>
+            </div>
+            <div class="large-9 columns faq-container">
+                <h3>Frequently Asked Questions (FAQ)</h3>
+                {% for category in categories %}
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation">
+                            <a class="accordion-nav" href="#panel21">{{ category.faq_category }}</a>
+                            <div id="panel21" class="content">
+                                {% for faq in faqs %}
+                                    {% if faq.faq_category.faq_category == category.faq_category %}
+                                        <strong>{{ faq.question }}</strong>
+                                        <p>{{ faq.answer|linebreaksbr }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                                {% ifchanged category.faq_category %}
+                            </div>
+                        </dd>
+                    </dl>
+                                {% endifchanged %}
+                {% endfor %}
+            </div>
+            <div class="large-9 columns videos-container" style="float: left; margin-top: 25px;">
+                <h3>Videos</h3>
+
+                <table>
+                    <tr>
+                        <td>
+                            <p style="margin: 5px 0 5px 0; font-size: 0.86rem;">
+                                <strong>1. Introduction</strong>
+                                -
+                                Introduction to the Information System on Small-scale Fisheries (ISSF)
+                            </p>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/IZV05y95_JM"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
+                        </td>
+
+
+                        <td>
+                            <p style="margin: 5px 0 5px 0;">
+                                <strong>2. Sign Up</strong>
+                                -
+                                Tutorial video explaining how to create an account on ISSF
+                            </p>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/lhDxUS4rOho"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p style="margin: 5px 0 5px 0;">
+                                <strong>3. Contribute</strong>
+                                -
+                                Tutorial video explaining how to contribute your knowledge to ISSF
+                            </p>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/EDRuhoBfmnU"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
+                        </td>
+                        <td>
+                            <p style="margin: 5px 0 5px 0;">
+                                <strong>4. Explore</strong>
+                                -
+                                Tutorial video demonstrating the various aspects of ISSF
+                            </p>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/Ai3ZMQb3ssI"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p style="margin: 5px 0 5px 0;">
+                                <strong>5. Additional features</strong>
+                                - Tutorial video demonstrating the additional features of ISSF
+                            </p>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/rqhwImqqIOw"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
+                        </td>
+                        <td>
+                            <p style="margin: 5px 0 5px 0;">
+                                <strong>6. Export</strong>
+                                - Tutorial video demonstrating how to export data from ISSF
+                            </p>
+                            <iframe
+                                width="500"
+                                height="281"
+                                src="https://www.youtube.com/embed/QrbFre9gPac"
+                                frameborder="0"
+                                allowfullscreen
+                            >
+                            </iframe>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}
