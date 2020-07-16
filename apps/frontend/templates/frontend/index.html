@@ -1122,7 +1122,7 @@
                 
                 bars.enter().append("rect")
                     .attr("width", x.bandwidth())
-                    .on("mouseover", function() { div.style("visibility", "visible");}) //.style("width", "100px")
+                    .on("mouseover", function() { div.style("display", "block"); }) //.style("width", "100px")
                     .on("mousemove", function(d) {  
                         var typeName = d3.select(this.parentNode).datum().key; 
                         var typeValue = d.data[typeName];
@@ -1133,10 +1133,10 @@
                              "<b>" + typeName + " : "  + typeValue +                 
                             "</b><br>" + d.data.country + " : "  + total)
                             
-                            .style("left", (d3.event.pageX - 45) + "px")          
+                            .style("left", (d3.event.pageX + 10) + "px")          
                             .style("top", (d3.event.pageY - 45) + "px");
                         })
-                    .on("mouseout", function() { div.style("visibility", "hidden"); })
+                    .on("mouseout", function() { div.style("display", "none"); })
                     .merge(bars)
                     .transition().duration(0)
                         .attr("x", d => x(d.data.country))
