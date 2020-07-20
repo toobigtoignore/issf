@@ -43,9 +43,8 @@ api = twitter.Api(
 )
 # Attempt to verify twitter credentials. Sets a variable saying whether or not it was successful
 try:
-    # Tweeting disabled while new team members are adding records at warp speed
-    # TWITTER_AUTHENTICATED = api.VerifyCredentials() is not None
-    TWITTER_AUTHENTICATED = False
+    TWITTER_AUTHENTICATED = api.VerifyCredentials() is not None
+    #TWITTER_AUTHENTICATED = False
 except twitter.error.TwitterError:
     TWITTER_AUTHENTICATED = False
 
