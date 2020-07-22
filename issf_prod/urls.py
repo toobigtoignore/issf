@@ -3,7 +3,7 @@ from typing import List
 from issf_admin.views import return_robots, return_google_site_verification, update_profile, \
     profile_saved, account_verified, custom_password_change, help_page, fact_archive, contributed_records, logout_view
 
-from frontend.views import new_tip, new_faq, who_feature, geojson_upload, index, table_data_export, profile_csv, country_records
+from frontend.views import new_tip, new_faq, who_feature, geojson_upload, index, table_data_export, profile_csv, country_records, visualizations
 from details.views import DetailsSitemap
 
 from django.conf.urls import include, url
@@ -98,4 +98,6 @@ urlpatterns = [
     url(r'^newfaq/$', new_faq, name='new-faq'),
     url(r'^whofeature/$', who_feature, name='who-feature'),
     url(r'^geojson/$', geojson_upload, name='geojson-upload'),
-    url(r'^country-records/(?P<country_id>\d+)/$', country_records, name='country-records'), ]
+    url(r'^visualizations/$', visualizations, name='visualizations'),
+    url(r'^country-records/(?P<country_id>\d+)/$', country_records, name='country-records') 
+]
