@@ -1,153 +1,1176 @@
-{% extends 'issf_base/base.html' %}
 
+{% extends 'issf_base/base.html' %}
 {% load staticfiles %}
 
-{% block additional_css_scripts %}
-    <link rel="stylesheet" href="{% static "details/css/details.css" %}">
-{% endblock additional_css_scripts %}
 
-{% block title %}
-    ISSF Help Page
-{% endblock %}
+{% block additional_css_scripts %}
+<style>
+    .slideshow-container { display: block; width: calc(100% - 255px); float: right; margin-left: 0; margin-right: 15px; }
+    #visual-section .triggers { width: 210px; float: left; height: 100%; padding: 50px 0px; border-right: 2px solid #e3e3e3; padding-right: 10px; margin-right: 20px; }
+    #visual-section .triggers span { background: #fff; color: #2699fb; font-weight: bold; float: left; width: 100%; padding: 10px 10px; margin-bottom: 20px;  border-radius: 0px 5px 5px 0px; margin-left: -7px; box-shadow: -1px 2px 3px 1px rgba(0,0,0,.3); cursor: pointer; }
+    #visual-section .triggers .triggers-activated { color: #fff; background: #2699fb; cursor: default; }
+    .visual-slides,#visual3 { display: none; width: calc(100% - 240px); float: right; padding-right: 25px; }
+    .visual-slides:first-child { display: block; }
+
+    /* css for visual 1*/
+    #visual1 { padding-top: 15px; text-align: center; }
+    #visual1-info li { display: inline; font-size: 14px; }
+    #visual1-info li:after { content: "|"; font-weight: bold; margin-left: 15px; margin-right: 15px; }
+    #visual1-info li:last-child:after { content: ""; margin-right: 0; }
+    #visual1 svg { width: 100%; }
+    .tooltipPopsup { position: fixed; font-size: 15px; width:  auto; height: auto; pointer-events: none; background-color: #feffeb; box-sizing: border-box; padding: 10px; border: 1px solid #e3e3e3; border-radius: 3px; z-index: 999; }
+
+    /* css for visual 2*/
+    .svgmap { border: 0px solid  black; }
+    .svgdiv { text-align: center; }
+    .hidden { display: none; }
+    .axis { font: 10px sans-serif; }
+    .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
+    .chart-button { background: white; border-radius: 2; margin-top: -0.5px; margin-right: 0px; margin-bottom: -0.5px; margin-left: 0px; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
+    .button-on { background: #2699FB !important; color: #fff; border: 1px solid #555; }
+    .button-off { background: #f3f3f3; color: #555; border: 1px solid #555; }
+    .second-button { background: #fafcd2; border-radius: 2; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
+    .Column { margin-top: 0px; margin-right: 8px; margin-bottom: 9px; margin-left: 0px; display: inline-block; }
+    #drop select { width: 200px; margin-left: 15px; padding-right: 28px; border-radius: 4px; }
+    input#myCheckbox { width: 18px; height: 18px; }
+    #dimensions label { display: inline-block; margin-right: 10px; font-weight: normal; }
+    #dimensions label input { margin-right: 4px; height: 18px; width: 18px; margin-bottom: 0; }
+    #dimensions label span {float: right;}
+    label#myCheckboxLabel { display: inline-block; margin-left: -5px; }
+    #myCheckboxLabel span { float: right; margin-left: 6px; }
+    #visual2 { padding-top: 50px; }
+    #visual2 ul { text-align: left; }
+
+    /* css for visual 3*/
+    #visual3 { padding-top: 75px; text-align: center; font-size: 14px; } 
+    #visual3 div.bluejusticeTooltip { position: fixed; text-align: center; padding: 5px; background: #fff2d1; border: 0px; border-radius: 8px; }
+    #visual3 ul { text-align: left; }
+</style>
+{% endblock additional_css_scripts %}
+    
 
 {% block body %}
     <section class="content-section report">
         <div class="row">
-            <div class="large-9 columns did-know-container">
-                <h3>Tips</h3>
+            <div id="visual-section" class="visual-section">
+                <div class="visual-carousel">
+                    <div class="triggers">
+                        <span class="triggers-activated" data-trigger="visual1">Governance Modes</span>
+                        <span data-trigger="visual2">Gear and Vessel</span>
+                        <span data-trigger="visual3">Bluejustice</span>
+                    </div>
+                    <!-- <div id="visual-loading-overlay"></div> -->
+                    <div class="sldeshow-container">
+                    <!-- <div class="cycle-slideshow slideshow-container" 
+                         data-cycle-fx=fade
+                         data-cycle-manual-speed="10"
+                         data-cycle-timeout=0
+                         data-cycle-slides="> div"
+                         data-cycle-prev="#prev-slide"
+                         data-cycle-next="#next-slide"
+                         data-cycle-pager="#pager"> -->
 
-                <div class="panel callout radius">
-                    <p style="margin-bottom: 0">{{ fact.fact }}</p>
-                    <a
-                        href="{% url 'fact-archive' %}"
-                        style="position:absolute; right:20px; font-size: 0.75em;"
-                    >
-                        Archive
-                    </a>
+
+                        <div id="visual1" class="visual-slides">
+                            <div id="svg-visual1" style="overflow: hidden;"></div>
+                            <div style="margin-top:-25px;">
+                                <p style="font-size: 14.5px; font-weight: bold; margin-top: 15px; margin-bottom: 0px;">This visualisation shows various governance types by country based on the contributed records (number next to country name)</p>
+                                <ul id="visual1-info">
+                                    <li>Mouse over the country to see the details</li>
+                                    <li>Click to rotate the wheel </li>
+                                    <li>Scroll to zoom the chart</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        
+                        <div id="visual2" class="visual-slides">
+                            <div align="center" class="Row">
+                                <div class="Column">
+                                    <button name="Gear" class="chart-button button-on">Gear</button>
+                                    <button name="Vessel" class="chart-button button-off">Vessel</button>
+                                </div>
+                               
+                                <div class="Column">
+                                    <button id="perc" name="Percentage" class="second-button button-off">Percentage</button><button id="std" name="Standardized" class="second-button button-on">Standardized Count</button>
+                                </div>
+                            </div>
+
+                            <div align="center" class="Row2">
+                                <div class="Column">
+                                    <form id="dimensions">
+                                      <label id="country-radio-label" for="country"><input class="radioinput" type="radio" id="country" name="first" checked=""><span>Country</span></label>
+                                      <label id="region-radio-label" for="region"><input type="radio" id="region" name="first"><span>Region</span></label>
+                                    </form>
+                                </div>
+                                
+                                <label id="myCheckboxLabel" for="myCheckbox"> <input type="checkbox" id="myCheckbox"> <span>Compare</span></label>
+                                
+                                <div id="drop" align=left class="Column"></div>
+                            </div>
+
+                            <div class="svgdiv"></div>
+
+                            <div style="margin-top: -20px;">
+                                This visualisation shows vessel/gear types information by country/region
+                                <ul>
+                                    <li>"Percentage" shows the percentage of a given vessel/gear type used in a country/region</li>
+                                     <li>"Standardized Count" shows average number of records using a given vessel/gear in a country/region</li>
+                                     <li>To compare country/region choose "Standardized Count" option</li>
+                                </ul>
+                            </div>
+                        </div> <!-- /visual2 -->
+
+
+                        <div id="visual3" class="">
+                            <div style="font-size: 15px; width: 160px; margin: auto; margin-bottom: 32px;">
+                                <input type="checkbox" id="sort" style="float: left; width: 20px; height: 20px; margin-bottom: 0; cursor: pointer;margin-right: 15px;"> 
+                                <label for="sort" style="float: left;margin: 0;">Sort By Country</label>
+                            </div>
+                            
+                            <svg id="chart" width="750" height="400"></svg><br>
+                                <p style=" font-weight: bold; ">This visualisation shows different types of injustice to small-scale fisheries taking place in various case study locations.</p>
+                                <ul>
+                                    <li>Number on top of the histogram shows the number of case studies reported in each country</li>
+                                    <li>Mouseover the justice type in a country to see the total reported number for that type</li>
+                                    <li>Results can be sorted by country, click "Sort by Country" </li>     
+                                </ul> 
+                        </div> <!-- /visual3 end -->
+                    </div>
+
+                    <!-- <div class="visual-carousel-control">
+                        <button id="prev-slide">&#8617;</button>
+                        <button id="next-slide">&#8618;</button>
+                    </div> 
+
+                    <div id="pager"></div> -->
                 </div>
             </div>
-            <div class="large-9 columns faq-container">
-                <h3>Frequently Asked Questions (FAQ)</h3>
-                {% for category in categories %}
-                    <dl class="accordion" data-accordion>
-                        <dd class="accordion-navigation">
-                            <a class="accordion-nav" href="#panel21">{{ category.faq_category }}</a>
-                            <div id="panel21" class="content">
-                                {% for faq in faqs %}
-                                    {% if faq.faq_category.faq_category == category.faq_category %}
-                                        <strong>{{ faq.question }}</strong>
-                                        <p>{{ faq.answer|linebreaksbr }}</p>
-                                    {% endif %}
-                                {% endfor %}
-                                {% ifchanged category.faq_category %}
-                            </div>
-                        </dd>
-                    </dl>
-                                {% endifchanged %}
-                {% endfor %}
-            </div>
-            <div class="large-9 columns videos-container" style="float: left; margin-top: 25px;">
-                <h3>Videos</h3>
-
-                <table>
-                    <tr>
-                        <td>
-                            <p style="margin: 5px 0 5px 0; font-size: 0.86rem;">
-                                <strong>1. Introduction</strong>
-                                -
-                                Introduction to the Information System on Small-scale Fisheries (ISSF)
-                            </p>
-                            <iframe
-                                width="500"
-                                height="281"
-                                src="https://www.youtube.com/embed/IZV05y95_JM"
-                                frameborder="0"
-                                allowfullscreen
-                            >
-                            </iframe>
-                        </td>
-
-
-                        <td>
-                            <p style="margin: 5px 0 5px 0;">
-                                <strong>2. Sign Up</strong>
-                                -
-                                Tutorial video explaining how to create an account on ISSF
-                            </p>
-                            <iframe
-                                width="500"
-                                height="281"
-                                src="https://www.youtube.com/embed/lhDxUS4rOho"
-                                frameborder="0"
-                                allowfullscreen
-                            >
-                            </iframe>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="margin: 5px 0 5px 0;">
-                                <strong>3. Contribute</strong>
-                                -
-                                Tutorial video explaining how to contribute your knowledge to ISSF
-                            </p>
-                            <iframe
-                                width="500"
-                                height="281"
-                                src="https://www.youtube.com/embed/EDRuhoBfmnU"
-                                frameborder="0"
-                                allowfullscreen
-                            >
-                            </iframe>
-                        </td>
-                        <td>
-                            <p style="margin: 5px 0 5px 0;">
-                                <strong>4. Explore</strong>
-                                -
-                                Tutorial video demonstrating the various aspects of ISSF
-                            </p>
-                            <iframe
-                                width="500"
-                                height="281"
-                                src="https://www.youtube.com/embed/Ai3ZMQb3ssI"
-                                frameborder="0"
-                                allowfullscreen
-                            >
-                            </iframe>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="margin: 5px 0 5px 0;">
-                                <strong>5. Additional features</strong>
-                                - Tutorial video demonstrating the additional features of ISSF
-                            </p>
-                            <iframe
-                                width="500"
-                                height="281"
-                                src="https://www.youtube.com/embed/rqhwImqqIOw"
-                                frameborder="0"
-                                allowfullscreen
-                            >
-                            </iframe>
-                        </td>
-                        <td>
-                            <p style="margin: 5px 0 5px 0;">
-                                <strong>6. Export</strong>
-                                - Tutorial video demonstrating how to export data from ISSF
-                            </p>
-                            <iframe
-                                width="500"
-                                height="281"
-                                src="https://www.youtube.com/embed/QrbFre9gPac"
-                                frameborder="0"
-                                allowfullscreen
-                            >
-                            </iframe>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        </div> <!-- /row end -->
     </section>
-{% endblock %}
+
+
+    <!-- for D3 -->
+    <script src="https://d3js.org/d3-array.v1.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
+    <script src="https://d3js.org/d3-format.v1.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    
+    <script src="{% static "issf_base/issf-js/d3-scale-radial.js" %}"></script>
+    
+
+
+
+    <!-- Visual 1 -->
+    <script>
+        // set the dimensions and margins of the graph
+        var margin = {top: 30, right: 0, bottom: 0, left: 0}
+        var width = 600;
+        var height = 620;
+            
+        // append the svg object to the body of the page
+        var svg = d3.select("#svg-visual1")
+          .append("svg")
+            .attr("width", width)
+            .attr("height", height + 30)
+            
+        var g_scroll =  svg.call(d3.zoom().scaleExtent([1, 3]).on("zoom", function () {
+               g_scroll.attr("transform", d3.event.transform)
+            }))
+            .append("g")
+            .attr("id","scroll group")
+            
+        var innerRadius = 130,
+            outerRadius = Math.min(width, height) / 2
+        
+        var g = g_scroll.append("g")
+            .attr("id","main group")
+            .attr("transform",
+                  "translate(" + width / 2 + "," + height / 2 + ")")
+                  
+        var x = d3.scaleBand()
+            .range([0, 2 * Math.PI])
+            .align(0);
+        
+        var y = d3.scaleRadial()
+            .range([innerRadius, outerRadius]);
+        
+        var z = d3.scaleOrdinal()
+            .range(["#0000FF", "#FF4500", "#008000", "#964b00", "#696969"]);
+            
+        var tooltipPopsup = d3.select("body").append("div")
+            .attr("class", "tooltipPopsup")
+            .style("opacity", 0);
+        
+        var mouseover = function(d) {
+                              var visualSection = document.getElementById("visual-section");
+                              var html  = "Country : " + d.data.country + " | Records : " + d.data.record +"<br/>"; 
+                            valueLabel_array.forEach(function (c) { 
+                                html  = html + "<font color=" + z(c) + ">" + c + ": " + d.data[c] + "</font><br/>"; 
+                            })
+                            html  = html + "Total : " + d.data.total + "<br/>"; 
+                            // html  = html + "Records : " + d.data.record + "<br/>";
+                              tooltipPopsup.html(html)
+                                  .style("left", (d3.event.pageX) + "px")
+                                  .style("top", (d3.event.pageY) + "px")
+                                .transition()
+                                  .duration(200) 
+                                  .style("opacity", 1) 
+                            d3.select(this)
+                              .style("stroke", "black")
+                              .style("opacity", 1)
+                          };
+                          
+        var mouseleave = function(d) {
+                              tooltipPopsup.transition()
+                                  .duration(300) // ms
+                                  .style("opacity", 0); // don't care about position!
+                            d3.select(this)
+                              .style("stroke", "none")
+                              .style("opacity", 1)
+                          };
+                          
+        var rotate = 0;
+
+
+        d3.csv("{% static "issf_base/csv/data.csv" %}", function(error, data){
+        
+    data_nested = d3.nest()
+          .key(function(d) { return d.country; }).sortKeys(d3.ascending)
+          .key(function(d) { return d.valueLabel; })
+          .rollup(function(v) { return {
+            length: v.length
+          }; })
+          .entries(data);
+
+    valueLabel_array = d3.map(data, v => v.valueLabel).keys()
+
+        var new_data = []
+        data_nested.forEach(function (d, i) {
+            new_data.push({country: d.key, total: 0, record: 0})
+            
+            var data_country_filtered = data.filter(m => (m.country == d.key))
+            var count_issf = d3.map(data_country_filtered, function(c){return c.issf_core_id;}).keys().length
+            new_data[i].record = count_issf
+            
+            valueLabel_array.forEach(function (c) { 
+                new_data[i][c] = 0
+            })
+            
+            var total = 0
+            d.values.forEach(function (v) {
+                new_data[i][v.key] = v.value.length
+                total = total + v.value.length
+            })
+            
+            new_data[i].total = total
+            
+        })
+        
+    data = new_data
+    <!-- console.log("data",data)            -->
+          x.domain(data.map(function(d) { return d.country; }));
+          y.domain([0, d3.max(data, function(d) { return d.total; })]);
+      z.domain(valueLabel_array);
+      
+        var arc = g.append("g")
+                .attr("id", "arc");
+                
+            arc.append("g")
+                .selectAll("g")
+                .data(d3.stack().keys(valueLabel_array)(data))
+                .enter()
+                    .append("g")
+                    .attr("fill", function(d) { return z(d.key); })
+                    .selectAll("path")
+                    .data(function(d) { return d; })
+                    .enter()
+                        .append("path")
+                        .on("mouseover", mouseover)
+                        .on("mouseleave", mouseleave)
+                        .attr("id", function(d) { return d; })
+                        .attr("d", d3.arc()
+                              .innerRadius(function(d) { return y(d[0]); })
+                              .outerRadius(function(d) { return y(d[1]); })
+                              .startAngle(function(d) { return x(d.data.country); })
+                              .endAngle(function(d) { return x(d.data.country) + x.bandwidth(); })
+                              .padAngle(0.01)
+                              .padRadius(innerRadius));
+            
+        var gg = g
+            .selectAll("g") 
+            
+        var label_dr = d3.arc()
+            .outerRadius(500)
+            .innerRadius(0);
+            
+        d3.select("#svg-visual1")
+            .on("click",function(d) { 
+                                rotate = rotate + 8;
+                                
+                                gg.transition()
+                                    .attr("transform",  "rotate(" + rotate + ")")
+                                    .duration(1000);
+                                
+                                 label.transition()
+                                      .attr("text-anchor", "right")                                                                                 //"translate(" + (y(d['Value'])+10) + ",0)"; })
+                                      .attr("transform", function(d) { return "rotate(" + (2*rotate+(x(d.country) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (y(d['total'])+10) + ",-10)"; })
+                                        .duration(1000);                
+                                });
+        
+        var label = arc.append("g")
+            .attr("id","label")
+            .selectAll("g")
+            .data(data)
+            .enter().append("g")
+                .attr("id","labels")
+                .attr("text-anchor", "right")                                                                                   //"translate(" + (y(d['Value'])+10) + ",0)"; })
+                .attr("transform", function(d) { return "rotate(" + ((x(d.country) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (y(d['total'])+10) + ",-10)"; });
+        
+        var text =  label.append("text")
+              .attr("transform", function(d) { return (x(d.country) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(0)translate(0,15)" : "rotate(-0)translate(0,15)"; })
+              .text(function(d) { return d.country+" "+d.record; })
+              .attr("font-weight","normal")
+              .style("font-size", "13px")
+              .style("font-family", "sans-serif");  
+          
+          var yAxis = g.append("g")
+            .attr("id","yAxis")
+            .attr("text-anchor", "middle");
+        
+          var yTick = yAxis
+            .selectAll("g")
+            .data(y.ticks(5).slice(1))
+            .enter().append("g")
+            .attr("id","yTick");
+        
+          yTick.append("circle")
+              .attr("fill", "none")
+              .attr("stroke", "#000")
+              .attr("stroke-width", 0.4)
+              .attr("r", y)
+          .style("opacity", 1);
+        
+          yTick.append("text")
+              .attr("y", function(d) { return -y(d); })
+              .attr("dy", "0.35em")
+              .attr("fill", "none")
+              .attr("stroke-width", 5)
+              .text(y.tickFormat(5, "s"));
+        
+          yTick.append("text")
+              .attr("y", function(d) { return -y(d); })
+              .attr("dy", "0.35em")
+              .text(y.tickFormat(5, "s"))
+              .style("opacity", 0.4);;
+        
+          yAxis.append("text")
+              .attr("y", function(d) { return -y(y.ticks(5).pop()); })
+              .attr("dy", "-1em")
+              .text("No. of each type");
+              
+          var legend = g.append("g")
+            .attr("id","legend")
+            .selectAll("g")
+            .data(valueLabel_array)
+            .enter().append("g")
+            .attr("id","legends")
+            .attr("transform", function(d, i) { return "translate(-112," + (i - (valueLabel_array.length) / 2) * 20 + ")"; });
+        
+          legend.append("rect")
+              .attr("width", 18)
+              .attr("height", 18)
+              .attr("fill", z);
+        
+          legend.append("text")
+              .attr("x", 24)
+              .attr("y", 9)
+              .attr("dy", "0.35em")
+              .style("font-size", "12px")
+              .style("font-family", "sans-serif")
+              .text(function(d) { return d; }); 
+
+            g.style('transform', 'translate(50%, 50%)');
+        });
+        
+    </script>
+    <!-- Visual 1 end -->
+
+
+
+    
+    <!-- Visual 2 -->
+    <script>
+        var margin = {top: 20, right: 10, bottom: 150, left: 60, space : 2},
+            width = 665,
+            height = 450 - margin.top - margin.bottom;
+                    
+        var svg = d3.select(".svgdiv").append("svg")
+            .attr("class", "svgmap")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            
+        var underConstr = svg.append("g")
+                    .attr("class", "under hidden")
+                    .attr("transform", "translate(100,100)")
+                    
+        underConstr.append("text").text("Under Construction :)")
+
+        d3.csv("{% static "issf_base/csv/gear.csv" %}", function(error, data){
+            
+            //Read data by Gear or Vessel
+            var data = data.filter(function(d){return d.attribute_value__value_label != '';});
+            
+            var main_gear = data.filter(function(d){return d.attribute__attribute_label == 'Main gear type(s):';});
+            var main_vessel = data.filter(function(d){return d.attribute__attribute_label == 'Main SSF vessel type(s):';});
+
+            //Get Types for Gear
+            var regions_array = data.map(function(x) { return x.region; }); 
+            regions_array = regions_array.filter(function(elem, pos) {
+              return regions_array.indexOf(elem) == pos;
+            });
+
+            //Get Types for Gear
+            var types_gear = main_gear.map(function(x) { return x.attribute_value__value_label; }); 
+            types_gear = types_gear.filter(function(elem, pos) {
+              return types_gear.indexOf(elem) == pos;
+            });
+            
+            //Get Types for Vessel
+            var types_vessel = main_vessel.map(function(x) { return x.attribute_value__value_label; }); 
+            types_vessel = types_vessel.filter(function(elem, pos) {
+              return types_vessel.indexOf(elem) == pos;
+            });
+            
+            //Draw Bar Chart
+            function drawGraph(main, drop_selected, types, regionOrCountry){
+                var dG = {};
+                //Groupping data by type for average  /////////old calc
+                data_count = d3.nest()
+                      .key(function(d) { return d.attribute_value__value_label; })
+                      .rollup(function(v) { return {
+                        length: v.length
+                      }; })
+                      .entries(main);
+                      
+                //Groupping data //cal 1 ok
+                data_gear = d3.nest()
+                      .key(function(d) { return d.country})
+                      .key(function(d) { return d.attribute_value__value_label; })
+                      .rollup(function(v) { return {
+                        length: v.length
+                      }; })
+                      .entries(main);
+                      
+                //Sum of country labels //calc 2
+                data_gear.forEach(function (d) {
+                    if (regionOrCountry == "region"){
+                        region = main.filter(function(m){return m.country == d.key;}).map(function(r) { return r.region; });  //main.map(function(x) { return x.region; }); 
+                        d.region = region[0]
+                    }
+                    
+                    //Groupping data by type for average  /////////old calc
+                    data_other = d3.nest()
+                          .key(function(d) { return d.issf_core_id;})
+                          .rollup(function(v) { return {
+                            length: v.length
+                          }; })
+                          .entries(main.filter(function(m){return m.country == d.key && m.attribute_value__value_label == "Other";}));
+                    
+                    records = d3.sum(data_other,function(v){return v.value.length;}) - data_other.length
+                    
+                    var data_issf = d3.map(main.filter(function(m){return m.country == d.key;}), function(m){return m.issf_core_id;}).keys()
+
+                    d.total = d3.sum(d.values,function(v){return v.value.length;})
+                    d.records = records + data_issf.length
+                })  
+                    
+                //add new length and sum of types ///calc 3 & 4
+                data_gear.forEach(function (d) {
+                    d.values.forEach(function (v) {
+                        v.value.std = +d3.format(".5f")((v.value.length/d.records*100))
+                        v.value.perc = +d3.format(".5f")((v.value.length/d.total))
+                    });
+                });
+
+                if (regionOrCountry == "region"){ 
+                    var new_data = [];
+                    data_gear.forEach(function (d) {
+                        d.values.forEach(function (v) {
+                            new_data.push({region: d.region, type: v.key, length: v.value.length})
+                        });
+                    });
+                    
+                    //Groupping data by type for average 
+                    new_data_nested = d3.nest()
+                          .key(function(d) { return d.region; })
+                          .key(function(d) { return d.type; })
+                          .rollup(function(v) { return {
+                            length: d3.sum(v, function(d) { return d.length; })
+                          }; })
+                          .entries(new_data);
+                          
+                    new_data_nested.forEach(function (d) {
+                        d.total = d3.sum(d.values,function(v){return v.value.length;})
+                        d.records = d3.sum(data_gear.filter(function(m){return m.region == d.key;}),function(v){return v.records;})
+                    });   
+                    
+                    new_data_nested.forEach(function (d) {
+                        d.values.forEach(function (v) {
+                            v.value.std = +d3.format(".5f")((v.value.length/d.records*100))
+                            v.value.perc = +d3.format(".5f")((v.value.length/d.total))
+                        });
+                    });
+
+                    data_gear = new_data_nested
+                }
+
+                var format_scale = d3.scaleOrdinal()
+                        .domain(["std","perc"])
+                        .range([".2f",".2%"]); //".2%"
+                
+                var format_scale_yAxis = d3.scaleOrdinal()
+                        .domain(["std","perc"])
+                        .range([".0f",".0%"]); //
+                
+                //Set Axiss
+                var x0 = d3.scaleBand()
+                        .domain(types)
+                        .rangeRound([0, width])
+                        .paddingInner(0.1); 
+                        
+                var y = d3.scaleLinear()
+                        .range([height, 0]);
+                        
+                var xAxis = d3.axisBottom(x0)
+                var yAxis = d3.axisLeft(y).tickFormat(d3.format(format_scale_yAxis(countOrPerc)));
+
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                        .selectAll("text")
+                        .style("font-size", "13px")
+                        .style("font-family", "sans")
+                        .style("text-anchor", "end")
+                        .attr("dx", "-.8em")
+                        .attr("dy", ".55em")
+                        .attr("transform", "rotate(-30)" );
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                      .attr("transform", "rotate(-90)")
+                      .attr("y", 6)
+                      .attr("dy", ".71em")
+                      .style("text-anchor", "end")
+                      .style('font-weight','bold')
+                      
+                //Updateing by DropDown
+                dG.update = function(drop_selected, types, turn){
+                
+                //Filtering selected Country
+                selection = []
+                selection_new = []
+                var selection = data_gear.filter(function(d){return d.key == uniqueCountryArray[drop_selected[0]];});
+                if (selection == "") {selection.push({key : uniqueCountryArray[drop_selected[0]],values : []})}
+                selection.push(data_gear.filter(function(d){return d.key == uniqueCountryArray[drop_selected[1]];})[0]);
+                if (!selection[1]) {selection[1] = {key : uniqueCountryArray[drop_selected[1]],values : []}}
+                    
+                //Adding nonExist Types to Country
+                for(var i =0;i<types.length;i++){   
+                    var a=0;
+                    for(var j =0;j<selection[0].values.length;j++){ 
+                        if (types[i] == selection[0].values[j].key) {var a=1;}
+                    }
+                    if (a==0){selection[0].values.push({key : types[i],value : {length : 0, perc : 0, std : 0}})}
+                    
+                    var a=0;
+                    for(var j =0;j<selection[1].values.length;j++){ 
+                        if (types[i] == selection[1].values[j].key) {var a=1;}
+                    }
+                    if (a==0){selection[1].values.push({key : types[i],value : {length : 0, perc : 0, std : 0}})}
+                    
+                    selection_new.push({key : types[i],values : []})
+                }
+                
+                //Merge two Selected Dropdown
+                for(var i =0;i<selection_new.length;i++){
+                    for(var j =0;j<2;j++){
+                        std = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].value.std
+                        perc = selection[j].values.filter(function(d) {return d.key == selection_new[i].key})[0].value.perc
+                        selection_new[i].values.push({std : std, perc : perc, country : uniqueCountryArray[drop_selected[j]]})
+                    }
+                }
+                
+                 //Color and Axis
+                var inlineCountry = selection_new[0].values.map(function(d) { return d.country; });
+                
+                var color = d3.scaleOrdinal()
+                    .domain(inlineCountry)
+                    .range(["blue","#f25618"]); 
+                
+                var x1 = d3.scaleBand()
+                        .domain(inlineCountry)
+                        .rangeRound([0, x0.bandwidth()]);
+                
+                var y = d3.scaleLinear()
+                        .domain([0, d3.max(selection_new, function(categorie) { return d3.max(categorie.values, function(d) { return d[countOrPerc]; }); })]) //[countOrPerc]
+                        .range([height, 0]);
+
+                yAxis.scale(y)
+                    .tickFormat(d3.format(format_scale_yAxis(countOrPerc)));
+                
+                //Append Slice Group for xAxis
+                var slice = svg.selectAll(".types")
+                  .data(selection_new)
+                  
+                slice.enter().append("g")
+                      .attr("class", "types")
+                      .attr("transform",function(d) { return "translate(" + x0(d.key) + ",0)"; });
+                
+                //Append Country to Slice Group
+                var sliceCountry = slice.selectAll("rect")
+                    .data(function(d){return d.values; });  
+                
+                sliceCountry.enter().append("rect")
+                    .attr('height', 0);
+            
+                slice.selectAll("rect")
+                    .attr("name", function(d,i) {  return d.country; })
+                    .attr("class","rectangle")
+                    .attr("width", x1.bandwidth())
+                    .attr("x", function(d) { return x1(d.country);})
+                    .style("fill", function(d) { return color(d.country) })
+                    .on("mouseover", function(d) {
+                          d3.select(this).style("fill", d3.rgb(color(d.country)).darker(2)); 
+                      })
+                      .on("mouseout", function(d) {
+                          d3.select(this).style("fill", color(d.country));
+                        })
+                    .append("title")
+                        .attr("class", "title")
+                        .text(function(d){
+                            return d.country + " : " + d3.format(format_scale(countOrPerc))(d[countOrPerc]); 
+                        });
+                    
+                    if (turn == 1){
+                        slice.selectAll("rect")
+                            .attr("y", function(d) { return y(0); })
+                            .attr("height", function(d) { return height - y(0); })
+                    }
+
+                    slice.selectAll("rect")
+                      .transition()
+                      .duration(1000)
+                      .attr("y", function(d) { return y(d[countOrPerc]); })
+                      .attr("height", function(d) { return height - y(d[countOrPerc]); });
+              
+                    d3.selectAll("g.y.axis")
+                        .transition()
+                        .duration(1000)
+                        .call(yAxis);
+                }
+                
+                inlineCountryId = []
+                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                        
+                //plot selected button
+                selected_button = d3.select(".chart-button.button-on").attr("name")
+                
+                if (selected_button == "Gear") {dG.update(inlineCountryId, types_gear, 1)}
+                else if (selected_button == "Vessel") {dG.update(inlineCountryId, types_vessel, 1)}
+                else if (selected_button == "GearVessel") {GearVessel("GearVessel")}                                
+                
+                return dG;
+            }
+            
+            
+            /////////Third Steps//////////
+            function fillDropdown(uniqueCountryArray){
+                //Clear Dropdown
+                document.querySelectorAll('option').forEach(guardian => guardian.remove()) 
+                selector.selectAll("option")
+                  .data(uniqueCountryArray)
+                  .enter()
+                  .append("option")
+                      .attr("value", function(d, i){
+                        return i;
+                      })
+                      .text(function(d){
+                        return d;
+                  })
+                  
+                selector2.selectAll("option")
+                  .data(uniqueCountryArray)
+                  .enter()
+                  .append("option")
+                      .attr("value", function(d, i){
+                        return i;
+                      })
+                      .text(function(d){
+                        return d;
+                  })
+            
+                d3.select('#dropdown').property('value',FirstDropId)
+                d3.select('#dropdown2').property('value',SecondDropId)
+                radioCheck = 0
+            }
+            
+            function changeIt(){
+            //Clear visual
+            d3.selectAll(".types").remove()
+            d3.selectAll(".rectangle").remove()
+            d3.selectAll(".axis").remove()
+                        
+            //Calculate uniqueCountryArray by Radio
+            //Select Checked Radio
+            var form = document.getElementById("dimensions")  
+            for(var i=0; i<form.length; i++){
+            if(form[i].checked){
+                if (form[i].name == "first") {form_val = form[i].id;}
+            }}
+                  
+            //Get Countries or Regions
+            var country = data.map(function(x) { return x[form_val]; }); 
+            uniqueCountryArray = country.filter(function(elem, pos) {
+              return country.indexOf(elem) == pos;
+            });
+            uniqueCountryArray = uniqueCountryArray.sort(d3.ascending)
+
+            //Selected Country Canada & USA
+            if (form_val == "country") {
+                FirstDropId = uniqueCountryArray.indexOf("Canada")
+                SecondDropId = uniqueCountryArray.indexOf("United States of America")
+            }
+            else if (form_val == "region") {
+                FirstDropId = uniqueCountryArray.indexOf("Europe")
+                SecondDropId = uniqueCountryArray.indexOf("North America and Canada")
+            }
+                
+            if (radioCheck == 1){fillDropdown(uniqueCountryArray)}
+            
+            if(d3.select("#myCheckbox").property("checked")){
+                d3.select('#dropdown2').classed("hidden", false)
+            } 
+            else {
+                d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))
+                d3.select('#dropdown2').classed("hidden", true)     
+            }
+            
+            //Gear or Vessel
+            selected_button = d3.select(".button-on").attr("name")
+            
+            //Count or Perc
+            countOrPerc = d3.select(".second-button.button-on").attr("id")
+            
+            var inlineCountryId = []
+                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                
+                if (selected_button == "Gear") {drawGraph(main_gear, inlineCountryId, types_gear, form_val)}
+                    else if (selected_button == "Vessel") {drawGraph(main_vessel, inlineCountryId, types_vessel, form_val)}
+                    else if (selected_button == "GearVessel") {GearVessel("GearVessel")}
+                    
+                if (selected_button == "Gear") {drawGraph(main_gear, inlineCountryId, types_gear, form_val)}
+                    else if (selected_button == "Vessel") {drawGraph(main_vessel, inlineCountryId, types_vessel, form_val)}
+                    else if (selected_button == "GearVessel") {GearVessel("GearVessel")}
+            }
+            
+            
+            /////////Second Steps//////////
+            
+            function button_click() {
+                underConstr.classed("hidden", true)
+                if (d3.select(this).classed("chart-button")){selected_tab = "chart-button"}
+                else if (d3.select(this).classed("second-button")){selected_tab = "second-button"}
+                
+                //Disabled Compare
+                if (selected_tab == "second-button"){
+                    if (d3.select(this).attr("id") == "perc"){
+                        d3.select("#myCheckbox").property("disabled",true)
+                        d3.select("#myCheckbox").property("checked",false)
+                    }else{
+                        d3.select("#myCheckbox").property("disabled",false)
+                    }
+                
+                }
+                
+                //change button class
+                d3.selectAll("."+selected_tab).classed("button-on", false)
+                d3.selectAll("."+selected_tab).classed("button-off", true)
+                d3.select(this).classed("button-off", false)
+                d3.select(this).classed("button-on", true)
+                
+                changeIt()
+            }
+            
+            function GearVessel(data) {
+                underConstr.classed("hidden", false)
+            }
+                
+            function radioChange(){
+                radioCheck = 1
+                changeIt()
+            }
+            
+            function update_checkbox(){
+                if(d3.select("#myCheckbox").property("checked")){
+                    d3.select('#dropdown2').classed("hidden", false)
+                    if (form_val == "country") {
+                        SecondDropId = uniqueCountryArray.indexOf("United States of America")
+                    }
+                    else if (form_val == "region") {
+                        SecondDropId = uniqueCountryArray.indexOf("North America and Canada")
+                    }
+                    d3.select('#dropdown2').property('value',SecondDropId)
+                } 
+                else {
+                    d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))
+                    d3.select('#dropdown2').classed("hidden", true)     
+                }
+                dropChange()
+            }
+                    
+            let dropChange = function(d) {
+                d3.selectAll(".title").remove()
+                
+                if(!d3.select("#myCheckbox").property("checked")){d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))}
+                        
+                inlineCountryId = []
+                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                
+                //Gear or Vessel
+                selected_button = d3.select(".button-on").attr("name")
+                        
+                if (selected_button == "Gear") {dG.update(inlineCountryId, types_gear, 0)}
+                else if (selected_button == "Vessel") {dG.update(inlineCountryId, types_vessel, 0)}
+            }
+            
+            
+            /////////First Steps//////////
+                    
+            //Buttons
+            d3.selectAll("#visual2 button").on("click", button_click);
+            
+            //Radio Buttons
+            var dataDim = d3.select("#dimensions")
+                dataDim.on("change", radioChange)
+            
+            //CheckBox
+            d3.select("#myCheckbox").on("change",update_checkbox);
+            
+            //First Dropdown
+            var selector = d3.select("#drop")
+                    .append("select")
+                    .attr("id","dropdown")
+                    .style("border", "2px")
+                    .style("border-style", "outset")
+                    .style("border-color", "blue") 
+                    .on("change", dropChange);
+                    
+            //Second Dropdown
+            var selector2 = d3.select("#drop")
+                    .append("select")
+                    .attr("id","dropdown2")
+                    .style("border", "2px")
+                    .style("border-style", "outset")
+                    .style("border-color", "#f25618")
+                    .on("change", dropChange);
+            
+            //Globale Variables
+            var FirstDropId,SecondDropId,form_val,countOrPerc,uniqueCountryArray,inlineCountryId;
+            var radioCheck = 1;
+            
+            changeIt()
+            
+            var dG = drawGraph(main_gear, inlineCountryId, types_gear, form_val)
+            
+        });
+    </script>
+    <!-- Visual 2 End -->
+
+
+
+
+    <!-- Visual 3 -->
+    <script>
+        // Load external datas
+        d3.queue()
+          .defer(d3.csv, "{% static "issf_base/csv/bluejustice.csv" %}")
+          .await(ready);
+
+        function ready(error, data) {
+
+            var data_types = data.columns.slice(3);
+            
+            var data_country = d3.map(data, function(d) { return d.ssf_country; }).keys()
+                .sort(d3.ascending)
+            
+            var data_array = []
+            for(var i =0;i<data_country.length;i++){
+                
+                var data_country_filtered = data.filter(m => (m.ssf_country == data_country[i]))
+                var count_issf = d3.map(data_country_filtered, function(c){return c.issf_core_id;}).keys().length
+                
+                data_array.push({country: data_country[i], total: 0, record: count_issf})
+                for(var j =0;j<data_types.length;j++){
+                     data_array[i][data_types[j]] = 0
+                }
+            }
+                
+            for(var i =0;i<data.length;i++){
+                index = data_array.findIndex(x => x.country === data[i].ssf_country)
+                for(var j =0;j<data_types.length;j++){
+                    if (data[i][data_types[j]] != ""){
+                        data_array[index][data_types[j]] = data_array[index][data_types[j]] + 1
+                        data_array[index].total = data_array[index].total + 1
+                    }
+                }
+            }
+            
+            csv = data_array
+
+            var keys = data_types
+
+            // Define 'div' for tooltips
+            var div = d3.select("#visual3")
+                .append("div")  
+                .attr("class", "bluejusticeTooltip")             
+                .style("opacity", 0);                
+            
+            //SVG elements
+            var svg = d3.select("#chart"),
+                margin = {top: 75, left: 40, bottom: 0, right: 0},
+                width = +svg.attr("width") - margin.left - margin.right,
+                height = +svg.attr("height") - margin.top - margin.bottom
+                
+            var x = d3.scaleBand()
+                .range([margin.left, width - margin.right])
+                .padding(0.1)
+
+            var y = d3.scaleLinear()
+                .rangeRound([height - margin.bottom, margin.top])
+
+            var xAxis = svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .attr("class", "x-axis")
+
+            var yAxis = svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .attr("class", "y-axis")
+
+            var z = d3.scaleOrdinal(d3.schemeTableau10);
+
+            //Legend
+            var legspacing = 140;
+            
+            var legend = svg.selectAll(".legend")
+                .data(data_types)
+                .enter()
+                .append("g")
+                        
+            legend.append("rect")
+                .attr("fill", function (d) {
+                    return z(d);
+                    })
+                .attr("width", 20)
+                .attr("height", 20)
+                .attr("x", function (d, i) {
+                    return (i<=4)? (i * legspacing)+legspacing : ((i * legspacing) - (legspacing*5))+legspacing;
+                    })
+                .attr("y", function (d, i) {
+                    return (i<=4)?10:35;
+                    })
+                .transition()
+                    .ease(d3.easeBack)
+                    .delay(0)
+                    .duration(1000)
+                    .attr("x", function (d, i) {
+                        return (i<=4)?i * legspacing : (i * legspacing) - (legspacing*5);
+                        });
+
+            legend.append("text")
+                .attr("class", "label")
+                .attr("x", function (d, i) {
+                    return (i<=4)?i * legspacing+25 : (i * legspacing) - (legspacing*5)+25;
+                    })
+                .attr("y", function (d, i) {
+                    return (i<=4)?25:50;
+                    })
+                .attr("text-anchor", "start")
+                .text(function (d, i) {
+                    return data_types[i];
+                    })
+                .attr("opacity", 0)
+                .transition()
+                        .ease(d3.easeLinear)
+                        .delay(500)
+                        .duration(2000)
+                .attr("opacity", 1);
+
+            var data = csv
+
+                y.domain([0, 2+d3.max(data, function(d) { return d.total; })]).nice();
+
+                data.sort(d3.select("#sort").property("checked")
+                    ? (a, b) => data_country.indexOf(a.country) - data_country.indexOf(b.country)
+                    : (a, b) => b.total - a.total)
+
+                x.domain(data.map(d => d.country));
+
+                var group = svg.selectAll("g.layer")
+                    .data(d3.stack().keys(keys)(data), d => d.key)
+
+                group.exit().remove()
+
+                group.enter().append("g")
+                    .classed("layer", true)
+                    .attr("fill", d => z(d.key));
+
+                var bars = svg.selectAll("g.layer").selectAll("rect")
+                    .data(d => d, e => e.data.country)
+                  
+                bars.exit().remove()
+                
+                bars.enter().append("rect")
+                    .attr("width", x.bandwidth())
+                    .on("mouseover", function() { div.style("display", "block"); }) //.style("width", "100px")
+                    .on("mousemove", function(d) {  
+                        var typeName = d3.select(this.parentNode).datum().key; 
+                        var typeValue = d.data[typeName];
+                        var total = d.data.total;
+                        div.style("opacity", .9);
+                        
+                        div.html(
+                             "<b>" + typeName + " : "  + typeValue +                 
+                            "</b><br>" + d.data.country + " : "  + total)
+                            
+                            .style("left", (d3.event.pageX + 10) + "px")          
+                            .style("top", (d3.event.pageY - 45) + "px");
+                        })
+                    .on("mouseout", function() { div.style("display", "none"); })
+                    .merge(bars)
+                    .transition().duration(0)
+                        .attr("x", d => x(d.data.country))
+                        .attr("y", d => y(0))
+                        .attr("height", d => 0)
+                      
+                //Max Count  
+                var text = svg.selectAll(".text")
+                    .data(data, d => d.country);
+
+                text.exit().remove()
+
+                text.enter().append("text")
+                    .attr("class", "text")
+                    .attr("text-anchor", "middle")
+                    .merge(text)
+                .transition().duration(0)
+                    .attr("x", d => x(d.country) + x.bandwidth() / 2)
+                    .attr("y", d => y(0) - 5)
+                    .text(d => d.record)
+
+            update(1000)
+
+            function update(speed) {
+                var data = csv
+
+                y.domain([0, 2+d3.max(data, function(d) { return d.total; })]).nice();
+
+                svg.selectAll(".y-axis").transition().duration(speed)
+                    .call(d3.axisLeft(y).ticks(null, "s"))
+
+                data.sort(d3.select("#sort").property("checked")
+                    ? (a, b) => data_country.indexOf(a.country) - data_country.indexOf(b.country)
+                    : (a, b) => b.total - a.total)
+
+                x.domain(data.map(d => d.country));
+
+                svg.selectAll(".x-axis").transition().duration(speed)
+                    .call(d3.axisBottom(x).tickSizeOuter(0)).selectAll("text")  
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-35)");
+
+                var group = svg.selectAll("g.layer")
+                    .data(d3.stack().keys(keys)(data), d => d.key)
+
+                group.exit().remove()
+
+                group.enter().append("g")
+                    .classed("layer", true)
+                    .attr("fill", d => z(d.key));
+
+                var bars = svg.selectAll("g.layer").selectAll("rect")
+                    .data(d => d, e => e.data.country)
+                  
+                bars.exit().remove()
+                
+                bars.enter().append("rect")
+                    .attr("width", x.bandwidth())
+                    .on("mouseover", function() { div.style("visibility", "visible");}) //.style("width", "100px")
+                    .on("mousemove", function(d) {  
+                        var typeName = d3.select(this.parentNode).datum().key; 
+                        var typeValue = d.data[typeName];
+                        var total = d.data.total;
+                        div.style("opacity", .9);
+                        
+                        div.html(
+                             "<b>" + typeName + " : "  + typeValue +                 
+                            "</b><br>" + d.data.country + " : "  + total)
+                            
+                            .style("left", (d3.event.pageX) + "px")          
+                            .style("top", (d3.event.pageY - 45) + "px");
+                        })
+                    .on("mouseout", function() { div.style("visibility", "hidden"); })
+                    .merge(bars)
+                    .transition().duration(speed)
+                        .attr("x", d => x(d.data.country))
+                        .attr("y", d => y(d[1]))
+                        .attr("height", d => y(d[0]) - y(d[1]))
+                      
+                //Max Count  
+                var text = svg.selectAll(".text")
+                    .data(data, d => d.country);
+
+                text.exit().remove()
+
+                text.enter().append("text")
+                    .attr("class", "text")
+                    .attr("text-anchor", "middle")
+                    .merge(text)
+                .transition().duration(speed)
+                    .attr("x", d => x(d.country) + x.bandwidth() / 2)
+                    .attr("y", d => y(d.total) - 5)
+                    .text(d => d.record)
+              
+            } //function update(speed)
+
+            var checkbox = d3.select("#sort")
+                .on("click", function() {
+                    update(750)
+                })
+        } //function ready(error, data)
+    </script>
+    <!-- Visual 3 End -->
+
+{% endblock body%}
+
+
+{% block additional_js_scripts %}
+<script>
+    $('#visual-section .triggers span').on('click',function(){
+        let $this = $(this);
+        $this.addClass('triggers-activated').siblings().removeClass('triggers-activated');
+        $('#' + $this.data('trigger')).show().siblings().hide();
+    });
+</script>
+{% endblock additional_js_scripts %}

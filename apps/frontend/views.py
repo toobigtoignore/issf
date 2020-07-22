@@ -1095,3 +1095,13 @@ def geojson_upload(request: HttpRequest) -> HttpResponse:
         else:
             form = GeoJSONUploadForm()
             return render(request, 'frontend/geojson_upload.html', {'form': form})
+
+
+
+@login_required()
+@gzip_page
+def visualizations(request: HttpRequest) -> HttpResponse:
+    return render(
+        request,
+        "frontend/visualizations.html"
+    )

@@ -2105,7 +2105,8 @@
         var GlobalMapHandle = null;
         var GlobalTableHandle = null;
 
-        var geojson, choroControl, legend, extloadChoropleth;
+        var geojson, choroControl, legend;
+        // var extloadChoropleth;
 
         var min = Number.MAX_SAFE_INTEGER;
         var max = Number.MIN_SAFE_INTEGER;
@@ -2175,35 +2176,40 @@
             var osmAttr = 'basemap data &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, ' +
                 'basemap &copy; <a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>';
             var osm = L.tileLayer(osmUrl, {attribution: osmAttr, noWrap: true});
-            var esriAttr = 'basemap &copy; <a href="http://esri.com" target="_blank">Esri</a>';
-            var esriUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/{id}/MapServer/tile/{z}/{y}/{x}';
-            var esriImagery = L.tileLayer(esriUrl, {id: 'World_Imagery', attribution: esriAttr, noWrap: true});
-            var esriStreet = L.tileLayer(esriUrl, {id: 'World_Street_Map', attribution: esriAttr, noWrap: true});
-            var choroBase = L.tileLayer(esriUrl, {id: 'World_Street_Map', attribution: esriAttr, noWrap: true});
-            var esriOcean = L.tileLayer(esriUrl, {id: 'Ocean_Basemap', attribution: esriAttr, noWrap: true});
-            var esriNatGeo = L.tileLayer(esriUrl, {id: 'NatGeo_World_Map', attribution: esriAttr, noWrap: true});
-            var bingKey = 'Al1mXkJObbAqh8s8TkCwTnIYZOemobAiJZSVaPklNXPS_ErYDtPButHlPDJrznFf';
-            var bingAttr = 'basemap &copy; <a href="https://bing.com/maps" target="_blank">Bing Maps</a>';
-            var bingAerialUrl = 'https://t{s}.tiles.virtualearth.net/tiles/a{q}.jpeg?g=1398&key=' + bingKey;
-            var bingRoadsUrl = 'https://t{s}.tiles.virtualearth.net/tiles/r{q}.jpeg?g=1398&key=' + bingKey;
-            var bingAerial = new BingLayer(bingAerialUrl, {
-                subdomains: ['0', '1', '2', '3', '4'],
-                attribution: bingAttr,
-                noWrap: true
-            });
-            var bingRoads = new BingLayer(bingRoadsUrl, {
-                subdomains: ['0', '1', '2', '3', '4'],
-                attribution: bingAttr,
-                noWrap: true
-            });
+
+
+            // UNCOMMENT THIS PART TO ADD MORE OPTIONS ON THE MAP
+            
+            // var esriAttr = 'basemap &copy; <a href="http://esri.com" target="_blank">Esri</a>';
+            // var esriUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/{id}/MapServer/tile/{z}/{y}/{x}';
+            // var esriImagery = L.tileLayer(esriUrl, {id: 'World_Imagery', attribution: esriAttr, noWrap: true});
+            // var esriStreet = L.tileLayer(esriUrl, {id: 'World_Street_Map', attribution: esriAttr, noWrap: true});
+            // var choroBase = L.tileLayer(esriUrl, {id: 'World_Street_Map', attribution: esriAttr, noWrap: true});
+            // var esriOcean = L.tileLayer(esriUrl, {id: 'Ocean_Basemap', attribution: esriAttr, noWrap: true});
+            // var esriNatGeo = L.tileLayer(esriUrl, {id: 'NatGeo_World_Map', attribution: esriAttr, noWrap: true});
+            // var bingKey = 'Al1mXkJObbAqh8s8TkCwTnIYZOemobAiJZSVaPklNXPS_ErYDtPButHlPDJrznFf';
+            // var bingAttr = 'basemap &copy; <a href="https://bing.com/maps" target="_blank">Bing Maps</a>';
+            // var bingAerialUrl = 'https://t{s}.tiles.virtualearth.net/tiles/a{q}.jpeg?g=1398&key=' + bingKey;
+            // var bingRoadsUrl = 'https://t{s}.tiles.virtualearth.net/tiles/r{q}.jpeg?g=1398&key=' + bingKey;
+            // var bingAerial = new BingLayer(bingAerialUrl, {
+            //     subdomains: ['0', '1', '2', '3', '4'],
+            //     attribution: bingAttr,
+            //     noWrap: true
+            // });
+            // var bingRoads = new BingLayer(bingRoadsUrl, {
+            //     subdomains: ['0', '1', '2', '3', '4'],
+            //     attribution: bingAttr,
+            //     noWrap: true
+            // });
             var baseLayers = {
-                "OpenStreetMap": osm,
-                "Esri Imagery": esriImagery,
-                "Esri Street": esriStreet,
-                "Esri Ocean": esriOcean,
-                "Esri National Geographic": esriNatGeo,
-                "Bing Aerial": bingAerial,
-                "Bing Roads": bingRoads,
+                "OpenStreetMap": osm
+                // UNCOMMENT THIS PART TO ADD MORE OPTIONS ON THE MAP
+                // "Esri Imagery": esriImagery,
+                // "Esri Street": esriStreet,
+                // "Esri Ocean": esriOcean,
+                // "Esri National Geographic": esriNatGeo,
+                // "Bing Aerial": bingAerial,
+                // "Bing Roads": bingRoads,
             };
 
             function getColor(d) {
@@ -2311,86 +2317,86 @@
                 return this._div;
             };
 
-            function formatChoroProp(x, sep, grp) {
-                if (x === null || x === "-") return "No Data";
-                var num = Math.round(x);
-                if (x.length > 3) {
-                    var sx = ('' + num).split('.'), s = '', i, j;
-                    sep || (sep = ','); // default seperator
-                    grp || grp === 0 || (grp = 3); // default grouping
-                    i = sx[0].length;
-                    while (i > grp) {
-                        j = i - grp;
-                        s = sep + sx[0].slice(j, i) + s;
-                        i = j;
-                    }
-                    s = sx[0].slice(0, i) + s;
-                    sx[0] = s;
-                    return sx.join('.');
-                } else {
-                    return num;
-                }
-            }
+            // function formatChoroProp(x, sep, grp) {
+            //     if (x === null || x === "-") return "No Data";
+            //     var num = Math.round(x);
+            //     if (x.length > 3) {
+            //         var sx = ('' + num).split('.'), s = '', i, j;
+            //         sep || (sep = ','); // default seperator
+            //         grp || grp === 0 || (grp = 3); // default grouping
+            //         i = sx[0].length;
+            //         while (i > grp) {
+            //             j = i - grp;
+            //             s = sep + sx[0].slice(j, i) + s;
+            //             i = j;
+            //         }
+            //         s = sx[0].slice(0, i) + s;
+            //         sx[0] = s;
+            //         return sx.join('.');
+            //     } else {
+            //         return num;
+            //     }
+            // }
 
             // Method used to update the control based on feature properties passed
-            choroControl.update = function (props) {
-                this._div.innerHTML = (props ? '<h5><b>' + props.name + '</b></h5>' +
-                    localStorage.getItem('choroPropTitle') + ': ' +
-                    formatChoroProp(props[localStorage.getItem("choroProp")]) : 'Hover over a country');
-            };
+            // choroControl.update = function (props) {
+            //     this._div.innerHTML = (props ? '<h5><b>' + props.name + '</b></h5>' +
+            //         localStorage.getItem('choroPropTitle') + ': ' +
+            //         formatChoroProp(props[localStorage.getItem("choroProp")]) : 'Hover over a country');
+            // };
 
             // Legend for choropleth layer
-            legend = L.control({position: 'bottomleft'});
+            // legend = L.control({position: 'bottomleft'});
 
-            legend.onAdd = function (map) {
-                var div = L.DomUtil.create('div', 'info legend');
-                var grades = [];
-                labels = [];
+            // legend.onAdd = function (map) {
+            //     var div = L.DomUtil.create('div', 'info legend');
+            //     var grades = [];
+            //     labels = [];
 
-                div.style.maxWidth = '60%';
-                div.style.fontSize = '10pt';
-                var choroSelect = '<select id="choroProps">';
-                // Get any layer from geojson since all have the same properites
-                var layer = geojson.getLayers()[0];
-                var props = Object.keys(layer.feature.properties);
-                var optionTitle, optionUnits, optionVal;
-                for (var i = 0; i < props.length; i++) {
-                    if (props[i].includes("SSF_")) {
-                        optionTitle = layer.feature.properties[props[i]];
-                        optionVal = layer.feature.properties[props[i + 1]];
-                        optionUnits = layer.feature.properties[props[i + 2]];
-                        choroSelect += '<option id="' + optionVal + '" value="' + props[i + 1] + '" ';
+            //     div.style.maxWidth = '60%';
+            //     div.style.fontSize = '10pt';
+            //     var choroSelect = '<select id="choroProps">';
+            //     // Get any layer from geojson since all have the same properites
+            //     var layer = geojson.getLayers()[0];
+            //     var props = Object.keys(layer.feature.properties);
+            //     var optionTitle, optionUnits, optionVal;
+            //     for (var i = 0; i < props.length; i++) {
+            //         if (props[i].includes("SSF_")) {
+            //             optionTitle = layer.feature.properties[props[i]];
+            //             optionVal = layer.feature.properties[props[i + 1]];
+            //             optionUnits = layer.feature.properties[props[i + 2]];
+            //             choroSelect += '<option id="' + optionVal + '" value="' + props[i + 1] + '" ';
 
-                        //set selected option to current choropleth property
-                        if (props[i + 1] === localStorage.getItem("choroProp")) {
-                            choroSelect += 'selected="selected"'
-                        }
-                        choroSelect += '>' + optionTitle + ' (' + optionUnits + ')' + '</option>';
-                        i += 2;
-                    }
-                }
-                choroSelect += '</select>';
-                div.innerHTML += choroSelect;
+            //             //set selected option to current choropleth property
+            //             if (props[i + 1] === localStorage.getItem("choroProp")) {
+            //                 choroSelect += 'selected="selected"'
+            //             }
+            //             choroSelect += '>' + optionTitle + ' (' + optionUnits + ')' + '</option>';
+            //             i += 2;
+            //         }
+            //     }
+            //     choroSelect += '</select>';
+            //     div.innerHTML += choroSelect;
 
-                div.innerHTML += '<i style="background: #d6d6d6"></i> No data</br>';
-                var quantiles = quantScale.quantiles();
-                if (quantiles[0]) {
-                    quantiles.unshift(0);
-                }
-                for (var i = 0; i < quantiles.length; i++) {
-                    div.innerHTML +=
-                        '<i style="background:' + getColor(quantScale(quantiles[i])) + '"></i> ' +
-                        (Math.round(quantiles[i]) + (i===0?0:1)) + (Math.round(quantiles[i + 1]) >= 0 ? '&ndash;' +
-                        Math.round(quantiles[i + 1]) + '<br>' : '+');
-                }
+            //     div.innerHTML += '<i style="background: #d6d6d6"></i> No data</br>';
+            //     var quantiles = quantScale.quantiles();
+            //     if (quantiles[0]) {
+            //         quantiles.unshift(0);
+            //     }
+            //     for (var i = 0; i < quantiles.length; i++) {
+            //         div.innerHTML +=
+            //             '<i style="background:' + getColor(quantScale(quantiles[i])) + '"></i> ' +
+            //             (Math.round(quantiles[i]) + (i===0?0:1)) + (Math.round(quantiles[i + 1]) >= 0 ? '&ndash;' +
+            //             Math.round(quantiles[i + 1]) + '<br>' : '+');
+            //     }
 
-                var stop = L.DomEvent.stopPropagation;
-                L.DomEvent
-                    .on(div, 'click', stop)
-                    .on(div, 'mousedown', stop);
+            //     var stop = L.DomEvent.stopPropagation;
+            //     L.DomEvent
+            //         .on(div, 'click', stop)
+            //         .on(div, 'mousedown', stop);
 
-                return div;
-            };
+            //     return div;
+            // };
 
             lastSelectedLayer = localStorage.getItem("lastselectedlayer");
             if (lastSelectedLayer === null) {
@@ -2404,18 +2410,19 @@
                     if (lastSelectedLayer === layer) {
                         baseLayers[lastSelectedLayer].addTo(map);
                         if (lastSelectedLayer === "Country Statistics") {
-                            loadChoropleth();
+                            // loadChoropleth();
                         }
                     }
                 }
             }
 
-            var options = {
-                text: 'Locate placename using Bing',
-                position: 'bottomright'
-            };
+            // var options = {
+            //     text: 'Locate placename using Bing',
+            //     position: 'bottomright'
+            // };
 
-            new L.Control.BingGeocoder(bingKey, options).addTo(map);
+            // uncomment this part to add bing option on the map
+            // new L.Control.BingGeocoder(bingKey, options).addTo(map);
 
             var mrUrl = 'http://geo.vliz.be/geoserver/MarineRegions/wms';
 
@@ -2448,39 +2455,39 @@
                 "FAO Fishing Areas": mrFAO
             };
 
-            var choroToggle = L.control({position: 'bottomright'});
-            choroToggle.onAdd = function (map) {
-                var div = L.DomUtil.create('div', 'choroToggle');
-                div.title = 'Toggle country statistics overlay';
-                div.style.background = '#f8f8f9';
-                div.style.backgroundImage = 'url("static/issf_base/img/icon-data.png")';
-                div.style.backgroundPosition = '92.5% 50%';
-                div.style.backgroundRepeat = 'no-repeat';
-                div.style.boxShadow = '0 1px 7px #999';
-                div.style.borderRadius = '8px';
-                div.style.width = '36px';
-                div.style.height = '36px';
+            // var choroToggle = L.control({position: 'bottomright'});
+            // choroToggle.onAdd = function (map) {
+            //     var div = L.DomUtil.create('div', 'choroToggle');
+            //     div.title = 'Toggle country statistics overlay';
+            //     div.style.background = '#f8f8f9';
+            //     div.style.backgroundImage = 'url("static/issf_base/img/icon-data.png")';
+            //     div.style.backgroundPosition = '92.5% 50%';
+            //     div.style.backgroundRepeat = 'no-repeat';
+            //     div.style.boxShadow = '0 1px 7px #999';
+            //     div.style.borderRadius = '8px';
+            //     div.style.width = '36px';
+            //     div.style.height = '36px';
 
-                L.DomEvent.on(div, 'mouseover', function () {
-                    div.style.cursor = 'pointer';
-                });
-                L.DomEvent.on(div, 'click', toggleChoropleth);
+            //     L.DomEvent.on(div, 'mouseover', function () {
+            //         div.style.cursor = 'pointer';
+            //     });
+            //     L.DomEvent.on(div, 'click', toggleChoropleth);
 
-                function toggleChoropleth() {
-                    if (geojson && geojson._map) {
-                        map.removeLayer(geojson);
-                        map.removeControl(choroControl);
-                        map.removeControl(legend);
+            //     function toggleChoropleth() {
+            //         if (geojson && geojson._map) {
+            //             map.removeLayer(geojson);
+            //             map.removeControl(choroControl);
+            //             map.removeControl(legend);
 
-                        $('.map-icons a').addClass('on');
-                        loadData2();
-                    } else {
-                        loadChoropleth();
-                    }
-                }
-                return div;
-            };
-            choroToggle.addTo(map);
+            //             $('.map-icons a').addClass('on');
+            //             loadData2();
+            //         } else {
+            //             loadChoropleth();
+            //         }
+            //     }
+            //     return div;
+            // };
+            // choroToggle.addTo(map);
 
             // Add basemaps and overlays
             L.control.layers(baseLayers, overlayLayers, {position: 'bottomright'}).addTo(map);
@@ -2495,53 +2502,53 @@
                 localStorage.setItem("lastselectedlayer", lastSelectedLayer);
 
                 // User selected choropleth layer
-                if (e.name === "Country Statistics") {
-                    loadChoropleth();
-                } else {
-                    map.removeLayer(geojson);
-                    map.removeControl(choroControl);
-                    map.removeControl(legend);
-                    $('.map-icons a').addClass('on');
-                    loadData2();
-                }
+                // if (e.name === "Country Statistics") {
+                //     loadChoropleth();
+                // } else {
+                //     map.removeLayer(geojson);
+                //     map.removeControl(choroControl);
+                //     map.removeControl(legend);
+                //     $('.map-icons a').addClass('on');
+                //     loadData2();
+                // }
             });
 
             // This flag is needed to check if LoadChoropleth was loaded internally.
             var initialLoad = true;
 
-            function loadChoropleth() {
-                if (isReady) {
-                    $('.map-icons a').removeClass('on');
-                    loadData2();
-                    if (geojson) {
-                        map.removeLayer(geojson);
-                    }
-                    geojson = L.geoJson(choroData, {onEachFeature: onEachFeature});
-                    quantScale = d3.scaleQuantile().domain(prop_vals).range([0, 20, 40, 60, 80]);
-                    prop_vals = [];
-                    geojson.setStyle(style);
-                    geojson.addTo(map);
+            // function loadChoropleth() {
+            //     if (isReady) {
+            //         $('.map-icons a').removeClass('on');
+            //         loadData2();
+            //         if (geojson) {
+            //             map.removeLayer(geojson);
+            //         }
+            //         geojson = L.geoJson(choroData, {onEachFeature: onEachFeature});
+            //         quantScale = d3.scaleQuantile().domain(prop_vals).range([0, 20, 40, 60, 80]);
+            //         prop_vals = [];
+            //         geojson.setStyle(style);
+            //         geojson.addTo(map);
 
-                    if (($('div.info.legend').length)) {
-                        map.removeControl(choroControl);
-                        map.removeControl(legend);
-                    }
-                    choroControl.addTo(map);
-                    legend.addTo(map);
-                    $('#choroProps').on('change', function () {
-                        localStorage.setItem('choroProp', $(this).children(':selected').attr('value'));
-                        localStorage.setItem('choroPropTitle', $(this).children(':selected').text());
-                        max = min = 0;
-                        initialLoad = false;
-                        loadChoropleth();
-                    });
-                    // Function called externally, need to reload to set
-                    // choropleth property data. It's not pretty, but it works.
-                    if (initialLoad) {
-                        $('#choroProps').change();
-                    }
-                }
-            }
+            //         if (($('div.info.legend').length)) {
+            //             map.removeControl(choroControl);
+            //             map.removeControl(legend);
+            //         }
+            //         choroControl.addTo(map);
+            //         legend.addTo(map);
+            //         $('#choroProps').on('change', function () {
+            //             localStorage.setItem('choroProp', $(this).children(':selected').attr('value'));
+            //             localStorage.setItem('choroPropTitle', $(this).children(':selected').text());
+            //             max = min = 0;
+            //             initialLoad = false;
+            //             loadChoropleth();
+            //         });
+            //         // Function called externally, need to reload to set
+            //         // choropleth property data. It's not pretty, but it works.
+            //         if (initialLoad) {
+            //             $('#choroProps').change();
+            //         }
+            //     }
+            // }
 
 
             // Add transparent tooltipPopsup markers for key geographic scopes
@@ -2962,6 +2969,7 @@
                 // Hide Loading Overlay
                 $("#map-loading-overlay").fadeOut(100);
 
+
                 var contained = [];
 
                 map.eachLayer(function(l) {
@@ -3097,6 +3105,12 @@
 
 
     <script>
+        // add target="_blank" to the element of the tables to open in a new tab
+        function addAttrOnTableAnchors(){
+            $('#record-table-result a').attr('target','_blank');
+        }
+        setInterval(addAttrOnTableAnchors,1000);
+
         $(window).load(function(){
             $('#visual-loading-overlay').fadeOut();
             $('.slideshow-container').css('display','flex');
