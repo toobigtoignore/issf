@@ -371,6 +371,7 @@ footer {
     .header-right {
         text-align: right;
         padding-top: 40px;
+        padding-right: 27px;
         top: 15px;
     }
 }
@@ -2634,6 +2635,10 @@ select[multiple] {
     height: 200px;
 }
 
+#record-table-result { 
+    width: 99%;
+}
+
 #record-table-result tbody tr td:nth-child(1) {
     width: 180px;
 }
@@ -3752,13 +3757,14 @@ table p {
         position: absolute;
         left: 5px;
         text-align: left;
+        font-size: 11px;
     }
     
     .contribution-bts {
         display: inline;
         position: absolute;
         left: 5px;
-        top: 40px;
+        top: 35px;
         margin-right: 0;
     }
     
@@ -3825,7 +3831,7 @@ table p {
         display: inline;
         position: absolute;
         left: 5px;
-        top: 40px;
+        top: 35px;
         margin-right: 0;
     }
     
@@ -3888,6 +3894,11 @@ table p {
     
     nav .tabs .tab-title .pop { 
         right: 5px !important;
+    }
+
+    #record-table-result_filter {
+        float: left;
+        text-align: left;
     }
     
     #content-contribute main { 
