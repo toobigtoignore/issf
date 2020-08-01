@@ -946,6 +946,16 @@
                                         <td><strong>B. % of households participating in SSF:</strong></td>
                                         <td>{% if bluejustice_instance.households_participation_percentage %} {{ bluejustice_instance.households_participation_percentage }} {% endif %}</td>
                                     </tr>
+
+                                    {% if user.is_staff %}
+                                    <tr>
+                                        <td colspan="3" style="padding: 25px 2px 11px 10px; font-size: 16px;"><strong>Bluejustice PDF:</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>PDF link for SSF bluejustice:</strong></td>
+                                        <td>{% if bluejustice_instance.bluejustice_pdf %} <a href="{{ bluejustice_instance.bluejustice_pdf }}" target="_blank">{{ bluejustice_instance.bluejustice_pdf }}</a> {% endif %}</td>
+                                    </tr>
+                                    {% endif %}
                                 </table>
 
 
@@ -1550,6 +1560,12 @@
                                         <input type="number" step="0.01" id="total-number-households" name="total_number_households" value="{{ bluejustice_instance.total_number_households }}">
                                         <label for="households-participation-percentage">B. % of households participating in SSF:</label>
                                         <input type="number" step="0.01" id="households-participation-percentage" name="households_participation_percentage" value="{{ bluejustice_instance.households_participation_percentage }}">
+                                        
+                                        {% if user.is_staff %}
+                                          <h5>Bluejustice PDF:</h5>
+                                          <label for="pdf-link">PDF link for SSF bluejustice:</label>
+                                          <input type="text" id="pdf-link" name="bluejustice_pdf" value="{{ bluejustice_instance.bluejustice_pdf }}">
+                                        {% endif %}
                                     </div>
 
 
@@ -2382,6 +2398,10 @@
 
 
                 <div class="large-4 columns">
+                    {% if bluejustice_instance.bluejustice_pdf %}
+                    <a id="report-btn" href="{{ bluejustice_instance.bluejustice_pdf }}" class="button radius" style="width: 305px; margin-left: 2%; margin-bottom: 40px;">Download as PDF</a>
+                    {% endif %}
+                    
                     <div
                         class="fb-comments"
                         data-href="https://issfcloud.toobigtoignore.net{% url 'bluejustice-details' issf_core_id=core_instance.issf_core_id %}"

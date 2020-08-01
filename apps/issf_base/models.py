@@ -785,6 +785,9 @@ class SSFBlueJustice(models.Model):
     dealing_with_justice = models.TextField(blank=True)
     social_justice_source = models.TextField(blank=True)
 
+    # For staff account use only
+    bluejustice_pdf = models.TextField(blank=True)
+
     #This is to support legacy images as well the new user uploaded ones
     @property
     def uploaded_image_url(self):

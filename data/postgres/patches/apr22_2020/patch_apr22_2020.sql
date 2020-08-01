@@ -170,3 +170,6 @@ ALTER FUNCTION public.bluejustice_summary_update(integer)
 
 ALTER TABLE public.ssf_bluejustice
     ADD COLUMN social_justice_source text NULL;
+
+ALTER TABLE public.ssf_bluejustice
+    ADD COLUMN bluejustice_pdf text NULL;
