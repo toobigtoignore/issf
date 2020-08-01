@@ -145,7 +145,7 @@ AS $BODY$
     WHERE issf_core_id = core_id;
 
 
-    summary_text := summary_text || '<strong> Name: </strong>' || bluejustice.name;
+    summary_text := summary_text || '<strong> SSF Name: </strong>' || bluejustice.ssf_name;
 
 
     bluejustice.core_record_summary := summary_text;
