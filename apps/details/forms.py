@@ -387,7 +387,7 @@ class SSFBlueJusticeForm(ModelForm):
             'justice_in_context', 'types_of_justice_distributive', 'types_of_justice_social', 'types_of_justice_economic',
             'types_of_justice_market', 'types_of_justice_infrastructure', 'types_of_justice_regulatory', 'types_of_justice_procedural',
             'types_of_justice_environmental', 'types_of_justice_others', 'dealing_with_justice', 'covid_19_related', 'social_justice_source', 
-            'photo_upload'
+            'photo_upload', 'bluejustice_pdf'
         ]
         labels = {
             'name': 'Name of Contributor',
