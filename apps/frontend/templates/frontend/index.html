@@ -28,23 +28,23 @@
         .tooltipPopsup { position: fixed; font-size: 15px; width:  auto; height: auto; pointer-events: none; background-color: #feffeb; box-sizing: border-box; padding: 10px; border: 1px solid #e3e3e3; border-radius: 3px; z-index: 999; }
 
         /* css for visual 2*/
-        .svgmap { border: 0px solid  black; }
-        .svgdiv { text-align: center; }
-        .hidden { display: none; }
-        .axis { font: 10px sans-serif; }
-        .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
-        .chart-button { background: white; border-radius: 2; margin-top: -0.5px; margin-right: 0px; margin-bottom: -0.5px; margin-left: 0px; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
-        .button-on { background: #2699FB !important; color: #fff; border: 1px solid #555; }
-        .button-off { background: #f3f3f3; color: #555; border: 1px solid #555; }
-        .second-button { background: #fafcd2; border-radius: 2; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
-        .Column { margin-top: 0px; margin-right: 8px; margin-bottom: 9px; margin-left: 0px; display: inline-block; }
-        #drop select { width: 200px; margin-left: 15px; padding-right: 28px; border-radius: 4px; }
-        input#myCheckbox { width: 18px; height: 18px; }
-        #dimensions label { display: inline-block; margin-right: 10px; font-weight: normal; }
-        #dimensions label input { margin-right: 4px; height: 18px; width: 18px; margin-bottom: 0; }
-        #dimensions label span {float: right;}
-        label#myCheckboxLabel { display: inline-block; margin-left: -5px; }
-        #myCheckboxLabel span { float: right; margin-left: 6px; }
+        #visual2.svgmap { border: 0px solid  black; }
+        #visual2 .svgdiv { text-align: center; }
+        #visual2 .hidden { display: none; }
+        #visual2 .axis { font: 10px sans-serif; }
+        #visual2 .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
+        #visual2 .chart-button { background: white; border-radius: 2; margin-top: -0.5px; margin-right: 0px; margin-bottom: -0.5px; margin-left: 0px; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
+        #visual2 .button-on { background: #2699FB !important; color: #fff; border: 1px solid #555; }
+        #visual2 .button-off { background: #f3f3f3; color: #555; border: 1px solid #555; }
+        #visual2 .second-button { background: #fafcd2; border-radius: 2; padding: 4px 6px; cursor: pointer; border-radius: 1px; font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; }
+        #visual2 .Column { margin-top: 0px; margin-right: 8px; margin-bottom: 9px; margin-left: 0px; display: inline-block; }
+        #visual2 #drop select { width: 200px; margin-left: 15px; padding-right: 28px; border-radius: 4px; }
+        #visual2 input#myCheckbox { width: 18px; height: 18px; }
+        #visual2 #dimensions label { display: inline-block; margin-right: 10px; font-weight: normal; }
+        #visual2 #dimensions label input { margin-right: 4px; height: 18px; width: 18px; margin-bottom: 0; }
+        #visual2 #dimensions label span {float: right;}
+        #visual2 label#myCheckboxLabel { display: inline-block; margin-left: -5px; }
+        #visual2 #myCheckboxLabel span { float: right; margin-left: 6px; }
         #visual2 { padding-top: 50px; }
         #visual2 ul { text-align: left; }
 
@@ -52,6 +52,42 @@
         #visual3 { padding-top: 75px; text-align: center; font-size: 14px; } 
         #visual3 div.bluejusticeTooltip { position: fixed; text-align: center; padding: 5px; background: #fff2d1; border: 0px; border-radius: 8px; }
         #visual3 ul { text-align: left; }
+
+        /* css for visual 4 */
+        #visual4 { padding-top: 25px; }
+        #visual4 .sota-info { margin-bottom: -50px; }
+        #visual4 .sota-info h3 { font-size: 20px; }
+        #visual4 .sota-info p { font-size: 16px; margin-bottom: 0; }
+        #visual4 #barSvg {display: block;}
+        #visual4 {font-family:"avenir next", Arial, sans-serif; font-size: 12px; color: #696969;}
+        #visual4 .hidden {display: none;}
+        #visual4 select { width: auto !important; }
+        #visual4 #firstDiv { font-size: 16px; }
+        #visual4 #selectedCountries { position: absolute; left: 41%; width: 20px; height: 20px; margin-right: 15px; margin-bottom: 0; }
+        
+        /* Chart */ 
+        #visual4 .label{ font-weight: 600; font-size: 13px; }
+        #visual4 text.yearText{font-size: 64px; font-weight: 700; opacity: 0.25;}
+        #visual4 .tick text {fill: #777777;}
+        #visual4 .xAxis .tick:nth-child(2) text {text-anchor: start;}
+        #visual4 .tick line {shape-rendering: CrispEdges; stroke: #dddddd;}
+        #visual4 .tick line.origin{stroke: #aaaaaa;}
+        #visual4 path.domain{display: none;}
+        
+        /* Buttons */ 
+        #visual4 .playpause{position: absolute; cursor: pointer; border:3px solid #000; border-radius:50%; height:50px; width:50px; text-align:center; background-color:#caddfa; box-shadow: 0px 0px 0px 0px #000;}
+        #visual4 .button {position:absolute; left:31%; top:32%; border: 0; background: transparent; box-sizing: border-box; width: 5px; height: 18px; border-color: transparent transparent transparent #202020; transition: 100ms all ease; cursor: pointer; border-style: solid; border-width: 9px 0 9px 20px;}
+        #visual4 .button.paused {border-style: double; border-width: 0px 0px 0px 20px; left:31%; top:32%;}
+        #visual4 .myButton {box-shadow: 0px 2px 0px 0px #1c1b18;background:linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%); background-color:#eae0c2; border-radius:15px; border:2px solid #333029; display:inline-block; cursor:pointer; color:#505739; font-family:Arial; font-size:14px; font-weight:bold; padding:8px 50px; text-decoration:none; text-shadow:0px 1px 0px #ffffff;}
+        #visual4 .myButton:hover {background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%); background-color:#ccc2a6;}
+        #visual4 .myButton:active {position:relative; top:1px;}
+        
+        /* Slider */ 
+        #visual4 .track,.track-inset,.track-overlay {stroke-linecap: round;}
+        #visual4 .track {stroke: #000; stroke-opacity: 0.3; stroke-width: 10px;}
+        #visual4 .track-inset {stroke: #dcdcdc; stroke-width: 8px;}
+        #visual4 .track-overlay {pointer-events: stroke; stroke-width: 50px; stroke: transparent; cursor: crosshair;}
+        #visual4 .handle {fill: #fff; stroke: #000; stroke-opacity: 0.5; stroke-width: 1.25px;}
     </style>
 
 {% endblock additional_css_scripts %}
@@ -380,7 +416,7 @@
                 <div class="visual-carousel">
                     <div id="visual-loading-overlay"></div>
                     <!-- <h3 style="padding: 1rem">Latest Visualization</h3> -->
-                    <div class="cycle-slideshow slideshow-container" 
+                    <div class="slideshow-container" 
                          data-cycle-fx=fade
                          data-cycle-manual-speed="10"
                          data-cycle-timeout=0
@@ -390,7 +426,7 @@
                          data-cycle-pager="#pager">
 
 
-                        <div id="visual1" class="visual-slides">
+                        <div id="visual1" class="active visual-slides" data-pager="0" style="height: 770px;">
                             <div id="svg-visual1" style="overflow: hidden;"></div>
                             <div style="margin-top:-25px;">
                                 <p style="font-size: 14.5px; font-weight: bold; margin-top: 15px; margin-bottom: 0px;">This visualisation shows various governance types by country based on the contributed records (number next to country name)</p>
@@ -403,7 +439,7 @@
                         </div>
 
                         
-                        <div id="visual2" class="visual-slides">
+                        <div id="visual2" class="visual-slides" data-pager="1" style="height: 740px;">
                             <div align="center" class="Row">
                                 <div class="Column">
                                     <button name="Gear" class="chart-button button-on">Gear</button>
@@ -441,7 +477,7 @@
                         </div> <!-- /visual2 -->
 
 
-                        <div id="visual3">
+                        <div id="visual3" class="visual-slides" data-pager="2" style="height: 700px;">
                             <div style="font-size: 15px; width: 160px; margin: auto; margin-bottom: 32px;">
                                 <input type="checkbox" id="sort" style="float: left; width: 20px; height: 20px; margin-bottom: 0; cursor: pointer;margin-right: 15px;"> 
                                 <label for="sort" style="float: left;margin: 0;">Sort By Country</label>
@@ -455,14 +491,41 @@
                                     <li>Results can be sorted by country, click "Sort by Country" </li>     
                                 </ul> 
                         </div> <!-- /visual3 end -->
+
+
+
+
+                        <div id="visual4" class="visual-slides" data-pager="3" style="height: 1020px;">
+                            <div id="sotaDiv">
+                                <div class="sota-info">
+                                    <h3>State-of-the-Art in SSF Research</h3>
+                                    <p>This visualization shows top 12 countries with the highest number of total themes/issues reported.</p>
+                                    <p>First number shows a sum of themes/issues reported while the second number shows the number of ISSF records for the country.</p>
+                                    <p>Click "Select Countries" to explore other countries.</p>
+                                </div>
+
+                                <svg id='barSvg'></svg>
+                                <svg id='sliderSvg'></svg><br><br>
+                            </div>
+
+                            <div id="firstDiv" align="center">
+                                <input type="checkbox" id="sort" hidden>
+                                <input type="checkbox" id="selectedCountries" checked>Select Countries
+                                <div id="dropDiv"></div>
+                            </div>
+
+                            <div class="playpause">
+                                <div id="buttonDiv" align="center"></div>
+                            </div>
+                        </div> <!-- /visual4 end -->
                     </div>
 
-                    <div class="visual-carousel-control">
+                    <div class="visual-carousel-control hide">
                         <button id="prev-slide">&#8617;</button>
                         <button id="next-slide">&#8618;</button>
                     </div>
 
-                    <div id="pager"></div>
+                    <div id="pager" class="hide"></div>
                 </div>
             </div>
         </div>
@@ -980,279 +1043,13 @@
 
 
 
-    <!-- Visual 3 -->
-    <script>
-        // Load external datas
-        d3.queue()
-          .defer(d3.csv, "{% static "issf_base/csv/bluejustice.csv" %}")
-          .await(ready);
-
-        function ready(error, data) {
-
-            var data_types = data.columns.slice(3);
-            
-            var data_country = d3.map(data, function(d) { return d.ssf_country; }).keys()
-                .sort(d3.ascending)
-            
-            var data_array = []
-            for(var i =0;i<data_country.length;i++){
-                
-                var data_country_filtered = data.filter(m => (m.ssf_country == data_country[i]))
-                var count_issf = d3.map(data_country_filtered, function(c){return c.issf_core_id;}).keys().length
-                
-                data_array.push({country: data_country[i], total: 0, record: count_issf})
-                for(var j =0;j<data_types.length;j++){
-                     data_array[i][data_types[j]] = 0
-                }
-            }
-                
-            for(var i =0;i<data.length;i++){
-                index = data_array.findIndex(x => x.country === data[i].ssf_country)
-                for(var j =0;j<data_types.length;j++){
-                    if (data[i][data_types[j]] != ""){
-                        data_array[index][data_types[j]] = data_array[index][data_types[j]] + 1
-                        data_array[index].total = data_array[index].total + 1
-                    }
-                }
-            }
-            
-            csv = data_array
-
-            var keys = data_types
-
-            // Define 'div' for tooltips
-            var div = d3.select("#visual3")
-                .append("div")  
-                .attr("class", "bluejusticeTooltip")             
-                .style("opacity", 0);                
-            
-            //SVG elements
-            var svg = d3.select("#chart"),
-                margin = {top: 75, left: 40, bottom: 0, right: 0},
-                width = +svg.attr("width") - margin.left - margin.right,
-                height = +svg.attr("height") - margin.top - margin.bottom
-                
-            var x = d3.scaleBand()
-                .range([margin.left, width - margin.right])
-                .padding(0.1)
-
-            var y = d3.scaleLinear()
-                .rangeRound([height - margin.bottom, margin.top])
-
-            var xAxis = svg.append("g")
-                .attr("transform", `translate(0,${height - margin.bottom})`)
-                .attr("class", "x-axis")
-
-            var yAxis = svg.append("g")
-                .attr("transform", `translate(${margin.left},0)`)
-                .attr("class", "y-axis")
-
-            var z = d3.scaleOrdinal(d3.schemeTableau10);
-
-            //Legend
-            var legspacing = 140;
-            
-            var legend = svg.selectAll(".legend")
-                .data(data_types)
-                .enter()
-                .append("g")
-                        
-            legend.append("rect")
-                .attr("fill", function (d) {
-                    return z(d);
-                    })
-                .attr("width", 20)
-                .attr("height", 20)
-                .attr("x", function (d, i) {
-                    return (i<=4)? (i * legspacing)+legspacing : ((i * legspacing) - (legspacing*5))+legspacing;
-                    })
-                .attr("y", function (d, i) {
-                    return (i<=4)?10:35;
-                    })
-                .transition()
-                    .ease(d3.easeBack)
-                    .delay(0)
-                    .duration(1000)
-                    .attr("x", function (d, i) {
-                        return (i<=4)?i * legspacing : (i * legspacing) - (legspacing*5);
-                        });
-
-            legend.append("text")
-                .attr("class", "label")
-                .attr("x", function (d, i) {
-                    return (i<=4)?i * legspacing+25 : (i * legspacing) - (legspacing*5)+25;
-                    })
-                .attr("y", function (d, i) {
-                    return (i<=4)?25:50;
-                    })
-                .attr("text-anchor", "start")
-                .text(function (d, i) {
-                    return data_types[i];
-                    })
-                .attr("opacity", 0)
-                .transition()
-                        .ease(d3.easeLinear)
-                        .delay(500)
-                        .duration(2000)
-                .attr("opacity", 1);
-
-            var data = csv
-
-                y.domain([0, 2+d3.max(data, function(d) { return d.total; })]).nice();
-
-                data.sort(d3.select("#sort").property("checked")
-                    ? (a, b) => data_country.indexOf(a.country) - data_country.indexOf(b.country)
-                    : (a, b) => b.total - a.total)
-
-                x.domain(data.map(d => d.country));
-
-                var group = svg.selectAll("g.layer")
-                    .data(d3.stack().keys(keys)(data), d => d.key)
-
-                group.exit().remove()
-
-                group.enter().append("g")
-                    .classed("layer", true)
-                    .attr("fill", d => z(d.key));
-
-                var bars = svg.selectAll("g.layer").selectAll("rect")
-                    .data(d => d, e => e.data.country)
-                  
-                bars.exit().remove()
-                
-                bars.enter().append("rect")
-                    .attr("width", x.bandwidth())
-                    .on("mouseover", function() { div.style("display", "block"); }) //.style("width", "100px")
-                    .on("mousemove", function(d) {  
-                        var typeName = d3.select(this.parentNode).datum().key; 
-                        var typeValue = d.data[typeName];
-                        var total = d.data.total;
-                        div.style("opacity", .9);
-                        
-                        div.html(
-                             "<b>" + typeName + " : "  + typeValue +                 
-                            "</b><br>" + d.data.country + " : "  + total)
-                            
-                            .style("left", (d3.event.pageX + 10) + "px")          
-                            .style("top", (d3.event.pageY - 45) + "px");
-                        })
-                    .on("mouseout", function() { div.style("display", "none"); })
-                    .merge(bars)
-                    .transition().duration(0)
-                        .attr("x", d => x(d.data.country))
-                        .attr("y", d => y(0))
-                        .attr("height", d => 0)
-                      
-                //Max Count  
-                var text = svg.selectAll(".text")
-                    .data(data, d => d.country);
-
-                text.exit().remove()
-
-                text.enter().append("text")
-                    .attr("class", "text")
-                    .attr("text-anchor", "middle")
-                    .merge(text)
-                .transition().duration(0)
-                    .attr("x", d => x(d.country) + x.bandwidth() / 2)
-                    .attr("y", d => y(0) - 5)
-                    .text(d => d.record)
-
-            update(1000)
-
-            function update(speed) {
-                var data = csv
-
-                y.domain([0, 2+d3.max(data, function(d) { return d.total; })]).nice();
-
-                svg.selectAll(".y-axis").transition().duration(speed)
-                    .call(d3.axisLeft(y).ticks(null, "s"))
-
-                data.sort(d3.select("#sort").property("checked")
-                    ? (a, b) => data_country.indexOf(a.country) - data_country.indexOf(b.country)
-                    : (a, b) => b.total - a.total)
-
-                x.domain(data.map(d => d.country));
-
-                svg.selectAll(".x-axis").transition().duration(speed)
-                    .call(d3.axisBottom(x).tickSizeOuter(0)).selectAll("text")  
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-35)");
-
-                var group = svg.selectAll("g.layer")
-                    .data(d3.stack().keys(keys)(data), d => d.key)
-
-                group.exit().remove()
-
-                group.enter().append("g")
-                    .classed("layer", true)
-                    .attr("fill", d => z(d.key));
-
-                var bars = svg.selectAll("g.layer").selectAll("rect")
-                    .data(d => d, e => e.data.country)
-                  
-                bars.exit().remove()
-                
-                bars.enter().append("rect")
-                    .attr("width", x.bandwidth())
-                    .on("mouseover", function() { div.style("visibility", "visible");}) //.style("width", "100px")
-                    .on("mousemove", function(d) {  
-                        var typeName = d3.select(this.parentNode).datum().key; 
-                        var typeValue = d.data[typeName];
-                        var total = d.data.total;
-                        div.style("opacity", .9);
-                        
-                        div.html(
-                             "<b>" + typeName + " : "  + typeValue +                 
-                            "</b><br>" + d.data.country + " : "  + total)
-                            
-                            .style("left", (d3.event.pageX) + "px")          
-                            .style("top", (d3.event.pageY - 45) + "px");
-                        })
-                    .on("mouseout", function() { div.style("visibility", "hidden"); })
-                    .merge(bars)
-                    .transition().duration(speed)
-                        .attr("x", d => x(d.data.country))
-                        .attr("y", d => y(d[1]))
-                        .attr("height", d => y(d[0]) - y(d[1]))
-                      
-                //Max Count  
-                var text = svg.selectAll(".text")
-                    .data(data, d => d.country);
-
-                text.exit().remove()
-
-                text.enter().append("text")
-                    .attr("class", "text")
-                    .attr("text-anchor", "middle")
-                    .merge(text)
-                .transition().duration(speed)
-                    .attr("x", d => x(d.country) + x.bandwidth() / 2)
-                    .attr("y", d => y(d.total) - 5)
-                    .text(d => d.record)
-              
-            } //function update(speed)
-
-            var checkbox = d3.select("#sort")
-                .on("click", function() {
-                    update(750)
-                })
-        } //function ready(error, data)
-    </script>
-    <!-- Visual 3 End -->
-
-
-
-    
     <!-- Visual 2 -->
     <script>
         var margin = {top: 20, right: 10, bottom: 150, left: 60, space : 2},
             width = 665,
             height = 450 - margin.top - margin.bottom;
                     
-        var svg = d3.select(".svgdiv").append("svg")
+        var svg = d3.select("#visual2 .svgdiv").append("svg")
             .attr("class", "svgmap")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -1523,7 +1320,7 @@
                 }
                 
                 inlineCountryId = []
-                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                inlineCountryId.push(+d3.select('#visual2 #dropdown').property('value'),+d3.select('#visual2 #dropdown2').property('value'))
                         
                 //plot selected button
                 selected_button = d3.select(".chart-button.button-on").attr("name")
@@ -1539,8 +1336,8 @@
             /////////Third Steps//////////
             function fillDropdown(uniqueCountryArray){
                 //Clear Dropdown
-                document.querySelectorAll('option').forEach(guardian => guardian.remove()) 
-                selector.selectAll("option")
+                document.querySelectorAll('#visual2 option').forEach(guardian => guardian.remove()) 
+                selector.selectAll("#visual2 option")
                   .data(uniqueCountryArray)
                   .enter()
                   .append("option")
@@ -1551,7 +1348,7 @@
                         return d;
                   })
                   
-                selector2.selectAll("option")
+                selector2.selectAll("#visual2 option")
                   .data(uniqueCountryArray)
                   .enter()
                   .append("option")
@@ -1562,8 +1359,8 @@
                         return d;
                   })
             
-                d3.select('#dropdown').property('value',FirstDropId)
-                d3.select('#dropdown2').property('value',SecondDropId)
+                d3.select('#visual2 #dropdown').property('value',FirstDropId)
+                d3.select('#visual2 #dropdown2').property('value',SecondDropId)
                 radioCheck = 0
             }
             
@@ -1600,12 +1397,12 @@
                 
             if (radioCheck == 1){fillDropdown(uniqueCountryArray)}
             
-            if(d3.select("#myCheckbox").property("checked")){
-                d3.select('#dropdown2').classed("hidden", false)
+            if(d3.select("#visual2 #myCheckbox").property("checked")){
+                d3.select('#visual2 #dropdown2').classed("hidden", false)
             } 
             else {
-                d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))
-                d3.select('#dropdown2').classed("hidden", true)     
+                d3.select('#visual2 #dropdown2').property('value',d3.select('#visual2 #dropdown').property('value'))
+                d3.select('#visual2 #dropdown2').classed("hidden", true)     
             }
             
             //Gear or Vessel
@@ -1615,7 +1412,7 @@
             countOrPerc = d3.select(".second-button.button-on").attr("id")
             
             var inlineCountryId = []
-                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                inlineCountryId.push(+d3.select('#visual2 #dropdown').property('value'),+d3.select('#visual2 #dropdown2').property('value'))
                 
                 if (selected_button == "Gear") {drawGraph(main_gear, inlineCountryId, types_gear, form_val)}
                     else if (selected_button == "Vessel") {drawGraph(main_vessel, inlineCountryId, types_vessel, form_val)}
@@ -1664,19 +1461,19 @@
             }
             
             function update_checkbox(){
-                if(d3.select("#myCheckbox").property("checked")){
-                    d3.select('#dropdown2').classed("hidden", false)
+                if(d3.select("#visual2 #myCheckbox").property("checked")){
+                    d3.select('#visual2 #dropdown2').classed("hidden", false)
                     if (form_val == "country") {
                         SecondDropId = uniqueCountryArray.indexOf("United States of America")
                     }
                     else if (form_val == "region") {
                         SecondDropId = uniqueCountryArray.indexOf("North America and Canada")
                     }
-                    d3.select('#dropdown2').property('value',SecondDropId)
+                    d3.select('#visual2 #dropdown2').property('value',SecondDropId)
                 } 
                 else {
-                    d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))
-                    d3.select('#dropdown2').classed("hidden", true)     
+                    d3.select('#visual2 #dropdown2').property('value',d3.select('#visual2 #dropdown').property('value'))
+                    d3.select('#visual2 #dropdown2').classed("hidden", true)     
                 }
                 dropChange()
             }
@@ -1684,10 +1481,10 @@
             let dropChange = function(d) {
                 d3.selectAll(".title").remove()
                 
-                if(!d3.select("#myCheckbox").property("checked")){d3.select('#dropdown2').property('value',d3.select('#dropdown').property('value'))}
+                if(!d3.select("#visual2 #myCheckbox").property("checked")){d3.select('#visual2 #dropdown2').property('value',d3.select('#visual2 #dropdown').property('value'))}
                         
                 inlineCountryId = []
-                inlineCountryId.push(+d3.select('#dropdown').property('value'),+d3.select('#dropdown2').property('value'))
+                inlineCountryId.push(+d3.select('#visual2 #dropdown').property('value'),+d3.select('#visual2 #dropdown2').property('value'))
                 
                 //Gear or Vessel
                 selected_button = d3.select(".button-on").attr("name")
@@ -1703,14 +1500,14 @@
             d3.selectAll("#visual2 button").on("click", button_click);
             
             //Radio Buttons
-            var dataDim = d3.select("#dimensions")
+            var dataDim = d3.select("#visual2 #dimensions")
                 dataDim.on("change", radioChange)
             
             //CheckBox
-            d3.select("#myCheckbox").on("change",update_checkbox);
+            d3.select("#visual2 #myCheckbox").on("change",update_checkbox);
             
             //First Dropdown
-            var selector = d3.select("#drop")
+            var selector = d3.select("#visual2 #drop")
                     .append("select")
                     .attr("id","dropdown")
                     .style("border", "2px")
@@ -1719,7 +1516,7 @@
                     .on("change", dropChange);
                     
             //Second Dropdown
-            var selector2 = d3.select("#drop")
+            var selector2 = d3.select("#visual2 #drop")
                     .append("select")
                     .attr("id","dropdown2")
                     .style("border", "2px")
@@ -1738,6 +1535,901 @@
         });
     </script>
     <!-- Visual 2 End -->
+
+
+
+
+    <!-- Visual 3 -->
+    <script>
+        // Load external datas
+        d3.queue()
+          .defer(d3.csv, "{% static "issf_base/csv/bluejustice.csv" %}")
+          .await(ready);
+
+        function ready(error, data) {
+
+            var data_types = data.columns.slice(3);
+            
+            var data_country = d3.map(data, function(d) { return d.ssf_country; }).keys()
+                .sort(d3.ascending)
+            
+            var data_array = []
+            for(var i =0;i<data_country.length;i++){
+                
+                var data_country_filtered = data.filter(m => (m.ssf_country == data_country[i]))
+                var count_issf = d3.map(data_country_filtered, function(c){return c.issf_core_id;}).keys().length
+                
+                data_array.push({country: data_country[i], total: 0, record: count_issf})
+                for(var j =0;j<data_types.length;j++){
+                     data_array[i][data_types[j]] = 0
+                }
+            }
+                
+            for(var i =0;i<data.length;i++){
+                index = data_array.findIndex(x => x.country === data[i].ssf_country)
+                for(var j =0;j<data_types.length;j++){
+                    if (data[i][data_types[j]] != ""){
+                        data_array[index][data_types[j]] = data_array[index][data_types[j]] + 1
+                        data_array[index].total = data_array[index].total + 1
+                    }
+                }
+            }
+            
+            csv = data_array
+
+            var keys = data_types
+
+            // Define 'div' for tooltips
+            var div = d3.select("#visual3")
+                .append("div")  
+                .attr("class", "bluejusticeTooltip")             
+                .style("opacity", 0);                
+            
+            //SVG elements
+            var svg = d3.select("#chart"),
+                margin = {top: 75, left: 40, bottom: 0, right: 0},
+                width = +svg.attr("width") - margin.left - margin.right,
+                height = +svg.attr("height") - margin.top - margin.bottom
+                
+            var x = d3.scaleBand()
+                .range([margin.left, width - margin.right])
+                .padding(0.1)
+
+            var y = d3.scaleLinear()
+                .rangeRound([height - margin.bottom, margin.top])
+
+            var xAxis = svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .attr("class", "x-axis")
+
+            var yAxis = svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .attr("class", "y-axis")
+
+            var z = d3.scaleOrdinal(d3.schemeTableau10);
+
+            //Legend
+            var legspacing = 140;
+            
+            var legend = svg.selectAll(".legend")
+                .data(data_types)
+                .enter()
+                .append("g")
+                        
+            legend.append("rect")
+                .attr("fill", function (d) {
+                    return z(d);
+                    })
+                .attr("width", 20)
+                .attr("height", 20)
+                .attr("x", function (d, i) {
+                    return (i<=4)? (i * legspacing)+legspacing : ((i * legspacing) - (legspacing*5))+legspacing;
+                    })
+                .attr("y", function (d, i) {
+                    return (i<=4)?10:35;
+                    })
+                .transition()
+                    .ease(d3.easeBack)
+                    .delay(0)
+                    .duration(1000)
+                    .attr("x", function (d, i) {
+                        return (i<=4)?i * legspacing : (i * legspacing) - (legspacing*5);
+                        });
+
+            legend.append("text")
+                .attr("class", "label")
+                .attr("x", function (d, i) {
+                    return (i<=4)?i * legspacing+25 : (i * legspacing) - (legspacing*5)+25;
+                    })
+                .attr("y", function (d, i) {
+                    return (i<=4)?25:50;
+                    })
+                .attr("text-anchor", "start")
+                .text(function (d, i) {
+                    return data_types[i];
+                    })
+                .attr("opacity", 0)
+                .transition()
+                        .ease(d3.easeLinear)
+                        .delay(500)
+                        .duration(2000)
+                .attr("opacity", 1);
+
+            var data = csv
+
+                y.domain([0, 2+d3.max(data, function(d) { return d.total; })]).nice();
+
+                data.sort(d3.select("#sort").property("checked")
+                    ? (a, b) => data_country.indexOf(a.country) - data_country.indexOf(b.country)
+                    : (a, b) => b.total - a.total)
+
+                x.domain(data.map(d => d.country));
+
+                var group = svg.selectAll("g.layer")
+                    .data(d3.stack().keys(keys)(data), d => d.key)
+
+                group.exit().remove()
+
+                group.enter().append("g")
+                    .classed("layer", true)
+                    .attr("fill", d => z(d.key));
+
+                var bars = svg.selectAll("g.layer").selectAll("rect")
+                    .data(d => d, e => e.data.country)
+                  
+                bars.exit().remove()
+                
+                bars.enter().append("rect")
+                    .attr("width", x.bandwidth())
+                    .on("mouseover", function() { div.style("display", "block"); }) //.style("width", "100px")
+                    .on("mousemove", function(d) {  
+                        var typeName = d3.select(this.parentNode).datum().key; 
+                        var typeValue = d.data[typeName];
+                        var total = d.data.total;
+                        div.style("opacity", .9);
+                        
+                        div.html(
+                             "<b>" + typeName + " : "  + typeValue +                 
+                            "</b><br>" + d.data.country + " : "  + total)
+                            
+                            .style("left", (d3.event.pageX + 10) + "px")          
+                            .style("top", (d3.event.pageY - 45) + "px");
+                        })
+                    .on("mouseout", function() { div.style("display", "none"); })
+                    .merge(bars)
+                    .transition().duration(0)
+                        .attr("x", d => x(d.data.country))
+                        .attr("y", d => y(0))
+                        .attr("height", d => 0)
+                      
+                //Max Count  
+                var text = svg.selectAll(".text")
+                    .data(data, d => d.country);
+
+                text.exit().remove()
+
+                text.enter().append("text")
+                    .attr("class", "text")
+                    .attr("text-anchor", "middle")
+                    .merge(text)
+                .transition().duration(0)
+                    .attr("x", d => x(d.country) + x.bandwidth() / 2)
+                    .attr("y", d => y(0) - 5)
+                    .text(d => d.record)
+
+            update(1000)
+
+            function update(speed) {
+                var data = csv
+
+                y.domain([0, 2+d3.max(data, function(d) { return d.total; })]).nice();
+
+                svg.selectAll(".y-axis").transition().duration(speed)
+                    .call(d3.axisLeft(y).ticks(null, "s"))
+
+                data.sort(d3.select("#sort").property("checked")
+                    ? (a, b) => data_country.indexOf(a.country) - data_country.indexOf(b.country)
+                    : (a, b) => b.total - a.total)
+
+                x.domain(data.map(d => d.country));
+
+                svg.selectAll(".x-axis").transition().duration(speed)
+                    .call(d3.axisBottom(x).tickSizeOuter(0)).selectAll("text")  
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-35)");
+
+                var group = svg.selectAll("g.layer")
+                    .data(d3.stack().keys(keys)(data), d => d.key)
+
+                group.exit().remove()
+
+                group.enter().append("g")
+                    .classed("layer", true)
+                    .attr("fill", d => z(d.key));
+
+                var bars = svg.selectAll("g.layer").selectAll("rect")
+                    .data(d => d, e => e.data.country)
+                  
+                bars.exit().remove()
+                
+                bars.enter().append("rect")
+                    .attr("width", x.bandwidth())
+                    .on("mouseover", function() { div.style("visibility", "visible");}) //.style("width", "100px")
+                    .on("mousemove", function(d) {  
+                        var typeName = d3.select(this.parentNode).datum().key; 
+                        var typeValue = d.data[typeName];
+                        var total = d.data.total;
+                        div.style("opacity", .9);
+                        
+                        div.html(
+                             "<b>" + typeName + " : "  + typeValue +                 
+                            "</b><br>" + d.data.country + " : "  + total)
+                            
+                            .style("left", (d3.event.pageX) + "px")          
+                            .style("top", (d3.event.pageY - 45) + "px");
+                        })
+                    .on("mouseout", function() { div.style("visibility", "hidden"); })
+                    .merge(bars)
+                    .transition().duration(speed)
+                        .attr("x", d => x(d.data.country))
+                        .attr("y", d => y(d[1]))
+                        .attr("height", d => y(d[0]) - y(d[1]))
+                      
+                //Max Count  
+                var text = svg.selectAll(".text")
+                    .data(data, d => d.country);
+
+                text.exit().remove()
+
+                text.enter().append("text")
+                    .attr("class", "text")
+                    .attr("text-anchor", "middle")
+                    .merge(text)
+                .transition().duration(speed)
+                    .attr("x", d => x(d.country) + x.bandwidth() / 2)
+                    .attr("y", d => y(d.total) - 5)
+                    .text(d => d.record)
+              
+            } //function update(speed)
+
+            var checkbox = d3.select("#sort")
+                .on("click", function() {
+                    update(750)
+                })
+        } //function ready(error, data)
+    </script>
+    <!-- Visual 3 End -->
+
+
+
+    
+    <!-- Visual 4 -->
+    <script>
+        var Global = "Global Data"
+        var tickDuration = 2000;
+        var init = 0
+        var clear = false
+        let year = 2000;
+        var lastYear = 2020
+        var rangeYear = lastYear - year
+        
+        var top_n = 12;
+        var visual4Height = 490;
+        var visual4Width = 960;
+       
+        const sotaMargin = {
+          top: 80,
+          right: 200,
+          bottom: 0,
+          left: 20
+        };
+      
+        var visual4svg = d3.select("#visual4 #barSvg")
+          .attr("width", visual4Width)
+          .attr("height", visual4Height)
+          .append("g")
+        
+         var fo = visual4svg.append('foreignObject')
+                        .attr('x', visual4Width/2)
+         var div = fo.append('xhtml:div')
+                        .attr("class", "playLocation")
+
+    ////////////////////////////////////////////////////////////// Button //////////////////////////////////////////////////////
+        var buttonDiv = d3.select("#visual4 #buttonDiv")
+                    .attr("class", "buttonDiv")
+                    
+        var button = buttonDiv
+                    .append("button")
+                    .attr("class", "button")
+                    
+       function redraw(){
+       
+       var x = d3.selectAll("#visual4 .playLocation")["_groups"][0][0].getBoundingClientRect().left
+       
+            d3.selectAll("#visual4 .playpause")
+                    .style("right", "30%")        
+                    .style("top",  visual4Height-sotaMargin.bottom-90 + "px")
+       }
+
+        
+        redraw();
+          
+        window.addEventListener("resize", redraw);
+        
+
+    ////////////////////////////////////////////////////////////// Info //////////////////////////////////////////////////////
+    let subTitle = visual4svg.append("text")
+     .attr("class", "title")
+     .attr('x', visual4Width-sotaMargin.right)
+     .attr("y", 60)
+     .html("Country | # Issues | # Records");
+
+
+    ////////////////////////////////////////////////////////////// READING CSV //////////////////////////////////////////////////////
+        d3.csv("{% static "issf_base/csv/sota.csv" %}", function(error, data){
+        
+            var data = data.filter(d => d.year != "1973")
+            var country = d3.map(data, d => d.country).keys()
+            country.push(Global)
+            var category = d3.map(data, d => d.category).keys()
+            
+    ////////////////////////////////////////////////////////////// DATA MANIPULATION //////////////////////////////////////////////////////
+        var total = {} 
+        var totalStd = {} 
+        var totalCategory = {}
+        var totalRecord = {}
+        var totalStdCategory = {}
+        country.forEach(function (d) {
+            total[d] = 0
+            totalStd[d] = 0
+            totalCategory[d] = []
+            totalRecord[d] = 0
+            totalStdCategory[d] = []
+            
+            category.forEach(function (cat) {
+                totalCategory[d][cat] = 0
+                totalStdCategory[d][cat] = 0
+            })
+        })
+        
+        //Grouping by year and country
+        data_nested = d3.nest()
+              .key(function(d) { return d.year; }).sortKeys(d3.ascending)
+              .key(function(d) { return d.country; })
+              .rollup(function(v) { return {
+                length: v.length
+              }; })
+              .entries(data);
+        
+        var new_data = []
+        var i = 0
+        data_nested.forEach(function (d) {
+            //Add All country to each year array
+            new_country = d3.map(d.values, v => v.key).keys()
+            var sum = d3.sum(d.values, v=> v.value.length)
+            country.forEach(function (c) {
+                if(new_country.indexOf(c)===-1){
+                    if (c === Global){
+                        d.values.push({key: c, value: {length: sum}})
+                    }else{
+                        d.values.push({key: c, value: {length: 0}})
+                    }
+                }
+            })
+            
+            var data_year_filtered = data.filter(m => (m.year == d.key))
+            
+            //Create new array
+            d.values.forEach(function (v) {
+                    //Find Standardized count
+                    if (v.key == Global){
+                        var data_country_filtered = data_year_filtered
+                    }else{
+                        var data_country_filtered = data_year_filtered.filter(m => (m.country == v.key))
+                    }
+                    var count_issf = d3.map(data_country_filtered, function(c){return c.issf_core_id;}).keys().length
+                
+                    totalRecord[v.key] = totalRecord[v.key] + count_issf
+                    
+                    if (count_issf == 0) {
+                        totalStd[v.key] = totalStd[v.key] + 0
+                    }else{
+                        totalStd[v.key] = totalStd[v.key] + v.value.length/count_issf
+                    }
+                    
+                    total[v.key] = total[v.key] + v.value.length
+                
+                new_data.push({year: d.key, name: v.key, value: total[v.key], std: totalStd[v.key], totalRecord : totalRecord[v.key], stdCat : [], length: v.value.length,  rank: 0})
+                
+                category.forEach(function (cat) {
+                    var catLength = data_country_filtered.filter(m => (m.category == cat)).length
+                    totalCategory[v.key][cat] = totalCategory[v.key][cat] + catLength
+                    new_data[i][cat] = totalCategory[v.key][cat]
+                })
+                i = i + 1
+            });
+        })
+
+        data = new_data
+
+        data.forEach(d => {
+            d.value = +d.value,
+            d.std = +d.std,
+            d.value = isNaN(d.value) ? 0 : d.value,
+            d.year = +d.year
+        });
+
+    ////////////////////////////////////////////////////////////// Legend //////////////////////////////////////////////////////
+        var z = d3.scaleOrdinal(["#ffca3a","#8ac926","#1982c4","#6a4c93"]); 
+        
+        var legsize = 20;
+        
+        var legendCat = visual4svg.selectAll("#visual4 .legend")
+                    .data(category)
+                    .enter()
+                    .append("g")
+                    
+        legendCat.append("rect")
+                    .attr("fill", function (d) {
+                        return z(d);
+                        })
+                    .attr("width", legsize)
+                    .attr("height", legsize)
+                    .attr("x", function (d, i) {
+                        return visual4Width-sotaMargin.right;
+                        })
+                    .attr("y", function (d, i) {
+                        return visual4Height/2+i*30;
+                        });
+
+        legendCat.append("text")
+                    .attr("class", "labelCat")
+                    .attr("x", function (d, i) {
+                        return visual4Width-sotaMargin.right+legsize+5;
+                        })
+                    .attr("y", function (d, i) {
+                        return visual4Height/2+i*30+legsize/2+3;
+                        })
+                    .attr("text-anchor", "start")
+                    .text(function (d, i) {
+                        return category[i];
+                        });
+
+    ////////////////////////////////////////////////////////////// INITIAL CHART //////////////////////////////////////////////////////
+         var yearSlice = []
+         if (d3.select("#visual4 #sort").property("checked")){
+            value = "std"
+          }else{
+            value = "value"
+          }
+          
+                                        ///////////////////////// Checkbox //////////////////////
+            d3.select("#visual4 #selectedCountries").on("change",update_checkbox);
+            
+            function update_checkbox() {
+                if (d3.select("#visual4 #selectedCountries").property("checked")){
+                    d3.select("#visual4 #dropDiv").classed("hidden", false)
+                }else{
+                    d3.select("#visual4 #dropDiv").classed("hidden", true)
+                }
+            }
+            update_checkbox()
+
+                                    ///////////////////////// DROPDOWN //////////////////////
+          yearSlice = data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
+                .sort((a,b) => b[value] - a[value])
+            
+            country = yearSlice.map(d => d.name)
+            var countryAlph = yearSlice.map(d => d.name).sort(d3.ascending)
+            
+            var dropDiv = d3.select("#visual4 #dropDiv")
+              .style("width", '100%')
+              .style("height", '60px')
+              .style("margin-top", '15px');
+          
+            var selectedCountries = []
+            for(var i=0; i<top_n; i++){
+                var selector = dropDiv
+                    .append("select")
+                    .attr("id","dropdown"+i)
+                    .style("border", "1px")
+                    .style("border-style", "outset")
+                    
+                if (i==0){
+                    var firstRows = [" ", Global]
+                }else{
+                    var firstRows = [" "]
+                }
+                
+                selector.selectAll("#visual4 option")
+                    .data(firstRows)
+                    .enter()
+                    .append("option")
+                    .attr("value", function(d){
+                        return d;
+                        })
+                    .text(function(d){
+                        return d;
+                        })
+                        
+                selector.selectAll("#visual4 option")
+                    .data(countryAlph)
+                    .enter()
+                    .append("option")
+                    .attr("value", function(d){
+                        return d;
+                        })
+                    .text(function(d){
+                        return d;
+                        })
+
+                selector.property('value',country[i])
+            }
+            
+            dropDiv.append("br")
+            dropDiv.append("br")
+            
+                                        ///////////////////////// Top / Clear Buttons //////////////////////
+            var yearSliceReal = yearSlice.slice(0,top_n)
+
+            dropDiv
+                    .append("button")
+                    .attr("class", "myButton")
+                    .text("Top "+top_n)
+                    .on("click", function() {
+                        var i = 0
+                        d3.selectAll("#visual4 select").property('value',' ')
+                        yearSliceReal.forEach(function (n) {
+                                d3.select("#visual4 #dropdown"+i).property("value", n.name)
+                            i = i + 1
+                        })
+                        if (!moving) {
+                            movingStart()
+                        }
+                      })
+                      
+            dropDiv
+                    .append("button")
+                    .attr("class", "myButton")
+                    .text("Clear")
+                    .on("click", function() {
+                        d3.selectAll("#visual4 select").property('value',' ')
+                        movingStop()
+                        clear = true
+                        if (init == 0) {update(xx.invert(currentValue))} else{update(xx.invert(currentValue)-1)}
+                      })
+                
+          if (d3.select("#visual4 #selectedCountries").property("checked")){
+                selectedCountries = []
+                    for(var i=0; i<top_n; i++){
+                        selectedCountries.push(d3.select("#visual4 #dropdown"+i).property("value"))
+                    }
+                yearSlice = data.filter(d => d.year == year && !isNaN(d[value]) && !(selectedCountries.indexOf(d.name)===-1))
+                    .sort((a,b) => b[value] - a[value])
+                    .slice(0,top_n);
+            }else{
+              yearSlice = data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
+                .sort((a,b) => b[value] - a[value])
+                .slice(0,top_n);
+            }
+          
+        yearSlice.forEach((d,i) => d.rank = i);
+
+        var ySt = d3.scaleBand()
+            .range([visual4Height-sotaMargin.bottom, sotaMargin.top])
+        
+        ySt.domain(yearSlice.map(d => d.name))
+            .padding(0.1)     
+     
+         let x = d3.scaleLinear()
+            .domain([0, d3.max(yearSlice, d => d[value])])
+            .range([sotaMargin.left, visual4Width-sotaMargin.right]);
+      
+         let y = d3.scaleLinear()
+            .domain([top_n, 0])
+            .range([visual4Height-sotaMargin.bottom, sotaMargin.top]);
+      
+         let xAxis = d3.axisTop()
+            .scale(x)
+            .ticks(visual4Width > 500 ? 5:2)
+            .tickSize(-(visual4Height-sotaMargin.top-sotaMargin.bottom))
+            .tickFormat(d => d);
+      
+         visual4svg.append('g')
+           .attr('class', 'axis xAxis')
+           .attr('transform', `translate(0, ${sotaMargin.top})`)
+           .call(xAxis)
+           .selectAll('#visual4 .tick line')
+           .classed('origin', d => d == 0);
+           
+                                ////////////////////////////////// Stacked Bars /////////////////////////////////////////
+            var group = visual4svg.selectAll("#visual4 g.layer")
+                .data(d3.stack().keys(category)(yearSlice), d => d.key)
+
+            group.exit().remove()
+
+            group.enter().append("g")
+                .classed("layer", true)
+                .attr("id", d => d.key)
+                .attr("fill", d => z(d.key));
+                
+        var bars = visual4svg.selectAll("#visual4 g.layer").selectAll("#visual4 rect")
+                .data(d => d, e => e.data.name)
+                
+        bars.exit().remove()
+            
+            bars.enter().append("rect")
+                .attr("id", d => d.data.name)
+                .attr("height", ySt.bandwidth())
+                .merge(bars)
+                    .attr("x", d => x(d[0]))
+                    .attr('y', d => y(d.data.rank)+5)
+                    .attr("width", d => x(d[1]) - x(d[0]))
+                    
+                                    ///////////////////////////// Bars Labels ////////////////////////////////
+        visual4svg.selectAll('#visual4 text.valueLabel')
+          .data(yearSlice, d => d.name)
+          .enter()
+          .append('text')
+          .attr('class', 'label')
+            .attr('x', d => x(d[value])+5)
+          .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
+          .text(d => d.name + " | " + d[value] + " | " + d.totalRecord); 
+
+        let yearText = visual4svg.append('text')
+          .attr('class', 'yearText')
+          .attr('x', visual4Width-sotaMargin.right)
+          .attr('y', visual4Height-50)
+          .style('text-anchor', 'end')
+          .html(~~year)
+          
+                                ///////////////////////////// SLIDER ////////////////////////////////
+        var startDate = year
+        var endDate = lastYear
+
+        var marginSlider = {top:40, right:50, bottom:0, left:50},
+            widthSlider = visual4Width - marginSlider.left - marginSlider.right,
+            heightSlider = 60 - marginSlider.top - marginSlider.bottom;
+
+        var svgSlider = d3.select("#visual4 #sliderSvg")
+            .attr("width", widthSlider + marginSlider.left + marginSlider.right)
+            .attr("height", heightSlider + marginSlider.top + marginSlider.bottom);  
+        
+        var moving = false;
+        var currentValue = 0;
+        var targetValue = widthSlider;
+        
+        var playPause = d3.selectAll("#visual4 .playpause")
+        var playButton = d3.select("#visual4 .button");
+
+        playPause
+            .on("click", function() {
+                if (playButton.classed("paused")) {movingStop()}else{movingStart()}
+          })
+          
+        function movingStart() {
+            playButton.classed("paused", true)
+                    console.log("play")
+                      moving = true;
+                      if (init == 1) {currentValue = currentValue - (targetValue/rangeYear)} else{currentValue = currentValue + (targetValue/rangeYear)}
+                      step()
+                      timer = setInterval(step, tickDuration);
+                      init = 1
+        }
+        
+        function movingStop() {
+            console.log("paused")
+                    playButton.classed("paused", false)
+                    moving = false;
+                  if (init == 1) {clearInterval(timer);}
+        }
+        
+        var xx = d3.scaleLinear()
+            .domain([startDate, endDate])
+            .range([0, targetValue])
+            .clamp(true);
+            
+        var slider = svgSlider.append("g")
+            .attr("class", "slider")
+            .attr("transform", "translate(" + marginSlider.left + "," + heightSlider + ")");
+
+        slider.append("line")
+            .attr("class", "track")
+            .attr("transform", "translate(0," + 15 + ")")
+            .attr("x1", xx.range()[0])
+            .attr("x2", xx.range()[1])
+          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+            .attr("class", "track-inset")
+          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+            .attr("class", "track-overlay")
+            .call(d3.drag()
+                .on("start.interrupt", function() { slider.interrupt(); })
+                .on("start drag", function() {
+                  currentValue = d3.event.x;
+                  update(xx.invert(currentValue)); 
+                })
+            );
+
+        slider.insert("g", ".track-overlay")
+            .attr("class", "ticks")
+            .attr("transform", "translate(0," + 30 + ")")
+          .selectAll("#visual4 text")
+            .data(xx.ticks(rangeYear))
+            .enter()
+            .append("text")
+            .attr("x", xx)
+            .attr("y", 10)
+            .attr("text-anchor", "middle")
+            .text(function(d) { return d; });
+
+        var handle = slider.insert("circle", ".track-overlay")
+            .attr("transform", "translate(0," + 15 + ")")
+            .attr("class", "handle")
+            .attr("r", 9);
+
+        var label = slider.append("text")  
+            .attr("class", "label")
+            .attr("text-anchor", "middle")
+            .text(startDate)
+            .attr("transform", "translate(0," + 0 + ")")
+
+        function step() {
+          update(xx.invert(currentValue));
+
+          if (Math.round(xx.invert(currentValue)) >= lastYear) {
+          console.log("son" , xx.invert(currentValue))
+            moving = false;
+            currentValue = 0;
+            clearInterval(timer);
+            d3.select("#visual4 .button").classed("paused", false)
+          }else{
+            currentValue = currentValue + (targetValue/rangeYear);
+            }
+        }
+        
+        
+    /////////////////////////////////////////////////////////////////////// UPDATE ////////////////////////////////////////////////////////
+        function update(h) {
+            var a = 0
+            for(var i=0; i<top_n; i++){
+                if (d3.select("#visual4 #dropdown"+i).property("value") !== " ") {a = 1}
+            }
+            if (a == 0) {movingStop()}
+            if (a == a) { 
+                clear = false
+                h = d3.format(".0f")(h)
+                handle.attr("cx", xx(h));
+                label
+                    .attr("x", xx(h))
+                    .text(h);
+
+                year = h
+                
+                if (d3.select("#visual4 #sort").property("checked")){
+                    value = "std"
+                  }else{
+                    value = "value"
+                  }
+                  
+                yearSliceReal = data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
+                    .sort((a,b) => b[value] - a[value])
+                    .slice(0,top_n);
+
+                if (d3.select("#visual4 #selectedCountries").property("checked")){
+                    selectedCountries = []
+                        for(var i=0; i<top_n; i++){
+                            selectedCountries.push(d3.select("#visual4 #dropdown"+i).property("value"))
+                        }
+                    yearSlice = data.filter(d => d.year == year && !isNaN(d[value]) && !(selectedCountries.indexOf(d.name)===-1))
+                        .sort((a,b) => b[value] - a[value])
+                        .slice(0,top_n);
+                }else{
+                  yearSlice = data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
+                    .sort((a,b) => b[value] - a[value])
+                    .slice(0,top_n);
+                }
+
+              yearSlice.forEach((d,i) => d.rank = i);
+
+              x.domain([0, d3.max(yearSlice, d => d[value])]); 
+
+              visual4svg.select('#visual4 .xAxis')
+                .transition()
+                .duration(tickDuration)
+                .ease(d3.easeLinear)
+                .call(xAxis);
+                
+            var group = visual4svg.selectAll("#visual4 g.layer")
+                    .data(d3.stack().keys(category)(yearSlice), d => d.key)
+                    
+                group.exit().remove()
+
+                group.enter().append("g")
+                    .classed("layer", true)
+                    .attr("id", "d => d.key")
+                    .attr("fill", d => z(d.key));
+                    
+            var bars = visual4svg.selectAll("#visual4 g.layer").selectAll("#visual4 rect")
+                    .data(d => d, e => e.data.name)
+        
+           bars //adding
+            .enter()
+            .append('rect')
+            .attr("id", d => d.data.name)
+            .attr("height", ySt.bandwidth())
+            .attr("x", d => x(d[0]))
+            .attr('y', d => y(top_n+1)+5)
+            .attr("width", d => x(d[1]) - x(d[0]))
+            .merge(bars)
+            .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr('y', d => y(d.data.rank)+5);
+              
+           bars //changing
+            .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+            .attr("x", d => x(d[0]))
+              .attr("width", d => x(d[1]) - x(d[0]))
+              .attr('y', d => y(d.data.rank)+5);
+                
+           bars  //removing
+            .exit()
+            .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr('y', d => y(top_n+1)+5)
+              .remove();
+             
+           let valueLabels = visual4svg.selectAll('#visual4 .label').data(yearSlice, d => d.name);
+        
+           valueLabels
+              .enter()
+              .append('text')
+              .attr('class', 'label')
+              .attr('x', d => x(d[value])+5)
+              .attr('y', d => y(top_n+1)+5)
+              .text(d => d.name + " | " + d[value] + " | " + d.totalRecord)
+              .transition()
+                .duration(tickDuration)
+                .ease(d3.easeLinear)
+                .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
+                
+           valueLabels
+              .transition()
+                .duration(tickDuration)
+                .ease(d3.easeLinear)
+                .attr('x', d => x(d[value])+5)
+                .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
+                .tween("text", function(d) {
+                    var node = this;
+                    var text = node.textContent.split( ' | ' );
+                   let i = d3.interpolateRound(text[1], d[value]);
+                   let j = d3.interpolateRound(text[2], d.totalRecord);
+                   return function(t) {
+                     node.textContent = text[0] + " | " + i(t) + " | " + j(t); //d3.format(',')(i(t))
+                     
+                  };
+                });
+          
+          valueLabels
+            .exit()
+            .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr('y', d => y(top_n+1)+5)
+              .remove();
+        
+          yearText.html(~~year);
+       }
+       }
+     });
+    </script>
+    <!-- Visual 4 End -->
+
 
 
 
@@ -3103,11 +3795,53 @@
         }
         setInterval(addAttrOnTableAnchors,1000);
 
+        
+        // VISUALIZATION SECTION
+        let sliderCount = 0;
+        $('.visual-slides').each(function(){
+            $('#pager').append("<span class='dot' data-target='" + sliderCount + "'></span>");
+            sliderCount++;
+        });
+        $('#pager .dot').first().addClass('active');
+
         $(window).load(function(){
             $('#visual-loading-overlay').fadeOut();
-            $('.slideshow-container').css('display','flex');
+            $('.slideshow-container').css('display','block');
+            $('#pager').removeClass('hide');
+            $('.visual-carousel-control').removeClass('hide');
         });
 
+        // VISUALIZATION SLIDER
+        $('#next-slide').on('click',function(){
+            if($('.visual-slides.active').next().hasClass('visual-slides')){
+                $('.visual-slides.active').removeClass('active').next().addClass('active');
+            }
+            else{
+                $('.visual-slides.active').removeClass('active');   
+                $('.visual-slides').first().addClass('active');   
+            }
+            $('#pager .dot').eq($('.visual-slides.active').data('pager')).addClass('active').siblings().removeClass('active');
+        });
+
+        $('#prev-slide').on('click',function(){
+            if($('.visual-slides.active').prev().hasClass('visual-slides')){
+                $('.visual-slides.active').removeClass('active').prev().addClass('active');
+            }
+            else{
+                $('.visual-slides.active').removeClass('active');   
+                $('.visual-slides').last().addClass('active');   
+            }
+            $('#pager .dot').eq($('.visual-slides.active').data('pager')).addClass('active').siblings().removeClass('active');
+        });
+
+        $('#pager .dot').on('click',function(){
+            let $this = $(this);
+            $this.addClass('active').siblings('.dot').removeClass('active');
+            $('.visual-slides').eq($this.data('target')).addClass('active').siblings().removeClass('active');
+        });
+
+        
+        // MOST RECENT CONTRIBUTION SECTION
         $('.most-recent-contributions-trigger li a').on('click',function(){
             let $this = $(this);
             $this.closest('li').addClass('active').siblings('li').removeClass('active');
