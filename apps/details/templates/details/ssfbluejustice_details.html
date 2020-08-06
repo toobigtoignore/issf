@@ -946,16 +946,6 @@
                                         <td><strong>B. % of households participating in SSF:</strong></td>
                                         <td>{% if bluejustice_instance.households_participation_percentage %} {{ bluejustice_instance.households_participation_percentage }} {% endif %}</td>
                                     </tr>
-
-                                    {% if user.is_staff %}
-                                    <tr>
-                                        <td colspan="3" style="padding: 25px 2px 11px 10px; font-size: 16px;"><strong>Bluejustice PDF:</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>PDF link for SSF bluejustice:</strong></td>
-                                        <td>{% if bluejustice_instance.bluejustice_pdf %} <a href="{{ bluejustice_instance.bluejustice_pdf }}" target="_blank">{{ bluejustice_instance.bluejustice_pdf }}</a> {% endif %}</td>
-                                    </tr>
-                                    {% endif %}
                                 </table>
 
 
@@ -1560,12 +1550,6 @@
                                         <input type="number" step="0.01" id="total-number-households" name="total_number_households" value="{{ bluejustice_instance.total_number_households }}">
                                         <label for="households-participation-percentage">B. % of households participating in SSF:</label>
                                         <input type="number" step="0.01" id="households-participation-percentage" name="households_participation_percentage" value="{{ bluejustice_instance.households_participation_percentage }}">
-                                        
-                                        {% if user.is_staff %}
-                                          <h5>Bluejustice PDF:</h5>
-                                          <label for="pdf-link">PDF link for SSF bluejustice:</label>
-                                          <input type="text" id="pdf-link" name="bluejustice_pdf" value="{{ bluejustice_instance.bluejustice_pdf }}">
-                                        {% endif %}
                                     </div>
 
 
@@ -2327,7 +2311,13 @@
                             {% if editor %}
                                 <button class="bt-edit">Edit</button>
                             {% endif %}
-                            <a class="accordion-nav" href="#panel-image">Image</a>
+
+                            {% if user.is_staff %}
+                              <a class="accordion-nav" href="#panel-image">Image and PDF</a>
+                            {% else %}
+                              <a class="accordion-nav" href="#panel-image">Image</a>
+                            {% endif %} 
+                            
                             <div id="panel-image" class="content">
                                 <table>
                                     <tr>
@@ -2354,6 +2344,13 @@
                                         <td><strong>Name of the photographer</strong></td>
                                         <td>{{ bluejustice_instance.photographer }}</td>
                                     </tr>
+
+                                    {% if user.is_staff %}
+                                    <tr>
+                                        <td><strong>Bluejustice PDF:</strong></td>
+                                        <td><a target="_blank" href="{{ bluejustice_instance.bluejustice_pdf }}">{{ bluejustice_instance.bluejustice_pdf }}</a></td>
+                                    </tr>
+                                    {% endif %}
                                 </table>
 
 
@@ -2362,11 +2359,18 @@
                                 {% csrf_token %}
                                     
                                     <div class="FormSet" id="bluejustice-image-form">
-                                        <label id="photo-upload-label">Upload a photo:</label><br>
+                                        <h5 style="margin: 0px 0px 10px;">Upload a photo:</h5>
                                         {{ bluejustice_form.photo_upload }}
                                         {{ bluejustice_form.photo_location.label_tag }}{{ bluejustice_form.photo_location }}
                                         {{ bluejustice_form.date_of_photo.label_tag }}{{ bluejustice_form.date_of_photo }}
                                         {{ bluejustice_form.photographer.label_tag }}{{ bluejustice_form.photographer }}
+
+                                        
+                                        {% if user.is_staff %}
+                                          <h5>Bluejustice PDF:</h5>
+                                          <label for="pdf-link">PDF link:</label>
+                                          <input type="text" id="pdf-link" name="bluejustice_pdf" value="{{ bluejustice_instance.bluejustice_pdf }}">
+                                        {% endif %}
                                     </div>
 
 
@@ -2399,13 +2403,14 @@
 
                 <div class="large-4 columns">
                     {% if bluejustice_instance.bluejustice_pdf %}
-                    <a target="_blank" id="report-btn" href="{{ bluejustice_instance.bluejustice_pdf }}" class="button radius" style="width: 305px; margin-left: 2%; margin-bottom: 40px;">Download as PDF</a>
+                    <a target="_blank" id="report-btn" href="{{ bluejustice_instance.bluejustice_pdf }}" class="button radius" style="width: 88%; height: 35px; margin-left: 6%; margin-bottom: 40px; background: #4d9de0; line-height: 22px;">Download as PDF</a>
                     {% endif %}
                     
                     <div
                         class="fb-comments"
                         data-href="https://issfcloud.toobigtoignore.net{% url 'bluejustice-details' issf_core_id=core_instance.issf_core_id %}"
                         data-width="220" data-numposts="3" data-colorscheme="light"
+                        style="margin-left: 3%;"
                     >
                     </div>
                 </div>
