@@ -275,6 +275,11 @@ footer {
     z-index: 91;
     margin-bottom: 35px;
 }
+    
+.content-section .large-4 {
+    padding-left: 3%;
+    padding-right: 0;
+}
 
 #advance-search {
     position: relative;
@@ -3980,7 +3985,6 @@ table p {
     .content-section .large-4 {
         width: 100%;
         margin-top: 20px;
-        padding-left: 5px;
     }
     
     .content-section .large-4.columns {
