@@ -10,9 +10,9 @@
     {% autoescape off %}
         {% include "issf_base/loading-spinner.html" %}
 
-        <title>{% block title %}ISSF: Capacity Development - {{ capacity_need_instance.capacity_need_title }}{% endblock %}</title>
+        <title>{% block title %}ISSF: SSF Governance - {{ capacity_need_instance.case_study_country }}{% endblock %}</title>
 
-        <section class="content-section report" id="content-capacity">
+        <section class="content-section report" id="content-governance">
             <div class="row" id="main">
                 <div class="large-12 columns page-title">
                     <span>
@@ -25,11 +25,9 @@
                         </a>
                     </span>
 
-                    <h1>Capacity Development</h1>
-
+                    <h1>SSF Governance</h1>
                     <div class="basic-info">
-                        {{ capacity_need_instance.capacity_need_category }} {{ capacity_need_instance.capacity_need_type }}:
-                        <strong> {{ capacity_need_instance.capacity_need_title }}</strong>
+                        {{ capacity_need_instance.contributors_names }} | <strong>{{ capacity_need_instance.case_study_country }}</strong>
                     </div>
                 </div>
             </div>
@@ -41,97 +39,298 @@
                                 <button class="bt-edit">Edit</button>
                             {% endif %}
 
-                            <a class="accordion-nav" href="#panel1">Details</a>
+                            <a class="accordion-nav" href="#panel-basic">Basic Information</a>
 
-                            <div id="panel1" class="content">
+                            <div id="panel-basic" class="content">
                                 <table>
                                     <tr>
-                                        <td>
-                                            <strong>Category</strong>
-                                        </td>
-                                        <td>{{ capacity_need_instance.capacity_need_category }}</td>
+                                        <td><strong>Case Study Country</strong></td>
+                                        <td>{{ capacity_need_instance.case_study_country }}</td>
                                     </tr>
+
                                     <tr>
-                                        <td>
-                                            <strong>Type</strong>
-                                        </td>
-                                        <td>{{ capacity_need_instance.capacity_need_type }}</td>
+                                        <td><strong>Contributors Names</strong></td>
+                                        <td>{{ capacity_need_instance.contributors_names }}</td>
                                     </tr>
+
                                     <tr>
-                                        <td>
-                                            <strong>Short title</strong>
-                                        </td>
-                                        <td>{{ capacity_need_instance.capacity_need_title }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>Description</strong>
-                                        </td>
-                                        <td>{{ capacity_need_instance.capacity_need_description }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>Contributor</strong>
-                                        </td>
-                                        <td>
-                                            {% autoescape on %}
-                                            {% if who_page %}
-                                                <a href="{% url 'who-details' who_page.issf_core_id %}">
-                                                    {{ core_instance.contributor }}
-                                                </a>
-                                            {% else %}
-                                                <a
-                                                    href="mailto:{{ core_instance.contributor.email }}"
-                                                    target="_blank"
-                                                >
-                                                    {{ core_instance.contributor }}
-                                                </a>
-                                            {% endif %}
-                                            {% endautoescape %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>Contribution date</strong>
-                                        </td>
-                                        <td>{{ core_instance.contribution_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                        <td><strong>Contributors Affiliations</strong></td>
+                                        <td>{{ capacity_need_instance.contributors_affiliations }}</td>
                                     </tr>
                                 </table>
+
+
                                 {% if editor %}
-                                    <form action="{% url 'capacity-basic' %}" method="post">
-                                        <h6>Please provide details of the existing or needed capacity development</h6>
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <h6>Please provide the basic details for updating the record</h6>
 
-                                        <p class="alert">
-                                            <label>*</label>
-                                            indicates required fields
-                                        </p>
+                                    <p class="alert">
+                                        <label>*</label>
+                                        indicates required fields
+                                    </p>
+                                    
+                                    <div class="FormSet">
+                                        <label for="case-study-country">Case Study Country<sup>*</sup></label>
+                                        <select name="case_study_country" id="case-study-country" data-country="{{ capacity_need_instance.case_study_country }}" required="" style="margin-bottom: 30px;">
+                                          <option value="" selected="">---------</option>
+                                          <option value="Afghanistan">Afghanistan</option>
+                                          <option value="Albania">Albania</option>
+                                          <option value="Algeria">Algeria</option>
+                                          <option value="Andorra">Andorra</option>
+                                          <option value="Angola">Angola</option>
+                                          <option value="Anguilla">Anguilla</option>
+                                          <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                          <option value="Argentina">Argentina</option>
+                                          <option value="Armenia">Armenia</option>
+                                          <option value="Australia">Australia</option>
+                                          <option value="Austria">Austria</option>
+                                          <option value="Azerbaijan">Azerbaijan</option>
+                                          <option value="Bahamas">Bahamas</option>
+                                          <option value="Bahrain">Bahrain</option>
+                                          <option value="Bangladesh">Bangladesh</option>
+                                          <option value="Barbados">Barbados</option>
+                                          <option value="Belarus">Belarus</option>
+                                          <option value="Belgium">Belgium</option>
+                                          <option value="Belize">Belize</option>
+                                          <option value="Benin">Benin</option>
+                                          <option value="Bhutan">Bhutan</option>
+                                          <option value="Bolivia (Plurinational State of)">Bolivia (Plurinational State of)</option>
+                                          <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                          <option value="Botswana">Botswana</option>
+                                          <option value="Brazil">Brazil</option>
+                                          <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                          <option value="Bulgaria">Bulgaria</option>
+                                          <option value="Burkina Faso">Burkina Faso</option>
+                                          <option value="Burundi">Burundi</option>
+                                          <option value="Cabo Verde">Cabo Verde</option>
+                                          <option value="Cambodia">Cambodia</option>
+                                          <option value="Cameroon">Cameroon</option>
+                                          <option value="Canada">Canada</option>
+                                          <option value="Cape Verde">Cape Verde</option>
+                                          <option value="Central African Republic">Central African Republic</option>
+                                          <option value="Chad">Chad</option>
+                                          <option value="Chile">Chile</option>
+                                          <option value="China">China</option>
+                                          <option value="Colombia">Colombia</option>
+                                          <option value="Comoros">Comoros</option>
+                                          <option value="Congo">Congo</option>
+                                          <option value="Cook Islands">Cook Islands</option>
+                                          <option value="Costa Rica">Costa Rica</option>
+                                          <option value="Cote d'Ivoire">Cote d'Ivoire</option>
+                                          <option value="Croatia">Croatia</option>
+                                          <option value="Cuba">Cuba</option>
+                                          <option value="Cyprus">Cyprus</option>
+                                          <option value="Czech Republic">Czech Republic</option>
+                                          <option value="Democratic People's Republic of Korea">Democratic People's Republic of Korea</option>
+                                          <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                                          <option value="Denmark">Denmark</option>
+                                          <option value="Djibouti">Djibouti</option>
+                                          <option value="Dominica">Dominica</option>
+                                          <option value="Dominican Republic">Dominican Republic</option>
+                                          <option value="Ecuador">Ecuador</option>
+                                          <option value="Egypt">Egypt</option>
+                                          <option value="El Salvador">El Salvador</option>
+                                          <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                          <option value="Eritrea">Eritrea</option>
+                                          <option value="Estonia">Estonia</option>
+                                          <option value="Ethiopia">Ethiopia</option>
+                                          <option value="Faroe Islands">Faroe Islands</option>
+                                          <option value="Fiji">Fiji</option>
+                                          <option value="Finland">Finland</option>
+                                          <option value="France">France</option>
+                                          <option value="French Guiana">French Guiana</option>
+                                          <option value="Gabon">Gabon</option>
+                                          <option value="Gambia">Gambia</option>
+                                          <option value="Georgia">Georgia</option>
+                                          <option value="Germany">Germany</option>
+                                          <option value="Ghana">Ghana</option>
+                                          <option value="Greece">Greece</option>
+                                          <option value="Greenland">Greenland</option>
+                                          <option value="Grenada">Grenada</option>
+                                          <option value="Guadeloupe">Guadeloupe</option>
+                                          <option value="Guatemala">Guatemala</option>
+                                          <option value="Guinea">Guinea</option>
+                                          <option value="Guinea-Bissau">Guinea-Bissau</option>
+                                          <option value="Guyana">Guyana</option>
+                                          <option value="Haiti">Haiti</option>
+                                          <option value="Honduras">Honduras</option>
+                                          <option value="Hong Kong">Hong Kong</option>
+                                          <option value="Hungary">Hungary</option>
+                                          <option value="Iceland">Iceland</option>
+                                          <option value="India">India</option>
+                                          <option value="Indonesia">Indonesia</option>
+                                          <option value="Iran (Islamic Republic of)">Iran (Islamic Republic of)</option>
+                                          <option value="Iraq">Iraq</option>
+                                          <option value="Ireland">Ireland</option>
+                                          <option value="Israel">Israel</option>
+                                          <option value="Italy">Italy</option>
+                                          <option value="Jamaica">Jamaica</option>
+                                          <option value="Japan">Japan</option>
+                                          <option value="Jordan">Jordan</option>
+                                          <option value="Kazakhstan">Kazakhstan</option>
+                                          <option value="Kenya">Kenya</option>
+                                          <option value="Kiribati">Kiribati</option>
+                                          <option value="Kuwait">Kuwait</option>
+                                          <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                          <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                                          <option value="Latvia">Latvia</option>
+                                          <option value="Lebanon">Lebanon</option>
+                                          <option value="Lesotho">Lesotho</option>
+                                          <option value="Liberia">Liberia</option>
+                                          <option value="Libya">Libya</option>
+                                          <option value="Lithuania">Lithuania</option>
+                                          <option value="Luxembourg">Luxembourg</option>
+                                          <option value="Madagascar">Madagascar</option>
+                                          <option value="Malawi">Malawi</option>
+                                          <option value="Malaysia">Malaysia</option>
+                                          <option value="Maldives">Maldives</option>
+                                          <option value="Mali">Mali</option>
+                                          <option value="Malta">Malta</option>
+                                          <option value="Marshall Islands">Marshall Islands</option>
+                                          <option value="Martinique">Martinique</option>
+                                          <option value="Mauritania">Mauritania</option>
+                                          <option value="Mauritius">Mauritius</option>
+                                          <option value="Mexico">Mexico</option>
+                                          <option value="Micronesia (Federated States of)">Micronesia (Federated States of)</option>
+                                          <option value="Monaco">Monaco</option>
+                                          <option value="Mongolia">Mongolia</option>
+                                          <option value="Montenegro">Montenegro</option>
+                                          <option value="Montserrat">Montserrat</option>
+                                          <option value="Morocco">Morocco</option>
+                                          <option value="Mozambique">Mozambique</option>
+                                          <option value="Myanmar">Myanmar</option>
+                                          <option value="Namibia">Namibia</option>
+                                          <option value="Nauru">Nauru</option>
+                                          <option value="Nepal">Nepal</option>
+                                          <option value="Netherlands">Netherlands</option>
+                                          <option value="Netherlands Antilles">Netherlands Antilles</option>
+                                          <option value="New Caledonia">New Caledonia</option>
+                                          <option value="New Zealand">New Zealand</option>
+                                          <option value="Nicaragua">Nicaragua</option>
+                                          <option value="Niger">Niger</option>
+                                          <option value="Nigeria">Nigeria</option>
+                                          <option value="Niue">Niue</option>
+                                          <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                                          <option value="Norway">Norway</option>
+                                          <option value="Oman">Oman</option>
+                                          <option value="Pakistan">Pakistan</option>
+                                          <option value="Palau">Palau</option>
+                                          <option value="Panama">Panama</option>
+                                          <option value="Papua New Guinea">Papua New Guinea</option>
+                                          <option value="Paraguay">Paraguay</option>
+                                          <option value="Peru">Peru</option>
+                                          <option value="Philippines">Philippines</option>
+                                          <option value="Poland">Poland</option>
+                                          <option value="Portugal">Portugal</option>
+                                          <option value="Puerto Rico">Puerto Rico</option>
+                                          <option value="Qatar">Qatar</option>
+                                          <option value="Republic of Korea">Republic of Korea</option>
+                                          <option value="Republic of Moldova">Republic of Moldova</option>
+                                          <option value="Romania">Romania</option>
+                                          <option value="Russian Federation">Russian Federation</option>
+                                          <option value="Rwanda">Rwanda</option>
+                                          <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                          <option value="Saint Lucia">Saint Lucia</option>
+                                          <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                                          <option value="Samoa">Samoa</option>
+                                          <option value="San Marino">San Marino</option>
+                                          <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                          <option value="Saudi Arabia">Saudi Arabia</option>
+                                          <option value="Senegal">Senegal</option>
+                                          <option value="Serbia">Serbia</option>
+                                          <option value="Seychelles">Seychelles</option>
+                                          <option value="Sierra Leone">Sierra Leone</option>
+                                          <option value="Singapore">Singapore</option>
+                                          <option value="Slovakia">Slovakia</option>
+                                          <option value="Slovenia">Slovenia</option>
+                                          <option value="Solomon Islands">Solomon Islands</option>
+                                          <option value="Somalia">Somalia</option>
+                                          <option value="South Africa">South Africa</option>
+                                          <option value="South Sudan">South Sudan</option>
+                                          <option value="Spain">Spain</option>
+                                          <option value="Sri Lanka">Sri Lanka</option>
+                                          <option value="Sudan">Sudan</option>
+                                          <option value="Suriname">Suriname</option>
+                                          <option value="Swaziland">Swaziland</option>
+                                          <option value="Sweden">Sweden</option>
+                                          <option value="Switzerland">Switzerland</option>
+                                          <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                                          <option value="Taiwan, Province of China">Taiwan, Province of China</option>
+                                          <option value="Tajikistan">Tajikistan</option>
+                                          <option value="Thailand">Thailand</option>
+                                          <option value="The former Yugoslav Republic of Macedonia">The former Yugoslav Republic of Macedonia</option>
+                                          <option value="Timor-Leste">Timor-Leste</option>
+                                          <option value="Togo">Togo</option>
+                                          <option value="Tonga">Tonga</option>
+                                          <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                          <option value="Tunisia">Tunisia</option>
+                                          <option value="Turkey">Turkey</option>
+                                          <option value="Turkmenistan">Turkmenistan</option>
+                                          <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                                          <option value="Tuvalu">Tuvalu</option>
+                                          <option value="U.S. Minor Islands">U.S. Minor Islands</option>
+                                          <option value="Uganda">Uganda</option>
+                                          <option value="Ukraine">Ukraine</option>
+                                          <option value="United Arab Emirates">United Arab Emirates</option>
+                                          <option value="United Kingdom">United Kingdom</option>
+                                          <option value="United Republic of Tanzania">United Republic of Tanzania</option>
+                                          <option value="United States of America">United States of America</option>
+                                          <option value="Uruguay">Uruguay</option>
+                                          <option value="Uzbekistan">Uzbekistan</option>
+                                          <option value="Vanuatu">Vanuatu</option>
+                                          <option value="Venezuela (Bolivarian Republic of)">Venezuela (Bolivarian Republic of)</option>
+                                          <option value="Viet Nam">Viet Nam</option>
+                                          <option value="Virgin Islands (British)">Virgin Islands (British)</option>
+                                          <option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option>
+                                          <option value="Yemen">Yemen</option>
+                                          <option value="Zambia">Zambia</option>
+                                          <option value="Zimbabwe">Zimbabwe</option>
+                                        </select>
+                                    
+                                        <button type="button" id="add-more-contributors" style="margin-top: -6px;">Add More Contributors</button>
+                                    </div> <!-- /Formset -->
 
-                                        {% csrf_token %}
-                                        <div class="FormSet">
-                                            {{ capacity_need_form }}
-                                        </div>
-                                        <input
-                                            id="issf_core_id" type="hidden"
-                                            value="{{ capacity_need_instance.issf_core_id }}"
-                                            name="issf_core_id"
-                                        >
+                                    
+                                    {% if user.is_staff %}
+                                    <div style="margin-top: 20px;">
+                                        {{ capacity_need_form.contributor.label_tag }}{{ capacity_need_form.contributor }}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <input type="hidden" name="contributors_names" id="contributors-names" value="{{ capacity_need_instance.contributors_names }}">
+                                    <input type="hidden" name="contributors_affiliations" id="contributors-affiliations" value="{{ capacity_need_instance.contributors_affiliations }}">
 
-                                        <div class="button-bar">
-                                            <button class="medium radius submit bt-submit">Submit</button>
-                                        </div>
-                                    </form>
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+
+                                    <div class="button-bar">
+                                        <button id="submit-basic-decoy" type="button" class="medium bt-submit" value="Submit">Submit</button>
+                                        <button class="medium bt-submit hide" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-key-principles-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
                                 {% endif %}
                             </div>
                         </dd>
+
 
                         <dd class="accordion-navigation">
                             {% if editor %}
                                 <button class="bt-edit">Edit</button>
                             {% endif %}
 
-                            <a class="accordion-nav" href="#panel4">Geographic scope</a>
+                            <a class="accordion-nav" href="#panel-geographic">Geographic scope</a>
 
-                            <div id="panel4" class="content">
+                            <div id="panel-geographic" class="content">
                                 <table>
                                     {% if core_instance.geographic_scope_type == 'Regional' %}
                                         {% for gsregion in geographic_scope_region %}
@@ -241,7 +440,7 @@
                                         </div>
 
                                         <input
-                                            id="issf_core_id" type="hidden"
+                                            class="issf_core_id" type="hidden"
                                             value="{{ core_instance.issf_core_id }}"
                                             name="issf_core_id"
                                         >
@@ -253,58 +452,987 @@
                                 {% endif %}
                             </div>
                         </dd>
+                        
                         <dd class="accordion-navigation">
-                            <a class="accordion-nav" href="#panel1b">Map</a>
+                            <a class="accordion-nav" href="#panel-map">Map</a>
 
-                            <div id="panel1" class="content">
+                            <div id="panel-map" class="content">
                                 {% leaflet_map "report-map" callback="window.map_init_basic" %}
                             </div>
                         </dd>
+                        
                         <dd class="accordion-navigation">
-                            {% if editor %}
-                                <button class="bt-edit">Edit</button>
-                            {% endif %}
-                            <a class="accordion-nav" href="#panel7">External links</a>
-
-                            <div id="panel7" class="content">
+                            {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
+                            <a class="accordion-nav" href="#panel-definition">Definition of SSF or related terms</a>
+                            
+                            <div id="panel-definition" class="content">
+                                <p>
+                                    E.G. artisanal, subsistence, semi-industrial, customary, coastal, traditional, indigenous, aboriginal, and tribal. Note that SSF refers mostly to the ‘harvesting/fishing’ activities. Feel free to indicate in Part VI, however, if there are specific definitions related to SSF in post-harvest. 
+                                </p>
                                 <table>
-                                    {% for external_link in external_links %}
-                                        <tr>
-                                            <td>{{ external_link.link_type }}</td>
-                                            <td>
-                                                <a
-                                                    href="{{ external_link.link_address }}"
-                                                    target="_blank"
-                                                >
-                                                    {{ external_link.link_address }}
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                    <tr>
+                                        <td><strong>Are SSF or related terms “legally” defined in the Constitution, Law, or Act?</strong></td>
+                                        <td>   
+                                            <strong>{{ capacity_need_instance.is_ssf_terms_legally_defined }}</strong><br>
+                                            {{ capacity_need_instance.ssf_terms_legally_defined }}
+                                        </td>
+                                        <td>{{ capacity_need_instance.ssf_terms_legally_defined_additional }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Is SSF (or related terms) captured/defined in other legal and policy documents?</strong></td>
+                                        <td>   
+                                            <strong class="remove-last-comma-space">
+                                                {% if capacity_need_instance.ssf_terms_policy_primary %}
+                                                    {{ capacity_need_instance.ssf_terms_policy_primary }}, 
+                                                {% endif %}
+                                                
+                                                {% if capacity_need_instance.ssf_terms_policy_regulation %}
+                                                    {{ capacity_need_instance.ssf_terms_policy_regulation }}, 
+                                                {% endif %}
+                                                
+                                                {% if capacity_need_instance.ssf_terms_policy_national %}
+                                                    {{ capacity_need_instance.ssf_terms_policy_national }}, 
+                                                {% endif %}
+                                                
+                                                {% if capacity_need_instance.ssf_terms_policy_none %}
+                                                    {{ capacity_need_instance.ssf_terms_policy_none }}, 
+                                                {% endif %}
+                                            </strong><br>
+                                            {{ capacity_need_instance.ssf_terms_policy_defined }}
+                                        </td>
+                                        <td>{{ capacity_need_instance.ssf_terms_policy_additional }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Is there any other “informal” way that SSF (or related terms) are referred to?</strong></td>
+                                        <td>   
+                                            <strong>{{ capacity_need_instance.is_ssf_terms_informal }}</strong><br>
+                                            {{ capacity_need_instance.ssf_terms_informal }}
+                                        </td>
+                                        <td>{{ capacity_need_instance.ssf_terms_informal_additional }}</td>
+                                    </tr>
                                 </table>
+
+
                                 {% if editor %}
-                                    <form action="{% url 'external-links' %}" method="post">
-                                        <h6>Please provide links to related material on the internet</h6>
-                                        {% csrf_token %}
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="alert">Please fill up all the fields</p>
+                                    
+                                    <div class="FormSet">
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">Are SSF or related terms “legally” defined in the Constitution, Law, or Act?</h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.is_ssf_terms_legally_defined == "Yes" %}     
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_legally_defined" data-show="true" value="Yes" checked>Yes</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_legally_defined" data-show="true" value="Yes">Yes</label>
+                                                {% endif %}
 
-                                        <div class="FormSet FormSetGrowable">
-                                            {{ external_links_form }}
-                                        </div>
-                                        <input
-                                            id="issf_core_id" type="hidden"
-                                            value="{{ core_instance.issf_core_id }}"
-                                            name="issf_core_id"
-                                        >
+                                                {% if capacity_need_instance.is_ssf_terms_legally_defined == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_legally_defined" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_legally_defined" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
 
-                                        <div class="button-bar">
-                                            <button class="medium radius submit bt-submit">Submit</button>
-                                        </div>
-                                    </form>
+                                            {% if capacity_need_instance.is_ssf_terms_legally_defined == "Yes" %}     
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>If yes, copy and paste the exact text(s) where SSF or related terms is mentioned:</span>
+                                                    <textarea rows="4" name="ssf_terms_legally_defined">{{ capacity_need_instance.ssf_terms_legally_defined }}</textarea>
+                                                </label>
+                                            </li>
+
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the exact provision(s) of the Constitution/Law/Act that supports your answer, and provide URL:</span>
+                                                    <input type="text" name="ssf_terms_legally_defined_additional" value="{{ capacity_need_instance.ssf_terms_legally_defined_additional }}">
+                                                </label>
+                                            </li>
+
+                                            {% else %}
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>If yes, copy and paste the exact text(s) where SSF or related terms is mentioned:</span>
+                                                    <textarea rows="4" name="ssf_terms_legally_defined">{{ capacity_need_instance.ssf_terms_legally_defined }}</textarea>
+                                                </label>
+                                            </li>
+                                            
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the exact provision(s) of the Constitution/Law/Act that supports your answer, and provide URL:</span>
+                                                    <input type="text" name="ssf_terms_legally_defined_additional" value="{{ capacity_need_instance.ssf_terms_legally_defined_additional }}">
+                                                </label>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">Is SSF (or related terms) captured/defined in other legal and policy documents? <br><span style="font-size:14px;">(Check all that apply)</span></h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.ssf_terms_policy_primary == "Primary fisheries legislation" %}     
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_primary" data-show="true" value="Primary fisheries legislation" checked>Primary fisheries legislation</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_primary" data-show="true" value="Primary fisheries legislation">Primary fisheries legislation</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.ssf_terms_policy_regulation == "Regulation, Decree, Ordinance" %}     
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_regulation" data-show="true" value="Regulation, Decree, Ordinance" checked>Regulation, Decree, Ordinance</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_regulation" data-show="true" value="Regulation, Decree, Ordinance">Regulation, Decree, Ordinance</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.ssf_terms_policy_national == "National fisheries policy" %}     
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_national" data-show="true" value="National fisheries policy" checked>National fisheries policy</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_national" data-show="true" value="National fisheries policy">National fisheries policy</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.ssf_terms_policy_none == "No" %}     
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_none" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_none" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>If yes to any of the above, copy and paste the text(s) used to refer to SSF:</span>
+                                                    <textarea rows="4" name="ssf_terms_policy_defined">{{ capacity_need_instance.ssf_terms_policy_defined }}</textarea>
+                                                </label>
+                                            </li>
+
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the document that supports your answer:</span>
+                                                    <input type="text" name="ssf_terms_policy_additional" value="{{ capacity_need_instance.ssf_terms_policy_additional }}" />
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">Is there any other “informal” way that SSF (or related terms) are referred to?</h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.is_ssf_terms_informal == "Yes" %}     
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_informal" data-show="true" value="Yes" checked>Yes</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_informal" data-show="true" value="Yes">Yes</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.is_ssf_terms_informal == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_informal" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="is_ssf_terms_informal" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
+
+                                            
+                                            {% if capacity_need_instance.is_ssf_terms_informal == "Yes" %}     
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>If yes, indicate how:</span>
+                                                    <textarea rows="4" name="ssf_terms_informal">{{ capacity_need_instance.ssf_terms_informal }}</textarea>
+                                                </label>
+                                            </li>
+
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the document that supports your answer:</span>
+                                                    <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" />
+                                                </label>
+                                            </li>
+                                            
+                                            {% else %}   
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>If yes, indicate how:</span>
+                                                    <textarea rows="4" name="ssf_terms_informal">{{ capacity_need_instance.ssf_terms_informal }}</textarea>
+                                                </label>
+                                            </li>
+
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the document that supports your answer:</span>
+                                                    <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" />
+                                                </label>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div> <!-- /FormSet -->
+
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+                                    
+                                    <div class="button-bar">
+                                        <button id="submit-definition-decoy" type="button" class="medium bt-submit" value="Submit">Submit</button>
+                                        <button class="medium bt-submit hide" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-key-principles-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        
+                        <dd class="accordion-navigation">
+                            {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
+                            <a class="accordion-nav" href="#panel-key-principles">Key principles - legislation and policy documents</a>
+                            
+                            <div id="panel-key-principles" class="content">
+                                <p>
+                                    Are the following principles mentioned/specified in the legislation and/or fisheries policy? 
+                                </p>
+                                
+                                <table class="table-bordered">
+                                    <thead>
+                                        <th>Principles</th>
+                                        <th>Legislation</th>
+                                        <th>Policy</th>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr>
+                                            <th>Human rights &amp; dignity</th>
+                                            <td>{{ capacity_need_instance.human_rights_legislation }}</td>
+                                            <td>{{ capacity_need_instance.human_rights_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Respect of cultures</th>
+                                            <td>{{ capacity_need_instance.respect_of_cultures_legislation }}</td>
+                                            <td>{{ capacity_need_instance.respect_of_cultures_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Non-discrimination</th>
+                                            <td>{{ capacity_need_instance.non_discrimination_legislation }}</td>
+                                            <td>{{ capacity_need_instance.non_discrimination_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Gender equality &amp; equity</th>
+                                            <td>{{ capacity_need_instance.gender_equality_legislation }}</td>
+                                            <td>{{ capacity_need_instance.gender_equality_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Equity &amp; equality</th>
+                                            <td>{{ capacity_need_instance.equity_equality_legislation }}</td>
+                                            <td>{{ capacity_need_instance.equity_equality_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Consultation &amp; participation</th>
+                                            <td>{{ capacity_need_instance.consultation_participation_legislation }}</td>
+                                            <td>{{ capacity_need_instance.consultation_participation_policy }}</td>                  
+                                            
+                                        <tr>
+                                            <th>Rule of law</th>
+                                            <td>{{ capacity_need_instance.rule_of_law_legislation }}</td>
+                                            <td>{{ capacity_need_instance.rule_of_law_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Transparency</th>
+                                            <td>{{ capacity_need_instance.transparency_legislation }}</td>
+                                            <td>{{ capacity_need_instance.transparency_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Accountability</th>
+                                            <td>{{ capacity_need_instance.accountability_legislation }}</td>
+                                            <td>{{ capacity_need_instance.accountability_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Economic, social &amp; environmental sustainability</th>
+                                            <td>{{ capacity_need_instance.economic_social_environmental_legislation }}</td>
+                                            <td>{{ capacity_need_instance.economic_social_environmental_policy }}</td>
+                                        </tr>                     
+                                            
+                                        <tr>
+                                            <th>Ecosystem approach to fisheries</th>
+                                            <td>{{ capacity_need_instance.ecosystem_approach_legislation }}</td>
+                                            <td>{{ capacity_need_instance.ecosystem_approach_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Social responsibility</th>
+                                            <td>{{ capacity_need_instance.social_responsibility_legislation }}</td>
+                                            <td>{{ capacity_need_instance.social_responsibility_policy }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Other principles relevant to SSF</th>
+                                            <td>{{ capacity_need_instance.other_principles_legislation }}</td>
+                                            <td>{{ capacity_need_instance.other_principles_policy }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                {% if editor %}
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="alert">Please fill up all the fields</p>
+                                    
+                                    <div class="FormSet">
+                                        <div class="form-section">
+                                            <h5>Human rights &amp; dignity</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.human_rights_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.human_rights_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.human_rights_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.human_rights_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.human_rights_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.human_rights_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="human_rights_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section -->
+
+
+                                        <div class="form-section">
+                                            <h5>Respect of cultures </h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.respect_of_cultures_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.respect_of_cultures_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.respect_of_cultures_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.respect_of_cultures_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.respect_of_cultures_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.respect_of_cultures_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="respect_of_cultures_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Non-discrimination</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.non_discrimination_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.non_discrimination_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.non_discrimination_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.non_discrimination_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.non_discrimination_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.non_discrimination_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="non_discrimination_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Gender equality &amp; equity</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.gender_equality_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.gender_equality_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.gender_equality_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.gender_equality_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.gender_equality_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.gender_equality_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="gender_equality_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Equity &amp; equality</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.equity_equality_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.equity_equality_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.equity_equality_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.equity_equality_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.equity_equality_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.equity_equality_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="equity_equality_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Consultation &amp; participation</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.consultation_participation_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.consultation_participation_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.consultation_participation_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.consultation_participation_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.consultation_participation_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.consultation_participation_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="consultation_participation_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Rule of law</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.rule_of_law_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.rule_of_law_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.rule_of_law_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.rule_of_law_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.rule_of_law_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.rule_of_law_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="rule_of_law_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Transparency</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.transparency_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.transparency_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.transparency_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.transparency_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.transparency_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.transparency_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="transparency_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Accountability</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.accountability_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.accountability_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.accountability_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.accountability_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.accountability_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.accountability_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="accountability_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Economic, social &amp; environmental sustainability </h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.economic_social_environmental_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.economic_social_environmental_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.economic_social_environmental_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.economic_social_environmental_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.economic_social_environmental_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.economic_social_environmental_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="economic_social_environmental_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Ecosystem approach to fisheries</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.ecosystem_approach_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.ecosystem_approach_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.ecosystem_approach_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.ecosystem_approach_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.ecosystem_approach_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.ecosystem_approach_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="ecosystem_approach_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Social responsibility</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.social_responsibility_legislation == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_legislation" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_legislation" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.social_responsibility_legislation == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_legislation" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_legislation" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.social_responsibility_legislation == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_legislation" value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_legislation" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    {% if capacity_need_instance.social_responsibility_policy == "Not Clear" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_policy" value="Not Clear" checked> Not Clear</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_policy" value="Not Clear"> Not Clear</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.social_responsibility_policy == "No" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_policy" value="No" checked> No</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_policy" value="No"> No</label>
+                                                    {% endif %}
+
+                                                    {% if capacity_need_instance.social_responsibility_policy == "Yes" %}     
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_policy"  value="Yes" checked> Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="social_responsibility_policy" value="Yes"> Yes</label>
+                                                    {% endif %}
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+
+
+                                        <div class="form-section">
+                                            <h5>Other principles relevant to SSF</h5>
+                                            <section>
+                                                <h6>Legislation</h6>
+                                                <div>
+                                                    <label class="governance-textarea">
+                                                        <input type="text" name="other_principles_legislation" value="{{ capacity_need_instance.other_principles_legislation }}" placeholder="Please Specify:">
+                                                    </label>
+                                                </div>
+                                            </section>
+
+                                            <section>
+                                                <h6>Policy</h6>
+                                                <div>
+                                                    <label class="governance-textarea">
+                                                        <input type="text" name="other_principles_policy" value="{{ capacity_need_instance.other_principles_policy }}" placeholder="Please Specify:">
+                                                    </label>
+                                                </div>
+                                            </section>
+                                        </div> <!-- /form-section-->
+                                    </div> <!-- /FormSet -->
+
+
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+                                    
+                                    <div class="button-bar">
+                                        <button class="medium bt-submit" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-definition-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
                                 {% endif %}
                             </div>
                         </dd>
                     </dl>
                 </div>
+
                 <div class="large-4 columns">
                     <div
                         class="fb-comments"
@@ -362,6 +1490,60 @@
                     </div>
                 {% endif %}
             </div>
+
+
+            <div id="all-form-fields" class="hide">
+                <div id="basic-form">
+                    {{ capacity_need_form.case_study_country }}
+                    {{ capacity_need_form.contributors_names }}
+                    {{ capacity_need_form.contributors_affiliations }}
+                    {{ capacity_need_form.contributor }}
+                </div> <!-- /basic-form -->
+
+                <div id="definition-form">
+                    {{ capacity_need_form.is_ssf_terms_legally_defined }}
+                    {{ capacity_need_form.ssf_terms_legally_defined }}
+                    {{ capacity_need_form.ssf_terms_legally_defined_additional }}
+                    {{ capacity_need_form.ssf_terms_policy_primary }}
+                    {{ capacity_need_form.ssf_terms_policy_regulation }}
+                    {{ capacity_need_form.ssf_terms_policy_national }}
+                    {{ capacity_need_form.ssf_terms_policy_none }}
+                    {{ capacity_need_form.ssf_terms_policy_defined }}
+                    {{ capacity_need_form.ssf_terms_policy_additional }}
+                    {{ capacity_need_form.is_ssf_terms_informal }}
+                    {{ capacity_need_form.ssf_terms_informal }}
+                    {{ capacity_need_form.ssf_terms_informal_additional }}
+                </div> <!-- /definition-form -->
+
+                <div id="key-principles-form">
+                    {{ capacity_need_form.human_rights_legislation }}
+                    {{ capacity_need_form.human_rights_policy }}
+                    {{ capacity_need_form.respect_of_cultures_legislation }}
+                    {{ capacity_need_form.respect_of_cultures_policy }}
+                    {{ capacity_need_form.non_discrimination_legislation }}
+                    {{ capacity_need_form.non_discrimination_policy }}
+                    {{ capacity_need_form.gender_equality_legislation }}
+                    {{ capacity_need_form.gender_equality_policy }}
+                    {{ capacity_need_form.equity_equality_legislation }}
+                    {{ capacity_need_form.equity_equality_policy }}
+                    {{ capacity_need_form.consultation_participation_legislation }}
+                    {{ capacity_need_form.consultation_participation_policy }}
+                    {{ capacity_need_form.rule_of_law_legislation }}
+                    {{ capacity_need_form.rule_of_law_policy }}
+                    {{ capacity_need_form.transparency_legislation }}
+                    {{ capacity_need_form.transparency_policy }}
+                    {{ capacity_need_form.accountability_legislation }}
+                    {{ capacity_need_form.accountability_policy }}
+                    {{ capacity_need_form.economic_social_environmental_legislation }}
+                    {{ capacity_need_form.economic_social_environmental_policy }}
+                    {{ capacity_need_form.ecosystem_approach_legislation }}
+                    {{ capacity_need_form.ecosystem_approach_policy }}
+                    {{ capacity_need_form.social_responsibility_policy }}
+                    {{ capacity_need_form.social_responsibility_legislation }}
+                    {{ capacity_need_form.other_principles_legislation }}
+                    {{ capacity_need_form.other_principles_policy }}
+                </div> <!-- /key-principles-form -->
+            </div> <!-- /all-form-fields -->
         </section>
     {% endautoescape %}
 {% endblock body %}
@@ -395,5 +1577,93 @@
         // This function handles all form errors; both field- and form-level.
         // It can be found in error-handling.js
         error_handler();
+
+
+
+
+        // Make the case study country selected by going through the options
+        $('#case-study-country option').each(function(){
+            if($.trim($(this).val()).toLowerCase() == $.trim($('#case-study-country').data('country')).toLowerCase()){
+                $(this).attr('selected','selected').siblings('option').removeAttr('selected');
+            }
+        });
+
+        // Fetch contributors name and affiliation and set it in input fields
+        let contributorsNames = $('#panel-basic #contributors-names').val().split(", ");
+        let contributorsAffiliations = $('#panel-basic #contributors-affiliations').val().split(", ");
+        let contributorsTemplate = "";
+        for(let i=0; i<contributorsNames.length; i++){
+            contributorsTemplate = "<div class='governance-fieldset'><label><span>Contributor Name <sup>*</sup></span><input type='text' class='contributors-names' required value='" + contributorsNames[i] + "'></label><label><span>Contributor Affiliation <sup>*</sup></span><input type='text' class='contributors-affiliations' required value='" + contributorsAffiliations[i] + "'></label>";
+
+            if(i == 0) { contributorsTemplate = contributorsTemplate + "<br></div>"; }
+            else { 
+                contributorsTemplate = contributorsTemplate + "<span class='remove-fieldset'>-</span><br></div>"; 
+                removeGovernanceFieldset();
+            }
+            $(contributorsTemplate).insertBefore('#panel-basic #add-more-contributors');
+        }
+
+        // Add more contributors for ssf governance when user clicks on "add more contributors" button
+        $('#panel-basic #add-more-contributors').on('click',function(){
+            $("<div class='governance-fieldset'><label><span>Contributor Name <sup>*</sup></span><input type='text' class='contributors-names' required></label><label><span>Contributor Affiliation <sup>*</sup></span><input type='text' class='contributors-affiliations' required></label><span class='remove-fieldset'>-</span><br></div>").insertBefore('#panel-basic #add-more-contributors');
+        removeGovernanceFieldset();
+        });
+        
+        // Remove fieldset
+        removeGovernanceFieldset();
+        function removeGovernanceFieldset(){
+            $('#panel-basic .remove-fieldset').on('click',function(){
+                $(this).closest('.governance-fieldset').remove();
+            });
+        }
+
+        // Submit governance form
+        contributorsNames = "";
+        contributorsAffiliations = "";
+        $('#submit-basic-decoy').on('click',function(){
+            $('#panel-basic .contributors-names').each(function(){
+                contributorsNames = contributorsNames + $(this).val() + ", ";
+            });
+            $('#panel-basic .contributors-affiliations').each(function(){
+                contributorsAffiliations = contributorsAffiliations + $(this).val() + ", ";
+            });
+            contributorsNames = contributorsNames.slice(0,-2);
+            contributorsAffiliations = contributorsAffiliations.slice(0,-2);
+            $('#panel-basic #contributors-names').val(contributorsNames);
+            $('#panel-basic #contributors-affiliations').val(contributorsAffiliations);
+            contributorsNames = "";
+            contributorsAffiliations = "";
+            $(this).siblings('.bt-submit').trigger('click');
+        });
+
+
+        // Show fields based on radio/checkbox input
+        $('.governance-ticks input').on('click',function(){
+            let $this = $(this);
+            if($this.data('show') == true) {
+                $this.closest('li').siblings('.governance-ticks-true').removeClass('hide');
+            }
+            else {
+                $this.closest('li').siblings('.governance-ticks-true').addClass('hide');
+            }
+        });
+
+
+        // Submit definition form 
+        $('#submit-definition-decoy').on('click',function(){
+            let definitionDecoy = $('#submit-definition-decoy');
+            $('#panel-definition .governance-ticks-true').each(function(){
+                if($(this).hasClass('hide')){
+                    $(this).find('input, textarea').val('');
+                }
+            });
+            definitionDecoy.siblings('.bt-submit').trigger('click');
+        });
+
+
+        // Load data of one forms to the others
+        $('.load-basic-form').html($('#basic-form').html());
+        $('.load-definition-form').html($('#definition-form').html());
+        $('.load-key-principles-form').html($('#key-principles-form').html());
     </script>
 {% endblock additional_js_scripts %}

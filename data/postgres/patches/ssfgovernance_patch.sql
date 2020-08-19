@@ -1,1 +1,93 @@
 
+-- UPDATE public.ssf_capacity_need SET core_record_type = 'SSF Governance';
+
+
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN case_study_country varchar(256) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN contributors_names text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN contributors_affiliations text NULL;
+
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN is_ssf_terms_legally_defined varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_legally_defined text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_legally_defined_additional text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_policy_primary varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_policy_regulation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_policy_national varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_policy_none varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_policy_defined text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_policy_additional text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN is_ssf_terms_informal varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_informal text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_terms_informal_additional text NULL;
+
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN human_rights_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN human_rights_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN respect_of_cultures_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN respect_of_cultures_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN non_discrimination_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN non_discrimination_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN gender_equality_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN gender_equality_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN equity_equality_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN equity_equality_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN consultation_participation_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN consultation_participation_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN rule_of_law_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN rule_of_law_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN transparency_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN transparency_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN accountability_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN accountability_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN economic_social_environmental_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN economic_social_environmental_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ecosystem_approach_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ecosystem_approach_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN social_responsibility_policy varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN social_responsibility_legislation varchar(50) NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN other_principles_legislation text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN other_principles_policy text NULL;
+
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN ssf_country_specific_info text NULL;
+-- ALTER TABLE public.ssf_capacity_need
+-- 	ADD COLUMN legal_and_policy_framework text NULL;

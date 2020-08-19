@@ -228,18 +228,34 @@ class SSFCapacityNeedForm(ModelForm):
 
     class Meta:
         model = SSFCapacityNeed
-        fields = ['capacity_need_category', 'capacity_need_type',
-                  'capacity_need_title', 'capacity_need_description',
-                  'contributor', ]
+        # fields = ['capacity_need_category', 'capacity_need_type',
+        #           'capacity_need_title', 'capacity_need_description',
+        #           'contributor' ]
+
+        fields = [ 
+            'case_study_country', 'contributors_names', 'contributors_affiliations', 'contributor', 
+            'is_ssf_terms_legally_defined', 'ssf_terms_legally_defined', 'ssf_terms_legally_defined_additional', 
+            'ssf_terms_policy_primary', 'ssf_terms_policy_regulation', 'ssf_terms_policy_national', 'ssf_terms_policy_none', 
+            'ssf_terms_policy_defined', 'ssf_terms_policy_additional', 'is_ssf_terms_informal', 'ssf_terms_informal', 
+            'ssf_terms_informal_additional', 'human_rights_legislation', 'human_rights_policy', 'respect_of_cultures_legislation', 
+            'respect_of_cultures_policy', 'non_discrimination_legislation', 'non_discrimination_policy', 
+            'gender_equality_legislation', 'gender_equality_policy', 'equity_equality_legislation', 'equity_equality_policy', 
+            'consultation_participation_legislation', 'consultation_participation_policy', 'rule_of_law_legislation', 
+            'rule_of_law_policy', 'transparency_legislation', 'transparency_policy', 'accountability_legislation', 
+            'accountability_policy', 'economic_social_environmental_legislation', 'economic_social_environmental_policy', 
+            'ecosystem_approach_legislation', 'ecosystem_approach_policy', 'social_responsibility_policy', 
+            'social_responsibility_legislation', 'other_principles_legislation', 'other_principles_policy', 
+            'ssf_country_specific_info', 'legal_and_policy_framework'
+        ]
+        
         labels = {
-            'capacity_need_category': 'Category',
-            'capacity_need_type': 'Type',
-            'capacity_need_title': 'Short title',
-            'capacity_need_description': 'Description',
-            'contributor': '8Contributor (note: this is the only person, other than ISSF staff, '
+            'case_study_country': 'Case Study Country',
+            'contributors_names': 'Contributors Names',
+            'contributors_affiliations': 'Contributors Affiliations',
+            'contributor': 'Contributor (note: this is the only person, other than ISSF staff, '
                            'who can edit the record)'
         }
-        widgets = {'capacity_need_description': forms.Textarea(attrs={'rows': 3})}
+        # widgets = {'capacity_need_description': forms.Textarea(attrs={'rows': 3})}
 
     def clean(self) -> Dict[str, Any]:
         """

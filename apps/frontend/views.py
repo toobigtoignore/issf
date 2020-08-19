@@ -406,7 +406,7 @@ def table_data_export(request: HttpRequest) -> HttpResponse:
             type = record[0]
             issf_core_id = record[1]
 
-            if type == 'Capacity Development':
+            if type == 'SSF Governance':
                 cap_items.append(issf_core_id)
             elif type == 'SSF Guidelines':
                 guide_items.append(issf_core_id)
@@ -923,10 +923,10 @@ def convert_records(records: Iterable[Model]) -> List[Model]:
             record['url'] = 'casestudy'
             record['title'] = SSFCaseStudies.objects.get(issf_core_id=record['issf_core_id'])
             record['record_type'] = 'Case Study'
-        elif type == "Capacity Development":
+        elif type == "SSF Governance":
             record['url'] = 'capacity'
             record['title'] = SSFCapacityNeed.objects.get(issf_core_id=record['issf_core_id'])
-            record['record_type'] = 'Capacity Development'
+            record['record_type'] = 'SSF Governance'
         elif type == "SSF Experiences":
             record['url'] = 'experiences'
             record['title'] = SSFExperiences.objects.get(issf_core_id=record['issf_core_id'])

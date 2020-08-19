@@ -414,7 +414,7 @@ def capacity_details(request: HttpRequest, issf_core_id: int) -> HttpResponse:
         who_page = None
 
     # ensure record is of type capacity
-    if "Capacity Development" in capacity_need_instance.core_record_type:
+    if "SSF Governance" in capacity_need_instance.core_record_type:
         return render(
             request,
             "details/ssfcapacity_details.html",
@@ -850,7 +850,7 @@ def save_basic(request: HttpRequest, model_class: Model, form_class: ModelForm) 
                 if not existing and not instance.core_record_type == 'Who\'s Who in SSF' and not tweet_disabled and TWITTER_AUTHENTICATED:
                     # Get the record name to be used for the tweet and truncate it to 20 characters
                     name = ''
-                    if instance.core_record_type == 'Capacity Development':
+                    if instance.core_record_type == 'SSF Governance':
                         name = instance.capacity_need_title
                     elif instance.core_record_type == 'SSF Profile':
                         name = instance.ssf_name
@@ -917,7 +917,7 @@ def update_tsvector_summary(core_record_type: str, issf_core_id: str) -> None:
     elif core_record_type == "SSF Organization":
         cursor.execute('SELECT * FROM organization_tsvector_update(' + issf_core_id + ')')
         cursor.execute('SELECT * FROM organization_summary_update(' + issf_core_id + ')')
-    elif core_record_type == "Capacity Development":
+    elif core_record_type == "SSF Governance":
         cursor.execute('SELECT * FROM capacity_need_tsvector_update(' + issf_core_id + ')')
         cursor.execute('SELECT * FROM capacity_need_summary_update(' + issf_core_id + ')')
     elif core_record_type == "SSF Profile":

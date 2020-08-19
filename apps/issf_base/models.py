@@ -547,7 +547,7 @@ class SSFCapacityNeed(models.Model):
     contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     edited_date = models.DateField(auto_now=True)
     editor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor+', on_delete=models.CASCADE)
-    core_record_type = models.TextField(default='Capacity Development')
+    core_record_type = models.TextField(default='SSF Governance')
     geographic_scope_type = models.CharField(max_length=100, default='Local')
 
     # model-specific fields
@@ -557,14 +557,65 @@ class SSFCapacityNeed(models.Model):
         ('Social/Cultural', 'Social/Cultural'),
         ('Governance', 'Governance')
     )
-    capacity_need_category = models.CharField(max_length=50, choices=CAPACITY_NEED_CATEGORY)
+    capacity_need_category = models.CharField(max_length=50, choices=CAPACITY_NEED_CATEGORY, blank=True)
     CAPACITY_NEED_TYPE = (
         ('Existing', 'Existing'),
         ('Need', 'Need')
     )
-    capacity_need_type = models.CharField(max_length=50, choices=CAPACITY_NEED_TYPE)
-    capacity_need_title = models.CharField(max_length=50)
-    capacity_need_description = models.TextField()
+    capacity_need_type = models.CharField(max_length=50, choices=CAPACITY_NEED_TYPE, blank=True)
+    capacity_need_title = models.CharField(max_length=50, blank=True)
+    capacity_need_description = models.TextField(blank=True)
+
+
+    # SSF Governance fields
+    case_study_country = models.CharField(max_length=256, blank=True)
+    contributors_names = models.TextField(blank=True)
+    contributors_affiliations = models.TextField(blank=True)
+
+    is_ssf_terms_legally_defined = models.CharField(max_length=50, blank=True)
+    ssf_terms_legally_defined = models.TextField(blank=True)
+    ssf_terms_legally_defined_additional = models.TextField(blank=True)
+    ssf_terms_policy_primary = models.CharField(max_length=50, blank=True)
+    ssf_terms_policy_regulation = models.CharField(max_length=50, blank=True)
+    ssf_terms_policy_national = models.CharField(max_length=50, blank=True)
+    ssf_terms_policy_none = models.CharField(max_length=50, blank=True)
+    ssf_terms_policy_defined = models.TextField(blank=True)
+    ssf_terms_policy_additional = models.TextField(blank=True)
+    is_ssf_terms_informal = models.CharField(max_length=50, blank=True)
+    ssf_terms_informal = models.TextField(blank=True)
+    ssf_terms_informal_additional = models.TextField(blank=True)
+
+    human_rights_legislation = models.CharField(max_length=50, blank=True)
+    human_rights_policy = models.CharField(max_length=50, blank=True)
+    respect_of_cultures_legislation = models.CharField(max_length=50, blank=True)
+    respect_of_cultures_policy = models.CharField(max_length=50, blank=True)
+    non_discrimination_legislation = models.CharField(max_length=50, blank=True)
+    non_discrimination_policy = models.CharField(max_length=50, blank=True)
+    gender_equality_legislation = models.CharField(max_length=50, blank=True)
+    gender_equality_policy = models.CharField(max_length=50, blank=True)
+    equity_equality_legislation = models.CharField(max_length=50, blank=True)
+    equity_equality_policy = models.CharField(max_length=50, blank=True)
+    consultation_participation_legislation = models.CharField(max_length=50, blank=True)
+    consultation_participation_policy = models.CharField(max_length=50, blank=True)
+    rule_of_law_legislation = models.CharField(max_length=50, blank=True)
+    rule_of_law_policy = models.CharField(max_length=50, blank=True)
+    transparency_legislation = models.CharField(max_length=50, blank=True)
+    transparency_policy = models.CharField(max_length=50, blank=True)
+    accountability_legislation = models.CharField(max_length=50, blank=True)
+    accountability_policy = models.CharField(max_length=50, blank=True)
+    economic_social_environmental_legislation = models.CharField(max_length=50, blank=True)
+    economic_social_environmental_policy = models.CharField(max_length=50, blank=True)
+    ecosystem_approach_legislation = models.CharField(max_length=50, blank=True)
+    ecosystem_approach_policy = models.CharField(max_length=50, blank=True)
+    social_responsibility_policy = models.CharField(max_length=50, blank=True)
+    social_responsibility_legislation = models.CharField(max_length=50, blank=True)
+    other_principles_legislation = models.TextField(blank=True)    
+    other_principles_policy = models.TextField(blank=True)
+
+    ssf_country_specific_info = models.TextField(blank=True)
+    legal_and_policy_framework = models.TextField(blank=True)
+
+
 
     class Meta:
         managed = False
