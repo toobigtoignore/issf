@@ -1,5 +1,5 @@
 -- UPDATE public.ssf_capacity_need SET core_record_type = 'SSF Governance';
--- UPDATE public.ssf_capacity_need set core_record_summary = concat('<strong> Case Study Country: </strong>', case_study_country, '<br><strong> Contributors Names: </strong>', contributors_names, '<br><strong> Contributors Affiliations: </strong>', contributors_affiliations);
+UPDATE public.ssf_capacity_need set core_record_summary = concat('<strong> Case Study Country: </strong>', case_study_country, '<br><strong> Contributors Names: </strong>', contributors_names, '<br><strong> Contributors Affiliations: </strong>', contributors_affiliations);
 
 
 -- ALTER TABLE public.ssf_capacity_need
@@ -262,5 +262,3 @@
 -- 	ADD COLUMN ssf_country_specific_info text NULL;
 -- ALTER TABLE public.ssf_capacity_need
 -- 	ADD COLUMN legal_and_policy_framework text NULL;
-
-DELETE FROM public.ssf_capacity_need WHERE issf_core_id = '1665' OR issf_core_id = '1666' OR issf_core_id = '1667' OR issf_core_id = '1668' OR issf_core_id = '1669' OR issf_core_id = '4042';
