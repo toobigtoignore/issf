@@ -264,6 +264,11 @@ label textarea {
     width: calc(100% - 230px);
 }
 
+#contribute-panel-right dl h5 {
+    text-align: center;
+    color: white;
+}
+
 footer {
     float: left;
     width: 100%;
