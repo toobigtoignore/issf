@@ -47,7 +47,8 @@ textarea {
     resize: vertical;
 }
 
-label input {
+label input,
+label textarea {
     font-weight: normal;
 }
 
@@ -2081,32 +2082,6 @@ form sup {
     color: #fff;
 }
 
-.governance-fieldset {
-    position: relative;
-}
-
-.governance-fieldset label {
-    margin-bottom: 8px;
-    display: block;
-}
-
-.governance-fieldset .remove-fieldset {
-    position: absolute;
-    right: 0px;
-    top: 21px;
-    background: #e3e3e3;
-    height: 101px;
-    width: 55px;
-    text-align: center;
-    font-size: 60px;
-    border: 1px solid black;
-    cursor: pointer;
-}
-
-.governance-fieldset .remove-fieldset:hover {
-    background: #d3d3d3;
-}
-
 nav .tabs .tab-title {
     width: 100%;
     margin: 2px 0 0;
@@ -2440,6 +2415,9 @@ nav .tabs .active a[tabindex="11"] span {
 .content-section h5 {
     font-size: 1rem;
     margin: 0.2rem 0;
+}
+
+#contribute-panel-right .content-section h5 {
     text-align: center;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0,0,0,.4);
@@ -2453,9 +2431,11 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 .content-section .alert {
-    font-size: 0.875rem;
+    font-size: 15px;
     color: #bf273b;
     margin: 0 0 .5rem;
+    font-weight: bold;
+    padding: 5px 8px !important;
 }
 
 #content-contribute .tabs-content > .content {
@@ -3531,6 +3511,104 @@ table p {
     width: 100%;
     margin-bottom: 12px;
     cursor: default;
+}
+
+
+
+
+/* CAPACITY/GOVERNANCE LAYER SPECIFIC CSS */
+.governance-fieldset {
+    position: relative;
+}
+
+.governance-fieldset label {
+    margin-bottom: 8px;
+    display: block;
+}
+
+.governance-fieldset .remove-fieldset {
+    position: absolute;
+    right: 0px;
+    top: 21px;
+    background: #e3e3e3;
+    height: 101px;
+    width: 55px;
+    text-align: center;
+    font-size: 60px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.governance-fieldset .remove-fieldset:hover {
+    background: #d3d3d3;
+}
+
+#content-governance .governance-ticks {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+#content-governance .governance-ticks input[type="radio"],
+#content-governance .governance-ticks input[type="checkbox"] {
+    float: left;
+    width: 18px;
+    height: 19px;
+    cursor: pointer;
+    margin-top: 1px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    
+}
+
+#content-governance .governance-textarea {
+    font-size: 15px;
+}
+
+#content-governance .FormSet li {
+    margin-top: 22px;
+}
+
+#panel-key-principles .form-section {
+    float: left;
+    margin-bottom: 25px;
+}
+
+#panel-key-principles .form-section h5 {
+    background: #f2f2f2;
+    border: 1px solid #e3e3e3;
+    padding: 5px 15px;
+    margin-top: 0;
+    margin-bottom: 0px;
+}
+
+#panel-key-principles .form-section section {
+    float: left;
+    width: 100%;
+    border: 1px solid #e3e3e3;
+    border-top: none;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
+#panel-key-principles .form-section section h6 {
+    float: left;
+    width: 120px;
+    box-sizing: border-box;
+    padding-left: 15px;
+    font-size:  15px;
+}
+
+#panel-key-principles .form-section section div {
+    float: right;
+    width: calc(100% - 130px);
+    box-sizing: border-box;
+    padding-right: 15px;
+}
+
+#panel-key-principles .form-section .governance-ticks {
+    float: right;
+    margin-right: 25px;
 }
 
 
