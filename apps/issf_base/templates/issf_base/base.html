@@ -319,6 +319,13 @@
                     $(this).find('sup').first().text(' *').show().siblings().hide();
                 });
             },10);
+
+
+            // Remove last comma from words separated by comma
+            // for example: a,b,c,d, -> remove the last comma after d
+            $('.remove-last-comma').each(function(){
+                $(this).text($.trim($(this).text()).slice(0,-1));
+            });
         </script>
     </body>
 </html>

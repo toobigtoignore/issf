@@ -47,6 +47,10 @@ textarea {
     resize: vertical;
 }
 
+label input {
+    font-weight: normal;
+}
+
 .hide {
     display: none;
 }
@@ -947,7 +951,7 @@ footer {
     top: 12px;
 }
 
-.map-icons #who h3, .map-icons #sota h3, .map-icons #case h3, .map-icons #profile h3, .map-icons #capacity h3, .map-icons #guidelines h3, .map-icons #training h3, .map-icons #choropleth h3, .map-icons #all h3 {
+.map-icons #who h3, .map-icons #sota h3, .map-icons #case h3, .map-icons #profile h3, .map-icons #governance h3, .map-icons #guidelines h3, .map-icons #training h3, .map-icons #choropleth h3, .map-icons #all h3 {
     top: 4px;
 }
 
@@ -975,7 +979,7 @@ footer {
     color: #5e6b22;
 }
 
-.map-icons #capacity h3, .map-icons #capacity h4 {
+.map-icons #governance h3, .map-icons #governance h4 {
     color: #ca9174;
 }
 
@@ -1031,7 +1035,7 @@ footer {
     background-image: url(../img/icon-case.png);
 }
 
-.map-icons #capacity span {
+.map-icons #governance span {
     background-image: url(../img/icon-capacity.png);
 }
 
@@ -1089,7 +1093,7 @@ map-icons #expe span {
     background: #bcd745;
 }
 
-.map-icons #capacity.on {
+.map-icons #governance.on {
     background: #ca9174;
 }
 
@@ -1141,7 +1145,7 @@ map-icons #expe span {
     background-color: #bcd745;
 }
 
-.map-icons #capacity.on .pop {
+.map-icons #governance.on .pop {
     background-color: #ca9174;
 }
 
@@ -1196,7 +1200,7 @@ map-icons #expe span {
     border-right-color: #5e6b22;
 }
 
-.map-icons #capacity.on:hover:before {
+.map-icons #governance.on:hover:before {
     border-right-color: #5e3014;
 }
 
@@ -1240,7 +1244,7 @@ map-icons #expe span {
 }
 
 .map-icons.on #who.on h3, .map-icons.on #sota.on h3, .map-icons.on #profile.on h3,
-.map-icons.on #organize.on h3, .map-icons.on #case.on h3, .map-icons.on #capacity.on h3,
+.map-icons.on #organize.on h3, .map-icons.on #case.on h3, .map-icons.on #governance.on h3,
 .map-icons.on #expe.on h3,.map-icons.on #bluejustice.on h3, .map-icons.on #guidelines.on h3, .map-icons.on #project.on h3,
 .map-icons.on #training.on h3, .map-icons.on #choropleth.on h3, .map-icons.on #all.on h3 {
     background: none;
@@ -1891,9 +1895,6 @@ form sup {
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: 1px 1px 2px #515151;
-    -moz-box-shadow: 1px 1px 2px #515151;
-    box-shadow: 1px 1px 2px #515151;
 }
 
 .bt-detail:after {
@@ -1928,9 +1929,9 @@ form sup {
 }
 
 .bt-edit:hover {
-    -webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.4);
-    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,.4);
-    box-shadow: 1px 1px 2px rgba(0,0,0,.4);
+    -webkit-box-shadow: 0px 1px 2px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0px 1px 2px 2px rgba(0,0,0,.2);
+    box-shadow: 0px 1px 2px 2px rgba(0,0,0,.2);
 }
 
 .infobox .bt-edit {
@@ -1940,7 +1941,7 @@ form sup {
 
 .accordion-navigation .bt-edit {
     display: none;
-    top: 8px;
+    top: 7px;
     right: 46px;
     z-index: 99;
 }
@@ -2003,11 +2004,11 @@ form sup {
 #content-case .bt-edit:hover {
 }
 
-#content-capacity .page-title {
+#content-governance .page-title {
     background-position: 17px -300px;
 }
 
-#content-capacity .page-title, #content-capacity .mapbox, #content-capacity .accordion-navigation.active > a {
+#content-governance .page-title, #content-governance .mapbox, #content-governance .accordion-navigation.active > a {
     background-color: #ca9174;
 }
 
@@ -2078,6 +2079,32 @@ form sup {
 #contribute-title h1 {
     margin-left: 15px;
     color: #fff;
+}
+
+.governance-fieldset {
+    position: relative;
+}
+
+.governance-fieldset label {
+    margin-bottom: 8px;
+    display: block;
+}
+
+.governance-fieldset .remove-fieldset {
+    position: absolute;
+    right: 0px;
+    top: 21px;
+    background: #e3e3e3;
+    height: 101px;
+    width: 55px;
+    text-align: center;
+    font-size: 60px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.governance-fieldset .remove-fieldset:hover {
+    background: #d3d3d3;
 }
 
 nav .tabs .tab-title {
@@ -2158,15 +2185,21 @@ nav .tabs .tab-title h3 {
     font-size: 0.9rem;
     font-weight: normal;
     margin-left: 36px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     text-shadow: none;
 }
 
+nav .tabs .tab-title a:hover {
+    text-decoration: none;
+}
+
 nav .tabs .tab-title a[tabindex="0"] span {
-    background-position: -104px 0px;
+    background-position: -104px 4px;
 }
 
 nav .tabs .tab-title a[tabindex="1"] span {
-    background-position: -104px -52px;
+    background-position: -104px -45px;
 }
 
 nav .tabs .tab-title a[tabindex="2"] span {
@@ -2178,11 +2211,11 @@ nav .tabs .tab-title a[tabindex="3"] span {
 }
 
 nav .tabs .tab-title a[tabindex="4"] span {
-    background-position: -104px -208px;
+    background-position: -104px -205px;
 }
 
 nav .tabs .tab-title a[tabindex="5"] span {
-    background-position: -104px -260px;
+    background-position: -104px -261px;
 }
 
 nav .tabs .tab-title a[tabindex="6"] span {
@@ -2193,7 +2226,7 @@ nav .tabs .tab-title a[tabindex="6"] span {
 }
 
 nav .tabs .tab-title a[tabindex="7"] span {
-    background-position: -104px -364px;
+    background-position: -104px -360px;
 }
 
 nav .tabs .tab-title a[tabindex="8"] span {
@@ -2238,7 +2271,7 @@ nav .tabs .active #case {
     background-color: #bcd745;
 }
 
-nav .tabs .active #capacity {
+nav .tabs .active #governance {
     background-color: #ca9174;
 }
 
@@ -2299,7 +2332,7 @@ nav .tabs .active #case:after {
     border-left-color: #bcd745;
 }
 
-nav .tabs .active #capacity:after {
+nav .tabs .active #governance:after {
     border-left-color: #ca9174;
 }
 
@@ -2407,9 +2440,9 @@ nav .tabs .active a[tabindex="11"] span {
 .content-section h5 {
     font-size: 1rem;
     margin: 0.2rem 0;
-    /*text-align: center;
+    text-align: center;
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,.4);*/
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
 }
 
 .content-section h6 {
@@ -3159,7 +3192,7 @@ form ul {
     background-position: 18px -440px;
 }
 
-#content-capacity .page-title {
+#content-governance .page-title {
     background-position: 18px -550px;
 }
 

@@ -18,5 +18,5 @@ docker-compose exec -T db \
 docker-compose exec -T db \
 /bin/bash -c "psql -U postgres issf_prod -f /data/postgres/patches/fix_table_bluejustice.sql"
 
-
-
+docker-compose exec -T db \
+/bin/bash -c "psql -U postgres issf_prod -f /data/postgres/patches/ssfgovernance_patch.sql"

@@ -9,7 +9,7 @@ def get_redirectname(core_record_type: str) -> str:
         "State-of-the-Art in SSF Research": 'sota-details',
         "Who's Who in SSF": 'who-details',
         "SSF Organization": 'organization-details',
-        "Capacity Development": 'capacity-details',
+        "SSF Governance": 'capacity-details',
         "SSF Profile": 'profile-details',
         "SSF Guidelines": 'guidelines-details',
         "Case Study": 'case-studies-details',

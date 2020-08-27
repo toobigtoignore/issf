@@ -225,11 +225,11 @@
                                     </div>
                                 </a>
 
-                                <a id="capacity" tabindex="5">
-                                    <h3>Capacity Development</h3>
+                                <a id="governance" tabindex="5">
+                                    <h3>SSF Governance</h3>
                                     <span></span>
                                     <div class="pop">
-                                        <p>What capacity needs to be developed for small-scale fisheries</p>
+                                        <p>Unlocking legal and policy frameworks for Small-Scale Fisheries</p>
                                         <p><strong>No records.</strong></p>
                                     </div>
                                 </a>
@@ -700,7 +700,7 @@
                                                             <a href="{% url 'sota-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
                                                         </p>
 
-                                                    {% elif recent_contribution.core_record_type == "Capacity Development" %}
+                                                    {% elif recent_contribution.core_record_type == "SSF Governance" %}
                                                         <span class="icon cont-capacity"></span>
                                                         <p>
                                                             <a href="{% url 'capacity-details' recent_contribution.issf_core_id %}">{{ recent_contribution.core_record_summary }}</a>
@@ -790,10 +790,10 @@
                                                     {{ contribution.contribution_count }}
                                                 </p>
                                             
-                                            {% elif contribution.core_record_type == "Capacity Development" %}
+                                            {% elif contribution.core_record_type == "SSF Governance" %}
                                                 <span class="icon cont-capacity"></span>
                                                 <p>
-                                                    <strong>Capacity Developmet:</strong> 
+                                                    <strong>SSF Governance:</strong> 
                                                     {{ contribution.contribution_count }}
                                                 </p>
                                                 
@@ -4602,7 +4602,7 @@
                     "SSF Organization": L.icon(Object.assign(defaultIconProps, {
                         iconUrl: '{% static "img/icon-organizations.png" %}'
                     })),
-                    "Capacity Development": L.icon(Object.assign(defaultIconProps, {
+                    "SSF Governance": L.icon(Object.assign(defaultIconProps, {
                         iconUrl: '{% static "img/icon-capacity.png" %}'
                     })),
                     "SSF Profile": L.icon(Object.assign(defaultIconProps, {
