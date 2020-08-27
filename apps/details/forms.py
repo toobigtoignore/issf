@@ -245,7 +245,30 @@ class SSFCapacityNeedForm(ModelForm):
             'accountability_policy', 'economic_social_environmental_legislation', 'economic_social_environmental_policy', 
             'ecosystem_approach_legislation', 'ecosystem_approach_policy', 'social_responsibility_policy', 
             'social_responsibility_legislation', 'other_principles_legislation', 'other_principles_policy', 
-            'ssf_country_specific_info', 'legal_and_policy_framework'
+            'provision_tenure_name', 'provision_tenure_year', 'provision_tenure_defined', 'provision_tenure_additional', 
+            'provision_exclusive_name', 'provision_exclusive_year', 'provision_exclusive_defined', 
+            'provision_exclusive_additional', 'provision_registration_name', 'provision_registration_year', 
+            'provision_registration_defined', 'provision_registration_additional', 'provision_mcs_name', 'provision_mcs_year', 
+            'provision_mcs_defined', 'provision_mcs_additional', 'provision_social_name', 'provision_social_year', 
+            'provision_social_defined', 'provision_social_additional', 'provision_labour_name', 'provision_labour_year', 
+            'provision_labour_defined', 'provision_labour_additional', 'provision_capacity_name', 'provision_capacity_year', 
+            'provision_capacity_defined', 'provision_capacity_additional', 'provision_recognition_name', 
+            'provision_recognition_year', 'provision_recognition_defined', 'provision_recognition_additional', 
+            'provision_responsible_name', 'provision_responsible_year', 'provision_responsible_defined', 
+            'provision_responsible_additional', 'provision_legal_name', 'provision_legal_year', 'provision_legal_defined', 
+            'provision_legal_additional', 'provision_special_name', 'provision_special_year', 'provision_special_defined', 
+            'provision_special_additional', 'provision_protection_name', 'provision_protection_year', 
+            'provision_protection_defined', 'provision_protection_additional', 'legal_system', 'legal_system_additional', 
+            'fisheries_legislation_title', 'fisheries_legislation_year', 'fisheries_legislation_amendments', 
+            'fisheries_legislation_sources', 'national_policy_title', 'national_policy_year', 'national_policy_period_coverage', 
+            'national_policy_additional', 'national_governmental_authority_name', 'national_governmental_authority_sources', 
+            'national_governmental_type', 'national_governmental_type_explanation', 'national_governmental_support_document', 
+            'national_governmental_support_pages', 'specifical_in_ssfcharge', 'specifical_in_ssfcharge_sources', 
+            'communication_among_authority', 'communication_among_authority_example', 'communication_among_authority_additional', 
+            'communication_between_fishers', 'communication_between_fishers_example', 'communication_between_fishers_additional', 
+            'representation_required', 'representation_required_example', 'representation_required_additional', 
+            'participation_management', 'participation_management_example', 'participation_management_additional', 'holistic_form', 
+            'holistic_form_example', 'holistic_form_additional', 'ssf_country_specific_info', 'legal_and_policy_framework'
         ]
         
         labels = {

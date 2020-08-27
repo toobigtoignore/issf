@@ -41,7 +41,7 @@
 
                             <a class="accordion-nav" href="#panel-basic">Basic Information</a>
 
-                            <div id="panel-basic" class="content">
+                            <div id="panel-basic" class="content panel-content">
                                 <table>
                                     <tr>
                                         <td><strong>Case Study Country</strong></td>
@@ -315,7 +315,12 @@
 
                                     <!-- load missing fields from other info div -->
                                     <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-legal-form" style="display: none;"></div>
                                     <div class="load-key-principles-form" style="display: none;"></div>
+                                    <div class="load-specific-provision-form" style="display: none;"></div>
+                                    <div class="load-interaction-form" style="display: none;"></div>
+                                    <div class="load-specific-information-form" style="display: none;"></div>
+                                    <div class="load-about-team-form" style="display: none;"></div>
                                     <!-- end loading -->
                                 </form>
                                 {% endif %}
@@ -330,7 +335,7 @@
 
                             <a class="accordion-nav" href="#panel-geographic">Geographic scope</a>
 
-                            <div id="panel-geographic" class="content">
+                            <div id="panel-geographic" class="content panel-content">
                                 <table>
                                     {% if core_instance.geographic_scope_type == 'Regional' %}
                                         {% for gsregion in geographic_scope_region %}
@@ -453,19 +458,21 @@
                             </div>
                         </dd>
                         
+                        
                         <dd class="accordion-navigation">
                             <a class="accordion-nav" href="#panel-map">Map</a>
 
-                            <div id="panel-map" class="content">
+                            <div id="panel-map" class="content panel-content">
                                 {% leaflet_map "report-map" callback="window.map_init_basic" %}
                             </div>
                         </dd>
+                        
                         
                         <dd class="accordion-navigation">
                             {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
                             <a class="accordion-nav" href="#panel-definition">Definition of SSF or related terms</a>
                             
-                            <div id="panel-definition" class="content">
+                            <div id="panel-definition" class="content panel-content">
                                 <p>
                                     E.G. artisanal, subsistence, semi-industrial, customary, coastal, traditional, indigenous, aboriginal, and tribal. Note that SSF refers mostly to the ‘harvesting/fishing’ activities. Feel free to indicate in Part VI, however, if there are specific definitions related to SSF in post-harvest. 
                                 </p>
@@ -474,7 +481,7 @@
                                         <td><strong>Are SSF or related terms “legally” defined in the Constitution, Law, or Act?</strong></td>
                                         <td>   
                                             <strong>{{ capacity_need_instance.is_ssf_terms_legally_defined }}</strong><br>
-                                            {{ capacity_need_instance.ssf_terms_legally_defined }}
+                                            {{ capacity_need_instance.ssf_terms_legally_defined | linebreaksbr }}
                                         </td>
                                         <td>{{ capacity_need_instance.ssf_terms_legally_defined_additional }}</td>
                                     </tr>
@@ -482,7 +489,7 @@
                                     <tr>
                                         <td><strong>Is SSF (or related terms) captured/defined in other legal and policy documents?</strong></td>
                                         <td>   
-                                            <strong class="remove-last-comma-space">
+                                            <strong class="remove-last-comma">
                                                 {% if capacity_need_instance.ssf_terms_policy_primary %}
                                                     {{ capacity_need_instance.ssf_terms_policy_primary }}, 
                                                 {% endif %}
@@ -499,7 +506,7 @@
                                                     {{ capacity_need_instance.ssf_terms_policy_none }}, 
                                                 {% endif %}
                                             </strong><br>
-                                            {{ capacity_need_instance.ssf_terms_policy_defined }}
+                                            {{ capacity_need_instance.ssf_terms_policy_defined | linebreaksbr }}
                                         </td>
                                         <td>{{ capacity_need_instance.ssf_terms_policy_additional }}</td>
                                     </tr>
@@ -508,7 +515,7 @@
                                         <td><strong>Is there any other “informal” way that SSF (or related terms) are referred to?</strong></td>
                                         <td>   
                                             <strong>{{ capacity_need_instance.is_ssf_terms_informal }}</strong><br>
-                                            {{ capacity_need_instance.ssf_terms_informal }}
+                                            {{ capacity_need_instance.ssf_terms_informal | linebreaksbr }}
                                         </td>
                                         <td>{{ capacity_need_instance.ssf_terms_informal_additional }}</td>
                                     </tr>
@@ -521,7 +528,7 @@
                                     <p class="alert">Please fill up all the fields</p>
                                     
                                     <div class="FormSet">
-                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">Are SSF or related terms “legally” defined in the Constitution, Law, or Act?</h5>
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">(1) Are SSF or related terms “legally” defined in the Constitution, Law, or Act?</h5>
                                         <ul>
                                             <li>
                                                 {% if capacity_need_instance.is_ssf_terms_legally_defined == "Yes" %}     
@@ -537,30 +544,29 @@
                                                 {% endif %}
                                             </li>
 
-                                            {% if capacity_need_instance.is_ssf_terms_legally_defined == "Yes" %}     
-                                            <li class="governance-ticks-true">
+                                            {% if capacity_need_instance.is_ssf_terms_legally_defined == "No" %}
+                                            <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>If yes, copy and paste the exact text(s) where SSF or related terms is mentioned:</span>
                                                     <textarea rows="4" name="ssf_terms_legally_defined">{{ capacity_need_instance.ssf_terms_legally_defined }}</textarea>
                                                 </label>
                                             </li>
 
-                                            <li class="governance-ticks-true">
+                                            <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>Please indicate the exact provision(s) of the Constitution/Law/Act that supports your answer, and provide URL:</span>
                                                     <input type="text" name="ssf_terms_legally_defined_additional" value="{{ capacity_need_instance.ssf_terms_legally_defined_additional }}">
                                                 </label>
                                             </li>
-
                                             {% else %}
-                                            <li class="governance-ticks-true hide">
+                                            <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>If yes, copy and paste the exact text(s) where SSF or related terms is mentioned:</span>
                                                     <textarea rows="4" name="ssf_terms_legally_defined">{{ capacity_need_instance.ssf_terms_legally_defined }}</textarea>
                                                 </label>
                                             </li>
-                                            
-                                            <li class="governance-ticks-true hide">
+
+                                            <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>Please indicate the exact provision(s) of the Constitution/Law/Act that supports your answer, and provide URL:</span>
                                                     <input type="text" name="ssf_terms_legally_defined_additional" value="{{ capacity_need_instance.ssf_terms_legally_defined_additional }}">
@@ -570,7 +576,7 @@
                                         </ul>
 
 
-                                        <h5 style="margin: 50px 0px 10px 6px;">Is SSF (or related terms) captured/defined in other legal and policy documents? <br><span style="font-size:14px;">(Check all that apply)</span></h5>
+                                        <h5 style="margin: 50px 0px 10px 6px;">(2) Is SSF (or related terms) captured/defined in other legal and policy documents? <br><span style="font-size:14px;">(Check all that apply)</span></h5>
                                         <ul>
                                             <li>
                                                 {% if capacity_need_instance.ssf_terms_policy_primary == "Primary fisheries legislation" %}     
@@ -598,6 +604,22 @@
                                                 {% endif %}
                                             </li>
 
+                                            {% if capacity_need_instance.ssf_terms_policy_none == "No" %}     
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>If yes to any of the above, copy and paste the text(s) used to refer to SSF:</span>
+                                                    <textarea rows="4" name="ssf_terms_policy_defined">{{ capacity_need_instance.ssf_terms_policy_defined }}</textarea>
+                                                </label>
+                                            </li>
+
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the document that supports your answer:</span>
+                                                    <input type="text" name="ssf_terms_policy_additional" value="{{ capacity_need_instance.ssf_terms_policy_additional }}" />
+                                                </label>
+                                            </li>
+
+                                            {% else %}
                                             <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>If yes to any of the above, copy and paste the text(s) used to refer to SSF:</span>
@@ -611,10 +633,11 @@
                                                     <input type="text" name="ssf_terms_policy_additional" value="{{ capacity_need_instance.ssf_terms_policy_additional }}" />
                                                 </label>
                                             </li>
+                                            {% endif %}
                                         </ul>
 
 
-                                        <h5 style="margin: 50px 0px 10px 6px;">Is there any other “informal” way that SSF (or related terms) are referred to?</h5>
+                                        <h5 style="margin: 50px 0px 10px 6px;">(3) Is there any other “informal” way that SSF (or related terms) are referred to?</h5>
                                         <ul>
                                             <li>
                                                 {% if capacity_need_instance.is_ssf_terms_informal == "Yes" %}     
@@ -630,23 +653,7 @@
                                                 {% endif %}
                                             </li>
 
-                                            
-                                            {% if capacity_need_instance.is_ssf_terms_informal == "Yes" %}     
-                                            <li class="governance-ticks-true">
-                                                <label class="governance-textarea">
-                                                    <span>If yes, indicate how:</span>
-                                                    <textarea rows="4" name="ssf_terms_informal">{{ capacity_need_instance.ssf_terms_informal }}</textarea>
-                                                </label>
-                                            </li>
-
-                                            <li class="governance-ticks-true">
-                                                <label class="governance-textarea">
-                                                    <span>Please indicate the document that supports your answer:</span>
-                                                    <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" />
-                                                </label>
-                                            </li>
-                                            
-                                            {% else %}   
+                                            {% if capacity_need_instance.is_ssf_terms_informal == "No" %}
                                             <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>If yes, indicate how:</span>
@@ -659,8 +666,23 @@
                                                     <span>Please indicate the document that supports your answer:</span>
                                                     <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" />
                                                 </label>
+                                            </li>    
+
+                                            {% else %}     
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>If yes, indicate how:</span>
+                                                    <textarea rows="4" name="ssf_terms_informal">{{ capacity_need_instance.ssf_terms_informal }}</textarea>
+                                                </label>
                                             </li>
-                                            {% endif %}
+
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the document that supports your answer:</span>
+                                                    <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" />
+                                                </label>
+                                            </li>                                   
+                                            {% endif %}                                     
                                         </ul>
                                     </div> <!-- /FormSet -->
 
@@ -671,25 +693,421 @@
                                     >
                                     
                                     <div class="button-bar">
-                                        <button id="submit-definition-decoy" type="button" class="medium bt-submit" value="Submit">Submit</button>
+                                        <button id="submit-definition-decoy" type="button" class="medium bt-submit submit-decoy" value="Submit">Submit</button>
                                         <button class="medium bt-submit hide" value="Submit">Submit</button>
                                     </div>
 
 
                                     <!-- load missing fields from other info div -->
                                     <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-legal-form" style="display: none;"></div>
                                     <div class="load-key-principles-form" style="display: none;"></div>
+                                    <div class="load-specific-provision-form" style="display: none;"></div>
+                                    <div class="load-interaction-form" style="display: none;"></div>
+                                    <div class="load-specific-information-form" style="display: none;"></div>
+                                    <div class="load-about-team-form" style="display: none;"></div>
                                     <!-- end loading -->
                                 </form>
                                 {% endif %}
                             </div>
                         </dd>
                         
+                        
+                        <dd class="accordion-navigation">
+                            {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
+                            <a class="accordion-nav" href="#panel-legal">Legal framework and institutional arrangement</a>
+                            
+                            <div id="panel-legal" class="content panel-content">
+                              <table>
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 300px;">What is the legal system in the country?</th>
+                                            <td>
+                                                {{ capacity_need_instance.legal_system_additional | linebreaksbr }}
+                                                {% if capacity_need_instance.legal_system %}
+                                                    <br><br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.legal_system }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>What is the main “fisheries legislation” in the country (e.g. Act, Law, Statute)?</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Full title of legislation:</strong> &nbsp; {{ capacity_need_instance.fisheries_legislation_title }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.fisheries_legislation_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Amendments:</strong> &nbsp; {{ capacity_need_instance.fisheries_legislation_amendments }}</p>
+
+                                                {% if capacity_need_instance.fisheries_legislation_sources %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.fisheries_legislation_sources | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>What is the main “national policy” for fisheries?</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Full title of policy:</strong> &nbsp; {{ capacity_need_instance.national_policy_title }}</p>
+                                                
+                                                <p style="margin-bottom: 0;"><strong>Year (adoption):</strong> &nbsp; {{ capacity_need_instance.national_policy_year }}</p>
+
+                                                <p style="margin-bottom: 0;"><strong>Period of coverage (if specified):</strong> &nbsp; {{ capacity_need_instance.national_policy_period_coverage }}</p>
+
+                                                {% if capacity_need_instance.national_policy_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.national_policy_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Which “national” governmental authority (e.g. Ministry, Agency, Secretary or any other institutional body) is primarily in charge of fisheries?</th>
+                                            <td>
+                                                {{ capacity_need_instance.national_governmental_authority_name }}
+                                                {% if capacity_need_instance.national_governmental_authority_sources %}
+                                                    <br><br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.national_governmental_authority_sources | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>What is the mandate of this national governmental authority? Note - mandate can be related to: <br>(a) Objectives (seeks to) <br>(b) Powers (ability to) <br>(c) Responsibilities (duty to)</th>
+                                            <td>
+                                                <p><strong>{{ capacity_need_instance.national_governmental_type }}</strong><br>
+                                                {% if capacity_need_instance.national_governmental_type != "No Clear Mandate" %}
+                                                    {{ capacity_need_instance.national_governmental_type_explanation | linebreaksbr }}
+                                                {% endif %}
+                                                </p>
+
+                                                {% if capacity_need_instance.national_governmental_support_document or capacity_need_instance.national_governmental_support_pages %}
+                                                    <strong>Additional information</strong><br>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.national_governmental_support_document %}
+                                                    <strong>The exact provision(s) of the legal/policy document that supports your answer.</strong>
+                                                    <p>{{ capacity_need_instance.national_governmental_support_document | linebreaksbr }}</p>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.national_governmental_support_pages %}
+                                                    <strong>Exact part(s) or page of the policy that supports your answer.</strong>
+                                                    <p>{{ capacity_need_instance.national_governmental_support_pages | linebreaksbr }}</p>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Is there a national and/or sub-national governmental authority specifically in charge of SSF?</th>
+                                            <td>
+                                                {{ capacity_need_instance.specifical_in_ssfcharge | linebreaksbr }}
+
+                                                {% if capacity_need_instance.specifical_in_ssfcharge_sources %}
+                                                    <br><br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.specifical_in_ssfcharge_sources | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                {% if editor %}
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="alert">Please fill up all the fields</p>
+                                    
+                                    <div class="FormSet">
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">(1) What is the legal system in the country?</h5>
+                                        <ul>
+                                            <li id="country-legal-system">
+                                                {% if capacity_need_instance.legal_system == "Common Law" %}     
+                                                <label class="governance-ticks"><input type="radio" name="legal_system" data-show="false" value="Common Law" checked>Common Law</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="legal_system" data-show="false" value="Common Law">Common Law</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.legal_system == "Civil Law" %}     
+                                                <label class="governance-ticks"><input type="radio" name="legal_system" data-show="false" value="Civil Law" checked>Civil Law</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="legal_system" data-show="false" value="Civil Law">Civil Law</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.legal_system == "Customary Law" %}     
+                                                <label class="governance-ticks"><input type="radio" name="legal_system" data-show="false" value="Customary Law" checked>Customary Law</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="legal_system" data-show="false" value="Customary Law">Customary Law</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.legal_system == "Common Law" or capacity_need_instance.legal_system == "Civil Law" or capacity_need_instance.legal_system == "Customary Law" or capacity_need_instance.legal_system == NULL %}
+                                                <label class="governance-ticks"><input type="radio" data-show="true" name="legal_system" value="Mixed Law Systems">Mixed Law Systems</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" data-show="true" name="legal_system" value="Mixed Law Systems" checked>Mixed Law Systems</label>
+                                                {% endif %}
+                                            </li>
+
+                                            {% if capacity_need_instance.legal_system == "Common Law" or capacity_need_instance.legal_system == "Civil Law" or capacity_need_instance.legal_system == "Customary Law" %} 
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Please Specify:</span>
+                                                    <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" />
+                                                </label>
+                                            </li>
+
+                                            {% elif capacity_need_instance.legal_system == NULL %} 
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Please Specify:</span>
+                                                    <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" />
+                                                </label>
+                                            </li>
+
+                                            {% else %}
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Please Specify:</span>
+                                                    <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" required />
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate any source (literature, policy, electronic website) where more detailed information can be found:</span>
+                                                    <textarea rows="4" name="legal_system_additional">{{ capacity_need_instance.legal_system_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(2) What is the main “fisheries legislation” in the country (e.g. Act, Law, Statute)?</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>A. Full title of legislation:</span>
+                                                    <input type="text" name="fisheries_legislation_title" value="{{ capacity_need_instance.fisheries_legislation_title }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>B. Year:</span>
+                                                    <input type="text" name="fisheries_legislation_year" value="{{ capacity_need_instance.fisheries_legislation_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>C. Amendments:</span>
+                                                    <input type="text" name="fisheries_legislation_amendments" value="{{ capacity_need_instance.fisheries_legislation_amendments }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate any source (literature, policy, electronic website) where more detailed information can be found:</span>
+                                                    <textarea rows="4" name="fisheries_legislation_sources">{{ capacity_need_instance.fisheries_legislation_sources }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(3) What is the main “national policy” for fisheries?</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>A. Full title of Policy:</span>
+                                                    <input type="text" name="national_policy_title" value="{{ capacity_need_instance.national_policy_title }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>B. Year (adoption):</span>
+                                                    <input type="text" name="national_policy_year" value="{{ capacity_need_instance.national_policy_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>C. Period of coverage (if specified):</span>
+                                                    <input type="text" name="national_policy_period_coverage" value="{{ capacity_need_instance.national_policy_period_coverage }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate any source (literature, policy, electronic website) where more detailed information can be found:</span>
+                                                    <textarea rows="4" name="national_policy_additional">{{ capacity_need_instance.national_policy_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(4) Which “national” governmental authority (e.g. Ministry, Agency, Secretary or any other institutional body) is primarily in charge of fisheries?</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Full name of the authority:</span>
+                                                    <input type="text" name="national_governmental_authority_name" value="{{ capacity_need_instance.national_governmental_authority_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate any source (literature, policy, electronic website) where more detailed information can be found:</span>
+                                                    <textarea rows="4" name="national_governmental_authority_sources">{{ capacity_need_instance.national_governmental_authority_sources }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(5) What is the mandate of this national governmental authority? Note - mandate can be related to: <br>(a) Objectives (seeks to) <br>(b) Powers (ability to) <br>(c) Responsibilities (duty to)</h5>
+                                        <ul id="defined-in-radios">
+                                            <li>
+                                                {% if capacity_need_instance.national_governmental_type == "Defined in legislation" %}     
+                                                <label class="governance-ticks"><input type="radio" name="national_governmental_type" data-show="true" value="Defined in legislation" checked>Defined in legislation</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="national_governmental_type" data-show="true" value="Defined in legislation">Defined in legislation</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.national_governmental_type == "Defined in fisheries policy" %}     
+                                                <label class="governance-ticks"><input type="radio" name="national_governmental_type" data-show="true" value="Defined in fisheries policy" checked>Defined in fisheries policy</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="national_governmental_type" data-show="true" value="Defined in fisheries policy">Defined in fisheries policy</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.national_governmental_type == "No Clear Mandate" %}     
+                                                <label class="governance-ticks"><input type="radio" name="national_governmental_type" data-show="false" value="No Clear Mandate" checked>No Clear Mandate</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="national_governmental_type" data-show="false" value="No Clear Mandate">No Clear Mandate</label>
+                                                {% endif %}  
+                                            </li>
+
+                                            {% if capacity_need_instance.national_governmental_type == "No Clear Mandate" or capacity_need_instance.national_governmental_type == NULL%}     
+                                            <li class="governance-ticks-true hide">
+                                                <label id="defined-in" class="governance-textarea">
+                                                    <span>Please Specify:</span>
+                                                    <textarea rows="4" name="national_governmental_type_explanation"></textarea>
+                                                </label>
+                                            </li>
+                                            {% else %}
+                                            <li class="governance-ticks-true">
+                                                <label id="defined-in" class="governance-textarea">
+                                                    {% if capacity_need_instance.national_governmental_type == "Defined in legislation" %} 
+                                                    <span>Defined in legislation, as follows:</span>
+                                                    {% elif capacity_need_instance.national_governmental_type == "Defined in fisheries policy" %}
+                                                    <span>Defined in fisheries policy, as follows:</span>
+                                                    {% endif %}
+                                                    <textarea rows="4" name="national_governmental_type_explanation">{{ capacity_need_instance.national_governmental_type_explanation }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer:</span>
+                                                    <input type="text" name="national_governmental_support_document" value="{{ capacity_need_instance.national_governmental_support_document }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate the exact part(s) or page of the policy that supports your answer:</span>
+                                                    <input type="text" name="national_governmental_support_pages" value="{{ capacity_need_instance.national_governmental_support_pages }}">
+                                                </label>
+                                            </li>
+                                        </ul>
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(6) Is there a national and/or sub-national governmental authority specifically in charge of SSF?</h5>
+                                        <ul>
+                                            <li id="specifical-in-ssfcharge">
+                                                {% if capacity_need_instance.specifical_in_ssfcharge != "No" %}
+                                                    {% if capacity_need_instance.specifical_in_ssfcharge == NULL %}     
+                                                    <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="" data-show="true">Yes</label>
+                                                    {% else %}
+                                                    <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="" data-show="true" checked>Yes</label>
+                                                    {% endif %}
+
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="" data-show="true">Yes</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.specifical_in_ssfcharge == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" data-show="false" value="No">No</label>
+                                                {% endif %}  
+                                            </li>
+
+                                            {% if capacity_need_instance.specifical_in_ssfcharge != "No" %}
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Indicate name and level of each authority (state, provincial, sub-regional, city, municipal, local):</span>
+                                                    {% if capacity_need_instance.specifical_in_ssfcharge == NULL %}
+                                                    <textarea rows="4" name="specifical_in_ssfcharge">{{ capacity_need_instance.specifical_in_ssfcharge }}</textarea>
+                                                    {% else %}
+                                                    <textarea rows="4" name="specifical_in_ssfcharge" required>{{ capacity_need_instance.specifical_in_ssfcharge }}</textarea>
+                                                    {% endif %}
+                                                </label>
+                                            </li>
+
+                                            {% else %}
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Indicate name and level of each authority (state, provincial, sub-regional, city, municipal, local):</span>
+                                                    <textarea rows="4" name="specifical_in_ssfcharge"></textarea>
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate any source (literature, policy, electronic website) where more detailed information can be found:</span>
+                                                    <textarea rows="4" name="specifical_in_ssfcharge_sources">{{ capacity_need_instance.specifical_in_ssfcharge_sources }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- /FormSet -->
+
+
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+                                    
+                                    <div class="button-bar">
+                                        <button class="medium bt-submit" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-key-principles-form" style="display: none;"></div>
+                                    <div class="load-specific-provision-form" style="display: none;"></div>
+                                    <div class="load-interaction-form" style="display: none;"></div>
+                                    <div class="load-specific-information-form" style="display: none;"></div>
+                                    <div class="load-about-team-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        
+                        
                         <dd class="accordion-navigation">
                             {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
                             <a class="accordion-nav" href="#panel-key-principles">Key principles - legislation and policy documents</a>
                             
-                            <div id="panel-key-principles" class="content">
+                            <div id="panel-key-principles" class="content panel-content">
                                 <p>
                                     Are the following principles mentioned/specified in the legislation and/or fisheries policy? 
                                 </p>
@@ -789,7 +1207,7 @@
                                     
                                     <div class="FormSet">
                                         <div class="form-section">
-                                            <h5>Human rights &amp; dignity</h5>
+                                            <h5>(1) Human rights &amp; dignity</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -839,7 +1257,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Respect of cultures </h5>
+                                            <h5>(2) Respect of cultures </h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -889,7 +1307,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Non-discrimination</h5>
+                                            <h5>(3) Non-discrimination</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -939,7 +1357,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Gender equality &amp; equity</h5>
+                                            <h5>(4) Gender equality &amp; equity</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -989,7 +1407,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Equity &amp; equality</h5>
+                                            <h5>(5) Equity &amp; equality</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1039,7 +1457,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Consultation &amp; participation</h5>
+                                            <h5>(6) Consultation &amp; participation</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1089,7 +1507,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Rule of law</h5>
+                                            <h5>(7) Rule of law</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1139,7 +1557,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Transparency</h5>
+                                            <h5>(8) Transparency</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1189,7 +1607,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Accountability</h5>
+                                            <h5>(9) Accountability</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1239,7 +1657,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Economic, social &amp; environmental sustainability </h5>
+                                            <h5>(10) Economic, social &amp; environmental sustainability </h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1289,7 +1707,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Ecosystem approach to fisheries</h5>
+                                            <h5>(11) Ecosystem approach to fisheries</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1339,7 +1757,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Social responsibility</h5>
+                                            <h5>(12) Social responsibility</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1389,7 +1807,7 @@
 
 
                                         <div class="form-section">
-                                            <h5>Other principles relevant to SSF</h5>
+                                            <h5>(13) Other principles relevant to SSF</h5>
                                             <section>
                                                 <h6>Legislation</h6>
                                                 <div>
@@ -1425,6 +1843,1136 @@
                                     <!-- load missing fields from other info div -->
                                     <div class="load-basic-form" style="display: none;"></div>
                                     <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-legal-form" style="display: none;"></div>
+                                    <div class="load-specific-provision-form" style="display: none;"></div>
+                                    <div class="load-interaction-form" style="display: none;"></div>
+                                    <div class="load-specific-information-form" style="display: none;"></div>
+                                    <div class="load-about-team-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        
+                        
+                        <dd class="accordion-navigation">
+                            {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
+                            <a class="accordion-nav" href="#panel-specific-provision">Specific provision and consideration for SSF</a>
+                            
+                            <div id="panel-specific-provision" class="content panel-content">
+                              <p>
+                                  Is there any legal and/or policy instrument related to the following topics, specifically for SSF? Note that this is not only about harvesting/fishing but also post-harvest activities. Indicate the “name” of the document where the provision can be found and provide details as appropriate. Include provision that is ‘relevant’ to SSF, even if it is not specific.
+                              </p>
+
+                              <table>
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 300px;">Tenure and related rights for SSF (to fisheries resources and to land). Include, when appropriate, customary rights and Indigenous rights.</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_tenure_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_tenure_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Specify how tenure is defined for SSF and/or what rights they have:</strong> &nbsp; {{ capacity_need_instance.provision_tenure_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_tenure_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_tenure_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Exclusive fishing area or priority access to fishery resources for SSF</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_exclusive_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_exclusive_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Specify whether it is inland, coastal, marine:</strong> &nbsp; {{ capacity_need_instance.provision_exclusive_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_exclusive_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_exclusive_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Registration requirements for SSF</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_registration_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_registration_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Specify type (general, vessel, gear, “professional” fishers):</strong> &nbsp; {{ capacity_need_instance.provision_registration_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_registration_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_registration_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>MCS measures and others aimed to deter, prevent and eliminate IUU applying to SSF</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_mcs_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_mcs_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_mcs_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_mcs_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_mcs_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Social development, employment and decent work for SSF along the value chain</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_social_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_social_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_social_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_social_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_social_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Labour rights or social benefits for SSF along the value chain (e.g. financial support during closed season, social security, access to health care, unemployment benefit, old age pension, etc.)</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_labour_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_labour_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_labour_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_labour_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_labour_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Capacity building program for SSF (e.g. provision of and access to education, training)</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_capacity_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_capacity_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_capacity_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_capacity_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_capacity_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Recognition of SSF as professional workers, along the value chain</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_recognition_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_recognition_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_recognition_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_recognition_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_recognition_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Responsible trade in fish and certification of fishery products from SSF, including sanitary and safety standards for domestic vs. export markets</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_responsible_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_responsible_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_responsible_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_responsible_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_responsible_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Legal protection of women in SSF, along the value chain</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_legal_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_legal_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_legal_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_legal_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_legal_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Special treatment to women in SSF (e.g. financial support during maternity leave)</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_special_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_special_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_special_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_special_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_special_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Protection of SSF from disaster risks/ climate change, and/or recognition of SSF vulnerability in disaster risk/climate change policies and strategies</th>
+                                            <td>
+                                                <p style="margin-bottom: 0;"><strong>Name:</strong> &nbsp; {{ capacity_need_instance.provision_protection_name }}</p>
+                                            
+                                                <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_protection_year }}</p>
+                                            
+                                                <p style="margin-bottom: 0;">{{ capacity_need_instance.provision_protection_defined }}</p>
+
+                                                {% if capacity_need_instance.provision_protection_additional %}
+                                                    <br><strong>Additional information</strong><br>
+                                                    {{ capacity_need_instance.provision_protection_additional | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                {% if editor %}
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="alert">Please fill up all the fields</p>
+                                    
+                                    <div class="FormSet">
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">(1) Tenure and related rights for SSF (to fisheries resources and to land). Include, when appropriate, customary rights and Indigenous rights.</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_tenure_name" value="{{ capacity_need_instance.provision_tenure_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_tenure_year" value="{{ capacity_need_instance.provision_tenure_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_tenure_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_tenure_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_tenure_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_tenure_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_tenure_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_tenure_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_tenure_additional">{{ capacity_need_instance.provision_tenure_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(2) Exclusive fishing area or priority access to fishery resources for SSF</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_exclusive_name" value="{{ capacity_need_instance.provision_exclusive_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_exclusive_year" value="{{ capacity_need_instance.provision_exclusive_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_exclusive_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_exclusive_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_exclusive_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_exclusive_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_exclusive_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_exclusive_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_exclusive_additional">{{ capacity_need_instance.provision_exclusive_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(3) Registration requirements for SSF</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="registration_exclusive_name" value="{{ capacity_need_instance.provision_registration_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_registration_year" value="{{ capacity_need_instance.provision_registration_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_registration_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_registration_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_registration_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_registration_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_registration_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_registration_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_registration_additional">{{ capacity_need_instance.provision_registration_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(4) MCS measures and others aimed to deter, prevent and eliminate IUU applying to SSF</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_mcs_name" value="{{ capacity_need_instance.provision_mcs_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_mcs_year" value="{{ capacity_need_instance.provision_mcs_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_mcs_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_mcs_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_mcs_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_mcs_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_mcs_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_mcs_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_mcs_additional">{{ capacity_need_instance.provision_mcs_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(5) Social development, employment and decent work for SSF along the value chain</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_social_name" value="{{ capacity_need_instance.provision_social_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_social_year" value="{{ capacity_need_instance.provision_social_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_social_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_social_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_social_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_social_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_social_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_social_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_social_additional">{{ capacity_need_instance.provision_social_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(6) Labour rights or social benefits for SSF along the value chain (e.g. financial support during closed season, social security, access to health care, unemployment benefit, old age pension, etc.)</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_labour_name" value="{{ capacity_need_instance.provision_labour_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_labour_year" value="{{ capacity_need_instance.provision_labour_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_labour_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_labour_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_labour_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_labour_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_labour_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_labour_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_labour_additional">{{ capacity_need_instance.provision_labour_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(7) Capacity building program for SSF (e.g. provision of and access to education, training)</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_capacity_name" value="{{ capacity_need_instance.provision_capacity_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_capacity_year" value="{{ capacity_need_instance.provision_capacity_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_capacity_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_capacity_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_capacity_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_capacity_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_capacity_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_capacity_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_capacity_additional">{{ capacity_need_instance.provision_capacity_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(8) Responsible trade in fish and certification of fishery products from SSF, including sanitary and safety standards for domestic vs. export markets</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_recognition_name" value="{{ capacity_need_instance.provision_recognition_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_recognition_year" value="{{ capacity_need_instance.provision_recognition_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_recognition_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_recognition_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_recognition_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_recognition_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_recognition_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_recognition_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_recognition_additional">{{ capacity_need_instance.provision_recognition_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(9) Responsible trade in fish and certification of fishery products from SSF, including sanitary and safety standards for domestic vs. export markets</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_responsible_name" value="{{ capacity_need_instance.provision_responsible_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_responsible_year" value="{{ capacity_need_instance.provision_responsible_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_responsible_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_responsible_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_responsible_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_responsible_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_responsible_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_responsible_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_responsible_additional">{{ capacity_need_instance.provision_responsible_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(10) Legal protection of women in SSF, along the value chain</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_legal_name" value="{{ capacity_need_instance.provision_legal_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_legal_year" value="{{ capacity_need_instance.provision_legal_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_legal_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_legal_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_legal_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_legal_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_legal_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_legal_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_legal_additional">{{ capacity_need_instance.provision_legal_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(11) Special treatment to women in SSF (e.g. financial support during maternity leave)</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_special_name" value="{{ capacity_need_instance.provision_special_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_special_year" value="{{ capacity_need_instance.provision_special_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_special_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_special_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_special_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_special_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_special_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_special_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_special_additional">{{ capacity_need_instance.provision_special_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(12) Protection of SSF from disaster risks/ climate change, and/or recognition of SSF vulnerability in disaster risk/climate change policies and strategies</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Name:</span>
+                                                    <input type="text" name="provision_protection_name" value="{{ capacity_need_instance.provision_protection_name }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Year:</span>
+                                                    <input type="text" name="provision_protection_year" value="{{ capacity_need_instance.provision_protection_year }}">
+                                                </label>
+                                            </li>
+
+                                            <li>
+                                                {% if capacity_need_instance.provision_protection_defined == "No specific provision for SSF" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_protection_defined" value="No specific provision for SSF" checked>No specific provision for SSF</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_protection_defined" value="No specific provision for SSF">No specific provision for SSF</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.provision_protection_defined == "Topic generally not considered" %}     
+                                                <label class="governance-ticks"><input type="radio" name="provision_protection_defined" value="Topic generally not considered" checked>Topic generally not considered</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="provision_protection_defined" value="Topic generally not considered">Topic generally not considered</label>
+                                                {% endif %}
+                                            </li>
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="provision_protection_additional">{{ capacity_need_instance.provision_protection_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- /FormSet -->
+
+
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+                                    
+                                    <div class="button-bar">
+                                        <button class="medium bt-submit" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-legal-form" style="display: none;"></div>
+                                    <div class="load-key-principles-form" style="display: none;"></div>
+                                    <div class="load-interaction-form" style="display: none;"></div>
+                                    <div class="load-specific-information-form" style="display: none;"></div>
+                                    <div class="load-about-team-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        
+                        
+                        <dd class="accordion-navigation">
+                            {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
+                            <a class="accordion-nav" href="#panel-interaction">Interaction and stakeholders participation</a>
+                            
+                            <div id="panel-interaction" class="content panel-content">
+                              <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Is there any mechanism (e.g. regular meetings, information sharing, reporting) to facilitate communication and interaction among governmental departments, agencies and authorities?</th>
+                                            <td>
+                                                {{ capacity_need_instance.communication_among_authority }}
+                                                {% if capacity_need_instance.communication_among_authority == "Yes" %}
+                                                    <br>{{ capacity_need_instance.communication_among_authority_example | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ capacity_need_instance.communication_among_authority_additional | linebreaksbr }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Is there any mechanism (e.g. regular meetings, information sharing, reporting) to facilitate communication and interaction between governmental departments, agencies and authorities and fishers’ organizations and groups</th>
+                                            <td>
+                                                {{ capacity_need_instance.communication_between_fishers }}
+                                                {% if capacity_need_instance.communication_between_fishers == "Yes" %}
+                                                    <br>{{ capacity_need_instance.communication_between_fishers_example | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ capacity_need_instance.communication_between_fishers_additional | linebreaksbr }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Is representation of SSF in decision-making and/or resource management legally required, at any level of governance?</th>
+                                            <td>
+                                                {{ capacity_need_instance.representation_required }}
+                                                {% if capacity_need_instance.representation_required == "Yes" %}
+                                                    <br>{{ capacity_need_instance.representation_required_example | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ capacity_need_instance.representation_required_additional | linebreaksbr }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Is there a co-management or decentralised fisheries management scheme (e.g. co-management, community-based management), or any other forms of fishers’ participation in management?</th>
+                                            <td>
+                                                {{ capacity_need_instance.participation_management }}
+                                                {% if capacity_need_instance.participation_management == "Yes" %}
+                                                    <br>{{ capacity_need_instance.participation_management_example | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ capacity_need_instance.participation_management_additional | linebreaksbr }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Is there any interest or commitment for a more holistic form of governance or reform?</th>
+                                            <td>
+                                                {{ capacity_need_instance.holistic_form }}
+                                                {% if capacity_need_instance.holistic_form == "Yes" %}
+                                                    <br>{{ capacity_need_instance.holistic_form_example | linebreaksbr }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ capacity_need_instance.holistic_form_additional | linebreaksbr }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                {% if editor %}
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="alert">Please fill up all the fields</p>
+                                    
+                                    <div class="FormSet">
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">(1) Is there any mechanism (e.g. regular meetings, information sharing, reporting) to facilitate communication and interaction among governmental departments, agencies and authorities?</h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.communication_among_authority == "Yes" %}     
+                                                <label class="governance-ticks"><input type="radio" name="communication_among_authority" data-show="true" value="Yes" checked>Yes</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="communication_among_authority" data-show="true" value="Yes">Yes</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.communication_among_authority == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="communication_among_authority" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="communication_among_authority" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
+
+                                            {% if capacity_need_instance.communication_among_authority == "No" %}
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="communication_among_authority_example">{{ capacity_need_instance.communication_among_authority_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% else %}
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="communication_among_authority_example">{{ capacity_need_instance.communication_among_authority_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="communication_among_authority_additional">{{ capacity_need_instance.communication_among_authority_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(2) Is there any mechanism (e.g. regular meetings, information sharing, reporting) to facilitate communication and interaction between governmental departments, agencies and authorities and fishers’ organizations and groups</h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.communication_between_fishers == "Yes" %}     
+                                                <label class="governance-ticks"><input type="radio" name="communication_between_fishers" data-show="true" value="Yes" checked>Yes</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="communication_between_fishers" data-show="true" value="Yes">Yes</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.communication_between_fishers == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="communication_between_fishers" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="communication_between_fishers" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
+
+                                            {% if capacity_need_instance.communication_between_fishers == "No" %}
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="communication_between_fishers_example">{{ capacity_need_instance.communication_between_fishers_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% else %}
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="communication_between_fishers_example">{{ capacity_need_instance.communication_between_fishers_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="communication_between_fishers_additional">{{ capacity_need_instance.communication_between_fishers_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(3) Is representation of SSF in decision-making and/or resource management legally required, at any level of governance?</h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.representation_required == "Yes" %}     
+                                                <label class="governance-ticks"><input type="radio" name="representation_required" data-show="true" value="Yes" checked>Yes</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="representation_required" data-show="true" value="Yes">Yes</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.representation_required == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="representation_required" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="representation_required" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
+
+                                            {% if capacity_need_instance.representation_required == "No" %}
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="representation_required_example">{{ capacity_need_instance.representation_required_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% else %}
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="representation_required_example">{{ capacity_need_instance.representation_required_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="representation_required_additional">{{ capacity_need_instance.representation_required_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(4) Is there a co-management or decentralised fisheries management scheme (e.g. co-management, community-based management), or any other forms of fishers’ participation in management?</h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.participation_management == "Yes" %}     
+                                                <label class="governance-ticks"><input type="radio" name="participation_management" data-show="true" value="Yes" checked>Yes</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="participation_management" data-show="true" value="Yes">Yes</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.participation_management == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="participation_management" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="participation_management" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
+
+                                            {% if capacity_need_instance.participation_management == "No" %}
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="participation_management_example">{{ capacity_need_instance.participation_management_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% else %}
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="participation_management_example">{{ capacity_need_instance.participation_management_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="participation_management_additional">{{ capacity_need_instance.participation_management_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+
+
+                                        <h5 style="margin: 50px 0px 10px 6px;">(5) Is there any interest or commitment for a more holistic form of governance or reform?</h5>
+                                        <ul>
+                                            <li>
+                                                {% if capacity_need_instance.holistic_form == "Yes" %}     
+                                                <label class="governance-ticks"><input type="radio" name="holistic_form" data-show="true" value="Yes" checked>Yes</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="holistic_form" data-show="true" value="Yes">Yes</label>
+                                                {% endif %}
+
+                                                {% if capacity_need_instance.holistic_form == "No" %}     
+                                                <label class="governance-ticks"><input type="radio" name="holistic_form" data-show="false" value="No" checked>No</label>
+                                                {% else %}
+                                                <label class="governance-ticks"><input type="radio" name="holistic_form" data-show="false" value="No">No</label>
+                                                {% endif %}
+                                            </li>
+
+                                            {% if capacity_need_instance.holistic_form == "No" %}
+                                            <li class="governance-ticks-true hide">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="holistic_form_example">{{ capacity_need_instance.holistic_form_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% else %}
+                                            <li class="governance-ticks-true">
+                                                <label class="governance-textarea">
+                                                    <span>Explain/example:</span>
+                                                    <textarea rows="4" name="holistic_form_example">{{ capacity_need_instance.holistic_form_example }}</textarea>
+                                                </label>
+                                            </li>
+                                            {% endif %}
+
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <span>Please indicate, if applicable, the exact provision(s) of the legal/policy document that supports your answer, and provide URL:</span>
+                                                    <textarea rows="4" name="holistic_form_additional">{{ capacity_need_instance.holistic_form_additional }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- /FormSet -->
+
+
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+                                    
+                                    <div class="button-bar">
+                                        <button id="submit-interaction-decoy" type="button" class="medium bt-submit submit-decoy" value="Submit">Submit</button>
+                                        <button class="medium bt-submit hide" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-legal-form" style="display: none;"></div>
+                                    <div class="load-key-principles-form" style="display: none;"></div>
+                                    <div class="load-specific-provision-form" style="display: none;"></div>
+                                    <div class="load-specific-information-form" style="display: none;"></div>
+                                    <div class="load-about-team-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        
+                        
+                        <dd class="accordion-navigation">
+                            {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
+                            <a class="accordion-nav" href="#panel-specific-information">Other context or specific information about SSF</a>
+                            
+                            <div id="panel-specific-information" class="content panel-content">
+                              <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ capacity_need_instance.ssf_country_specific_info | linebreaksbr }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                {% if editor %}
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="alert">Please fill up all the fields</p>
+                                    
+                                    <div class="FormSet">
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">Other context or specific information about SSF in the country</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <textarea rows="4" name="ssf_country_specific_info">{{ capacity_need_instance.ssf_country_specific_info }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- /FormSet -->
+
+
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+                                    
+                                    <div class="button-bar">
+                                        <button class="medium bt-submit" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-legal-form" style="display: none;"></div>
+                                    <div class="load-key-principles-form" style="display: none;"></div>
+                                    <div class="load-specific-provision-form" style="display: none;"></div>
+                                    <div class="load-interaction-form" style="display: none;"></div>
+                                    <div class="load-about-team-form" style="display: none;"></div>
+                                    <!-- end loading -->
+                                </form>
+                                {% endif %}
+                            </div>
+                        </dd>
+                        
+                        
+                        <dd class="accordion-navigation">
+                            {% if editor %} <button class="bt-edit">Edit</button> {% endif %}
+                            <a class="accordion-nav" href="#panel-about-team">About the team</a>
+                            
+                            <div id="panel-about-team" class="content panel-content">
+                              <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ capacity_need_instance.legal_and_policy_framework | linebreaksbr }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                {% if editor %}
+                                <form action="{% url 'capacity-basic' %}" method="post">
+                                    {% csrf_token %}
+                                    <p class="alert">Please fill up all the fields</p>
+                                    
+                                    <div class="FormSet">
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">About the team</h5>
+                                        <ul>
+                                            <li>
+                                                <label class="governance-textarea">
+                                                    <textarea rows="4" name="legal_and_policy_framework">{{ capacity_need_instance.legal_and_policy_framework }}</textarea>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- /FormSet -->
+
+
+                                    <input
+                                        class="issf_core_id" type="hidden"
+                                        value="{{ capacity_need_instance.issf_core_id }}"
+                                        name="issf_core_id"
+                                    >
+                                    
+                                    <div class="button-bar">
+                                        <button class="medium bt-submit" value="Submit">Submit</button>
+                                    </div>
+
+
+                                    <!-- load missing fields from other info div -->
+                                    <div class="load-basic-form" style="display: none;"></div>
+                                    <div class="load-definition-form" style="display: none;"></div>
+                                    <div class="load-legal-form" style="display: none;"></div>
+                                    <div class="load-key-principles-form" style="display: none;"></div>
+                                    <div class="load-specific-provision-form" style="display: none;"></div>
+                                    <div class="load-interaction-form" style="display: none;"></div>
+                                    <div class="load-specific-information-form" style="display: none;"></div>
                                     <!-- end loading -->
                                 </form>
                                 {% endif %}
@@ -1515,6 +3063,28 @@
                     {{ capacity_need_form.ssf_terms_informal_additional }}
                 </div> <!-- /definition-form -->
 
+                <div id="legal-form">
+                    {{ capacity_need_form.legal_system }}
+                    {{ capacity_need_form.legal_system_additional }}
+                    {{ capacity_need_form.fisheries_legislation_title }}
+                    {{ capacity_need_form.fisheries_legislation_year }}
+                    {{ capacity_need_form.fisheries_legislation_amendments }}
+                    {{ capacity_need_form.fisheries_legislation_sources }}
+                    {{ capacity_need_form.national_policy_title }}
+                    {{ capacity_need_form.national_policy_year }}
+                    {{ capacity_need_form.national_policy_period_coverage }}
+                    {{ capacity_need_form.national_policy_additional }}
+                    {{ capacity_need_form.national_governmental_authority_name }}
+                    {{ capacity_need_form.national_governmental_authority_sources }}
+                    {{ capacity_need_form.national_governmental_legislation }}
+                    {{ capacity_need_form.national_governmental_fisheries_policy }}
+                    {{ capacity_need_form.national_governmental_no_clear_mandate }}
+                    {{ capacity_need_form.national_governmental_support_document }}
+                    {{ capacity_need_form.national_governmental_support_pages }}
+                    {{ capacity_need_form.specifical_in_ssfcharge }}
+                    {{ capacity_need_form.specifical_in_ssfcharge_sources }}
+                </div> <!-- /legal-form -->
+
                 <div id="key-principles-form">
                     {{ capacity_need_form.human_rights_legislation }}
                     {{ capacity_need_form.human_rights_policy }}
@@ -1543,6 +3113,84 @@
                     {{ capacity_need_form.other_principles_legislation }}
                     {{ capacity_need_form.other_principles_policy }}
                 </div> <!-- /key-principles-form -->
+
+                <div id="specific-provision-form">
+                    {{ capacity_need_form.provision_tenure_name }}
+                    {{ capacity_need_form.provision_tenure_year }}
+                    {{ capacity_need_form.provision_tenure_defined }}
+                    {{ capacity_need_form.provision_tenure_additional }}
+                    {{ capacity_need_form.provision_exclusive_name }}
+                    {{ capacity_need_form.provision_exclusive_year }}
+                    {{ capacity_need_form.provision_exclusive_defined }}
+                    {{ capacity_need_form.provision_exclusive_additional }}
+                    {{ capacity_need_form.provision_registration_name }}
+                    {{ capacity_need_form.provision_registration_year }}
+                    {{ capacity_need_form.provision_registration_defined }}
+                    {{ capacity_need_form.provision_registration_additional }}
+                    {{ capacity_need_form.provision_mcs_name }}
+                    {{ capacity_need_form.provision_mcs_year }}
+                    {{ capacity_need_form.provision_mcs_defined }}
+                    {{ capacity_need_form.provision_mcs_additional }}
+                    {{ capacity_need_form.provision_social_name }}
+                    {{ capacity_need_form.provision_social_year }}
+                    {{ capacity_need_form.provision_social_defined }}
+                    {{ capacity_need_form.provision_social_additional }}
+                    {{ capacity_need_form.provision_labour_name }}
+                    {{ capacity_need_form.provision_labour_year }}
+                    {{ capacity_need_form.provision_labour_defined }}
+                    {{ capacity_need_form.provision_labour_additional }}
+                    {{ capacity_need_form.provision_capacity_name }}
+                    {{ capacity_need_form.provision_capacity_year }}
+                    {{ capacity_need_form.provision_capacity_defined }}
+                    {{ capacity_need_form.provision_capacity_additional }}
+                    {{ capacity_need_form.provision_recognition_name }}
+                    {{ capacity_need_form.provision_recognition_year }}
+                    {{ capacity_need_form.provision_recognition_defined }}
+                    {{ capacity_need_form.provision_recognition_additional }}
+                    {{ capacity_need_form.provision_responsible_name }}
+                    {{ capacity_need_form.provision_responsible_year }}
+                    {{ capacity_need_form.provision_responsible_defined }}
+                    {{ capacity_need_form.provision_responsible_additional }}
+                    {{ capacity_need_form.provision_legal_name }}
+                    {{ capacity_need_form.provision_legal_year }}
+                    {{ capacity_need_form.provision_legal_defined }}
+                    {{ capacity_need_form.provision_legal_additional }}
+                    {{ capacity_need_form.provision_special_name }}
+                    {{ capacity_need_form.provision_special_year }}
+                    {{ capacity_need_form.provision_special_defined }}
+                    {{ capacity_need_form.provision_special_additional }}
+                    {{ capacity_need_form.provision_protection_name }}
+                    {{ capacity_need_form.provision_protection_year }}
+                    {{ capacity_need_form.provision_protection_defined }}
+                    {{ capacity_need_form.provision_protection_additional }}
+                </div> <!-- /specific-provision-form -->
+
+                <div id="interaction-form">
+                    {{ capacity_need_form.communication_among_authority }}
+                    {{ capacity_need_form.communication_among_authority_example }}
+                    {{ capacity_need_form.communication_among_authority_additional }}
+                    {{ capacity_need_form.communication_between_fishers }}
+                    {{ capacity_need_form.communication_between_fishers_example }}
+                    {{ capacity_need_form.communication_between_fishers_additional }}
+                    {{ capacity_need_form.representation_required }}
+                    {{ capacity_need_form.representation_required_example }}
+                    {{ capacity_need_form.representation_required_additional }}
+                    {{ capacity_need_form.participation_management }}
+                    {{ capacity_need_form.participation_management_example }}
+                    {{ capacity_need_form.participation_management_additional }}
+                    {{ capacity_need_form.holistic_form }}
+                    {{ capacity_need_form.holistic_form_example }}
+                    {{ capacity_need_form.holistic_form_additional }}
+                </div> <!-- /interaction-form -->
+
+                <div id="specific-information-form">
+                    {{ capacity_need_form.ssf_country_specific_info }}
+                </div> <!-- /specific-information-form -->
+
+                <div id="about-team-form">
+                    {{ capacity_need_form.legal_and_policy_framework }}
+                </div> <!-- /about-team-form -->
+
             </div> <!-- /all-form-fields -->
         </section>
     {% endautoescape %}
@@ -1649,21 +3297,54 @@
         });
 
 
-        // Submit definition form 
-        $('#submit-definition-decoy').on('click',function(){
-            let definitionDecoy = $('#submit-definition-decoy');
-            $('#panel-definition .governance-ticks-true').each(function(){
+        // Set input text values = '' for radio button == no
+        $('#country-legal-system input[type=radio]').on('click',function(){
+            if($(this).val() == "Mixed Law Systems"){
+                $(this).closest('li').next('.governance-ticks-true').find('input').attr('required','required').attr('name','legal_system').val('');
+            }
+            else{ 
+                $(this).closest('li').next('.governance-ticks-true').find('input').removeAttr('required').attr('name','');
+            }
+        });
+
+        $('#specifical-in-ssfcharge input[type=radio]').on('click',function(){
+            if($(this).val() != "No"){
+                $(this).closest('li').next('.governance-ticks-true').find('textarea').attr('required','required').attr('name','specifical_in_ssfcharge');
+            }
+            else{ 
+                $(this).closest('li').next('.governance-ticks-true').find('textarea').removeAttr('required').attr('name','');
+            }
+        });
+        
+
+
+
+        // Submit form 
+        $('.submit-decoy').on('click',function(){
+            let submitDecoy = $(this);
+            submitDecoy.closest('.panel-content').find('.governance-ticks-true').each(function(){
                 if($(this).hasClass('hide')){
                     $(this).find('input, textarea').val('');
                 }
             });
-            definitionDecoy.siblings('.bt-submit').trigger('click');
+            submitDecoy.siblings('.bt-submit').trigger('click');
+        });
+
+
+        // Change text of label of defined in legislation/fishery policy based on the radio input selected
+        $('#defined-in-radios input[type=radio]').on('click',function(){
+            $('#defined-in span').text($(this).val() + ", as follows:");
         });
 
 
         // Load data of one forms to the others
         $('.load-basic-form').html($('#basic-form').html());
         $('.load-definition-form').html($('#definition-form').html());
+        $('.load-legal-form').html($('#legal-form').html());
         $('.load-key-principles-form').html($('#key-principles-form').html());
+        $('.load-specific-provision-form').html($('#specific-provision-form').html());
+        $('.load-interaction-form').html($('#interaction-form').html());
+        $('.load-specific-information-form').html($('#specific-information-form').html());
+        $('.load-about-team-form').html($('#about-team-form').html());
     </script>
 {% endblock additional_js_scripts %}
