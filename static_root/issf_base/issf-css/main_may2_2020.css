@@ -3574,6 +3574,10 @@ table p {
     margin-top: 22px;
 }
 
+#content-governance #panel-geographic li {
+    margin-top: 0;
+}
+
 #panel-key-principles .form-section {
     float: left;
     margin-bottom: 25px;
