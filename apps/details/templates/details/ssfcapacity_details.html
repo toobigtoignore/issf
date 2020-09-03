@@ -61,7 +61,7 @@
 
 
                                 {% if editor %}
-                                <form action="{% url 'capacity-basic' %}" method="post">
+                                <form id="ssfgovernance-basic-form" action="{% url 'capacity-basic' %}" method="post">
                                     {% csrf_token %}
                                     <h6>Please provide the basic details for updating the record</h6>
 
@@ -3268,7 +3268,7 @@
         // Submit governance form
         contributorsNames = "";
         contributorsAffiliations = "";
-        $('#submit-basic-decoy').on('click',function(){
+        $('#ssfgovernance-basic-form').on('submit',function(){
             $('#panel-basic .contributors-names').each(function(){
                 contributorsNames = contributorsNames + $(this).val() + ", ";
             });
@@ -3281,7 +3281,6 @@
             $('#panel-basic #contributors-affiliations').val(contributorsAffiliations);
             contributorsNames = "";
             contributorsAffiliations = "";
-            $(this).siblings('.bt-submit').trigger('click');
         });
 
 
