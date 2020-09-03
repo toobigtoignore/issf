@@ -1,5 +1,53 @@
+CREATE OR REPLACE FUNCTION public.capacity_need_summary_update(core_id integer)
+ RETURNS void
+ LANGUAGE plpgsql
+AS $function$
+
+  DECLARE
+
+    capacity   ssf_capacity_need%ROWTYPE;
+
+    summary_text TEXT := '';
+
+  BEGIN
+
+
+    SELECT *
+
+
+    INTO capacity
+
+
+    FROM ssf_capacity_need
+
+
+    WHERE issf_core_id = core_id;
+
+
+    summary_text := summary_text || '<strong> Case Study Country: </strong>' || capacity.case_study_country || '<br><strong> Contributors Names: </strong>' || capacity.contributors_names || '<br><strong> Contributors Affiliations: </strong>' || capacity.contributors_affiliations;
+
+    capacity.core_record_summary := summary_text;
+
+
+    UPDATE ssf_capacity_need
+
+
+    SET core_record_summary = summary_text
+
+
+    WHERE issf_core_id = core_id;
+
+
+  END;
+
+
+  $function$
+;
+
+
+
 -- UPDATE public.ssf_capacity_need SET core_record_type = 'SSF Governance';
-UPDATE public.ssf_capacity_need set core_record_summary = concat('<strong> Case Study Country: </strong>', case_study_country, '<br><strong> Contributors Names: </strong>', contributors_names, '<br><strong> Contributors Affiliations: </strong>', contributors_affiliations);
+-- UPDATE public.ssf_capacity_need set core_record_summary = concat('<strong> Case Study Country: </strong>', case_study_country, '<br><strong> Contributors Names: </strong>', contributors_names, '<br><strong> Contributors Affiliations: </strong>', contributors_affiliations);
 
 
 -- ALTER TABLE public.ssf_capacity_need
