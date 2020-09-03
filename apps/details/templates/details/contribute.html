@@ -434,7 +434,7 @@
                                         >
                                     </div>
                                     <div class="FormSection">
-                                        <form action="{% url 'capacity-basic' %}" method="post">
+                                        <form id="ssfgovernance-basic-form" action="{% url 'capacity-basic' %}" method="post">
                                             {% csrf_token %}
     
                                             <div class="FormSet">
@@ -686,8 +686,7 @@
                                             <input type="hidden" name="contributors_affiliations" id="contributors-affiliations">
 
                                             <div class="button-bar">
-                                                <button id="submit-governance-decoy" type="button" class="medium bt-submit" value="Submit">Submit</button>
-                                                <button id="submit-governance" class="medium bt-submit hide" value="Submit">Submit</button>
+                                                <button id="submit-governance" class="medium bt-submit" value="Submit">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1358,7 +1357,7 @@
         // Submit governance form
         let contributorsNames = "";
         let contributorsAffiliations = "";
-        $('#submit-governance-decoy').on('click',function(){
+        $('#ssfgovernance-basic-form').on('submit',function(){
             $('#panel-governance .contributors-names').each(function(){
                 contributorsNames = contributorsNames + $(this).val() + ", ";
             });
@@ -1371,7 +1370,6 @@
             $('#panel-governance #contributors-affiliations').val(contributorsAffiliations);
             contributorsNames = "";
             contributorsAffiliations = "";
-            $('#submit-governance').trigger('click');
         });
     </script>
 
