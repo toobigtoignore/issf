@@ -478,12 +478,17 @@
                                 </p>
                                 <table>
                                     <tr>
-                                        <td><strong>Are SSF or related terms “legally” defined in the Constitution, Law, or Act?</strong></td>
+                                        <td><strong>Are SSF or related terms "legally" defined in the Constitution, Law, or Act?</strong></td>
+                                        {% if capacity_need_instance.is_ssf_terms_legally_defined == NULL or capacity_need_instance.is_ssf_terms_legally_defined == "" %}
+                                        <td colspan="2"><strong>No information available</strong></td>
+
+                                        {% else %}
                                         <td>   
                                             <strong>{{ capacity_need_instance.is_ssf_terms_legally_defined }}</strong><br>
                                             {{ capacity_need_instance.ssf_terms_legally_defined | linebreaksbr }}
                                         </td>
                                         <td>{{ capacity_need_instance.ssf_terms_legally_defined_additional }}</td>
+                                        {% endif %}
                                     </tr>
 
                                     <tr>
@@ -512,23 +517,29 @@
                                     </tr>
 
                                     <tr>
-                                        <td><strong>Is there any other “informal” way that SSF (or related terms) are referred to?</strong></td>
+                                        <td><strong>Is there any other "informal" way that SSF (or related terms) are referred to?</strong></td>
+                                        
+                                        {% if capacity_need_instance.is_ssf_terms_informal == NULL or capacity_need_instance.is_ssf_terms_informal == "" %}
+                                        <td colspan="2"><strong>No information available</strong></td>
+                                        
+                                        {% else %}
                                         <td>   
                                             <strong>{{ capacity_need_instance.is_ssf_terms_informal }}</strong><br>
                                             {{ capacity_need_instance.ssf_terms_informal | linebreaksbr }}
                                         </td>
                                         <td>{{ capacity_need_instance.ssf_terms_informal_additional }}</td>
+                                        {% endif %}
                                     </tr>
                                 </table>
 
 
                                 {% if editor %}
-                                <form action="{% url 'capacity-basic' %}" method="post">
+                                <form class="form-needs-modificiation" action="{% url 'capacity-basic' %}" method="post">
                                     {% csrf_token %}
                                     <p class="alert">Please fill up all the fields</p>
                                     
                                     <div class="FormSet">
-                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">(1) Are SSF or related terms “legally” defined in the Constitution, Law, or Act?</h5>
+                                        <h5 style="margin-bottom: -10px; margin-left: 6px;">(1) Are SSF or related terms "legally" defined in the Constitution, Law, or Act?</h5>
                                         <ul>
                                             <li>
                                                 {% if capacity_need_instance.is_ssf_terms_legally_defined == "Yes" %}     
@@ -544,29 +555,29 @@
                                                 {% endif %}
                                             </li>
 
-                                            {% if capacity_need_instance.is_ssf_terms_legally_defined == "No" %}
-                                            <li class="governance-ticks-true hide">
+                                            {% if capacity_need_instance.is_ssf_terms_legally_defined == "Yes" %}
+                                            <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>If yes, copy and paste the exact text(s) where SSF or related terms is mentioned:</span>
-                                                    <textarea rows="4" name="ssf_terms_legally_defined">{{ capacity_need_instance.ssf_terms_legally_defined }}</textarea>
+                                                    <textarea rows="4" name="ssf_terms_legally_defined" required>{{ capacity_need_instance.ssf_terms_legally_defined }}</textarea>
                                                 </label>
                                             </li>
 
-                                            <li class="governance-ticks-true hide">
+                                            <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>Please indicate the exact provision(s) of the Constitution/Law/Act that supports your answer, and provide URL:</span>
-                                                    <input type="text" name="ssf_terms_legally_defined_additional" value="{{ capacity_need_instance.ssf_terms_legally_defined_additional }}">
+                                                    <input type="text" name="ssf_terms_legally_defined_additional" value="{{ capacity_need_instance.ssf_terms_legally_defined_additional }}" required>
                                                 </label>
                                             </li>
                                             {% else %}
-                                            <li class="governance-ticks-true">
+                                            <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>If yes, copy and paste the exact text(s) where SSF or related terms is mentioned:</span>
                                                     <textarea rows="4" name="ssf_terms_legally_defined">{{ capacity_need_instance.ssf_terms_legally_defined }}</textarea>
                                                 </label>
                                             </li>
 
-                                            <li class="governance-ticks-true">
+                                            <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>Please indicate the exact provision(s) of the Constitution/Law/Act that supports your answer, and provide URL:</span>
                                                     <input type="text" name="ssf_terms_legally_defined_additional" value="{{ capacity_need_instance.ssf_terms_legally_defined_additional }}">
@@ -598,13 +609,13 @@
                                                 {% endif %}
 
                                                 {% if capacity_need_instance.ssf_terms_policy_none == "No" %}     
-                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_none" data-show="false" value="No" checked>No</label>
+                                                <label class="governance-ticks remove-other-checks"><input type="checkbox" name="ssf_terms_policy_none" data-show="false" value="No" checked>No</label>
                                                 {% else %}
-                                                <label class="governance-ticks"><input type="checkbox" name="ssf_terms_policy_none" data-show="false" value="No">No</label>
+                                                <label class="governance-ticks remove-other-checks"><input type="checkbox" name="ssf_terms_policy_none" data-show="false" value="No">No</label>
                                                 {% endif %}
                                             </li>
 
-                                            {% if capacity_need_instance.ssf_terms_policy_none == "No" %}     
+                                            {% if capacity_need_instance.ssf_terms_policy_none == "No" or capacity_need_instance.ssf_terms_policy_none|length == 0 %}     
                                             <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>If yes to any of the above, copy and paste the text(s) used to refer to SSF:</span>
@@ -623,21 +634,21 @@
                                             <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>If yes to any of the above, copy and paste the text(s) used to refer to SSF:</span>
-                                                    <textarea rows="4" name="ssf_terms_policy_defined">{{ capacity_need_instance.ssf_terms_policy_defined }}</textarea>
+                                                    <textarea rows="4" name="ssf_terms_policy_defined" required>{{ capacity_need_instance.ssf_terms_policy_defined }}</textarea>
                                                 </label>
                                             </li>
 
                                             <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>Please indicate the document that supports your answer:</span>
-                                                    <input type="text" name="ssf_terms_policy_additional" value="{{ capacity_need_instance.ssf_terms_policy_additional }}" />
+                                                    <input type="text" name="ssf_terms_policy_additional" value="{{ capacity_need_instance.ssf_terms_policy_additional }}" required />
                                                 </label>
                                             </li>
                                             {% endif %}
                                         </ul>
 
 
-                                        <h5 style="margin: 50px 0px 10px 6px;">(3) Is there any other “informal” way that SSF (or related terms) are referred to?</h5>
+                                        <h5 style="margin: 50px 0px 10px 6px;">(3) Is there any other "informal" way that SSF (or related terms) are referred to?</h5>
                                         <ul>
                                             <li>
                                                 {% if capacity_need_instance.is_ssf_terms_informal == "Yes" %}     
@@ -653,30 +664,30 @@
                                                 {% endif %}
                                             </li>
 
-                                            {% if capacity_need_instance.is_ssf_terms_informal == "No" %}
-                                            <li class="governance-ticks-true hide">
+                                            {% if capacity_need_instance.is_ssf_terms_informal == "Yes" %}
+                                            <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>If yes, indicate how:</span>
-                                                    <textarea rows="4" name="ssf_terms_informal">{{ capacity_need_instance.ssf_terms_informal }}</textarea>
+                                                    <textarea rows="4" name="ssf_terms_informal" required>{{ capacity_need_instance.ssf_terms_informal }}</textarea>
                                                 </label>
                                             </li>
 
-                                            <li class="governance-ticks-true hide">
+                                            <li class="governance-ticks-true">
                                                 <label class="governance-textarea">
                                                     <span>Please indicate the document that supports your answer:</span>
-                                                    <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" />
+                                                    <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" required />
                                                 </label>
                                             </li>    
 
                                             {% else %}     
-                                            <li class="governance-ticks-true">
+                                            <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>If yes, indicate how:</span>
                                                     <textarea rows="4" name="ssf_terms_informal">{{ capacity_need_instance.ssf_terms_informal }}</textarea>
                                                 </label>
                                             </li>
 
-                                            <li class="governance-ticks-true">
+                                            <li class="governance-ticks-true hide">
                                                 <label class="governance-textarea">
                                                     <span>Please indicate the document that supports your answer:</span>
                                                     <input type="text" name="ssf_terms_informal_additional" value="{{ capacity_need_instance.ssf_terms_informal_additional }}" />
@@ -693,8 +704,7 @@
                                     >
                                     
                                     <div class="button-bar">
-                                        <button id="submit-definition-decoy" type="button" class="medium bt-submit submit-decoy" value="Submit">Submit</button>
-                                        <button class="medium bt-submit hide" value="Submit">Submit</button>
+                                        <button class="medium bt-submit" value="Submit">Submit</button>
                                     </div>
 
 
@@ -732,7 +742,7 @@
                                         </tr>
 
                                         <tr>
-                                            <th>What is the main “fisheries legislation” in the country (e.g. Act, Law, Statute)?</th>
+                                            <th>What is the main "fisheries legislation" in the country (e.g. Act, Law, Statute)?</th>
                                             <td>
                                                 <p style="margin-bottom: 0;"><strong>Full title of legislation:</strong> &nbsp; {{ capacity_need_instance.fisheries_legislation_title }}</p>
                                             
@@ -748,7 +758,7 @@
                                         </tr>
 
                                         <tr>
-                                            <th>What is the main “national policy” for fisheries?</th>
+                                            <th>What is the main "national policy" for fisheries?</th>
                                             <td>
                                                 <p style="margin-bottom: 0;"><strong>Full title of policy:</strong> &nbsp; {{ capacity_need_instance.national_policy_title }}</p>
                                                 
@@ -764,7 +774,7 @@
                                         </tr>
 
                                         <tr>
-                                            <th>Which “national” governmental authority (e.g. Ministry, Agency, Secretary or any other institutional body) is primarily in charge of fisheries?</th>
+                                            <th>Which "national" governmental authority (e.g. Ministry, Agency, Secretary or any other institutional body) is primarily in charge of fisheries?</th>
                                             <td>
                                                 {{ capacity_need_instance.national_governmental_authority_name }}
                                                 {% if capacity_need_instance.national_governmental_authority_sources %}
@@ -841,36 +851,42 @@
                                                 <label class="governance-ticks"><input type="radio" name="legal_system" data-show="false" value="Customary Law">Customary Law</label>
                                                 {% endif %}
 
-                                                {% if capacity_need_instance.legal_system == "Common Law" or capacity_need_instance.legal_system == "Civil Law" or capacity_need_instance.legal_system == "Customary Law" or capacity_need_instance.legal_system == NULL %}
+                                                {% if capacity_need_instance.legal_system == "Common Law" or capacity_need_instance.legal_system == "Civil Law" or capacity_need_instance.legal_system == "Customary Law" %}
                                                 <label class="governance-ticks"><input type="radio" data-show="true" name="legal_system" value="Mixed Law Systems">Mixed Law Systems</label>
                                                 {% else %}
-                                                <label class="governance-ticks"><input type="radio" data-show="true" name="legal_system" value="Mixed Law Systems" checked>Mixed Law Systems</label>
+                                                    {% if capacity_need_instance.legal_system|length > 0 %}
+                                                      <label class="governance-ticks"><input type="radio" data-show="true" name="legal_system" value="Mixed Law Systems" checked>Mixed Law Systems</label>
+                                                    {% else %}
+                                                      <label class="governance-ticks"><input type="radio" data-show="true" name="legal_system" value="Mixed Law Systems">Mixed Law Systems</label>
+                                                    {% endif %}
                                                 {% endif %}
                                             </li>
 
                                             {% if capacity_need_instance.legal_system == "Common Law" or capacity_need_instance.legal_system == "Civil Law" or capacity_need_instance.legal_system == "Customary Law" %} 
-                                            <li class="governance-ticks-true hide">
-                                                <label class="governance-textarea">
-                                                    <span>Please Specify:</span>
-                                                    <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" />
-                                                </label>
-                                            </li>
-
-                                            {% elif capacity_need_instance.legal_system == NULL %} 
-                                            <li class="governance-ticks-true">
-                                                <label class="governance-textarea">
-                                                    <span>Please Specify:</span>
-                                                    <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" />
-                                                </label>
-                                            </li>
-
+                                            
+                                                <li class="governance-ticks-true hide">
+                                                    <label class="governance-textarea">
+                                                        <span>Please Specify:</span>
+                                                        <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" required />
+                                                    </label>
+                                                </li>
+                                            
                                             {% else %}
-                                            <li class="governance-ticks-true">
-                                                <label class="governance-textarea">
-                                                    <span>Please Specify:</span>
-                                                    <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" required />
-                                                </label>
-                                            </li>
+                                                {% if capacity_need_instance.legal_system|length > 0 %}
+                                                  <li class="governance-ticks-true">
+                                                      <label class="governance-textarea">
+                                                          <span>Please Specify:</span>
+                                                          <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" />
+                                                      </label>
+                                                  </li>
+                                                {% else %}
+                                                <li class="governance-ticks-true hide">
+                                                    <label class="governance-textarea">
+                                                        <span>Please Specify:</span>
+                                                        <input type="text" name="legal_system" value="{{ capacity_need_instance.legal_system }}" required />
+                                                    </label>
+                                                </li>
+                                                {% endif %}
                                             {% endif %}
 
                                             <li>
@@ -882,7 +898,7 @@
                                         </ul>
 
 
-                                        <h5 style="margin: 50px 0px 10px 6px;">(2) What is the main “fisheries legislation” in the country (e.g. Act, Law, Statute)?</h5>
+                                        <h5 style="margin: 50px 0px 10px 6px;">(2) What is the main "fisheries legislation" in the country (e.g. Act, Law, Statute)?</h5>
                                         <ul>
                                             <li>
                                                 <label class="governance-textarea">
@@ -914,7 +930,7 @@
                                         </ul>
 
 
-                                        <h5 style="margin: 50px 0px 10px 6px;">(3) What is the main “national policy” for fisheries?</h5>
+                                        <h5 style="margin: 50px 0px 10px 6px;">(3) What is the main "national policy" for fisheries?</h5>
                                         <ul>
                                             <li>
                                                 <label class="governance-textarea">
@@ -946,7 +962,7 @@
                                         </ul>
 
 
-                                        <h5 style="margin: 50px 0px 10px 6px;">(4) Which “national” governmental authority (e.g. Ministry, Agency, Secretary or any other institutional body) is primarily in charge of fisheries?</h5>
+                                        <h5 style="margin: 50px 0px 10px 6px;">(4) Which "national" governmental authority (e.g. Ministry, Agency, Secretary or any other institutional body) is primarily in charge of fisheries?</h5>
                                         <ul>
                                             <li>
                                                 <label class="governance-textarea">
@@ -1029,14 +1045,14 @@
                                         <ul>
                                             <li id="specifical-in-ssfcharge">
                                                 {% if capacity_need_instance.specifical_in_ssfcharge != "No" %}
-                                                    {% if capacity_need_instance.specifical_in_ssfcharge == NULL %}     
-                                                    <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="" data-show="true">Yes</label>
+                                                    {% if capacity_need_instance.specifical_in_ssfcharge|length > 0 %}     
+                                                    <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="Yes" data-show="true" checked>Yes</label>
                                                     {% else %}
-                                                    <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="" data-show="true" checked>Yes</label>
+                                                    <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="Yes" data-show="true">Yes</label>
                                                     {% endif %}
 
                                                 {% else %}
-                                                <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="" data-show="true">Yes</label>
+                                                <label class="governance-ticks"><input type="radio" name="specifical_in_ssfcharge" value="Yes" data-show="true">Yes</label>
                                                 {% endif %}
 
                                                 {% if capacity_need_instance.specifical_in_ssfcharge == "No" %}     
@@ -1047,16 +1063,21 @@
                                             </li>
 
                                             {% if capacity_need_instance.specifical_in_ssfcharge != "No" %}
-                                            <li class="governance-ticks-true">
-                                                <label class="governance-textarea">
-                                                    <span>Indicate name and level of each authority (state, provincial, sub-regional, city, municipal, local):</span>
-                                                    {% if capacity_need_instance.specifical_in_ssfcharge == NULL %}
-                                                    <textarea rows="4" name="specifical_in_ssfcharge">{{ capacity_need_instance.specifical_in_ssfcharge }}</textarea>
-                                                    {% else %}
-                                                    <textarea rows="4" name="specifical_in_ssfcharge" required>{{ capacity_need_instance.specifical_in_ssfcharge }}</textarea>
-                                                    {% endif %}
-                                                </label>
-                                            </li>
+                                                {% if capacity_need_instance.specifical_in_ssfcharge|length > 0 %}
+                                                <li class="governance-ticks-true">
+                                                    <label class="governance-textarea">
+                                                        <span>Indicate name and level of each authority (state, provincial, sub-regional, city, municipal, local):</span>
+                                                        <textarea rows="4" name="specifical_in_ssfcharge" required>{{ capacity_need_instance.specifical_in_ssfcharge }}</textarea>
+                                                    </label>
+                                                </li>
+                                                {% else %}
+                                                <li class="governance-ticks-true hide">
+                                                    <label class="governance-textarea">
+                                                        <span>Indicate name and level of each authority (state, provincial, sub-regional, city, municipal, local):</span>
+                                                        <textarea rows="4" name="specifical_in_ssfcharge">{{ capacity_need_instance.specifical_in_ssfcharge }}</textarea>
+                                                    </label>
+                                                </li>
+                                                {% endif %}
 
                                             {% else %}
                                             <li class="governance-ticks-true hide">
@@ -1861,7 +1882,7 @@
                             
                             <div id="panel-specific-provision" class="content panel-content">
                               <p>
-                                  Is there any legal and/or policy instrument related to the following topics, specifically for SSF? Note that this is not only about harvesting/fishing but also post-harvest activities. Indicate the “name” of the document where the provision can be found and provide details as appropriate. Include provision that is ‘relevant’ to SSF, even if it is not specific.
+                                  Is there any legal and/or policy instrument related to the following topics, specifically for SSF? Note that this is not only about harvesting/fishing but also post-harvest activities. Indicate the "name" of the document where the provision can be found and provide details as appropriate. Include provision that is ‘relevant’ to SSF, even if it is not specific.
                               </p>
 
                               <table>
@@ -1905,7 +1926,7 @@
                                             
                                                 <p style="margin-bottom: 0;"><strong>Year:</strong> &nbsp; {{ capacity_need_instance.provision_registration_year }}</p>
                                             
-                                                <p style="margin-bottom: 0;"><strong>Specify type (general, vessel, gear, “professional” fishers):</strong> &nbsp; {{ capacity_need_instance.provision_registration_defined }}</p>
+                                                <p style="margin-bottom: 0;"><strong>Specify type (general, vessel, gear, "professional" fishers):</strong> &nbsp; {{ capacity_need_instance.provision_registration_defined }}</p>
 
                                                 {% if capacity_need_instance.provision_registration_additional %}
                                                     <br><strong>Additional information</strong><br>
@@ -2628,7 +2649,7 @@
 
 
                                 {% if editor %}
-                                <form action="{% url 'capacity-basic' %}" method="post">
+                                <form class="form-needs-modificiation" action="{% url 'capacity-basic' %}" method="post">
                                     {% csrf_token %}
                                     <p class="alert">Please fill up all the fields</p>
                                     
@@ -2846,8 +2867,7 @@
                                     >
                                     
                                     <div class="button-bar">
-                                        <button id="submit-interaction-decoy" type="button" class="medium bt-submit submit-decoy" value="Submit">Submit</button>
-                                        <button class="medium bt-submit hide" value="Submit">Submit</button>
+                                        <button class="medium bt-submit" value="Submit">Submit</button>
                                     </div>
 
 
@@ -3288,18 +3308,28 @@
         $('.governance-ticks input').on('click',function(){
             let $this = $(this);
             if($this.data('show') == true) {
-                $this.closest('li').siblings('.governance-ticks-true').removeClass('hide');
+                $this.closest('li').siblings('.governance-ticks-true').removeClass('hide').find('textarea, input').attr('required', 'required');
             }
             else {
-                $this.closest('li').siblings('.governance-ticks-true').addClass('hide');
+                $this.closest('li').siblings('.governance-ticks-true').addClass('hide').find('textarea, input').removeAttr('required');
             }
+        });
+
+
+        // Uncheck other checkboxes based on input
+        $('.remove-other-checks').siblings().find('input[type=checkbox]').on('click',function(){
+            $(this).closest('label').siblings('.remove-other-checks').find('input[type=checkbox]').attr('checked',false);
+        });
+
+        $('.remove-other-checks input[type=checkbox]').on('click',function(){
+            $(this).closest('label').siblings().find('input[type=checkbox]').attr('checked',false);
         });
 
 
         // Set input text values = '' for radio button == no
         $('#country-legal-system input[type=radio]').on('click',function(){
             if($(this).val() == "Mixed Law Systems"){
-                $(this).closest('li').next('.governance-ticks-true').find('input').attr('required','required').attr('name','legal_system').val('');
+                $(this).closest('li').next('.governance-ticks-true').find('input').attr('required','required').attr('name','legal_system');
             }
             else{ 
                 $(this).closest('li').next('.governance-ticks-true').find('input').removeAttr('required').attr('name','');
@@ -3314,19 +3344,16 @@
                 $(this).closest('li').next('.governance-ticks-true').find('textarea').removeAttr('required').attr('name','');
             }
         });
-        
-
 
 
         // Submit form 
-        $('.submit-decoy').on('click',function(){
-            let submitDecoy = $(this);
-            submitDecoy.closest('.panel-content').find('.governance-ticks-true').each(function(){
+        $('.form-needs-modificiation').on('submit',function(){
+            let form = $(this);
+            form.find('.governance-ticks-true').each(function(){
                 if($(this).hasClass('hide')){
                     $(this).find('input, textarea').val('');
                 }
             });
-            submitDecoy.siblings('.bt-submit').trigger('click');
         });
 
 
