@@ -326,6 +326,63 @@
             $('.remove-last-comma').each(function(){
                 $(this).text($.trim($(this).text()).slice(0,-1));
             });
+
+
+            // load form in modal when user tries to edit the form
+            // remove the following section of the code to disable modal feature
+            var btnClicked = false;
+            var valueChanged = false;
+            $('.bt-edit').on('click',function(){
+                if(!btnClicked){
+                  let $this = $(this),
+                      tablePanelHeader = $this.closest('.accordion-navigation').find('.accordion-nav'),
+                      form = $this.closest('.accordion-navigation').find('form');
+
+                  $this.closest('.accordion-navigation').addClass('modal-form-accordion').find('.content').addClass('modal-form-edit').append("<p id='modal-panel-header' style='background-color: " + $('.page-title').css('background-color') + "'>" + tablePanelHeader.text() +  "<span>X</span></p>"); 
+                  btnClicked = true;
+                  $this.hide();
+                  tablePanelHeader.hide();
+
+                  $this.closest('.accordion-navigation').find('form').on('change',function(){
+                    valueChanged = true;
+                  });
+                  closeEditModal(tablePanelHeader,form);
+                }
+            }); 
+
+            function closeEditModal(tablePanelHeader, form){
+              $('#modal-panel-header span').on('click',function(){
+                let $this = $(this);   
+                if(btnClicked){ 
+                  if(valueChanged){
+                    if(confirm("Any changes you have made in the form will not be saved?")){
+                      executeCloseModal($this, tablePanelHeader);
+                      btnClicked = false;
+                      valueChanged = false;
+                      form[0].reset();
+                    } 
+                  }
+                  else{
+                    executeCloseModal($this, tablePanelHeader);
+                    btnClicked = false;
+                  }
+                }
+              });
+            }
+
+            function executeCloseModal($this, tablePanelHeader, btnClicked){
+                let btn = $this.closest('.accordion-navigation').find('.bt-edit');
+                let panelHeader = $this.parent();
+                
+                $this.closest('.content')
+                     .removeClass('modal-form-edit').closest('.accordion-navigation')
+                     .removeClass('modal-form-accordion');
+                
+                btn.trigger('click').show();
+                tablePanelHeader.show();
+                panelHeader.remove();
+            }
+            // load form ends here
         </script>
     </body>
 </html>

@@ -3213,6 +3213,11 @@
 
             </div> <!-- /all-form-fields -->
         </section>
+
+        <!-- <div id="form-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: auto; min-height: 100vh; background: rgba(0,0,0,.5); z-index: 999;overflow-y: scroll; display: none;">
+          <div id="form-modal-overlay" style="position: absolute; left: 0; top: 0; width: 100vw; height: 100%; background: red;"></div>
+          <div class="edit-panel-content" style="position: absolute; left: 10%; top: 5%; width: 80%; min-height: 90%; height: auto; overflow-y: auto; box-sizing:border-box; padding: 50px 10%; border: 1px solid #ababab; background: #f7f7f7; z-index: 9999;"></div> -->
+        </div>
     {% endautoescape %}
 {% endblock body %}
 
@@ -3372,5 +3377,6 @@
         $('.load-interaction-form').html($('#interaction-form').html());
         $('.load-specific-information-form').html($('#specific-information-form').html());
         $('.load-about-team-form').html($('#about-team-form').html());
+     
     </script>
 {% endblock additional_js_scripts %}
