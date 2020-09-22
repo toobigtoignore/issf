@@ -338,7 +338,7 @@
                       tablePanelHeader = $this.closest('.accordion-navigation').find('.accordion-nav'),
                       form = $this.closest('.accordion-navigation').find('form');
 
-                  $this.closest('.accordion-navigation').addClass('modal-form-accordion').find('.content').addClass('modal-form-edit').append("<p id='modal-panel-header' style='background-color: " + $('.page-title').css('background-color') + "'>" + tablePanelHeader.text() +  "<span>X</span></p>"); 
+                  $this.closest('.accordion-navigation').addClass('modal-form-accordion').find('.content').addClass('modal-form-edit').prepend("<p id='modal-panel-header' style='background-color: " + $('.page-title').css('background-color') + "' title='" + tablePanelHeader.text() + "'>" + tablePanelHeader.text() +  "<span>X</span></p>"); 
                   btnClicked = true;
                   $this.hide();
                   tablePanelHeader.hide();

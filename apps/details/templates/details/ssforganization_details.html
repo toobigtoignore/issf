@@ -760,46 +760,35 @@
                             </div>
                         </dd>
                     </dl>
+
+                    {% if editor %}
+                    <a href="#" data-reveal-id="deleteModal" class="button radius" style="background-color: #d01f1f; margin-top: 40px;">Delete Record</a>
+                    <div id="deleteModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
+                            <div class="row">
+                                <div class="columns">
+                                    <p>WARNING</p>
+                                    <p>
+                                        Are you sure you want to <b style="color:red;">PERMANENTLY</b> delete this record?<br>
+                                        Once deleted, the record content cannot be recovered.
+                                    </p>
+                                    <button class="button radius" style="background-color: #B70000; margin-right:10px;" type="submit">DELETE</button>
+
+                                    <a href="#" class="button radius close-reveal-modal" style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color: white;">CANCEL</a>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                    {% endif %}
                 </div>
+
                 <div class="large-4 columns">
                     <!--domain hard-coded because request.get_host broke under https-->
                     <div class="fb-comments"
                          data-href="https://issfcloud.toobigtoignore.net{% url 'organization-details' issf_core_id=core_instance.issf_core_id %}"
                          data-width="220" data-numposts="3" data-colorscheme="light"></div>
                 </div>
-                {% if editor %}
-                    <a href="#" data-reveal-id="deleteModal" class="button radius"
-                       style="background-color: #525252; position: absolute; right:5px; bottom:-10px;">
-                        Delete Record
-                    </a>
-                    <div id="deleteModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle"
-                         aria-hidden="true"
-                         role="dialog">
-                        <form class="deleteForm" action="{% url 'delete-record' core_instance.issf_core_id %}">
-                            <div class="row">
-                                <div class="large-5 columns">
-                                    <p>WARNING</p>
-
-                                    <p>Are you sure you want to
-                                        <b style="color:red;">PERMANENTLY</b>
-                                        delete this record?
-                                        <br>
-                                        Once deleted, the record content cannot be recovered.
-                                    </p>
-
-                                    <button class="button radius" style="background-color: #B70000; margin-right:10px;"
-                                            type="submit">DELETE
-                                    </button>
-                                    <a href="#" class="button radius close-reveal-modal"
-                                       style="font-size: 1rem; position: initial; font-weight: normal; line-height: normal; color: white;">
-                                        CANCEL
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-                    </div>
-                {% endif %}
             </div>
         </section>
     {% endautoescape %}
