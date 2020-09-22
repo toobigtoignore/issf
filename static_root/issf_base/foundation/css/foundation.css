@@ -3182,9 +3182,9 @@ dialog, .reveal-modal {
   padding: 1.25rem;
   border: solid 1px #666666;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); }
-  @media only screen and (max-width: 40em) {
+  /*@media only screen and (max-width: 40em) {
     dialog, .reveal-modal {
-      min-height: 100vh; } }
+      min-height: 100vh; } }*/
   @media only screen and (min-width: 40.063em) {
     dialog, .reveal-modal {
       left: 50%; } }

@@ -282,6 +282,7 @@ footer {
 
 .content-section {
     position: relative;
+    min-height: 72vh;
     z-index: 91;
     margin-bottom: 35px;
 }
@@ -355,6 +356,16 @@ footer {
 /* for screen greater than 1850px */
 .header-left-large {
     height: 0;
+}
+
+.reveal-modal {
+    position: fixed !important;
+}
+
+@media only screen and (max-width: 40em) {
+    .reveal-modal {
+        min-height: auto !important;
+    }
 }
 
 /* less than 1850px */
@@ -2517,23 +2528,25 @@ nav .tabs .active a[tabindex="11"] span {
 }
 
 #modal-panel-header {
-    position: absolute !important;
-    left: 0;
-    top: 0;
-    width: 100%;
+    position: fixed;
+    width: 105%;
+    max-width: 920px;
     height: 40px;
+    line-height: 40px;
     color: #fff;
     font-weight: bold;
     font-size: 19px;
-    padding: 0px 4%;
-    line-height: 40px;
+    box-sizing: border-box;
+    padding: 0px 5%;
+    margin-left: -5%;
+    margin-top: -60px;
     text-shadow: 0 1px 3px #11111185;
 }
 
 #modal-panel-header span {
     position: absolute;
     top: -1px;
-    right: 10px;
+    right: 20px;
     box-sizing: border-box;
     padding: 0px 12px;
     border: 1px solid rgba(0,0,0,.1);
