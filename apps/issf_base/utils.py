@@ -14,6 +14,7 @@ def get_redirectname(core_record_type: str) -> str:
         "SSF Guidelines": 'guidelines-details',
         "Case Study": 'case-studies-details',
         "SSF Experiences": 'experiences-details',
-        "SSF Blue Justice": 'bluejustice-details'
+        "SSF Blue Justice": 'bluejustice-details',
+        "Capacity Development" : 'capacity-details'
     }
     return urls[core_record_type]
