@@ -210,8 +210,14 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
                         results = model.objects.filter(ssf_name__icontains=keywords)
                     elif model == SSFOrganization:
                         results = model.objects.filter(organization_name__icontains=keywords)
+                    #TODO: Enable me
                     elif model == SSFCapacityNeed:
-                        results = model.objects.filter(capacity_need_title__icontains=keywords)
+                        #results = model.objects.filter(capacity_need_title__icontains=keywords)
+                        pass
+                    #TODO: Enable me
+                    elif model == SSFExperiences:
+                        #results = model.objects.filter(capacity_need_title__icontains=keywords)
+                        pass
                     elif model == SSFCaseStudies:
                         results = model.objects.filter(name__icontains=keywords)
                     else:
