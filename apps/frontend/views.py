@@ -138,7 +138,9 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
             countries = form.cleaned_data['countries']
             contribution_begin_date = form.cleaned_data['contribution_begin_date']
             contribution_end_date = form.cleaned_data['contribution_end_date']
+            print("Form is valid")
         else:
+            print("Form is not valid")
             keywords = None
             fulltext_keywords = None
             contributor = None
@@ -188,7 +190,10 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
                     map_queryset = ISSFCoreMapPointUnique.objects.all()
                     cache.set('cached_map_data', map_queryset, 86400)
                 map_queryset = list(map_queryset)
+                print("Empty keywords returning all")
             else:
+                print("There are keywords")
+                print(keywords)
                 search_terms.append('Title: {}'.format(str(bleach.clean(keywords))))
                 for model in models:
                     # Every object has different variables for "title"
@@ -214,9 +219,11 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
                     ids = [result.issf_core_id for result in results]
                     map_queryset += get_map_points(ids)
         else:
+            print("No keywords detected")
             map_queryset = list(ISSFCoreMapPointUnique.objects.all())
 
         if fulltext_keywords:
+            print("Fulltext keywords detected")
             if fulltext_keywords != '':
                 search_terms.append('Full text: {}'.format(fulltext_keywords))
                 fulltext_matches = set(i.issf_core_id for i in ISSFCoreMapPointUnique.objects.filter(core_record_summary__icontains=fulltext_keywords))
@@ -341,6 +348,8 @@ def frontend_data(request: HttpRequest) -> HttpResponse:
         search_terms = ["None"]
 
     joined_terms = ", ".join(search_terms)
+
+    print(len(map_results))
 
     response = json.dumps({
         'success': 'true',

@@ -2292,7 +2292,6 @@
           
         function movingStart() {
             playButton.classed("paused", true)
-                    console.log("play")
                       moving = true;
                       if (init == 1) {currentValue = currentValue - (targetValue/rangeYear)} else{currentValue = currentValue + (targetValue/rangeYear)}
                       step()
@@ -2301,7 +2300,6 @@
         }
         
         function movingStop() {
-            console.log("paused")
                     playButton.classed("paused", false)
                     moving = false;
                   if (init == 1) {clearInterval(timer);}
@@ -2360,7 +2358,6 @@
           update(xx.invert(currentValue));
 
           if (Math.round(xx.invert(currentValue)) >= lastYear) {
-          console.log("son" , xx.invert(currentValue))
             moving = false;
             currentValue = 0;
             clearInterval(timer);
@@ -2634,7 +2631,6 @@
                         })
                     .on("click", function () {
                             var country = d3.select(this).attr("id")
-                            console.log("country",country)
                             if (country == "World"){
                                 var tableData = data
                                 .sort((a,b) => b.number_publications - a.number_publications)
@@ -2795,7 +2791,6 @@
                 simulation.nodes(nodes)
                     .on('tick', ticked)
                     .restart();
-        console.log("nodes",nodes)
                 ///////////////////////////////////////////PUBLICATIONS TABLE///////////////////////////////////////////
                 var legend = d3.select("#tableDiv")
                     .append("table").attr('id','publications').attr("width", "100%")
@@ -3968,6 +3963,12 @@
         var GlobalMapHandle = null;
         var GlobalTableHandle = null;
 
+
+        var table = $('#record-table-result').DataTable({
+                    "retrieve": true,
+                    "autoWidth": false
+        });
+
         var geojson, choroControl, legend, extloadChoropleth;
 
         var min = Number.MAX_SAFE_INTEGER;
@@ -4530,7 +4531,9 @@
                 url: "{% url 'frontend-data' %}",
                 dataType: "json",
                 data: form.serialize(),
-                success: loadData
+                success: function(data){
+                    loadData(data)
+                }
             });
         });
 
@@ -4763,19 +4766,15 @@
                 map.addLayer(markers);
 
                 /* Update table */
-
-                var table = $('#record-table-result').DataTable({
-                    "retrieve": true
-                });
                 table.clear();
 
+
                 // Order by relevance after performing a search
-                if (search) {
+                /*if (search) {
                     table.order([3, 'desc']);
                 } else {
                     table.order([2, 'desc']);
-                }
-                GlobalTableHandle = table;
+                }*/
 
 
                 for (newRow in mapDataSource) {
@@ -4788,6 +4787,7 @@
                         if (mapDataSource[newRow][0] == activeFilters[i]) {
                             var url = mapDataSource[newRow][3];
                             url = url.split('"');
+
                             var summary = '<a href="' + url[1] + '">' + mapDataSource[newRow][2] + '</a>';
                             // Retrieve table data from map data to reduce amount of data transferred
                             table.row.add([mapDataSource[newRow][0], summary, mapDataSource[newRow][6], mapDataSource[newRow][7]]);
