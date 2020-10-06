@@ -348,6 +348,9 @@
                   });
                   closeEditModal(tablePanelHeader,form);
                 }
+
+                // Create save or discard confirm modal
+                $('body').append("<div id='modal-closing-decision' style='display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,.85); z-index: 999; align-items: flex-start; justify-content: center;'><div style='position: relative; width: 50%; min-width: 250px; max-width: 550px; background: #fff; box-sizing: border-box; padding: 30px; margin-top: 30px; border-radius: 4px;'><h3>Are you sure?</h3><p>Changes you made will not be saved. Do you want to save your changes before you close the form?</p><button data-value='save' style='margin-right: 5px; background:#6FE7A9;'>Save Changes</button><button data-value='discard' style='margin-right: 5px; background: #d01f1f;'>Discard Changes</button><button data-value='cancel'>Cancel</button><button data-value='cancel' style='position: absolute; right: 5px; top: 5px; background: transparent; color: #000; font-size: 20px; box-shadow: none;'>X</button></div></div>");
             }); 
 
             function closeEditModal(tablePanelHeader, form){
@@ -355,12 +358,24 @@
                 let $this = $(this);   
                 if(btnClicked){ 
                   if(valueChanged){
-                    if(confirm("Any changes you have made in the form will not be saved?")){
-                      executeCloseModal($this, tablePanelHeader);
-                      btnClicked = false;
-                      valueChanged = false;
-                      form[0].reset();
-                    } 
+                    let modalClosing = $('#modal-closing-decision');
+                    modalClosing.css('display','flex').find('button').on('click',function(){
+                        if($(this).data('value') == "discard"){
+                          // user discarded changes
+                          executeCloseModal($this, tablePanelHeader);
+                          btnClicked = false;
+                          valueChanged = false;
+                          form[0].reset();
+                          modalClosing.remove();
+                        } 
+                        else if($(this).data('value') == "save") {
+                            // user wants to save the changes
+                            $this.closest('.modal-form-edit').find('form').find('.bt-submit').trigger('click');
+                        }
+                        else{
+                            modalClosing.css('display','none');
+                        }
+                    });
                   }
                   else{
                     executeCloseModal($this, tablePanelHeader);
@@ -381,6 +396,12 @@
                 btn.trigger('click').show();
                 tablePanelHeader.show();
                 panelHeader.remove();
+            }
+
+            function createConfirmModal(){
+                $('#modal-closing-decision button').on('click',function(){
+                    return $(this).data('value');
+                });
             }
             // load form ends here
         </script>
