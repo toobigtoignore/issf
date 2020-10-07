@@ -457,18 +457,8 @@
             <div id="visual-section" class="visual-section">
                 <div class="visual-carousel">
                     <div id="visual-loading-overlay"></div>
-                    <!-- <h3 style="padding: 1rem">Latest Visualization</h3> -->
-                    <div class="slideshow-container" 
-                         data-cycle-fx=fade
-                         data-cycle-manual-speed="10"
-                         data-cycle-timeout=0
-                         data-cycle-slides="> div"
-                         data-cycle-prev="#prev-slide"
-                         data-cycle-next="#next-slide"
-                         data-cycle-pager="#pager">
-
-
-                        <div id="visual1" class="active visual-slides" data-pager="0" style="height: 770px;">
+                    <div class="slideshow-container">
+                        <div id="visual1" class="visual-slides" data-pager="0" style="height: 770px;">
                             <div id="svg-visual1" style="overflow: hidden;"></div>
                             <div style="margin-top:-25px;">
                                 <p style="font-size: 14.5px; font-weight: bold; margin-top: 15px; margin-bottom: 0px;">This visualisation shows various governance types by country based on the contributed records (number next to country name)</p>
@@ -4968,15 +4958,23 @@
 
         
         // VISUALIZATION SECTION
+        // RANDOMLY DECIDE WHICH VISUALIZATION SHOULD SHOW WHEN PAGE IS INITIALLY LOADED
         let sliderCount = 0;
         $('.visual-slides').each(function(){
             $('#pager').append("<span class='dot' data-target='" + sliderCount + "'></span>");
             sliderCount++;
         });
-        $('#pager .dot').first().addClass('active');
 
         $(window).load(function(){
+            // REMOVE MAP LOADING SCREEN WHEN MAP IS LOADED
             $('#visual-loading-overlay').fadeOut();
+
+            // RANDOMLY DECIDE WHICH VISUALIZATION SHOULD SHOW WHEN PAGE IS INITIALLY LOADED
+            let randomNum = Math.floor(Math.random() * sliderCount);        // GET A RANDOM NUMBER FROM 0 TO NUMBER OF SLIDER
+            $('.visual-slides').eq(randomNum).addClass('active');
+            $('#pager .dot').eq(randomNum).addClass('active');
+
+            // DISPLAY SLIDER
             $('.slideshow-container').css('display','block');
             $('#pager').removeClass('hide');
             $('.visual-carousel-control').removeClass('hide');
