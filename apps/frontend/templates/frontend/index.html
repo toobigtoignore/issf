@@ -596,7 +596,14 @@
                         <button id="next-slide">&#8618;</button>
                     </div>
 
-                    <div id="pager" class="hide"></div>
+                    <div id="pager" class="hide">
+                        <img src="{% static 'img/governance.PNG' %}" alt="Governance" data-target="0">
+                        <img src="{% static 'img/gear.PNG' %}" alt="Gear" data-target="1">
+                        <img src="{% static 'img/bluejustice.PNG' %}" alt="Bluejustice" data-target="2">
+                        <img src="{% static 'img/sota1.PNG' %}" alt="SOTA" data-target="3">
+                        <img src="{% static 'img/researchers.PNG' %}" alt="Researchers" data-target="4">
+                        <img src="{% static 'img/ssfresearch.PNG' %}" alt="SSFResearch" data-target="5">
+                    </div> <!-- /pager -->
                 </div>
             </div>
         </div>
@@ -4959,11 +4966,11 @@
         
         // VISUALIZATION SECTION
         // RANDOMLY DECIDE WHICH VISUALIZATION SHOULD SHOW WHEN PAGE IS INITIALLY LOADED
-        let sliderCount = 0;
-        $('.visual-slides').each(function(){
-            $('#pager').append("<span class='dot' data-target='" + sliderCount + "'></span>");
-            sliderCount++;
-        });
+        let sliderCount = 6;
+        // $('.visual-slides').each(function(){
+        //     $('#pager').append("<span class='dot' data-target='" + sliderCount + "'></span>");
+        //     sliderCount++;
+        // });
 
         $(window).load(function(){
             // REMOVE MAP LOADING SCREEN WHEN MAP IS LOADED
@@ -4972,7 +4979,7 @@
             // RANDOMLY DECIDE WHICH VISUALIZATION SHOULD SHOW WHEN PAGE IS INITIALLY LOADED
             let randomNum = Math.floor(Math.random() * sliderCount);        // GET A RANDOM NUMBER FROM 0 TO NUMBER OF SLIDER
             $('.visual-slides').eq(randomNum).addClass('active');
-            $('#pager .dot').eq(randomNum).addClass('active');
+            $('#pager img').eq(randomNum).addClass('active');
 
             // DISPLAY SLIDER
             $('.slideshow-container').css('display','block');
@@ -4989,7 +4996,7 @@
                 $('.visual-slides.active').removeClass('active');   
                 $('.visual-slides').first().addClass('active');   
             }
-            $('#pager .dot').eq($('.visual-slides.active').data('pager')).addClass('active').siblings().removeClass('active');
+            $('#pager img').eq($('.visual-slides.active').data('pager')).addClass('active').siblings().removeClass('active');
         });
 
         $('#prev-slide').on('click',function(){
@@ -5000,12 +5007,12 @@
                 $('.visual-slides.active').removeClass('active');   
                 $('.visual-slides').last().addClass('active');   
             }
-            $('#pager .dot').eq($('.visual-slides.active').data('pager')).addClass('active').siblings().removeClass('active');
+            $('#pager img').eq($('.visual-slides.active').data('pager')).addClass('active').siblings().removeClass('active');
         });
 
-        $('#pager .dot').on('click',function(){
+        $('#pager img').on('click',function(){
             let $this = $(this);
-            $this.addClass('active').siblings('.dot').removeClass('active');
+            $this.addClass('active').siblings('img').removeClass('active');
             $('.visual-slides').eq($this.data('target')).addClass('active').siblings().removeClass('active');
         });
 
