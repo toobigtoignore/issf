@@ -122,7 +122,8 @@ label textarea {
 /* less than 1850px */
   @media only screen and (max-width: 1850px) {
     .visual-carousel {
-        width: 1000px;
+        width: 100%:;
+        max-width: 1160px;
         margin: 1rem auto;
     }
   }
@@ -2541,6 +2542,7 @@ nav .tabs .active a[tabindex="11"] span {
     margin-left: -5%;
     margin-top: -60px;
     text-shadow: 0 1px 3px #11111185;
+    z-index: 9;
 }
 
 #modal-panel-header span {
@@ -3854,17 +3856,17 @@ table p {
         left: 3px;
         bottom: 8px;
     }
+    
+    #visual-section {
+        display: none;
+    }
 }
 
 
 
 
 @media only screen and (max-width: 575px)
-{
-    #visual-section {
-        display: none;
-    }
-    
+{   
     .info-ctn { 
         margin-bottom: -0px;
     }
