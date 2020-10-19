@@ -221,7 +221,7 @@ label textarea {
     width: 100%;
     text-align: center;
     z-index: 999;
-    background: #fff;
+    background: #268dfb91;
     padding: 20px 0px 25px 0px;
     box-shadow: 2px 2px 5px -1px rgba(0,0,0,.4);
 }
@@ -248,18 +248,33 @@ label textarea {
 }
 
 #pager img {
-  width: 15%;
+  width: 13%;
   border: 1px solid #e3e3e3;
   box-sizing: border-box;
-  padding: 1px;
   height: 86px;
   object-fit: contain;
   cursor: pointer;
+  background: white;
   padding: 2px;
+  box-shadow: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+#pager img:hover {
+  border: 3px solid #2699FB; 
 }
 
 #pager img.active {
-  border: 2px solid #2699fb;
+  border: 3px solid #2699FB;
+  -webkit-filter: brightness(85%);
+  -moz-filter: brightness(85%);
+  -ms-filter: brightness(85%);
+  -o-filter: brightness(85%);
+  filter: brightness(85%);
   box-shadow: 2px 5px 6px 0px rgba(0,0,0,.3);
 }
 
