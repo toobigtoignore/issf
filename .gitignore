@@ -80,3 +80,6 @@ desktop.ini
 docs/_sources/
 docs/.doctrees/
 docs/objects.inv
+
+#credentials
+issf_prod/.env.dist
