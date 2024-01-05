@@ -1,0 +1,89 @@
+.account-container {
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 30px 20px 35px;
+    margin-bottom: 28px;
+}
+
+
+.account-container .trigger-container {
+    float: left;
+    width: 21%;
+}
+
+
+.account-container .trigger-container ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+
+.account-container .trigger-container li {
+    float: left;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 3px;
+    list-style: none;
+    margin-bottom: 12px;
+    margin-left: 5%;
+    cursor: pointer;
+}
+
+
+.account-container .trigger-container li span {
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.account-container .trigger-container li .active {
+    color: #fff;
+    background: #2699FB;
+    border: 1px solid #2699FB;
+}
+
+
+.account-container .content {
+    float: right;
+    width: 78%;
+}
+
+
+
+
+@media only screen and (max-width: 767px) {
+    .account-container {
+        padding: 10px 15px 0px;
+        margin-bottom: 0px;
+    }
+
+
+    .account-container .trigger-container {
+        width: 100%;
+    }
+
+
+    .account-container .trigger-container li {
+        width: auto;
+        margin-left: 0;
+        margin-right: 10px;
+        margin-bottom: 7px;
+    }
+
+
+    .account-container .trigger-container li span {
+        padding: 8px 10px;
+    }
+
+
+    .account-container .content {
+        width: 100%;
+        margin-top: 15px;
+    }
+}

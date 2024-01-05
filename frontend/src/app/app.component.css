@@ -1,0 +1,33 @@
+
+#page-wrapper {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	height: auto;
+}
+
+
+.main-container {
+	position: relative;
+	overflow: hidden;
+	min-height: calc(100vh - 233px);
+	/* background: #fff; */
+}
+
+
+.content-container {
+	width: 100%;
+	max-width: 1360px;
+	margin: auto;
+}
+
+
+#page-footer {
+	display: inline-block;
+	width: 100%;
+	background: #444;
+	box-sizing: border-box;
+    padding: 30px;
+	margin-top: 30px;
+    margin-bottom: -5px;
+}

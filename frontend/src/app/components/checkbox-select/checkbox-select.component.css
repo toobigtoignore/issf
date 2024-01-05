@@ -1,0 +1,23 @@
+.checkbox-select-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 0px 7px 0px;
+    overflow: hidden;
+}
+
+
+.checkbox-select-container .box-label {
+    position: absolute;
+    left: 0;
+    top: -1.5px;
+}
+
+
+.checkbox-select-container .select-box {
+    position: absolute;
+    left: 0;
+    top: -3px;
+}

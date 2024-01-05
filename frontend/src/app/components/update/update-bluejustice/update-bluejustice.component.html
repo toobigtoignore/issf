@@ -1,0 +1,443 @@
+<div class="update-bluejustice">
+    <form
+        [hidden]="activeTab != tabLabels[0]"
+        class="bluejustice-update-form background" 
+        #basicForm
+        (ngSubmit)="onBluejusticeUpdate()"
+    >        
+        <section class="form-input no-margin-top">
+            <label>
+                <span>Small-scale fisheries (SSF) name: <em class="required">*</em></span>
+                <input 
+                    type="text" 
+                    name="ssf_name" 
+                    placeholder="Name of the small-scale fisheries" 
+                    [value]="record.ssf_name" 
+                    required 
+                />
+            </label>
+        </section>
+
+                
+        <section class="form-input">
+            <label class="input-spinner-holder">
+                <span>Select a country for the small-scale fisheries: <em class="required">*</em></span>
+                <img 
+                    *ngIf="!countryList" 
+                    class="input-spinner"
+                    src="../../../../assets/img/icons/loader/loading.gif" 
+                    alt="spinner"
+                />
+                <select name="ssf_country" required>
+                    <option 
+                        *ngFor="let country of countryList" 
+                        [value]="country.country_id"
+                        [innerHTML]="country.short_name"
+                        [selected]="country.short_name == record.ssf_country"
+                    ></option>
+                </select>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Provide a location for the small-scale fisheries (SSF): <em class="required">*</em></span>
+                <input 
+                    type="text" 
+                    name="ssf_location" 
+                    placeholder="Location for the small-scale fisheries" 
+                    [value]="record.ssf_location" 
+                    required 
+                />
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>SSF Main Species</span>
+                <textarea 
+                    name="ssf_main_species" 
+                    placeholder="Please provide the name of some main species..." 
+                    [value]="record.ssf_main_species || ''"
+                ></textarea>
+            </label>
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /bluejustice-update-form -->
+
+    
+    <form
+        [hidden]="activeTab != tabLabels[1]"
+        class="bluejustice-update-form general-info" 
+        #generalForm
+        (ngSubmit)="onBluejusticeUpdate()"
+    >
+        <section class="form-input checkbox-container no-margin-top">
+            <h3>Type of SSF:</h3>
+            <h4>SSF type(s): (select all that apply)</h4>
+            <label *ngFor="let key of ssfTypesKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    [value]="ssfTypes[key]" 
+                    [checked]="inArray(ssfTypes[key], record.ssf_type_list)" 
+                /> 
+                <span [innerHTML]="ssfTypes[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    [checked]="getOtherValue(record.ssf_type_list, ssfTypes)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="ssf_type_other" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.ssf_type_list, ssfTypes) || ''"
+                [ngStyle]="{'display': getOtherValue(record.ssf_type_list, ssfTypes) ? 'block' : 'none' }"
+            />
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <h3>Dominant ecosystems in the location:</h3>
+            <h4>A. Ecosystem type(s): (select ALL that apply)</h4>
+            <label *ngFor="let key of ecoSystemTypesKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    [value]="ecoSystemTypes[key]" 
+                    [checked]="inArray(ecoSystemTypes[key], record.ecosystem_type_list)" 
+                /> 
+                <span [innerHTML]="ecoSystemTypes[key]"></span>
+            </label>
+
+            <h4>B. Ecosystem detailed type(s): (select ALL that apply)</h4>
+            <label *ngFor="let key of ecoSystemDetailKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    [value]="ecoSystemDetail[key]" 
+                    [checked]="inArray(ecoSystemDetail[key], record.ecosystem_detailed_list)" 
+                /> 
+                <span [innerHTML]="ecoSystemDetail[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    [checked]="getOtherValue(record.ecosystem_detailed_list, ecoSystemDetail)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="ecosystem_detailed_other" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.ecosystem_detailed_list, ecoSystemDetail) || ''"
+                [ngStyle]="{'display': getOtherValue(record.ecosystem_detailed_list, ecoSystemDetail) ? 'block' : 'none' }"
+            />
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <h3>SSF term and definition:</h3>
+            <h4>A. Term(s) used to refer to SSF: (select ALL that apply)</h4>
+            <label *ngFor="let key of ssfTermsKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    [value]="ssfTerms[key]" 
+                    [checked]="inArray(ssfTerms[key], record.ssf_terms_list)" 
+                /> 
+                <span [innerHTML]="ssfTerms[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    [checked]="getOtherValue(record.ssf_terms_list, ssfTerms)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="ssf_terms_others" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.ssf_terms_list, ssfTerms) || ''"
+                [ngStyle]="{'display': getOtherValue(record.ssf_terms_list, ssfTerms) ? 'block' : 'none' }"
+            />
+
+            <div class="toggle-container" togglerContainer>
+                <h4>Are small-scale fisheries defined?</h4>
+                <select name="ssf_terms_fisheries" (change)="toggleOnOther($event, definiteAns['YES'])">
+                    <option value="">--------------</option>
+                    <option 
+                        *ngFor="let value of definiteValues"
+                        [value]="value"
+                        [innerHTML]="value"
+                        [selected]="value == record.is_ssf_defined"
+                    ></option>
+                </select>
+
+                <div [hidden]="record.is_ssf_defined != definiteAns['YES']" toggleDisable>
+                    <h4>Provide SSF definition, if applicable: <em class="required">*</em></h4>
+                    <textarea 
+                        name="ssf_terms_fisheries_definiton"
+                        [value]="record.ssf_terms_fisheries_definiton || ''"
+                        [required]="record.is_ssf_defined == definiteAns['YES']"
+                        [disabled]="record.is_ssf_defined != definiteAns['YES']"
+                        toggleOnChange 
+                    ></textarea>
+                </div>
+            </div> <!-- /toggleContainer -->
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <h3>Main gears type(s): (select ALL that apply):</h3>
+            <br>
+            <label *ngFor="let key of mainGearsKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    [value]="mainGears[key]" 
+                    [checked]="inArray(mainGears[key], record.main_gear_types_list)" 
+                /> 
+                <span [innerHTML]="mainGears[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    [checked]="getOtherValue(record.main_gear_types_list, mainGears)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="main_gears_others" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.main_gear_types_list, mainGears) || ''"
+                [ngStyle]="{'display': getOtherValue(record.main_gear_types_list, mainGears) ? 'block' : 'none' }"
+            />
+        </section>
+
+        
+        <section class="form-input text-input-only">
+            <h3>Main vessel type(s),number(s) and engine size:</h3>
+
+            <h4>Type:</h4>
+            <input type="text" name="main_vessel_type" [value]="record.main_vessel_type" /> 
+            
+            <h4>Number:</h4>
+            <input type="text" name="main_vessel_number" [value]="record.main_vessel_number" /> 
+            
+            <h4>Engine (HP):</h4>
+            <input type="text" name="main_vessel_engine" [value]="record.main_vessel_engine" /> 
+        </section>
+
+        
+        <section class="form-input text-input-only">
+            <h3>Number of SS fishers:</h3>
+
+            <h4>A. Total number of SS fishers:</h4>
+            <input type="text" name="ss_fishers_numbers" [value]="record.ss_fishers_numbers" /> 
+            
+            <h4>B. % of full-time:</h4>
+            <input type="text" name="ss_fishers_full_time" [value]="record.ss_fishers_full_time" /> 
+            
+            <h4>C. % of fisher women:</h4>
+            <input type="text" name="ss_fishers_women" [value]="record.ss_fishers_women" /> 
+        </section>
+
+        
+        <section class="form-input text-input-only no-border">
+            <h3>Number of all households and SS households in the location:</h3>
+
+            <h4>A. Total number of households in the location:</h4>
+            <input type="text" name="total_number_households" [value]="record.total_number_households" /> 
+            
+            <h4>B. % of households participating in SSF:</h4>
+            <input type="text" name="households_participation_percentage" [value]="record.households_participation_percentage" /> 
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /bluejustice-update-form -->
+
+    
+    <form
+        [hidden]="activeTab != tabLabels[2]"
+        class="bluejustice-update-form social-equity-issues" 
+        #socialJusticeForm
+        (ngSubmit)="onBluejusticeUpdate()"
+    >
+        <section class="form-input text-input-only no-margin-top">
+            <h3>Background about SSF:</h3>
+            <textarea 
+                name="background_about_ssf"
+                [value]="record.background_about_ssf || ''"
+            ></textarea>
+        </section>
+
+
+        <section class="form-input text-input-only">
+            <h3>Justice in Context:</h3>
+            <textarea 
+                name="justice_in_context"
+                [value]="record.justice_in_context || ''"
+            ></textarea>
+        </section>
+
+
+        <section class="form-input checkbox-container">
+            <h3>Type of Justice:</h3>
+            <h4>Justice type(s): (select all that apply)</h4>
+            <label *ngFor="let key of justiceTypesKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    [value]="justiceTypes[key].label" 
+                    [checked]="inArray(justiceTypes[key].label, record.justice_types_list)" 
+                /> 
+                <span [innerHTML]="justiceTypes[key].label + ' ' + justiceTypes[key].additionalText"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    [checked]="getOtherValue(record.justice_types_list, justiceTypesLabels)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="types_of_justice_others" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.justice_types_list, justiceTypesLabels) || ''"
+                [ngStyle]="{'display': getOtherValue(record.justice_types_list, justiceTypesLabels) ? 'block' : 'none' }"
+            />
+        </section>
+
+
+        <section class="form-input text-input-only">
+            <h3>Dealing with justice:</h3>
+            <textarea 
+                name="dealing_with_justice"
+                [value]="record.dealing_with_justice || ''"
+            ></textarea>
+        </section>
+
+
+        <section class="form-input">
+            <h3>Sources:</h3>
+            <h4>List all sources used to complete this template on "Blue Justice for Small-Scale Fisheries"</h4>
+            <textarea 
+                name="social_justice_source"
+                [value]="record.social_justice_source || ''"
+            ></textarea>
+        </section>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /bluejustice-update-form -->
+
+    
+    <form
+        [hidden]="activeTab != tabLabels[3]"
+        class="bluejustice-update-form image-pdf"
+        #imageForm
+        (ngSubmit)="onBluejusticeUpdate()"
+    >   
+        <fieldset class="bluejustice-image">
+            <legend>Image</legend>
+            
+            <section class="form-input image-section no-margin-top">
+                <div *ngIf="record.photo_upload_url" class="image-container">
+                    <img 
+                        src="https://www.campbellrivermirror.com/wp-content/uploads/2021/04/24883656_web1_CP121738206.jpg" 
+                        alt="Record Image" 
+                    />
+                    <span (click)="removeImage($event)">X</span>
+                </div> <!-- image-container -->
+
+                
+                <br>
+                <label>
+                    <span [innerHTML]="record.photo_upload_url ? 'Upload a new photo:' : 'Upload a photo:'"></span>
+                    <input 
+                        type="file" 
+                        name="photo_upload" 
+                        (change)="processImage($event)" 
+                    />
+                    <input 
+                        #imageAction
+                        hidden="true"
+                        type="hidden"
+                        name="image_action"
+                        [value]="imageActionKey"
+                    />
+                </label>
+            </section>
+
+
+            <section class="form-input">
+                <label>
+                    <span>When the photo was taken: </span>
+                    <input type="text" name="date_of_photo" placeholder="Date/time or any information that might describe the time when photo was taken" [value]="record.date_of_photo" />
+                </label>
+            </section>
+    
+            
+            <section class="form-input">
+                <label>
+                    <span>Location where the photo was taken: </span>
+                    <input type="text" name="photo_location" placeholder="Where this photo was taken" [value]="record.photo_location" />
+                </label>
+            </section>
+    
+            
+            <section class="form-input">
+                <label>
+                    <span>Name of the photographer: </span>
+                    <input type="text" name="photographer" placeholder="Name of the photographer" [value]="record.photographer" />
+                </label>
+            </section>
+        </fieldset> <!-- /bluejustice-image -->
+
+        
+        <fieldset class="bluejustice-pdf">
+            <legend>PDF</legend>
+            <section class="form-input no-margin-top">
+                <label>
+                    <span>Please provide a pdf link if you have any (direct link only): </span>
+                    <input type="text" name="bluejustice_pdf" placeholder="Direct link to any pdf that might be relevant" [value]="record.pdf" />
+                </label>
+            </section>
+        </fieldset> <!-- /bluejustice-pdf -->
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /bluejustice-update-form -->
+</div> <!-- /update-bluejustice -->

@@ -1,0 +1,51 @@
+<div class="table-type-input species-link-container">
+    <table>
+        <thead>
+            <tr>
+                <th [innerHTML]="label1"></th>
+                <th [innerHTML]="label2"></th>
+            </tr>
+        </thead>
+        
+        <tbody #valueSet>
+            <tr *ngFor="let value of values">
+                <td>
+                    <input 
+                        *ngIf="field1Type === types['INPUT']" 
+                        type="text" 
+                        [name]="field1" 
+                        [value]="value[0] || ''" 
+                        placeholder="{{ label1 }} ..." 
+                    />
+                    <select *ngIf="field1Type === types['SELECT']" [name]="field1">
+                        <option 
+                            *ngFor="let option of optionValues" 
+                            [value]="option"
+                            [selected]="option == value.link_type"
+                            [innerHTML]="option"
+                        ></option>
+                    </select>
+                </td>
+                <td>
+                    <input 
+                        type="text" 
+                        [name]="field2" 
+                        [value]="value[1] || value.link_address || ''"
+                        placeholder="{{ label2 }} ..." 
+                    />
+                </td>
+                <td><span class="btn" (click)="onRemoveSection($event)">__</span></td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <span 
+                class="add-more" 
+                (click)="onAddAnother($event)"
+            >
+                <mat-icon>add_circle_outline</mat-icon>
+                Add another
+            </span>
+        </tfoot>
+    </table>
+</div> <!-- /species-link-container -->

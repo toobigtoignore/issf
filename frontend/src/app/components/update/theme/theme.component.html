@@ -1,0 +1,160 @@
+<div class="themes-issues-container">
+    <div class="theme-section toggle-container">
+        <section class="form-input checkbox-container no-margin-top">
+            <label class="header-label">
+                <span>Economic (select ALL that apply):</span>
+            </label>
+            
+            <label *ngFor="let index of themeEconomicsOptions">
+                <input 
+                    type="checkbox" 
+                    name="theme_issue_value_ids[]"
+                    [checked]="inArray(themeEconomics.options[index].title, themes['Economic'])" 
+                    [value]="themeEconomics.options[index].value" 
+                /> 
+                <span [innerHTML]="themeEconomics.options[index].title"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox"
+                    name="theme_issue_value_ids[]"
+                    (click)="toggleOther($event)"
+                    [checked]="getOtherValue(themes['Economic'], objectsToArray(themeEconomics.options, 'title'))" 
+                    [value]="themeEconomics.other.value"
+                /> 
+                <span [innerHTML]="themeEconomics.other.title"></span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="economic_other" 
+                [required]="getOtherValue(themes['Economic'], objectsToArray(themeEconomics.options, 'title'))"
+                placeholder="Please specify ..."
+                [value]="getOtherValue(themes['Economic'], objectsToArray(themeEconomics.options, 'title')) || ''"
+                [ngStyle]="{'display': getOtherValue(themes['Economic'], objectsToArray(themeEconomics.options, 'title')) ? 'block' : 'none' }"
+            />
+        </section>
+    </div> <!-- /theme-section -->
+
+    
+    <div class="theme-section toggle-container">
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Ecological (select ALL that apply):</span>
+            </label>
+            
+            <label *ngFor="let index of themeEcologicalOptions">
+                <input 
+                    type="checkbox" 
+                    name="theme_issue_value_ids[]"
+                    [checked]="inArray(themeEcological.options[index].title, themes['Ecological'])" 
+                    [value]="themeEcological.options[index].value" 
+                /> 
+                <span [innerHTML]="themeEcological.options[index].title"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    name="theme_issue_value_ids[]"
+                    (click)="toggleOther($event)"
+                    [checked]="getOtherValue(themes['Ecological'], objectsToArray(themeEcological.options, 'title'))" 
+                    [value]="themeEcological.other.value"
+                /> 
+                <span [innerHTML]="themeEcological.other.title"></span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="ecological_other" 
+                [required]="getOtherValue(themes['Ecological'], objectsToArray(themeEcological.options, 'title'))"
+                placeholder="Please specify ..."
+                [value]="getOtherValue(themes['Ecological'], objectsToArray(themeEcological.options, 'title')) || ''"
+                [ngStyle]="{'display': getOtherValue(themes['Ecological'], objectsToArray(themeEcological.options, 'title')) ? 'block' : 'none' }"
+            />
+        </section>
+    </div> <!-- /theme-section -->
+
+    
+    <div class="theme-section toggle-container">
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Social/Cultural (select ALL that apply):</span>
+            </label>
+            
+            <label *ngFor="let index of themeSocialsOptions">
+                <input 
+                    type="checkbox"
+                    name="theme_issue_value_ids[]"
+                    [checked]="inArray(themeSocials.options[index].title, themes['Social/Cultural'])" 
+                    [value]="themeSocials.options[index].value" 
+                /> 
+                <span [innerHTML]="themeSocials.options[index].title"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox"
+                    name="theme_issue_value_ids[]"
+                    (click)="toggleOther($event)"
+                    [checked]="getOtherValue(themes['Social/Cultural'], objectsToArray(themeSocials.options, 'title'))" 
+                    [value]="themeSocials.other.value"
+                /> 
+                <span [innerHTML]="themeSocials.other.title"></span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="social_cultural_other" 
+                [required]="getOtherValue(themes['Social/Cultural'], objectsToArray(themeSocials.options, 'title'))"
+                placeholder="Please specify ..."
+                [value]="getOtherValue(themes['Social/Cultural'], objectsToArray(themeSocials.options, 'title')) || ''"
+                [ngStyle]="{'display': getOtherValue(themes['Social/Cultural'], objectsToArray(themeSocials.options, 'title')) ? 'block' : 'none' }"
+            />
+        </section>
+    </div> <!-- /theme-section -->
+
+    
+    <div class="theme-section toggle-container">
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Governance (select ALL that apply):</span>
+            </label>
+            
+            <label *ngFor="let index of themeGovernanceOptions">
+                <input 
+                    type="checkbox"
+                    name="theme_issue_value_ids[]"
+                    [checked]="inArray(themeGovernance.options[index].title, themes['Governance'])" 
+                    [value]="themeGovernance.options[index].value" 
+                /> 
+                <span [innerHTML]="themeGovernance.options[index].title"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox"
+                    name="theme_issue_value_ids[]"
+                    (click)="toggleOther($event)"
+                    [checked]="getOtherValue(themes['Governance'], objectsToArray(themeGovernance.options, 'title'))" 
+                    [value]="themeGovernance.other.value"
+                /> 
+                <span [innerHTML]="themeGovernance.other.title"></span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="governance_other" 
+                [required]="getOtherValue(themes['Governance'], objectsToArray(themeGovernance.options, 'title'))"
+                placeholder="Please specify ..."
+                [value]="getOtherValue(themes['Governance'], objectsToArray(themeGovernance.options, 'title')) || ''"
+                [ngStyle]="{'display': getOtherValue(themes['Governance'], objectsToArray(themeGovernance.options, 'title')) ? 'block' : 'none' }"
+            />
+        </section>
+    </div> <!-- /theme-section -->
+</div> <!-- /theme-issues-container -->

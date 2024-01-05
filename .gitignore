@@ -1,0 +1,20 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# frontend 
+# compiled output
+/frontend/dist
+
+# cache
+/frontend/.angular
+
+# dependencies
+/frontend/node_modules
+/frontend/package-lock.json
+
+
+# backend
+# prod configuration
+/backend/.env-prod
+
+# dependencies
+/backend/composer.lock

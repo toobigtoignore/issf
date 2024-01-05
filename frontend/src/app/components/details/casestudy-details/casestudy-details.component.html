@@ -1,0 +1,97 @@
+
+<div class="casestudy-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Case study name</th>
+                <td [innerHTML]="caseData.name"></td>
+            </tr>
+
+            <tr>
+                <th>Your role in the case study</th>
+                <td [innerHTML]="caseData.role"></td>
+            </tr>
+
+            <tr>
+                <th>Contribution date</th>
+                <td [innerHTML]="getFormattedDate(caseData.core?.contribution_date, '-')"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details contains-description">
+        <section>
+            <h3>Background and context:</h3>
+            <div [innerHTML]="caseData.background_context.replaceAll('\n','<br>')"></div>
+        </section>
+
+        <section>
+            <h3>Area description:</h3>
+            <div [innerHTML]="caseData.description_area.replaceAll('\n','<br>')"></div>
+        </section>
+
+        <section>
+            <h3>Fishery description:</h3>
+            <div [innerHTML]="caseData.description_fishery.replaceAll('\n','<br>')"></div>
+        </section>
+
+        <section>
+            <h3>Issues description:</h3>
+            <div [innerHTML]="caseData.description_issues.replaceAll('\n','<br>')"></div>
+        </section>
+
+        <section>
+            <h3>Stakeholders involved:</h3>
+            <div [innerHTML]="caseData.stakeholders.replaceAll('\n','<br>')"></div>
+        </section>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[2]" class="accordion-details contains-description">
+        <section>
+            <h3>Key activities/innovation:</h3>
+            <div [innerHTML]="caseData.activities_innovation.replaceAll('\n','<br>')"></div>
+        </section>
+
+        <section>
+            <h3>Issues addressed?/Remaining challenges:</h3>
+            <div [innerHTML]="caseData.issues_challenges.replaceAll('\n','<br>')"></div>
+        </section>
+
+        <section>
+            <h3>Was the transdisciplinary perspective applied?:</h3>
+            <div [innerHTML]="caseData.transdisciplinary.replaceAll('\n','<br>')"></div>
+        </section>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[3]"
+        class="accordion-details contributors-info"
+    >
+        <table>
+            <tr>
+                <th>Name of Contributor</th>
+                <td>
+                    <a target="blank" [href]="caseData.person_link" [innerHTML]="getContributorName()"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>E-mail Address</th>
+                <td [innerHTML]="caseData.core?.user?.email"></td>
+            </tr>
+
+            <tr>
+                <th>Affiliation</th>
+                <td [innerHTML]="caseData.contributor_affiliation"></td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="caseData.core?.user?.country?.short_name"></td>
+            </tr>
+        </table>
+    </div>
+</div> <!-- /casestudy-accordions-->

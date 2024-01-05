@@ -1,0 +1,46 @@
+
+<!-- Content for right block of profile panel -->
+<div *ngIf="showProfilePanel" class="block-container">
+    <div class="progress-bar-container">
+        <div class="progress-bar" [ngStyle]="{'border': '1px solid ' + panelColor}">
+            <span class="progress-text">{{ data.percent }}% Completed</span>
+            <p class="progress-completed"
+            [ngStyle]="{
+                'width': data.percent + '%',
+                'background-color': panelColor
+                }"
+            ></p>
+        </div>
+    </div>
+    <!-- /progress-bar-container -->
+
+
+    <section *ngIf="data.img_url" class="profile-image">
+        <h3 [ngStyle]="{'background': panelColor}">Image</h3>
+        <img
+            [src]="data.img_url"
+            alt="Record Image"
+        />
+    </section> <!-- /profile-image -->
+</div>
+
+
+<!-- Content for right block of bluejustice panel -->
+<div *ngIf="showBluejusticePanel" class="block-container">
+    <a
+        *ngIf="data.bluejustice_pdf"
+        [href]="data.bluejustice_pdf"
+        target="blank"
+    >
+        <button class="full-link">Download PDF</button>
+    </a>
+
+
+    <section *ngIf="data.uploaded_img && data.uploaded_img !==''" class="bluejustice-image">
+        <h3 [ngStyle]="{'background': panelColor}">Image</h3>
+        <img
+            [src]="imageUrl + '/' + data.uploaded_img"
+            alt="Record Image"
+        />
+    </section> <!-- /bluejustice-image -->
+</div>

@@ -1,0 +1,35 @@
+
+<mat-form-field class="combobox-container-across-components">
+    <mat-label class="input-label"> {{ placeholderValue }} </mat-label>
+    
+    
+    <label>
+        <span class="caret-down">&#x25BE;</span>
+        <input 
+            #comboInput
+            matInput 
+            (keyup)="placeholderValue = ''"
+            (focusout)="onFocusOut()"
+            (focus)="inputCtrl.reset()"
+            [matAutocomplete]="auto" 
+            [formControl]="inputCtrl"
+        />
+    </label>
+    
+    
+    <mat-autocomplete 
+        #autoCompleteSelect
+        #auto="matAutocomplete" 
+        class="autocomplete-container" 
+        (optionSelected)='getOptionValue($event.option.value)'
+    >
+        <mat-option 
+            class="option-value" 
+            *ngFor="let item of filtered | async" 
+            [value]="item[optionValue]"
+        >
+            <img class="option-img" [src]="item[iconKey]" *ngIf="iconKey">
+            <span>{{ item[optionLabel] }}</span>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

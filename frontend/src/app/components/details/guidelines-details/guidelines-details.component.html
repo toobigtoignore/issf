@@ -1,0 +1,86 @@
+
+<div class="guidelines-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Title</th>
+                <td [innerHTML]="guidelinesData.title"></td>
+            </tr>
+
+            <tr>
+                <th>Activity type</th>
+                <td [innerHTML]="guidelinesData.activity_type"></td>
+            </tr>
+
+            <tr>
+                <th>Activity coverage</th>
+                <td [innerHTML]="guidelinesData.activity_coverage"></td>
+            </tr>
+
+            <tr>
+                <th>Location</th>
+                <td [innerHTML]="guidelinesData.location"></td>
+            </tr>
+
+            <tr>
+                <th>Organizer</th>
+                <td [innerHTML]="guidelinesData.organizer"></td>
+            </tr>
+
+            <tr>
+                <th>Purpose</th>
+                <td [innerHTML]="guidelinesData.purpose"></td>
+            </tr>
+
+            <tr>
+                <th>Time frame</th>
+                <td [innerHTML]="getTimeframe()"></td>
+            </tr>
+
+            <tr>
+                <th>Contribution date</th>
+                <td [innerHTML]="getFormattedDate(guidelinesData?.core?.contribution_date, '-')"></td>
+            </tr>
+
+            <tr>
+                <th>Link</th>
+                <td class="link-holder">
+                    <a  [href]="guidelinesData.link"
+                        [innerHTML]="guidelinesData.link"
+                        target="_blank"
+                    ></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[1]"
+        class="accordion-details contributors-info"
+    >
+        <table>
+            <tr>
+                <th>Name of Contributor</th>
+                <td>
+                    <a target="blank" [href]="guidelinesData.person_link" [innerHTML]="getContributorName()"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>E-mail Address</th>
+                <td [innerHTML]="guidelinesData.core?.user?.email"></td>
+            </tr>
+
+            <tr>
+                <th>Affiliation</th>
+                <td [innerHTML]="guidelinesData.contributor_affiliation"></td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="guidelinesData.core?.user?.country?.short_name"></td>
+            </tr>
+        </table>
+    </div>
+</div> <!-- /guidelines-accordions-->

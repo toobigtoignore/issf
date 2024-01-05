@@ -1,0 +1,201 @@
+<div class="update-guidelines">
+    <form
+        [hidden]="activeTab != tabLabels[0]"
+        class="guidelines-update-form"
+        #basicForm
+        (ngSubmit)="onGuidelinesUpdate()"
+        togglerContainer
+    >
+        <section class="form-input">
+            <label>
+                <span>Title of the Record: <em class="required">*</em></span>
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Title of the Record"
+                    [value]="record.title"
+                    required
+                />
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Activity Type: <em class="required">*</em></span>
+                <select name="activity_type" [value]="record.activity_type" required>
+                    <option value="Conference">Conference</option>
+                    <option value="Journal Article">Journal Article</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="National Plan">National Plan</option>
+                    <option value="Network">Network</option>
+                    <option value="Newsletter">Newsletter</option>
+                    <option value="Regional Programme">Regional Programme</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Research">Research</option>
+                    </select>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Activity Coverage: <em class="required">*</em></span>
+                <select name="activity_coverage" [value]="record.activity_coverage" required>
+                    <option value="Regional">Regional</option>
+                    <option value="National">National</option>
+                    <option value="International">International</option>
+                    <option value="Global">Global</option>
+                    </select>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Location: <em class="required">*</em></span>
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Location"
+                    [value]="record.location"
+                    required
+                />
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Organizer: <em class="required">*</em></span>
+                <input
+                    type="text"
+                    name="organizer"
+                    placeholder="Organizer"
+                    [value]="record.organizer"
+                    required
+                />
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Purpose: <em class="required">*</em></span>
+                <textarea
+                    name="purpose"
+                    placeholder="Purpose"
+                    [value]="record.purpose"
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Start Date: <em class="required">*</em></span>
+                <div class="date-month">
+                    <select name="start_year" required>
+                        <option
+                            *ngFor="let year of years"
+                            [value]="year"
+                            [innerHTML]="year"
+                            [selected]="record.start_year === year"
+                        ></option>
+                    </select>
+
+
+                    <select name="start_month" required>
+                        <option
+                            *ngFor="let month of months"
+                            [value]="month.num"
+                            [innerHTML]="month.name"
+                            [selected]="record.start_month === month.num"
+                        ></option>
+                    </select>
+
+
+                    <select name="start_day" required>
+                        <option
+                            *ngFor="let c of counter(31); let i = index"
+                            [value]="i+1"
+                            [innerHTML]="i+1"
+                            [selected]="record.start_day === i+1"
+                        ></option>
+                    </select>
+                </div> <!-- /date-month -->
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Ongoing? <em class="required">*</em></span>
+                <select
+                    name="ongoing"
+                    (change)="toggleOnOther($event, 'No')"
+                    [value]="record.ongoing"
+                    required
+                >
+                    <option value="" disabled hidden selected>Select One that Applies</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </label>
+        </section>
+
+
+        <section class="form-input" [hidden]="record.ongoing === 'Yes'" toggleDisable>
+            <label>
+                <span>End Date: <em class="required">*</em></span>
+                <div class="date-month">
+                    <select name="end_year" required toggleOnChange [disabled]="record.ongoing !== 'No'">
+                        <option
+                            *ngFor="let year of years"
+                            [value]="year"
+                            [innerHTML]="year"
+                            [selected]="record.end_year === year"
+                        ></option>
+                    </select>
+
+
+                    <select name="end_month" required toggleOnChange [disabled]="record.ongoing !== 'No'">
+                        <option
+                            *ngFor="let month of months"
+                            [value]="month.num"
+                            [innerHTML]="month.name"
+                            [selected]="record.end_month === month.num"
+                        ></option>
+                    </select>
+
+
+                    <select name="end_day" required toggleOnChange [disabled]="record.ongoing !== 'No'">
+                        <option
+                            *ngFor="let c of counter(31); let i = index"
+                            [value]="i+1"
+                            [innerHTML]="i+1"
+                            [selected]="record.end_day === i+1"
+                        ></option>
+                    </select>
+                </div> <!-- /date-month -->
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Link</span>
+                <input
+                    type="text"
+                    name="link"
+                    placeholder="Link to find more details"
+                    [value]="record.link"
+                />
+            </label>
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /guidelines-update-form -->
+</div> <!-- /update-guidelines -->

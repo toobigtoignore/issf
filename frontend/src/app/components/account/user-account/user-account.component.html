@@ -1,0 +1,102 @@
+
+<div *ngIf="userInfo && usersContributions" class="profile-form">
+    <fieldset>
+        <legend>Account</legend>
+        <form *ngIf="showForm" #accountForm>
+            <div *ngIf="updateResponse" class="update-msg">
+                <section [class]="updateResponse['status'] === 'success' ? 'update-successful' : 'update-error'">
+                    <mat-icon
+                        class="icon"
+                        [innerHTML]="updateResponse['status'] === 'success' ? 'check_circle' : 'error_outline'"
+                    ></mat-icon>
+                    <span [innerHTML]="updateResponse['message']"></span>
+                </section>
+            </div> <!-- /update-msg -->
+
+
+            <label>
+                <span>First Name <em class="required">*</em></span>
+                <input type="text" name="first_name" [value]="userInfo.first_name" required />
+            </label>
+
+
+            <label>
+                <span>Middle Name Initial</span>
+                <input type="text" name="initials" [value]="userInfo.initials" />
+            </label>
+
+
+            <label>
+                <span>Last Name <em class="required">*</em></span>
+                <input type="text" name="last_name" [value]="userInfo.last_name" required />
+            </label>
+
+
+            <label>
+                <span>Country of Residence <em class="required">*</em></span>
+                <select name="country_id" *ngIf="countryList" required>
+                    <option value="">--------------</option>
+                    <option
+                        *ngFor="let country of countryList"
+                        [value]="country.country_id"
+                        [innerHTML]="country.short_name"
+                        [selected]="userInfo.country_id == country.country_id"
+                    ></option>
+                </select>
+            </label>
+
+
+            <div>
+                <button type="submit" (click)="onAccountUpdate()">Save</button>
+                <button class="cancel-form" (click)="showForm = false; updateResponse = null">Cancel</button>
+            </div>
+        </form>
+
+
+        <section *ngIf="!showForm">
+            <table>
+                <tr><th class="cell-header" colspan="2">User Information</th></tr>
+
+                <tr>
+                    <th>Name</th>
+                    <td [innerHTML]="userInfo.first_name + ' ' + userInfo.initials + ' ' + userInfo.last_name"></td>
+                </tr>
+
+                <tr>
+                    <th>Email Address</th>
+                    <td [innerHTML]="userInfo.email"></td>
+                </tr>
+
+                <tr>
+                    <th>Username</th>
+                    <td [innerHTML]="userInfo.username"></td>
+                </tr>
+
+                <tr>
+                    <th>Country of Residence</th>
+                    <td [innerHTML]="userInfo.country?.short_name"></td>
+                </tr>
+
+                <tr>
+                    <th>Date Joined</th>
+                    <td [innerHTML]="userInfo.date_joined.split(' ')[0]"></td>
+                </tr>
+            </table>
+
+            <button (click)="showForm = true; updateResponse = null">Edit Account</button>
+        </section>
+
+
+    </fieldset>
+
+
+    <div class="contribution-by-panel">
+        <h3>Contributions by Record Type</h3>
+        <ul>
+            <li *ngFor="let recordType of recordTypes; let i = index">
+                <img [src]="getPanelIcon(recordType)" [alt]="recordType">
+                <strong [innerHTML]="recordType + ': ' + contributionsByType[recordType]"></strong>
+            </li>
+        </ul>
+    </div> <!-- /contribution-by-panel -->
+</div> <!-- /profile-form -->

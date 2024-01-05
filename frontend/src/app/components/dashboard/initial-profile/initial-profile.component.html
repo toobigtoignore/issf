@@ -1,0 +1,72 @@
+<div 
+	*ngIf="isLoggedIn && incompleteProfile"
+	class="incomplete-user-profile"
+	#initialProfile
+>
+	<form 
+        #userAccountForm
+        (ngSubmit)="onUserProfileUpdate()"
+    >
+		<h1>Please complete your profile before proceeding</h1>
+        
+
+        <div *ngIf="updateResponse" class="update-msg">
+            <section [class]="updateResponse['status'] === 'success' ? 'update-successful' : 'update-error'">
+                <mat-icon 
+                    class="icon" 
+                    [innerHTML]="updateResponse['status'] === 'success' ? 'check_circle' : 'error_outline'"
+                ></mat-icon> 
+                <span [innerHTML]="updateResponse['message']"></span>
+            </section>
+        </div> <!-- /update-msg -->
+
+
+		<div class="form-box">
+			<label for="first-name">First Name: <em class="required">*</em></label>
+			<input id="first-name" type="text" name="first_name" placeholder="Your first name ..." required>
+		</div> <!-- /form-box -->
+		
+
+		<div class="form-box">
+			<label for="initials">Middle Name/Initials: </label>
+			<input id="initials" type="text" name="initials" placeholder="Your middle name/initials ...">
+		</div> <!-- /form-box -->
+		
+
+		<div class="form-box">
+			<label for="last-name">Last Name: <em class="required">*</em></label>
+			<input id="last-name" type="text" name="last_name" placeholder="Your last name ..." required>
+		</div> <!-- /form-box -->
+
+		
+		<div class="form-box">
+			<label class="input-spinner-holder">
+				Select Your Country of Residence: 
+				<em class="required">*</em>
+			</label>
+			<img 
+				*ngIf="!countryList" 
+				class="input-spinner"
+				src="../../../assets/img/icons/loader/loading.gif" 
+				alt="spinner"
+			/>
+			<select name="country" required>
+				<option value="">--------------</option>
+				<option 
+					*ngFor="let country of countryList" 
+					[value]="country.country_id"
+					[innerHTML]="country.short_name"
+				></option>
+			</select>
+		</div>
+
+		<button *ngIf="!accountUpdated" type="submit">Submit</button>
+
+		<button
+			*ngIf="accountUpdated"
+			type="button"
+			class="proceeding-link"
+			(click)="removeModal()"
+		>Continue</button>
+	</form>
+</div> <!-- /incomplete-user-profile -->

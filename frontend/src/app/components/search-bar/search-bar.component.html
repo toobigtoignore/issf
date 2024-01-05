@@ -1,0 +1,154 @@
+
+<div
+    *ngIf="showDetailSearch"
+    class="search-overlay"
+    (click)="showDetailSearch = false"
+></div>
+
+
+<form
+    class="search-box"
+    [ngClass]="{'search-box-selected' : showDetailSearch}"
+>
+    <div class="input-box full-width search-bar">
+        <input
+            type="text"
+            name="title"
+            [placeholder]="showDetailSearch ? 'Record Title ...' : 'Search ISSF database ...'"
+            (focus)="showDetailSearch = true"
+            [(ngModel)]="title"
+        >
+    </div> <!-- /input-box -->
+
+
+    <div class="detail-form" *ngIf="showDetailSearch">
+        <div class="input-box half-width">
+            <app-combo-box
+                *ngIf="panelList"
+                role="combo-box"
+                (comboBoxUpdated)="setPanelInfo($event)"
+                [list]="panelList"
+                [boxLabel]="'Choose One or More Record Types'"
+                [optionLabel]="'label'"
+                [optionValue]="'code'"
+                [iconKey]="'icon'"
+                [ngStyle]="{
+                    'border': '1px solid #ccc',
+                    'border-radius':'3px'
+                }"
+            >
+            </app-combo-box>
+        </div> <!-- /input-box -->
+
+
+        <div class="input-box half-width">
+            <app-combo-box
+                *ngIf="contributorsList != undefined"
+                role="combo-box"
+                (comboBoxUpdated)="setContributors($event)"
+                [list]="contributorsList"
+                [boxLabel]="'Choose One or More Contributors'"
+                [optionLabel]="'full_name'"
+                [optionValue]="'id'"
+                [ngStyle]="{
+                    'border': '1px solid #ccc',
+                    'border-radius':'3px'
+                }"
+            >
+            </app-combo-box>
+        </div> <!-- /input-box -->
+
+
+        <div class="input-box half-width">
+            <app-combo-box
+                *ngIf="countriesList != undefined; else loadingCountries"
+                role="combo-box"
+                (comboBoxUpdated)="setCountries($event)"
+                [list]="countriesList"
+                [boxLabel]="'Choose One or More Countries'"
+                [optionLabel]="'short_name'"
+                [optionValue]="'country_id'"
+                [ngStyle]="{
+                    'border': '1px solid #ccc',
+                    'border-radius':'3px'
+                }"
+            >
+            </app-combo-box>
+        </div> <!-- /input-box -->
+
+
+        <div class="input-box quarter-width">
+            <span class="caret-down">&#x25BE;</span>
+            <select name="startYear" [(ngModel)]="startYear">
+                <option value="" disabled hidden selected>Start Year</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+        </div> <!-- /input-box -->
+
+
+        <div class="input-box quarter-width">
+            <span class="caret-down">&#x25BE;</span>
+            <select name="endYear" [(ngModel)]="endYear">
+                <option value="" disabled hidden selected>End Year</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+        </div> <!-- /input-box -->
+
+
+        <div class="selected-values">
+            <div class="panels" *ngIf="selectedPanels.length > 0">
+                <h3>Selected Panels: </h3>
+                <section class="chips">
+                    <span *ngFor="let panel of selectedPanels">
+                        {{ panel.label }}
+                        <em (click)="removeFromList(panel.code, selectedPanels, 'code')">x</em>
+                    </span>
+                </section>
+            </div>
+
+
+            <div class="contributors" *ngIf="selectedContributors.length > 0">
+                <h3>Selected Contributors: </h3>
+                <section class="chips">
+                    <span *ngFor="let contributor of selectedContributors">
+                        {{ contributor.name }}
+                        <em (click)="removeFromList(contributor.id, selectedContributors, 'id')">x</em>
+                    </span>
+                </section>
+            </div>
+
+
+            <div class="countries" *ngIf="selectedCountries.length > 0">
+                <h3>Selected Countries: </h3>
+                <section class="chips">
+                    <span *ngFor="let country of selectedCountries">
+                        {{ country.name }}
+                        <em (click)="removeFromList(country.country_id, selectedCountries, 'country_id')">x</em>
+                    </span>
+                </section>
+            </div>
+        </div> <!-- /selected-values -->
+
+
+        <button
+            class="search-button"
+            (click)="submitSearch()"
+        >
+            Search
+            <mat-icon
+                role="img"
+                class="mat-icon material-icons mat-icon-no-color"
+                data-mat-icon-type="font">
+                search
+            </mat-icon>
+        </button>
+    </div> <!-- /detail-form -->
+</form> <!-- /search-box -->

@@ -1,0 +1,831 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+	height: 100%;
+}
+
+
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	background-color: #f5f8ff
+}
+
+
+a {
+	color: #2699FB;
+	text-decoration: none;
+}
+
+
+.no-margin-left {
+    margin-left: 0 !important;
+}
+
+
+.no-margin-right {
+    margin-right: 0 !important;
+}
+
+
+.no-margin-top {
+    margin-top: 0 !important;
+}
+
+
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
+
+.no-margin {
+    margin: 0;
+}
+
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    /* background: rgba(0,0,0,.8); */
+    background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    cursor: pointer;
+}
+
+
+.required {
+    background-color: transparent;
+    color: red;
+    font-style: italic;
+}
+
+
+*[required]:after {
+    content: "*";
+    color: red;
+    margin-left: 2px;
+}
+
+
+button {
+	width: 90px;
+	height: 35px;
+	font-size: 15px;
+	background: #2699FB;
+	color: #fff;
+	border: 1px solid #428ECE;
+	border-radius: 6px;
+	cursor: pointer;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+
+button:active {
+    border: 2px solid #000;
+}
+
+
+button[disabled="disabled"] {
+	background: #9BCDF7;
+	cursor: not-allowed;
+}
+
+
+.mat-toolbar {
+	background-color: #f5f8ff;
+}
+
+
+.mat-sort-header-content {
+    text-align: left !important;
+}
+
+
+.mat-sort-header-stem,
+.mat-sort-header-pointer-left,
+.mat-sort-header-pointer-middle,
+.mat-sort-header-pointer-right {
+    color: #fff !important;
+}
+
+
+.shadowed-box {
+	box-shadow: 1px 1px 1px 1px rgba(0,0,0,.1);
+}
+
+
+table {
+    width: 100%;
+    text-align: left;
+    border: 1px solid #e3e3e3;
+}
+
+
+table tr:nth-child(even) {
+    background: #f7f7f7;
+}
+
+
+table th,
+table td {
+    font-size: 16px;
+    line-height: 22px;
+    box-sizing: border-box;
+    padding: 10px;
+    border-right: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+
+table th:last-child,
+table td:last-child {
+    border-right: none;
+}
+
+
+table tr:last-child th,
+table tr:last-child td {
+    border-bottom: none;
+}
+
+
+table th {
+    font-weight: 500;
+}
+
+
+.mat-paginator-container {
+    background: #fff;
+    border-top: 1px solid #e3e3e3;
+    z-index: 9;
+}
+
+
+input,
+textarea,
+select {
+    padding: 0px 10px;
+    font-family: 'Roboto', Helvetica, sans-serif;
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border: 2px solid #2699FB !important;
+}
+
+
+select {
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(100% - 17px) calc(1em + 2px),
+        calc(100% - 12px) calc(1em + 2px),
+        calc(100% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
+    cursor: pointer;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+
+select:active {
+    background-image:
+        linear-gradient(45deg, green 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, green 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(100% - 12px) 1em,
+        calc(100% - 17px) 1em,
+        calc(100% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
+}
+
+
+select.multi-select-box {
+    height: 200px !important;
+    background: #f7f7f7;
+    background-image: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+select.multi-select-box option {
+    padding: 5.5px 10px;
+}
+
+
+/* SELECT BOX STYLE STARTS */
+*[role='select-box'] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0px 10px;
+    line-height: 210%;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: left;
+}
+
+
+.mat-select-panel {
+    height: auto !important;
+    max-height: 320px !important;
+}
+
+
+/* SEARCH BOX SELECT BOX */
+.search-box *[role='select-box'] {
+    font-size: 14px;
+    padding-top: 8px;
+}
+
+
+.search-box *[role='select-box'] .mat-select-arrow {
+    opacity: 0;
+}
+/* SELECT BOX STYLE STARTS */
+
+
+/* COMBO BOX STYLE STARTS */
+*[role='combo-box'] {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+}
+
+
+.combobox-container-across-components {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+
+.combobox-container-across-components .mat-form-field-wrapper {
+    padding: 0 !important;
+    height: 100% !important;
+    overflow: hidden;
+}
+
+
+.combobox-container-across-components .mat-form-field-flex {
+    height: 100%;
+    padding: 4px 10px !important;
+}
+
+
+.combobox-container-across-components .mat-form-field-flex:focus-within {
+    padding-top: 3px !important;
+    border: 2px solid #2699FB !important;
+    border-radius: 4px;
+}
+
+
+.combobox-container-across-components .mat-form-field-infix {
+    height: 100%;
+    border: none;
+    padding: 0px !important;
+}
+
+
+.combobox-container-across-components .mat-form-field-wrapper input {
+    border: none !important;
+    height: 100%;
+    cursor: pointer;
+}
+
+
+.combobox-container-across-components .mat-form-field-wrapper input::placeholder {
+    color: #000;
+    font-size: 13px;
+    font-family: 'Roboto', "Helvetica Neue", sans-serif;
+}
+
+
+.combobox-container-across-components .mat-form-field-underline {
+    display: none;
+}
+
+
+.autocomplete-container {
+    max-height: 300px !important;
+    margin-top: 1px !important;
+}
+
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label,
+.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label {
+    transform: none !important;
+}
+
+
+/* SEARCH BOX COMBO BOX */
+.search-box .mat-form-field-flex {
+    padding: 8px 10px !important;
+}
+
+
+.search-box .mat-form-field-flex:focus-within {
+    padding: 6px 10px !important;
+}
+/* COMBO BOX STYLE ENDS */
+
+
+/* CHECKBOX SELECT STYLE ENDS */
+.checkbox-select-container .mat-form-field-underline {
+    height: 0 !important;
+}
+/* CHECKBOX SELECT STYLE ENDS */
+
+
+/* SEARCH RESULTS TABLE STARTS */
+.result-panel .table-controls.top .mat-paginator-range-label {
+    position: absolute;
+    left: -10px;
+    font-size: 16px;
+}
+
+
+.result-panel .table-controls.top .mat-paginator-range-label::before {
+    content: 'Showing '
+}
+
+
+.result-panel .table-controls.top .mat-paginator-range-label::after {
+    content: ' Results'
+}
+/* SEARCH RESULTS TABLE ENDS */
+
+
+.progress-bar {
+    width: 100%;
+    position: relative;
+    background: #fff;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 35px;
+}
+
+
+.progress-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 9;
+}
+
+
+.progress-completed {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 5px;
+}
+
+
+.details-container #details-map {
+    width: 100%;
+    height: 350px;
+    font-size: 17px;
+    padding: 20px;
+    line-height: 23px;
+}
+
+
+/* CONTRIBUTE FORM STARTS */
+.form-input {
+    width: 100%;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+
+.form-input label span {
+    width: 100%;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+.form-input label input,
+.form-input label select {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #555;
+    font-size: 14px;
+    margin: 5px 0px;
+}
+
+
+.form-input label input[type=file] {
+    width: auto;
+    height: auto;
+    border: none;
+    margin: 0px;
+}
+
+
+.form-input label textarea {
+    width: 100%;
+    height: 100px;
+    font-size: 14px;
+    color: #555;
+    line-height: 21.5px;
+    font-family: helvetica;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 5px;
+    resize: vertical;
+}
+
+
+.form-input .checkbox-container {
+    width: 100%;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+
+.form-input .checkbox-label {
+    float: left;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin: 5px 0px;
+    clear: both;
+    cursor: pointer;
+}
+
+
+.form-input input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 4px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+
+.form-input .not-satisfied {
+    border: 2px solid red !important;
+}
+
+
+.missing-form-values {
+    font-size: 18px;
+    color: red;
+    font-weight: bold;
+    margin-bottom: 22px;
+}
+
+
+.update-form h1 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+
+.table-type-input table,
+.table-type-input th,
+.table-type-input td {
+    border: none;
+    padding: 0;
+    padding-right: 10px;
+    background: #fff;
+}
+
+
+.table-type-input table {
+    padding-right: 0;
+}
+
+
+.table-type-input td:last-child {
+    width: 20px;
+    padding-top: 7px;
+    padding-right: 0;
+}
+
+
+.table-type-input tbody tr:first-child td:last-child {
+    display: none;
+}
+
+
+.table-type-input td input,
+.table-type-input td select {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+
+.table-type-input .btn {
+    float: left;
+    width: auto;
+    color: #fff;
+    background: #c82333;
+    border: 1px solid #bd2130;
+    border-radius: 5px;
+    padding: 0px 15px 10px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+
+.table-type-input .add-more {
+    margin-top: 20px;
+}
+
+
+.table-type-input span.add-more {
+    float: left;
+    display: flex;
+    color: #2699fb;
+    cursor: pointer;
+}
+
+
+.table-type-input span.add-more:active {
+    border: 1px solid transparent;
+    margin-top: 19px;
+}
+
+
+.table-type-input span.add-more .mat-icon {
+    margin-top: -3px;
+    margin-right: 5px;
+}
+
+
+.input-spinner-holder {
+    position: relative;
+}
+
+
+.input-spinner {
+    position: absolute;
+    right: 50px;
+    top: 31px;
+    width: 21px;
+}
+
+
+.multi-select-input-spinner {
+    right: 45%;
+    top: 110px;
+    width: 50px;
+}
+
+
+.add-another {
+    float: left;
+    color: #2699FB;
+    font-size: 16px;
+    margin-top: 30px !important;
+    margin-bottom: 0px !important;
+}
+
+
+.add-another span {
+    float: right;
+    margin-top: 3px;
+    padding-left: 8px;
+    cursor: pointer;
+}
+
+
+.add-another span:hover {
+    text-decoration: underline;
+}
+
+
+.add-another em {
+    float: left;
+    width: 24px;
+    height: 24px;
+    font-size: 21px;
+    color: #fff;
+    background: #2699FB;
+    text-align: center;
+    font-style: normal;
+    padding: 0;
+    border-radius: 20px;
+    padding-top: 2px;
+}
+
+
+.geoscope-container .multiple-select .selected-countries ul li {
+    color: #008cba;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 3px 10px;
+}
+/* CONTRIBUTE FORM ENDS */
+
+
+/* GENERAL SPINNER - STARTS */
+.site-loader {
+    width: 120px;
+    height: 120px;
+    border-width: 16px;
+    border-style: solid;
+    border-color: #f3f3f3;
+    border-top-color: #2699FB;
+    border-radius: 50%;
+
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.page-loading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    opacity: .9;
+    z-index: 9;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+.page-loading.hide-loading {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+.page-loading .site-loader {
+    width: 220px;
+    height: 220px;
+}
+
+
+.page-loading h3 {
+    color: #fff;
+    font-size: 5vw;
+    line-height: 7vw;
+    text-align: left;
+    font-family: 'Georgia';
+    font-style: italic;
+    margin-left: 7%;
+    text-shadow: 3px 3px 2px rgba(0,0,0,.2);
+}
+
+
+.page-loading h3 .big {
+    font-size: 7vw;
+}
+/* GENERAL SPINNER - ENDS */
+
+
+
+
+@media only screen and (max-width: 767px) {
+    .page-loading {
+        flex-direction: column;
+        opacity: .97;
+    }
+
+
+    .page-loading .site-loader {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 40px;
+    }
+
+
+    .page-loading h3 {
+        font-size: 35px;
+        line-height: 50px;
+    }
+
+
+    .page-loading h3 .big {
+        font-size: 50px;
+    }
+
+
+    table th,
+    table td {
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+
+    .add-another {
+        margin-left: 20px;
+    }
+}
+
+
+
+
+/* RESULT PAGE SPECIFIC STARTS */
+@media only screen and (max-width: 900px){
+    .result-panel .table-controls.top .mat-paginator-range-label {
+        padding-left: 1.5%;
+    }
+}
+
+
+@media only screen and (max-width: 767px){
+    .result-panel .table-controls.top .mat-paginator-range-label {
+        top: 55px;
+        left: -7%;
+        width: 100vw;
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+        font-weight: 550;
+    }
+
+
+    .result-panel .table-holder {
+        margin-top: 40px;
+    }
+
+
+    .result-panel .table-holder .mat-paginator-container {
+        justify-content: flex-start;
+        font-size: 14px;
+    }
+}
+
+
+@media only screen and (max-width: 370px){
+    .result-panel .table-holder .mat-paginator-container {
+        padding: 0px 3px;
+    }
+}
+/* RESULT PAGE SPECIFIC ENDS */

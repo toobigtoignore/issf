@@ -1,0 +1,215 @@
+
+<div class="organization-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Organization name</th>
+                <td [innerHTML]="orgData.organization_name"></td>
+            </tr>
+
+            <tr>
+                <th>Address</th>
+                <td>
+                    <span [innerHTML]="lnToBr(orgData.address1)"></span>
+                    <span [innerHTML]="lnToBr(orgData.address2)"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="orgData.organization_country?.short_name"></td>
+            </tr>
+
+            <tr>
+                <th>Province/state</th>
+                <td [innerHTML]="orgData.prov_state"></td>
+            </tr>
+
+            <tr>
+                <th>City/town</th>
+                <td [innerHTML]="orgData.city_town"></td>
+            </tr>
+
+            <tr>
+                <th>Postal code</th>
+                <td [innerHTML]="orgData.postal_code"></td>
+            </tr>
+
+            <tr>
+                <th>Year established</th>
+                <td [innerHTML]="orgData.year_established !== 0 ? orgData.year_established : ''"></td>
+            </tr>
+
+            <tr>
+                <th>Organization type</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let orgType of orgData.organization_type_list" [innerHTML]="orgType"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>SSF definition applied?</th>
+                <td [innerHTML]="orgData.ssf_defined"></td>
+            </tr>
+
+            <tr *ngIf="orgData.ssf_defined == 'Yes'">
+                <th>SSF working definition</th>
+                <td [innerHTML]="lnToBr(orgData.ssf_definition)"></td>
+            </tr>
+
+            <tr>
+                <th>Motivation/goals</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let motivation of orgData.motivation_list" [innerHTML]="motivation"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Mission</th>
+                <td [innerHTML]="lnToBr(orgData.mission)"></td>
+            </tr>
+
+            <tr>
+                <th>Main activities</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let activity of orgData.main_activities_list" [innerHTML]="activity"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Networks/partnerships/collaborations with other organizations</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let network of orgData.network_types_list" [innerHTML]="network"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Primary achievements</th>
+                <td [innerHTML]="lnToBr(orgData.achievements)"></td>
+            </tr>
+
+            <tr>
+                <th>Main success factors</th>
+                <td [innerHTML]="lnToBr(orgData.success_factors)"></td>
+            </tr>
+
+            <tr>
+                <th>Key obstacles to achieving goals</th>
+                <td [innerHTML]="lnToBr(orgData.obstacles)"></td>
+            </tr>
+
+            <tr>
+                <th>Contribution date</th>
+                <td [innerHTML]="getFormattedDate(orgData.core?.contribution_date, '-')"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Economic</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of orgData.theme_issues[theme_issues_categories.ECONOMIC]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Ecological</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of orgData.theme_issues[theme_issues_categories.ECOLOGICAL]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Social/Cultural</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of orgData.theme_issues[theme_issues_categories.SOCIAL]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Governance</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of orgData.theme_issues[theme_issues_categories.GOVERNANCE]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[2]"
+        class="accordion-details links-accordion"
+    >
+        <ng-container *ngIf="orgData.external_links.length > 0; else noLinks">
+            <ul>
+                <li
+                    *ngFor="let link of orgData.external_links"
+                    class="link-holder"
+                >
+                    {{ link.link_type }} -
+                    <a
+                        [href]="link.link_address"
+                        [innerHTML]="link.link_address"
+                        target="_blank"
+                    ></a>
+                </li>
+            </ul>
+        </ng-container>
+
+
+        <ng-template #noLinks>
+            <ul>
+                <li>No external link was provided for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[3]"
+        class="accordion-details contributors-info"
+    >
+        <table>
+            <tr>
+                <th>Name of Contributor</th>
+                <td>
+                    <a target="blank" [href]="orgData.person_link" [innerHTML]="getContributorName()"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>E-mail Address</th>
+                <td [innerHTML]="orgData.core?.user?.email"></td>
+            </tr>
+
+            <tr>
+                <th>Affiliation</th>
+                <td [innerHTML]="orgData.contributor_affiliation"></td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="orgData.core?.user?.country?.short_name"></td>
+            </tr>
+        </table>
+    </div>
+</div> <!-- /organization-accordions-->

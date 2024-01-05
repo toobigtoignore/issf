@@ -1,0 +1,61 @@
+.governance-forms .contributor-info h3 {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    font-weight: 550;
+}
+
+
+.governance-forms .contributor-info {
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    padding-top: 0px;
+    margin-top: 25px;
+    box-shadow: 1px 2px 5px 2px rgba(0,0,0,.1);
+}
+
+
+.governance-forms .contributor-info .contributor-caution {
+    display: block;
+    color: #ef1313;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+
+/*
+.governance-forms .contributor-repeat {
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    padding-top: 0px;
+    margin-top: 25px;
+    box-shadow: 1px 2px 5px 2px rgba(0,0,0,.1);
+}
+
+
+.governance-forms .contributor-repeat .remove-contributor {
+    width: auto;
+    font-size: 13px;
+    color: #fff;
+    background: #CD1212E0;
+    border: 1px solid red;
+    padding: 5px 10px;
+    margin-top: 16px;
+    margin-left: 0;
+    border-radius: 4px;
+}
+
+
+.governance-forms .initial-contributor .remove-contributor {
+    display: none;
+}
+
+
+.governance-forms .contributor-repeat .remove-contributor:active {
+    border: 2px solid black;
+}
+*/

@@ -1,0 +1,170 @@
+
+<div class="panel-container">
+    <header
+        class="panel-header"
+        [ngStyle]="{'background': getPanelColor(panel)}"
+    >
+        <h1 [innerHTML]="panelHeader"></h1>
+        <h2 [innerHTML]="recordName"></h2>
+    </header>
+
+
+    <div class="details-container">
+        <div
+            class="page-loading"
+            [ngClass]="{'hide-loading': recordData}"
+            [ngStyle]="{'background': getPanelColor(panel)}"
+        >
+            <div class="site-loader" [ngStyle]="{'border-top-color': getPanelColor(panel)}"></div>
+            <h3>
+                Please wait
+                <br>
+                <span class="big">loading your data</span>
+                <br>
+                just seconds away ...
+            </h3>
+        </div> <!-- /page-loading -->
+
+
+        <div class="details-accordions-container">
+            <ul #accordionContainer class="details-accordion">
+                <li *ngFor="let accordion of accordions; let i = index">
+                    <span
+                        (click)="toggleAccordion($event)"
+                        [ngClass]="{'active': i === 0}"
+                        [ngStyle]="{'background': i === 0 ? getPanelColor(panel) : 'transparent'}"
+                        [innerHTML]="accordion">
+                    </span>
+
+
+                    <div class="accordion-content" [ngClass]="{'active-accordion': i === 0}">
+                        <app-who-details
+                            *ngIf="panel===panelsList['WHO'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-who-details>
+
+                        <app-sota-details
+                            *ngIf="panel===panelsList['SOTA'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-sota-details>
+
+                        <app-profile-details
+                            *ngIf="panel===panelsList['PROFILE'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-profile-details>
+
+                        <app-organization-details
+                            *ngIf="panel===panelsList['ORGANIZATION'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-organization-details>
+
+                        <app-casestudy-details
+                            *ngIf="panel===panelsList['CASESTUDY'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-casestudy-details>
+
+                        <app-governance-details
+                            *ngIf="panel===panelsList['GOVERNANCE'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-governance-details>
+
+                        <app-bluejustice-details
+                            *ngIf="panel===panelsList['BLUEJUSTICE'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-bluejustice-details>
+
+                        <app-guidelines-details
+                            *ngIf="panel===panelsList['GUIDELINES'] && recordData != undefined"
+                            [record]="recordData"
+                            [accordion]="accordion"
+                        ></app-guidelines-details>
+                    </div> <!-- /accordion-content -->
+                </li>
+            </ul> <!-- /details-accordion -->
+        </div> <!-- /accordions-container -->
+
+
+        <div class="right-block">
+            <app-panel-based-component
+                *ngIf="(panel===panelsList['PROFILE'] || panel===panelsList['BLUEJUSTICE']) && recordData != undefined"
+                [panel]="panel"
+                [panelColor]="getPanelColor(panel)"
+                [data]="recordData"
+            ></app-panel-based-component>
+
+
+            <div
+                *ngIf="geoScopeDetailsLabels && geoScopeDetailsLabels.length > 1"
+                class="geo-label-triggers"
+            >
+                <button
+                    *ngFor="let label of geoScopeDetailsLabels; let i = index"
+                    (click)="updateActiveBlock(i)"
+                    [innerHTML]="label"
+                    [ngStyle]="{
+                        'background-color': i == activeBlock ? getPanelColor(panel) : '#fff',
+                        'color': i == activeBlock ? '#fff' : getPanelColor(panel),
+                        'border-color': getPanelColor(panel)
+                    }"
+                >
+                </button>
+            </div>
+
+
+            <div class="geo-scopes">
+                <section class="geographic-scope">
+                    <h3 [ngStyle]="{'background': getPanelColor(panel)}">Geographic Scope</h3>
+                    <div class="geographic-table-container">
+                        <table>
+                            <tr *ngFor="let label of geoScopeLabels; let j = index">
+                                <th [innerHTML]="label"></th>
+                                <td [innerHTML]="geoScopeValues[j]"></td>
+                            </tr>
+                        </table>
+                    </div> <!-- /geographic-table-container -->
+                </section> <!-- /geographic-scope -->
+
+
+                <section class="map" #mapSection>
+                    <h3 id="map-header" [ngStyle]="{'background': getPanelColor(panel)}">Map</h3>
+                    <div id="details-map"></div>
+                </section> <!-- /map -->
+            </div> <!-- /geo-scopes -->
+        </div> <!-- /right-block -->
+    </div> <!-- /details-container -->
+
+
+    <div *ngIf="recordData != undefined && isEditor()" class="edit-btn-container">
+        <button
+            [ngStyle]="{
+                'background': getPanelColor(panel),
+                'border-width': '1px',
+                'border-color': getPanelColor(panel)
+            }"
+            (click)="navigateToEditRecord()"
+        >Edit Record</button>
+
+        <button
+            *ngIf="panel != this.panelsList.WHO"
+            class="delete-btn"
+            (click)="deleteRecord()"
+        >Delete Record</button>
+    </div> <!-- /edit-btn-container -->
+
+
+    <div id="delete-modal">
+        <mat-icon class="delete-icon">delete_sweep</mat-icon>
+        <h3>Record Deleted Successfully !!!</h3>
+        <a href="/">
+            <mat-icon class="home-icon">home</mat-icon>
+            Go back to home page
+        </a>
+    </div>
+</div> <!-- /panel-container -->

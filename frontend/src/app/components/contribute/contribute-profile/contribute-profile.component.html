@@ -1,0 +1,52 @@
+<div class="profile-forms">
+    <section class="form-input">
+        <label>
+            <span>Name of Fishery: <em class="required">*</em></span>
+            <input type="text" name="ssf_name" placeholder="Name of Fishery" required />
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Time Frame - Begin Year: <em class="required">*</em></span>
+            <select name="start_year" required>
+                <option value="" disabled hidden selected>Select Start Year</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Time Frame - End Year: <em class="required">*</em></span>
+            <select name="end_year" required>
+                <option value="" disabled hidden selected>Select End Year</option>
+                <option value="0">Ongoing</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>SSF Defined? <em class="required">*</em></span>
+            <select name="ssf_defined" required>
+                <option value="" disabled hidden selected>Is SSF Defined?</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not explicitly">Not explicitly</option>
+            </select>
+        </label>
+    </section>
+</div> <!-- /profile-forms -->

@@ -1,0 +1,83 @@
+
+.bluejustice-accordions .link-holder {
+    word-break: break-all;
+}
+
+
+.bluejustice-accordions table td {
+    font-weight: normal;
+}
+
+
+.bluejustice-accordions table td[colspan="3"] {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 20px 10px 15px 10px;
+}
+
+
+.bluejustice-accordions table ul {
+    padding-left: 15px;
+}
+
+
+.bluejustice-accordions li {
+    list-style: disc;
+    margin: 5px 0px;
+}
+
+
+.bluejustice-accordions .justice-details {
+    padding: 20px 5px 2px;
+}
+
+
+.bluejustice-accordions .justice-details section {
+    padding: 10px 15px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    line-height: 25px;
+    background: #fffffb;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,.3);
+}
+
+
+.bluejustice-accordions .justice-details section h3 {
+    font-weight: 500;
+    color: #333;
+    font-size: 19px;
+}
+
+
+.bluejustice-accordions .justice-details section h4 {
+    color: #333;
+    font-weight: 500;
+    font-size: 17px;
+    margin-top: 23px;
+}
+
+
+.bluejustice-accordions .record-image {
+    float: left;
+    width: 100%;
+    padding: 20px 10px;
+    background: #fff;
+}
+
+
+.bluejustice-accordions .record-image .image-container {
+    display: flex;
+}
+
+
+.bluejustice-accordions .record-image img {
+    max-width: 30%;
+    margin-right: 2%;
+    border-radius: 5px;
+}
+
+
+.bluejustice-accordions .record-image section {
+    float: left;
+    font-size: 16px;
+}

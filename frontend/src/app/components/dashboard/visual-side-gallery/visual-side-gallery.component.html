@@ -1,0 +1,39 @@
+
+<div class="visual-side-gallery-container">
+	<h2>Checkout Our Latest Visualizations</h2>
+	<div class="large-thumbs-container">
+		<ng-container *ngFor="let section of sections; let i = index">
+			<section *ngIf="i === currentSlide" class="slide">
+                <div 
+                    *ngFor="let slide of section"
+                    class="large-thumb shadowed-box"
+                >
+                    <a [routerLink]="['/explore', slide.id]" target="_blank">
+                        <div class="thumb-img">
+                            <img src="/assets/img/visualizations/gifs/{{slide.vis}}.gif" alt="{{slide.vis}}">
+                            <h3>{{ slide.description }}</h3>
+                        </div>
+                    </a>
+                </div> 
+			</section>
+		</ng-container>
+
+
+		<!-- Controls -->
+		<div class="button-container shadowed-box">
+			<button id="prev" 
+					(click)="onPreviousClick()" 
+					[disabled]="prevDisabled"
+					[ngClass]="{buttonDisabled: prevDisabled}">
+				&#8617;
+			</button>
+			
+			<button id="next" 
+					(click)="onNextClick()" 
+					[disabled]="nextDisabled"
+					[ngClass]="{buttonDisabled: nextDisabled}">
+				&#8618;
+			</button>
+		</div> <!-- /button-container -->
+	</div> <!-- /large-thumbs-container -->
+</div> <!-- /visual-side-gallery-container -->

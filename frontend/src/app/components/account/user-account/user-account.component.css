@@ -1,0 +1,202 @@
+.profile-form {
+    float: left;
+    width: 97%;
+}
+
+
+.profile-form fieldset {
+    float: left;
+    width: 65%;
+    min-height: calc(100vh - 233px);
+    box-sizing: border-box;
+    padding: 30px 30px 20px;
+    border: 1px solid #ccc;
+    margin: 5px 0px;
+}
+
+
+.profile-form legend {
+    font-weight: 500;
+    font-size: 27px;
+}
+
+
+.profile-form .update-msg {
+    font-size: 18px;
+    padding: 0px 0px 23px;
+}
+
+
+.profile-form .update-msg section {
+    display: flex;
+    align-items: center;
+}
+
+
+.profile-form .update-msg .icon {
+    font-size: 25px;
+    margin-right: 9px;
+    margin-top: -4px;
+}
+
+
+.profile-form .update-successful {
+    color: #28A763;
+}
+
+
+.profile-form .update-error {
+    color: red;
+}
+
+
+.profile-form label {
+    float: left;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+
+.profile-form label:last-child {
+    margin-bottom: 15px;
+}
+
+
+.profile-form table {
+    margin-bottom: 15px;
+}
+
+
+.profile-form table .cell-header {
+    font-size: 18px;
+    padding: 15px 10px;
+}
+
+
+.profile-form span {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+
+.profile-form input,
+.profile-form select,
+.profile-form .text-value {
+    float: left;
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+}
+
+
+.profile-form .text-value {
+    background: #f8f8f8;
+    margin-bottom: 0;
+}
+
+
+.profile-form button {
+    width: auto;
+    padding: 0px 20px;
+    margin-top: 10px;
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+
+.profile-form button.cancel-form {
+    background: #f44336;
+    border: 1px solid #f44336;
+}
+
+
+.contribution-by-panel {
+    float: left;
+    width: 32%;
+    margin-left: 3%;
+}
+
+
+.contribution-by-panel h3 {
+    margin: 15px 0px 30px 5px;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+
+.contribution-by-panel ul {
+    padding-left: 0;
+    list-style: none;
+    margin-top: 0;
+}
+
+
+.contribution-by-panel ul li {
+    position: relative;
+    font-size: 15px;
+    border-bottom: 1px solid #e3e3e3;
+    padding-left: 33px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+
+.contribution-by-panel ul li:last-child {
+    border-bottom: none;
+}
+
+
+.contribution-by-panel ul li strong {
+    font-weight: 450;
+}
+
+
+.contribution-by-panel ul li img {
+    position: absolute;
+    width: 20px;
+    top: 0;
+    left: 0;
+}
+
+
+
+
+@media only screen and (max-width: 1023px) {
+    .profile-form legend {
+        font-size: 22px;
+    }
+
+
+    .contribution-by-panel h3 {
+        font-size: 20px;
+        line-height: 25px;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    .profile-form fieldset {
+        width: 100%;
+        min-height: auto;
+        padding: 20px 15px;
+        margin-bottom: 15px;
+    }
+
+
+    .profile-form form {
+        margin-bottom: 0px;
+    }
+
+
+    .contribution-by-panel {
+        width: 100%;
+        margin-left: 0;
+    }
+
+
+    .contribution-by-panel ul {
+        padding-left: 5px;
+    }
+}

@@ -1,0 +1,170 @@
+
+<div class="contribute-container">
+    <h1 class="page-header">Contribute Data</h1>
+    <div class="page-top-info">
+        <p>Please select the dataset associated with the information you would like to contribute.</p>
+        <p>Before contributing a new record, please explore/search using the table and map to see if it it already exists.</p>
+        <p>After submitting, you will be redirected to the record's page where you can add additional information.</p>
+    </div> <!-- /page-top-info -->
+
+
+    <div class="left-panel">
+        <ul>
+            <li
+                *ngFor="let code of panelCodes; let i = index"
+                [ngClass]="{'current-panel': code === activePanel}"
+                [ngStyle]="{'background': code === activePanel ? getPanelColor(code) : '#fff'}"
+                (click)="onPanelChange(code)"
+            >
+                <div><img [src]="getPanelIcon(code)" [alt]="code" /></div>
+                <span [innerHTML]="panelValues[i]"></span>
+            </li>
+        </ul>
+    </div> <!-- /left-panel -->
+
+
+    <div class="right-panel">
+        <div class="stepper">
+            <h3>Please provide the details for your {{ getLabel(activePanel) }} record </h3>
+
+
+            <div class="step-dots">
+                <section [ngClass]="{'colored-dot': formSeq > 0}">
+                    <span class="dot">&#x25CF;</span>
+                    <span>Basic Info</span>
+                </section>
+
+                <section [ngClass]="{'colored-dot': formSeq > 1}">
+                    <span class="dot">&#x25CF;</span>
+                    <span class="long-label">Geographic Scope</span>
+                </section>
+
+                <section [ngClass]="{'colored-dot': formSeq > 2}">
+                    <span class="dot">&#x25CF;</span>
+                    <span class="long-label">Completed</span>
+                </section>
+            </div> <!-- /step-dots -->
+        </div> <!-- /stepper -->
+
+
+        <div id="contribution-form" class="forms-section">
+            <form
+                #basicForm
+                class="basic-form"
+                [hidden]="formSeq != 1"
+            >
+                <app-contribute-who
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.WHO"
+                ></app-contribute-who>
+
+                <app-contribute-sota
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.SOTA"
+                ></app-contribute-sota>
+
+                <app-contribute-profile
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.PROFILE"
+                ></app-contribute-profile>
+
+                <app-contribute-organization
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.ORGANIZATION"
+                ></app-contribute-organization>
+
+                <app-contribute-case
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.CASESTUDY"
+                ></app-contribute-case>
+
+                <app-contribute-governance
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.GOVERNANCE"
+                ></app-contribute-governance>
+
+                <app-contribute-bluejustice
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.BLUEJUSTICE"
+                ></app-contribute-bluejustice>
+
+                <app-contribute-guidelines
+                    [formSeq]="formSeq"
+                    *ngIf="activePanel == panelCodesObj.GUIDELINES"
+                ></app-contribute-guidelines>
+
+
+                <section class="form-input">
+                    <label>
+                        <span>Editor (note: If you choose someone here, you authorize this person to edit this record. You, ISSF Staff and this person will be able to edit the content of this record.): </span>
+                        <select name="editor_id">
+                            <option value="" selected>Assign an editor (if any)</option>
+                            <option
+                                *ngFor="let editor of contributorsList"
+                                [value]="editor.id"
+                                [innerHTML]="editor.full_name + ' (' + editor.username + ')'"
+                            ></option>
+                        </select>
+                    </label>
+                </section>
+            </form>
+
+
+            <div *ngIf="countryList" class="geographic-form" [hidden]="formSeq != 2">
+                <app-geoscope [countryList]="countryList"></app-geoscope>
+            </div> <!-- /geographic-form -->
+
+
+            <div class="buttons" *ngIf="formSeq != 3">
+                <span class="button" *ngIf="formSeq === 2" (click)="formSeq=1">Previous</span>
+                <span class="button" *ngIf="formSeq === 1" (click)="validateBasicForm()">Next</span>
+                <span class="button" *ngIf="formSeq === 2" (click)="submitRecord()">Submit</span>
+            </div> <!-- /buttons -->
+        </div> <!-- /forms-section -->
+
+
+        <div class="record-created" *ngIf="formSeq == 3">
+            <h3>
+                <mat-icon class="icon">check_circle</mat-icon>
+                <br><br>
+                Congratulations! Your contribution has been added to our database.
+            </h3>
+
+
+            <p>
+                Your record has been successfully created with the basic info.
+                Although there are much more information you can provide.
+                Clicking the finish button will take you to the details of the record.
+                Please fill up as many fields as you can to complete your record.
+                You can easily find your contributions by visiting:
+                <strong>
+                    <em>Account -> Contributed Records</em>
+                </strong>
+                or by simply searching your record.
+            </p>
+
+
+            <div class="finish-buttons">
+                <button (click)="onFinishPress()">
+                    Finish &amp; View Record
+                </button>
+            </div> <!-- /finish-buttons -->
+
+
+            <div class="loading-container" *ngIf="loading">
+                <div class="site-loader"></div>
+                <p>Saving your <br> record ...</p>
+            </div> <!-- /loading-container -->
+        </div> <!-- /record-created -->
+    </div> <!-- /right-panel -->
+
+
+    <div class="require-signin" *ngIf="isSigninRequired">
+        <h3>
+            <mat-icon class="warning-icon">warning</mat-icon>
+            <span>Your session has expired! Please signin again and continue.</span>
+        </h3>
+
+        <app-authentication-form></app-authentication-form>
+    </div> <!-- /signin-form -->
+</div> <!-- /contribute-container -->

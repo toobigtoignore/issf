@@ -1,0 +1,231 @@
+
+<div class="search-container">
+    <div #filterOverlay (click)="removeFilterPanel()" class="filter-overlay" [hidden]="true"></div>
+
+
+    <div #filterPanel class="filter-panel">
+        <h1>Search Filters: </h1>
+        <section class="title">
+            <h3>Record title:</h3>
+            <input type="text" placeholder="Title of the record" [(ngModel)]="title" />
+        </section> <!-- /title -->
+
+
+        <section class="contributor-name">
+            <h3>Contributor's name:</h3>
+            <div class="search-combo-box">
+                <app-combo-box
+                    *ngIf="contributorsList != undefined; else loadingContributors"
+                    role="combo-box"
+                    (comboBoxUpdated)="setContributors($event)"
+                    [list]="contributorsList"
+                    [boxLabel]="'Choose One or More Contributors'"
+                    [optionLabel]="'display_name'"
+                    [optionValue]="'id'"
+                    [ngStyle]="{
+                        'border': '1px solid #ccc',
+                        'border-radius':'3px'
+                    }"
+                >
+                </app-combo-box>
+
+
+                <ng-template #loadingContributors>
+                    <span class="loading">
+                        <img
+                            src="../../../assets/img/icons/loader/loading.gif"
+                            alt="loading"
+                        />
+                        Loading list of contributors ...
+                    </span>
+                </ng-template>
+            </div> <!-- /search-combo-box -->
+
+
+            <div class="selected-combo-box" *ngIf="selectedContributors">
+                <span *ngFor="let contributor of selectedContributors">
+                    {{ contributor.label }}
+                    <em
+                        (click)="removeFromList(
+                            contributor.value,
+                            selectedContributors,
+                            'value'
+                        )">x
+                    </em>
+                </span>
+            </div> <!-- /selected-combo-box -->
+        </section> <!-- /contributor-name -->
+
+
+        <section class="country-dropdown">
+            <h3>Country:</h3>
+            <div class="search-combo-box">
+                <app-combo-box
+                    *ngIf="countryList != undefined; else loadingCountries"
+                    role="combo-box"
+                    (comboBoxUpdated)="setCountries($event)"
+                    [list]="countryList"
+                    [boxLabel]="'Choose One or More Countries'"
+                    [optionLabel]="'short_name'"
+                    [optionValue]="'country_id'"
+                    [ngStyle]="{
+                        'border': '1px solid #ccc',
+                        'border-radius':'3px'
+                    }"
+                >
+                </app-combo-box>
+
+
+                <ng-template #loadingCountries>
+                    <span class="loading">
+                        <img
+                            src="../../../assets/img/icons/loader/loading.gif"
+                            alt="loading"
+                        />
+                        Loading list of countries ...
+                    </span>
+                </ng-template>
+            </div> <!-- /search-combo-box -->
+
+
+            <div class="selected-combo-box" *ngIf="selectedCountries">
+                <span *ngFor="let country of selectedCountries">
+                    {{ country.short_name }}
+                    <em
+                        (click)="removeFromList(
+                            country.country_id,
+                            selectedCountries,
+                            'country_id'
+                        )">x
+                    </em>
+                </span>
+            </div> <!-- /selected-combo-box -->
+        </section> <!-- /country-dropdown -->
+
+
+        <section class="panel-checkboxes">
+            <h3>Choose one or more panels:</h3>
+            <ul>
+                <li *ngFor="let code of panelCodes; let i = index">
+                    <label>
+                        <input
+                            class="selected-panel"
+                            type="checkbox"
+                            [value]="code"
+                            [checked]="inSelectedPanels(code)"
+                            (click)="panelClicked(code)"
+                        >
+                        <span [innerHTML]="panelValues[i]"></span>
+                    </label>
+                </li>
+            </ul>
+        </section> <!-- /panel-checkboxes -->
+
+
+        <section class="year-dropdown">
+            <h3>Filter results with following range:</h3>
+            <select name="startYear" [(ngModel)]="startYear">
+                <option value="">Start Year</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+
+            <select name="startYear" [(ngModel)]="endYear">
+                <option value="">End Year</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+        </section> <!-- /year-dropdown -->
+
+
+        <button class="update-search-btn" (click)="updateSearch()">Update Search</button>
+    </div> <!-- /filter-panel -->
+
+
+    <div class="result-panel">
+        <div class="result-headers">
+            <mat-icon #filterToggler class="filter-icon" (click)="toggleFilter()">filter_list</mat-icon>
+
+
+            <div class="result-titles">
+                <h1>Results: </h1>
+            </div> <!-- /result-titles -->
+
+
+            <div class="filters">
+                <input type="text" (keyup)="filterTable($event)" placeholder="Search this table ..." />
+            </div> <!-- /filters -->
+        </div> <!-- /results-headers -->
+
+
+        <div class="search-loading" [ngStyle]="{'visibility': isSearchLoading ? 'visible' : 'hidden'}">
+            <img
+                src="../../../assets/img/icons/loader/loading.gif"
+                alt="loading"
+            />
+            <p>Please wait while your data is loading</p>
+        </div> <!-- /search-loading -->
+
+
+        <div
+            class="table-holder"
+            *ngIf="dataSource"
+            [ngClass]="{'dim-search-results': isSearchLoading}"
+        >
+            <mat-paginator
+                class="table-controls top"
+                [pageSizeOptions]="[10, 20, 50, 100, 200]"
+                showFirstLastButtons
+            ></mat-paginator>
+
+            <div class="table-content">
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="recordType">
+                        <th *matHeaderCellDef mat-sort-header> Record Type </th>
+                        <td *matCellDef="let data"> {{ data.core_record_type }} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="description">
+                        <th *matHeaderCellDef> Description </th>
+                        <td *matCellDef="let data">
+                            <a
+                                [routerLink]="[
+                                    '/details',
+                                    getPanelCode(data.core_record_type),
+                                    data.issf_core_id
+                                ]"
+                                [innerHTML]="adjustLineBreak(data.core_record_summary)"
+                            >
+                            </a>
+
+                            <div class="chips-container">
+                                <span class="chips" [innerHTML]="'Contributor: ' + getContributorIdentity(data.user)"></span>
+                                <span class="chips" [innerHTML]="data.core_record_type"></span>
+                                <span class="chips" [innerHTML]="data.geographic_scope_type"></span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="date">
+                        <th *matHeaderCellDef mat-sort-header> Date </th>
+                        <td *matCellDef="let data"> {{ data.contribution_date }} </td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <p class="no-record" *ngIf="totalResults === 0">No Results Found.</p>
+            </div> <!-- /table-content -->
+        </div> <!-- /table-holder -->
+    </div> <!-- /result-panel -->
+</div> <!-- /search-container -->

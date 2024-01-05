@@ -1,0 +1,560 @@
+
+<div class="governance-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Case Study Country</th>
+                <td [innerHTML]="governanceData.casestudy_country"></td>
+            </tr>
+
+            <tr>
+                <th>Contributor</th>
+                <td class="link-holder">
+                    <a
+                        [href]="governanceData.who_link ? governanceData.who_link : 'mailto:' + governanceData.contributor_email"
+                        [innerHTML]="governanceData.contributor_name ? governanceData.contributor_name : governanceData.contributor_email"
+                    ></a>
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Contributors Affiliations</th>
+                <td [innerHTML]="governanceData.contributors_affiliations"></td>
+            </tr>
+            
+            <tr>
+                <th>Contribution date</th>
+                <td [innerHTML]="getFormattedDate(governanceData.contribution_date, '-')"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Are SSF or related terms "legally" defined in the Constitution, Law, or Act?</th>
+                
+                <td [innerHTML]="
+                    governanceData.is_ssf_terms_legally_defined === 'Yes'
+                        ? governanceData.is_ssf_terms_legally_defined + ' - ' + governanceData.ssf_terms_legally_defined
+                        : governanceData.is_ssf_terms_legally_defined
+                    "
+                ></td>
+                
+                <td *ngIf="governanceData.ssf_terms_legally_defined_additional" 
+                    [innerHTML]="governanceData.ssf_terms_legally_defined_additional"
+                ></td>
+            </tr>
+
+            <tr>
+                <th>Is SSF (or related terms) captured/defined in other legal and policy documents?</th>
+                
+                <td>
+                    <div *ngIf="governanceData.defined_in_other_documents[0] !== 'No'; else notDefined">
+                        <ul>
+                            <li *ngFor="let value of governanceData.defined_in_other_documents" 
+                                [innerHTML]="value">
+                            </li>
+                        </ul>
+
+                        <hr>
+                        <p [innerHTML]="governanceData.ssf_terms_policy_defined" [ngStyle]="{'margin-top': '15px'}"></p>
+                    </div>
+                    
+                    <ng-template #notDefined>No</ng-template>
+                </td>
+                
+                <td *ngIf="governanceData.ssf_terms_policy_additional" 
+                    [innerHTML]="governanceData.ssf_terms_policy_additional"
+                ></td>
+            </tr>
+
+            <tr>
+                <th>Is there any other "informal" way that SSF (or related terms) are referred to?</th>
+                <td [innerHTML]="
+                    governanceData.is_ssf_terms_informal === 'Yes'
+                        ? governanceData.is_ssf_terms_informal + ' - ' + governanceData.ssf_terms_informal
+                        : governanceData.is_ssf_terms_informal
+                    "
+                ></td>
+                <td *ngIf="governanceData.ssf_terms_informal_additional" 
+                    [innerHTML]="governanceData.ssf_terms_informal_additional"
+                ></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[2]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Legal system in the country</th>
+                <td>
+                    {{ governanceData.legal_system }}
+                    <p *ngIf="governanceData.legal_system_additional">
+                        <strong>Additional information</strong><br>
+                        {{ governanceData.legal_system_additional }}
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Main "fisheries legislation" in the country (e.g. Act, Law, Statute)</th>
+                <td>
+                    <p *ngIf="governanceData.fisheries_legislation_title">
+                        <strong>Full title of legislation: </strong> {{ governanceData.fisheries_legislation_title }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.fisheries_legislation_year">
+                        <strong>Year: </strong> {{ governanceData.fisheries_legislation_year }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.fisheries_legislation_amendments">
+                        <strong>Amendments: </strong> {{ governanceData.fisheries_legislation_amendments }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.fisheries_legislation_sources">
+                        <strong>Sources: </strong> {{ governanceData.fisheries_legislation_sources }}
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Main "national policy" for fisheries</th>
+                <td>
+                    <p *ngIf="governanceData.national_policy_title">
+                        <strong>Full title of policy: </strong> {{ governanceData.national_policy_title }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.national_policy_year">
+                        <strong>Year: </strong> {{ governanceData.national_policy_year }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.national_policy_period_coverage">
+                        <strong>Period of coverage: </strong> {{ governanceData.national_policy_period_coverage }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.national_policy_additional">
+                        <strong>Sources: </strong> {{ governanceData.national_policy_additional }}
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Which "national" governmental authority (e.g. Ministry, Agency, Secretary or any other institutional body) is primarily in charge of fisheries</th>
+                <td>
+                    <p *ngIf="governanceData.national_governmental_authority_name">
+                        <strong>Full name of the authority: </strong> {{ governanceData.national_governmental_authority_name }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.national_governmental_authority_sources">
+                        <strong>Sources: </strong> {{ governanceData.national_governmental_authority_sources }}
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Mandate of this national governmental authority? Note - mandate can be related to:<br>
+                    (a) Objectives (seeks to)<br>
+                    (b) Powers (ability to)<br>
+                    (c) Responsibilities (duty to)
+                </th>
+                <td>
+                    <p *ngIf="governanceData.national_governmental_type">
+                        <strong>Mandate of the national governmental authority: </strong> {{ governanceData.national_governmental_type }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.national_governmental_type_explanation">
+                        <strong>Governmental type: </strong> {{ governanceData.national_governmental_type_explanation }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.national_governmental_support_document">
+                        <strong>Support document: </strong> {{ governanceData.national_governmental_support_document }}
+                    </p>
+                    
+                    <p *ngIf="governanceData.national_governmental_support_pages">
+                        <strong>Parts/pages of the support document: </strong> {{ governanceData.national_governmental_support_pages }}
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <th>National and/or sub-national governmental authority specifically in charge of SSF</th>
+                <td>
+                    {{ governanceData.specifical_in_ssfcharge }}
+                    <p *ngIf="governanceData.specifical_in_ssfcharge_sources">
+                        <strong>Sources: </strong> {{ governanceData.specifical_in_ssfcharge_sources }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[3]" class="accordion-details">
+        <table>
+            <thead>
+                <tr>
+                    <th>Principles</th>
+                    <th>Legislation</th>
+                    <th>Policy</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td>Human rights & dignity</td>
+                <td [innerHTML]="governanceData.human_rights_legislation"></td>
+                <td [innerHTML]="governanceData.human_rights_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Respect of cultures</td>
+                <td [innerHTML]="governanceData.respect_of_cultures_legislation"></td>
+                <td [innerHTML]="governanceData.respect_of_cultures_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Non-discrimination</td>
+                <td [innerHTML]="governanceData.non_discrimination_legislation"></td>
+                <td [innerHTML]="governanceData.non_discrimination_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Gender equality & equity</td>
+                <td [innerHTML]="governanceData.gender_equality_legislation"></td>
+                <td [innerHTML]="governanceData.gender_equality_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Equity & equality</td>
+                <td [innerHTML]="governanceData.equity_equality_legislation"></td>
+                <td [innerHTML]="governanceData.equity_equality_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Consultation & participation</td>
+                <td [innerHTML]="governanceData.consultation_participation_legislation"></td>
+                <td [innerHTML]="governanceData.consultation_participation_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Rule of law</td>
+                <td [innerHTML]="governanceData.rule_of_law_legislation"></td>
+                <td [innerHTML]="governanceData.rule_of_law_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Transparency</td>
+                <td [innerHTML]="governanceData.transparency_legislation"></td>
+                <td [innerHTML]="governanceData.transparency_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Accountability</td>
+                <td [innerHTML]="governanceData.accountability_legislation"></td>
+                <td [innerHTML]="governanceData.accountability_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Economic, social & environmental sustainability</td>
+                <td [innerHTML]="governanceData.economic_social_environmental_legislation"></td>
+                <td [innerHTML]="governanceData.economic_social_environmental_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Ecosystem approach to fisheries</td>
+                <td [innerHTML]="governanceData.ecosystem_approach_legislation"></td>
+                <td [innerHTML]="governanceData.ecosystem_approach_policy"></td>
+            </tr>
+
+            <tr>
+                <td>Social responsibility</td>
+                <td [innerHTML]="governanceData.social_responsibility_policy"></td>
+                <td [innerHTML]="governanceData.social_responsibility_legislation"></td>
+            </tr>
+
+            <tr>
+                <td>Other principles relevant to SSF</td>
+                <td [innerHTML]="governanceData.other_principles_legislation"></td>
+                <td [innerHTML]="governanceData.other_principles_policy"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[4]" class="accordion-details">
+        <table>
+            <thead>
+                <th>Topics</th>
+                <th>Description</th>
+                <th>Source</th>
+            </thead>
+
+            <tr>
+                <td>Tenure and related rights for SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_tenure_name }}</span>
+                    <span *ngIf="governanceData.provision_tenure_year"> | {{ governanceData.provision_tenure_year }}</span>
+                    <p *ngIf="governanceData.provision_tenure_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_tenure_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_tenure_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Exclusive fishing area/priority access</td>
+                <td>
+                    <span>{{ governanceData.provision_exclusive_name }}</span>
+                    <span *ngIf="governanceData.provision_exclusive_year"> | {{ governanceData.provision_exclusive_year }}</span>
+                    <p *ngIf="governanceData.provision_exclusive_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_exclusive_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_exclusive_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Registration requirements for SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_registration_name }}</span>
+                    <span *ngIf="governanceData.provision_registration_year"> | {{ governanceData.provision_registration_year }}</span>
+                    <p *ngIf="governanceData.provision_registration_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_registration_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_registration_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>MCS measures and others aimed to deter, prevent and eliminate IUU applying to SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_mcs_name }}</span>
+                    <span *ngIf="governanceData.provision_mcs_year"> | {{ governanceData.provision_mcs_year }}</span>
+                    <p *ngIf="governanceData.provision_mcs_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_mcs_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_mcs_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Social development, employment and decent work for SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_social_name }}</span>
+                    <span *ngIf="governanceData.provision_social_year"> | {{ governanceData.provision_social_year }}</span>
+                    <p *ngIf="governanceData.provision_social_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_social_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_social_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Labour rights or social benefits for SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_labour_name }}</span>
+                    <span *ngIf="governanceData.provision_labour_year"> | {{ governanceData.provision_labour_year }}</span>
+                    <p *ngIf="governanceData.provision_labour_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_labour_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_labour_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Capacity building program for SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_capacity_name }}</span>
+                    <span *ngIf="governanceData.provision_capacity_year"> | {{ governanceData.provision_capacity_year }}</span>
+                    <p *ngIf="governanceData.provision_capacity_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_capacity_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_capacity_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Recognition of SSF as professional workers</td>
+                <td>
+                    <span>{{ governanceData.provision_recognition_name }}</span>
+                    <span *ngIf="governanceData.provision_recognition_year"> | {{ governanceData.provision_recognition_year }}</span>
+                    <p *ngIf="governanceData.provision_recognition_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_recognition_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_recognition_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Responsible trade in fish and certification of fishery products from SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_responsible_name }}</span>
+                    <span *ngIf="governanceData.provision_responsible_year"> | {{ governanceData.provision_responsible_year }}</span>
+                    <p *ngIf="governanceData.provision_responsible_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_responsible_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_responsible_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Legal protection of women in SSF, along the value chain</td>
+                <td>
+                    <span>{{ governanceData.provision_legal_name }}</span>
+                    <span *ngIf="governanceData.provision_legal_year"> | {{ governanceData.provision_legal_year }}</span>
+                    <p *ngIf="governanceData.provision_legal_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_legal_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_legal_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Special treatment to women in SSF</td>
+                <td>
+                    <span>{{ governanceData.provision_special_name }}</span>
+                    <span *ngIf="governanceData.provision_special_year"> | {{ governanceData.provision_special_year }}</span>
+                    <p *ngIf="governanceData.provision_special_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_special_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_special_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Protection of SSF from disaster risks or recognition of SSF vulnerability</td>
+                <td>
+                    <span>{{ governanceData.provision_protection_name }}</span>
+                    <span *ngIf="governanceData.provision_protection_year"> | {{ governanceData.provision_protection_year }}</span>
+                    <p *ngIf="governanceData.provision_protection_defined">
+                        <strong>Definition: </strong> {{ governanceData.provision_protection_defined }}
+                    </p>
+                </td>
+                <td>{{ governanceData.provision_protection_additional }}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[5]" class="accordion-details">
+        <table>
+            <thead>
+                <th>Topics</th>
+                <th>Description</th>
+                <th>Source</th>
+            </thead>
+
+            <tr>
+                <td>Mechanism to facilitate communication and interaction among governmental departments, agencies and authorities</td>
+                <td>
+                    <span>{{ governanceData.communication_among_authority }}</span>
+                    <p *ngIf="governanceData.communication_among_authority_example">
+                        <strong>Example: </strong> {{ governanceData.communication_among_authority_example }}
+                    </p>
+                </td>
+                <td>{{ governanceData.communication_among_authority_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Mechanism to facilitate communication and interaction between governmental departments, agencies and authorities and fishers' organizations and groups</td>
+                <td>
+                    <span>{{ governanceData.communication_between_fishers }}</span>
+                    <p *ngIf="governanceData.communication_between_fishers_example">
+                        <strong>Example: </strong> {{ governanceData.communication_between_fishers_example }}
+                    </p>
+                </td>
+                <td>{{ governanceData.communication_between_fishers_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Representation of SSF in decision-making and/or resource management legally required, at any level of governance</td>
+                <td>
+                    <span>{{ governanceData.representation_required }}</span>
+                    <p *ngIf="governanceData.representation_required_example">
+                        <strong>Example: </strong> {{ governanceData.representation_required_example }}
+                    </p>
+                </td>
+                <td>{{ governanceData.representation_required_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Co-management or decentralised fisheries management scheme or any other forms of fishers' participation in management</td>
+                <td>
+                    <span>{{ governanceData.participation_management }}</span>
+                    <p *ngIf="governanceData.participation_management_example">
+                        <strong>Example: </strong> {{ governanceData.participation_management_example }}
+                    </p>
+                </td>
+                <td>{{ governanceData.participation_management_additional }}</td>
+            </tr>
+
+            <tr>
+                <td>Interest or commitment for a more holistic form of governance or reform</td>
+                <td>
+                    <span>{{ governanceData.holistic_form }}</span>
+                    <p *ngIf="governanceData.holistic_form_example">
+                        <strong>Example: </strong> {{ governanceData.holistic_form_example }}
+                    </p>
+                </td>
+                <td>{{ governanceData.holistic_form_additional }}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[6]" class="accordion-details detail-text-container">
+        <section>
+            <div
+                *ngIf="governanceData.ssf_country_specific_info"
+                [innerHTML]="governanceData.ssf_country_specific_info.replaceAll('\n','<br>')"
+            ></div>
+            
+            <div *ngIf="!governanceData.ssf_country_specific_info">No information provided.</div>
+        </section>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[7]" class="accordion-details detail-text-container">
+        <section>
+            <div
+                *ngIf="governanceData.legal_and_policy_framework"
+                [innerHTML]="governanceData.legal_and_policy_framework.replaceAll('\n','<br>')"
+            ></div>
+            
+            <div *ngIf="!governanceData.legal_and_policy_framework">No information provided.</div>
+        </section>
+    </div>
+            
+            
+    <div 
+        *ngIf="accordion === accordionList[8]" 
+        class="accordion-details contributors-info"
+    >
+        <table>
+            <tr>
+                <th>Name of Contributor</th>
+                <td>
+                    <a [href]="governanceData.who_link" [innerHTML]="governanceData.contributor_name"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>E-mail Address</th>
+                <td [innerHTML]="governanceData.contributor_email"></td>
+            </tr>
+            
+            <tr>
+                <th>Affiliation</th>
+                <td [innerHTML]="governanceData.contributor_affiliation"></td>
+            </tr>
+            
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="governanceData.contributor_country"></td>
+            </tr>
+        </table>
+    </div>
+</div> <!-- /governance-accordions-->

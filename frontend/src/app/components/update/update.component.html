@@ -1,0 +1,140 @@
+<div class="update-container">
+    <div 
+        class="page-loading" 
+        [ngClass]="{'hide-loading': recordData}"
+        [ngStyle]="{'background': getPanelColor()}"
+    >
+        <div class="site-loader" [ngStyle]="{'border-top-color': getPanelColor()}"></div>
+        <h3>
+            Please wait 
+            <br>
+            <span class="big">loading your data</span>
+            <br>
+            just seconds away ...
+        </h3>
+    </div> <!-- /page-loading -->
+
+    
+    <h1 class="panel-title" [ngStyle]="{'color': getPanelColor()}">{{ panelTitle }}</h1>
+
+    
+    <ul class="triggers">
+        <li 
+            *ngFor="let label of tabLabels"
+            [ngClass]="{'selected': activeTab === label}"
+            [ngStyle]="{'background': activeTab === label ? getPanelColor() : '#fff'}"
+            (click)="onTriggerPress(label)"
+            [innerHTML]="label"
+        ></li>
+    </ul>
+
+
+    <div class="update-sections">
+        <div *ngIf="updateResponse" class="update-msg">
+            <section [class]="updateResponse['status'] === 'success' ? 'update-successful' : 'update-error'">
+                <mat-icon 
+                    class="icon" 
+                    [innerHTML]="updateResponse['status'] === 'success' ? 'check_circle' : 'error_outline'"
+                ></mat-icon> 
+                <span [innerHTML]="updateResponse['message']"></span>
+            </section>
+        </div> <!-- /update-msg -->
+
+
+        <section>
+            <app-update-who 
+                *ngIf="selectedPanel === panelCodes['WHO'] && recordData != undefined"
+                [activeTab]="activeTab"
+                [record]="recordData"
+                [recordId]="recordId"
+            ></app-update-who>
+        </section>
+
+
+        <section>
+            <app-update-sota 
+                *ngIf="selectedPanel === panelCodes['SOTA'] && recordData != undefined"
+                [activeTab]="activeTab"
+                [record]="recordData"
+                [recordId]="recordId"
+            ></app-update-sota>
+        </section>
+        
+
+        <section>
+            <app-update-profile
+                *ngIf="selectedPanel === panelCodes['PROFILE'] && recordData != undefined"
+                [activeTab]="activeTab"
+                [record]="recordData"
+                [recordId]="recordId"
+            ></app-update-profile>
+        </section>
+        
+
+        <section>
+            <app-update-organization
+                *ngIf="selectedPanel === panelCodes['ORGANIZATION'] && recordData != undefined"
+                [activeTab]="activeTab"
+                [record]="recordData"
+                [recordId]="recordId"
+            ></app-update-organization>
+        </section>
+        
+
+        <section>
+            <app-update-casestudies
+                *ngIf="selectedPanel === panelCodes['CASESTUDY'] && recordData != undefined"
+                [activeTab]="activeTab"
+                [record]="recordData"
+                [recordId]="recordId"
+            ></app-update-casestudies>
+        </section>
+        
+
+        <section>
+            <app-update-bluejustice
+                *ngIf="selectedPanel === panelCodes['BLUEJUSTICE'] && recordData != undefined"
+                [activeTab]="activeTab"
+                [record]="recordData"
+                [recordId]="recordId"
+            ></app-update-bluejustice>
+        </section>
+        
+
+        <section>
+            <app-update-guidelines
+                *ngIf="selectedPanel === panelCodes['GUIDELINES'] && recordData != undefined"
+                [activeTab]="activeTab"
+                [record]="recordData"
+                [recordId]="recordId"
+            ></app-update-guidelines>
+        </section>
+        
+
+        <section [hidden]="activeTab != geographicTabTitle">
+            <app-geoscope 
+                class="geoscope-container"
+                *ngIf="recordData != undefined && geoScopeInfo"
+                [countryList]="countryList"
+                [geoScopeInfo]="geoScopeInfo"
+            ></app-geoscope>
+
+            <br>
+            <button 
+                type="submit" 
+                class="no-margin-left"
+                (click)="onGeoscopeUpdate()"
+            >Submit</button>
+        </section>
+    </div> <!-- /update-sections -->
+
+    
+    <div class="require-signin" *ngIf="isSigninRequired">
+        <h3>
+            <mat-icon class="warning-icon">warning</mat-icon>
+            <span>Your session has expired! Please signin again and continue.</span>
+        </h3>
+        
+        <app-authentication-form></app-authentication-form>
+    </div> <!-- /signin-form -->
+</div> <!-- /update-container -->

@@ -1,0 +1,35 @@
+
+.input-label {
+    color: #000;
+}
+
+
+.combobox-container-across-components label {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+.combobox-container-across-components .caret-down {
+    position: absolute;
+    height: 91.5%;
+    top: 4px;
+    right: 3px;
+    font-size: min(135%, 23px);
+}
+
+
+.option-value {
+    height: 37px;
+    padding: 0px 10px;
+}
+
+
+.option-img {
+    float: left;
+    height: 19px;
+    margin-top: 13px;
+    margin-right: 10px;
+}

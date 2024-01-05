@@ -1,0 +1,69 @@
+
+<div id="records">
+    <fieldset class="record-holder">
+        <legend>My Contributions</legend>
+        <div class="tab-triggers">
+            <span
+                [ngClass]="{'selected': activeTab == tabType['contributor']}"
+                (click)="onTriggerUpdate(tabType['contributor'])"
+            >As Contributor</span>
+
+            <span
+                [ngClass]="{'selected': activeTab == tabType['editor']}"
+                (click)="onTriggerUpdate(tabType['editor'])"
+            >As Editor</span>
+        </div> <!-- /tab-triggers -->
+
+
+        <div id="contributor">
+            <div class="filter-box">
+                <input type="text" (keyup)="filterTable($event)" placeholder="Search for Records...." />
+                <p class="all-records">
+                    <span
+                        [innerHTML]="activeTab == tabType['contributor']
+                            ? 'Total Records As Contributor:'
+                            : 'Total Records As Editor:'
+                        "
+                    ></span>
+                    <span
+                        class="badge"
+                        [innerHTML]="activeTab == tabType['contributor']
+                            ? usersContributions.contributor_data.length
+                            : usersContributions.editor_data.length
+                        "
+                    ></span>
+                </p>
+            </div> <!-- /filter-box -->
+
+
+            <table mat-table [dataSource]="dataSource">
+                {{ activeTab }}
+                <ng-container matColumnDef="recordName">
+                    <th mat-header-cell *matHeaderCellDef> Record Name </th>
+                    <td mat-cell *matCellDef="let record">
+                        <a
+                            [routerLink]="fetchLink(record.core_record_type, record.issf_core_id)"
+                            target="_blank"
+                        >
+                            <p [innerHTML]="adjustLineBreak(record.core_record_summary)"></p>
+                        </a>
+                        <span>Date Created: <em [innerHTML]="record.contribution_date"></em></span>
+                        <span>Last Modified: <em [innerHTML]="record.edited_date"></em></span>
+                        <div class="tags">
+                            <span class="tag" [innerHTML]="record.core_record_type"></span>
+                            <span class="tag" [innerHTML]="record.geographic_scope_type"></span>
+                        </div> <!-- /tags -->
+                    </td>
+                </ng-container>
+
+                <tr mat-row *matRowDef="let row; columns: recordColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">
+                        <span>No match found in the table with the search value.</span>
+                    </td>
+                  </tr>
+            </table>
+        </div> <!-- /contributor -->
+    </fieldset> <!-- /record-holder -->
+</div> <!-- /records -->

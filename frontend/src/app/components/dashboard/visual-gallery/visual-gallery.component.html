@@ -1,0 +1,17 @@
+
+<div class="visual-full-gallery-content">
+	<h2>Checkout Our Latest Visualizations</h2>
+
+	<div class="visual-thumbs-container">
+        <ng-container *ngFor="let slide of allSlides">
+            <div class="visual-thumb shadowed-box">
+                <a [routerLink]="['/explore', slide.id]" target="_blank">
+                    <div class="thumb-img">
+                        <img src="/assets/img/visualizations/gifs/{{ slide.vis }}.gif" alt="{{slide.vis}}">
+                        <h3>{{ slide.description }}</h3>
+                    </div>
+                </a>
+            </div> 
+        </ng-container>
+	</div> <!-- /visual-thumbs-container -->
+</div> <!-- /visual-full-gallery-content -->

@@ -1,0 +1,93 @@
+
+<mat-toolbar id="navigation-container">
+    <mat-toolbar-row>
+        <button
+            class="menu-icon"
+            (click)="mobileMenuHidden = !mobileMenuHidden"
+            mat-icon-button
+        >
+         	<mat-icon *ngIf="mobileMenuHidden">menu</mat-icon>
+         	<mat-icon *ngIf="!mobileMenuHidden">close</mat-icon>
+        </button>
+
+
+        <a href="/"><img src="assets/img/logo-issf.png" class="issf-logo"/></a>
+        <a href="http://toobigtoignore.net/"><img src="assets/img/logo-tbti.png" /></a>
+
+
+        <div
+            class="main-nav"
+            [ngClass]="{hidden: mobileMenuHidden === true}"
+        >
+            <nav (click)="hideMobileMenu()">
+                <a
+                    (click)="navigateToHome()"
+                    [routerLink]="['/']"
+                    [routerLinkActive]="'menu-active'"
+                    [routerLinkActiveOptions]="{exact: true}"
+                    mat-button
+                >
+                    Home
+                </a>
+
+                <a
+                    [routerLink]="['/explore']"
+                    [routerLinkActive]="'menu-active'"
+                    mat-button
+                >
+                    Explore
+                </a>
+
+                <a
+                    [routerLink]="['/contribute']"
+                    [routerLinkActive]="'menu-active'"
+                    mat-button
+                >
+                    Contribute
+                </a>
+
+                <a
+                    *ngIf="isLoggedIn()"
+                    [routerLink]="['/account']"
+                    [routerLinkActive]="'menu-active'"
+                    mat-button
+                >
+                    Account
+                </a>
+
+                <a
+                    *ngIf="isLoggedIn()"
+                    [routerLink]="['/profile']"
+                    [routerLinkActive]="'menu-active'"
+                    mat-button
+                    userProfileMenu
+                >
+                    Profile
+                </a>
+
+
+                <div class="right-menu">
+                    <a
+                        *ngIf="!isLoggedIn()"
+                        [routerLink]="['/registration']"
+                        [routerLinkActive]="'menu-active'"
+                        mat-button
+                    >Login</a>
+
+                    <a
+                        *ngIf="isLoggedIn()"
+                        (click)="logUserOut()"
+                        mat-button
+                    >Logout</a>
+                </div> <!-- /right-menu -->
+            </nav>
+        </div>
+
+        <div
+            class="nav-background-overlay"
+            [ngClass]="{hidden: mobileMenuHidden === true}"
+            (click)="hideMobileMenu()"
+        >
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

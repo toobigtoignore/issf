@@ -1,0 +1,52 @@
+
+<div class="visualization-page-container">
+	<div class="visualization-content shadowed-box">
+		<div class="governance-vis" *ngIf="id==1">
+			<app-govmod *ngIf="govmodesData != undefined" [data]="govmodesData"></app-govmod>
+		</div> <!-- /governance-vis -->	
+
+
+		<div class="gear-vessel" *ngIf="id==2">
+			<app-gear-vessel *ngIf="gearData != undefined" [data]="gearData"></app-gear-vessel>
+		</div> <!-- /gear-vessel -->	
+
+
+		<div class="bluejustice" *ngIf="id==3">
+			<app-bluejustice *ngIf="bluejusticeData != undefined" [data]="bluejusticeData"></app-bluejustice>
+		</div> <!-- /bluejustice -->	
+
+
+		<div class="sota" *ngIf="id==4">
+			<app-sota *ngIf="sotaData != undefined" [data]="sotaData"></app-sota>
+		</div> <!-- /sota -->	
+
+
+		<div class="mshare" *ngIf="id==5">
+			<app-mshare *ngIf="mshareData != undefined" [data]="mshareData"></app-mshare>
+		</div> <!-- /mshare -->	
+
+
+		<div class="wiw" *ngIf="id==6">
+			<app-wiw *ngIf="wiwData != undefined" [data]="wiwData"></app-wiw>
+		</div> <!-- /wiw -->	
+
+
+		<div class="research" *ngIf="id==7">
+			<app-research *ngIf="researchData != undefined" [data]="researchData"></app-research>
+		</div> <!-- /research -->	
+	</div> <!-- /visualization-content -->	
+
+
+	<div class="visualization-triggers shadowed-box">
+		<ng-container *ngFor="let slide of slides">
+            <a
+                [routerLink]="['/explore', slide.id]"
+                class="thumb-img shadowed-box"
+                [ngClass]="{selected: slide.id === id}"
+                (click)="updateTab(slide.id)"
+            >
+                <img src="/assets/img/visualizations/{{ slide.vis }}.png" alt="{{slide.vis}}">
+            </a>
+		</ng-container>
+	</div> <!-- /visualization-triggers -->	
+</div> <!-- /visualization-page-container -->

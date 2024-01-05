@@ -1,0 +1,172 @@
+
+.visual-wiw-center {
+    text-align: center;
+}
+
+
+#visual-wiw .hidden {
+    display: none;
+}
+
+
+#visual-wiw #toolbar {
+    margin-bottom: 30px;
+}
+
+
+#visual-wiw .button {
+    min-width: 120px; 
+    padding: 4px 5px; 
+    cursor: pointer;
+    text-align: center;	
+    font-size: 15px; 
+    border: 1px solid #e0e0e0;
+}
+
+
+#visual-wiw .button.active {
+    background: #000;
+    color: #fff;
+}
+
+
+#visual-wiw .Column {
+    display: inline-block; 
+    vertical-align: top; 
+    margin: auto;
+}
+
+
+.visual-wiw-center #tableDiv{
+    overflow-y:scroll;
+}
+
+
+#visual-wiw th.headerCountry {
+    top: 0px; 
+    background: #c9fdff; 
+    color: black; 
+    height: 20px;
+}
+
+
+#visual-wiw th {
+    position: sticky;
+    top: 35px;
+    color: #fff;
+    background: #a88d8d;
+    font-weight: normal;
+    padding: 10px;
+}
+
+
+#visual-wiw tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+
+#visual-wiw tr:hover {
+    background-color: #ddd;
+}
+
+
+#visual-wiw td {
+    padding: 10px;
+}
+
+
+#visual-wiw .circle {
+    cursor: pointer;
+}
+
+
+#visual-wiw-info li:nth-child(1) { 
+    color: #34bd3a;
+}
+
+
+#visual-wiw-info li:nth-child(2) { 
+    color: #f2652e;
+}
+
+
+#visual-wiw-info li:nth-child(3) { 
+    color: #5680e0;
+}
+
+
+#visual-wiw-info li:after { 
+    content: "|"; 
+    font-weight: bold; 
+    margin-left: 12px; 
+    margin-right: 12px; 
+}
+
+
+#visual-wiw-info li:last-child:after { 
+    content: ""; 
+    margin-right: 0; 
+}
+
+
+#visual-wiw .svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+
+#visual-wiw #footerDiv p {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+
+#visual-wiw #footerDiv li { 
+    display: inline; 
+    font-size: 17px; 
+    font-weight: 500;
+    line-height: 25px;
+}
+
+
+
+
+@media only screen and (max-width: 1199px){
+    #chartDiv {
+        width: 100%;
+        max-width: 100%;
+        flex: 1 auto;
+        padding: 0;
+    }
+
+
+    #chartDiv .svg-content {
+        max-height: 750px;
+    }
+
+
+    #chartDiv + .col-3 {
+        width: 100%;
+        max-width: 100%;
+        flex: 1;
+        margin-top: 20px;
+    }
+
+    
+    #visual-wiw #footerDiv p {
+        font-size: 17px;
+    }
+
+
+    #visual-wiw-info {
+        padding-left: 0;
+    }
+
+
+    #visual-wiw #footerDiv li {
+        font-size: 16px;
+    }
+}

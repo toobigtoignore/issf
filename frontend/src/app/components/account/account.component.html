@@ -1,0 +1,44 @@
+<div class="account-container">
+    <div
+        class="page-loading"
+        [ngClass]="{'hide-loading': usersContributions}"
+        [ngStyle]="{'background': '#4d9de0'}"
+    >
+        <div class="site-loader"></div>
+        <h3>
+            Please wait
+            <br>
+            <span class="big">loading your data</span>
+            <br>
+            just seconds away ...
+        </h3>
+    </div> <!-- /page-loading -->
+
+
+    <div class="trigger-container">
+        <ul>
+            <li *ngFor="let trigger of triggers">
+                <span
+                    [ngClass] = "{active: activeTrigger == trigger.sn}"
+                    (click)="updateTrigger(trigger.sn)">
+                    {{ trigger.title }}
+                </span>
+            </li>
+        </ul>
+    </div> <!-- /trigger-container -->
+
+
+    <div class="content">
+        <app-user-account
+            *ngIf="activeTrigger === 1 && usersContributions !== undefined"
+            [usersContributions]="usersContributions"
+        ></app-user-account>
+
+        <app-password-setting *ngIf="activeTrigger === 2"></app-password-setting>
+
+        <app-contributed-records
+            *ngIf="activeTrigger === 3 && usersContributions !== undefined"
+            [usersContributions]="usersContributions"
+        ></app-contributed-records>
+    </div> <!-- /content -->
+</div> <!-- /account-container -->

@@ -1,0 +1,137 @@
+
+<div class="faq-content">
+    <h1>Frequently Asked Questions</h1>
+
+
+    <div class="categories">
+        <h3>Categories</h3>
+        <ul>
+            <li>
+                <a (click)="scrollToElement(signup)">Signup</a>
+                <ul>
+                    <li><a (click)="scrollToElement(createAnAccount)">How do I create an account?</a></li>
+                    <li><a (click)="scrollToElement(forgotCredentials)">I forgot my username/password</a></li>
+                </ul>
+            </li>
+            <li>
+                <a (click)="scrollToElement(contribute)">Contribute</a>
+                <ul>
+                    <li><a (click)="scrollToElement(howToContribute)">How can I contribute?</a></li>
+                    <li><a (click)="scrollToElement(identifyGeoscope)">How do I identify geographic scope?</a></li>
+                    <li><a (click)="scrollToElement(targetedSpecies)">Do I create a profile for each targeted species?</a></li>
+                    <li><a (click)="scrollToElement(uploadImage)">How do I upload an image?</a></li>
+                    <li><a (click)="scrollToElement(nameSSFProfile)">How do I name my SSF Profile?</a></li>
+                </ul>
+            </li>
+            <li>
+                <a (click)="scrollToElement(datasets)">Datasets</a>
+                <ul>
+                    <li><a (click)="scrollToElement(viewSpecificDatasets)">How do I view only specific data sets?</a></li>
+                    <li><a (click)="scrollToElement(limitRecordAmount)">How do I limit the amount of records shown?</a></li>
+                    <li><a (click)="scrollToElement(statisticsDataset)">How do I access the Country Statistics dataset</a></li>
+                    <li><a (click)="scrollToElement(citeChoropleth)">How do I cite the choropleth data layers for marine catches and value?</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div> <!-- /categories -->
+
+
+    <div #signup class="faq-answer-section">
+        <h2>Signup</h2>
+        <section>
+            <h3 #createAnAccount>How do I create an account?</h3>
+            <p>
+                Select the <strong>Sign Up</strong> link found at the top of the page. You will be asked to provide a username, email address, and password. After filling out these fields you must then confirm your email address. You now have an account on ISSF, enjoy.
+            </p>
+        </section>
+
+
+        <section #forgotCredentials>
+            <h3>I forgot my username/password</h3>
+            <p>If have forgotten your password please follow these steps to create a new one:</p>
+            <ol>
+                <li>Click <strong>login</strong></li>
+                <li>Select <strong>Forgot Password?</strong></li>
+                <li>Enter the email address you used to make your account</li>
+                <li>Follow the link sent to you by email and create your new password</li>
+            </ol>
+            <p>If you have forgotten your username follow steps 1-3 above. The email sent to you will contain your username.</p>
+        </section>
+    </div> <!-- /signup -->
+
+
+    <div #contribute class="faq-answer-section">
+        <h2>Contribute</h2>
+        <section #howToContribute>
+            <h3>How can I contribute?</h3>
+            <p>After creating an account and logging in, select the <strong>Contribute</strong> icon found at the top right of the page. Then you must select the data set in which you wish to contribute to.</p>
+            <p>Fill in all fields to the best of your knowledge and keep in mind that fields with a <strong>*</strong> are mandatory to fill in.</p>
+        </section>
+
+
+        <section #identifyGeoscope>
+            <h3>How do I identify geographic scope?</h3>
+            <p>When creating an SSF profile you must choose a geographic scope from the following:</p>
+            <p>
+                Local, Subnational, National, Regional, Global, or Not Specific. Please be reminded that fisheries occurring within a particular portion of a Nation should be classified as Subnational and not National.
+            </p>
+        </section>
+
+
+        <section #targetedSpecies>
+            <h3>Do I create a profile for each targeted species?</h3>
+            <p>
+                No. When describing a SSF that targets multiple fish species consider it a multispecies fishery and list all species caught under the <strong>Species</strong> category.
+            </p>
+        </section>
+
+
+        <section #uploadImage>
+            <h3>How do I upload an image?</h3>
+            <p>
+                To add an image to your Who's Who or SSF Profile you must first upload it onto the <a href="http://toobigtoignore.net/gallery/" target="_blank">Too Big To Ignore gallery</a>. Once your image has been uploaded to the gallery (or another image hosting website), simply copy the image URL by right-clicking on the image and selecting <strong>copy image</strong> and then paste the image URL into the space.
+            </p>
+        </section>
+
+
+        <section #nameSSFProfile>
+            <h3>How do I name my SSF Profile?</h3>
+            <p>
+                When creating a SSF Profile, it is important that you include the country in which the fishery is occurring and that you follow this template: name/type of fishery, country. Some examples of already exiting profiles include: <strong>Northeastern Handline & Gillnet Fisheries, Brazil</strong> and <strong>Conception Bay Snow Crab Fishery, Canada</strong>.
+            </p>
+        </section>
+    </div> <!-- /contribute -->
+
+
+    <div #datasets class="faq-answer-section">
+        <h2>Datasets</h2>
+        <section #viewSpecificDatasets>
+            <h3>How do I view only specific data sets?</h3>
+            <p>Along the right hand side of the map there are icons representing each dataset that we offer. You may select or deselect any number of these icons to limit your search results. To turn off or on all data sets at once select the “Show/Hide all” icon at the bottom of the list.</p>
+        </section>
+
+
+        <section #limitRecordAmount>
+            <h3>How do I limit the amount of records shown?</h3>
+            <p>
+                Thousands of records are being displayed by ISSF. To narrow your findings try searching for key words such as names, places, or species in the search bar found at the bottom of the map.
+            </p>
+        </section>
+
+
+        <section #statisticsDataset>
+            <h3>How do I access the Country Statistics dataset</h3>
+            <p>
+             Unlike other datasets, the button to turn on/off the Country Statistics layer is found on the bottom right of the map itself.
+            </p>
+        </section>
+
+
+        <section #citeChoropleth>
+            <h3>How do I cite the choropleth data layers for marine catches and value?</h3>
+            <p>
+                These datasets are provided by the Sea Around Us, one of the TBTI partner organizations located at the University of British Columbia, British Columbia, Canada. The dataset can be downloaded from <a href="http://www.seaaroundus.org/data/#/eez" target="_blank">Sea Around Us</a> website.
+            </p>
+        </section>
+    </div> <!-- /datasets -->
+</div> <!-- /faq-content -->

@@ -1,0 +1,265 @@
+#visual5 {
+    color: #696969;
+    font-size: 12px; 
+    font-family:"avenir next", Arial, sans-serif; 
+}
+
+
+.sota {
+    width: 100%;
+}
+
+
+#visual5 #sota-header {
+    padding: 0 2%;
+}
+
+
+#visual5 #sota-header h3 {
+    color: #000;
+    font-size: 20px; 
+    font-weight: 500; 
+    margin-bottom: 20px; 
+    margin-top: 0; 
+}
+
+
+#visual5 #barSvg {
+    display: block;
+}
+
+
+#visual5 #sota-header ul {
+    padding-left: 16px; 
+}
+
+
+#visual5 #sota-header li {
+    color: #000;
+    font-size: 16px; 
+    margin-top: 8px;
+}
+
+
+#visual5 .hidden {
+    display: none;
+}
+
+
+/* Chart */ 
+#visual5 text.subTitle {
+    font-size: 12px; 
+    font-weight: 500;
+}
+
+
+#visual5 text.title, .label {
+    font-weight: 600;
+}
+
+
+#visual5 text.yearText {
+    font-size: 64px; 
+    font-weight: 700; 
+    opacity: 0.25;
+}
+
+
+#visual5 .tick text {
+    fill: #777777;
+}
+
+
+#visual5 .xAxis .tick:nth-child(2) text {
+    text-anchor: start;
+}
+
+
+#visual5 .tick line {
+    shape-rendering: CrispEdges; 
+    stroke: #dddddd;
+}
+
+
+#visual5 .tick line.origin {
+    stroke: #aaaaaa;
+}
+
+
+#visual5 path.domain {
+    display: none;
+}
+
+
+/* Buttons */ 
+#visual5 .playpause {
+    position: absolute; 
+    cursor: pointer; 
+    border: 6px solid #000; 
+    border-radius:50%; 
+    height: 75px; 
+    width: 75px; 
+    text-align:center; 
+    background-color:#caddfa; 
+    box-shadow: 0px 0px 0px 0px #000;
+}
+
+
+#visual5 .button {
+    position:absolute; 
+    left: 25%; 
+    top: 25%; 
+    border: 0; 
+    background: transparent; 
+    box-sizing: border-box; 
+    width: 20px; 
+    height: 20px; 
+    border-color: transparent transparent transparent #202020; 
+    transition: 100ms all ease; 
+    cursor: pointer; 
+    border-style: solid; 
+    border-width: 15px 0px 15px 25px;
+}
+
+
+#visual5 .button.paused {
+    border-style: double; 
+    border-width: 0px 0px 0px 2vw; 
+    left: 31%; 
+    top: 32%;
+}
+
+
+#visual5 .myButton {
+    width: 110px;
+    color: #505739;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+    background-color: #eae0c2;
+    border: 2px solid #333029;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+#visual5 .myButton:hover {
+    background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%); 
+    background-color:#ccc2a6;
+}
+
+
+#visual5 .myButton:active {
+    position: relative; 
+    top: 1px;
+}
+
+
+/* Slider */ 
+#visual5 .track,
+.track-inset,
+.track-overlay {
+    stroke-linecap: round;
+}
+
+
+#visual5 .track {
+    stroke: #000; 
+    stroke-opacity: 0.3; 
+    stroke-width: 10px;
+}
+
+
+#visual5 .track-inset {
+    stroke: #dcdcdc; 
+    stroke-width: 8px;
+}
+
+
+#visual5 .track-overlay {
+    pointer-events: stroke; 
+    stroke-width: 50px; 
+    stroke: transparent; 
+    cursor: crosshair;
+}
+
+
+#visual5 .handle {
+    fill: #fff; 
+    stroke: #000; 
+    stroke-opacity: 0.5; 
+    stroke-width: 1.25px;
+}
+
+
+#visual5 #firstDiv {
+    text-align: center;
+}
+
+
+#visual5 #dropDiv {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+
+#visual5 #firstDiv span {
+    font-size: 16px;
+    vertical-align: super;
+}
+
+
+#visual5 #selectedCountries {
+    width: 20px;
+    height: 23px;
+    margin-right: 10px;
+}
+
+
+#visual5 #dropDiv select {
+    width: calc(25% - 5px);
+    font-size: 15px;
+    padding: 10px;
+    margin: 2.5px;
+    border: 2px solid #e3e3e3;
+}
+
+
+#visual5 .svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 1vw;
+    vertical-align: top;
+    overflow: hidden;
+}
+
+
+
+
+@media only screen and (max-width: 1199px){
+    #visual5 #sota-header h3 {
+        font-size: 17px;
+    }
+
+
+    #visual5 #sota-header li {
+        font-size: 16px;
+        line-height: 22px;
+        margin-bottom: 10px;
+    }
+
+
+    #visual5 #dropDiv select {
+        width: calc(33.33333% - 5px);
+        font-size: 13px;
+    }
+}
+
+
+@media only screen and (max-width: 767px){
+    #visual5 text.title, .label {
+        font-size: 17px;
+    }
+}

@@ -1,0 +1,96 @@
+<div id="record-table">
+	  <mat-card>
+		    <div class="table-holder">
+			      <div class="filters">
+                <input type="text" (keyup)="filterTable($event)" placeholder="Search this table ..." />
+            </div> <!-- /filters -->
+
+
+			      <div class="table-content">
+                <table mat-table [dataSource]="dataSource" matSort>
+					          <ng-container matColumnDef="recordType">
+                        <th *matHeaderCellDef mat-sort-header> Record Type </th>
+                        <td
+                            *matCellDef="let data"
+                            [innerHTML]="data.core_record_type"
+                        ></td>
+					          </ng-container>
+
+
+                    <ng-container matColumnDef="description">
+                        <th *matHeaderCellDef> Description </th>
+                        <td *matCellDef="let data">
+                            <a
+                                [routerLink]="[
+                                    '/details',
+                                    getPanelCodeFromLabel(data.core_record_type),
+                                    data.issf_core_id
+                                ]"
+                                [innerHTML]="adjustLineBreak(data.core_record_summary)"
+                            ></a>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="date">
+                        <th *matHeaderCellDef mat-sort-header style="width: 70px;"> Date </th>
+                        <td
+                            *matCellDef="let data"
+                            [innerHTML]="data.contribution_date"
+                        ></td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <p class="no-record" *ngIf="noRecordsFound">No Results Found.</p>
+
+            </div> <!-- /table-content -->
+        </div> <!-- /table-holder -->
+
+        <mat-paginator
+            [pageSizeOptions]="[10, 20, 50, 100, 200]"
+            showFirstLastButtons
+        ></mat-paginator>
+    </mat-card>
+</div> <!-- record-table -->
+
+
+
+<!-- <div id="record-table">
+    <div class="table-holder">
+        <div class="filters">
+            <input type="text" (keyup)="filterTable($event)" placeholder="Search this table ..." />
+        </div>
+
+
+        <div class="table-content">
+            <table>
+                <thead>
+                    <th>Record Type</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let data of tableData; let i = index">
+                        <td [innerHTML]="data.core_record_type"></td>
+                        <td>
+                            <a
+                                [routerLink]="[
+                                    '/details',
+                                    getPanelCodeFromLabel(data.core_record_type),
+                                    data.issf_core_id
+                                ]"
+                                [innerHTML]="adjustLineBreak(data.core_record_summary)"
+                            ></a>
+                        </td>
+                        <td [innerHTML]="data.contribution_date"></td>
+                      </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> -->

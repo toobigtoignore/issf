@@ -1,0 +1,19 @@
+.update-casestudies .form-input input[type="text"],
+.update-casestudies .form-input textarea {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+
+.update-casestudies .form-input input[type="text"],
+.update-casestudies .form-input textarea {
+    padding: 10px;
+}
+
+
+.update-casestudies .form-input textarea {
+    height: 150px;
+}

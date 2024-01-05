@@ -1,0 +1,195 @@
+<!-- force old users to add name and country if they have not added them yet -->
+<app-initial-profile></app-initial-profile>
+
+
+<div class="dashboard-container">
+    <div id="dashboard-banner">
+        <div class="overlay">
+            <h1>Search our ISSF records by country, ssf name, author name and more</h1>
+            <app-search-bar></app-search-bar>
+        </div> <!-- /overlay -->
+    </div> <!-- /dashboard-banner -->
+
+
+    <!-- Map and visualizations component goes here -->
+    <div class="map-visualization">
+        <div id="map-section" class="record-views shadowed-box">
+            <div class="intro">
+                <h2>Information System for Small-scale Fisheries</h2>
+                <p>
+                    Browse through our large collection of datasets. Switch the view mode between Map and Table to adjust your preference. You can also use the search bar with specified parameters to find more precise results.
+                </p>
+            </div> <!-- /intro -->
+
+
+            <div class="views">
+                <div
+                    *ngIf="!visualsLoaded"
+                    class="view-loading"
+                >
+                    <div>
+                        <img src="../../../assets/img/icons/loader/map-loading.gif" alt="loading...">
+                        <h3>Loading Visuals ...</h3>
+                    </div>
+                </div> <!-- /view-loading -->
+
+
+                <div class="view-controllers">
+                    <div class="country-selection">
+                        <i class="fa fa-globe" aria-hidden="true"></i>
+                        <div class="country-list">
+                            <app-checkbox-select
+                                *ngIf="countryList"
+                                [list]="countryList"
+                                [boxLabel]="'All Countries'"
+                                (selectedValues)="updateFilterWithCountries($event)"
+                            ></app-checkbox-select>
+                        </div> <!-- /country-list -->
+                    </div> <!-- /country-selection -->
+
+
+                    <div class="map-selection" [ngStyle]="{'visibility': viewType !== viewTypes['map'] ? 'hidden' : 'visible'}">
+                        <img [src]="selectedMapIcon" alt="map-icon">
+                        <div class="map-select-box">
+                            <app-select-box
+                                role="select-box"
+                                [isMultiple]="false"
+                                [list]="mapOptions"
+                                [optionLabel]="'type'"
+                                [optionValue]="'type'"
+                                [iconKey]="'icon'"
+                                (selectBoxUpdated)="selectMapType($event)"
+                            ></app-select-box>
+                        </div> <!-- /map-select-box -->
+                    </div> <!-- /map-selection -->
+
+
+                    <div class="view-types">
+                        <button
+                            (click)="onMapViewClick()"
+                            [ngClass]="{'selected': viewType === viewTypes['map']}"
+                        >
+                            <span>Map</span>
+                            <i class="fa fa-map-o" aria-hidden="true"></i>
+                        </button> <!-- /map-view -->
+
+
+                        <button
+                            (click)="onTableViewClick()"
+                            [ngClass]="{'selected': viewType === viewTypes['table']}"
+                        >
+                            <span>Table</span>
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                        </button> <!-- /table-view -->
+                    </div> <!-- /view-types -->
+                </div> <!-- /view-controllers -->
+
+
+                <section>
+                    <div class="visuals">
+                        <div class="map-view" [hidden]="viewType !== viewTypes['map']">
+                            <div id="leaflet-map-container" [hidden]="selectedMapType !== mapTypes['leaflet']"></div>
+                            <div class="choropleth-map" [hidden]="selectedMapType !== mapTypes['choropleth']">
+                                <app-country
+                                    *ngIf="filteredChoropleth"
+                                    [data]="filteredChoropleth"
+                                    [selectedCountries]="selectedCountries"
+                                  ></app-country>
+                            </div> <!-- /choropleth-map -->
+                        </div> <!-- /map-view -->
+
+
+                        <div class="table-view" [hidden]="viewType !== viewTypes['table']">
+                            <app-record-table
+                                id="table"
+                                *ngIf="visualsLoaded"
+                                [tableData]="filteredData"
+                                (updatedDatasource)="updateDatasource($event)"
+                            ></app-record-table>
+                        </div> <!-- /table-view -->
+                    </div> <!-- /visuals -->
+
+
+                    <div class="icons-container">
+                        <div (click)="filterVisuals($event)" [attr.recordType]="panelValues['WHO']" class="icon icon-who selected"></div>
+                        <div (click)="filterVisuals($event)" [attr.recordType]="panelValues['SOTA']" class="icon icon-sota selected"></div>
+                        <div (click)="filterVisuals($event)" [attr.recordType]="panelValues['PROFILE']" class="icon icon-profile selected"></div>
+                        <div (click)="filterVisuals($event)" [attr.recordType]="panelValues['ORGANIZATION']" class="icon icon-organization selected"></div>
+                        <div (click)="filterVisuals($event)" [attr.recordType]="panelValues['CASESTUDY']" class="icon icon-case selected"></div>
+                        <div (click)="filterVisuals($event)" [attr.recordType]="panelValues['BLUEJUSTICE']" class="icon icon-bluejustice selected"></div>
+                        <div (click)="filterVisuals($event)" [attr.recordType]="panelValues['GUIDELINES']" class="icon icon-guidelines selected"></div>
+                        <div (click)="filterVisuals($event)" [attr.recordType]="allTypes" class="icon icon-all selected"></div>
+                    </div> <!-- /icons-container -->
+                </section>
+            </div> <!-- /views -->
+        </div> <!-- /record-views -->
+
+
+        <div id="side-visuals" class="side-visuals shadowed-box">
+            <div id="visualization-side-gallery" class="visualization-side-gallery" *ngIf="showSideGallery">
+                <app-visual-side-gallery></app-visual-side-gallery>
+            </div>
+            <!-- /visualization-side-gallery -->
+        </div> <!-- /side-visuals -->
+    </div> <!-- /map-visualization -->
+
+
+
+    <div class="info-container">
+        <div #visualFullGallery id="visualization-gallery" class="visual-full-gallery shadowed-box">
+            <app-visual-gallery></app-visual-gallery>
+        </div>
+        <!-- /visual-full-gallery -->
+
+
+        <div class="panel-left">
+            <app-welcome></app-welcome>
+            <app-recent-contribution></app-recent-contribution>
+        </div> <!-- /panel-left -->
+
+
+        <div class="panel-right">
+            <div class="social-media-container">
+                <h3>What's Happening on Our Social Media</h3>
+                <div class="trigger">
+                    <span
+                        [ngClass]="{'selected': showSocialMedia === 'twitter'}"
+                        (click)="showSocialMedia = 'twitter'"
+                    ><i class="fa fa-twitter"></i>Twitter</span>
+
+                    <span
+                        [ngClass]="{'selected': showSocialMedia === 'facebook'}"
+                        (click)="showSocialMedia = 'facebook'"
+                    ><i class="fa fa-facebook"></i>Facebook</span>
+                </div> <!-- /trigger -->
+
+
+                <div id="twitter-box" [hidden]="showSocialMedia !== 'twitter'">
+                    <a class="twitter-timeline" href="https://twitter.com/TBTInetwork?ref_src=twsrc%5Etfw">Tweets by TBTInetwork</a>
+                </div> <!-- /twitter-box -->
+
+
+                <div id="facebook-box" [hidden]="showSocialMedia !== 'facebook'">
+                    <div
+                        class="fb-page"
+                        data-href="https://www.facebook.com/TBTInetwork"
+                        data-tabs="timeline"
+                        data-width="550"
+                        data-height="1695"
+                        data-small-header="false"
+                        data-adapt-container-width="true"
+                        data-hide-cover="false"
+                        data-show-facepile="true"
+                    >
+                        <blockquote
+                            cite="https://www.facebook.com/TBTInetwork"
+                            class="fb-xfbml-parse-ignore"
+                        >
+                            <a href="https://www.facebook.com/TBTInetwork">Too Big To Ignore</a>
+                        </blockquote>
+                    </div>
+                </div> <!-- /facebook-box -->
+            </div> <!-- /social-media-container -->
+        </div> <!-- /panel-right -->
+    </div> <!-- /info-container -->
+</div> <!-- /dashboard-container -->

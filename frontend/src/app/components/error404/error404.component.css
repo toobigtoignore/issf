@@ -1,0 +1,45 @@
+.error-container {
+    display: flex;
+    align-items: center;
+    padding: 0px 10%;
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    min-height: calc(100vh - 233px);
+}
+
+
+.error-info h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+
+.error-info p {
+    font-size: 25px;
+    line-height: 40px;
+    margin-bottom: 50px;
+}
+
+
+.error-info p span {
+    font-family: 'Georgia', sans-serif;
+    font-style: italic;
+}
+
+
+.error-info a {
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+
+.gif-holder {
+    margin-top: -80px;
+}
+
+
+.gif-holder p {
+    margin-top: 10px;
+    text-align: center;
+}

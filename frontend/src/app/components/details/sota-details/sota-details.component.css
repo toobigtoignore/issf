@@ -1,0 +1,37 @@
+
+.sota-accordions .link-holder {
+    word-break: break-all;
+}
+
+
+.sota-accordions ul {
+    padding-left: 15px;
+}
+
+
+.sota-accordions li {
+    font-size: 16px;
+    list-style: disc;
+    margin: 12px 0px;
+}
+
+
+.sota-accordions .accordion-species,
+.sota-accordions .links-accordion {
+    padding: 10px;
+}
+
+
+.sota-accordions .accordion-species ul,
+.sota-accordions .links-accordion ul {
+    padding-left: 25px;
+}
+
+
+.sota-accordions .accordion-species h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e3e3e3;
+}

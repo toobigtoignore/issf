@@ -1,0 +1,387 @@
+<div class="update-who">
+    <form 
+        [hidden]="activeTab != tabLabels[0]"
+        class="who-update-form basic" 
+        #basicForm
+        (ngSubmit)="onWhoUpdate()"
+    >   
+        <!-- <div class="user-info" #userInfo>
+            <section class="form-input no-margin-top">
+                <label>
+                    <span>Your E-mail:</span>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Your e-mail address" 
+                        [value]="record.contributor_email"
+                    />
+                </label>
+            </section>
+    
+    
+            <section class="form-input">
+                <label>
+                    <span>First name:</span>
+                    <input 
+                        type="text" 
+                        name="first_name" 
+                        placeholder="First name" 
+                        [value]="record.first_name"
+                    />
+                </label>
+            </section>
+    
+    
+            <section class="form-input">
+                <label>
+                    <span>Last name:</span>
+                    <input 
+                        type="text" 
+                        name="last_name" 
+                        placeholder="Last name" 
+                        [value]="record.last_name"
+                    />
+                </label>
+            </section>
+            
+    
+            <section class="form-input">
+                <label>
+                    <span>Middle name:</span>
+                    <input 
+                        type="text" 
+                        name="initials" 
+                        placeholder="Middle name" 
+                        [value]="record.initials"
+                    />
+                </label>
+            </section>
+            
+    
+            <section class="form-input">
+                <label>
+                    <span>Country of residence:</span>
+                    <img 
+                        *ngIf="!countryList" 
+                        class="input-spinner"
+                        src="../../../../assets/img/icons/loader/loading.gif" 
+                        alt="spinner"
+                    />
+                    <select name="country">
+                        <option 
+                            *ngFor="let country of countryList" 
+                            [value]="country.country_id"
+                            [innerHTML]="country.short_name"
+                            [selected]="record.contributor_country === country.short_name"
+                        ></option>
+                    </select>
+                </label>
+            </section>
+        </div> -->
+        <!-- user-info -->
+            
+    
+        <section class="form-input">
+            <label>
+                <span>Your picture (direct link only):</span>
+                <input 
+                    type="text" 
+                    name="img_url" 
+                    placeholder="Direct link to your picture" 
+                    [value]="record.img_url"
+                />
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Please include a link to your homepage or online profile (Google Scholar, LinkedIn, etc.):</span>
+                <input
+                    type="text" 
+                    name="url" 
+                    placeholder="Link to your online profile" 
+                    [value]="record.online_profile_url"
+                />
+            </label>
+        </section>
+
+        
+        <fieldset class="organization-info">
+            <legend>Organization Information</legend>
+
+                
+            <section class="form-input">
+                <label>
+                    <span>Primary Institutional/Organizational Affiliation:</span>
+                    <input 
+                        type="text" 
+                        name="affiliation" 
+                        placeholder="Primary institution that you are affiliated with" 
+                        [value]="record.affiliation"
+                    />
+                </label>
+            </section>
+            
+                
+            <section class="form-input">
+                <label>
+                    <span>Address line 1:</span>
+                    <input 
+                        type="text" 
+                        name="address1" 
+                        placeholder="Address line 1" 
+                        [value]="record.address1"
+                    />
+                </label>
+            </section>
+            
+                
+            <section class="form-input">
+                <label>
+                    <span>Address line 2:</span>
+                    <input 
+                        type="text" 
+                        name="address2" 
+                        placeholder="Address line 2" 
+                        [value]="record.address2"
+                    />
+                </label>
+            </section>
+
+            
+            <section class="form-input">
+                <label class="input-spinner-holder">
+                    <span>Country:</span>
+                    <img 
+                        *ngIf="!countryList" 
+                        class="input-spinner"
+                        src="../../../../assets/img/icons/loader/loading.gif" 
+                        alt="spinner"
+                    />
+                    <select name="country">
+                        <option 
+                            *ngFor="let country of countryList" 
+                            [value]="country.country_id"
+                            [innerHTML]="country.short_name"
+                            [selected]="record.country === country.short_name"
+                        ></option>
+                    </select>
+                </label>
+            </section>
+
+        
+            <section class="form-input">
+                <label>
+                    <span>City/town:</span>
+                    <input 
+                        type="text" 
+                        name="city_town" 
+                        placeholder="Name of the city or town" 
+                        [value]="record.city_town"
+                    />
+                </label>
+            </section>
+
+            
+            <section class="form-input">
+                <label>
+                    <span>Province/state:</span>
+                    <input 
+                        type="text" 
+                        name="prov_state" 
+                        placeholder="Province or state" 
+                        [value]="record.province_state"
+                    />
+                </label>
+            </section>
+
+            
+            <section class="form-input">
+                <label>
+                    <span>Postal code:</span>
+                    <input 
+                        type="text" 
+                        name="postal_code" 
+                        placeholder="Please provide the postal code" 
+                        [value]="record.postal_code"
+                    />
+                </label>
+            </section>
+
+    
+            <section class="form-input">
+                <label class="input-spinner-holder">
+                    <span>Select all SSF Organizations/Networks/Associations that you are a member of (use Contribute to add) :</span>
+                    <img 
+                        *ngIf="!organizationList" 
+                        class="input-spinner multi-select-input-spinner"
+                        src="../../../../assets/img/icons/loader/loading.gif" 
+                        alt="spinner"
+                    />
+                    <select name="organizations" class="multi-select-box" multiple>
+                        <option 
+                            *ngFor="let organization of organizationList" 
+                            [value]="organization.issf_core_id"
+                            [innerHTML]="organization.organization_name"
+                            [selected]="inArray(organization.issf_core_id, record.organizations)"
+                        ></option>
+                    </select>
+                </label>
+            </section>
+        </fieldset>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+
+    
+    <form 
+        [hidden]="activeTab != tabLabels[1]"
+        class="who-update-form researcher-info" 
+        #researcherInfo
+        (ngSubmit)="onWhoUpdate()"
+    >   
+        <section class="form-input no-margin-top">
+            <label>
+                <span>Are you a SSF researcher? <em class="required">*</em></span>
+                <select 
+                    name="is_researcher" 
+                    [value]="record.is_researcher"
+                    required
+                >
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Number of publications in last 10 years:</span>
+                <input 
+                    type="number" 
+                    name="number_publications" 
+                    placeholder="Number of publications in last 10 years" 
+                    [value]="record.number_of_publications"
+                />
+            </label>
+        </section>
+
+
+        <div class="toggle-container" togglerContainer>
+            <section class="form-input">
+                <label class="header-label">
+                    <span>Highest level of education:</span>
+                    <select 
+                        name="education_level" 
+                        (change)="toggleOnOther($event, 'Other')"
+                    >
+                        <option value="" [selected]="record.highest_education == ''">--------------</option>     
+                        <option 
+                            *ngFor="let eduLevel of educationLevels"
+                            [value]="eduLevel"
+                            [selected]="eduLevel == record.highest_education"
+                            [innerHTML]="eduLevel"
+                        ></option>
+                        <option value="Other" [selected]="isOtherEducationLevel">Other</option>     
+                    </select>
+                </label>
+            </section>
+        
+            
+            <section class="form-input" [hidden]="!isOtherEducationLevel" toggleDisable>
+                <label class="header-label">
+                    <span>Please specify: <em class="required">*</em></span>
+                    <input 
+                        type="text" 
+                        name="other_education_level" 
+                        placeholder="Please specify other education level"
+                        [value]="isOtherEducationLevel ? record.highest_education : ''"
+                        [disabled]="!isOtherEducationLevel"
+                        [required]="isOtherEducationLevel"
+                        toggleOnChange
+                    />
+                </label>
+            </section>
+        </div> <!-- /toggleContainer -->
+
+
+        <section class="form-input">
+            <label>
+                <span>Research method(s) or approach(es) most commonly applied (e.g. ethnographic, survey, etc.):</span>
+                <textarea 
+                    type="text" 
+                    name="research_method" 
+                    placeholder="Most commonly applied research methods or approaches" 
+                    [value]="record.research_method"
+                ></textarea>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>List up to three main issues your research aims to address:</span>
+                <textarea 
+                    type="text" 
+                    name="issues_addressed" 
+                    placeholder="Three main issues your research aims to address" 
+                    [value]="record.issues_addressed"
+                ></textarea>
+            </label>
+        </section>
+    
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+    
+    
+    <form 
+        [hidden]="activeTab != tabLabels[2]"
+        class="who-update-form theme"
+        #themeForm
+        (ngSubmit)="onWhoUpdate()"
+    >
+        <app-theme [themes]="record.theme_issues"></app-theme>
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+
+
+    <form 
+        [hidden]="activeTab != tabLabels[3]"
+        class="who-update-form species"
+        #speciesForm
+        (ngSubmit)="onWhoUpdate()"
+    >
+        <app-species-link
+            label1 = "Common species name"
+            label2 = "Scientific/Latin name"
+            field1 = "common"
+            field2 = "scientific"
+            [values]="record.species"
+            [field1Type] = "species_link_types['INPUT']"
+        ></app-species-link>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+
+
+    <form 
+        [hidden]="activeTab != tabLabels[4]"
+        class="who-update-form links"
+        #linksForm
+        (ngSubmit)="onWhoUpdate()"
+    >
+        <app-species-link
+            label1 = "Link type"
+            label2 = "Link address"
+            field1 = "link-type"
+            field2 = "link-address"
+            [values]="record.external_links"
+            [field1Type] = "species_link_types['SELECT']"
+        ></app-species-link>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+</div> <!-- /update-who -->

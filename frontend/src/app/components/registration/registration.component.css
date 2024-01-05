@@ -1,0 +1,9 @@
+.registration-container {
+    width: 100%;
+    min-height: calc(100vh - 233px);
+    padding: 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f8ff;
+}

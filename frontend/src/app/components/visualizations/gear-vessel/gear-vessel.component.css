@@ -1,0 +1,215 @@
+
+#visual2 .Row,
+#visual2 .Row2 { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+
+#visual2 .svgmap { 
+    max-width: 650px;
+    overflow: visible;
+    border: 0px solid black;
+    margin-bottom: 20%;
+}
+
+
+#visual2 .svgdiv { 
+    width: auto;
+	text-align: center; 
+}
+
+
+#visual2 .hidden { 
+	display: none; 
+}
+
+
+#visual2 .axis { 
+	font: 10px sans-serif; 
+}
+
+
+#visual2 .axis path, .axis line { 
+	fill: none; 
+	stroke: #000; 
+	shape-rendering: crispEdges; 
+}
+
+
+#visual2 .chart-button { 
+	background: white; 
+	border-radius: 2; 
+	margin-top: -0.5px; 
+	margin-right: 0px; 
+	margin-bottom: -0.5px; 
+	margin-left: 0px; 
+	padding: 4px 6px; 
+	cursor: pointer; 
+	border-radius: 1px; 
+	font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; 
+}
+
+
+#visual2 #std {
+    width: auto;
+}
+
+
+#visual2 .button-on { 
+	background: #2699FB !important; 
+	color: #fff; 
+	border: 1px solid #555; 
+}
+
+
+#visual2 .button-off { 
+	background: #f3f3f3; 
+	color: #555; 
+	border: 1px solid #555; 
+}
+
+
+#visual2 .second-button { 
+	background: #fafcd2; 
+	border-radius: 2; 
+	padding: 4px 6px; 
+	cursor: pointer; 
+	border-radius: 1px; 
+	font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; 
+}
+
+
+#visual2 .Column { 
+	margin-top: 0px; 
+	margin-right: 8px; 
+	margin-left: 0px; 
+	display: inline-block; 
+}
+
+
+#visual2 #drop select { 
+    padding: 5px;
+    margin-left: 15px; 
+	border-radius: 5px; 
+}
+
+
+#visual2 input#myCheckbox { 
+	width: 18px; 
+	height: 18px; 
+}
+
+
+#visual2 #dimensions label { 
+	display: inline-block; 
+	margin-right: 10px; 
+	font-weight: normal; 
+}
+
+
+#visual2 #dimensions label input { 
+	margin-right: 4px; 
+	height: 18px; 
+	width: 18px; 
+	margin-bottom: 0; 
+}
+
+
+#visual2 #dimensions label span { 
+    float: right;
+    margin-top: 3px;
+}
+
+
+#visual2 label#myCheckboxLabel { 
+	display: inline-block; 
+	margin-left: -5px; 
+}
+
+
+#visual2 #myCheckboxLabel span { 
+    float: right; 
+    margin-top: 3px;
+	margin-left: 6px; 
+}
+
+
+#visual2 .vis-description p { 
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+#visual2 .vis-description ul { 
+	margin-top: 25px;
+}
+
+
+#visual2 .vis-description ul li { 
+    font-size: 16px;
+    margin-top: 8px; 
+}
+
+
+
+
+@media only screen and (max-width: 1199px){
+    #visual2 {
+        margin-left: 15px;
+    }
+
+    
+    #visual2 .Row, 
+    #visual2 .Row2 {
+        display: block;
+        text-align: center;
+        margin: 0px 0px 15px;
+    }
+
+
+    #visual2 button {
+        font-size: 13px;
+        margin: 1px 0px !important;
+    }
+
+
+    #visual2 #myCheckboxLabel span,
+    #visual2 #dimensions label span {
+        margin-top: 2px;
+    }
+
+
+    #visual2 #drop select {
+        margin-top: 10px;
+    }
+
+
+    #visual2 .vis-description p {
+        font-size: 17px;
+        line-height: 22px;
+    }
+
+
+    #visual2 .vis-description ul {
+        padding-left: 2%;
+        margin-top: 20px;
+    }
+
+
+    #visual2 .vis-description ul li {
+        font-size: 16px;
+        line-height: 22px;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media only screen and (min-width: 600px) and (max-width: 1199px) {
+    #visual2 .svgmap {
+        margin-left: 1%;
+    }
+}

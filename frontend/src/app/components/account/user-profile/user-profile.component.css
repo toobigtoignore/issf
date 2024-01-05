@@ -1,0 +1,42 @@
+.user-profile .loading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #ee364d;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    opacity: .9;
+    z-index: 9;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+.user-profile .loading .site-loader {
+    width: 220px;
+    height: 220px;
+}
+
+
+.user-profile .loading h3 {
+    color: #fff;
+    font-size: 5vw;
+    line-height: 7vw;
+    text-align: left;
+    font-family: 'Georgia';
+    font-style: italic;
+    margin-left: 7%;
+    text-shadow: 3px 3px 2px rgba(0,0,0,.2);    
+}
+
+
+.user-profile .loading h3 .big {
+    font-size: 7vw;
+}

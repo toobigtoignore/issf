@@ -1,0 +1,10 @@
+.guidelines-forms .date-month {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.guidelines-forms .date-month select {
+    width: 32%;
+}

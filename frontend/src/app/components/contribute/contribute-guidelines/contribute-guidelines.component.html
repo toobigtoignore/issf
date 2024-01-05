@@ -1,0 +1,183 @@
+<div class="guidelines-forms" togglerContainer>
+    <section class="form-input">
+        <label>
+            <span>Title of the Record: <em class="required">*</em></span>
+            <input
+                type="text"
+                name="title"
+                placeholder="Title of the record"
+                required
+            />
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Activity Type: <em class="required">*</em></span>
+            <select name="activity_type" required>
+                <option value="" disabled hidden selected>Select the type of activity</option>
+                <option
+                    *ngFor="let type of activityType"
+                    [value]="type"
+                    [innerHTML]="type"
+                ></option>
+            </select>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Activity Coverage: <em class="required">*</em></span>
+            <select name="activity_coverage" required>
+                <option value="" disabled hidden selected>Select the activity coverage</option>
+                <option
+                    *ngFor="let coverage of activityCoverage"
+                    [value]="coverage"
+                    [innerHTML]="coverage"
+                ></option>
+            </select>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Location: <em class="required">*</em></span>
+            <input
+                type="text"
+                name="location"
+                placeholder="Location"
+                required
+            />
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Organizer: <em class="required">*</em></span>
+            <input
+                type="text"
+                name="organizer"
+                placeholder="Organizer"
+                required
+            />
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Purpose: <em class="required">*</em></span>
+            <textarea
+                name="purpose"
+                placeholder="Purpose"
+                required
+            ></textarea>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Start Date: <em class="required">*</em></span>
+            <div class="date-month">
+                <select name="start_year" required>
+                    <option value="" disabled hidden selected>Year</option>
+                    <option
+                        *ngFor="let year of years"
+                        [value]="year"
+                        [innerHTML]="year"
+                    ></option>
+                </select>
+
+
+                <select name="start_month" required>
+                    <option value="" disabled hidden selected>Month</option>
+                    <option
+                        *ngFor="let month of months"
+                        [value]="month.num"
+                        [innerHTML]="month.name"
+                    ></option>
+                </select>
+
+
+                <select name="start_day" required>
+                    <option value="" disabled hidden selected>Day</option>
+                    <option
+                        *ngFor="let c of counter(31); let i = index"
+                        [value]="i+1"
+                        [innerHTML]="i+1"
+                    ></option>
+                </select>
+            </div> <!-- /date-month -->
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Ongoing? <em class="required">*</em></span>
+            <select
+                name="ongoing"
+                (change)="toggleOnOther($event, 'No')"
+                required
+            >
+                <option value="" disabled hidden selected>Select the one that applies</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                </select>
+        </label>
+    </section>
+
+
+    <section class="form-input"  [hidden]="true" toggleDisable>
+        <label>
+            <span>End Date: <em class="required">*</em></span>
+            <div class="date-month">
+                <select name="end_year" required toggleOnChange disabled>
+                    <option value="" disabled hidden selected>Year</option>
+                    <option
+                        *ngFor="let year of years"
+                        [value]="year"
+                        [innerHTML]="year"
+                    ></option>
+                </select>
+
+
+                <select name="end_month" required toggleOnChange disabled>
+                    <option value="" disabled hidden selected>Month</option>
+                    <option
+                        *ngFor="let month of months"
+                        [value]="month.num"
+                        [innerHTML]="month.name"
+                    ></option>
+                </select>
+
+
+                <select name="end_day" required toggleOnChange disabled>
+                    <option value="" disabled hidden selected>Day</option>
+                    <option
+                        *ngFor="let c of counter(31); let i = index"
+                        [value]="i+1"
+                        [innerHTML]="i+1"
+                    ></option>
+                </select>
+            </div> <!-- /date-month -->
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Link</span>
+            <input
+                type="text"
+                name="link"
+                placeholder="Link to find more details"
+            />
+        </label>
+    </section>
+</div> <!-- /guidelines-forms -->

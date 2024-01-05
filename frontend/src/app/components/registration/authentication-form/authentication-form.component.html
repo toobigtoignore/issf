@@ -1,0 +1,160 @@
+<form class="authentication-form" #authenticationForm #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <section class="response shadow-box" [hidden]="!responseMessage">
+        <p
+            #responseEl
+            class="response-message"
+            [innerHTML]="responseMessage"
+        ></p>
+        <span *ngIf="verificationLinkOption" (click)="resetFormView(registration_actions['RESEND_VERIFICATION_LINK'])">Resend verification link</span>
+    </section>
+
+
+    <section class="form-section shadow-box">
+        <header>
+            <h2 [innerHTML]="getFormSpecificHeader()"></h2>
+            <img class="logo" src="../../../assets/img/logo-issf.png" alt="ISSF Logo">
+        </header>
+
+
+        <div
+            *ngIf="selectedActionType == registration_actions['SIGNUP']"
+            class="form-box"
+        >
+            <label>First Name: <em class="required">*</em></label>
+            <input id="first_name" type="text" name="first_name" placeholder="Your First Name ..." maxlength="30" ngModel required>
+        </div> <!-- /form-box -->
+
+
+        <div
+            *ngIf="selectedActionType == registration_actions['SIGNUP']"
+            class="form-box"
+        >
+            <label>Last Name: <em class="required">*</em></label>
+            <input id="last_name" type="text" name="last_name" placeholder="Your Last Name ..." maxlength="30" ngModel required>
+        </div> <!-- /form-box -->
+
+
+        <div
+            *ngIf="selectedActionType == registration_actions['SIGNUP']"
+            class="form-box"
+        >
+            <label>Your Country of Residence: <em class="required">*</em></label>
+            <select name="country_id" ngModel required>
+              <option value="" disabled hidden selected>Select a Country</option>
+              <option
+                  *ngFor="let country of countryList"
+                  [value]="country.country_id"
+                  [innerHTML]="country.short_name"
+              ></option>
+          </select>
+        </div> <!-- /input-box -->
+
+
+        <div
+            *ngIf="
+                selectedActionType != registration_actions['SIGNIN'] &&
+                selectedActionType != registration_actions['VERIFY_CODE'] &&
+                selectedActionType != registration_actions['RESET_PASSWORD']
+            "
+            class="form-box"
+        >
+            <label>E-mail: <em class="required">*</em></label>
+            <input id="email" type="email" name="email" placeholder="Your e-mail address ..." maxlength="100" ngModel required>
+        </div> <!-- /form-box -->
+
+
+        <div *ngIf="
+                selectedActionType == registration_actions['SIGNUP'] ||
+                selectedActionType == registration_actions['SIGNIN']
+            "
+            class="form-box"
+        >
+            <label for="username">
+                Username
+                <span *ngIf="selectedActionType == registration_actions['SIGNUP']">
+                    (You will need it to sign in to your account)
+                </span>
+                : <em class="required">*</em>
+            </label>
+
+            <input id="username" type="text" name="username" placeholder="Choose a username ..." maxlength="30" ngModel required>
+        </div> <!-- /form-box -->
+
+
+        <div
+            *ngIf="
+                selectedActionType == registration_actions['SIGNUP'] ||
+                selectedActionType == registration_actions['SIGNIN'] ||
+                selectedActionType == registration_actions['RESET_PASSWORD']
+            "
+            class="form-box"
+        >
+            <label for="password">Password: <em class="required">*</em></label>
+            <input id="password" type="password" name="password" placeholder="Your Password ..." min="8" maxlength="512" ngModel required>
+        </div> <!-- /form-box -->
+
+
+        <div *ngIf="
+                  selectedActionType == registration_actions['SIGNUP'] ||
+                  selectedActionType == registration_actions['RESET_PASSWORD']
+              "
+              class="form-box"
+        >
+            <label for="confirm-password">Confirm Password: <em class="required">*</em></label>
+            <input id="confirm-password" type="password" name="confirm_password" placeholder="Confirm Your Password ..." min="8" maxlength="512" ngModel required>
+        </div> <!-- /form-box -->
+
+
+        <div
+            *ngIf="selectedActionType == registration_actions['VERIFY_CODE']"
+            class="form-box"
+        >
+            <label>Enter the Verification Code Sent to Your E-mail: <em class="required">*</em></label>
+            <input id="verification-code" type="text" name="verification_code" placeholder="Verification Code ..." ngModel required>
+        </div> <!-- /form-box -->
+
+
+        <footer>
+            <button #submitBtn type="submit">
+                <span>Submit</span>
+                <span [hidden]="true" class="spinner site-loader"></span>
+            </button>
+
+
+            <div class="conditional-text">
+                <p>
+                    <span
+                        *ngIf="selectedActionType != registration_actions['SIGNUP']"
+                        (click)="resetFormView(registration_actions['SIGNUP'])">Don't have an account? Sign up here. <br>
+                    </span>
+
+
+                    <span
+                        *ngIf="
+                            selectedActionType != registration_actions['SIGNIN']
+                        "
+                        (click)="resetFormView(registration_actions['SIGNIN'])">Already have an account? Try logging in. <br>
+                    </span>
+
+
+                    <span
+                        *ngIf="
+                            selectedActionType == registration_actions['SIGNIN'] ||
+                            selectedActionType == registration_actions['FORGOT_USERNAME']
+                        "
+                        (click)="resetFormView(registration_actions['FORGOT_PASSWORD'])">Reset Password <br>
+                    </span>
+
+
+                    <span
+                        *ngIf="
+                            selectedActionType == registration_actions['SIGNIN'] ||
+                            selectedActionType == registration_actions['RESET_PASSWORD']
+                        "
+                        (click)="resetFormView(registration_actions['FORGOT_USERNAME'])">Forgot Username? <br>
+                    </span>
+                </p>
+            </div> <!-- /conditional-text -->
+        </footer>
+    </section> <!-- /form-section -->
+</form>

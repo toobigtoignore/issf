@@ -1,0 +1,354 @@
+
+#visual8 {
+    position: relative;
+}
+
+
+.visual8_center {
+    text-align: center;
+}
+
+
+#visual8 .svgmap {
+    background: #bbe4f1;
+}
+
+
+#visual8 .inactive-zones {
+    width: 98%;
+    margin-left: 1%;
+    margin-bottom: 5px;
+    background: #f2efe9;
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+
+
+div.visual8_tooltip {
+    position: absolute;
+    min-width: 200px;
+    max-width: 250px;
+    font-size: 15px;
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #e3e3e3;
+    box-shadow: 0px 0px 0px 0px #a6a6a6;
+    padding: 10px 15px;
+    opacity: 0.9;
+    overflow: hidden;
+    z-index: 9;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+div.visual8_tooltip p strong {
+    color: #1785e4;
+    cursor: pointer;
+}
+
+
+div.visual8_tooltip p:last-child strong {
+    color: #000;
+    cursor: default;
+}
+
+
+div.visual8_tooltip h3 {
+    font-weight: 550;
+    line-height: 22px;
+    padding-bottom: 7px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+
+div.visual8_tooltip p {
+    position: relative;
+    padding-left: 25px;
+    margin: 12px 0px;
+}
+
+
+div.visual8_tooltip p:last-child {
+    padding-left: 0px;
+}
+
+
+div.visual8_tooltip strong {
+    font-weight: 550;
+}
+
+
+div.visual8_tooltip img {
+    position: absolute;
+    left: -85px;
+    top: -3px;
+    width: 110px;
+}
+
+
+div.visual8_tooltip .map-small-screen-details {
+    display: none;
+}
+
+
+#visual8 div.legendDiv {
+    color: #222;
+    background: #aad3df;
+    border-radius: 10px;
+    opacity: 0.9;
+    border: 1px solid #88afbb;
+    position: absolute;
+    left: 2px;
+}
+
+
+#visual8 .selected {
+    fill: #DEB887;
+}
+
+
+#visual8 .boundary {
+    fill: #DEB887;
+    stroke: black;
+    stroke-width: 1px;
+}
+
+
+div.visual8_tooltip.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+#visual8 path {
+    stroke: #fff;
+}
+
+
+#visual8 .axis {
+    font: 10px sans-serif;
+}
+
+
+#visual8 .legend tr {
+    border-bottom:1px solid grey;
+}
+
+
+#visual8 .legend tr:first-child {
+    border-top:1px solid grey;
+}
+
+
+#visual8 .axis path,
+#visual8 .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+
+#visual8 .x.axis path {
+    display: none;
+}
+
+
+#visual8 .legend {
+    margin-bottom:60px;
+    display:inline-block;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+
+#visual8 .legend td {
+    text-align: left;
+    padding: 4px 5px;
+    vertical-align:bottom;
+}
+
+
+#visual8 .legendType {
+    width: 270px;
+}
+
+
+#visual8 .legendValue {
+    width: 40px;
+}
+
+
+#visual8 .legend th {
+    text-align: center;
+}
+
+
+#visual8 .labelHeader {
+    font-size: 16px;
+}
+
+
+#visual8 .legendHeader {
+    background-color:#f2efe9;
+}
+
+
+#visual8_info li {
+     display: inline;
+     font-size: 12px;
+}
+
+
+#visual8_info li:after {
+    content: "|";
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+#visual8_info li:last-child:after {
+    content: "";
+    margin-right: 0;
+}
+
+
+#visual8 .visual8_Column {
+    display: inline-block;
+    vertical-align: top;
+    margin: auto;
+}
+
+
+#visual8 .hidden {
+    display: none;
+}
+
+
+#visual8 .chart-button {
+    background: #f3f3f3;
+    color: #555;
+    border: 1px solid #555;
+    border-radius: 2;
+    padding: 4px 6px;
+    cursor: pointer;
+    border-radius: 1px;
+}
+
+
+#visual8 .checked_region {
+    background: #954aff !important;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+
+#visual8 .svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    vertical-align: top;
+}
+
+
+#visual8 .svg-content {
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,.3);
+}
+
+
+/*********************************** MAP INFO ***********************************/
+.choropleth-map-info {
+    position: absolute;
+    left: 10px;
+    bottom: 15px;
+    width: 265px;
+    background: #aad3df;
+    opacity: .9;
+    border: 1px solid #88afbb;
+    box-sizing: border-box;
+    padding: 8px 8px 7px;
+    border-radius: 10px;
+}
+
+
+.panel-info p {
+    font-size: 13px;
+    margin: 0;
+    line-height: 16px;
+}
+
+
+.choropleth-map-info ul {
+    float: left;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 7px 0px 0px;
+}
+
+
+.choropleth-map-info li {
+    float: left;
+    width: 48%;
+    margin: 0 1% 3px;
+    text-align: center;
+    border: 1px solid #999;
+    font-size: 12px;
+}
+
+
+.choropleth-map-info li:nth-child(3),
+.choropleth-map-info li:nth-child(4) {
+    margin-bottom: 0;
+}
+
+
+
+@media only screen and (max-width: 979px){
+    div.visual8_tooltip h3 {
+        font-size: 15px;
+        padding-bottom: 2px;
+        margin-bottom: 2px;
+    }
+
+
+    div.visual8_tooltip p {
+        font-size: 14px;
+        margin: 10px 0px;
+    }
+
+
+    div.visual8_tooltip .map-small-screen-details {
+        display: block;
+        width: 100px;
+        color: #fff;
+        font-size: 12px;
+        padding: 5px 0px;
+        text-align: center;
+        background: #2699FB;
+        border-radius: 5px;
+        margin-top: 11px;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    .choropleth-map-info {
+        width: 200px;
+        left: 5px;
+        bottom: 10px;
+        opacity: 0.8;
+        padding: 5px;
+    }
+
+
+    .choropleth-map-info li {
+        font-size: 12px;
+    }
+}

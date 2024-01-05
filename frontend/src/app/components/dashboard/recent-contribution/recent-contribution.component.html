@@ -1,0 +1,76 @@
+
+<div class="recent-contributions">
+	<h2>Most Recent Contributions</h2>
+	<div class="contribution-panels-container shadowed-box">
+		<ul>
+            <li *ngFor="let tab of tabs">
+                <span [ngClass]="{active: currentTab === tab.key}"
+                      (click)="onTabTriggerClicked(tab.key)">
+                      {{ tab.title }}
+                </span>
+            </li>
+		</ul>
+
+
+        <ng-container *ngIf="tabsContent">
+            <div
+                *ngFor="let tab of tabs"
+                id="{{ tab.key }}"
+                class="contribution-panel"
+                [ngClass]="{active: currentTab === tab.key}"
+            >
+                <ng-container *ngIf="currentTab === tabs[0].key">
+                    <h3>10 most recent contributions</h3>
+                    <section *ngFor="let data of tabsContent.recent_contributions">
+                        <img
+                            [src]="getPanelIconFromLabel(data.core_record_type)"
+                            [alt]="data.core_record_type"
+                        />
+
+                        <a
+                            [routerLink]="[
+                                '/details',
+                                getPanelCodeFromLabel(data.core_record_type),
+                                data.issf_core_id
+                            ]"
+                            [innerHTML]="adjustLineBreak(data.core_record_summary)"
+                        >
+                        </a>
+                    </section>
+                </ng-container>
+
+
+                <ng-container *ngIf="currentTab === tabs[1].key">
+                    <h3>Number of contributions made on each of the following record types in last 12 months</h3>
+                    <section *ngFor="let data of tabsContent.recent_contributions_by_type">
+                        <img
+                            [src]="getPanelIconFromLabel(data.core_record_type)"
+                            [alt]="data.core_record_type"
+                        />
+
+                        <span [innerHTML]="data.core_record_type + ': ' + data.total"></span>
+                    </section>
+                </ng-container>
+
+
+                <ng-container *ngIf="currentTab === tabs[2].key">
+                    <h3 [ngStyle]="{ 'padding-bottom': '0' }">Top Contributors who contributed most in last 12 months</h3>
+                    <section>
+                        <table>
+                            <tr>
+                                <th>Contributor name</th>
+                                <th>Number of contribution</th>
+                            </tr>
+                            <tr *ngFor="let contributor of tabsContent.top_contributors">
+                                <td>
+                                    <a [routerLink]="contributor.person_id">{{ contributor.contributor_name }}</a>
+                                </td>
+                                <td [innerHTML]="contributor.total_contribution"></td>
+                            </tr>
+                        </table>
+                    </section>
+                </ng-container>
+            </div> <!-- /contribution-panel -->
+        </ng-container>
+	</div> <!-- /contribution-panels -->
+</div> <!--/ recent-contributions -->

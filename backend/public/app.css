@@ -1,0 +1,35 @@
+/* REGISTRATION EMAIL BODY START */
+.registraion-email-body {
+    font-size: 15px;
+    font-family: 'helvetica';
+    max-width: 550px;
+    padding: 20px 25px;
+    margin: 30px auto;
+    border: 1px solid #e3e3e3;
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0,.1);
+    text-align: center;
+    border-radius: 5px;
+}
+
+
+.registraion-email-body h2 {
+    color: #2699FB;
+    font-size: 23px;
+    line-height: 30px;
+}
+
+
+.registraion-email-body p {
+    margin: 10px 0px;
+}
+
+
+.registraion-email-body .activation-link {
+    background: #2699FB;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 100px;
+    text-align: center;
+}
+/* REGISTRATION EMAIL BODY END */

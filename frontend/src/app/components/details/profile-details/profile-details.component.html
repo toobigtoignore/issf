@@ -1,0 +1,193 @@
+
+<div class="profile-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Fishery name</th>
+                <td [innerHTML]="profileData.ssf_name"></td>
+            </tr>
+
+            <tr>
+                <th>Is SSF defined</th>
+                <td [innerHTML]="profileData.ssf_defined"></td>
+            </tr>
+
+            <tr>
+                <th>SSF definition (if applicable)</th>
+                <td [innerHTML]="
+                    profileData.ssf_defined == definiteAns['YES']
+                        ? lnToBr(profileData.ssf_definition)
+                        : 'N/A'
+                    "
+                ></td>
+            </tr>
+
+            <tr>
+                <th>Data time frame</th>
+                <td>
+                    {{ profileData.start_year }}
+                    {{ profileData.ongoing || profileData.end_year === 0 ? '  - Ongoing ' :  ' - ' + profileData.end_year }}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Contribution date</th>
+                <td [innerHTML]="getFormattedDate(profileData.core.contribution_date, '-')"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details">
+        <table>
+            <tr *ngFor="let category of profileData.attributes?.categories; let i = index">
+                <th [innerHTML]="category"></th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of profileData.attributes.values[i]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[2]"
+        class="accordion-details accordion-species"
+    >
+        <ng-container *ngIf="profileData.species.length > 0; else emptySpecies">
+            <h3>Species: </h3>
+            <ul>
+                <li
+                    *ngFor="let species of profileData.species"
+                    [innerHTML]="
+                        species.species_scientific
+                        ? species.species_common + ' (<b>Scientific name:</b> ' + species.species_scientific + ')'
+                        : species.species_common
+                    "
+                ></li>
+            </ul>
+        </ng-container>
+
+
+        <ng-template #emptySpecies>
+            <ul>
+                <li>No species was listed for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[3]"
+        class="accordion-details organization-accordion">
+
+        <ng-container *ngIf="profileData.organizations && profileData.organizations.length > 0; else noOrganization">
+            <table>
+                <tr>
+                    <th>Organization Name</th>
+                    <th>Organization Type</th>
+                    <th>Geographic Scope</th>
+                </tr>
+                <tr *ngFor="let organization of profileData.organizations">
+                    <td>
+                        <a
+                            *ngIf="organization.issf_core_id"
+                            [routerLink]="['/details/organization/', organization.issf_core_id]"
+                            [innerHTML]="organization.name"
+                            target="_blank"
+                        ></a>
+                        <span *ngIf="!organization.issf_core_id" [innerHTML]="organization.name"></span>
+                    </td>
+                    <td [innerHTML]="organization.type"></td>
+                    <td [innerHTML]="organization.geoscope"></td>
+                </tr>
+            </table>
+        </ng-container>
+
+
+        <ng-template #noOrganization>
+            <ul>
+                <li>No organizaion was listed for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[4]"
+        class="accordion-details links-accordion"
+    >
+        <ng-container *ngIf="profileData.external_links.length > 0; else noLinks">
+            <ul>
+                <li
+                    *ngFor="let link of profileData.external_links"
+                    class="link-holder"
+                >
+                    {{ link.link_type }} -
+                    <a
+                        [href]="link.link_address"
+                        [innerHTML]="link.link_address"
+                        target="_blank"
+                    ></a>
+                </li>
+            </ul>
+        </ng-container>
+
+
+        <ng-template #noLinks>
+            <ul>
+                <li>No external link was provided for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[5]"
+        class="accordion-sources"
+    >
+        <table>
+            <tr>
+                <th>Sources</th>
+                <td [innerHTML]="lnToBr(profileData.sources)"></td>
+            </tr>
+
+            <tr>
+                <th>Comments</th>
+                <td [innerHTML]="lnToBr(profileData.comments)"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[6]"
+        class="accordion-details contributors-info"
+    >
+        <table>
+            <tr>
+                <th>Name of Contributor</th>
+                <td>
+                    <a target="blank" [href]="profileData.person_link" [innerHTML]="getContributorName()"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>E-mail Address</th>
+                <td [innerHTML]="profileData.core?.user?.email"></td>
+            </tr>
+
+            <tr>
+                <th>Affiliation</th>
+                <td [innerHTML]="profileData.contributor_affiliation"></td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="profileData.core?.user?.country?.short_name"></td>
+            </tr>
+        </table>
+    </div>
+</div> <!-- /profile-accordions-->

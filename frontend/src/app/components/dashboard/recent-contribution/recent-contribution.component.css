@@ -1,0 +1,211 @@
+
+.recent-contributions {
+	float: left;
+	width: 100%;
+}
+
+
+.recent-contributions h2 {
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+
+.contribution-panels-container {
+    float: left;
+    width: 100%;
+    background: #fff;
+}
+
+
+.contribution-panel {
+    max-height: 600px;
+    overflow: auto;
+    border-radius: 0px 0px 5px 5px;
+    border-bottom: 2px solid #e3e3e3e3;
+}
+
+
+.contribution-panels-container ul {
+    color: #fff;
+    background: #2699fb;
+    list-style: none;
+    height: 60px;
+    border-bottom: 5px solid #6ab6f8;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 10px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+
+.contribution-panels-container li {
+    float: left;
+    display: inline;
+    margin-right: 30px;
+    box-sizing: border-box;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+
+.contribution-panels-container li span {
+    float: left;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    border-radius: 3px;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+.contribution-panels-container li span.active,
+.contribution-panels-container li span:hover {
+    color: #2699fb;
+    background: #fff;
+}
+
+
+.contribution-panels-container li.active {
+    cursor: default;
+}
+
+
+.contribution-panels-container .contribution-panel {
+    display: none;
+}
+
+
+.contribution-panels-container .contribution-panel.active {
+    display: block;
+}
+
+
+.contribution-panels-container section {
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 3%;
+    border-bottom: 2px solid #e3e3e3;
+    font-size: 17px;
+}
+
+
+.contribution-panels-container section:last-child {
+    border-bottom: none;
+}
+
+
+.contribution-panels-container h3 {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 20px 3%;
+    margin: 0;
+}
+
+
+.contribution-panels-container section img {
+    float: left;
+    width: 22px;
+    height: auto;
+    margin-right: 15px;
+}
+
+
+.contribution-panels-container section a {
+    float: left;
+    width: calc(100% - 55px);
+    margin: -5px 0px !important;
+    line-height: 25px;
+}
+
+
+.contribution-panels-container section a:hover {
+    text-decoration: underline;
+}
+
+
+.contribution-panels-container section a:last-child {
+    margin-bottom: 0;
+}
+
+
+
+
+@media only screen and (max-width: 1400px) {
+    .recent-contributions {
+        padding-left: 1.5%;
+    }
+
+
+    .contribution-panels-container li {
+        font-size: 18px;
+        margin-right: 5%;
+    }
+}
+
+
+@media only screen and (max-width: 1023px) {
+    .recent-contributions h2 {
+        font-size: 21px;
+        background: #fff;
+        margin: 20px 0 5px;
+        padding: 10px 2.5%;
+    }
+
+
+    .contribution-panel {
+        width: 100%;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 15px;
+    }
+
+
+    .contribution-panels-container ul {
+        float: left;
+        width: 100%;
+        height: auto;
+        padding: 5px 2.5% 10px;
+    }
+
+
+    .contribution-panels-container li {
+        font-size: 15px;
+        margin-top: 10px;
+        margin-right: 8px;
+    }
+
+
+    .contribution-panels-container li span {
+        padding: 7px 5px;
+        border: 1px solid #ccc;
+    }
+
+
+    .contribution-panels-container section img {
+        margin-right: 15px;
+    }
+
+
+    .contribution-panels-container section {
+        width: 95%;
+        border-bottom: 1px solid #e3e3e3;
+        box-shadow: 0 0 3px #0003;
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-left: 2.5%
+    }
+
+
+    .contribution-panels-container section a {
+        width:calc(100% - 40px);
+        font-size:16px;
+        margin-bottom:8px
+    }
+}

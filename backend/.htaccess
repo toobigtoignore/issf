@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    # RewriteCond %{HTTP_HOST} ^domain.com$ [NC,OR]
+    # RewriteCond %{HTTP_HOST} ^www.domain.com$
+    # RewriteCond %{REQUEST_URI} !public/
+    # RewriteRule (.*) /public/$1 [L]
+
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} -d [OR]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ ^$1 [N]
+
+    RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
+    RewriteRule ^(.*)$ public/$1
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+</IfModule>

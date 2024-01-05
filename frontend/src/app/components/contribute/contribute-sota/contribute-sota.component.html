@@ -1,0 +1,88 @@
+<div class="sota-forms" togglerContainer>
+    <section class="form-input">
+        <label>
+            <span>Author(s) Name: <em class="required">*</em></span>
+            <input
+                type="text"
+                name="author_names"
+                delimiter=","
+                placeholder="Name of the author(s)..."
+                required
+            />
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Publication Type: <em class="required">*</em></span>
+            <select
+                name="publication_type_id"
+                (change)="toggleOnOther($event, '9')"
+                required
+            >
+                <option value="" disabled hidden selected>Select a publication type</option>
+                <option
+                    *ngFor="let type of publicationTypes"
+                    [value]="type.value"
+                    [innerHTML]="type.title"
+                ></option>
+                <option value="9">Other</option>
+            </select>
+        </label>
+    </section>
+
+
+    <section class="form-input" [hidden]="true" toggleDisable>
+        <label>
+            <span>Please Specify: <em class="required">*</em></span>
+            <input
+                type="text"
+                name="other_publication_type"
+                placeholder="Please specify publication type"
+                toggleOnChange
+                disabled
+                required
+            />
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Journal/Book/Report/Newsletter/Conference: <em class="required">*</em></span>
+            <textarea
+                name="level1_title"
+                placeholder="Please provide journal/book/report/newsletter/conference information here... "
+                required
+            ></textarea>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Article/Chapter/Item Title: <em class="required">*</em></span>
+            <textarea
+                name="level2_title"
+                placeholder="Please provide article/chapter/item title here... "
+                required
+            ></textarea>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Select the Year of Publication: <em class="required">*</em></span>
+            <select name="year" required>
+                <option value="" disabled hidden selected>Select a Year</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+        </label>
+    </section>
+</div> <!-- /sota-forms -->

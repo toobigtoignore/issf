@@ -1,0 +1,198 @@
+
+<div class="who-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Name</th>
+                <td [innerHTML]="formulateFullName(whoData.core?.user)"></td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td class="link-holder">
+                    <a
+                        [href]="'mailto:' + whoData.core?.user?.email"
+                        [innerHTML]="whoData.core?.user?.email"
+                    ></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Country of residence</th>
+                <td [innerHTML]="whoData.core?.user?.country?.short_name"></td>
+            </tr>
+
+            <tr>
+                <th>Primary institutional/organizational affiliation</th>
+                <td [innerHTML]="whoData.affiliation"></td>
+            </tr>
+
+            <tr>
+                <th>Address Line 1</th>
+                <td [innerHTML]="whoData.address1"></td>
+            </tr>
+
+            <tr>
+                <th>Address Line 2</th>
+                <td [innerHTML]="whoData.address2"></td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="whoData.ssf_country?.short_name"></td>
+            </tr>
+
+            <tr>
+                <th>City / Town</th>
+                <td [innerHTML]="whoData.city_town"></td>
+            </tr>
+
+            <tr>
+                <th>Province / State</th>
+                <td [innerHTML]="whoData.prov_state"></td>
+            </tr>
+
+            <tr>
+                <th>Postal Code</th>
+                <td [innerHTML]="whoData.postal_code"></td>
+            </tr>
+
+            <tr>
+                <th>Link to homepage or online profile (Google Scholar, LinkedIn, etc.):</th>
+                <td [innerHTML]="whoData.url"></td>
+            </tr>
+
+            <tr>
+                <th>Date created</th>
+                <td [innerHTML]="getFormattedDate(whoData.core?.contribution_date, '-')"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Is researcher</th>
+                <td [innerHTML]="whoData.is_researcher ? 'Yes' : 'No'"></td>
+            </tr>
+
+            <tr>
+                <th>Number of publications in the last 10 years</th>
+                <td [innerHTML]="whoData.number_publications"></td>
+            </tr>
+
+            <tr>
+                <th>Highest level of education</th>
+                <td [innerHTML]="whoData.education_level"></td>
+            </tr>
+
+            <tr>
+                <th>Research method(s)/approach(es) commonly applied</th>
+                <td [innerHTML]="lnToBr(whoData.research_method)"></td>
+            </tr>
+
+            <tr>
+                <th>Issues addressed</th>
+                <td [innerHTML]="lnToBr(whoData.issues_addressed)"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[2]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Economic</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of whoData.theme_issues[theme_issues_categories.ECONOMIC]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Ecological</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of whoData.theme_issues[theme_issues_categories.ECOLOGICAL]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Social/Cultural</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of whoData.theme_issues[theme_issues_categories.SOCIAL]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Governance</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of whoData.theme_issues[theme_issues_categories.GOVERNANCE]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[3]"
+        class="accordion-details accordion-species"
+    >
+        <ng-container *ngIf="whoData.species.length > 0; else emptySpecies">
+            <h3>Common species: </h3>
+            <ul>
+                <li
+                    *ngFor="let species of whoData.species"
+                    [innerHTML]="
+                        species.species_scientific
+                        ? species.species_common + ' (<b>Scientific name:</b> ' + species.species_scientific + ')'
+                        : species.species_common
+                    "
+                ></li>
+            </ul>
+        </ng-container>
+
+
+        <ng-template #emptySpecies>
+            <ul>
+                <li>No species was listed for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[4]"
+        class="accordion-details links-accordion"
+    >
+        <ng-container *ngIf="whoData.external_links.length > 0; else noLinks">
+            <ul>
+                <li
+                    *ngFor="let link of whoData.external_links"
+                    class="link-holder"
+                >
+                    {{ link.link_type }} -
+                    <a
+                        [href]="link.link_address"
+                        [innerHTML]="link.link_address"
+                        target="_blank"
+                    ></a>
+                </li>
+            </ul>
+        </ng-container>
+
+
+        <ng-template #noLinks>
+            <ul>
+                <li>No external link was provided for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+</div> <!-- /who-accordions-->

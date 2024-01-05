@@ -1,0 +1,449 @@
+<div class="update-sota">
+    <form 
+        [hidden]="activeTab != tabLabels[0]"
+        class="sota-update-form basic" 
+        #basicForm
+        (ngSubmit)="onSotaUpdate()"
+    >
+        <section class="form-input no-margin-top">
+            <label class="header-label">
+                <span>Author(s) name: <em class="required">*</em></span>
+                <input 
+                    type="text" 
+                    name="author_name[]"
+                    delimiter="," 
+                    placeholder="Name of the Author(s)"
+                    [value]="record.authors"
+                    required 
+                />
+            </label>
+        </section>
+
+
+        <div class="toggle-container" togglerContainer>
+            <section class="form-input">
+                <label class="header-label">
+                    <span>Publication type: <em class="required">*</em></span>
+                    <select 
+                        name="publication_type" 
+                        (change)="toggleOnOther($event, '9')"
+                        required
+                    >
+                        <option 
+                            *ngFor="let type of publicationTypes"
+                            [value]="type.value"
+                            [selected]="type.title == record.publication_type"
+                            [innerHTML]="type.title"
+                        ></option>
+                        <option value="9" [selected]="isOtherPublicationType">Other</option>     
+                    </select>
+                </label>
+            </section>
+        
+            
+            <section class="form-input" [hidden]="!isOtherPublicationType" toggleDisable>
+                <label class="header-label">
+                    <span>Please specify: <em class="required">*</em></span>
+                    <input 
+                        type="text" 
+                        name="other_publication_type" 
+                        placeholder="Please specify publication type"
+                        [value]="isOtherPublicationType ? record.publication_type : ''"
+                        [disabled]="!isOtherPublicationType"
+                        toggleOnChange
+                        required 
+                    />
+                </label>
+            </section>
+        </div> <!-- /toggleContainer -->
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Journal/book/report/newsletter/conference: <em class="required">*</em></span>
+                <textarea 
+                    name="level1_title" 
+                    placeholder="Please provide journal/book/report/newsletter/conference information here... " 
+                    [value]="record.journal_title"
+                    required
+                ></textarea>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Article/chapter/item title: <em class="required">*</em></span>
+                <textarea 
+                    name="level2_title" 
+                    placeholder="Please provide article/chapter/item title here... "
+                    [value]="record.article_title"
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label class="input-spinner-holder header-label">
+                <span>If the study was published in a language other than English, please specify:</span>
+                <img 
+                    *ngIf="!languages" 
+                    class="input-spinner"
+                    src="../../../../assets/img/icons/loader/loading.gif" 
+                    alt="spinner"
+                />
+                <select name="nonenglish_language_id">
+                    <option value="">Select language of the publication (if not english):</option>
+                    <option 
+                        *ngFor="let language of languages"
+                        [value]="language.language_id"
+                        [innerHTML]="language.language_name"
+                        [selected]="record.nonenglish_language == language.language_name"
+                    ></option>
+                </select>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Title in original language: </span>
+                <input
+                    type="text"
+                    name="nonenglish_title" 
+                    placeholder="Title in the original language... "
+                    [value]="record.nonenglish_title"
+                />
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Select the Year of Publication: <em class="required">*</em></span>
+                <select name="year" required>
+                    <option 
+                        *ngFor="let year of years"
+                        [value]="year"
+                        [innerHTML]="year"
+                        [selected]="year == record.year"
+                    ></option>
+                </select>
+            </label>
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+    
+    
+    <form 
+        [hidden]="activeTab != tabLabels[1]"
+        class="sota-update-form theme"
+        #themeForm
+        (ngSubmit)="onSotaUpdate()"
+    >
+        <app-theme [themes]="record.theme_issues"></app-theme>
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+
+
+    <form 
+        [hidden]="activeTab != tabLabels[2]"
+        class="sota-update-form characteristics"
+        #characteristicsForm        
+        (ngSubmit)="onSotaUpdate()"
+        togglerContainer
+    >
+        <app-characteristics 
+            [characteristics]="record.characteristics"
+        ></app-characteristics>
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+    
+
+    <form 
+        [hidden]="activeTab != tabLabels[3]"
+        class="sota-update-form additional"
+        #additionalForm
+        (ngSubmit)="onSotaUpdate()"
+    >
+        <section class="form-input checkbox-container no-margin-top">
+            <label class="header-label">
+                <span>Demographic factors (check all that apply):</span>
+            </label>
+            
+            <label *ngFor="let key of demographicFactorKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    value="Yes" 
+                    defaultValue="No" 
+                    [checked]="inArray(demographicFactor[key], record.demographic_list)" 
+                /> 
+                <span [innerHTML]="demographicFactor[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    name="demographics_other"
+                    value="Yes"
+                    defaultValue="No"
+                    [checked]="getOtherValue(record.demographic_list, demographicFactor)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="demographics_other_text" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.demographic_list, demographicFactor) || ''"
+                [ngStyle]="{'display': getOtherValue(record.demographic_list, demographicFactor) ? 'block' : 'none' }"
+            />
+        </section>
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Demographic details (if applicable):</span>
+                <textarea 
+                    name="demographic_details"
+                    [value]="record.demographic_details || ''"
+                    placeholder="Please provide demographic details if applicable..."
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Employment status of fishers (check all that apply):</span>
+            </label>
+            
+            <label *ngFor="let key of employmentStatusKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    value="Yes"
+                    defaultValue="No" 
+                    [checked]="inArray(employmentStatus[key], record.employment_list)"
+                /> 
+                <span [innerHTML]="employmentStatus[key]"></span>
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Employment details (if applicable):</span>
+                <textarea 
+                    name="employment_details"
+                    [value]="record.employment_details || ''"
+                    placeholder="Please provide employment details if applicable..."
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Stage(s) of fishery chain addressed (check all that apply):</span>
+            </label>
+
+            <label *ngFor="let key of fisheryStageKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    value="Yes"
+                    defaultValue="No"
+                    [checked]="inArray(fisheryStage[key], record.stage_list)"
+                /> 
+                <span [innerHTML]="fisheryStage[key]"></span>
+            </label>
+        </section>
+
+
+        <div class="toggle-container" togglerContainer>
+            <section class="form-input">
+                <label class="header-label">
+                    <span>Are small-scale fisheries defined?</span>
+                    <select name="ssf_defined" (change)="toggleOnOther($event, definiteAns['YES'])">
+                        <option value="">--------------</option>
+                        <option 
+                            *ngFor="let value of definiteValues"
+                            [value]="value"
+                            [innerHTML]="value"
+                            [selected]="value == record.ssf_defined"
+                        ></option>
+                    </select>
+                </label>
+            </section>
+        
+            
+            <section class="form-input" [hidden]="record.ssf_defined !== definiteAns['YES']" toggleDisable>
+                <label class="header-label">
+                    <span>Provide definition of small-scale fisheries:</span>
+                    <input 
+                        type="text" 
+                        name="ssf_definition" 
+                        placeholder="Please provide definition of small-scale fisheries..."
+                        [value]="record.ssf_definition"
+                        [disabled]="record.ssf_defined !== definiteAns['YES']"
+                        toggleOnChange 
+                    />
+                </label>
+            </section>
+        </div> <!-- /toggleContainer -->
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Are large-scale fisheries also considered?</span>
+                <select name="lsf_considered">
+                    <option [value]="true" [innerHTML]="definiteAns['YES']" [selected]="record.lsf_considered"></option>
+                    <option [value]="false" [innerHTML]="definiteAns['NO']" [selected]="!record.lsf_considered"></option>
+                </select>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Research method(s) or approach(es) applied in the study (e.g. ethnographic, survey, etc.):</span>
+                <textarea 
+                    name="research_method" 
+                    placeholder="Approaches applied in the study... " 
+                    [value]="record.research_method || ''"
+                ></textarea>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Overall aim(s)/purpose or research question addressed in the study:</span>
+                <textarea 
+                    name="aim_purpose_question" 
+                    placeholder="Overall aim(s)/purpose or research question addressed in the study... " 
+                    [value]="record.aim_purpose_question || ''"
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <div class="toggle-container" togglerContainer>
+            <section class="form-input">
+                <label class="header-label">
+                    <span>
+                        Does the study offer solutions to the above issues? 
+                        <em>(Please note: Solutions are regarded as central topics that were elaborated or justified throughout the article in repsonse to certain issues, rather than recommendations tacked on at the end of the article)</em>
+                        :
+                    </span>
+                    <select name="solutions_offered" (change)="toggleOnOther($event, 'true')">
+                        <option [value]="true" [innerHTML]="definiteAns['YES']" [selected]="record.solutions_offered"></option>
+                        <option [value]="false" [innerHTML]="definiteAns['NO']" [selected]="!record.solutions_offered"></option>
+                    </select>
+                </label>
+            </section>
+        
+            
+            <section class="form-input" [hidden]="!record.solutions_offered" toggleDisable>
+                <label class="header-label">
+                    <span>Please provide details about the solutions identified in the study:</span>
+                    <textarea 
+                        name="solution_details" 
+                        placeholder="Please provide details about the solutions identified in the study... " 
+                        [value]="record.solution_details || ''"
+                        [disabled]="!record.solutions_offered"
+                        toggleOnChange 
+                    ></textarea>
+                </label>
+            </section>
+        </div> <!-- /toggle-container -->
+
+        
+        <div class="toggle-container" togglerContainer>
+            <section class="form-input">
+                <label class="header-label">
+                    <span>Are research implications and/or policy recommendations made explicit:</span>
+                    <select name="explicit_implications_recommendations" (change)="toggleOnOther($event, 'true')">
+                        <option [value]="true" [innerHTML]="definiteAns['YES']" [selected]="record.explicit_implications_recommendations"></option>
+                        <option [value]="false" [innerHTML]="definiteAns['NO']" [selected]="!record.explicit_implications_recommendations"></option>
+                    </select>
+                </label>
+            </section>
+        
+            
+            <section class="form-input" [hidden]="!record.explicit_implications_recommendations" toggleDisable>
+                <label class="header-label">
+                    <span>Please provide details about the research implications identified in the study:</span>
+                    <textarea 
+                        name="implication_details" 
+                        placeholder="Please provide details about the research implications identified in the study... " 
+                        [value]="record.implication_details || ''"
+                        [disabled]="!record.explicit_implications_recommendations"
+                        toggleOnChange 
+                    ></textarea>
+                </label>
+            </section>
+        </div> <!-- /toggle-container -->
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Additional details/comments:</span>
+                <textarea 
+                    name="comments" 
+                    placeholder="Please provide any additional comments or details you may have... " 
+                    [value]="record.comments"
+                ></textarea>
+            </label>
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+
+
+    <form 
+        [hidden]="activeTab != tabLabels[4]"
+        class="sota-update-form species"
+        #speciesForm
+        (ngSubmit)="onSotaUpdate()"
+    >
+        <app-species-link
+            label1 = "Common species name"
+            label2 = "Scientific/Latin name"
+            field1 = "common"
+            field2 = "scientific"
+            [values]="record.species"
+            [field1Type] = "species_link_types['INPUT']"
+        ></app-species-link>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+
+
+    <form 
+        [hidden]="activeTab != tabLabels[5]"
+        class="sota-update-form links"
+        #linksForm
+        (ngSubmit)="onSotaUpdate()"
+    >
+        <app-species-link
+            label1 = "Link type"
+            label2 = "Link address"
+            field1 = "link-type"
+            field2 = "link-address"
+            [values]="record.external_links"
+            [field1Type] = "species_link_types['SELECT']"
+        ></app-species-link>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+</div> <!-- /update-sota -->

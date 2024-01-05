@@ -1,0 +1,252 @@
+
+<div class="bluejustice-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Small-scale fisheries (SSF) name</th>
+                <td [innerHTML]="bluejusticeData.ssf_name"></td>
+            </tr>
+
+            <tr>
+                <th>Country of the small-scale fisheries</th>
+                <td [innerHTML]="bluejusticeData.ssf_country.short_name"></td>
+            </tr>
+
+            <tr>
+                <th>Location of the small-scale fisheries</th>
+                <td [innerHTML]="bluejusticeData.ssf_location"></td>
+            </tr>
+
+            <tr>
+                <th>Main Species</th>
+                <td [innerHTML]="lnToBr(bluejusticeData.ssf_main_species)"></td>
+            </tr>
+        </table>
+    </div> <!-- /accordion-details -->
+
+
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details">
+        <table>
+            <tr>
+                <td colspan="3">Type of SSF:</td>
+            </tr>
+
+            <tr>
+                <th>SSF type(s):</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let type of bluejusticeData.bluejustice_type_list" [innerHTML]="type"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    Dominant ecosystems in the location:
+                </td>
+            </tr>
+
+            <tr>
+                <th>A. Ecosystem type(s):</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let item of bluejusticeData.ecosystem_type_list" [innerHTML]="item"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>B. Ecosystem detailed type(s):</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let item of bluejusticeData.ecosystem_detailed_list" [innerHTML]="item"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    SSF term and definition:
+                </td>
+            </tr>
+
+            <tr>
+                <th>A. Term(s) used to refer to SSF:</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let item of bluejusticeData.bluejustice_terms_list" [innerHTML]="item"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>B. Are small-scale fisheries defined?</th>
+                <td [innerHTML]="bluejusticeData.ssf_terms_fisheries"></td>
+            </tr>
+
+            <tr *ngIf="bluejusticeData.ssf_terms_fisheries == definiteAns['YES']">
+                <th>Provide SSF definition, if applicable:</th>
+                <td [innerHTML]="lnToBr(bluejusticeData.ssf_terms_fisheries_definiton)"></td>
+            </tr>
+
+            <tr>
+                <td colspan="3">Main gears:</td>
+            </tr>
+
+            <tr>
+                <th>Type(s):</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let item of bluejusticeData.main_gear_types_list" [innerHTML]="item"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    Main vessel type(s),number(s) and engine size:
+                </td>
+            </tr>
+
+            <tr>
+                <th>Type(s):</th>
+                <td [innerHTML]="bluejusticeData.main_vessel_type"></td>
+            </tr>
+
+            <tr>
+                <th>Number(s):</th>
+                <td [innerHTML]="bluejusticeData.main_vessel_number"></td>
+            </tr>
+
+            <tr>
+                <th>Engine size:</th>
+                <td [innerHTML]="bluejusticeData.main_vessel_engine"></td>
+            </tr>
+
+            <tr>
+                <td colspan="3">Number of SS fishers:</td>
+            </tr>
+
+            <tr>
+                <th>A. Total number of SS fishers:</th>
+                <td [innerHTML]="bluejusticeData.ss_fishers_numbers"></td>
+            </tr>
+
+            <tr>
+                <th>B. % of full-time:</th>
+                <td [innerHTML]="bluejusticeData.ss_fishers_full_time"></td>
+            </tr>
+
+            <tr>
+                <th>C. % of fisher women:</th>
+                <td [innerHTML]="bluejusticeData.ss_fishers_women"></td>
+            </tr>
+
+            <tr>
+                <td colspan="3">Number of all households and SS households in the location:</td>
+            </tr>
+
+            <tr>
+                <th>A. Total number of households in the location:</th>
+                <td [innerHTML]="bluejusticeData.total_number_households"></td>
+            </tr>
+
+            <tr>
+                <th>B. % of households participating in SSF:</th>
+                <td [innerHTML]="bluejusticeData.households_participation_percentage"></td>
+            </tr>
+        </table>
+    </div> <!-- /accordion-details -->
+
+
+    <div *ngIf="accordion === accordionList[2]" class="accordion-details justice-details">
+        <section>
+            <h3>Background about SSF:</h3>
+            <div [innerHTML]="lnToBr(bluejusticeData.background_about_ssf) || 'N/A'"></div>
+        </section>
+
+        <section>
+            <h3>Justice in context:</h3>
+            <div [innerHTML]="lnToBr(bluejusticeData.justice_in_context) || 'N/A'"></div>
+        </section>
+
+        <section>
+            <h3>Types of justice:</h3>
+            <div *ngIf="bluejusticeData.justice_types_list.length === 0" [innerHTML]="'N/A'"></div>
+            <ul>
+                <li
+                    *ngFor="let item of bluejusticeData.justice_types_list"
+                    [innerHTML]="item"
+                ></li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Dealing with justice:</h3>
+            <div [innerHTML]="lnToBr(bluejusticeData.dealing_with_justice) || 'N/A'"></div>
+        </section>
+
+        <section>
+            <h3>Sources:</h3>
+            <div [innerHTML]="lnToBr(bluejusticeData.social_justice_source) || 'N/A'"></div>
+        </section>
+    </div> <!-- /accordion-details -->
+
+
+    <div *ngIf="accordion === accordionList[3]" class="accordion-details record-image">
+        <h3 *ngIf="!bluejusticeData.img_url || bluejusticeData.img_url === ''">No image provided</h3>
+        <section *ngIf="bluejusticeData.img_url && bluejusticeData.img_url !== ''" class="image-container">
+            <img
+                src="https://www.campbellrivermirror.com/wp-content/uploads/2021/04/24883656_web1_CP121738206.jpg"
+                alt="Record Image"
+            />
+
+            <table>
+                <tr>
+                    <th>Where this photo was taken</th>
+                    <td [innerHTML]="bluejusticeData.photo_location"></td>
+                </tr>
+
+                <tr>
+                    <th>When this photo was taken</th>
+                    <td [innerHTML]="bluejusticeData.date_of_photo"></td>
+                </tr>
+
+                <tr>
+                    <th>Name of the photographer</th>
+                    <td [innerHTML]="bluejusticeData.photographer"></td>
+                </tr>
+            </table>
+        </section>
+    </div> <!-- /accordion-details -->
+
+
+    <div
+        *ngIf="accordion === accordionList[4]"
+        class="accordion-details contributors-info"
+    >
+        <table>
+            <tr>
+                <th>Name of Contributor</th>
+                <td>
+                    <a target="blank" [href]="bluejusticeData.person_link" [innerHTML]="getContributorName()"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>E-mail Address</th>
+                <td [innerHTML]="bluejusticeData.core?.user?.email"></td>
+            </tr>
+
+            <tr>
+                <th>Affiliation</th>
+                <td [innerHTML]="bluejusticeData.contributor_affiliation"></td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="bluejusticeData.core?.user?.country?.short_name"></td>
+            </tr>
+        </table>
+    </div>
+</div> <!-- /bluejustice-accordions -->

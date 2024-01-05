@@ -1,0 +1,56 @@
+.update-sota .form-input .header-label {
+    display: block;
+    font-weight: 500;
+    margin: 0;
+}
+
+
+.update-sota .form-input .header-label span {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+
+.update-sota .form-input input[type="text"],
+.update-sota .form-input select,
+.update-sota .form-input textarea {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+
+.update-sota .form-input input[type="text"],
+.update-sota .form-input textarea {
+    padding: 10px;
+}
+
+
+.update-sota .form-input textarea {
+    height: 150px;
+}
+
+
+.update-sota .checkbox-container label {
+    display: flex;
+    align-items: center;
+    margin: 5px 0px;
+    cursor: pointer;
+}
+
+
+.update-sota .checkbox-container label span {
+    font-weight: normal;
+}
+
+
+.update-sota .checkbox-container .header-label {
+    margin-bottom: 10px;
+}
+
+
+.update-sota .checkbox-container input[type="text"] {
+    max-width: 400px;
+}

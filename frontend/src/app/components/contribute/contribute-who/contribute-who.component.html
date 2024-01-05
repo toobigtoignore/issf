@@ -1,0 +1,75 @@
+<div class="who-forms">
+    <p>
+        <strong>Note:</strong> If you are directly involved in SSF please provide your basic details here. 
+        Name, email, and country of residence are provided on the User Profile form. 
+        Additional details, including researcher information, can be provided on the Who's Who page after you Submit this page. 
+        You can only contribute Who's Who information about yourself.
+    </p>
+    
+    <section class="form-input">
+        <label>
+            <span>First Name: <em class="required">*</em></span>
+            <input type="text" name="first-name" placeholder="First Name" required />
+        </label>
+    </section>
+    
+    <section class="form-input">
+        <label>
+            <span>Middle Initial(s):</span>
+            <input type="text" name="middle-name" placeholder="Middle Initial(s)" />
+        </label>
+    </section>
+    
+    <section class="form-input">
+        <label>
+            <span>Last Name: <em class="required">*</em></span>
+            <input type="text" name="last-name" placeholder="Last Name" required />
+        </label>
+    </section>
+    
+    <section class="form-input">
+        <label>
+            <span>Primary Institutional/Organizational Affiliation:</span>
+            <input type="text" name="primary-institution" placeholder="Primary institution that you are affiliated with" />
+        </label>
+    </section>
+    
+    <section class="form-input">
+        <label class="input-spinner-holder">
+            <span>Choose the Country of Residence:</span>
+            <img 
+                *ngIf="!countryList" 
+                class="input-spinner"
+                src="../../../../assets/img/icons/loader/loading.gif" 
+                alt="spinner"
+            />
+            <select name="selected-country">
+                <option value="" selected>Select a Country</option>
+                <option 
+                    *ngFor="let country of countryList" 
+                    [value]="country.country_id"
+                    [innerHTML]="country.short_name"
+                ></option>
+            </select>
+        </label>
+    </section>
+    
+    <section class="form-input">
+        <label class="input-spinner-holder">
+            <span>Select all SSF Organizations/Networks/Associations that you are a member of (use Contribute to add) :</span>
+            <img 
+                *ngIf="!organizationList" 
+                class="input-spinner multi-select-input-spinner"
+                src="../../../../assets/img/icons/loader/loading.gif" 
+                alt="spinner"
+            />
+            <select name="organizations" class="multi-select-box" multiple>
+                <option 
+                    *ngFor="let organization of organizationList" 
+                    [value]="organization.issf_core_id"
+                    [innerHTML]="organization.organization_name"
+                ></option>
+            </select>
+        </label>
+    </section>
+</div> <!-- /who-forms -->

@@ -1,0 +1,280 @@
+
+<div class="sota-accordions">
+    <div *ngIf="accordion === accordionList[0]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Author(s)</th>
+                <td [innerHTML]="sotaData.author_names"></td>
+            </tr>
+
+            <tr>
+                <th>Publication type</th>
+                <td [innerHTML]="getPublicationType()"></td>
+            </tr>
+
+            <tr>
+                <th>Journal/book/report/newsletter/conference title</th>
+                <td [innerHTML]="lnToBr(sotaData.level1_title)"></td>
+            </tr>
+
+            <tr>
+                <th>Article/chapter/item title (if applicable)</th>
+                <td [innerHTML]="lnToBr(sotaData.level2_title)"></td>
+            </tr>
+
+            <tr>
+                <th>Language in which the study was published</th>
+                <td [innerHTML]="sotaData.nonenglish_language_id ? sotaData.original_language?.language_name : 'N/A'"></td>
+            </tr>
+
+            <tr>
+                <th>Title in original language</th>
+                <td [innerHTML]="sotaData.nonenglish_title ? sotaData.nonenglish_title : 'N/A'"></td>
+            </tr>
+
+            <tr>
+                <th>Year</th>
+                <td [innerHTML]="sotaData.year"></td>
+            </tr>
+
+            <tr>
+                <th>Contribution date</th>
+                <td [innerHTML]="getFormattedDate(sotaData.core?.contribution_date, '-')"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Economic</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of sotaData.theme_issues[theme_issues_categories.ECONOMIC]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Ecological</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of sotaData.theme_issues[theme_issues_categories.ECOLOGICAL]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Social/Cultural</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of sotaData.theme_issues[theme_issues_categories.SOCIAL]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Governance</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of sotaData.theme_issues[theme_issues_categories.GOVERNANCE]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[2]" class="accordion-details">
+        <table>
+            <tr *ngFor="let category of sotaData.attributes?.categories; let i = index">
+                <th [innerHTML]="category"></th>
+                <td>
+                    <ul>
+                        <li *ngFor="let value of sotaData.attributes.values[i]" [innerHTML]="value"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="accordion === accordionList[3]" class="accordion-details">
+        <table>
+            <tr>
+                <th>Demographic factors</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let dl of sotaData.demographic_factors" [innerHTML]="dl"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Demographic details</th>
+                <td [innerHTML]="lnToBr(sotaData.demographic_details)"></td>
+            </tr>
+
+            <tr>
+                <th>Employment status of fishers</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let el of sotaData.employment_statuses" [innerHTML]="el"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Employment details</th>
+                <td [innerHTML]="lnToBr(sotaData.employment_details)"></td>
+            </tr>
+
+            <tr>
+                <th>Stage(s) of fishery chain addressed</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let sl of sotaData.fishery_stages" [innerHTML]="sl"></li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>SSF defined</th>
+                <td [innerHTML]="sotaData.ssf_defined"></td>
+            </tr>
+
+            <tr *ngIf="sotaData.ssf_defined === 'Yes'">
+                <th>SSF definition</th>
+                <td [innerHTML]="sotaData.ssf_definition"></td>
+            </tr>
+
+            <tr>
+                <th>Large-scale Fisheries considered</th>
+                <td [innerHTML]="sotaData.lsf_considered ? 'Yes': 'No'"></td>
+            </tr>
+
+            <tr>
+                <th>Research method</th>
+                <td [innerHTML]="lnToBr(sotaData.research_method)"></td>
+            </tr>
+
+            <tr>
+                <th>Overall aim/purpose or research question</th>
+                <td [innerHTML]="lnToBr(sotaData.aim_purpose_question)"></td>
+            </tr>
+
+            <tr>
+                <th>Solutions offered</th>
+                <td [innerHTML]="sotaData.solutions_offered ? 'Yes': 'No'"></td>
+            </tr>
+
+            <tr>
+                <th>Solutions details</th>
+                <td [innerHTML]="lnToBr(sotaData.solution_details)"></td>
+            </tr>
+
+            <tr>
+                <th>Explicit research implications and/or policy recommendations</th>
+                <td [innerHTML]="sotaData.explicit_implications_recommendations ? 'Yes' : 'No'"></td>
+            </tr>
+
+            <tr *ngIf="sotaData.explicit_implications_recommendations">
+                <th>Details about the research implications</th>
+                <td [innerHTML]="lnToBr(sotaData.implication_details)"></td>
+            </tr>
+
+            <tr>
+                <th>Additional details/comments</th>
+                <td [innerHTML]="lnToBr(sotaData.comments)"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[4]"
+        class="accordion-details accordion-species"
+    >
+
+        <ng-container *ngIf="sotaData.species.length > 0; else emptySpecies">
+            <h3>Species: </h3>
+            <ul>
+                <li
+                    *ngFor="let species of sotaData.species"
+                    [innerHTML]="
+                        species.species_scientific
+                        ? species.species_common + ' (<b>Scientific name:</b> ' + species.species_scientific + ')'
+                        : species.species_common
+                    "
+                ></li>
+            </ul>
+        </ng-container>
+
+
+        <ng-template #emptySpecies>
+            <ul>
+                <li>No species was listed for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[5]"
+        class="accordion-details links-accordion"
+    >
+        <ng-container *ngIf="sotaData.external_links.length > 0; else noLinks">
+            <ul>
+                <li
+                    *ngFor="let link of sotaData.external_links"
+                    class="link-holder"
+                >
+                    {{ link.link_type }} -
+                    <a
+                        [href]="link.link_address"
+                        [innerHTML]="link.link_address"
+                        target="_blank"
+                    ></a>
+                </li>
+            </ul>
+        </ng-container>
+
+
+        <ng-template #noLinks>
+            <ul>
+                <li>No external link was provided for this record.</li>
+            </ul>
+        </ng-template>
+    </div>
+
+
+    <div
+        *ngIf="accordion === accordionList[6]"
+        class="accordion-details contributors-info"
+    >
+        <table>
+            <tr>
+                <th>Name of Contributor</th>
+                <td>
+                    <a target="blank" [href]="sotaData.person_link" [innerHTML]="getContributorName()"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <th>E-mail Address</th>
+                <td [innerHTML]="sotaData.core?.user?.email"></td>
+            </tr>
+
+            <tr>
+                <th>Affiliation</th>
+                <td [innerHTML]="sotaData.contributor_affiliation"></td>
+            </tr>
+
+            <tr>
+                <th>Country</th>
+                <td [innerHTML]="sotaData.core?.user?.country?.short_name"></td>
+            </tr>
+        </table>
+    </div>
+</div> <!-- /sota-accordions-->

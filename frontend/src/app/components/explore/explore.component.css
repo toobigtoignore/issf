@@ -1,0 +1,117 @@
+.visualization-page-container {
+    float: left;
+    width: 100%;
+    background: #fff;
+    padding-bottom: 30px;
+}
+
+
+.visualization-content {
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 79%;
+    min-height: 100vh;
+    margin-left: 1%;
+    margin-top: 10px;
+    margin-bottom: -20px;
+    border-radius: 5px;
+    padding: 20px 10px;
+    border: 1px solid #e3e3e3;
+    overflow: hidden;
+}
+
+
+.visualization-triggers {
+    float: right;
+    width: 18%;
+    height: 100vh;
+    background: #fff;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-left: 1%;
+    padding-right: 1%;
+    cursor: pointer;
+    overflow: auto;
+}
+
+
+.visualization-triggers .thumb-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 175px;
+    border: 1px solid #e3e3e3;
+    padding: 5px 5px 10px 5px;
+    margin-bottom: 10px;
+}
+
+
+.visualization-triggers .thumb-img img {
+    max-width: 95%;
+    max-height: 95%;
+}
+
+
+.visualization-triggers .thumb-img.selected {
+    border: 3px solid #2699FB !important;
+    cursor: default;
+}
+
+
+
+
+@media only screen and (max-width: 1023px) {
+    .visualization-page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 2px;
+        margin-bottom: 0px;
+    }
+
+
+    .visualization-content {
+        display: block;
+        width: 100%;
+        max-width: 979px;
+        min-height: auto;
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+
+
+    .visualization-triggers {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding-right: 0;
+    }
+
+
+    .visualization-triggers .thumb-img {
+        float: left;
+        width: 31%;
+        height: 24vw;
+        max-height: 200px;
+        padding: 0;
+        margin: 5px 1%;
+    }
+}
+
+
+@media only screen and (max-width: 574px) {
+    .visualization-page-container {
+        width: 98%;
+        padding: 0px 1%;
+        margin-left: 1%;
+        border-radius: 5px;
+    }
+
+
+    .visualization-content {
+        margin-top: 3px;
+    }
+}

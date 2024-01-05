@@ -1,0 +1,46 @@
+
+<div id="visual2" class="visual-slides">
+    <div class="Row">
+        <div class="Column">
+            <button name="Gear" class="chart-button button-on">Gear</button><button name="Vessel" class="chart-button button-off">Vessel</button>
+        </div>
+      
+        <div class="Column">
+			<button id="perc" name="Percentage" class="second-button button-off">Percentage</button><button id="std" name="Standardized" class="second-button button-on">Standardized Count</button>
+		</div>
+    </div>
+
+    
+    <div class="Row2">
+        <div class="Column">
+            <form id="dimensions">
+                <label id="country-radio-label" for="country"><input class="radioinput" type="radio" id="country" name="first" checked="">
+                    <span>Country</span>
+                </label>
+
+                <label id="region-radio-label" for="region"><input type="radio" id="region" name="first">
+                    <span>Region</span>
+                </label>
+            </form>
+        </div>
+
+        <label id="myCheckboxLabel" for="myCheckbox"> <input type="checkbox" id="myCheckbox">
+            <span>Compare</span>
+        </label> 
+        
+        <div id="drop" class="Column"></div>
+    </div>
+
+
+    <div class="svgdiv"></div>
+
+    
+    <div class="vis-description">
+        <p>This visualisation shows vessel/gear types information by country/region</p>
+        <ul>
+            <li>"Percentage" shows the percentage of a given vessel/gear type used in a country/region</li>
+			<li>"Standardized Count" shows average number of records using a given vessel/gear in a country/region</li>
+			<li>To compare country/region choose "Standardized Count" option</li>
+        </ul>
+    </div>
+</div>

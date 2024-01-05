@@ -1,0 +1,154 @@
+
+.authentication-form {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+}
+
+
+.authentication-form .shadow-box {
+    background: #fff;
+    box-sizing: border-box;
+    border-radius: 5px;
+	box-shadow: 1px 1px 0px 0px rgba(0,0,0,.1);    
+    border: 1px solid #e3e3e3;
+}
+
+
+.authentication-form .form-section {
+    padding: 20px;
+
+    /*  
+    -webkit-transition: transform 1.5s;
+    -moz-transition: transform 1.5s;
+    -ms-transition: transform 1.5s;
+    -o-transition: transform 1.5s;
+    transition: transform 1.5s;
+    transform-style: preserve-3d; 
+    */
+}
+
+
+.authentication-form .response {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}
+
+
+.authentication-form .response-message {
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 450;
+    line-height: 22px;
+    color: red;
+    margin: 0;
+}
+
+
+.authentication-form .response-message.success {
+    color: green;   
+}
+
+
+.authentication-form .response span {
+    display: block;
+    color: #2699fb;
+    font-size: 16px;
+    text-decoration: underline;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+.authentication-form header {
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #e3e3e3;
+    margin-bottom: 20px;
+}
+
+
+.authentication-form h2 { 
+    float: left;
+    font-size: 25px;
+}
+
+
+.authentication-form .logo { 
+    float: right;
+    width: 100px;
+}
+
+
+.authentication-form .form-box {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+.authentication-form .form-box label {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+
+.authentication-form .form-box input,
+.authentication-form .form-box select {
+    width: 100%;
+    height: 35px;  
+    font-size: 13px;
+    padding: 0px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+
+.authentication-form .form-box .invalid-field {
+    border: 1px solid red;
+}
+
+
+.authentication-form button {
+    position: relative;
+    min-width: 130px;
+    width: auto;
+    padding: 0px 15px;
+    margin-left: 0;
+}
+
+
+.authentication-form .spinner {
+    position: absolute;
+    top: 3px;
+    right: -45px;
+    width: 25px;
+    height: 25px;
+    border-width: 4px;
+    border-color: #2699fb;
+    border-top-color: #ccc;
+}
+
+
+.authentication-form .disabled {
+    color: #666;
+    background: #ccc;
+    border: 1px solid #ccc;
+    cursor: not-allowed;
+}
+
+
+.authentication-form .conditional-text {
+    margin-top: 22px;
+}
+
+
+.authentication-form .conditional-text p {
+    font-size: 16px;
+    color: #2699FB;
+    line-height: 28px;
+    margin-bottom: 0;
+    cursor: pointer;
+}

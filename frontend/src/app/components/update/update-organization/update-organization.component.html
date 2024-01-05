@@ -1,0 +1,390 @@
+<div class="update-organization">
+    <form 
+        [hidden]="activeTab != tabLabels[0]"
+        class="organization-update-form basic" 
+        #basicForm
+        (ngSubmit)="onOrganizationUpdate()"
+    >
+        <section class="form-input no-margin-top">
+            <label class="header-label">
+                <span>Organization name: <em class="required">*</em></span>
+                <input 
+                    type="text" 
+                    name="organization_name"
+                    placeholder="Name of the organization"
+                    [value]="characterDecode(record.organization_name)"
+                    required 
+                />
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Address Line 1: </span>
+                <input 
+                    type="text" 
+                    name="address1"
+                    placeholder="Address line 1"
+                    [value]="fetchAddressLine(record.address, 1)"
+                />
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Address Line 2: </span>
+                <input 
+                    type="text" 
+                    name="address2"
+                    placeholder="Address line 2"
+                    [value]="fetchAddressLine(record.address, 2)"
+                />
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>City/town: </span>
+                <input 
+                    type="text" 
+                    name="city_town"
+                    placeholder="City/town"
+                    [value]="record.city_town"
+                />
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Province/state: </span>
+                <input 
+                    type="text" 
+                    name="prov_state"
+                    placeholder="Province/state"
+                    [value]="record.prov_state"
+                />
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Postal code: </span>
+                <input 
+                    type="text" 
+                    name="postal_code"
+                    placeholder="Postal code"
+                    [value]="record.postal_code"
+                />
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label class="header-label">
+                <span>Country: <em class="required">*</em></span>
+                <select name="country" required>
+                    <option 
+                        *ngFor="let country of countryList" 
+                        [value]="country.country_id"
+                        [innerHTML]="country.short_name"
+                        [selected]="country.short_name == record.country"
+                    ></option>
+                </select>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Year established: <em class="required">*</em></span>
+                <select name="year_established" required>
+                    <option 
+                        *ngFor="let year of years"
+                        [value]="year"
+                        [innerHTML]="year"
+                        [selected]="year == record.year_established"
+                    ></option>
+                </select>
+            </label>
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Organization type (check all that apply):</span>
+            </label>
+            
+            <label *ngFor="let key of organizationTypesKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    value="true" 
+                    defaultValue="false" 
+                    [checked]="inArray(organizationTypes[key], record.organization_type_list)" 
+                /> 
+                <span [innerHTML]="organizationTypes[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    name="organization_type_other"
+                    value="true"
+                    defaultValue="false"
+                    [checked]="getOtherValue(record.organization_type_list, organizationTypes)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="organization_type_other_text" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.organization_type_list, organizationTypes) || ''"
+                [ngStyle]="{'display': getOtherValue(record.organization_type_list, organizationTypes) ? 'block' : 'none' }"
+            />
+        </section>
+
+
+        <div class="toggle-container" togglerContainer>
+            <section class="form-input">
+                <label class="header-label">
+                    <span>Does the organization apply a small-scale fisheries definition? <em class="required">*</em></span>
+                    <select 
+                        name="ssf_defined" 
+                        (change)="toggleOnOther($event, definiteAns['YES'])"
+                        required
+                    >
+                        <option 
+                            *ngFor="let value of definiteValues"
+                            [value]="value"
+                            [innerHTML]="value"
+                            [selected]="value == record.ssf_defined"
+                        ></option>
+                    </select>
+                </label>
+            </section>
+        
+            
+            <section class="form-input" [hidden]="record.ssf_defined !== definiteAns['YES']" toggleDisable>
+                <label class="header-label">
+                    <span>Provide working definition of small-scale fisheries (if applicable): <em class="required">*</em></span>
+                    <textarea 
+                        type="text" 
+                        name="ssf_definition" 
+                        placeholder="Please provide definition of small-scale fisheries..."
+                        [value]="record.ssf_definition"
+                        [disabled]="record.ssf_defined !== definiteAns['YES']"
+                        [required]="record.ssf_defined === definiteAns['YES']"
+                        toggleOnChange 
+                    ></textarea>
+                </label>
+            </section>
+        </div> <!-- /toggleContainer -->
+
+        
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Motivation/goals (check all that apply):</span>
+            </label>
+            
+            <label *ngFor="let key of organizationMotivationsKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    value="true" 
+                    defaultValue="false" 
+                    [checked]="inArray(organizationMotivations[key], record.motivation_list)" 
+                /> 
+                <span [innerHTML]="organizationMotivations[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    name="motivation_other"
+                    value="true"
+                    defaultValue="false"
+                    [checked]="getOtherValue(record.motivation_list, organizationMotivations)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="motivation_other_text" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.motivation_list, organizationMotivations) || ''"
+                [ngStyle]="{'display': getOtherValue(record.motivation_list, organizationMotivations) ? 'block' : 'none' }"
+            />
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Main activities (check all that apply):</span>
+            </label>
+            
+            <label *ngFor="let key of organizationActivitiesKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    value="true" 
+                    defaultValue="false" 
+                    [checked]="inArray(organizationActivities[key], record.main_activities_list)" 
+                /> 
+                <span [innerHTML]="organizationActivities[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    name="activities_other"
+                    value="true"
+                    defaultValue="false"
+                    [checked]="getOtherValue(record.main_activities_list, organizationActivities)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="activities_other_text" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.main_activities_list, organizationActivities) || ''"
+                [ngStyle]="{'display': getOtherValue(record.main_activities_list, organizationActivities) ? 'block' : 'none' }"
+            />
+        </section>
+
+        
+        <section class="form-input checkbox-container">
+            <label class="header-label">
+                <span>Networks/partnerships/collaborations with other organizations (check all that apply):</span>
+            </label>
+            
+            <label *ngFor="let key of organizationNetworksKeys">
+                <input 
+                    type="checkbox" 
+                    [name]="key" 
+                    value="true" 
+                    defaultValue="false" 
+                    [checked]="inArray(organizationNetworks[key], record.network_types_list)" 
+                /> 
+                <span [innerHTML]="organizationNetworks[key]"></span>
+            </label>
+
+            <label>
+                <input 
+                    type="checkbox" 
+                    name="network_types_other"
+                    value="true"
+                    defaultValue="false"
+                    [checked]="getOtherValue(record.network_types_list, organizationNetworks)" 
+                    (click)="toggleOther($event)"
+                /> 
+                <span>Other (Please specify)</span>
+            </label>
+                
+            <input 
+                type="text" 
+                class="does-toggle"
+                name="network_types_other_text" 
+                placeholder="Please specify ..."
+                [value]="getOtherValue(record.network_types_list, organizationNetworks) || ''"
+                [ngStyle]="{'display': getOtherValue(record.network_types_list, organizationNetworks) ? 'block' : 'none' }"
+            />
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Mission:</span>
+                <textarea 
+                    name="mission" 
+                    placeholder="Please provide a mission of your organization... "
+                    [value]="record.mission"
+                ></textarea>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Primary achievements:</span>
+                <textarea 
+                    name="achievements" 
+                    placeholder="Any achievement of your organization... "
+                    [value]="record.primary_achievements"
+                ></textarea>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Main success factors:</span>
+                <textarea 
+                    name="success_factors" 
+                    placeholder="Any success factors of your organization... "
+                    [value]="record.success_factors"
+                ></textarea>
+            </label>
+        </section>
+    
+        
+        <section class="form-input">
+            <label class="header-label">
+                <span>Key obstacles to achieving goals:</span>
+                <textarea 
+                    name="obstacles" 
+                    placeholder="Any obstacles the organization faced trying to achieve its goals..."
+                    [value]="record.obstacles"
+                ></textarea>
+            </label>
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+    
+    
+    <form 
+        [hidden]="activeTab != tabLabels[1]"
+        class="organization-update-form theme"
+        #themeForm
+        (ngSubmit)="onOrganizationUpdate()"
+    >
+        <app-theme [themes]="record.theme_issues"></app-theme>
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+
+
+    <form 
+        [hidden]="activeTab != tabLabels[2]"
+        class="organization-update-form links"
+        #linksForm
+        (ngSubmit)="onOrganizationUpdate()"
+    >
+        <app-species-link
+            label1 = "Link type"
+            label2 = "Link address"
+            field1 = "link-type"
+            field2 = "link-address"
+            [values]="record.external_links"
+            [field1Type] = "species_link_types['SELECT']"
+        ></app-species-link>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form>
+</div> <!-- /update-organization -->

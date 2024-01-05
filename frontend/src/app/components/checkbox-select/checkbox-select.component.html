@@ -1,0 +1,19 @@
+<mat-form-field class="checkbox-select-container">
+    <label class="box-label" *ngIf="!listControlller || listControlller.value?.length == 0"> {{ boxLabel }}</label>
+
+    <mat-select
+        class="select-box"
+        [formControl]="listControlller"
+        (selectionChange)="onSelection()"
+        multiple
+    >
+        <mat-select-trigger>
+            {{ listControlller.value[0] || ''}}
+            <span *ngIf="listControlller.value?.length > 1" class="selected-values">
+                + {{ listControlller.value.length - 1 }} {{ listControlller.value.length === 2 ? 'Other' : 'Others' }}
+            </span>
+        </mat-select-trigger>
+
+        <mat-option *ngFor="let item of list" [value]="item"> {{ item }} </mat-option>
+    </mat-select>
+</mat-form-field>

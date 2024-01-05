@@ -1,0 +1,258 @@
+.geoscope-container h1 {
+    font-weight: 550;
+}
+
+
+.geoscope-container header {
+    padding: 0px 10px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+
+.geoscope-container ul {
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+.geoscope-container ul li {
+    width: 15%;
+    color: #2699FB;
+    font-size: 15px;
+    text-align: center;
+    border: 1px solid #2699FB;
+    border-radius: 30px;
+    padding: 7px 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+.geoscope-container ul li:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
+.geoscope-container ul li.selected {
+    background: #2699FB;
+    color: #fff;
+}
+
+
+.geoscope-container .multiple-select .selected-countries ul li {
+    width: 100%;
+    color: #008cba;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    text-align: left;
+    padding: 3px 10px;
+}
+
+
+.geoscope-container h3 {
+    font-size: 21px;
+    font-weight: 550;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+
+.geoscope-container .form-repeat {
+    position: relative;
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,.1);
+    padding: 10px 20px 30px 20px;
+    margin-top: 30px;
+}
+
+
+.geoscope-container .form-repeat .remove-form {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 12px;
+    color: #c82333;
+    background: #f7f7f7;
+    text-align: center;
+    padding: 1px 10px 0px;
+    border: 1px solid #bd2130;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+
+.geoscope-container .regional-details form {
+    float: left;
+    width: 100%;
+    padding-bottom: 20px !important;
+}
+
+
+.geoscope-container .multiple-select .select-box-container {
+    float: left;
+    width: 75%;
+}
+
+
+.geoscope-container .multiple-select .select-box-container label {
+    float: left;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+
+.geoscope-container .multiple-select .select-box-container input {
+    width: 100%;
+    font-size: 15px;
+    padding: 10px 15px;
+    border: 2px solid #2699FB;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+
+.geoscope-container .multiple-select .select-box-container .select-box {
+    float: left;
+    width: 100%;
+    height: 265px;
+    border: 2px solid #ccc;
+    overflow-y: auto;
+}
+
+
+.geoscope-container .multiple-select .select-box p {
+    font-size: 15px;
+    padding: 3px 15px;
+    margin: 0px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+
+.geoscope-container .multiple-select .select-box p.selected {
+    color: #fff;
+    background: #2699FB;
+}
+
+
+.geoscope-container .multiple-select .selected-countries {
+    float: right;
+    width: 22%;
+    margin-top: 5px;
+}
+
+
+.geoscope-container .multiple-select .selected-countries ul {
+    display: block;
+    width: 100%;
+    height: 310px;
+    border: 2px solid #ccc;
+    padding: 1px 0px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    overflow-y: auto;
+}
+
+
+.geoscope-container .global-ns {
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+
+
+.geoscope-container .global-ns .icon {
+    float: left;
+    color: #28a745;
+    margin-right: 10px;
+    margin-top: -3px;
+}
+
+
+.geo-scope {
+    width: 100%;
+    height: 350px;
+    border: 1px solid #e3e3e3;
+    background: #aad3df;
+}
+
+
+.geo-scope-label {
+    float: left;
+    width: 100%;
+    font-size: 17px;
+    font-weight: 500;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+
+
+
+@media only screen and (max-width: 1023px){
+    .geoscope-container .form-repeat {
+        margin-top: -1px;
+    }
+
+
+    .geoscope-container h1 {
+        font-size: 22px;
+        margin-top: 0px;
+    }
+
+
+    .geoscope-container ul li {
+        width: auto;
+        padding: 5px 11px;
+        line-height: 19px;
+        margin-right: 10px;
+    }
+
+
+    .geoscope-container ul li:last-child {
+        margin-right: 0px;
+    }
+}
+
+
+@media only screen and (max-width: 767px){
+    .geoscope-container h1 {
+        font-size: 18px;
+    }
+
+
+  .geoscope-container ul {
+        display: block;
+        list-style: inline;
+        margin-bottom: 10px;
+    }
+
+
+    .geoscope-container ul li {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+
+    .geoscope-container ul li:last-child {
+        margin-right: 0px;
+    }
+}

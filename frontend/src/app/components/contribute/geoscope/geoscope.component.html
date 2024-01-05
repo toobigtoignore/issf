@@ -1,0 +1,471 @@
+
+<div class="geoscope-container">
+    <header>
+        <h1 [ngStyle]="{'font-size': geoScopeInfo ? '18px': '24px'}">
+            Geographic Scope:
+        </h1>
+        <ul class="scope-triggers">
+            <li
+                [ngClass]="{selected: selectedScope === scopeLabels.LOCAL}"
+                (click)="onScopeSelect(scopeLabels.LOCAL)"
+            >
+                Local
+            </li>
+
+            <li
+                [ngClass]="{selected: selectedScope === scopeLabels.SUB_NATIONAL}"
+                (click)="onScopeSelect(scopeLabels.SUB_NATIONAL)"
+            >
+                Sub-national
+            </li>
+
+            <li
+                [ngClass]="{selected: selectedScope === scopeLabels.NATIONAL}"
+                (click)="onScopeSelect(scopeLabels.NATIONAL)"
+            >
+                National
+            </li>
+
+            <li
+                [ngClass]="{selected: selectedScope === scopeLabels.REGIONAL}"
+                (click)="onScopeSelect(scopeLabels.REGIONAL)"
+            >
+                Regional
+            </li>
+
+            <li
+                [ngClass]="{selected: selectedScope === scopeLabels.GLOBAL}"
+                (click)="onScopeSelect(scopeLabels.GLOBAL)"
+            >
+                Global
+            </li>
+
+            <li
+                [ngClass]="{selected: selectedScope === scopeLabels.NOT_SPECIFIC}"
+                (click)="onScopeSelect(scopeLabels.NOT_SPECIFIC)"
+            >
+                Not specific
+            </li>
+        </ul>
+    </header>
+
+
+    <div class="scope-details" #scopeDetails>
+
+        <!-- LOCAL FORM FOR GEOGRAPHIC SCOPE -->
+        <div [hidden]="selectedScope !== scopeLabels.LOCAL">
+            <div #localFormRef class="local-details">
+                <form
+                    *ngFor="let c of counter(localForms.numberOfScope); let i = index"
+                    autocomplete="off"
+                    class="form-repeat"
+                    togglerContainer
+                    [attr.geogroup]="scopeLabels.LOCAL"
+                >
+                    <h3>
+                        Details:
+                        <span
+                            removeform
+                            class="remove-form"
+                            (click)="onRemoveGeomapPress($event)"
+                        >
+                            Remove this section
+                        </span>
+                    </h3>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Name of the Local Area {{ c }}: <em class="required">*</em></span>
+                            <input
+                                type="text"
+                                name="area_name"
+                                placeholder="Name of the Local Area"
+                                [value]="localForms.areaNames[i]"
+                                required
+                            />
+                        </label>
+                    </section>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Alternate Name:</span>
+                            <input
+                                type="text"
+                                name="alternate_name"
+                                placeholder="Alternate Name"
+                                [value]="localForms.alternateNames[i]"
+                            />
+                        </label>
+                    </section>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Specify country for Local Area: <em class="required">*</em></span>
+                            <select name="country_id" required>
+                                <option value="" disabled hidden selected>---------</option>
+                                <option
+                                    *ngFor="let country of countryList"
+                                    [value]="country.country_id"
+                                    [innerHTML]="country.short_name"
+                                    [selected]="localForms.countryCodes[i] == country.country_id"
+                                ></option>
+                            </select>
+                        </label>
+                    </section>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Local Area Setting: <em class="required">*</em></span>
+                            <select
+                                name="setting"
+                                selectionToggler
+                                (change)="toggleOnOther($event, localSubOtherValue)"
+                                required
+                            >
+                                <option value="" disabled hidden selected>---------</option>
+
+                                <option
+                                    *ngFor="let setting of localAreaSettings"
+                                    [value]="setting"
+                                    [innerHTML]="setting"
+                                    [selected]="setting === localForms.areaSettings[i]"
+                                ></option>
+
+                                <option
+                                    [value]="localSubOtherValue"
+                                    [selected]="isOtherType(localAreaSettings,localForms.areaSettings[i])"
+                                >Other</option>
+                            </select>
+                        </label>
+                    </section>
+
+
+                    <section class="form-input" [hidden]="!isOtherType(localAreaSettings,localForms.areaSettings[i])" toggleDisable>
+                        <label>
+                            <span>Please Specify the Local Area Setting: <em class="required">*</em></span>
+                            <input
+                                type="text"
+                                name="setting_other"
+                                placeholder="Other Local Area Setting"
+                                [value]="localForms.areaSettings[i]"
+                                toggleOnChange
+                                disabled
+                                required
+                            />
+                        </label>
+                    </section>
+
+
+                    <section class="form-input">
+                        <label class="geo-scope-label">Local Area Location (put the marker on the map to specify the location):</label>
+                        <input
+                            type="text"
+                            class="map-location-point"
+                            name="area_point"
+                            [hidden]="true"
+                            [value]="pointsToValue(localForms.mapPoints[i])"
+                            latlong
+                        />
+                        <div class="geo-scope" scopeMapContainer></div>
+                    </section>
+                </form>
+            </div> <!-- /local-details -->
+
+
+            <p class="add-another" (click)="addAnotherForm(scopeLabels.LOCAL)">
+                <em>+</em>
+                <span>Click here to add another one</span>
+            </p>
+        </div>
+
+
+
+
+        <!-- SUB NATIONAL FORM FOR GEOGRAPHIC SCOPE -->
+        <div [hidden]="selectedScope !== scopeLabels.SUB_NATIONAL">
+            <div #subnationalFormRef class="subnational-details">
+                <form
+                    *ngFor="let c of counter(subnationalForms.numberOfScope); let i = index"
+                    autocomplete="off"
+                    class="form-repeat"
+                    [attr.geogroup]="scopeLabels.SUB_NATIONAL"
+                    togglerContainer
+                >
+                    <h3>
+                        Details:
+                        <span
+                            removeform
+                            class="remove-form"
+                            (click)="onRemoveGeomapPress($event)"
+                        >
+                            Remove this section
+                        </span>
+                    </h3>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Name of Sub-national Area: <em class="required">*</em></span>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Name of Sub-national Area"
+                                [value]="subnationalForms.subnationNames[i]"
+                                required
+                            >
+                        </label>
+                    </section>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Specify country for Sub-national Area: <em class="required">*</em></span>
+                            <select name="country_id" required>
+                                <option value="" disabled hidden selected>---------</option>
+                                <option
+                                    *ngFor="let country of countryList"
+                                    [value]="country.country_id"
+                                    [innerHTML]="country.short_name"
+                                    [selected]="subnationalForms.subnationCountries[i] === country.country_id"
+                                ></option>
+                            </select>
+                        </label>
+                    </section>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Sub-national Area Type (select one): <em class="required">*</em></span>
+                            <select
+                                name="type"
+                                selectionToggler
+                                (change)="toggleOnOther($event, localSubOtherValue)"
+                                required
+                            >
+                                <option value="" disabled hidden selected>---------</option>
+
+                                <option
+                                    *ngFor="let areaType of subNationAreaTypes"
+                                    [value]="areaType"
+                                    [innerHTML]="areaType"
+                                    [selected]="areaType === subnationalForms.subnationTypes[i]"
+                                ></option>
+
+                                <option
+                                    [value]="localSubOtherValue"
+                                    [selected]="isOtherType(subNationAreaTypes,subnationalForms.subnationTypes[i])"
+                                >Other</option>
+                            </select>
+                        </label>
+                    </section>
+
+
+                    <section class="form-input" [hidden]="!isOtherType(subNationAreaTypes,subnationalForms.subnationTypes[i])"  toggleDisable>
+                        <label>
+                            <span>Please Specify Sub-national Area Type: <em class="required">*</em></span>
+                            <input
+                                type="text"
+                                name="type_other"
+                                placeholder="Other Sub-national Area Type"
+                                [value]="subnationalForms.subnationTypes[i]"
+                                toggleOnChange
+                                disabled
+                                required
+                            />
+                        </label>
+                    </section>
+
+
+                    <section class="form-input">
+                        <label class="geo-scope-label">Sub-national Area Location (put the marker on the map to specify the location):</label>
+                        <input
+                            type="text"
+                            class="map-location-point"
+                            name="subnation_point"
+                            [hidden]="true"
+                            [value]="pointsToValue(subnationalForms.mapPoints[i])"
+                            latlong
+                        />
+                        <div class="geo-scope" scopeMapContainer></div>
+                    </section>
+                </form>
+            </div> <!-- /subnational-details -->
+
+
+            <p class="add-another" (click)="addAnotherForm(scopeLabels.SUB_NATIONAL)">
+                <em>+</em>
+                <span>Click here to add another one</span>
+            </p>
+        </div>
+
+
+
+
+        <!-- NATIONAL FORM FOR GEOGRAPHIC SCOPE -->
+        <div #nationalFormRef [hidden]="selectedScope !== scopeLabels.NATIONAL">
+            <form
+                autocomplete="off"
+                class="national-details"
+                [attr.geogroup]="scopeLabels.NATIONAL"
+            >
+                <section class="form-input">
+                    <label>
+                        <span>Select Country: <em class="required">*</em></span>
+                        <select name="country_id" required>
+                            <option value="" disabled hidden selected>---------</option>
+                            <option
+                                *ngFor="let country of countryList"
+                                [value]="country.country_id"
+                                [innerHTML]="country.short_name"
+                                [selected]="country.country_id === nationalForm.country"
+                            ></option>
+                        </select>
+                    </label>
+                </section>
+            </form>
+        </div>
+
+
+
+
+        <!-- REGIONAL FORM FOR GEOGRAPHIC SCOPE -->
+        <div [hidden]="selectedScope !== scopeLabels.REGIONAL">
+            <div #regionalFormRef class="regional-details">
+                <form
+                    *ngFor="let c of counter(regionalForms.numberOfScope); let i = index"
+                    autocomplete="off"
+                    class="form-repeat"
+                    [attr.geogroup]="scopeLabels.REGIONAL"
+                    togglerContainer
+                >
+                    <h3>
+                        Details:
+                        <span
+                            removeform
+                            class="remove-form"
+                            (click)="onRemoveGeomapPress($event)"
+                        >
+                            Remove this section
+                        </span>
+                    </h3>
+
+
+                    <section class="form-input">
+                        <label>
+                            <span>Name of Region: <em class="required">*</em></span>
+                            <select
+                                name="region_id"
+                                selectionToggler
+                                (change)="toggleOnOther($event, regionalOtherValue)"
+                                required
+                            >
+                                <option value="" disabled hidden selected>---------</option>
+
+                                <option
+                                    *ngFor="let region of regions"
+                                    [value]="region.id"
+                                    [innerHTML]="region.name"
+                                    [selected]="region.name === regionalForms.regions[i]"
+                                ></option>
+
+                                <option
+                                    [value]="regionalOtherValue"
+                                    [selected]="isRegionOtherType(regions, regionalForms.regions[i])"
+                                >Other</option>
+                            </select>
+                        </label>
+                    </section>
+
+
+                    <section class="form-input" [hidden]="!isRegionOtherType(regions, regionalForms.regions[i])" toggleDisable>
+                        <label>
+                            <span>Please Specify the Region Name: <em class="required">*</em></span>
+                            <input
+                                type="text"
+                                name="region_name_other"
+                                placeholder="Please Specify the Name of the Region"
+                                [value]="regionalForms.regions[i]"
+                                disabled
+                                toggleOnChange
+                                required
+                            />
+                        </label>
+                    </section>
+
+
+                    <section class="form-input multiple-select">
+                        <div class="select-box-container">
+                            <label><span>Select Country(ies) (if applicable): </span></label>
+                            <input type="text" placeholder="Search for Countries ..." (keyup)="filterCountries($event)" regionalCountryFilterer/>
+                            <div class="select-box">
+                                <p
+                                    *ngFor="let country of countryList"
+                                    class="options"
+                                    [ngClass]="{'selected': isCountryInRegion(regionalForms.countries[i], country.short_name)}"
+                                    [attr.countryoption]="country.country_id"
+                                    (click)="onRegionalCountryClick($event)"
+                                    [innerHTML]="country.short_name"
+                                ></p>
+                            </div> <!-- /select-box -->
+                        </div> <!-- /select-box-container -->
+
+
+                        <div class="selected-countries">
+                            <label><span>Countries Selected</span></label>
+                            <ul selectedcountries>
+                                <li
+                                    *ngFor="let country of regionalForms.countries[i]"
+                                    [innerHTML]="country"
+                                ></li>
+                            </ul>
+                        </div> <!-- /selected-countries -->
+
+
+                        <input
+                            [hidden]="true"
+                            delimiter=","
+                            type="text"
+                            name="countries"
+                        />
+                    </section>
+                </form>
+            </div> <!-- /regional-details -->
+
+
+            <p class="add-another" (click)="addAnotherForm(scopeLabels.REGIONAL)">
+                <em>+</em>
+                <span>Click here to add another one</span>
+            </p>
+        </div>
+
+
+
+
+        <!-- GLOBAL FORM FOR GEOGRAPHIC SCOPE -->
+        <div [hidden]="selectedScope !== scopeLabels.GLOBAL">
+            <section class="form-input">
+                <p class="global-ns">
+                    <mat-icon class="icon">check_circle_outline</mat-icon>
+                    This record applies globally.
+                </p>
+            </section>
+        </div>
+
+
+
+
+        <!-- NOT SPECIFIC FORM FOR GEOGRAPHIC SCOPE -->
+        <div [hidden]="selectedScope !== scopeLabels.NOT_SPECIFIC">
+            <section class="form-input">
+                <p class="global-ns">
+                    <mat-icon class="icon">check_circle_outline</mat-icon>
+                    This record does not have any specific geographic area.
+                </p>
+            </section>
+        </div>
+    </div> <!-- /scope-details -->
+</div> <!-- /geoscope-container -->

@@ -1,0 +1,149 @@
+<div class="update-casestudies">
+    <form
+        [hidden]="activeTab != tabLabels[0]"
+        class="casestudies-update-form basic" 
+        #basicForm
+        (ngSubmit)="onCaseStudiesUpdate()"
+    >        
+        <section class="form-input">
+            <label>
+                <span>Case study name: <em class="required">*</em></span>
+                <input type="text" name="name" placeholder="Name of the case study performed" [value]="record.casestudy_name" required />
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label>
+                <span>Your role in the case study: <em class="required">*</em></span>
+                <input type="text" name="role" placeholder="Your role in the case study" [value]="record.casestudy_role" required />
+            </label>
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /casestudies-update-form -->
+
+    
+    <form
+        [hidden]="activeTab != tabLabels[1]"
+        class="casestudies-update-form description" 
+        #descriptionForm
+        (ngSubmit)="onCaseStudiesUpdate()"
+    >
+        <section class="form-input">
+            <label>
+                <span>Background and context: <em class="required">*</em></span>
+                <textarea 
+                    name="background_context"
+                    [value]="record.casestudy_background || ''"
+                    placeholder="Background and context of the case study..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label>
+                <span>Describe Case Study Area: <em class="required">*</em></span>
+                <textarea 
+                    name="description_area"
+                    [value]="record.casestudy_area_description || ''"
+                    placeholder="Describe your case study area here ..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Describe Case Study Fishery: <em class="required">*</em></span>
+                <textarea 
+                    name="description_fishery"
+                    [value]="record.casestudy_fishery_description || ''"
+                    placeholder="Describe your case study fishery here..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label> 
+                <span>Describe Case Study Issues: <em class="required">*</em></span>
+                <textarea 
+                    name="description_issues"
+                    [value]="record.casestudy_issues_description || ''"
+                    placeholder="Describe your case study issues here..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label> 
+                <span>Stakeholders Involved: <em class="required">*</em></span>
+                <textarea 
+                    name="stakeholders"
+                    [value]="record.casestudy_stakeholders || ''"
+                    placeholder="Stakeholders involved..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /casestudies-update-form -->
+
+    
+    <form
+        [hidden]="activeTab != tabLabels[2]"
+        class="casestudies-update-form solution" 
+        #solutionForm
+        (ngSubmit)="onCaseStudiesUpdate()"
+    >
+        <section class="form-input">
+            <label> 
+                <span>Key Activities or Innovation: <em class="required">*</em></span>
+                <textarea 
+                    name="activities_innovation"
+                    [value]="record.casestudy_key_innovation || ''"
+                    placeholder="Key Activities or Innovation..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label> 
+                <span>Issues Addressed / Remaining Challenges: <em class="required">*</em></span>
+                <textarea 
+                    name="issues_challenges"
+                    [value]="record.casestudy_issues_challenges || ''"
+                    placeholder="Describe the issues addressed or remaining challenges..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+        
+        <section class="form-input">
+            <label> 
+                <span>Was the Transdisciplinary Perspective Applied? Explain How: <em class="required">*</em></span>
+                <textarea 
+                    name="transdisciplinary"
+                    [value]="record.casestudy_transdisciplinary || ''"
+                    placeholder="Explain How the Transdisciplinary Perspective has been Applied..."
+                    required
+                ></textarea>
+            </label>
+        </section>
+
+        <br><button type="submit" class="no-margin-left">Submit</button>
+    </form> <!-- /casestudies-update-form -->
+</div> <!-- /update-casestudies -->

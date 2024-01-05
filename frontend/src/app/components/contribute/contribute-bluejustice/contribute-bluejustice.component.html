@@ -1,0 +1,40 @@
+<div class="bluejustice-forms">
+    <div class="bluejustice-contribute-section">
+        <h2 class="bluejustice-section-header">SSF Bluejustice Information</h2>
+        <section class="form-input">
+            <label>
+                <span>Small-scale Fisheries (SSF) Name: <em class="required">*</em></span>
+                <input type="text" name="ssf_name" placeholder="Name of the Small-scale Fisheries" required />
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label class="input-spinner-holder">
+                <span>Select a Country for the Small-scale Fisheries: <em class="required">*</em></span>
+                <img
+                    *ngIf="!countryList"
+                    class="input-spinner"
+                    src="../../../../assets/img/icons/loader/loading.gif"
+                    alt="spinner"
+                />
+                <select name="ssf_country" required>
+                    <option value="" disabled hidden selected>Select Country</option>
+                    <option
+                        *ngFor="let country of countryList"
+                        [value]="country.country_id"
+                        [innerHTML]="country.short_name"
+                    ></option>
+                </select>
+            </label>
+        </section>
+
+
+        <section class="form-input">
+            <label>
+                <span>Provide A Location for the Small-scale Fisheries (SSF): <em class="required">*</em></span>
+                <input type="text" name="ssf_location" placeholder="Location for the small-scale fisheries" required />
+            </label>
+        </section>
+    </div> <!-- /bluejustice-contribute-section -->
+</div> <!-- /bluejustice-forms -->

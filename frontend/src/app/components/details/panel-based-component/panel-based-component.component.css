@@ -1,0 +1,45 @@
+
+.block-container {
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+
+.block-container section h3 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: normal;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 3px;
+    text-shadow: 2px 2px 3px rgba(0,0,0,.15);
+    margin: 0;
+}
+
+
+.block-container section img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+
+.block-container .progress-bar-container {
+    margin-bottom: 40px;
+}
+
+
+.block-container .progress-bar .progress-text {
+    color: #000;
+    font-size: 17px;
+}
+
+
+.block-container .full-link {
+    width: 100%;
+    font-weight: 550;
+    margin-left: 0;
+    margin-bottom: 25px;
+}

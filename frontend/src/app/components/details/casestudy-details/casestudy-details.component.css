@@ -1,0 +1,56 @@
+
+.casestudy-accordions .link-holder {
+    word-break: break-all;
+}
+
+
+.casestudy-accordions ul {
+    padding-left: 15px;
+}
+
+
+.casestudy-accordions li {
+    font-size: 16px;
+    list-style: disc;
+    margin: 12px 0px;
+}
+
+
+.casestudy-accordions .links-accordion {
+    padding: 10px;
+}
+
+
+.casestudy-accordions .links-accordion ul {
+    padding-left: 25px;
+}
+
+
+.casestudy-accordions .contains-description {
+    padding: 20px 5px 2px;
+}
+
+
+.casestudy-accordions .contains-description section {
+    padding: 10px 15px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    line-height: 25px;
+    background: #fffffb;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,.3);
+}
+
+
+.casestudy-accordions .contains-description section h3 {
+    font-weight: 500;
+    color: #333;
+    font-size: 19px;
+}
+
+
+.casestudy-accordions .contains-description section h4 {
+    color: #333;
+    font-weight: 500;
+    font-size: 17px;
+    margin-top: 23px;
+}

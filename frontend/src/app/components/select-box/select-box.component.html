@@ -1,0 +1,16 @@
+
+<mat-select 
+    [attr.formControl]="isMultiple ? items : null"
+    [(value)]="selectedValue"
+    (selectionChange)="getOptionValue()"
+    [multiple]="isMultiple"
+>
+    <mat-option 
+        class="option-value" 
+        *ngFor="let item of list" 
+        [value]="item[optionValue]"
+    >
+        <img class="option-img" [src]="item[iconKey]" *ngIf="iconKey">
+        <span>{{ item[optionLabel] }}</span>
+    </mat-option>
+</mat-select>

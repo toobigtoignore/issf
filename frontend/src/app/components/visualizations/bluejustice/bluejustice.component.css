@@ -1,0 +1,82 @@
+
+#visual3 {
+	display: inline-block;
+	width: 100%;
+	background: #fff;
+}
+
+
+#visual3 .visual-content { 
+	text-align: center;
+	background: #fff;
+}
+
+
+#visual3 .sort {
+    margin-bottom: 25px;
+}
+
+
+#visual3 .sort span {
+    font-size: 17px;
+    margin-left: 10px;
+}
+
+
+#visual3 .visual-content p { 
+	font-size: 18px;
+	font-weight: 500;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+
+#visual3 li {
+    text-align: left;
+    font-size: 16px;
+    margin-top: 7px;
+}
+
+
+#visual3 .bluejustice-tooltip {
+	position: absolute; 
+	text-align: center; 
+	padding: 5px; 
+	background: #fff2d1; 
+	border: 0px; 
+    border-radius: 8px;
+}
+
+
+
+
+@media only screen and (max-width: 1199px){
+    #visual3 svg {
+        overflow: visible;
+    }
+
+    
+    #visual3 .text,
+    #visual3 .tick {
+        font-size: 15px;
+    }
+
+    
+    #visual3 .visual-content p {
+        font-size: 17px;
+        margin-top: 20px;
+        line-height: 22px;
+    }
+
+
+    #visual3 ul {
+        padding-left: 7%;
+    }
+
+
+    #visual3 li {
+        font-size: 16px;
+        line-height: 22px;
+        margin-bottom: 10px;
+    }
+}

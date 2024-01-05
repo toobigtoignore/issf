@@ -1,0 +1,45 @@
+
+.profile-accordions .link-holder {
+    word-break: break-all;
+}
+
+
+.profile-accordions ul {
+    padding-left: 15px;
+}
+
+
+.profile-accordions li {
+    font-size: 16px;
+    list-style: disc;
+    margin: 12px 0px;
+}
+
+
+.profile-accordions .organization-accordion,
+.profile-accordions .accordion-species,
+.profile-accordions .links-accordion {
+    padding: 10px;
+}
+
+
+.profile-accordions .organization-accordion ul,
+.profile-accordions .accordion-species ul,
+.profile-accordions .links-accordion ul {
+    padding-left: 25px;
+}
+
+
+.profile-accordions .characteristics p {
+    font-size: 16px;
+    margin: 10px 0px;
+}
+
+
+.profile-accordions .accordion-species h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e3e3e3;
+}

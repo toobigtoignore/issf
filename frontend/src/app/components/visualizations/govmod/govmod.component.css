@@ -1,0 +1,135 @@
+
+/* css for visual 1*/
+#visual1 {
+	display: inline-block;
+	width: 100%;
+}
+
+
+#visual1 .visual-content { 
+	text-align: center;
+}
+
+
+#visual1 .visual-content p { 
+	font-size: 18px;
+	margin-top: 40px;
+    margin-bottom: 10px;
+    line-height: 30px;
+}
+
+
+#visual1 .visual-content li { 
+ 	display: inline;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+
+#visual1 .visual-content li:nth-child(1) { 
+ 	color: #3f51b5;
+}
+
+
+#visual1 .visual-content li:nth-child(2) { 
+ 	color: #d81b60;
+}
+
+
+#visual1 .visual-content li:nth-child(3) { 
+ 	color: #4caf50;
+}
+
+
+#visual1 .visual-content li:after { 
+ 	content: "|";
+	font-weight: bold;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+
+#visual1 .visual-content li:last-child:after { 
+ 	content: "";
+	margin-right: 0;
+}
+
+
+#visual1 .visual1_tooltip { 
+ 	position: absolute;
+	font-size: 14px;
+	width: auto;
+	height: auto;
+	pointer-events: none;
+	background-color: #feffeb;
+	box-sizing: border-box;
+	padding: 10px;
+	border: 1px solid #e3e3e3;
+	border-radius: 3px;
+	z-index: 999;
+}
+
+
+#visual1 .svg-container {
+    display: inline-block;	
+    position: relative;	
+    width: 100%;	
+    max-width: 680px;
+}
+
+
+#visual1 .svg-content {
+	overflow: hidden;
+}
+
+
+
+
+@media screen and (max-width: 1199px) {
+    #visual1 .svg-container { 
+    	overflow: visible;
+    }
+    
+    
+    #visual1 .svg-content { 
+    	padding: 0 !important;
+    }
+
+    
+    #visual1 .visual-content p {
+        font-size: 17px;
+        margin-top: 20px;
+        margin-bottom: 0;
+        line-height: 23px;
+    }
+
+
+    #visual1 .visual-content ul {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+
+    #visual1 .visual-content li {
+        font-size: 16px;
+        line-height: 22px;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    #visual1 .visual1_tooltip {
+        font-size: 13px;
+        left: calc(calc(100vw - 224px)/2) !important;
+        top: 38vw !important;
+        border-radius: 10px;
+        padding: 5px;
+    }
+}
+
+
+@media screen and (max-width: 575px) {
+    #visual1 #labels text {
+        font-size: 15px !important;
+    }
+}

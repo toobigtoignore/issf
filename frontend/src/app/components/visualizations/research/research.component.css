@@ -1,0 +1,207 @@
+
+.visual7-center {
+    text-align: center;
+}
+
+
+#visual7-lockCheckboxLabel {
+    display: inline-block;
+    background: #f7f7f7;
+    width: 100%;
+    padding: 10px 0px 8px;
+    margin: 10px 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+#visual7-lockCheckboxLabel input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+}
+
+
+#visual7-lockCheckboxLabel span {
+    font-size: 20px;
+}
+
+
+#visual7 svg {
+    font-family: Sans-Serif, Arial;
+}
+
+
+#visual7 #visual7-pieChart {
+    margin-left: 16.5%;
+}
+
+
+#visual7 #pie {
+    margin-bottom: 20px;
+}
+
+
+#visual7 .line {
+    stroke-width: 2;	
+    fill: none;
+}
+
+
+#visual7 .axis path {
+    stroke: black;
+}
+
+
+#visual7 .title {
+    font-size: 16px;
+}
+
+
+#visual7 .text {
+    font-size: 12px;
+}
+
+
+#visual7-info li { 
+    display: inline; 
+    font-size: 13px;
+}
+
+
+#visual7-info li:after { 
+    content: "|"; 
+    font-weight: bold; 
+    margin-left: 13px; 
+    margin-right: 13px; 
+}
+
+
+#visual7-info li:last-child:after { 
+    content: ""; 
+    margin-right: 0; 
+}
+
+
+#visual7 .svg-container {
+    width: 100%;
+    padding: 0;
+}
+
+
+#visual7-right {
+    padding-left: 5%;
+    padding-top: 10;
+}
+
+
+#visual7-footerDiv {
+    margin-top: 50px;
+}
+
+
+#visual7-footerDiv p {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+
+
+#visual7-footerDiv li {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 25px
+}
+
+
+#visual7-footerDiv li:nth-child(1) { 
+ 	color: #3f51b5;
+}
+
+
+#visual7-footerDiv li:nth-child(2) { 
+ 	color: #d81b60;
+}
+
+
+#visual7-footerDiv li:nth-child(3) { 
+ 	color: #4caf50;
+}
+
+
+
+
+@media screen and (max-width: 1199px) {
+    #visual7-lockCheckboxLabel span {
+        font-size: 17px;
+    }
+
+    
+    #visual7-footerDiv p {
+        font-size: 17px;
+        line-height: 23px;
+        margin-bottom: 0px;
+    }
+
+
+    #visual7-footerDiv {
+        padding: 0;
+        margin-top: 20px;
+    }
+
+
+    #visual7-info {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+
+    #visual7-footerDiv li {
+        font-size: 16px;
+        line-height: 23px;
+    }
+}
+
+
+
+
+@media screen and (max-width: 574px) {
+    #visual7 .row:first-child {
+       display: block;
+    }
+    
+    
+    #visual7-chart .svg-content {
+        width: calc(100vw - 5px);
+        margin-left: -7px;
+    }
+
+
+    #visual7-right {
+        padding-left: 10px;
+        margin-top: 20px;
+    }
+
+
+    #visual7-dropdown {
+        width: calc(100vw - 40px) !important;
+    }
+
+
+    #visual7-lockCheckboxLabel {
+        width: calc(100vw - 40px);
+        margin: 0;
+    }
+
+
+    #visual7-pieChart .svg-content {
+        width: 290px;
+        margin-left: calc(calc(100vw - 290px)/2);
+    }
+
+
+    #visual7-footerDiv {
+        margin-top: 0;
+    }
+}

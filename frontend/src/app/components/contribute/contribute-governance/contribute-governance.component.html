@@ -1,0 +1,51 @@
+<div class="governance-forms">
+    <section class="form-input">
+        <label class="input-spinner-holder">
+            <span>Case Study Country: <em class="required">*</em></span>
+            <img 
+                *ngIf="!countryList" 
+                class="input-spinner"
+                src="../../../../assets/img/icons/loader/loading.gif" 
+                alt="spinner"
+            />
+            <select name="country" required>
+                <option value="" disabled hidden selected>Select a Country</option>
+                <option 
+                    *ngFor="let country of countryList" 
+                    [value]="country.country_id"
+                    [innerHTML]="country.short_name"
+                ></option>
+            </select>
+        </label>
+    </section>
+
+    
+    <div class="contributor-info">
+        <h3>Contributors' Information:</h3>
+        <div class="contributor-repeat initial-contributor">
+            <section class="form-input">
+                <label>
+                    <span>Contributor's Name & Affiliations <em class="required">*</em></span><br>
+                    <em class="contributor-caution">(Please write the contributor's name followed by a hyphen followed by the affiliation. Use a new line for each contributor and their affiliation if you have more than one):</em>
+                    <textarea 
+                        name="name-affiliation" 
+                        placeholder="Example:&#10;&#10;John Doe - Memorial University,&#10;Jane Doe - Dalhousie University"
+                        required
+                    ></textarea>
+                </label>
+            </section>
+            
+            
+            <!-- <button 
+                class="remove-contributor" 
+                onclick="confirm('Are you sure you want to remove this contributor?') ? this.closest('.contributor-repeat').remove() : null"
+            >Remove Contributor</button> -->
+        </div> <!-- /contributor-repeat -->
+        
+        
+        <!-- <p class="add-another" (click)="addAnotherContributor()">
+            <em>+</em>
+            <span>Click here to add another one</span>
+        </p> -->
+    </div> <!-- /contributor-info -->
+</div> <!-- /governance-forms -->

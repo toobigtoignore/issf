@@ -1,0 +1,90 @@
+.update-profile .profile-organization-section {
+    padding: 15px 20px;
+    box-shadow: 1px 1px 8px 0px rgba(0,0,0,.2);
+    border-radius: 4px;
+    margin-top: 25px;
+}
+
+
+.update-profile .profile-organization-section:first-child {
+    margin-top: 0;
+}
+
+
+.update-profile .profile-organization-type-trigger {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+
+.update-profile .hidden {
+    display: none;
+}
+
+
+.update-profile .profile-organization-type-trigger p {   
+    float: left;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 550;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+
+.update-profile .profile-organization-type-trigger mat-icon {
+    margin-right: 10px;
+}
+
+
+.update-profile .other-organization-section {
+    border: 1px solid #ccc;
+    padding: 0px 15px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.update-profile .other-organization-section legend {
+    color: #2699FB;
+    font-weight: 550;
+    font-size: 17px;
+    padding: 0px 10px;
+}
+
+
+.update-profile .remove-section {
+    width: auto;
+    height: auto;
+    font-size: 13px;
+    color: #bd2130;
+    background: transparent;
+    border: 1px solid #bd2130;
+    padding: 4px 15px;
+    border-radius: 30px;
+    margin-left: 0;
+    margin-top: 15px;
+}
+
+
+.update-profile .remove-section:active {
+    border: 2px solid #bd2130;
+}
+
+
+.update-profile .add-more {
+    display: inline-block;
+    color: #2699FB;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+
+.update-profile .add-more mat-icon {
+    float: left;
+    margin-right: 7px;
+    margin-top: -3.5px;
+}

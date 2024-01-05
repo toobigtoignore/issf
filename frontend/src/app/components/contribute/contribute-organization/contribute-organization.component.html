@@ -1,0 +1,57 @@
+<div class="organization-forms">
+    <section class="form-input">
+        <label>
+            <span>Organization Name: <em class="required">*</em></span>
+            <input type="text" name="organization_name" placeholder="Organization name" required>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label class="input-spinner-holder">
+            <span>Country of the Organization: <em class="required">*</em></span>
+            <img
+                *ngIf="!countryList"
+                class="input-spinner"
+                src="../../../../assets/img/icons/loader/loading.gif"
+                alt="spinner"
+            />
+            <select name="country_id" required>
+                <option value="" disabled hidden selected>Select a Country</option>
+                <option
+                    *ngFor="let country of countryList"
+                    [value]="country.country_id"
+                    [innerHTML]="country.short_name"
+                ></option>
+            </select>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Which Year the Organization was Established: <em class="required">*</em></span>
+            <select name="year_established" required>
+                <option value="" disabled hidden selected>Year Established</option>
+                <option
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [innerHTML]="year"
+                ></option>
+            </select>
+        </label>
+    </section>
+
+
+    <section class="form-input">
+        <label>
+            <span>Does the Organization Apply a Small-scale Fisheries Definition? <em class="required">*</em></span>
+            <select name="ssf_defined" required>
+                <option value="" disabled hidden selected>Select One that Applies</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not explicitly">Not explicitly</option>
+                </select>
+        </label>
+    </section>
+</div> <!-- /organization-forms -->

@@ -1,0 +1,71 @@
+
+<div id="visual8" class="visual8_center">
+    <div id="visual8_header"></div>
+    <div id="visual8_map" class="svg-container"></div>
+    <div class="choropleth-map-info">
+        <div class="panel-info">
+            <p>The following colors indicate the number of records located in each country.</p>
+        </div> <!-- panel-info -->
+
+
+        <div class="range">
+            <ul>
+                <li><div class="box" style="background: #fcf09c;">0 - 19</div></li>
+                <li><div class="box" style="background: #ffda6b;">20 - 49</div></li>
+                <li><div class="box" style="background: #f9bb3e;">50 - 99</div></li>
+                <li><div class="box" style="background: #fe9929;">100+</div></li>
+            </ul>
+        </div> <!-- range -->
+    </div> <!-- choropleth-map-info -->
+</div> <!-- visual8 -->
+
+
+<div class="visual8_tooltip hidden">
+    <h3>Country: {{ countryName }} </h3>
+    <p *ngIf="totalWhoRecords">
+        <img src='../../../../assets/img/map-controller-icons/icon-who.png'/>
+        <strong>SSF WHO: </strong>
+        <em>{{ totalWhoRecords }}</em>
+    </p>
+
+    <p *ngIf="totalSotaRecords != undefined">
+        <img src='../../../../assets/img/map-controller-icons/icon-sota.png'/>
+        <strong>SSF State-of-the-art: </strong>
+        <em>{{ totalSotaRecords }}</em>
+    </p>
+
+    <p *ngIf="totalProfileRecords != undefined">
+        <img src='../../../../assets/img/map-controller-icons/icon-profile.png'/>
+        <strong>SSF Profile: </strong>
+        <em>{{ totalProfileRecords }}</em>
+    </p>
+
+    <p *ngIf="totalOrganizationRecords != undefined">
+        <img src='../../../../assets/img/map-controller-icons/icon-organization.png'/>
+        <strong>SSF Organization: </strong>
+        <em>{{ totalOrganizationRecords }}</em>
+    </p>
+
+    <p *ngIf="totalCaseStudyRecords != undefined">
+        <img src='../../../../assets/img/map-controller-icons/icon-organization.png'/>
+        <strong>Case Study: </strong>
+        <em>{{ totalCaseStudyRecords }}</em>
+    </p>
+
+    <p *ngIf="totalBluejusticeRecords != undefined">
+        <img src='../../../../assets/img/map-controller-icons/icon-bluejustice.png'/>
+        <strong>SSF Bluejustice: </strong>
+        <em>{{ totalBluejusticeRecords }}</em>
+    </p>
+
+    <p *ngIf="totalGuidelinesRecords != undefined">
+        <img src='../../../../assets/img/map-controller-icons/icon-guidelines.png'/>
+        <strong>SSF Guidelines: </strong>
+        <em>{{ totalGuidelinesRecords }}</em>
+    </p>
+
+    <p>
+        <strong>Total Records: </strong>
+        <em>{{ totalRecords }}</em>
+    </p>
+</div> <!-- /visual8_tooltip -->

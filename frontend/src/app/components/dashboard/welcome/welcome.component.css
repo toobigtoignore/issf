@@ -1,0 +1,187 @@
+
+.welcome {
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px 2.5% 0px;
+    text-align: center;
+    line-height: 30px;
+    background: #fff;
+    box-shadow: 1px 1px 2px -1px rgba(0,0,0,.4);
+    border-radius: 5px;
+  	margin-bottom: 25px;
+}
+
+
+.welcome h2 {
+    text-align: center;
+    color: #2699FB;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+
+.welcome .can-do-issf {
+    text-align: left;
+}
+
+
+.welcome ul {
+    padding-left: 2.5%;
+}
+
+
+.welcome ul li {
+    margin-bottom: 5px;
+}
+
+
+.welcome .icons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    box-sizing: border-box;
+    padding: 0px 20%;
+}
+
+
+.welcome .icons-container .icon {
+    width: 50px;
+    height: 50px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+.welcome .icons-container .icon-who {
+    background-image: url('/assets/img/map-controller-icons/icon-who.png');
+}
+
+
+.welcome .icons-container .icon-sota {
+    background-image: url('/assets/img/map-controller-icons/icon-sota.png');
+}
+
+
+.welcome .icons-container .icon-profile {
+    background-image: url('/assets/img/map-controller-icons/icon-profile.png');
+}
+
+
+.welcome .icons-container .icon-organization {
+    background-image: url('/assets/img/map-controller-icons/icon-organization.png');
+}
+
+
+.welcome .icons-container .icon-case {
+    background-image: url('/assets/img/map-controller-icons/icon-case.png');
+}
+
+
+.welcome .icons-container .icon-governance {
+    background-image: url('/assets/img/map-controller-icons/icon-governance.png');
+}
+
+
+.welcome .icons-container .icon-bluejustice {
+    background-position-y: 8px;
+    background-image: url('/assets/img/map-controller-icons/icon-bluejustice.png');
+}
+
+
+.welcome .icons-container .icon-guidelines {
+    background-image: url('/assets/img/map-controller-icons/icon-guidelines.png');
+}
+
+
+.welcome h4 {
+    color: #2699FB;
+    font-size: 25px;
+}
+
+
+.welcome .issf-help {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+
+.welcome .issf-help h4 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+.welcome #video-tutorial {
+    float: left;
+    width: 105%;
+    margin-left: -2.5%;
+}
+
+
+
+
+@media only screen and (max-width: 1023px) {
+    .welcome {
+        width: 100%;
+        font-size: 25px;
+        margin-bottom: 15px;
+        padding: 15px 2.5% 0;
+    }
+
+
+    .welcome h2 {
+        font-size: 22px;
+        margin-top:  5px;
+        margin-bottom:  10px;
+    }
+
+
+    .welcome p {
+        font-size: 16px;
+        line-height: 25px;
+    }
+
+
+    .welcome .icons-container {
+        padding: 0 2%;
+        margin-top: 20px;
+        margin-bottom: 25px;
+    }
+
+
+    .welcome .can-do-issf {
+        padding: 20px 10%;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 3px #0003;
+    }
+
+
+    .welcome h4 {
+        font-size: 20px;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+
+
+    .welcome .issf-help h4{
+        font-size: 18px;
+    }
+
+
+    .welcome ul {
+        margin-top: 15px;
+        margin-bottom: 0;
+    }
+
+
+    .welcome li {
+        font-size: 16px;
+        line-height: 25px;
+    }
+}

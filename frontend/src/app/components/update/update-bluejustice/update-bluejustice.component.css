@@ -1,0 +1,132 @@
+.update-bluejustice .form-input h3,
+.update-bluejustice .form-input h4 {
+    font-weight: 500;
+}
+
+
+.update-bluejustice .form-input h3 {
+    margin-bottom: -15px;
+}
+
+
+.update-bluejustice .form-input h4 {
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+
+.update-bluejustice .text-input-only h3 {
+    margin-bottom: 10px;
+}
+
+
+.update-bluejustice .text-input-only h4 {
+    margin-top: 2.5px;
+    margin-bottom: 2.5px;
+}
+
+
+.update-bluejustice .general-info .form-input.no-border {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+
+.update-bluejustice .checkbox-container label {
+    display: flex;
+    align-items: center;
+    margin: 5px 0px;
+    cursor: pointer;
+}
+
+
+.update-bluejustice .social-equity-issues .checkbox-container label {
+    align-items: flex-start;
+    margin: 15px 0px;
+}
+
+
+.update-bluejustice .checkbox-container label span {
+    font-weight: normal;
+}
+
+
+.update-bluejustice .form-input input[type="text"],
+.update-bluejustice .form-input select,
+.update-bluejustice .form-input textarea {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+
+.update-bluejustice .form-input input[type="text"],
+.update-bluejustice .form-input textarea {
+    padding: 10px;
+}
+
+
+.update-bluejustice .form-input textarea {
+    height: 150px;
+}
+
+
+.update-bluejustice .checkbox-container input[type="text"] {
+    max-width: 400px;
+}
+
+
+.update-bluejustice .image-pdf fieldset {
+    border: 1px solid #e3e3e3;
+    padding: 20px;
+}
+
+
+.update-bluejustice .image-pdf legend {
+    font-size: 18px;
+    font-weight: 550;
+}
+
+
+.update-bluejustice .image-pdf .image-section {
+    overflow: visible;
+    margin-bottom: 30px;
+}
+
+
+.update-bluejustice .image-pdf img {
+    display: block;
+    max-width: 250px;
+    max-height: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 2px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+
+.update-bluejustice .image-pdf .image-container {
+    position: relative;
+    display: inline-block;
+}
+
+
+.update-bluejustice .image-pdf .image-container span {
+    position: absolute;
+    right: -10px;
+    top: -4px;
+    color: #fff;
+    background: #c82333;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+
+.update-bluejustice .bluejustice-pdf {
+    margin-top: 30px;
+}
