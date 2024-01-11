@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { 
+import {
     BLUEJUSTICE_ECOSYSTEM_DETAILED,
     BLUEJUSTICE_ECOSYSTEM_TYPE,
     BLUEJUSTICE_JUSTICE_TYPES,
@@ -7,15 +7,16 @@ import {
     BLUEJUSTICE_SSF_TERMS,
     BLUEJUSTICE_SSF_TYPE,
     DEFINITE_ANS,
-    DETAILS_ACCORDIONS_LABELS, 
+    DETAILS_ACCORDIONS_LABELS,
     KEEP_BLUEJUSTICE_IMAGE_KEY,
     PANEL_CODES,
+    RESPONSE_CODES,
     REMOVE_BLUEJUSTICE_IMAGE_KEY,
     UPLOAD_BLUEJUSTICE_IMAGE_KEY
 } from '../../../constants/constants';
 import { countryList } from '../../../../assets/js/types';
 import { getAllCountriesUrl } from '../../../constants/api';
-import { 
+import {
     updateBluejusticeBasicUrl,
     updateBluejusticeFilesUrl,
     updateBluejusticeGeneralInfoUrl,
@@ -45,7 +46,7 @@ export class UpdateBluejusticeComponent implements OnInit {
     @Input() activeTab: string;
     @Input() record: any;
     @Input() recordId: number;
-    
+
     countryList: countryList[];
     image: File;
     imageActionKey: string = KEEP_BLUEJUSTICE_IMAGE_KEY;
@@ -66,14 +67,14 @@ export class UpdateBluejusticeComponent implements OnInit {
     ssfTypesKeys: string[] = Object.keys(this.ssfTypes);
     tabLabels: string[];
 
-    
+
     constructor(
         private commonServices: CommonServices,
         private postServices: PostServices
     ) { }
 
-    
-    ngOnInit(): void {         
+
+    ngOnInit(): void {
         this.tabLabels = Array.from(DETAILS_ACCORDIONS_LABELS['BLUEJUSTICE']);
         this.justiceTypesLabels = this.justiceTypesKeys.map((key: string) => this.justiceTypes[key].label);
         get(getAllCountriesUrl).then(async (data: any) => {
@@ -106,21 +107,21 @@ export class UpdateBluejusticeComponent implements OnInit {
             default: break;
         };
 
-        const formatted: any = formatFormValues({ 
-            panel: PANEL_CODES.BLUEJUSTICE, 
-            formType: formType, 
+        const formatted: any = formatFormValues({
+            recordType: PANEL_CODES.BLUEJUSTICE,
+            formType: formType,
             formElement: form
         });
         const { data, errorMsg } = formatted;
         if(errorMsg) {
-            this.commonServices.updateEmitter.emit({ 
-                status: 'error',  
-                message: errorMsg 
+            this.commonServices.updateEmitter.emit({
+                status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
+                message: errorMsg
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
-        
+
         await this.postServices.update(form, data, apiUrl);
     }
 

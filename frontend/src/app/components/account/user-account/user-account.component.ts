@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { get } from '../../../helpers/apiCalls';
-import { getUserId } from '../../../helpers/helpers';
+import { getLoggedInUser } from '../../../helpers/helpers';
 import { getAllCountriesUrl, getUserUrl, updateUserUrl } from '../../../constants/api';
-import { JWT_TOKENS, PANEL_VALUES } from '../../../constants/constants';
+import { STORAGE_TOKENS, PANEL_VALUES, RESPONSE_CODES } from '../../../constants/constants';
 import { PostServices } from '../../../services/post.service';
 import { CommonServices } from '../../../services/common.service';
 import { Subscription } from 'rxjs';
@@ -25,10 +25,11 @@ export class UserAccountComponent implements OnInit {
     selectedCountry: string;
     countryList: string[];
     updateSubscription: Subscription;
-    updateResponse: { status: string, message: string };
+    updateResponse: { status_code: number, message: string };
     contributionsByType: Object;
     recordTypes: string[];
     panelTitle = Object.values(PANEL_VALUES).slice(1);
+    responseCodes:RESPONSE_CODES = RESPONSE_CODES;
 
 
     constructor(
@@ -36,28 +37,28 @@ export class UserAccountComponent implements OnInit {
         private postServices: PostServices,
         private commonServices: CommonServices
     ) {
-        // this.updateSubscription = this.commonServices.updateEmitter.subscribe(
-        //     (updateResponse: any) => {
-        //         this.updateResponse = {
-        //             status: updateResponse.status,
-        //             message: updateResponse.message
-        //         };
-        //         if(updateResponse.status === 'success'){
-        //             const selectEl = this.accountForm.nativeElement.querySelector('[name=country]');
-        //             const countryName = selectEl.options[selectEl.selectedIndex].innerText;
-        //             this.userInfo.first_name = this.accountForm.nativeElement.querySelector('[name=first_name]').value;
-        //             this.userInfo.initials = this.accountForm.nativeElement.querySelector('[name=initials]').value;
-        //             this.userInfo.last_name = this.accountForm.nativeElement.querySelector('[name=last_name]').value;
-        //             this.userInfo.country_id = selectEl.value;
-        //             this.userInfo.country_name = countryName;
-        //             this.showForm = false;
-        //         }
-        // });
+        this.updateSubscription = this.commonServices.updateEmitter.subscribe(
+            (updateResponse: any) => {
+                this.updateResponse = {
+                    status_code: updateResponse.status_code,
+                    message: updateResponse.message
+                };
+                if(updateResponse.status_code === RESPONSE_CODES.HTTP_200_OK){
+                    const selectEl = this.accountForm.nativeElement.querySelector('[name=country]');
+                    const countryName = selectEl.options[selectEl.selectedIndex].innerText;
+                    this.userInfo.first_name = this.accountForm.nativeElement.querySelector('[name=first_name]').value;
+                    this.userInfo.initials = this.accountForm.nativeElement.querySelector('[name=initials]').value;
+                    this.userInfo.last_name = this.accountForm.nativeElement.querySelector('[name=last_name]').value;
+                    this.userInfo.country_id = selectEl.value;
+                    this.userInfo.country_name = countryName;
+                    this.showForm = false;
+                }
+        });
     }
 
 
     async ngOnInit(): Promise<void> {
-        this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
+        this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
         this.userInfo = await get(getUserUrl(this.userId));
         this.countryList = await get(getAllCountriesUrl);
         this.prepareNumberOfContributionsByType();

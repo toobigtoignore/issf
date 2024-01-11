@@ -4,10 +4,10 @@
         <legend>Account</legend>
         <form *ngIf="showForm" #accountForm>
             <div *ngIf="updateResponse" class="update-msg">
-                <section [class]="updateResponse['status'] === 'success' ? 'update-successful' : 'update-error'">
+                <section [class]="updateResponse['status_code'] === responseCodes.HTTP_200_OK ? 'update-successful' : 'update-error'">
                     <mat-icon
                         class="icon"
-                        [innerHTML]="updateResponse['status'] === 'success' ? 'check_circle' : 'error_outline'"
+                        [innerHTML]="updateResponse['status_code'] ===  responseCodes.HTTP_200_OK ? 'check_circle' : 'error_outline'"
                     ></mat-icon>
                     <span [innerHTML]="updateResponse['message']"></span>
                 </section>

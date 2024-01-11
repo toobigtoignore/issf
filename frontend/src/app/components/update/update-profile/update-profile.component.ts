@@ -5,13 +5,14 @@ import { Contents } from '../../../services/contents.service';
 import { AuthServices } from '../../../services/auth.service';
 import { CommonServices } from '../../../services/common.service';
 import { PostServices } from '../../../services/post.service';
-import { 
-    DETAILS_ACCORDIONS_LABELS, 
-    GS_OPTIONS, 
+import {
+    DETAILS_ACCORDIONS_LABELS,
+    GS_OPTIONS,
     PANEL_CODES,
-    ORGANIZATION_TYPES
-} from '../../../constants/constants'; 
-import { 
+    ORGANIZATION_TYPES,
+    RESPONSE_CODES
+} from '../../../constants/constants';
+import {
     getAllOrganizationNamesUrl,
     getProfileRecordUrl,
     updateCharacteristicsUrl,
@@ -44,7 +45,7 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
     @ViewChild('organizationFromList') organizationFromList: ElementRef;
     @ViewChild('addNewOrganization') addNewOrganization: ElementRef;
     @ViewChild('sourcesForm') sourcesForm: ElementRef;
-    
+
 
     @Input() activeTab: string;
     @Input() record: any;
@@ -60,24 +61,24 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
     updateSubscription: Subscription;
     years: number[];
 
-    
+
     constructor(
         private authServices: AuthServices,
         private commonServices: CommonServices,
         private contents: Contents,
         private postServices: PostServices
-    ) { 
+    ) {
         this.updateSubscription = this.commonServices.updateEmitter.subscribe(
             (updateResponse: any) => {
-                if(updateResponse.status === 'success'){
+                if(updateResponse.status_code === RESPONSE_CODES.HTTP_200_OK){
                     this.calculateProfilePercentage();
                 }
             }
         );
     }
 
-    
-    async ngOnInit(): Promise<void> { 
+
+    async ngOnInit(): Promise<void> {
         this.gsOptions = Object.values(GS_OPTIONS);
         this.tabLabels = Array.from(DETAILS_ACCORDIONS_LABELS['PROFILE']);
         this.species_link_types = SPECIES_LINKS_TYPES;
@@ -90,8 +91,8 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
         this.organizationList = await get(getAllOrganizationNamesUrl);
     }
 
-    
-    ngAfterViewInit() { 
+
+    ngAfterViewInit() {
         const checkOrganizationList = () => {
             if(!this.organizationList) setTimeout(checkOrganizationList, 1000);
             else this.initialProfileOrganizationSection = document.getElementsByClassName('profile-organization-section')[0].cloneNode(true);
@@ -102,7 +103,7 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
 
     calculateProfilePercentage(){
         const excludeFields = [ "characteristics_label_list", "characteristics_value_list", "contributor_id", "contributor_name", "contributor_email", "contributor_affiliation", "contributor_country", "contribution_date", "who_link", "gs_region", "gs_local", "gs_subnation", "gs_national", "gs_global_notspecific" ];
-        
+
         get(getProfileRecordUrl(this.recordId)).then(async (data: any) => {
             let fieldsFilled = 0;
             let totalFields = 0;
@@ -117,23 +118,22 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
                     }
                 }
             }
-            
+
             for(const index in characteristicsKeys){
                 totalFields = totalFields + 1;
                 if(data.characteristics_value_list[index]?.length > 0){
                     fieldsFilled = fieldsFilled + 1;
                 }
             }
-            
+
             const profilePercentage = {
                 percent: Math.round((fieldsFilled * 100)/totalFields)
             };
             const token = await this.authServices.getToken();
             if(token){
                 this.postServices.updateRecord(
-                    profilePercentage, 
-                    updateProfilePercentage(this.recordId), 
-                    token
+                    profilePercentage,
+                    updateProfilePercentage(this.recordId)
                 ).subscribe(response => {
                     console.log(response)
                 })
@@ -157,16 +157,16 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
             default: break;
         };
 
-        const formatted: any = formatFormValues({ 
-            panel: PANEL_CODES.PROFILE, 
-            formType: formType, 
+        const formatted: any = formatFormValues({
+            recordType: PANEL_CODES.PROFILE,
+            formType: formType,
             formElement: form
         });
         const { data, errorMsg } = formatted;
         if(errorMsg) {
-            this.commonServices.updateEmitter.emit({ 
-                status: 'error',  
-                message: errorMsg 
+            this.commonServices.updateEmitter.emit({
+                status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
+                message: errorMsg
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;

@@ -15,9 +15,9 @@ class ISSFCore extends Model
     protected $primaryKey = 'issf_core_id';
     protected $table = 'issf_core';
     public $timestamps = false;
-    protected $with = ['user'];
+    protected $with = ['contributor'];
 
-    public function user(){
+    public function contributor(){
         return $this->belongsTo(UserProfile::class, 'contributor_id');
     }
 

@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { countryList } from '../../../../assets/js/types';
 import { getAllCountriesUrl, getUserUrl, updateUserUrl } from '../../../constants/api';
-import { getUserId } from '../../../helpers/helpers';
+import { getLoggedInUser } from '../../../helpers/helpers';
 import { get } from '../../../helpers/apiCalls';
-import { JWT_TOKENS } from '../../../constants/constants';
+import { STORAGE_TOKENS, RESPONSE_CODES } from '../../../constants/constants';
 import { AuthServices } from '../../../services/auth.service';
 import { CommonServices } from '../../../services/common.service';
 import { PostServices } from '../../../services/post.service';
@@ -24,7 +24,8 @@ export class InitialProfileComponent implements OnInit {
     countryList: countryList[];
 	  incompleteProfile: boolean = false;
 	  isLoggedIn: boolean;
-    updateResponse: { status: string, message: string };
+    responseCodes: RESPONSE_CODES = RESPONSE_CODES;
+    updateResponse: { status_code: number, message: string };
     updateSubscription: Subscription;
     userId: number;
     userInfo: any;
@@ -36,11 +37,11 @@ export class InitialProfileComponent implements OnInit {
     ) {
         this.updateSubscription = this.commonServices.updateEmitter.subscribe(
             (updateResponse: any) => {
-                if(updateResponse.status === 'success'){
+                if(updateResponse.status_code === RESPONSE_CODES.HTTP_200_OK){
                     this.accountUpdated = true;
                 }
                 this.updateResponse = {
-                    status: updateResponse.status,
+                    status_code: updateResponse.status_code,
                     message: updateResponse.message
                 }
         });
@@ -50,7 +51,7 @@ export class InitialProfileComponent implements OnInit {
     async ngOnInit(): Promise<void> {
 		    this.isLoggedIn = this.authServices.isLoggedIn();
         if(this.isLoggedIn){
-          this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
+          this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
           get(getUserUrl(this.userId)).then(async (data: any) => {
               this.userInfo = data;
               if(!data.first_name || !data.last_name || !data.country_id){

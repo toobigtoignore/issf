@@ -3,13 +3,13 @@ import { CommonServices } from '../../../services/common.service';
 import { get } from '../../../helpers/apiCalls';
 import { PostServices } from '../../../services/post.service';
 import { formatFormValues } from '../../../helpers/formInputFormatter';
-import { PANEL_CODES } from '../../../constants/constants'; 
-import { 
-    DETAILS_ACCORDIONS_LABELS, 
-    SPECIES_LINKS_TYPES, 
-    WHO_EDUCATION_LEVELS 
+import { PANEL_CODES, RESPONSE_CODES } from '../../../constants/constants';
+import {
+    DETAILS_ACCORDIONS_LABELS,
+    SPECIES_LINKS_TYPES,
+    WHO_EDUCATION_LEVELS
 } from '../../../constants/constants';
-import { 
+import {
     getAllCountriesUrl,
     getAllOrganizationNamesUrl,
     updateWhoBasicUrl,
@@ -46,14 +46,14 @@ export class UpdateWhoComponent implements OnInit {
     species_link_types: SPECIES_LINKS_TYPES = SPECIES_LINKS_TYPES;
     tabLabels: string[];
 
-    
+
     constructor(
         private commonServices: CommonServices,
         private postServices: PostServices
     ) { }
 
-    
-    async ngOnInit(): Promise<void> { 
+
+    async ngOnInit(): Promise<void> {
         this.tabLabels = Array.from(DETAILS_ACCORDIONS_LABELS['WHO']);
         this.isOtherEducationLevel = this.isEducationLevelOther();
         this.countryList = await get(getAllCountriesUrl);
@@ -91,16 +91,16 @@ export class UpdateWhoComponent implements OnInit {
             default: break;
         };
 
-        const formatted: any = formatFormValues({ 
-            panel: PANEL_CODES.WHO, 
-            formType: formType, 
+        const formatted: any = formatFormValues({
+            recordType: PANEL_CODES.WHO,
+            formType: formType,
             formElement: form
         });
         const { data, errorMsg } = formatted;
         if(errorMsg) {
-            this.commonServices.updateEmitter.emit({ 
-                status: 'error',  
-                message: errorMsg 
+            this.commonServices.updateEmitter.emit({
+                status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
+                message: errorMsg
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;

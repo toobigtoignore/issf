@@ -1,12 +1,12 @@
 <div class="update-container">
-    <div 
-        class="page-loading" 
+    <div
+        class="page-loading"
         [ngClass]="{'hide-loading': recordData}"
         [ngStyle]="{'background': getPanelColor()}"
     >
         <div class="site-loader" [ngStyle]="{'border-top-color': getPanelColor()}"></div>
         <h3>
-            Please wait 
+            Please wait
             <br>
             <span class="big">loading your data</span>
             <br>
@@ -14,12 +14,12 @@
         </h3>
     </div> <!-- /page-loading -->
 
-    
+
     <h1 class="panel-title" [ngStyle]="{'color': getPanelColor()}">{{ panelTitle }}</h1>
 
-    
+
     <ul class="triggers">
-        <li 
+        <li
             *ngFor="let label of tabLabels"
             [ngClass]="{'selected': activeTab === label}"
             [ngStyle]="{'background': activeTab === label ? getPanelColor() : '#fff'}"
@@ -31,18 +31,18 @@
 
     <div class="update-sections">
         <div *ngIf="updateResponse" class="update-msg">
-            <section [class]="updateResponse['status'] === 'success' ? 'update-successful' : 'update-error'">
-                <mat-icon 
-                    class="icon" 
-                    [innerHTML]="updateResponse['status'] === 'success' ? 'check_circle' : 'error_outline'"
-                ></mat-icon> 
+            <section [class]="updateResponse['status_code'] === responseCodes.HTTP_200_OK ? 'update-successful' : 'update-error'">
+                <mat-icon
+                    class="icon"
+                    [innerHTML]="updateResponse['status_code'] === responseCodes.HTTP_200_OK ? 'check_circle' : 'error_outline'"
+                ></mat-icon>
                 <span [innerHTML]="updateResponse['message']"></span>
             </section>
         </div> <!-- /update-msg -->
 
 
         <section>
-            <app-update-who 
+            <app-update-who
                 *ngIf="selectedPanel === panelCodes['WHO'] && recordData != undefined"
                 [activeTab]="activeTab"
                 [record]="recordData"
@@ -52,14 +52,14 @@
 
 
         <section>
-            <app-update-sota 
+            <app-update-sota
                 *ngIf="selectedPanel === panelCodes['SOTA'] && recordData != undefined"
                 [activeTab]="activeTab"
                 [record]="recordData"
                 [recordId]="recordId"
             ></app-update-sota>
         </section>
-        
+
 
         <section>
             <app-update-profile
@@ -69,7 +69,7 @@
                 [recordId]="recordId"
             ></app-update-profile>
         </section>
-        
+
 
         <section>
             <app-update-organization
@@ -79,7 +79,7 @@
                 [recordId]="recordId"
             ></app-update-organization>
         </section>
-        
+
 
         <section>
             <app-update-casestudies
@@ -89,7 +89,7 @@
                 [recordId]="recordId"
             ></app-update-casestudies>
         </section>
-        
+
 
         <section>
             <app-update-bluejustice
@@ -99,7 +99,7 @@
                 [recordId]="recordId"
             ></app-update-bluejustice>
         </section>
-        
+
 
         <section>
             <app-update-guidelines
@@ -109,10 +109,10 @@
                 [recordId]="recordId"
             ></app-update-guidelines>
         </section>
-        
+
 
         <section [hidden]="activeTab != geographicTabTitle">
-            <app-geoscope 
+            <app-geoscope
                 class="geoscope-container"
                 *ngIf="recordData != undefined && geoScopeInfo"
                 [countryList]="countryList"
@@ -120,21 +120,21 @@
             ></app-geoscope>
 
             <br>
-            <button 
-                type="submit" 
+            <button
+                type="submit"
                 class="no-margin-left"
                 (click)="onGeoscopeUpdate()"
             >Submit</button>
         </section>
     </div> <!-- /update-sections -->
 
-    
+
     <div class="require-signin" *ngIf="isSigninRequired">
         <h3>
             <mat-icon class="warning-icon">warning</mat-icon>
             <span>Your session has expired! Please signin again and continue.</span>
         </h3>
-        
+
         <app-authentication-form></app-authentication-form>
     </div> <!-- /signin-form -->
 </div> <!-- /update-container -->

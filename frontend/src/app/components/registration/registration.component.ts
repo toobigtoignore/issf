@@ -15,8 +15,8 @@ export class RegistrationComponent implements OnInit {
 
 
     constructor(private authServices: AuthServices) {
-        this.sigininSubscription = this.authServices.signinEmitter.subscribe((response: {message: string, status_code: number}) => {
-            if(response.status_code === RESPONSE_CODES.HTTP_200_OK){
+        this.sigininSubscription = this.authServices.signinEmitter.subscribe((response: {redirectToHome: boolean, status_code: number}) => {
+            if(response.redirectToHome && response.status_code === RESPONSE_CODES.HTTP_200_OK){
                 window.location.href = '/';
             }
         });

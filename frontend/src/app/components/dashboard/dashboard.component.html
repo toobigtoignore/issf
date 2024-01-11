@@ -100,6 +100,7 @@
 
 
                         <div class="table-view" [hidden]="viewType !== viewTypes['table']">
+                            <p *ngIf="showNoResults" class="no-result-text">No records found. Change filters to find the results</p>
                             <app-record-table
                                 id="table"
                                 *ngIf="visualsLoaded"

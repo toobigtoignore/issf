@@ -11,6 +11,7 @@ import {
     getGuidelinesRecordUrl
 } from '../constants/api';
 import { COUNTRIES_LIST, DETAILS_ACCORDIONS_LABELS, GS_LABELS, GS_OPTIONS, PANEL_CODES, PANELS_LIST } from '../constants/constants';
+import { loggedInUserType } from '../../assets/js/types';
 
 
 export const capitalize = (word: string) => {
@@ -157,11 +158,14 @@ export const getOtherValue = (valueArr: string[], lookUpArr: string[]): string|n
 }
 
 
-export const getUserId = (token: string): number => {
+export const getLoggedInUser = (token: string): loggedInUserType => {
     if(!token) return null;
     const tokenHelper = new JwtHelperService();
     const decodedToken = tokenHelper.decodeToken(token);
-    return decodedToken.user_id;
+    return {
+        userId: decodedToken.user_id,
+        isStaff: decodedToken.is_staff
+    }
 }
 
 

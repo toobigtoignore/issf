@@ -511,12 +511,6 @@ export const GUIDELINES_ACTIVITY_COVERAGE = [
 export const INITIAL_CONTRIBUTION = 'Initial Contribution';
 
 
-export const JWT_TOKENS = {
-    ACCESS: 'access',
-    REFRESH: 'refresh'
-}
-
-
 export const PANEL_CODES = {
     WHO: 'who',
     SOTA: 'sota',
@@ -599,6 +593,13 @@ export const SOTA_PUBLICATION_TYPES = [
     { value: 7, title: 'Peer-reviewed Paper' },
     { value: 8, title: 'Report' }
 ];
+
+
+export const STORAGE_TOKENS = {
+    ACCESS: 'access',
+    REFRESH: 'refresh',
+    RESIGNIN: 'resignin'
+}
 
 
 export const THEME_ECONOMICS = {

@@ -5,17 +5,18 @@ import { get } from '../../../helpers/apiCalls';
 import { countryList } from '../../../../assets/js/types';
 import { PostServices } from '../../../services/post.service';
 import { formatFormValues } from '../../../helpers/formInputFormatter';
-import { PANEL_CODES } from '../../../constants/constants'; 
-import { 
+import { PANEL_CODES } from '../../../constants/constants';
+import {
     DEFINITE_ANS,
     DETAILS_ACCORDIONS_LABELS,
     ORGANIZATION_MAIN_ACTIVITIES,
     ORGANIZATION_CHECKBOX_TYPES,
     ORGANIZATION_MOTIVATION,
     ORGANIZATION_NETWORKS,
-    SPECIES_LINKS_TYPES,
+    RESPONSE_CODES,
+    SPECIES_LINKS_TYPES
 } from '../../../constants/constants';
-import { 
+import {
     getAllCountriesUrl,
     updateOrganizationUrl,
     updateThemeUrl,
@@ -39,13 +40,13 @@ export class UpdateOrganizationComponent implements OnInit {
     @Input() activeTab: string;
     @Input() record: any;
     @Input() recordId: number;
-    
+
     countryList: countryList[];
     species_link_types: SPECIES_LINKS_TYPES = SPECIES_LINKS_TYPES;
     tabLabels: string[];
     years: number[];
 
-    definiteAns: DEFINITE_ANS = DEFINITE_ANS;    
+    definiteAns: DEFINITE_ANS = DEFINITE_ANS;
     definiteValues: string[] = Object.values(this.definiteAns);
 
     organizationTypes: ORGANIZATION_CHECKBOX_TYPES = ORGANIZATION_CHECKBOX_TYPES;
@@ -58,15 +59,15 @@ export class UpdateOrganizationComponent implements OnInit {
     organizationActivitiesKeys: string[] =  Object.keys(this.organizationActivities);
     organizationNetworksKeys: string[] =  Object.keys(this.organizationNetworks);
 
-    
+
     constructor(
         private commonServices: CommonServices,
         private contents: Contents,
         private postServices: PostServices
     ) { }
 
-    
-    ngOnInit(): void { 
+
+    ngOnInit(): void {
         get(getAllCountriesUrl).then(async (data: any) => {
             this.countryList = data;
         });
@@ -111,16 +112,16 @@ export class UpdateOrganizationComponent implements OnInit {
             default: break;
         };
 
-        const formatted: any = formatFormValues({ 
-            panel: PANEL_CODES.ORGANIZATION, 
-            formType: formType, 
+        const formatted: any = formatFormValues({
+            recordType: PANEL_CODES.ORGANIZATION,
+            formType: formType,
             formElement: form
         });
         const { data, errorMsg } = formatted;
         if(errorMsg) {
-            this.commonServices.updateEmitter.emit({ 
-                status: 'error',  
-                message: errorMsg 
+            this.commonServices.updateEmitter.emit({
+                status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
+                message: errorMsg
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;

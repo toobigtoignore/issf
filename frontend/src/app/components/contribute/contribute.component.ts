@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { GS_OPTIONS, JWT_TOKENS, INITIAL_CONTRIBUTION, PANEL_CODES, PANEL_VALUES, RESPONSE_CODES, RESPONSE_MESSAGE } from '../../constants/constants';
+import { GS_OPTIONS, STORAGE_TOKENS, INITIAL_CONTRIBUTION, PANEL_CODES, PANEL_VALUES, RESPONSE_CODES, RESPONSE_MESSAGE } from '../../constants/constants';
 import { getAllContributorsUrl, getAllCountriesUrl } from '../../constants/api';
 import { GeoscopeComponent } from './geoscope/geoscope.component';
 import { Contents } from '../../services/contents.service';
@@ -9,7 +9,7 @@ import { CommonServices } from '../../services/common.service';
 import { PostServices } from '../../services/post.service';
 import { countryList } from '../../../assets/js/types';
 import { get } from '../../helpers/apiCalls';
-import { getColorForPanel, getContributorsFullName, getUserId } from '../../helpers/helpers';
+import { getColorForPanel, getContributorsFullName, getLoggedInUser } from '../../helpers/helpers';
 import { formatFormValues, formatGeoScopeForm, checkRequiredFields } from '../../helpers/formInputFormatter';
 
 
@@ -57,7 +57,7 @@ export class ContributeComponent implements OnInit {
 
         this.scopeSubscription = this.commonServices.scopeEmitter.subscribe((scope: string) => this.selectedGeoScope = scope);
         this.sigininSubscription = this.authServices.signinEmitter.subscribe((response: {message: string, status_code: number}) => {
-            if(response.status_code === 200){
+            if(response.status_code === RESPONSE_CODES.HTTP_200_OK){
                 this.isSigninRequired = false;
             }
         });
@@ -70,7 +70,7 @@ export class ContributeComponent implements OnInit {
         });
         this.panelCodesObj = PANEL_CODES;
         this.activePanel = !this.activePanel ? this.panelCodesObj.SOTA : this.activePanel;
-        this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
+        this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
         this.panelCodes = Object.values(PANEL_CODES).slice(1);
         this.panelValues = Object.values(PANEL_VALUES).slice(1);
         this.formSeq = 1;
@@ -201,7 +201,7 @@ export class ContributeComponent implements OnInit {
 
         // prepare data to submit
         submitData.basic_info = formatFormValues({
-            panel: this.activePanel,
+            recordType: this.activePanel,
             formType: INITIAL_CONTRIBUTION,
             formElement: this.basicForm
         });

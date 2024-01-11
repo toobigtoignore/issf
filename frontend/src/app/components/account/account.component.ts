@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthServices } from '../../services/auth.service';
-import { JWT_TOKENS } from '../../constants/constants';
+import { STORAGE_TOKENS } from '../../constants/constants';
 import { get } from '../../helpers/apiCalls';
-import { getUserId } from '../../helpers/helpers';
+import { getLoggedInUser } from '../../helpers/helpers';
 import { getContributionsByUserIdUrl } from '../../constants/api';
 
 
@@ -49,7 +49,7 @@ export class AccountComponent implements OnInit {
             })
         });
 
-        this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
+        this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
         this.usersContributions = await get(getContributionsByUserIdUrl(this.userId));
     }
 

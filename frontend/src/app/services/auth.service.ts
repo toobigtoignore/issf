@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JWT_TOKENS } from '../constants/constants';
+import { STORAGE_TOKENS } from '../constants/constants';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { get } from '../helpers/apiCalls';
 import { loginAccessToken } from '../../assets/js/types';
@@ -11,12 +11,10 @@ import {
     forgotPasswordUrl,
     forgotUsernameUrl,
     loginUrl,
-    logoutUrl,
     refreshTokenUrl,
     resetPasswordUrl,
     resendActivationLinkUrl,
-    signupUrl,
-    usernameEmailValidityUrl
+    signupUrl
 } from '../constants/api';
 
 
@@ -25,7 +23,6 @@ import {
 
 export class AuthServices {
     signinEmitter = new EventEmitter<any>();
-    loginStatusEmitter = new EventEmitter<boolean>();
 
     httpHeaders = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -52,7 +49,7 @@ export class AuthServices {
 
 
     setLoginTokens(token: string) {
-        localStorage.setItem(JWT_TOKENS.ACCESS, token);
+        localStorage.setItem(STORAGE_TOKENS.ACCESS, token);
     }
 
 
@@ -62,12 +59,12 @@ export class AuthServices {
 
 
     removeLoginTokens() {
-        localStorage.removeItem(JWT_TOKENS.ACCESS);
+        localStorage.removeItem(STORAGE_TOKENS.ACCESS);
     }
 
 
     isLoggedIn(): boolean {
-        const accessToken = localStorage.getItem(JWT_TOKENS.ACCESS);
+        const accessToken = localStorage.getItem(STORAGE_TOKENS.ACCESS);
         if(accessToken && this.isTokenValid(accessToken)){
             return true;
         }
@@ -76,7 +73,7 @@ export class AuthServices {
 
 
     async isLoggedIn2(): Promise<boolean> {
-        const accessToken = localStorage.getItem(JWT_TOKENS.ACCESS);
+        const accessToken = localStorage.getItem(STORAGE_TOKENS.ACCESS);
         console.log(accessToken);
         if(accessToken){
             console.log('access token validity: ', this.isTokenValid(accessToken));
@@ -88,7 +85,7 @@ export class AuthServices {
                 const newToken = await get(checkLoginStatusUrl(decodedToken.user_id, decodedToken.jti));
                 console.log("new token: ", newToken);
                 if(newToken){
-                    localStorage.setItem(JWT_TOKENS.ACCESS, newToken);
+                    localStorage.setItem(STORAGE_TOKENS.ACCESS, newToken);
                     return true;
                 }
                 // else this.logout();
@@ -113,10 +110,10 @@ export class AuthServices {
 
 
     async getToken(): Promise<string> {
-        const accessToken = localStorage.getItem(JWT_TOKENS.ACCESS);
-        const refreshToken = localStorage.getItem(JWT_TOKENS.REFRESH);
+        const accessToken = localStorage.getItem(STORAGE_TOKENS.ACCESS);
+        const refreshToken = localStorage.getItem(STORAGE_TOKENS.REFRESH);
         const payload = {
-            [JWT_TOKENS.REFRESH]: refreshToken
+            [STORAGE_TOKENS.REFRESH]: refreshToken
         };
 
         if(this.isTokenValid(refreshToken)){
@@ -130,7 +127,7 @@ export class AuthServices {
                         })
                     }
                 ).toPromise();
-                return token[JWT_TOKENS.ACCESS];
+                return token[STORAGE_TOKENS.ACCESS];
             }
         }
         return null;

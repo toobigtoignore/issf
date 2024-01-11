@@ -2,19 +2,20 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonServices } from '../../../services/common.service';
 import { PostServices } from '../../../services/post.service';
 import { formatFormValues } from '../../../helpers/formInputFormatter';
-import { PANEL_CODES } from '../../../constants/constants'; 
+import { PANEL_CODES } from '../../../constants/constants';
 import { get } from '../../../helpers/apiCalls';
 import { languages } from '../../../../assets/js/types';
-import { 
+import {
     DEFINITE_ANS,
-    DETAILS_ACCORDIONS_LABELS, 
-    SPECIES_LINKS_TYPES, 
+    DETAILS_ACCORDIONS_LABELS,
+    RESPONSE_CODES,
+    SPECIES_LINKS_TYPES,
     SOTA_PUBLICATION_TYPES,
     SOTA_DEMOGRAPHIC_FACTORS,
     SOTA_EMPLOYMENT_STATUS,
     SOTA_FISHERY_STAGE
 } from '../../../constants/constants';
-import { 
+import {
     getLanguagesUrl,
     updateCharacteristicsUrl,
     updateExternalLinksUrl,
@@ -44,7 +45,7 @@ export class UpdateSotaComponent implements OnInit {
     @Input() activeTab: string;
     @Input() record: any;
     @Input() recordId: number;
-    
+
     isOtherPublicationType: boolean;
     languages: languages[];
     species_link_types: SPECIES_LINKS_TYPES = SPECIES_LINKS_TYPES;
@@ -56,20 +57,20 @@ export class UpdateSotaComponent implements OnInit {
     employmentStatus: SOTA_EMPLOYMENT_STATUS = SOTA_EMPLOYMENT_STATUS;
     fisheryStage: SOTA_FISHERY_STAGE = SOTA_FISHERY_STAGE;
     publicationTypes: SOTA_PUBLICATION_TYPES = SOTA_PUBLICATION_TYPES;
-    
+
     definiteValues: string[] = Object.values(this.definiteAns);
     demographicFactorKeys: string[] =  Object.keys(this.demographicFactor);
     employmentStatusKeys: string[] =  Object.keys(this.employmentStatus);
     fisheryStageKeys: string[] =  Object.keys(this.fisheryStage);
 
-    
+
     constructor(
         private commonServices: CommonServices,
         private postServices: PostServices
     ) { }
 
-    
-    ngOnInit(): void { 
+
+    ngOnInit(): void {
         get(getLanguagesUrl).then(async (languages: any) => {
             this.languages = languages;
         });
@@ -112,16 +113,16 @@ export class UpdateSotaComponent implements OnInit {
             default: break;
         };
 
-        const formatted: any = formatFormValues({ 
-            panel: PANEL_CODES.SOTA, 
-            formType: formType, 
+        const formatted: any = formatFormValues({
+            recordType: PANEL_CODES.SOTA,
+            formType: formType,
             formElement: form
         });
         const { data, errorMsg } = formatted;
         if(errorMsg) {
-            this.commonServices.updateEmitter.emit({ 
-                status: 'error',  
-                message: errorMsg 
+            this.commonServices.updateEmitter.emit({
+                status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
+                message: errorMsg
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;

@@ -6,8 +6,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 
 export class CommonServices {
     scopeEmitter = new EventEmitter<string>();
-    updateEmitter = new EventEmitter<{status: string, message: string}>();
+    updateEmitter = new EventEmitter<{status_code: number, message: string}>();
 
-    
+
     constructor() { }
 }
