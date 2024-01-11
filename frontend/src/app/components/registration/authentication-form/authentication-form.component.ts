@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { get } from '../../../helpers/apiCalls';
 import { getAllCountriesUrl } from '../../../constants/api';
-import { REGISTRATION_ACTIONS, RESPONSE_CODES, RESPONSE_MESSAGE } from '../../../constants/constants';
+import { REGISTRATION_ACTIONS, RESPONSE_CODES, RESPONSE_MESSAGE, STORAGE_TOKENS } from '../../../constants/constants';
 import { AuthServices } from '../../../services/auth.service';
 const MSG_TYPE = {
     SUCCESS: 'success',
@@ -262,7 +262,11 @@ export class AuthenticationFormComponent implements OnInit, AfterViewInit {
             response => {
                 if(response.success && response.token) {
                     this.authServices.setLoginTokens(response.token);
-                    window.location.href = '/';
+                    if(localStorage.getItem(STORAGE_TOKENS.RESIGNIN)){
+                        localStorage.removeItem(STORAGE_TOKENS.RESIGNIN);
+                        this.authServices.signinEmitter.emit({signinRequired: false, status_code: RESPONSE_CODES.HTTP_200_OK});
+                    }
+                    else this.authServices.signinEmitter.emit({redirectToHome: true, status_code: RESPONSE_CODES.HTTP_200_OK});
                 }
                 else{
                     if(response.errors?.validation_failed?.username) this.setResponse(RESPONSE_MESSAGE.USERNAME_DOESNT_EXIST, MSG_TYPE.ERROR);

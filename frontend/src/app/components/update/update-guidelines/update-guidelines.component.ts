@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Contents } from '../../../services/contents.service';
-import { DETAILS_ACCORDIONS_LABELS, PANEL_CODES } from '../../../constants/constants';
+import { DETAILS_ACCORDIONS_LABELS, PANEL_CODES, RESPONSE_CODES } from '../../../constants/constants';
 import { formatFormValues } from '../../../helpers/formInputFormatter';
 import { updateGuidelinesRecordUrl } from '../../../constants/api';
 import { CommonServices } from '../../../services/common.service';
@@ -56,19 +56,21 @@ export class UpdateGuidelinesComponent implements OnInit {
         };
 
         const formatted: any = formatFormValues({
-            panel: PANEL_CODES.GUIDELINES,
+            recordType: PANEL_CODES.GUIDELINES,
             formType: formType,
             formElement: form
         });
         const { data, errorMsg } = formatted;
+
         if(errorMsg) {
             this.commonServices.updateEmitter.emit({
-                status: 'error',
+                status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
                 message: errorMsg
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
+
         await this.postServices.update(form, data, apiUrl);
     }
 

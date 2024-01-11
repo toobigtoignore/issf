@@ -159,6 +159,7 @@ class RegistrationController extends Controller
         $token_id = uniqid();
         $access_token = (new JWTController())->gen_JWT([
             "user_id" => $user->id,
+            "is_staff" => $user->is_staff,
             "exp" => strtotime('+7 days'),
             'jti' => $token_id
         ]);
@@ -201,6 +202,7 @@ class RegistrationController extends Controller
 
         $new_access_token = (new JWTController())->gen_JWT([
             "id" => $user_id,
+            "is_staff" => $user->is_staff,
             "exp" => strtotime('+1 minutes'),
             'jti' => $new_jti
         ]);

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { DETAILS_ACCORDIONS_LABELS, JWT_TOKENS, THEME_ISSUES_CATEGORIES } from '../../../constants/constants';
+import { DETAILS_ACCORDIONS_LABELS, STORAGE_TOKENS, THEME_ISSUES_CATEGORIES } from '../../../constants/constants';
 import { getCountryNameFromCode } from '../../../helpers/helpers';
-import { getUserId } from '../../../helpers/helpers';
+import { getLoggedInUser } from '../../../helpers/helpers';
 import { FormatterServices } from '../../../services/formatter.service';
 
 
@@ -29,8 +29,8 @@ export class WhoDetailsComponent implements OnInit, OnDestroy {
         this.accordionList = DETAILS_ACCORDIONS_LABELS.WHO;
         this.whoData = this.record;
         this.theme_issues_categories = THEME_ISSUES_CATEGORIES;
-        this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
-        if(this.whoData.core.user.id == this.userId){
+        this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
+        if(this.whoData.core.contributor.id == this.userId){
             this.profileMenu?.classList?.add('menu-active');
         }
     }

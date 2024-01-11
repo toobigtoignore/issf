@@ -1,7 +1,7 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PANEL_CODES } from '../constants/constants';
+import { PANEL_CODES, RESPONSE_CODES, STORAGE_TOKENS } from '../constants/constants';
 import { checkRequiredFields } from '../helpers/formInputFormatter';
 import {
     createPersonRecordUrl,
@@ -66,11 +66,9 @@ export class PostServices {
     }
 
 
-    updateRecord(payload: Object, apiUrl: string, token: string): Observable<any> {
+    updateRecord(payload: Object, apiUrl: string): Observable<any> {
         return this.http.put(
-            apiUrl, payload, {
-                headers: this.setHeaders(token)
-            }
+            apiUrl, payload
         );
     }
 
@@ -78,24 +76,26 @@ export class PostServices {
     async update(formEl: ElementRef, formattedData: any, apiUrl: string, skipRequiredCheck: boolean = false){
         const requiredFieldsSatisfied = !skipRequiredCheck ? checkRequiredFields(formEl) : true;
         if(requiredFieldsSatisfied){
-            const token = await this.authServices.getToken();
-            if(token){
-                this.updateRecord(formattedData, apiUrl, token)
+            if(this.authServices.isLoggedIn()){
+                this.updateRecord(formattedData, apiUrl)
                     .subscribe(response => {
-                        if(response.status_code == 200) {
+                        if(response.status_code == RESPONSE_CODES.HTTP_200_OK) {
                             this.commonServices.updateEmitter.emit({
-                                status: 'success',
+                                status_code: RESPONSE_CODES.HTTP_200_OK,
                                 message: 'Record updated successfully!!'
                             });
                         }
                         else alert("Something went wrong while trying to update the record. Please try again. If the issue persists, please contact us.");
                     });
             }
-            else this.authServices.loginStatusEmitter.emit(true);
+            else {
+                localStorage.setItem(STORAGE_TOKENS.RESIGNIN, 'true');
+                this.authServices.signinEmitter.emit({ signinRequired: true });
+            }
         }
         else {
             this.commonServices.updateEmitter.emit({
-                status: 'error',
+                status_code: RESPONSE_CODES.HTTP_400_BAD_REQUEST,
                 message: 'Please fill up all the required fields'
             });
         }
@@ -124,24 +124,26 @@ export class PostServices {
             if(!formattedData || formattedData.length === 0) {
                 // formattedData = formatFormValues(form);
             }
-            const token = await this.authServices.getToken();
-            if(token){
-                this.updateRecord(formattedData, apiUrl, token)
+            if(this.authServices.isLoggedIn()){
+                this.updateRecord(formattedData, apiUrl)
                     .subscribe(response => {
-                        if(response.status_code == 200) {
+                        if(response.status_code == RESPONSE_CODES.HTTP_200_OK) {
                             this.commonServices.updateEmitter.emit({
-                                status: 'success',
+                                status_code: RESPONSE_CODES.HTTP_200_OK,
                                 message: 'Record updated successfully!!'
                             });
                         }
                         else alert("Something went wrong while trying to update the record. Please try again. If the issue persists, please contact us.");
                     });
             }
-            else this.authServices.loginStatusEmitter.emit(true);
+            else {
+                localStorage.setItem(STORAGE_TOKENS.RESIGNIN, 'true');
+                this.authServices.signinEmitter.emit({ signinRequired: true })
+            };
         }
         else {
             this.commonServices.updateEmitter.emit({
-                status: 'error',
+                status_code: RESPONSE_CODES.HTTP_400_BAD_REQUEST,
                 message: 'Please fill up all the required fields'
             });
         }

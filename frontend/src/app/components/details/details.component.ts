@@ -6,9 +6,9 @@ import { getGeographicInfo } from '../../helpers/geoScopeDetailsHelpers';
 import { getColorForPanel, getPanelSections, getRecordDetailsUrl, getRecordName } from '../../helpers/helpers';
 import { getGeoScopeDetailsInfo } from '../../../assets/js/types';
 import { get } from '../../helpers/apiCalls';
-import { getUserId } from '../../helpers/helpers';
+import { getLoggedInUser } from '../../helpers/helpers';
 import {
-    JWT_TOKENS,
+    STORAGE_TOKENS,
     PANEL_CODES,
     RESPONSE_CODES
 } from '../../constants/constants';
@@ -86,9 +86,9 @@ export class DetailsComponent implements OnInit {
 
 
         if(this.authServices.isLoggedIn()){
-            this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
-            const userInfo = await get(getUserUrl(this.userId));
-            this.isStaff = userInfo.is_staff;
+            const loggedInUser =  getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS));
+            this.userId = loggedInUser.userId;
+            this.isStaff = loggedInUser.isStaff;
         }
     }
 

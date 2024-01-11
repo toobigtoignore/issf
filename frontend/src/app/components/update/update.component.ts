@@ -6,7 +6,7 @@ import {
     getCountryNameFromCode,
     getPanelLabelFromCode,
     getRecordDetailsUrl,
-    getUserId
+    getLoggedInUser
 } from '../../helpers/helpers';
 import { get } from '../../helpers/apiCalls';
 import { getAllCountriesUrl, getUserUrl } from '../../constants/api';
@@ -14,6 +14,7 @@ import {
     countryList,
     globalAndNotSpecificType,
     localScopeType,
+    loggedInUserType,
     nationalScopeType,
     regionalScopeType,
     subnationScopeType
@@ -22,8 +23,9 @@ import {
     DETAILS_ACCORDIONS_LABELS,
     GEOGRAPHIC_TITLE,
     GS_OPTIONS,
-    JWT_TOKENS,
-    PANEL_CODES
+    STORAGE_TOKENS,
+    PANEL_CODES,
+    RESPONSE_CODES
 } from '../../constants/constants';
 import { updateGeoscopeUrl } from '../../constants/api';
 import { GeoscopeComponent } from '../../components/contribute/geoscope/geoscope.component';
@@ -53,16 +55,18 @@ export class UpdateComponent implements OnInit {
     isSigninRequired: boolean = false;
     isStaff: boolean;
     loggedInStatusSubscription: Subscription;
+    loggedInUser: loggedInUserType
     panelCodes: PANEL_CODES = PANEL_CODES;
     panelTitle: string;
     recordData: any;
     recordId: number;
+    responseCodes: RESPONSE_CODES = RESPONSE_CODES;
     scopeSubscription: Subscription;
     selectedGeoScope: string;
     selectedPanel: string;
     selectedPanelKey: string;
     sigininSubscription: Subscription;
-    updateResponse: { status: string, message: string };
+    updateResponse: { status_code: number, message: string };
     tabLabels: DETAILS_ACCORDIONS_LABELS;
     updateSubscription: Subscription;
     userId: number;
@@ -75,28 +79,29 @@ export class UpdateComponent implements OnInit {
         private postServices: PostServices,
         private router: Router
     ) {
-        // this.updateSubscription = this.commonServices.updateEmitter.subscribe(
-        //     (updateResponse: any) => {
-        //         this.updateResponse = {
-        //             status: updateResponse.status,
-        //             message: updateResponse.message
-        //         }
-        //         if(this.updateResponse.status === 'success'){
-        //             setTimeout(() => this.updateResponse = null, 5000);
-        //         }
-        // });
-        // this.scopeSubscription = this.commonServices.scopeEmitter.subscribe((scope: string) => this.selectedGeoScope = scope);
-        // this.loggedInStatusSubscription = this.authServices.loginStatusEmitter.subscribe((loginStatus: boolean) => this.isSigninRequired = loginStatus);
-        // this.sigininSubscription = this.authServices.signinEmitter.subscribe((response: {message: string, status_code: number}) => {
-        //     if(response.status_code === 200){
-        //         this.userId = getUserId(localStorage.getItem(JWT_TOKENS.REFRESH));
-        //         this.isSigninRequired = false;
-        //         if(this.contributorId !== this.userId && this.editorId !== this.userId && !this.isStaff){
-        //             this.router.navigate(['/details', this.selectedPanel, this.recordId]);
-        //             return;
-        //         }
-        //     }
-        // });
+        this.updateSubscription = this.commonServices.updateEmitter.subscribe(
+            (updateResponse: any) => {
+                this.updateResponse = {
+                    status_code: updateResponse.status_code,
+                    message: updateResponse.message
+                }
+                if(this.updateResponse.status_code === RESPONSE_CODES.HTTP_200_OK){
+                    setTimeout(() => this.updateResponse = null, 5000);
+                }
+        });
+
+        this.scopeSubscription = this.commonServices.scopeEmitter.subscribe((scope: string) => this.selectedGeoScope = scope);
+        this.sigininSubscription = this.authServices.signinEmitter.subscribe((response: {signinRequired: boolean, status_code: number}) => {
+            this.isSigninRequired = response.signinRequired;
+            if(this.isSigninRequired) return;
+            if(response.status_code === RESPONSE_CODES.HTTP_200_OK){
+                this.setLoggedInUserInfo();
+                if(this.contributorId !== this.userId && this.editorId !== this.userId && !this.isStaff){
+                    this.router.navigate(['/details', this.selectedPanel, this.recordId]);
+                    return;
+                }
+            }
+        });
     }
 
 
@@ -108,16 +113,14 @@ export class UpdateComponent implements OnInit {
             this.selectedPanelKey = this.selectedPanel.toUpperCase();
         });
 
+        this.setLoggedInUserInfo()
+
         const recordDetailsUrl = getRecordDetailsUrl(this.selectedPanel, this.recordId);
         get(recordDetailsUrl).then(async (data: any) => {
             this.recordData = data;
-            this.contributorId = data.contributor_id;
-            this.editorId = data.editor_id;
-
+            this.contributorId = data.core.contributor_id;
+            this.editorId = data.core.editor_id;
             if(this.authServices.isLoggedIn()){
-                this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
-                const userInfo = await get(getUserUrl(this.userId));
-                this.isStaff = userInfo.is_staff;
                 if(this.userId !== this.contributorId && this.userId !== this.editorId && !this.isStaff){
                     this.router.navigate(['/details', this.selectedPanel, this.recordId]);
                 }
@@ -258,5 +261,12 @@ export class UpdateComponent implements OnInit {
                 break;
             }
         }
+    }
+
+
+    setLoggedInUserInfo(){
+        this.loggedInUser =  getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS));
+        this.userId = this.loggedInUser.userId;
+        this.isStaff = this.loggedInUser.isStaff;
     }
 }

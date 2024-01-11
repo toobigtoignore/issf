@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
     selectedCountries: string[];
     selectedMapIcon: string = this.mapOptions[0]['icon'];
     selectedMapType: string = this.mapOptions[0]['type'];
+    showNoResults: boolean = false;
     showSideGallery: boolean = true;
     showSocialMedia: string = 'twitter';
     userId: number;
@@ -149,6 +150,8 @@ export class DashboardComponent implements OnInit {
             }
             return isDataMatchedFilters;
         });
+
+        this.showNoResults = this.filteredData.length === 0;
 
         // FILTER CHOROPLETH MAP
         this.filteredChoropleth = this.choroplethData.map((dataBlock: any) => {

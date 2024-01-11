@@ -41,6 +41,12 @@ export interface localScopeType {
 };
 
 
+export interface loggedInUserType {
+    userId: number,
+    isStaff: boolean
+};
+
+
 export interface loginAccessToken {
     user_id: number;
     exp: number;

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { get } from '../../../helpers/apiCalls';
-import { getUserId } from '../../../helpers/helpers';
+import { getLoggedInUser } from '../../../helpers/helpers';
 import { getPersonLinkForUserUrl } from '../../../constants/api';
-import { GS_OPTIONS, JWT_TOKENS, PANEL_CODES, PANEL_VALUES, RESPONSE_CODES } from '../../../constants/constants';
+import { GS_OPTIONS, STORAGE_TOKENS, PANEL_CODES, PANEL_VALUES, RESPONSE_CODES } from '../../../constants/constants';
 import { AuthServices } from '../../../services/auth.service';
 import { PostServices } from '../../../services/post.service';
 
@@ -31,7 +31,7 @@ export class UserProfileComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.userId = getUserId(localStorage.getItem(JWT_TOKENS.ACCESS));
+        this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
         get(getPersonLinkForUserUrl(this.userId)).then(async (issf_core_id: number) => {
             if(issf_core_id) {
                 this.router.navigate(['/details', PANEL_CODES.WHO, issf_core_id]);

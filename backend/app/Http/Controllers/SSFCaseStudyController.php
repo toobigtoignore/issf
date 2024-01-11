@@ -93,4 +93,120 @@ class SSFCaseStudyController extends Controller
             )
         ];
     }
+
+
+    public function update_basic(SSFCaseStudy $record){
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'name' => ['required', 'string'],
+                'role' => ['required', 'string']
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $updated = $record->update([
+            'name' => $payload['name'],
+            'role' => $payload['role']
+        ]);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
+
+
+    public function update_description(SSFCaseStudy $record){
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'background_context' => ['required', 'string'],
+                'description_area' => ['required', 'string'],
+                'description_fishery' => ['required', 'string'],
+                'description_issues' => ['required', 'string'],
+                'stakeholders' => ['required', 'string']
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $updated = $record->update([
+            'background_context' => $payload['background_context'],
+            'description_area' => $payload['description_area'],
+            'description_fishery' => $payload['description_fishery'],
+            'description_issues' => $payload['description_issues'],
+            'stakeholders' => $payload['stakeholders']
+        ]);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
+
+
+    public function update_solution(SSFCaseStudy $record){
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'issues_challenges' => ['required', 'string'],
+                'transdisciplinary' => ['required', 'string'],
+                'activities_innovation' => ['required', 'string']
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $updated = $record->update([
+            'issues_challenges' => $payload['issues_challenges'],
+            'transdisciplinary' => $payload['transdisciplinary'],
+            'activities_innovation' => $payload['activities_innovation']
+        ]);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
 }

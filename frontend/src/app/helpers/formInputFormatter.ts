@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
-import { 
-    DETAILS_ACCORDIONS_LABELS, 
-    INITIAL_CONTRIBUTION, 
+import {
+    DETAILS_ACCORDIONS_LABELS,
+    INITIAL_CONTRIBUTION,
     PANEL_CODES,
     KEEP_BLUEJUSTICE_IMAGE_KEY,
     REMOVE_BLUEJUSTICE_IMAGE_KEY
@@ -20,7 +20,7 @@ export const checkRequiredFields = (form: ElementRef): boolean => {
             inputField.classList.add('not-satisfied');
             inputField.setAttribute('placeholder', 'This field is required...');
             formIsValid = false;
-        } 
+        }
         else {
             inputField.classList.remove('not-satisfied');
         }
@@ -35,17 +35,17 @@ const isNullable = (key: string, panel: string): boolean => {
         case PANEL_CODES.WHO: {
             nullableNames = [
                 'number_publications'
-            ]; 
+            ];
             break;
         }
         case PANEL_CODES.SOTA: {
             nullableNames = [
-                'nonenglish_language_id', 
-                'demographics_other_text', 
-                'demographic_details', 
-                'employment_details', 
+                'nonenglish_language_id',
+                'demographics_other_text',
+                'demographic_details',
+                'employment_details',
                 'ssf_defined'
-            ]; 
+            ];
             break;
         }
         case PANEL_CODES.PROFILE: nullableNames = []; break;
@@ -53,11 +53,11 @@ const isNullable = (key: string, panel: string): boolean => {
         case PANEL_CODES.CASESTUDY: nullableNames = []; break;
         case PANEL_CODES.GUIDELINES: {
             nullableNames = [
-                'end_day', 
-                'end_month', 
+                'end_day',
+                'end_month',
                 'end_year',
                 'link'
-            ]; 
+            ];
             break;
         }
     }
@@ -75,13 +75,13 @@ const isNullable = (key: string, panel: string): boolean => {
 
 /**************************** MAIN FORMATTER *******************************/
 export const formatFormValues = (formInfo: {
-    panel: string,
+    recordType: string,
     formType: string,
     formElement: ElementRef
 }) => {
-    const { panel, formType, formElement } = formInfo;
+    const { recordType, formType, formElement } = formInfo;
     const elementsInForm = formElement.nativeElement.elements;
-    switch(panel){
+    switch(recordType){
         case PANEL_CODES.WHO: return whoFormsFormatter(formType, elementsInForm);
         case PANEL_CODES.SOTA: return sotaFormsFormatter(formType, elementsInForm);
         case PANEL_CODES.PROFILE: return profileFormsFormatter(formType, formElement);
@@ -113,28 +113,28 @@ export const formatExternalLinks = (inputElementsList: Array<HTMLFormElement>) =
             const linkAddress = set.querySelector("[name='link-address']")?.value;
             if(linkAddress){
                 if(linkAddress.substr(0,7) !== 'http://' && linkAddress.substr(0,8) !== 'https://'){
-                    return { 
-                        data: null, 
+                    return {
+                        data: null,
                         errorMsg: 'One or more link is not valid. Please make sure your link starts with http:// or https://'
                     };
                 }
-                linkArray.push({ 
-                    'link_type': linkType, 
+                linkArray.push({
+                    'link_type': linkType,
                     'link_address': linkAddress
-                })  
+                })
             }
         }
     }
     if(linkArray.length === 0) {
-        return { 
-            data: null, 
-            errorMsg: 'All the fields are empty!' 
+        return {
+            data: null,
+            errorMsg: 'All the fields are empty!'
         };
     }
     formattedData.updated_links = linkArray;
-    return { 
-        data: formattedData, 
-        errorMsg: null 
+    return {
+        data: formattedData,
+        errorMsg: null
     };
 }
 
@@ -142,18 +142,18 @@ export const formatExternalLinks = (inputElementsList: Array<HTMLFormElement>) =
 export const formatCharacteristics = (inputElementsList: Array<HTMLFormElement>) => {
     const formattedData: { attribute_id: Number|null, attribute_value_id: Number|null, other_value: String, value: String }[] = [];
     for(const inputEl of inputElementsList){
-        let characteristic: { 
-            attribute_id: Number|null, 
-            attribute_value_id: Number|null, 
-            other_value: String, 
-            value: String 
-        } = { 
-            attribute_id: null, 
-            attribute_value_id: null, 
-            other_value: '', 
-            value: '' 
+        let characteristic: {
+            attribute_id: Number|null,
+            attribute_value_id: Number|null,
+            other_value: String,
+            value: String
+        } = {
+            attribute_id: null,
+            attribute_value_id: null,
+            other_value: '',
+            value: ''
         };
-        
+
         const inputType = inputEl.getAttribute('type');
         if(inputType === 'checkbox' && inputEl.checked){
             characteristic['attribute_id'] = inputEl.getAttribute('attrId') as any as Number;
@@ -165,9 +165,9 @@ export const formatCharacteristics = (inputElementsList: Array<HTMLFormElement>)
                 characteristic['other_value'] = otherInputField.value;
                 if(characteristic['other_value'].trim() === ''){
                     otherInputField.style.border = '2px solid red';
-                    return { 
-                        data: null, 
-                        errorMsg: 'Please specify a value if you have checked the other field.' 
+                    return {
+                        data: null,
+                        errorMsg: 'Please specify a value if you have checked the other field.'
                     };
                 }
                 else otherInputField.style.border = '1px solid #ccc';
@@ -190,9 +190,9 @@ export const formatGeoScopeForm = (geoScopeElement: ElementRef, selectedGeoScope
             if(inputEl.getAttribute('name')) {
                 const fieldName = inputEl.getAttribute('name');
                 const fieldValue = inputEl.value || '';
-                
+
                 if(inputEl.hasAttribute('latlong')){
-                    currentFormData[fieldName] = { 
+                    currentFormData[fieldName] = {
                         lat: fieldValue === '' ? 0 : fieldValue.split(',')[0],
                         long: fieldValue === '' ? 0 : fieldValue.split(',')[1]
                     };
@@ -204,7 +204,7 @@ export const formatGeoScopeForm = (geoScopeElement: ElementRef, selectedGeoScope
                 else {
                     currentFormData[fieldName] = fieldValue;
                 }
-                
+
                 // clear the value if the input was disabled by the user while submitting the form
                 if(inputEl.hasAttribute('disabled')) {
                     currentFormData[fieldName] = '';
@@ -226,23 +226,23 @@ export const formatSpecies = (inputElementsList: Array<HTMLFormElement>) => {
             const speciesCommonFieldValue = set.querySelector("[name='common']")?.value;
             const speciesScientificFieldValue = set.querySelector("[name='scientific']")?.value;
             if(speciesCommonFieldValue || speciesScientificFieldValue){
-                formattedData.push({ 
-                    'species_common': speciesCommonFieldValue, 
-                    'species_scientific': speciesScientificFieldValue, 
-                    'landings': null 
-                })  
+                formattedData.push({
+                    'species_common': speciesCommonFieldValue,
+                    'species_scientific': speciesScientificFieldValue,
+                    'landings': null
+                })
             }
         }
     }
     if(formattedData.length === 0) {
-        return { 
-            data: null, 
+        return {
+            data: null,
             errorMsg: 'All the fields are empty!'
         }
     }
-    return { 
-        data: formattedData, 
-        errorMsg: null 
+    return {
+        data: formattedData,
+        errorMsg: null
     };
 }
 
@@ -259,7 +259,7 @@ export const formatThemeIssues = (inputElementsList: Array<HTMLFormElement>) => 
                 if(inputType === 'checkbox'){
                     if(lastTwoCharOfFieldName === '[]'){
                         const arrayFieldName = fieldName.slice(0, -2);
-                        if(inputEl.checked) {     
+                        if(inputEl.checked) {
                             if(formattedData[arrayFieldName]) formattedData[arrayFieldName].push(inputEl.value)
                             else formattedData[arrayFieldName] = [inputEl.value];
                         }
@@ -321,7 +321,7 @@ export const formatWhoResearchInfo = (inputElementsList: Array<HTMLFormElement>)
             const fieldName = inputEl.getAttribute('name');
             if(inputEl.hasAttribute('disabled')) formattedData[fieldName] = '';
             else formattedData[fieldName] = inputEl.value || '';
-            
+
             if(formattedData[fieldName] == 'true') formattedData[fieldName] = true;
             if(formattedData[fieldName] == 'false') formattedData[fieldName] = false;
 
@@ -402,11 +402,11 @@ export const formatSotaAdditionalDetails = (inputElementsList: Array<HTMLFormEle
                     else formattedData[fieldName] = inputEl.getAttribute('defaultValue');
                 }
                 else formattedData[fieldName] = inputEl.value || '';
-                
+
                 if(formattedData[fieldName] == 'true') formattedData[fieldName] = true;
                 if(formattedData[fieldName] == 'false') formattedData[fieldName] = false;
             }
-            
+
             if(formattedData[fieldName] == '' && isNullable(inputEl.name, PANEL_CODES.SOTA)){
                 formattedData[fieldName] = null;
             }
@@ -461,18 +461,18 @@ export const formatProfileBasicInfo = (inputElementsList: Array<HTMLFormElement>
 export const formatProfileCharacteristics = (inputElementsList: Array<HTMLFormElement>) => {
     const formattedData: { attribute_id: String, attribute_value_id: String, other_value: String, value: String }[] = [];
     for(const inputEl of inputElementsList){
-        let characteristic: { 
-            attribute_id: String, 
-            attribute_value_id: String, 
-            other_value: String, 
-            value: String 
-        } = { 
-            attribute_id: '', 
-            attribute_value_id: '', 
-            other_value: '', 
-            value: '' 
+        let characteristic: {
+            attribute_id: String,
+            attribute_value_id: String,
+            other_value: String,
+            value: String
+        } = {
+            attribute_id: '',
+            attribute_value_id: '',
+            other_value: '',
+            value: ''
         };
-        
+
         const inputType = inputEl.getAttribute('type');
         if(inputType === 'checkbox' && inputEl.checked){
             characteristic['attribute_id'] = inputEl.getAttribute('attrId');
@@ -484,14 +484,14 @@ export const formatProfileCharacteristics = (inputElementsList: Array<HTMLFormEl
                 characteristic['other_value'] = otherInputField.value;
                 if(characteristic['other_value'].trim() === ''){
                     otherInputField.style.border = '2px solid red';
-                    return { 
-                        data: null, 
-                        errorMsg: 'Please specify a value if you have checked the other field.' 
+                    return {
+                        data: null,
+                        errorMsg: 'Please specify a value if you have checked the other field.'
                     };
                 }
                 else otherInputField.style.border = '1px solid #ccc';
             }
-            
+
             const unitValue = inputEl.closest('td');
             if(unitValue){
                 const unitFieldValue = unitValue.nextElementSibling.querySelector('[unitValue]') as HTMLInputElement;
@@ -499,7 +499,7 @@ export const formatProfileCharacteristics = (inputElementsList: Array<HTMLFormEl
             }
             formattedData.push(characteristic);
         }
-        
+
         else if(inputType === 'text' && inputEl.hasAttribute('textOnly')){
             characteristic['attribute_id'] = inputEl.getAttribute('attrId');
             characteristic['attribute_value_id'] = '';
@@ -593,7 +593,7 @@ export const formatOrganizationBasicInfo = (inputElementsList: Array<HTMLFormEle
                     else formattedData[fieldName] = inputEl.getAttribute('defaultValue');
                 }
                 else formattedData[fieldName] = inputEl.value || '';
-                
+
                 if(formattedData[fieldName] == 'true') formattedData[fieldName] = true;
                 if(formattedData[fieldName] == 'false') formattedData[fieldName] = false;
             }
@@ -700,7 +700,7 @@ export const formatBluejusticeGeneralAndSocialInfo = (inputElementsList: Array<H
 
 
 export const formatBluejusticeImageInfo = (inputElementsList: Array<HTMLFormElement>) => {
-    const formData = new FormData(); 
+    const formData = new FormData();
     for(const inputEl of inputElementsList){
         if(inputEl.getAttribute('name')){
             const fieldName = inputEl.getAttribute('name');
@@ -750,7 +750,7 @@ export const formatGuidelinesInfo = (inputElementsList: Array<HTMLFormElement>) 
             const fieldName = inputEl.getAttribute('name');
             if(inputEl.hasAttribute('disabled')) formattedData[fieldName] = '';
             else formattedData[fieldName] = inputEl.value;
-        
+
             if(formattedData[fieldName] == '' && isNullable(inputEl.name, PANEL_CODES.GUIDELINES)){
                 formattedData[fieldName] = null;
             }
