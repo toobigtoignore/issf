@@ -27,7 +27,7 @@ export class CasestudyDetailsComponent implements OnInit {
 
 
     getContributorName(){
-        return this.caseData?.core?.user?.first_name + ' ' + this.caseData?.core?.user?.last_name;
+        return this.caseData?.core?.contributor?.first_name + ' ' + this.caseData?.core?.contributor?.last_name;
     }
 
 

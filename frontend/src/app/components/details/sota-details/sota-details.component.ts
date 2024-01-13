@@ -29,7 +29,7 @@ export class SotaDetailsComponent implements OnInit {
 
 
       getContributorName(){
-          return this.sotaData?.core?.user?.first_name + ' ' + this.sotaData?.core?.user?.last_name;
+          return this.sotaData?.core?.contributor?.first_name + ' ' + this.sotaData?.core?.contributor?.last_name;
       }
 
 

@@ -60,6 +60,11 @@ return [
         'NO' => "No",
         'NOT_EXPLICITLY' => "Not explicitly"
     ],
+    'IMAGE_ACTIONS' => [
+        'KEEP_IMAGE_KEY' => 'keep-image',
+        'REMOVE_IMAGE_KEY' => 'remove-image',
+        'UPLOAD_IMAGE_KEY' => 'upload-image'
+    ],
     'GEO_SCOPES' => [
         'LOCAL' => "Local",
         'SUBNATIONAL' => "Sub-national",

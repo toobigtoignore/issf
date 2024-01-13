@@ -59,7 +59,8 @@ class RecentContributionsController extends Controller
         foreach($distinct_ids as $id){
             $contributor = $records->filter(fn($record) => $record->contributor_id === $id)
                                     ->first()
-                                    ->user;
+                                    ->contributor;
+
             $contributor_name = $contributor->username;
 
             if($contributor->first_name || $contributor->last_name){

@@ -82,14 +82,14 @@ export const updateProfilePercentage = recordId =>`${baseurl}/profile/update/per
 
 export const updateOrganizationUrl = recordId =>`${baseurl}/organization/update/details/${recordId}`;
 
-export const updateBluejusticeBasicUrl = recordId =>`${baseurl}/bluejustice/update/basic/${recordId}`;
-export const updateBluejusticeContributorUrl = recordId =>`${baseurl}/bluejustice/update/contributor/${recordId}`;
-export const updateBluejusticeFilesUrl = recordId =>`${baseurl}/bluejustice/update/filesInfo/${recordId}`;
-export const updateBluejusticeGeneralInfoUrl = recordId =>`${baseurl}/bluejustice/update/generalInfo/${recordId}`;
-export const updateBluejusticeSocialIssuesUrl = recordId =>`${baseurl}/bluejustice/update/socialIssues/${recordId}`;
-
 // new apis
 export const updateCaseStudiesBasicUrl = recordId =>`${baseurl}/casestudy/update/basic/${recordId}`;
 export const updateCaseStudiesDescriptionUrl = recordId =>`${baseurl}/casestudy/update/description/${recordId}`;
 export const updateCaseStudiesSolutionUrl = recordId =>`${baseurl}/casestudy/update/solution/${recordId}`;
+
+export const updateBluejusticeBasicUrl = recordId =>`${baseurl}/bluejustice/update/basic/${recordId}`;
+export const updateBluejusticeFilesUrl = recordId =>`${baseurl}/bluejustice/update/filesInfo/${recordId}`;
+export const updateBluejusticeGeneralInfoUrl = recordId =>`${baseurl}/bluejustice/update/generalInfo/${recordId}`;
+export const updateBluejusticeSocialIssuesUrl = recordId =>`${baseurl}/bluejustice/update/socialIssues/${recordId}`;
+
 export const updateGuidelinesRecordUrl = recordId =>`${baseurl}/guidelines/update/${recordId}`;

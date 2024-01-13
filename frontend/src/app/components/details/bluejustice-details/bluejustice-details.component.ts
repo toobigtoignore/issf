@@ -27,7 +27,7 @@ export class BluejusticeDetailsComponent implements OnInit {
 
 
     getContributorName(){
-        return this.bluejusticeData?.core?.user?.first_name + ' ' + this.bluejusticeData?.core?.user?.last_name;
+        return this.bluejusticeData?.core?.contributor?.first_name + ' ' + this.bluejusticeData?.core?.contributor?.last_name;
     }
 
 

@@ -67,7 +67,7 @@ export class PostServices {
 
 
     updateRecord(payload: Object, apiUrl: string): Observable<any> {
-        return this.http.put(
+        return this.http.post(
             apiUrl, payload
         );
     }

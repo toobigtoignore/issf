@@ -27,7 +27,7 @@ export class GuidelinesDetailsComponent implements OnInit {
 
 
     getContributorName(){
-        return this.guidelinesData?.core?.user?.first_name + ' ' + this.guidelinesData?.core?.user?.last_name;
+        return this.guidelinesData?.core?.contributor?.first_name + ' ' + this.guidelinesData?.core?.contributor?.last_name;
     }
 
 

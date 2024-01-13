@@ -17,7 +17,7 @@ export class PanelBasedComponentComponent implements OnInit {
     panelsList: {};
     showBluejusticePanel: boolean;
     showProfilePanel: boolean;
-    imageUrl: string = environment.IMAGE_URL;
+    imageUrl: string = environment.BLUEJUSTICE_IMAGE_URL
 
 
     constructor() { }
