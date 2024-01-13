@@ -207,7 +207,7 @@
 
 
 @media only screen and (max-width: 1023px){
-    .geoscope-container .form-repeat {
+    .geoscope-container .form-repeat:first-child {
         margin-top: -1px;
     }
 

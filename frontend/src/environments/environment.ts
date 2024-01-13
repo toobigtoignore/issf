@@ -6,7 +6,7 @@ export const environment =
 {
     production: false,
     API_URL: 'http://127.0.0.1:8000',
-    IMAGE_URL: 'https://issfcloud.toobigtoignore.net/backend/public/img'
+    BLUEJUSTICE_IMAGE_URL: 'http://127.0.0.1:8000/images/bluejustice'
 };
 
 /*

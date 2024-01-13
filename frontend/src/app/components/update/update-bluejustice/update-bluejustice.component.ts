@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import {
     BLUEJUSTICE_ECOSYSTEM_DETAILED,
     BLUEJUSTICE_ECOSYSTEM_TYPE,
@@ -8,11 +9,12 @@ import {
     BLUEJUSTICE_SSF_TYPE,
     DEFINITE_ANS,
     DETAILS_ACCORDIONS_LABELS,
-    KEEP_BLUEJUSTICE_IMAGE_KEY,
+    KEEP_IMAGE_KEY,
+    MAX_FILE_SIZE,
     PANEL_CODES,
     RESPONSE_CODES,
-    REMOVE_BLUEJUSTICE_IMAGE_KEY,
-    UPLOAD_BLUEJUSTICE_IMAGE_KEY
+    REMOVE_IMAGE_KEY,
+    UPLOAD_IMAGE_KEY
 } from '../../../constants/constants';
 import { countryList } from '../../../../assets/js/types';
 import { getAllCountriesUrl } from '../../../constants/api';
@@ -41,15 +43,19 @@ export class UpdateBluejusticeComponent implements OnInit {
     @ViewChild('contributorForm') contributorForm: ElementRef;
     @ViewChild('imageForm') imageForm: ElementRef;
     @ViewChild('imageAction') imageAction: ElementRef;
+    @ViewChild('imageInput') imageInput: ElementRef;
     @ViewChild('generalForm') generalForm: ElementRef;
+    @ViewChild('previewImage') previewImage: ElementRef;
     @ViewChild('socialJusticeForm') socialJusticeForm: ElementRef;
     @Input() activeTab: string;
     @Input() record: any;
     @Input() recordId: number;
 
     countryList: countryList[];
+    fileTooBigError: boolean = false;
     image: File;
-    imageActionKey: string = KEEP_BLUEJUSTICE_IMAGE_KEY;
+    imageActionKey: string = KEEP_IMAGE_KEY;
+    imageUrl: string = environment.BLUEJUSTICE_IMAGE_URL;
     definiteAns: DEFINITE_ANS = DEFINITE_ANS;
     definiteValues: string[] = Object.values(this.definiteAns);
     ecoSystemDetail: BLUEJUSTICE_ECOSYSTEM_DETAILED = BLUEJUSTICE_ECOSYSTEM_DETAILED;
@@ -61,6 +67,7 @@ export class UpdateBluejusticeComponent implements OnInit {
     justiceTypesLabels: string[];
     mainGears: BLUEJUSTICE_MAINGEARS_TYPE = BLUEJUSTICE_MAINGEARS_TYPE;
     mainGearsKeys: string[] =  Object.keys(this.mainGears);
+    showImage: boolean = false;
     ssfTerms: BLUEJUSTICE_SSF_TERMS = BLUEJUSTICE_SSF_TERMS;
     ssfTermsKeys: string[] =  Object.keys(this.ssfTerms);
     ssfTypes: BLUEJUSTICE_SSF_TYPE = BLUEJUSTICE_SSF_TYPE;
@@ -80,6 +87,7 @@ export class UpdateBluejusticeComponent implements OnInit {
         get(getAllCountriesUrl).then(async (data: any) => {
             this.countryList = data;
         });
+        this.showImage = this.record.uploaded_img !== null;
     }
 
 
@@ -113,6 +121,7 @@ export class UpdateBluejusticeComponent implements OnInit {
             formElement: form
         });
         const { data, errorMsg } = formatted;
+
         if(errorMsg) {
             this.commonServices.updateEmitter.emit({
                 status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -128,8 +137,22 @@ export class UpdateBluejusticeComponent implements OnInit {
 
     processImage(event: Event){
         this.image = (event.target as HTMLInputElement).files[0];
-        this.imageActionKey = UPLOAD_BLUEJUSTICE_IMAGE_KEY;
+        this.fileTooBigError = this.image.size > MAX_FILE_SIZE;
+
+        if(this.fileTooBigError){
+            this.imageInput.nativeElement.value = null;
+            return;
+        }
+
+        this.imageActionKey = UPLOAD_IMAGE_KEY;
         this.imageAction.nativeElement.value = this.imageActionKey;
+
+        if(this.image){
+            const reader = new FileReader();
+            reader.onload = (e) => this.previewImage.nativeElement.src = e.target.result;
+            reader.readAsDataURL(this.image);
+            this.showImage = true;
+        }
     }
 
 
@@ -137,13 +160,13 @@ export class UpdateBluejusticeComponent implements OnInit {
         if(confirm('Are you sure you want to remove this image?')){
             const element = (event.target as HTMLElement);
             const inputElements = Array.from(element.closest('fieldset').querySelectorAll('input'));
-            element.parentElement.remove();
 
             for(const inputEl of inputElements) {
                 inputEl.value = null;
             }
-            this.imageActionKey = REMOVE_BLUEJUSTICE_IMAGE_KEY;
+            this.imageActionKey = REMOVE_IMAGE_KEY;
             this.imageAction.nativeElement.value = this.imageActionKey;
+            this.showImage = false;
         }
     }
 

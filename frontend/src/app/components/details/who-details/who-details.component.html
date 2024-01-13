@@ -4,22 +4,22 @@
         <table>
             <tr>
                 <th>Name</th>
-                <td [innerHTML]="formulateFullName(whoData.core?.user)"></td>
+                <td [innerHTML]="formulateFullName(whoData.core?.contributor)"></td>
             </tr>
 
             <tr>
                 <th>Email</th>
                 <td class="link-holder">
                     <a
-                        [href]="'mailto:' + whoData.core?.user?.email"
-                        [innerHTML]="whoData.core?.user?.email"
+                        [href]="'mailto:' + whoData.core?.contributor?.email"
+                        [innerHTML]="whoData.core?.contributor?.email"
                     ></a>
                 </td>
             </tr>
 
             <tr>
                 <th>Country of residence</th>
-                <td [innerHTML]="whoData.core?.user?.country?.short_name"></td>
+                <td [innerHTML]="whoData.core?.contributor?.country?.short_name"></td>
             </tr>
 
             <tr>

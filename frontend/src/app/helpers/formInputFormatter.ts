@@ -2,9 +2,8 @@ import { ElementRef } from '@angular/core';
 import {
     DETAILS_ACCORDIONS_LABELS,
     INITIAL_CONTRIBUTION,
-    PANEL_CODES,
-    KEEP_BLUEJUSTICE_IMAGE_KEY,
-    REMOVE_BLUEJUSTICE_IMAGE_KEY
+    KEEP_IMAGE_KEY,
+    PANEL_CODES
 } from '../constants/constants';
 
 
@@ -701,6 +700,7 @@ export const formatBluejusticeGeneralAndSocialInfo = (inputElementsList: Array<H
 
 export const formatBluejusticeImageInfo = (inputElementsList: Array<HTMLFormElement>) => {
     const formData = new FormData();
+    let errorMsg = null;
     for(const inputEl of inputElementsList){
         if(inputEl.getAttribute('name')){
             const fieldName = inputEl.getAttribute('name');
@@ -708,7 +708,7 @@ export const formatBluejusticeImageInfo = (inputElementsList: Array<HTMLFormElem
             if(fieldType === 'file'){
                 if(inputEl.files[0]){
                     const file = inputEl.files[0];
-                    const fileName = file ? Date.now() + '-' + file.name : null;
+                    const fileName = file ? file.name : null;
                     formData.append(fieldName, file, fileName);
                 }
                 else formData.append(fieldName, '');
@@ -716,7 +716,20 @@ export const formatBluejusticeImageInfo = (inputElementsList: Array<HTMLFormElem
             else formData.append(fieldName, inputEl.value);
         }
     }
-    return { data: formData, errorMsg: null };
+
+    if(formData.get('image_action') === KEEP_IMAGE_KEY){
+        formData.set('image_file', 'true');
+    }
+    else if(formData.get('image_file') === null || formData.get('image_file') === ''){
+        const imageDetailFields = ['date_of_photo', 'photo_location', 'photographer'];
+        formData.forEach((value, key) => {
+            if(imageDetailFields.includes(key) && value != null && value != '') {
+                errorMsg = "An image is required when date of photo, photo location or photographer name is present."
+            }
+        });
+    }
+
+    return { data: formData, errorMsg: errorMsg };
 }
 
 

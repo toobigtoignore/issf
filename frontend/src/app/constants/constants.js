@@ -866,11 +866,6 @@ export const THEME_ISSUES_CATEGORIES = {
 }
 
 
-export const KEEP_BLUEJUSTICE_IMAGE_KEY = 'keep-image';
-export const REMOVE_BLUEJUSTICE_IMAGE_KEY = 'remove-image';
-export const UPLOAD_BLUEJUSTICE_IMAGE_KEY = 'upload-image';
-
-
 export const COUNTRIES_LIST = [
     { id: 165, name: "Afghanistan", coordinates: [ 66, 33 ] },
     { id: 166, name: "Albania", coordinates: [ 20, 41 ] },
@@ -1085,3 +1080,9 @@ export const COUNTRIES_LIST = [
     { id: 375, name: "Taiwan, Province of China", coordinates: [ -71.583333, 21.733333 ] },
     { id: 376, name: "Hong Kong", coordinates: [ 114.166667, 22.25 ] }
 ];
+
+
+export const KEEP_IMAGE_KEY = 'keep-image';
+export const REMOVE_IMAGE_KEY = 'remove-image';
+export const UPLOAD_IMAGE_KEY = 'upload-image';
+export const MAX_FILE_SIZE = 10485760; // 10 MB

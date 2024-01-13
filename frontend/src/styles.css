@@ -1,20 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body {
-	height: 100%;
+    height: 100%;
 }
 
 
 body {
-	margin: 0;
-	font-family: Roboto, "Helvetica Neue", sans-serif;
-	background-color: #f5f8ff
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #f5f8ff
 }
 
 
 a {
-	color: #2699FB;
-	text-decoration: none;
+    color: #2699FB;
+    text-decoration: none;
 }
 
 
@@ -82,16 +82,16 @@ a {
 
 
 button {
-	width: 90px;
-	height: 35px;
-	font-size: 15px;
-	background: #2699FB;
-	color: #fff;
-	border: 1px solid #428ECE;
-	border-radius: 6px;
-	cursor: pointer;
-	margin-left: 5px;
-	margin-right: 5px;
+    width: 90px;
+    height: 35px;
+    font-size: 15px;
+    background: #2699FB;
+    color: #fff;
+    border: 1px solid #428ECE;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 
@@ -101,13 +101,19 @@ button:active {
 
 
 button[disabled="disabled"] {
-	background: #9BCDF7;
-	cursor: not-allowed;
+    background: #9BCDF7;
+    cursor: not-allowed;
+}
+
+
+.error {
+    color: red;
+    font-size: 16px;
 }
 
 
 .mat-toolbar {
-	background-color: #f5f8ff;
+    background-color: #f5f8ff;
 }
 
 
@@ -125,7 +131,7 @@ button[disabled="disabled"] {
 
 
 .shadowed-box {
-	box-shadow: 1px 1px 1px 1px rgba(0,0,0,.1);
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.1);
 }
 
 
@@ -784,7 +790,7 @@ select.multi-select-box option {
 
 
     .add-another {
-        margin-left: 20px;
+        margin-left: 20px !important;
     }
 }
 

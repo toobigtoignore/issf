@@ -29,7 +29,7 @@ export class OrganizationDetailsComponent implements OnInit {
 
 
     getContributorName(){
-        return this.orgData?.core?.user?.first_name + ' ' + this.orgData?.core?.user?.last_name;
+        return this.orgData?.core?.contributor?.first_name + ' ' + this.orgData?.core?.contributor?.last_name;
     }
 
 

@@ -121,9 +121,9 @@ export const getRecordDetailsUrl = (panel: string, id: number) => {
 export const getRecordName = (data: any, panel: string) => {
     switch(panel) {
         case PANEL_CODES.WHO: {
-            const initials = data.core?.user?.initials || '';
-            const fullname = data.core?.user?.first_name + ' ' +  initials + ' ' + data.core?.user?.last_name;
-            const email = data.core?.user?.email;
+            const initials = data.core?.contributor?.initials || '';
+            const fullname = data.core?.contributor?.first_name + ' ' +  initials + ' ' + data.core?.contributor?.last_name;
+            const email = data.core?.contributor?.email;
             const trimmedFullName = fullname.trim();
             return trimmedFullName === '' ? email : trimmedFullName + ' | ' + email;
         }

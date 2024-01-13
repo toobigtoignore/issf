@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\HelperController;
 use App\Models\ISSFCore;
@@ -72,7 +73,7 @@ class SSFBluejusticeController extends Controller
 
     public function get_details(SSFBluejustice $bluejustice){
         $bluejustice_type_list = HelperController::formulate_list(config('constants.BLUEJUSTICE_SSF_TYPES'), $bluejustice, 'key', 'ssf_type_other');
-        $ecosystem_type_list = HelperController::formulate_list(config('constants.BLUEJUSTICE_ECOSYSTEM_TYPES'), $bluejustice, null, null);
+        $ecosystem_type_list = HelperController::formulate_list(config('constants.BLUEJUSTICE_ECOSYSTEM_TYPES'), $bluejustice, 'key', null);
         $ecosystem_detailed_list = HelperController::formulate_list(config('constants.BLUEJUSTICE_ECOSYSTEM_DETAILED'), $bluejustice, 'key', 'ecosystem_detailed_other');
         $bluejustice_terms_list = HelperController::formulate_list(config('constants.BLUEJUSTICE_SSF_TERMS'), $bluejustice, 'key', 'ssf_terms_others');
         $main_gear_types_list = HelperController::formulate_list(config('constants.BLUEJUSTICE_MAINGEARS_TYPE'), $bluejustice, 'key', 'main_gears_others');
@@ -91,6 +92,183 @@ class SSFBluejusticeController extends Controller
             'bluejustice_terms_list' => $bluejustice_terms_list,
             'main_gear_types_list' => $main_gear_types_list,
             'justice_types_list' => $justice_types_list
+        ];
+    }
+
+
+    public function update_basic(SSFBluejustice $record) {
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'ssf_name' => ['required', 'string'],
+                'ssf_country' => ['required', 'integer'],
+                'ssf_location' => ['required', 'string'],
+                'ssf_main_species' => ['string', 'nullable']
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $formatted_payload = [];
+        foreach(array_keys($payload) as $key) $formatted_payload[$key] = $payload[$key];
+        $updated = $record->update($formatted_payload);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
+
+
+    public function update_files_info(SSFBluejustice $record) {
+        $payload = request()->all();
+        $rules = [];
+        if($payload['image_action'] !== config('constants.IMAGE_ACTIONS.KEEP_IMAGE_KEY')){
+            $rules['image_file'] = ['required_with:date_of_photo,photo_location,photographer', 'image', 'nullable'];
+        }
+
+        $validator = Validator::make($payload, $rules);
+        if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $payload['uploaded_img'] = $record->uploaded_img;
+        $image_action = $payload['image_action'];
+        $image_file = $payload['image_file'];
+
+        unset($payload['image_action']);
+        unset($payload['image_file']);
+
+        if($image_file && $image_action === config('constants.IMAGE_ACTIONS.UPLOAD_IMAGE_KEY')){
+            if($record->uploaded_img){
+                Storage::disk('bluejustice_images')->delete($record->uploaded_img);
+            }
+
+            $image_name = time() . '-' . uniqid() . '-' . $image_file->getClientOriginalName();
+            Storage::disk('bluejustice_images')->put($image_name, file_get_contents($image_file));
+            $payload['uploaded_img'] = $image_name;
+        }
+
+        else if(!$image_file && $image_action === config('constants.IMAGE_ACTIONS.REMOVE_IMAGE_KEY')){
+            Storage::disk('bluejustice_images')->delete($record->uploaded_img);
+            $payload['uploaded_img'] = null;
+        }
+
+        $formatted_payload = [];
+        foreach(array_keys($payload) as $key) {
+            $formatted_payload[$key] = $payload[$key];
+        }
+        $updated = $record->update($formatted_payload);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
+
+
+    public function update_general_info(SSFBluejustice $record) {
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'ssf_terms_fisheries' => [ 'in:,' . implode(',', array_values(config('constants.DEFINED_ANSWERS')))],
+                'ssf_terms_fisheries_definiton' =>  ['required_if:ssf_terms_fisheries,' . config("constants.DEFINED_ANSWERS['YES']"), 'string', 'nullable']
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $formatted_payload = [];
+        foreach(array_keys($payload) as $key) $formatted_payload[$key] = $payload[$key];
+
+        $updated = $record->update($formatted_payload);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
+
+
+    public function update_social_issues(SSFBluejustice $record) {
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'background_about_ssf' => ['string', 'nullable'],
+                'justice_in_context' => ['string', 'nullable'],
+                'dealing_with_justice' => ['string', 'nullable'],
+                'social_justice_source' => ['string', 'nullable'],
+                'types_of_justice_distributive' => ['string', 'nullable'],
+                'types_of_justice_social' => ['string', 'nullable'],
+                'types_of_justice_economic' => ['string', 'nullable'],
+                'types_of_justice_market' => ['string', 'nullable'],
+                'types_of_justice_infrastructure' => ['string', 'nullable'],
+                'types_of_justice_regulatory' => ['string', 'nullable'],
+                'types_of_justice_procedural' => ['string', 'nullable'],
+                'types_of_justice_environmental' => ['string', 'nullable'],
+                'covid_19_related' => ['string', 'nullable'],
+                'types_of_justice_others' => ['string', 'nullable']
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $formatted_payload = [];
+        foreach(array_keys($payload) as $key) $formatted_payload[$key] = $payload[$key];
+        $updated = $record->update($formatted_payload);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
         ];
     }
 }

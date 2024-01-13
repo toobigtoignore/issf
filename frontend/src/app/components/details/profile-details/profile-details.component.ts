@@ -29,7 +29,7 @@ export class ProfileDetailsComponent implements OnInit {
 
 
     getContributorName(){
-        return this.profileData?.core?.user?.first_name + ' ' + this.profileData?.core?.user?.last_name;
+        return this.profileData?.core?.contributor?.first_name + ' ' + this.profileData?.core?.contributor?.last_name;
     }
 
 
