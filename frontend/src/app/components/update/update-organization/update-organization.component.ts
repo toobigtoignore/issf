@@ -81,14 +81,6 @@ export class UpdateOrganizationComponent implements OnInit {
     }
 
 
-    fetchAddressLine(address: string, line: number): string{
-        const addresses = address.split('\n');
-        if(line === 1) return this.characterDecode(addresses[0]);
-        if(line === 2) return this.characterDecode(addresses[1]);
-        return null;
-    }
-
-
     getOtherValue(valueArr: string[], lookUpArr: string[]): string|null {
         return getOtherValue(valueArr, lookUpArr);
     }
@@ -118,6 +110,7 @@ export class UpdateOrganizationComponent implements OnInit {
             formElement: form
         });
         const { data, errorMsg } = formatted;
+
         if(errorMsg) {
             this.commonServices.updateEmitter.emit({
                 status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,

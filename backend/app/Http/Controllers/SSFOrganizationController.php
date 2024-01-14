@@ -16,10 +16,10 @@ class SSFOrganizationController extends Controller
         $validator = Validator::make(
             $payload,
             array_merge(ValidationController::geographic_scope_rules(), [
-                'basic_info.organization_name' => ['required'],
-                'basic_info.country_id' => ['required'],
-                'basic_info.year_established' => ['required', 'max:' . date("Y")],
-                'basic_info.ssf_defined' => ['required', 'in:' . implode(',', array_values(config('constants.DEFINED_ANSWERS')))],
+                'basic_info.organization_name' => ['required', 'string'],
+                'basic_info.country_id' => ['required', 'integer'],
+                'basic_info.year_established' => ['required', 'integer', 'max:' . date("Y")],
+                'basic_info.ssf_defined' => ['required', 'string', 'max:30', 'in:' . implode(',', array_values(config('constants.DEFINED_ANSWERS')))],
                 'basic_info.record_type' => ['required', 'string'],
                 'basic_info.geographic_scope_type' => ['required', 'in:' . implode(',', array_values(config('constants.GEO_SCOPES')))],
                 'basic_info.contributor_id' => ['required', 'exists:user_profile,id']
@@ -91,6 +91,44 @@ class SSFOrganizationController extends Controller
             'organization_type_list' => $organization_type_list,
             'theme_issues' => HelperController::get_theme_issues($organization->issf_core_id),
             'external_links' => HelperController::get_external_links($organization->issf_core_id)
+        ];
+    }
+
+
+    public function update_details(SSFOrganization $record){
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'organization_name' => ['required', 'string'],
+                'country_id' => ['required', 'integer'],
+                'year_established' => ['required', 'integer', 'max:' . date("Y")],
+                'ssf_defined' => ['required', 'string', 'max:30', 'in:' . implode(',', array_values(config('constants.DEFINED_ANSWERS')))],
+                'ssf_definition' => ['required_if:ssf_defined,' . config('constants.DEFINED_ANSWERS.YES'), 'string', 'nullable']
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $formatted_payload = [];
+        foreach(array_keys($payload) as $key) $formatted_payload[$key] = $payload[$key];
+        $updated = $record->update($formatted_payload);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
         ];
     }
 }

@@ -866,6 +866,14 @@ export const THEME_ISSUES_CATEGORIES = {
 }
 
 
+export const THEME_ISSUES_OTHER_VALUES_ID = [
+    THEME_ECONOMICS.other.value,
+    THEME_ECOLOGICAL.other.value,
+    THEME_SOCIALS.other.value,
+    THEME_GOVERNANCE.other.value
+];
+
+
 export const COUNTRIES_LIST = [
     { id: 165, name: "Afghanistan", coordinates: [ 66, 33 ] },
     { id: 166, name: "Albania", coordinates: [ 20, 41 ] },

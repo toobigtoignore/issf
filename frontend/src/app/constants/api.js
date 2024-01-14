@@ -66,8 +66,6 @@ export const updateUserUrl = `${baseurl}/user/update`;
 export const updateCharacteristicsUrl = recordId =>`${baseurl}/issf_base/update/characteristics/${recordId}`;
 export const updateGeoscopeUrl = recordId =>`${baseurl}/issf_base/update/geoScope/${recordId}`;
 export const updateSpeciesUrl = recordId =>`${baseurl}/issf_base/update/species/${recordId}`;
-export const updateThemeUrl = recordId =>`${baseurl}/issf_base/update/themeIssue/${recordId}`;
-export const updateExternalLinksUrl = recordId =>`${baseurl}/issf_base/update/externalLink/${recordId}`;
 
 export const updateWhoBasicUrl = recordId =>`${baseurl}/who/update/details/${recordId}`;
 export const updateWhoResearcherUrl = recordId =>`${baseurl}/who/update/researcher/${recordId}`;
@@ -80,9 +78,12 @@ export const updateProfileOrganizationUrl = recordId =>`${baseurl}/profile/updat
 export const updateProfileSourcesCommentsUrl = recordId =>`${baseurl}/profile/update/sources/${recordId}`;
 export const updateProfilePercentage = recordId =>`${baseurl}/profile/update/percent-completed/${recordId}`;
 
-export const updateOrganizationUrl = recordId =>`${baseurl}/organization/update/details/${recordId}`;
 
 // new apis
+export const updateThemeUrl = recordId =>`${baseurl}/issf_base/update/themeIssue/${recordId}`;
+export const updateExternalLinksUrl = recordId =>`${baseurl}/issf_base/update/externalLink/${recordId}`;
+export const updateOrganizationUrl = recordId =>`${baseurl}/organization/update/details/${recordId}`;
+
 export const updateCaseStudiesBasicUrl = recordId =>`${baseurl}/casestudy/update/basic/${recordId}`;
 export const updateCaseStudiesDescriptionUrl = recordId =>`${baseurl}/casestudy/update/description/${recordId}`;
 export const updateCaseStudiesSolutionUrl = recordId =>`${baseurl}/casestudy/update/solution/${recordId}`;

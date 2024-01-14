@@ -3,7 +3,8 @@ import {
     DETAILS_ACCORDIONS_LABELS,
     INITIAL_CONTRIBUTION,
     KEEP_IMAGE_KEY,
-    PANEL_CODES
+    PANEL_CODES,
+    THEME_ISSUES_OTHER_VALUES_ID
 } from '../constants/constants';
 
 
@@ -101,7 +102,6 @@ export const formatFormValues = (formInfo: {
 
 /************************** COMMON FORMATTERS ******************************/
 export const formatExternalLinks = (inputElementsList: Array<HTMLFormElement>) => {
-    const formattedData: { updated_links: Object[] } = { updated_links: [] };
     const linkArray:Object[] = [];
     const form = inputElementsList[0].form;
     const linkSets = form.querySelector('tbody').childNodes;
@@ -117,22 +117,17 @@ export const formatExternalLinks = (inputElementsList: Array<HTMLFormElement>) =
                         errorMsg: 'One or more link is not valid. Please make sure your link starts with http:// or https://'
                     };
                 }
+
                 linkArray.push({
                     'link_type': linkType,
                     'link_address': linkAddress
-                })
+                });
             }
         }
     }
-    if(linkArray.length === 0) {
-        return {
-            data: null,
-            errorMsg: 'All the fields are empty!'
-        };
-    }
-    formattedData.updated_links = linkArray;
+
     return {
-        data: formattedData,
+        data: linkArray,
         errorMsg: null
     };
 }
@@ -247,25 +242,19 @@ export const formatSpecies = (inputElementsList: Array<HTMLFormElement>) => {
 
 
 export const formatThemeIssues = (inputElementsList: Array<HTMLFormElement>) => {
-    const formattedData: Object = {};
+    const formattedData: Object[] = [];
     for(const inputEl of inputElementsList){
         if(inputEl.getAttribute('name')){
-            const fieldName = inputEl.getAttribute('name');
-            if(inputEl.hasAttribute('disabled')) formattedData[fieldName] = '';
-            else{
-                const inputType = inputEl.getAttribute('type');
-                const lastTwoCharOfFieldName = fieldName.slice(-2);
-                if(inputType === 'checkbox'){
-                    if(lastTwoCharOfFieldName === '[]'){
-                        const arrayFieldName = fieldName.slice(0, -2);
-                        if(inputEl.checked) {
-                            if(formattedData[arrayFieldName]) formattedData[arrayFieldName].push(inputEl.value)
-                            else formattedData[arrayFieldName] = [inputEl.value];
-                        }
-                        else if(!formattedData[arrayFieldName]) formattedData[arrayFieldName] = [];
-                    }
+            const inputType = inputEl.getAttribute('type');
+            if(inputType === 'checkbox'){
+                if(inputEl.checked) {
+                    formattedData.push({
+                        'theme_issue_id': inputEl.value,
+                        'other_value': THEME_ISSUES_OTHER_VALUES_ID.includes(parseInt(inputEl.value))
+                                          ? (inputEl.parentElement.nextElementSibling as HTMLInputElement).value
+                                          : null
+                    });
                 }
-                else formattedData[fieldName] = inputEl.value || '';
             }
         }
     }
