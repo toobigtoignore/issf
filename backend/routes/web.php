@@ -97,6 +97,11 @@ Route::post('/guidelines/create', [SSFGuidelineController::class, 'create']);
 | DATA UPDATE ROUTES
 |--------------------------------------------------------------------------
 */
+Route::post('/issf_base/update/themeIssue/{issf_core_id}', [HelperController::class, 'update_theme_issues']);
+Route::post('/issf_base/update/externalLink/{issf_core_id}', [HelperController::class, 'update_external_link']);
+
+Route::post('/organization/update/details/{record:issf_core_id}', [SSFOrganizationController::class, 'update_details']);
+
 Route::post('/casestudy/update/basic/{record:issf_core_id}', [SSFCaseStudyController::class, 'update_basic']);
 Route::post('/casestudy/update/description/{record:issf_core_id}', [SSFCaseStudyController::class, 'update_description']);
 Route::post('/casestudy/update/solution/{record:issf_core_id}', [SSFCaseStudyController::class, 'update_solution']);

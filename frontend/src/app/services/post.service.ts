@@ -81,11 +81,21 @@ export class PostServices {
                     .subscribe(response => {
                         if(response.status_code == RESPONSE_CODES.HTTP_200_OK) {
                             this.commonServices.updateEmitter.emit({
-                                status_code: RESPONSE_CODES.HTTP_200_OK,
-                                message: 'Record updated successfully!!'
+                                status_code: response.status_code,
+                                message: response.message || 'Record updated successfully!!'
                             });
                         }
-                        else alert("Something went wrong while trying to update the record. Please try again. If the issue persists, please contact us.");
+                        else {
+                            if(!response.message){
+                                alert("Something went wrong while trying to update the record. Please try again. If the issue persists, please contact us.");
+                            }
+                            else{
+                                this.commonServices.updateEmitter.emit({
+                                    status_code: response.status_code,
+                                    message: response.message
+                                });
+                            }
+                        }
                     });
             }
             else {

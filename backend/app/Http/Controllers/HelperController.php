@@ -503,10 +503,13 @@ class HelperController extends Controller
         $economic = $ecological = $social = $governance = [];
         $selectedThemeIssues = SelectedThemeIssue::where('issf_core_id', $issf_core_id)->get();
         $categories = config('constants.THEME_ISSUES_CATEGORY');
-
         foreach($selectedThemeIssues as $sti){
             $value = $sti->theme_issue_values->label;
             $category = $sti->theme_issue_values->category->category;
+
+            if(strtolower($value) === 'other'){
+                $value = $sti->other_theme_issue;
+            }
 
             switch($category){
                 case $categories['ECONOMIC']: array_push($economic, $value); break;
@@ -537,6 +540,51 @@ class HelperController extends Controller
         return [
             'contributor_data' => $contributor_data,
             'editor_data' => $editor_data
+        ];
+    }
+
+
+    public static function update_external_link($issf_core_id){
+        $payload = request()->all();
+        $links = ExternalLink::where('issf_core_id', $issf_core_id);
+
+        if($links->count() === 0 && sizeof($payload) === 0){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'message' => 'All fields are empty.'
+            ];
+        }
+
+        $links->delete();
+
+        foreach($payload as $entry) {
+            ExternalLink::create([
+                'link_type' => $entry['link_type'],
+                'link_address' => $entry['link_address'],
+                'issf_core_id' => $issf_core_id
+            ]);
+        };
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+        ];
+    }
+
+
+    public static function update_theme_issues($issf_core_id){
+        $payload = request()->all();
+        $theme_issues = SelectedThemeIssue::where('issf_core_id', $issf_core_id)->delete();
+
+        foreach($payload as $entry) {
+            SelectedThemeIssue::create([
+                'theme_issue_value_id' => $entry['theme_issue_id'],
+                'other_theme_issue' => $entry['other_value'],
+                'issf_core_id' => $issf_core_id
+            ]);
+        };
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
         ];
     }
 }
