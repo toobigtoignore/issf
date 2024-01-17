@@ -104,14 +104,14 @@ export const BLUEJUSTICE_SSF_TYPE = {
 
 
 export const CHARACTERISTICS_LABELS = {
-    ecoDetailType: "Ecosystem detailed type(s):",
-    ecoTypes: "Ecosystem type(s):",
-    ssfGovModes: "Governance mode(s) in SSF:",
-    ssfKeyRules: "Key rules, regulations, instruments and measures used to manage SSF:",
-    mainGears: "Main gear type(s):",
-    ssfMarket: "SSF market and distribution channel(s):",
-    ssfTypes: "SSF type(s):",
-    ssfTerms: "Term(s) used to refer to SSF:"
+    ecoDetailType: "Ecosystem detailed type(s)",
+    ecoTypes: "Ecosystem type(s)",
+    ssfGovModes: "Governance mode(s) in SSF",
+    ssfKeyRules: "Key rules, regulations, instruments and measures used to manage SSF",
+    mainGears: "Main gear type(s)",
+    ssfMarket: "SSF market and distribution channel(s)",
+    ssfTypes: "SSF type(s)",
+    ssfTerms: "Term(s) used to refer to SSF"
 };
 
 

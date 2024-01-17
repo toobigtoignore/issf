@@ -49,6 +49,7 @@ Route::get('/issf-base/get-user/{user:id}', fn(UserProfile $user) => $user);
 Route::get('/issf-base/search/{title}/{record_type}/{contributor_ids}/{countries}/{startYear}/{endYear}', [SearchController::class, 'search']);
 Route::get('/issf-base/get-users-contributions/{contributor_id}', [HelperController::class, 'get_users_contributions']);
 Route::get('/issf-base/get-all-contributions', [HelperController::class, 'get_all_contributions']);
+Route::get('/issf-base/get-all-languages', [HelperController::class, 'get_languages']);
 
 
 /*
@@ -97,8 +98,13 @@ Route::post('/guidelines/create', [SSFGuidelineController::class, 'create']);
 | DATA UPDATE ROUTES
 |--------------------------------------------------------------------------
 */
-Route::post('/issf_base/update/themeIssue/{issf_core_id}', [HelperController::class, 'update_theme_issues']);
-Route::post('/issf_base/update/externalLink/{issf_core_id}', [HelperController::class, 'update_external_link']);
+Route::post('/issf-base/update/characteristics/{issf_core_id}', [HelperController::class, 'update_characteristics']);
+Route::post('/issf-base/update/species/{issf_core_id}', [HelperController::class, 'update_species']);
+Route::post('/issf-base/update/theme-issues/{issf_core_id}', [HelperController::class, 'update_theme_issues']);
+Route::post('/issf-base/update/external-links/{issf_core_id}', [HelperController::class, 'update_external_link']);
+
+Route::post('/sota/update/basic/{record:issf_core_id}', [SSFSotaController::class, 'update_basic']);
+Route::post('/sota/update/additional-details/{record:issf_core_id}', [SSFSotaController::class, 'update_additional_details']);
 
 Route::post('/organization/update/details/{record:issf_core_id}', [SSFOrganizationController::class, 'update_details']);
 
@@ -107,9 +113,9 @@ Route::post('/casestudy/update/description/{record:issf_core_id}', [SSFCaseStudy
 Route::post('/casestudy/update/solution/{record:issf_core_id}', [SSFCaseStudyController::class, 'update_solution']);
 
 Route::post('/bluejustice/update/basic/{record:issf_core_id}', [SSFBluejusticeController::class, 'update_basic']);
-Route::post('/bluejustice/update/filesInfo/{record:issf_core_id}', [SSFBluejusticeController::class, 'update_files_info']);
-Route::post('/bluejustice/update/generalInfo/{record:issf_core_id}', [SSFBluejusticeController::class, 'update_general_info']);
-Route::post('/bluejustice/update/socialIssues/{record:issf_core_id}', [SSFBluejusticeController::class, 'update_social_issues']);
+Route::post('/bluejustice/update/files-info/{record:issf_core_id}', [SSFBluejusticeController::class, 'update_files_info']);
+Route::post('/bluejustice/update/general-info/{record:issf_core_id}', [SSFBluejusticeController::class, 'update_general_info']);
+Route::post('/bluejustice/update/social-issues/{record:issf_core_id}', [SSFBluejusticeController::class, 'update_social_issues']);
 
 Route::post('/guidelines/update/{record:issf_core_id}', [SSFGuidelineController::class, 'update']);
 

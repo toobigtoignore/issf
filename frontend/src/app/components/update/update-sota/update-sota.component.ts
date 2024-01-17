@@ -92,8 +92,8 @@ export class UpdateSotaComponent implements OnInit {
 
 
     isPublicationOther(){
-        const titles = this.publicationTypes.map((p: SOTA_PUBLICATION_TYPES) => p.title)
-        if(titles.indexOf(this.record.publication_type) === -1) return true;
+        const publicationIds = this.publicationTypes.map((p: SOTA_PUBLICATION_TYPES) => p.value);
+        if(publicationIds.includes(this.record.publication_type_id)) return false;
         return false;
     }
 
@@ -119,6 +119,7 @@ export class UpdateSotaComponent implements OnInit {
             formElement: form
         });
         const { data, errorMsg } = formatted;
+
         if(errorMsg) {
             this.commonServices.updateEmitter.emit({
                 status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -127,6 +128,7 @@ export class UpdateSotaComponent implements OnInit {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
+
         await this.postServices.update(form, data, apiUrl);
     }
 

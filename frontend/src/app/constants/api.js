@@ -5,18 +5,17 @@ const baseurl = environment.API_URL;
 
 
 // AUTHORIZATION API
+export const changePasswordUrl = `${baseurl}/auth/users/set_password/`;
 export const checkLoginStatusUrl = (userId, jti) => `${baseurl}/authentication/login-status/${userId}/${jti}`;
 export const forgotPasswordUrl = `${baseurl}/authentication/forgot-password/`;
 export const forgotUsernameUrl = `${baseurl}/authentication/get-username/`;
 export const loginUrl = `${baseurl}/authentication/login`;
+export const logoutUrl = `${baseurl}/user/logout`;
+export const refreshTokenUrl = `${baseurl}/user/token/refresh`;
 export const resendActivationLinkUrl = `${baseurl}/authentication/resend-activation-link/`;
 export const resetPasswordUrl = `${baseurl}/authentication/reset-password`;
 export const signupUrl = `${baseurl}/authentication/signup`;
-
-export const logoutUrl = `${baseurl}/user/logout`;
 export const usernameEmailValidityUrl = (username, email) => `${baseurl}/user/doesUserExist/${username}/${email}`;
-export const changePasswordUrl = `${baseurl}/auth/users/set_password/`;
-export const refreshTokenUrl = `${baseurl}/user/token/refresh`;
 
 
 // ISSF BASE API
@@ -26,8 +25,9 @@ export const getAllContributorsUrl = `${baseurl}/issf-base/get-all-contributors`
 export const getAllCountriesUrl = `${baseurl}/issf-base/get-all-countries`;
 export const getContributionsByUserIdUrl = userId => `${baseurl}/issf-base/get-users-contributions/${userId}`;
 export const getCountryNameFromId = country_id => `${baseurl}/issf-base/get-country-name-from-id/${country_id}`;
-export const getRecentContributionsUrl = `${baseurl}/issf-base/get-recent-contributions`;
+export const getLanguagesUrl = `${baseurl}/issf-base/get-all-languages`;
 export const getPersonLinkForUserUrl = userId => `${baseurl}/issf-base/get-person-link-for-user/${userId}`;
+export const getRecentContributionsUrl = `${baseurl}/issf-base/get-recent-contributions`;
 export const getRecordsByCountryUrl = `${baseurl}/issf-base/get-records-by-country`;
 export const getSearchResultsUrl = (title, panels, contributor_ids, countries, startYear, endYear) => `${baseurl}/issf-base/search/${title}/${panels}/${contributor_ids}/${countries}/${startYear}/${endYear}`;
 export const getUserUrl = userId => `${baseurl}/issf-base/get-user/${userId}`;
@@ -55,7 +55,6 @@ export const createBluejusticeRecordUrl = `${baseurl}/bluejustice/create`;
 export const createGuidelinesRecordUrl = `${baseurl}/guidelines/create`;
 
 
-export const getLanguagesUrl = `${baseurl}/issf_base/getLanguages`;
 export const getLatestRecordUrl = `${baseurl}/issf_base/getLatestRecord`;
 export const getAllOrganizationNamesUrl = `${baseurl}/organization/getNames`;
 
@@ -63,15 +62,10 @@ export const getAllOrganizationNamesUrl = `${baseurl}/organization/getNames`;
 // UPDATE RECORD API
 export const updateUserUrl = `${baseurl}/user/update`;
 
-export const updateCharacteristicsUrl = recordId =>`${baseurl}/issf_base/update/characteristics/${recordId}`;
 export const updateGeoscopeUrl = recordId =>`${baseurl}/issf_base/update/geoScope/${recordId}`;
-export const updateSpeciesUrl = recordId =>`${baseurl}/issf_base/update/species/${recordId}`;
 
 export const updateWhoBasicUrl = recordId =>`${baseurl}/who/update/details/${recordId}`;
 export const updateWhoResearcherUrl = recordId =>`${baseurl}/who/update/researcher/${recordId}`;
-
-export const updateSotaBasicUrl = recordId =>`${baseurl}/sota/update/basic/${recordId}`;
-export const updateSotaAdditionalUrl = recordId =>`${baseurl}/sota/update/additionalDetails/${recordId}`;
 
 export const updateProfileBasicUrl = recordId =>`${baseurl}/profile/update/details/${recordId}`;
 export const updateProfileOrganizationUrl = recordId =>`${baseurl}/profile/update/organizations/${recordId}`;
@@ -80,17 +74,22 @@ export const updateProfilePercentage = recordId =>`${baseurl}/profile/update/per
 
 
 // new apis
-export const updateThemeUrl = recordId =>`${baseurl}/issf_base/update/themeIssue/${recordId}`;
-export const updateExternalLinksUrl = recordId =>`${baseurl}/issf_base/update/externalLink/${recordId}`;
+export const updateCharacteristicsUrl = recordId =>`${baseurl}/issf-base/update/characteristics/${recordId}`;
+export const updateSpeciesUrl = recordId =>`${baseurl}/issf-base/update/species/${recordId}`;
+export const updateThemeUrl = recordId =>`${baseurl}/issf-base/update/theme-issues/${recordId}`;
+export const updateExternalLinksUrl = recordId =>`${baseurl}/issf-base/update/external-links/${recordId}`;
 export const updateOrganizationUrl = recordId =>`${baseurl}/organization/update/details/${recordId}`;
+
+export const updateSotaBasicUrl = recordId =>`${baseurl}/sota/update/basic/${recordId}`;
+export const updateSotaAdditionalUrl = recordId =>`${baseurl}/sota/update/additional-details/${recordId}`;
 
 export const updateCaseStudiesBasicUrl = recordId =>`${baseurl}/casestudy/update/basic/${recordId}`;
 export const updateCaseStudiesDescriptionUrl = recordId =>`${baseurl}/casestudy/update/description/${recordId}`;
 export const updateCaseStudiesSolutionUrl = recordId =>`${baseurl}/casestudy/update/solution/${recordId}`;
 
 export const updateBluejusticeBasicUrl = recordId =>`${baseurl}/bluejustice/update/basic/${recordId}`;
-export const updateBluejusticeFilesUrl = recordId =>`${baseurl}/bluejustice/update/filesInfo/${recordId}`;
-export const updateBluejusticeGeneralInfoUrl = recordId =>`${baseurl}/bluejustice/update/generalInfo/${recordId}`;
-export const updateBluejusticeSocialIssuesUrl = recordId =>`${baseurl}/bluejustice/update/socialIssues/${recordId}`;
+export const updateBluejusticeFilesUrl = recordId =>`${baseurl}/bluejustice/update/files-info/${recordId}`;
+export const updateBluejusticeGeneralInfoUrl = recordId =>`${baseurl}/bluejustice/update/general-info/${recordId}`;
+export const updateBluejusticeSocialIssuesUrl = recordId =>`${baseurl}/bluejustice/update/social-issues/${recordId}`;
 
 export const updateGuidelinesRecordUrl = recordId =>`${baseurl}/guidelines/update/${recordId}`;

@@ -228,12 +228,7 @@ export const formatSpecies = (inputElementsList: Array<HTMLFormElement>) => {
             }
         }
     }
-    if(formattedData.length === 0) {
-        return {
-            data: null,
-            errorMsg: 'All the fields are empty!'
-        }
-    }
+
     return {
         data: formattedData,
         errorMsg: null

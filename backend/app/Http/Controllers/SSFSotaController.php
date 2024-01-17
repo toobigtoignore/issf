@@ -97,4 +97,79 @@ class SSFSotaController extends Controller
             'external_links' => HelperController::get_external_links($sota->issf_core_id)
         ];
     }
+
+
+    public function update_basic(SSFSota $record){
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'author_names' => ['required', 'string'],
+                'publication_type_id' => ['required', 'integer', 'in:' . implode(',', array_keys(config('constants.SOTA_PUBLICATION_TYPES')))],
+                'other_publication_type' => ['required_if:publication_type_id,9', 'string', 'max:100',  'nullable'],
+                'level1_title' => ['required', 'string'],
+                'level2_title' => ['required', 'string'],
+                'year' => ['required', 'integer', 'max:' . date("Y")]
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $formatted_payload = [];
+        foreach(array_keys($payload) as $key) $formatted_payload[$key] = $payload[$key];
+        $updated = $record->update($formatted_payload);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
+
+
+    public function update_additional_details(SSFSota $record){
+        $payload = request()->all();
+        $validator = Validator::make(
+            $payload,
+            [
+                'demographics_other_text' => ['required_if:demographics_other,' . config("constants.DEFINED_ANSWERS.YES"), 'string', 'nullable'],
+                'ssf_defined' => [ 'in:,' . implode(',', array_values(config('constants.DEFINED_ANSWERS')))],
+                'ssf_definition' => ['required_if:ssf_defined,' . config("constants.DEFINED_ANSWERS.YES")]
+            ]
+        );
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $formatted_payload = [];
+        foreach(array_keys($payload) as $key) $formatted_payload[$key] = $payload[$key];
+        $updated = $record->update($formatted_payload);
+
+        if($updated){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+            ];
+        }
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
+        ];
+    }
 }
