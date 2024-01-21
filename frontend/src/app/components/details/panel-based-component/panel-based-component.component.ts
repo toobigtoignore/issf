@@ -17,7 +17,8 @@ export class PanelBasedComponentComponent implements OnInit {
     panelsList: {};
     showBluejusticePanel: boolean;
     showProfilePanel: boolean;
-    imageUrl: string = environment.BLUEJUSTICE_IMAGE_URL
+    bluejusticeImageUrl: string = environment.BLUEJUSTICE_IMAGE_URL;
+    ssfProfileImageUrl: string = environment.SSF_PROFILE_IMAGE_URL;
 
 
     constructor() { }
@@ -25,7 +26,7 @@ export class PanelBasedComponentComponent implements OnInit {
 
     ngOnInit(): void {
         this.panelsList = PANEL_CODES;
-        this.showBluejusticePanel = (this.panel === this.panelsList['BLUEJUSTICE']) && (this.data.img_url || this.data.bluejustice_pdf);
-        this.showProfilePanel = this.panel == this.panelsList['PROFILE'];
+        this.showBluejusticePanel = (this.panel === this.panelsList['BLUEJUSTICE']) && (this.data.uploaded_img || this.data.bluejustice_pdf);
+        this.showProfilePanel = (this.panel == this.panelsList['PROFILE']) && (this.data.img && this.data.img !== '');
     }
 }

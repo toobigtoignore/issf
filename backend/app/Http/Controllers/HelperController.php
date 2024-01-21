@@ -456,18 +456,28 @@ class HelperController extends Controller
     }
 
 
+    public static function get_all_organizations(){
+        return SSFOrganization::without('core', 'organization_country')->get(['issf_core_id', 'organization_name']);
+    }
+
+
     public static function get_attributes($issf_core_id){
         $categories = $values = [];
         $attributes = SelectedAttribute::where('issf_core_id', $issf_core_id)->get();
 
         foreach($attributes as $attr) {
             $attr_category = $attr->category->attribute_label;
-            $attr_value = $attr->value;
+            $attr_value = [
+                'value' => $attr->value,
+                'unit' => null,
+                'additional' => null
+            ];
 
-            if($attr->other_value) $attr_value = $attr->other_value;
-            else if($attr->label) $attr_value = $attr->label->value_label;
+            if($attr->other_value) $attr_value['value'] = $attr->other_value;
+            else if($attr->label) $attr_value['value'] = $attr->label->value_label;
 
-            if($attr->category->units_label) $attr_value .= ' ' . $attr->category->units_label;
+            if($attr->category->units_label) $attr_value['unit'] = $attr->category->units_label;
+            if($attr->additional) $attr_value['additional'] = $attr->additional;
 
             $category_index = array_search($attr_category, $categories);
 
@@ -561,6 +571,7 @@ class HelperController extends Controller
                 'attribute_value_id' => $entry['attribute_value_id'],
                 'other_value' => $entry['other_value'],
                 'value' => $entry['value'],
+                'additional' => $entry['additional'],
                 'issf_core_id' => $issf_core_id
             ]);
         };

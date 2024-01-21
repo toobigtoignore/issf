@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { 
+import {
+    CHARACTERISTICS_LABELS,
     CHARACTERISTICS_TYPES,
     CHARACTERISTICS_ECOTYPES,
     CHARACTERISTICS_ECOTYPES_DETAILS,
@@ -31,7 +32,7 @@ import {
     CHARACTERISTICS_CHILDREN_POST_HARVEST_PERCENT,
     CHARACTERISTICS_GDP
 } from '../../../../constants/constants';
-import { getOtherValue, objectsToArray, toggleSection } from '../../../../helpers/helpers';
+import { objectsToArray, toggleSection } from '../../../../helpers/helpers';
 
 
 @Component({
@@ -43,9 +44,9 @@ import { getOtherValue, objectsToArray, toggleSection } from '../../../../helper
 
 export class ProfileCharacteristicsComponent implements OnInit {
     @ViewChild('characteristicsHolder', {static: true}) characteristicsHolder: ElementRef;
-    @Input() characteristicsLabels: any;
-    @Input() characteristicsValues: any;
-    
+    @Input() characteristics: any;
+
+    characteristicsLabels: CHARACTERISTICS_LABELS = CHARACTERISTICS_LABELS;
     characteristicsTypes: CHARACTERISTICS_TYPES = CHARACTERISTICS_TYPES;
     characteristicsEcoTypes: CHARACTERISTICS_ECOTYPES = CHARACTERISTICS_ECOTYPES;
     characteristicsEcoTypesDetails: CHARACTERISTICS_ECOTYPES_DETAILS = CHARACTERISTICS_ECOTYPES_DETAILS;
@@ -95,82 +96,42 @@ export class ProfileCharacteristicsComponent implements OnInit {
     characteristicsRegulationsOptions = Object.keys(this.characteristicsRegulations.options);
     characteristicsMajorConcernsOptions = Object.keys(this.characteristicsMajorConcerns.options);
 
-    
+
     constructor() { }
 
-    
+
     ngOnInit(): void { }
 
 
-    fetchUnitValue(title: string, label: string): string{
-        const index = this.characteristicsLabels.indexOf(label);
-        const fetchedCharacteristics = this.characteristicsValues[index];
-        for(const fc of fetchedCharacteristics){
-            const splittedValue = fc.split('|');
-            if(splittedValue[0] === title){
-                if(splittedValue[1]) return splittedValue[1];
-                else return ''
-            }
-        }
+    findTextualValue(key: string): string{
+        const label = this.characteristicsLabels[key];
+        const index = this.characteristics.categories.indexOf(label);
+        if(index === -1) return '';
+        const value = this.characteristics.values[index][0];
+        return value.length ? value : '';
     }
 
 
-    findOtherValue(characteristicsOptions: any[], label: string): string|null{
-        let otherValue: string|null = null;
-        const optionValues: string[] = [];
-        const index = this.characteristicsLabels.indexOf(label);
-        const fetchedCharacteristics = this.characteristicsValues[index];
-        characteristicsOptions.map(option => optionValues.push(option.title));
-        for(const fc of fetchedCharacteristics){
-            const characteristicTitle = fc.split('|')[0];
-            if(!this.inArray(characteristicTitle, optionValues)) {
-                otherValue = characteristicTitle;
-                break;
-            }
-        }
-        return otherValue;
+    getAdditionalValue(value: string, lookUpKey: string): string {
+      const indexOfLookUpArr = this.characteristics.categories.indexOf(this.characteristicsLabels[lookUpKey]);
+      if(indexOfLookUpArr === -1) return '';
+
+      const valueArr = this.characteristics.values[indexOfLookUpArr];
+      return valueArr.filter(item => item.value === value)[0]?.additional || '';
     }
 
 
-    fetchOtherUnitValue(characteristicsOptions: any[], label: string): string{
-        let otherUnitValue: string = '';
-        const optionValues: string[] = [];
-        const index = this.characteristicsLabels.indexOf(label);
-        const fetchedCharacteristics = this.characteristicsValues[index];
-        characteristicsOptions.map(option => optionValues.push(option.title));
-        for(const fc of fetchedCharacteristics){
-            const characteristicTitle = fc.split('|')[0];
-            if(!this.inArray(characteristicTitle, optionValues)) {
-                otherUnitValue = fc.split('|')[1];
-                break;
-            }
-        }
-        return otherUnitValue;
+    getOtherValue(types: Object, lookUpKey: string): string|null {
+        const lookUpArr: string[] = objectsToArray(types['options'], 'title');
+        const indexOfLookUpArr = this.characteristics.categories.indexOf(this.characteristicsLabels[lookUpKey]);
+        if(indexOfLookUpArr === -1) return null;
+
+        const valueArr = this.characteristics.values[indexOfLookUpArr].map(item => item.value);
+        const otherValues = valueArr.filter((value: string) => lookUpArr.indexOf(value) === -1);
+        if(otherValues.length > 0) return otherValues[0];
+        return null;
     }
 
-
-    findTextualValue(label: string): string{
-        const index = this.characteristicsLabels.indexOf(label);
-        const values = this.characteristicsValues[index];
-        if(values.length > 0){
-            const checkForPipe = values[0].split('|');
-            if(checkForPipe[1]) return checkForPipe[1];
-            else if(checkForPipe[0]) return checkForPipe[0];   
-        }
-        return '';
-    }
-
-
-    getAdditionalValue(value: string): string {
-        const splittedValue = value.split("|");
-        if(splittedValue[1]) splittedValue[1];
-        return splittedValue[0];
-    }
-
-
-    getOtherValue(valueArr: string[], lookUpArr: string[]): string|null {
-        return getOtherValue(valueArr, lookUpArr);
-    }
 
 
     inArray(key: string, arr: string[]): boolean {
@@ -184,14 +145,12 @@ export class ProfileCharacteristicsComponent implements OnInit {
     }
 
 
-    selectionCheck(title: string, characteristic: string): boolean {
-        const index = this.characteristicsLabels.indexOf(characteristic);
-        const fetchedCharacteristics: string[] = [];
-        this.characteristicsValues[index].map((sc:string) => {
-            fetchedCharacteristics.push(sc.split('|')[0])
-        });
-        if(this.inArray(title, fetchedCharacteristics)) return true;
-        return false;
+    shouldCheckItem(item: string, key: string): boolean {
+        const lookUpKey = this.characteristicsLabels[key];
+        const indexOfLookUpArr = this.characteristics.categories.indexOf(lookUpKey);
+        if(indexOfLookUpArr === -1) return false;
+        const lookUpArr = this.characteristics.values[indexOfLookUpArr].map(item => item.value);
+        return lookUpArr.includes(item);
     }
 
 

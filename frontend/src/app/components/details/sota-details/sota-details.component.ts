@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DETAILS_ACCORDIONS_LABELS, THEME_ISSUES_CATEGORIES } from '../../../constants/constants';
 import { FormatterServices } from '../../../services/formatter.service';
+import { adjustValueWithUnit } from '../../../helpers/helpers';
 
 
 @Component({
@@ -25,6 +26,11 @@ export class SotaDetailsComponent implements OnInit {
           this.accordionList = DETAILS_ACCORDIONS_LABELS.SOTA;
           this.sotaData = this.record;
           this.theme_issues_categories = THEME_ISSUES_CATEGORIES;
+      }
+
+
+      adjustValueWithUnit(item: {value: string, unit: string|null, additional: number|null}): string {
+          return adjustValueWithUnit(item);
       }
 
 

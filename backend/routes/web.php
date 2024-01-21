@@ -50,6 +50,7 @@ Route::get('/issf-base/search/{title}/{record_type}/{contributor_ids}/{countries
 Route::get('/issf-base/get-users-contributions/{contributor_id}', [HelperController::class, 'get_users_contributions']);
 Route::get('/issf-base/get-all-contributions', [HelperController::class, 'get_all_contributions']);
 Route::get('/issf-base/get-all-languages', [HelperController::class, 'get_languages']);
+Route::get('/issf-base/get-all-organizations', [HelperController::class, 'get_all_organizations']);
 
 
 /*
@@ -102,6 +103,10 @@ Route::post('/issf-base/update/characteristics/{issf_core_id}', [HelperControlle
 Route::post('/issf-base/update/species/{issf_core_id}', [HelperController::class, 'update_species']);
 Route::post('/issf-base/update/theme-issues/{issf_core_id}', [HelperController::class, 'update_theme_issues']);
 Route::post('/issf-base/update/external-links/{issf_core_id}', [HelperController::class, 'update_external_link']);
+
+Route::post('/profile/update/details/{record:issf_core_id}', [SSFProfileController::class, 'update_details']);
+Route::post('/profile/update/organizations/{record:issf_core_id}', [SSFProfileController::class, 'update_organizations']);
+Route::post('/profile/update/sources/{record:issf_core_id}', [SSFProfileController::class, 'update_sources']);
 
 Route::post('/sota/update/basic/{record:issf_core_id}', [SSFSotaController::class, 'update_basic']);
 Route::post('/sota/update/additional-details/{record:issf_core_id}', [SSFSotaController::class, 'update_additional_details']);

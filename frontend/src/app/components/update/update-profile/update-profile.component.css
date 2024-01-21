@@ -11,6 +11,34 @@
 }
 
 
+.update-profile .image-container {
+    position: relative;
+    max-width: 200px;
+    max-height: 180px;
+    margin-top: 20px;
+}
+
+
+.update-profile .image-container img {
+    width: 100%;
+    height: auto;
+}
+
+
+.update-profile .image-container span {
+    font-size: 12px;
+    font-weight: 600;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    background: #ffd132;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
 .update-profile .profile-organization-type-trigger {
     overflow: hidden;
     margin-bottom: 10px;
@@ -22,7 +50,7 @@
 }
 
 
-.update-profile .profile-organization-type-trigger p {   
+.update-profile .profile-organization-type-trigger p {
     float: left;
     display: flex;
     align-items: center;

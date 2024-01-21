@@ -92,7 +92,7 @@
                 <th [innerHTML]="category"></th>
                 <td>
                     <ul>
-                        <li *ngFor="let value of sotaData.attributes.values[i]" [innerHTML]="value"></li>
+                        <li *ngFor="let values of sotaData.attributes.values[i]" [innerHTML]="adjustValueWithUnit(values)"></li>
                     </ul>
                 </td>
             </tr>

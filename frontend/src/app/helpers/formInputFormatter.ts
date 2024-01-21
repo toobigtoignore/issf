@@ -134,28 +134,31 @@ export const formatExternalLinks = (inputElementsList: Array<HTMLFormElement>) =
 
 
 export const formatCharacteristics = (inputElementsList: Array<HTMLFormElement>) => {
-    const formattedData: { attribute_id: Number|null, attribute_value_id: Number|null, other_value: String, value: String }[] = [];
+    const formattedData: { attribute_id: number|null, attribute_value_id: number|null, other_value: string, value: string }[] = [];
     for(const inputEl of inputElementsList){
         let characteristic: {
-            attribute_id: Number|null,
-            attribute_value_id: Number|null,
-            other_value: String,
-            value: String
+            attribute_id: number|null,
+            attribute_value_id: number|null,
+            other_value: string,
+            value: string,
+            additional: string
         } = {
-            attribute_id: null,
+            attribute_id: inputEl.getAttribute('attrId') as any as number,
             attribute_value_id: null,
             other_value: '',
-            value: ''
+            value: '',
+            additional: ''
         };
 
         const inputType = inputEl.getAttribute('type');
+
         if(inputType === 'checkbox' && inputEl.checked){
-            characteristic['attribute_id'] = inputEl.getAttribute('attrId') as any as Number;
-            characteristic['attribute_value_id'] = inputEl.value as Number;
-            characteristic['other_value'] = '';
-            characteristic['value'] = '';
-            const otherInputField = inputEl.parentElement.nextElementSibling as HTMLInputElement;
-            if(otherInputField && otherInputField.classList.contains('does-toggle')){
+            characteristic['attribute_value_id'] = inputEl.value as number;
+
+            const otherInputField = inputEl.closest('[hasOtherValue]')?.querySelector('[otherValue]') as HTMLInputElement;
+            const additionalField = inputEl.closest('[hasAdditionalValue]')?.querySelector('[additionalField]') as HTMLInputElement;
+
+            if(inputEl.hasAttribute('otherValueTrigger') && otherInputField){
                 characteristic['other_value'] = otherInputField.value;
                 if(characteristic['other_value'].trim() === ''){
                     otherInputField.style.border = '2px solid red';
@@ -166,6 +169,17 @@ export const formatCharacteristics = (inputElementsList: Array<HTMLFormElement>)
                 }
                 else otherInputField.style.border = '1px solid #ccc';
             }
+
+            if(additionalField){
+                characteristic['additional'] = additionalField.value;
+            }
+
+            formattedData.push(characteristic);
+        }
+
+
+        else if(inputType === 'text' && inputEl.hasAttribute('textOnly')){
+            characteristic['value'] = inputEl.value || '';
             formattedData.push(characteristic);
         }
     }
@@ -413,7 +427,7 @@ export const profileFormsFormatter = (formType: string, formElement: ElementRef)
     switch(formType){
         case INITIAL_CONTRIBUTION: return formatProfileInitialInfo(inputElementsList);
         case profileTabLabels[0]: return formatProfileBasicInfo(inputElementsList);
-        case profileTabLabels[1]: return formatProfileCharacteristics(inputElementsList);
+        case profileTabLabels[1]: return formatCharacteristics(inputElementsList);
         case profileTabLabels[2]: return formatSpecies(inputElementsList);
         case profileTabLabels[3]: return formatProfileOrganization(formElement);
         case profileTabLabels[4]: return formatExternalLinks(inputElementsList);
@@ -429,15 +443,25 @@ export const formatProfileInitialInfo = (inputElementsList: Array<HTMLFormElemen
 
 
 export const formatProfileBasicInfo = (inputElementsList: Array<HTMLFormElement>) => {
-    const formattedData: Object = {};
+    const formData = new FormData();
     for(const inputEl of inputElementsList){
         if(inputEl.getAttribute('name')){
             const fieldName = inputEl.getAttribute('name');
-            if(inputEl.hasAttribute('disabled')) formattedData[fieldName] = '';
-            else formattedData[fieldName] = inputEl.value;
+            const fieldType = inputEl.getAttribute('type');
+
+            if(inputEl.hasAttribute('disabled')) formData.append(fieldName, '');
+            else if(fieldType === 'file'){
+                if(inputEl.files[0]){
+                    const file = inputEl.files[0];
+                    const fileName = file ? file.name : '';
+                    formData.append(fieldName, file, fileName);
+                }
+                else formData.append(fieldName, '');
+            }
+            else formData.append(fieldName, inputEl.value);
         }
     }
-    return { data: formattedData, errorMsg: null };
+    return { data: formData, errorMsg: null };
 }
 
 

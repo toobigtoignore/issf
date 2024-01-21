@@ -31,6 +31,7 @@ export const getRecentContributionsUrl = `${baseurl}/issf-base/get-recent-contri
 export const getRecordsByCountryUrl = `${baseurl}/issf-base/get-records-by-country`;
 export const getSearchResultsUrl = (title, panels, contributor_ids, countries, startYear, endYear) => `${baseurl}/issf-base/search/${title}/${panels}/${contributor_ids}/${countries}/${startYear}/${endYear}`;
 export const getUserUrl = userId => `${baseurl}/issf-base/get-user/${userId}`;
+export const getAllOrganizationsUrl = `${baseurl}/issf-base/get-all-organizations`;
 
 
 // GET RECORD DETAILS URL
@@ -56,7 +57,6 @@ export const createGuidelinesRecordUrl = `${baseurl}/guidelines/create`;
 
 
 export const getLatestRecordUrl = `${baseurl}/issf_base/getLatestRecord`;
-export const getAllOrganizationNamesUrl = `${baseurl}/organization/getNames`;
 
 
 // UPDATE RECORD API
@@ -67,11 +67,6 @@ export const updateGeoscopeUrl = recordId =>`${baseurl}/issf_base/update/geoScop
 export const updateWhoBasicUrl = recordId =>`${baseurl}/who/update/details/${recordId}`;
 export const updateWhoResearcherUrl = recordId =>`${baseurl}/who/update/researcher/${recordId}`;
 
-export const updateProfileBasicUrl = recordId =>`${baseurl}/profile/update/details/${recordId}`;
-export const updateProfileOrganizationUrl = recordId =>`${baseurl}/profile/update/organizations/${recordId}`;
-export const updateProfileSourcesCommentsUrl = recordId =>`${baseurl}/profile/update/sources/${recordId}`;
-export const updateProfilePercentage = recordId =>`${baseurl}/profile/update/percent-completed/${recordId}`;
-
 
 // new apis
 export const updateCharacteristicsUrl = recordId =>`${baseurl}/issf-base/update/characteristics/${recordId}`;
@@ -79,6 +74,11 @@ export const updateSpeciesUrl = recordId =>`${baseurl}/issf-base/update/species/
 export const updateThemeUrl = recordId =>`${baseurl}/issf-base/update/theme-issues/${recordId}`;
 export const updateExternalLinksUrl = recordId =>`${baseurl}/issf-base/update/external-links/${recordId}`;
 export const updateOrganizationUrl = recordId =>`${baseurl}/organization/update/details/${recordId}`;
+
+export const updateProfileBasicUrl = recordId =>`${baseurl}/profile/update/details/${recordId}`;
+export const updateProfileOrganizationUrl = recordId =>`${baseurl}/profile/update/organizations/${recordId}`;
+export const updateProfileSourcesCommentsUrl = recordId =>`${baseurl}/profile/update/sources/${recordId}`;
+export const updateProfilePercentage = recordId =>`${baseurl}/profile/update/percent-completed/${recordId}`;
 
 export const updateSotaBasicUrl = recordId =>`${baseurl}/sota/update/basic/${recordId}`;
 export const updateSotaAdditionalUrl = recordId =>`${baseurl}/sota/update/additional-details/${recordId}`;

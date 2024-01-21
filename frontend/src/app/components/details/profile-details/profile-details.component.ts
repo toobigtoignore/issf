@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DETAILS_ACCORDIONS_LABELS, DEFINITE_ANS } from '../../../constants/constants';
 import { FormatterServices } from '../../../services/formatter.service';
+import { adjustValueWithUnit } from '../../../helpers/helpers';
 
 
 @Component({
@@ -25,6 +26,11 @@ export class ProfileDetailsComponent implements OnInit {
         this.accordionList = DETAILS_ACCORDIONS_LABELS.PROFILE;
         this.definiteAns = DEFINITE_ANS;
         this.profileData = this.record;
+    }
+
+
+    adjustValueWithUnit(item: {value: string, unit: string|null, additional: number|null}): string {
+        return adjustValueWithUnit(item);
     }
 
 

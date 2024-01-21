@@ -34,6 +34,19 @@
                 <th>Contribution date</th>
                 <td [innerHTML]="getFormattedDate(profileData.core.contribution_date, '-')"></td>
             </tr>
+
+            <tr *ngIf="profileData.url && profileData.url.trim() !== ''">
+                <th>Relevant links</th>
+                <td>
+                    <ul>
+                        <ng-container *ngFor="let url of profileData.url.split('\n')">
+                            <li *ngIf="url.trim() !== ''">
+                                <a target="_blank" href="url" [innerHTML]="url"></a>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </td>
+            </tr>
         </table>
     </div>
 
@@ -44,7 +57,7 @@
                 <th [innerHTML]="category"></th>
                 <td>
                     <ul>
-                        <li *ngFor="let value of profileData.attributes.values[i]" [innerHTML]="value"></li>
+                        <li *ngFor="let values of profileData.attributes.values[i]" [innerHTML]="adjustValueWithUnit(values)"></li>
                     </ul>
                 </td>
             </tr>
