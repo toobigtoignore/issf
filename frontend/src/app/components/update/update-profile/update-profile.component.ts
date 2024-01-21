@@ -6,6 +6,7 @@ import { AuthServices } from '../../../services/auth.service';
 import { CommonServices } from '../../../services/common.service';
 import { PostServices } from '../../../services/post.service';
 import {
+    DEFINITE_ANS,
     DETAILS_ACCORDIONS_LABELS,
     GS_OPTIONS,
     PANEL_CODES,
@@ -13,7 +14,7 @@ import {
     RESPONSE_CODES
 } from '../../../constants/constants';
 import {
-    getAllOrganizationNamesUrl,
+    getAllOrganizationsUrl,
     getProfileRecordUrl,
     updateCharacteristicsUrl,
     updateProfileBasicUrl,
@@ -23,7 +24,14 @@ import {
     updateSpeciesUrl,
     updateProfileSourcesCommentsUrl
 } from '../../../constants/api';
-import { SPECIES_LINKS_TYPES } from '../../../constants/constants';
+import {
+    KEEP_IMAGE_KEY,
+    MAX_FILE_SIZE,
+    REMOVE_IMAGE_KEY,
+    SPECIES_LINKS_TYPES,
+    UPLOAD_IMAGE_KEY
+} from '../../../constants/constants';
+import { environment } from '../../../../environments/environment';
 import { getYears, toggleOnSpecificValue } from '../../../helpers/helpers';
 import { Subscription } from 'rxjs';
 
@@ -38,6 +46,9 @@ import { Subscription } from 'rxjs';
 export class UpdateProfileComponent implements OnInit, AfterViewInit {
     @ViewChild('basicForm') basicForm: ElementRef;
     @ViewChild('characteristicsForm') characteristicsForm: ElementRef;
+    @ViewChild('imageAction') imageAction: ElementRef;
+    @ViewChild('imageInput') imageInput: ElementRef;
+    @ViewChild('previewImage') previewImage: ElementRef;
     @ViewChild('speciesForm') speciesForm: ElementRef;
     @ViewChild('profileOrganizationForm') profileOrganizationForm: ElementRef;
     @ViewChild('profileOrganizationSection') profileOrganizationSection: ElementRef;
@@ -51,11 +62,18 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
     @Input() record: any;
     @Input() recordId: number;
 
+    definiteAns: DEFINITE_ANS = DEFINITE_ANS;
+    definiteValues: string[];
+    fileTooBigError: boolean = false;
     gsOptions: GS_OPTIONS;
+    image: File;
+    imageActionKey: string = KEEP_IMAGE_KEY;
+    imageUrl: string = environment.SSF_PROFILE_IMAGE_URL;
     profileOrganizations: any;
     organizationList: string[];
     organizationTypes: string[];
     initialProfileOrganizationSection: any;
+    showImage: boolean = false;
     species_link_types: SPECIES_LINKS_TYPES;
     tabLabels: string[];
     updateSubscription: Subscription;
@@ -79,16 +97,24 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
 
 
     async ngOnInit(): Promise<void> {
+        this.definiteValues = Object.values(this.definiteAns);
         this.gsOptions = Object.values(GS_OPTIONS);
         this.tabLabels = Array.from(DETAILS_ACCORDIONS_LABELS['PROFILE']);
         this.species_link_types = SPECIES_LINKS_TYPES;
-        this.years = getYears(1990);
+        this.years = getYears();
         this.organizationTypes = ORGANIZATION_TYPES;
         this.profileOrganizations = this.record.organizations;
         if(this.profileOrganizations.length === 0){
-            this.profileOrganizations = [['','','','','']];
+            this.profileOrganizations = [{
+                enlisted: true,
+                name: null,
+                type: null,
+                other: null,
+                geoscope: null
+            }];
         }
-        this.organizationList = await get(getAllOrganizationNamesUrl);
+        this.organizationList = await get(getAllOrganizationsUrl);
+        this.showImage = this.record.img !== null;
     }
 
 
@@ -102,43 +128,43 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
 
 
     calculateProfilePercentage(){
-        const excludeFields = [ "characteristics_label_list", "characteristics_value_list", "contributor_id", "contributor_name", "contributor_email", "contributor_affiliation", "contributor_country", "contribution_date", "who_link", "gs_region", "gs_local", "gs_subnation", "gs_national", "gs_global_notspecific" ];
+        // const excludeFields = [ "characteristics_label_list", "characteristics_value_list", "contributor_id", "contributor_name", "contributor_email", "contributor_affiliation", "contributor_country", "contribution_date", "who_link", "gs_region", "gs_local", "gs_subnation", "gs_national", "gs_global_notspecific" ];
 
-        get(getProfileRecordUrl(this.recordId)).then(async (data: any) => {
-            let fieldsFilled = 0;
-            let totalFields = 0;
-            const characteristicsKeys = Object.keys(data.characteristics_label_list);
-            const fields = Object.keys(data);
+        // get(getProfileRecordUrl(this.recordId)).then(async (data: any) => {
+        //     let fieldsFilled = 0;
+        //     let totalFields = 0;
+        //     const characteristicsKeys = Object.keys(data.characteristics_label_list);
+        //     const fields = Object.keys(data);
 
-            for(const field of fields){
-                if(excludeFields.indexOf(field) === -1){
-                    totalFields = totalFields + 1;
-                    if(data[field]?.toString().length > 0){
-                        fieldsFilled = fieldsFilled + 1;
-                    }
-                }
-            }
+        //     for(const field of fields){
+        //         if(excludeFields.indexOf(field) === -1){
+        //             totalFields = totalFields + 1;
+        //             if(data[field]?.toString().length > 0){
+        //                 fieldsFilled = fieldsFilled + 1;
+        //             }
+        //         }
+        //     }
 
-            for(const index in characteristicsKeys){
-                totalFields = totalFields + 1;
-                if(data.characteristics_value_list[index]?.length > 0){
-                    fieldsFilled = fieldsFilled + 1;
-                }
-            }
+        //     for(const index in characteristicsKeys){
+        //         totalFields = totalFields + 1;
+        //         if(data.characteristics_value_list[index]?.length > 0){
+        //             fieldsFilled = fieldsFilled + 1;
+        //         }
+        //     }
 
-            const profilePercentage = {
-                percent: Math.round((fieldsFilled * 100)/totalFields)
-            };
-            const token = await this.authServices.getToken();
-            if(token){
-                this.postServices.updateRecord(
-                    profilePercentage,
-                    updateProfilePercentage(this.recordId)
-                ).subscribe(response => {
-                    console.log(response)
-                })
-            }
-        });
+        //     const profilePercentage = {
+        //         percent: Math.round((fieldsFilled * 100)/totalFields)
+        //     };
+        //     const token = await this.authServices.getToken();
+        //     if(token){
+        //         this.postServices.updateRecord(
+        //             profilePercentage,
+        //             updateProfilePercentage(this.recordId)
+        //         ).subscribe(response => {
+        //             console.log(response)
+        //         })
+        //     }
+        // });
     }
 
 
@@ -163,6 +189,7 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
             formElement: form
         });
         const { data, errorMsg } = formatted;
+
         if(errorMsg) {
             this.commonServices.updateEmitter.emit({
                 status_code: RESPONSE_CODES.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -196,7 +223,7 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
         const newSection = (el.previousElementSibling.lastElementChild as HTMLElement);
         newSection.querySelector('[sectionRemover]').addEventListener('click', (ev: Event) => this.removeSection(ev));
         (newSection.querySelector('[toggleDisable]') as HTMLElement).style.display = 'none';
-        newSection.querySelector('[otherOrganizationTrigger]').addEventListener('change', (ev: Event) => this.toggleOnOther(ev, 'Other'));
+        newSection.querySelector('[otherOrganizationTrigger]').addEventListener('change', (ev: Event) => this.toggler(ev, 'Other', true));
         const triggers = newSection.querySelectorAll('[trigger]');
         triggers.forEach(bindEvent);
     }
@@ -238,12 +265,43 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
     }
 
 
+    processImage(event: Event){
+        this.image = (event.target as HTMLInputElement).files[0];
+        this.fileTooBigError = this.image.size > MAX_FILE_SIZE;
+
+        if(this.fileTooBigError){
+            this.imageInput.nativeElement.value = null;
+            return;
+        }
+
+        this.imageActionKey = UPLOAD_IMAGE_KEY;
+        this.imageAction.nativeElement.value = this.imageActionKey;
+
+        if(this.image){
+            const reader = new FileReader();
+            reader.onload = (e) => this.previewImage.nativeElement.src = e.target.result;
+            reader.readAsDataURL(this.image);
+            this.showImage = true;
+        }
+    }
+
+
+    removeImage(){
+        if(confirm('Are you sure you want to remove this image?')){
+            this.imageInput.nativeElement.value = null;
+            this.imageActionKey = REMOVE_IMAGE_KEY;
+            this.imageAction.nativeElement.value = this.imageActionKey;
+            this.showImage = false;
+        }
+    }
+
+
     removeSection(event: Event){
         (event.target as HTMLElement).closest('.profile-organization-section').remove();
     }
 
 
-    toggleOnOther(event: Event, targetValue: string){
-        toggleOnSpecificValue(event, targetValue);
+    toggler(event: Event, targetValue: string, otherValue: boolean = false){
+        toggleOnSpecificValue(event, targetValue, otherValue);
     }
 }

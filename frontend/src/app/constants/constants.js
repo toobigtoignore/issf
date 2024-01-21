@@ -104,14 +104,36 @@ export const BLUEJUSTICE_SSF_TYPE = {
 
 
 export const CHARACTERISTICS_LABELS = {
-    ecoDetailType: "Ecosystem detailed type(s):",
-    ecoTypes: "Ecosystem type(s):",
-    ssfGovModes: "Governance mode(s) in SSF:",
-    ssfKeyRules: "Key rules, regulations, instruments and measures used to manage SSF:",
-    mainGears: "Main gear type(s):",
-    ssfMarket: "SSF market and distribution channel(s):",
-    ssfTypes: "SSF type(s):",
-    ssfTerms: "Term(s) used to refer to SSF:"
+    avgVehicleLength: "Average length of SSF vessel",
+    ecoDetailType: "Ecosystem detailed type(s)",
+    ecoTypes: "Ecosystem type(s)",
+    fishingPerYear: "Number of day fishing per year",
+    fishersPropertyRights: "Property rights held by SS fishers",
+    isSSFLastResort: "Is fishing considered (by SS fishers) an occupation of last resort",
+    householdIncome: "Percent of household income from SSF (harvest and post-harvest)",
+    mainGears: "Main gear type(s)",
+    mainVesselType: "Main SSF vessel type(s)",
+    otherNonFishingLivelihood: "Other non-fishing livelihood activities SS fishing people participate in",
+    postHarvestActivities: "Post-harvest activity(ies) in the location",
+    postHarvestWomen: "Percent of women in post-harvest",
+    postHarvestChildren: "Percent of children in post-harvest",
+    ssFishersAccess: "Access held by SS fishers",
+    ssFishersPercentage: "Percent of SS fishers full-time",
+    ssFishersPercentageWoman: "Percent of SS fishers women",
+    ssfFishersSociety: "How are SS fishers regarded by other members of society",
+    ssfGovModes: "Governance mode(s) in SSF",
+    ssfGdp: "Percent of total income or GDP in the location coming from SSF",
+    ssfLength: "Number of years SSF have existed in the location",
+    ssfKeyRules: "Key rules, regulations, instruments and measures used to manage SSF",
+    ssfMajorConcerns: "Major concerns/issues affecting SSF (which make them vulnerable or threaten their viability)",
+    ssfMarket: "SSF market and distribution channel(s)",
+    ssfTerms: "Term(s) used to refer to SSF",
+    ssfTypes: "SSF type(s)",
+    ssfHouseholdsPercentage: "Percent of households participating in SSF",
+    typicalCrewSize: "Typical number of crew",
+    typicalEngineSize: "Typical engine size (HP)",
+    totalSSFishers: "Total number of SS fishers",
+    totalHouseholds: "Total number of households in the location"
 };
 
 

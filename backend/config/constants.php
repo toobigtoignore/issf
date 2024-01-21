@@ -151,6 +151,17 @@ return [
         'stage_post_harvest' => 'Post-harvest',
         'stage_unspecified' => 'Unspecified'
     ],
+    'SOTA_PUBLICATION_TYPES' => [
+        1 =>  'Book',
+        2 =>  'Book Chapter',
+        3 =>  'Conference Proceedings',
+        4 =>  'Documentary',
+        5 =>  'Dissertation/Thesis',
+        6 =>  'Newsletter/Newspaper Article',
+        7 =>  'Peer-reviewed Paper',
+        8 =>  'Report',
+        9 => 'Other'
+    ],
     'THEME_ISSUES_CATEGORY' => [
         'ECONOMIC' => 'Economic',
         'ECOLOGICAL' => 'Ecological',

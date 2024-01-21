@@ -11,6 +11,7 @@ use App\Models\GSLocal;
 use App\Models\GSSubnation;
 use App\Models\GSNational;
 use App\Models\GSRegion;
+use App\Models\Language;
 use App\Models\PublicationType;
 use App\Models\Region;
 use App\Models\RegionCountry;
@@ -455,17 +456,28 @@ class HelperController extends Controller
     }
 
 
+    public static function get_all_organizations(){
+        return SSFOrganization::without('core', 'organization_country')->get(['issf_core_id', 'organization_name']);
+    }
+
+
     public static function get_attributes($issf_core_id){
         $categories = $values = [];
         $attributes = SelectedAttribute::where('issf_core_id', $issf_core_id)->get();
 
         foreach($attributes as $attr) {
             $attr_category = $attr->category->attribute_label;
-            $attr_value = $attr->value;
+            $attr_value = [
+                'value' => $attr->value,
+                'unit' => null,
+                'additional' => null
+            ];
 
-            if($attr->other_value) $attr_value = $attr->other_value;
-            else if($attr->label) $attr_value = $attr->label->value_label;
-            $attr_value .= ' ' . $attr->category->units_label;
+            if($attr->other_value) $attr_value['value'] = $attr->other_value;
+            else if($attr->label) $attr_value['value'] = $attr->label->value_label;
+
+            if($attr->category->units_label) $attr_value['unit'] = $attr->category->units_label;
+            if($attr->additional) $attr_value['additional'] = $attr->additional;
 
             $category_index = array_search($attr_category, $categories);
 
@@ -490,6 +502,11 @@ class HelperController extends Controller
             'categories' => $categories,
             'values' => $values
         ];
+    }
+
+
+    public static function get_languages(){
+        return Language::all();
     }
 
 
@@ -544,6 +561,27 @@ class HelperController extends Controller
     }
 
 
+    public static function update_characteristics($issf_core_id){
+        $payload = request()->all();
+        $theme_issues = SelectedAttribute::where('issf_core_id', $issf_core_id)->delete();
+
+        foreach($payload as $entry) {
+            SelectedAttribute::create([
+                'attribute_id' => $entry['attribute_id'],
+                'attribute_value_id' => $entry['attribute_value_id'],
+                'other_value' => $entry['other_value'],
+                'value' => $entry['value'],
+                'additional' => $entry['additional'],
+                'issf_core_id' => $issf_core_id
+            ]);
+        };
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+        ];
+    }
+
+
     public static function update_external_link($issf_core_id){
         $payload = request()->all();
         $links = ExternalLink::where('issf_core_id', $issf_core_id);
@@ -561,6 +599,33 @@ class HelperController extends Controller
             ExternalLink::create([
                 'link_type' => $entry['link_type'],
                 'link_address' => $entry['link_address'],
+                'issf_core_id' => $issf_core_id
+            ]);
+        };
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+        ];
+    }
+
+
+    public static function update_species($issf_core_id){
+        $payload = request()->all();
+        $species = Species::where('issf_core_id', $issf_core_id);
+
+        if($species->count() === 0 && sizeof($payload) === 0){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'message' => 'All fields are empty.'
+            ];
+        }
+
+        $species->delete();
+
+        foreach($payload as $entry) {
+            Species::create([
+                'species_common' => $entry['species_common'],
+                'species_scientific' => $entry['species_scientific'],
                 'issf_core_id' => $issf_core_id
             ]);
         };

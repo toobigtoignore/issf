@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { DEFINITE_ANS, DETAILS_ACCORDIONS_LABELS } from '../../../constants/constants';
 
 
@@ -15,6 +16,7 @@ export class BluejusticeDetailsComponent implements OnInit {
     accordionList: string[];
     bluejusticeData: any;
     definiteAns: DEFINITE_ANS = DEFINITE_ANS;
+    imageUrl: string = environment.BLUEJUSTICE_IMAGE_URL;
 
 
     constructor() { }

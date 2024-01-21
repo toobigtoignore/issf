@@ -1,302 +1,874 @@
-<div class="characteristics-issues-container" #characteristicsHolder>
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container no-margin-top">
-            <label class="header-label">
-                <span>SSF type(s) (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsTypesOptions">
-                <input 
-                    type="checkbox" 
-                    [attr.attrId]="characteristicsTypes.options[index].attrId" 
-                    [checked]="inArray(characteristicsTypes.options[index].title, characteristics['SSF type(s):'])" 
-                    [value]="characteristicsTypes.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsTypes.options[index].title"></span>
-            </label>
+<div class="characteristics-section-container" #characteristicsHolder>
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container no-margin-top" hasOtherValue>
+          <label class="header-label">
+              <span>SSF type(s) (select ALL that apply):</span>
+          </label>
 
-            <label>
-                <input 
-                    type="checkbox"
-                    (click)="toggleOther($event)"
-                    [attr.attrId]="characteristicsTypes.other.attrId" 
-                    [checked]="getOtherValue(characteristics['SSF type(s):'], objectsToArray(characteristicsTypes.options, 'title'))" 
-                    [value]="characteristicsTypes.other.attrValue"
-                /> 
-                <span [innerHTML]="characteristicsTypes.other.title"></span>
-            </label>
-                
-            <input 
-                type="text" 
-                class="does-toggle"
-                [attr.attrId]="characteristicsTypes.other.attrId" 
-                [required]="getOtherValue(characteristics['SSF type(s):'], objectsToArray(characteristicsTypes.options, 'title'))"
-                placeholder="Please specify ..."
-                [value]="getOtherValue(characteristics['SSF type(s):'], objectsToArray(characteristicsTypes.options, 'title')) || ''"
-                [ngStyle]="{'display': getOtherValue(characteristics['SSF type(s):'], objectsToArray(characteristicsTypes.options, 'title')) ? 'block' : 'none' }"
-            />
-        </section>
+          <label *ngFor="let index of characteristicsTypesOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsTypes.options[index].attrId"
+                  [checked]="shouldCheckItem(characteristicsTypes.options[index].title, 'ssfTypes')"
+                  [value]="characteristicsTypes.options[index].attrValue"
+              />
+              <span [innerHTML]="characteristicsTypes.options[index].title"></span>
+          </label>
+
+          <label>
+              <input
+                  otherValueTrigger
+                  type="checkbox"
+                  (click)="toggleOther($event)"
+                  [attr.attrId]="characteristicsTypes.other.attrId"
+                  [checked]="getOtherValue(characteristicsTypes, 'ssfTypes')"
+                  [value]="characteristicsTypes.other.attrValue"
+              />
+              <span [innerHTML]="characteristicsTypes.other.title"></span>
+          </label>
+
+          <input
+              otherValue
+              type="text"
+              class="does-toggle"
+              [attr.attrId]="characteristicsTypes.other.attrId"
+              [required]="getOtherValue(characteristicsTypes, 'ssfTypes')"
+              placeholder="Please specify ..."
+              [value]="getOtherValue(characteristicsTypes, 'ssfTypes') || ''"
+              [ngStyle]="{'display': getOtherValue(characteristicsTypes, 'ssfTypes') ? 'block' : 'none' }"
+          />
+      </section>
     </div> <!-- /characteristic-section -->
 
-    
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container">
-            <label class="header-label">
-                <span>Ecosystem type(s) (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsEcoTypesOptions">
-                <input 
-                    type="checkbox" 
-                    [attr.attrId]="characteristicsEcoTypes.options[index].attrId" 
-                    [checked]="inArray(characteristicsEcoTypes.options[index].title, characteristics['Ecosystem type(s):'])" 
-                    [value]="characteristicsEcoTypes.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsEcoTypes.options[index].title"></span>
-            </label>
-        </section>
-    </div> <!-- /characteristic-section -->
 
-    
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container">
-            <label class="header-label">
-                <span>Ecosystem detailed type(s) (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsEcoTypesDetailsOptions">
-                <input 
-                    type="checkbox"
-                    [attr.attrId]="characteristicsEcoTypesDetails.options[index].attrId" 
-                    [checked]="inArray(characteristicsEcoTypesDetails.options[index].title, characteristics['Ecosystem detailed type(s):'])" 
-                    [value]="characteristicsEcoTypesDetails.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsEcoTypesDetails.options[index].title"></span>
-            </label>
+    <div class="characteristic-section">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Ecosystem type(s) (select ALL that apply):</span>
+          </label>
 
-            <label>
-                <input 
-                    type="checkbox"
-                    name="characteristic_issue_value_ids[]"
-                    [attr.attrId]="characteristicsEcoTypesDetails.other.attrId" 
-                    (click)="toggleOther($event)"
-                    [checked]="getOtherValue(characteristics['Ecosystem detailed type(s):'], objectsToArray(characteristicsEcoTypesDetails.options, 'title'))" 
-                    [value]="characteristicsEcoTypesDetails.other.attrValue"
-                /> 
-                <span [innerHTML]="characteristicsEcoTypesDetails.other.title"></span>
-            </label>
-                
-            <input 
-                type="text" 
-                class="does-toggle"
-                [attr.attrId]="characteristicsEcoTypesDetails.other.attrId" 
-                [required]="getOtherValue(characteristics['Ecosystem detailed type(s):'], objectsToArray(characteristicsEcoTypesDetails.options, 'title'))"
-                placeholder="Please specify ..."
-                [value]="getOtherValue(characteristics['Ecosystem detailed type(s):'], objectsToArray(characteristicsEcoTypesDetails.options, 'title')) || ''"
-                [ngStyle]="{'display': getOtherValue(characteristics['Ecosystem detailed type(s):'], objectsToArray(characteristicsEcoTypesDetails.options, 'title')) ? 'block' : 'none' }"
-            />
-        </section>
-    </div> <!-- /characteristic-section -->
+          <label *ngFor="let index of characteristicsEcoTypesOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsEcoTypes.options[index].attrId"
+                  [checked]="shouldCheckItem(characteristicsEcoTypes.options[index].title, 'ecoTypes')"
+                  [value]="characteristicsEcoTypes.options[index].attrValue"
+              />
+              <span [innerHTML]="characteristicsEcoTypes.options[index].title"></span>
+          </label>
+      </section>
+  </div> <!-- /characteristic-section -->
 
-    
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container">
-            <label class="header-label">
-                <span>Term(s) used to refer to SSF (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsTermsUsedOptions">
-                <input 
-                    type="checkbox"
-                    [attr.attrId]="characteristicsTermsUsed.options[index].attrId" 
-                    [checked]="inArray(characteristicsTermsUsed.options[index].title, characteristics['Term(s) used to refer to SSF:'])" 
-                    [value]="characteristicsTermsUsed.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsTermsUsed.options[index].title"></span>
-            </label>
 
-            <label>
-                <input 
-                    type="checkbox"
-                    name="characteristic_issue_value_ids[]"
-                    [attr.attrId]="characteristicsTermsUsed.other.attrId" 
-                    (click)="toggleOther($event)"
-                    [checked]="getOtherValue(characteristics['Term(s) used to refer to SSF:'], objectsToArray(characteristicsTermsUsed.options, 'title'))" 
-                    [value]="characteristicsTermsUsed.other.attrValue"
-                /> 
-                <span [innerHTML]="characteristicsTermsUsed.other.title"></span>
-            </label>
-                
-            <input 
-                type="text" 
-                class="does-toggle"
-                name="governance_other" 
-                [attr.attrId]="characteristicsTermsUsed.other.attrId" 
-                [required]="getOtherValue(characteristics['Term(s) used to refer to SSF:'], objectsToArray(characteristicsTermsUsed.options, 'title'))"
-                placeholder="Please specify ..."
-                [value]="getOtherValue(characteristics['Term(s) used to refer to SSF:'], objectsToArray(characteristicsTermsUsed.options, 'title')) || ''"
-                [ngStyle]="{'display': getOtherValue(characteristics['Term(s) used to refer to SSF:'], objectsToArray(characteristicsTermsUsed.options, 'title')) ? 'block' : 'none' }"
-            />
-        </section>
-    </div> <!-- /characteristic-section -->
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container" hasOtherValue>
+          <label class="header-label">
+              <span>Ecosystem detailed type(s) (select ALL that apply):</span>
+          </label>
 
-    
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container">
-            <label class="header-label">
-                <span>Main gear type(s) (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsGearsOptions">
-                <input 
-                    type="checkbox"
-                    [attr.attrId]="characteristicsGears.options[index].attrId" 
-                    [checked]="inArray(characteristicsGears.options[index].title, characteristics['Main gear type(s):'])" 
-                    [value]="characteristicsGears.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsGears.options[index].title"></span>
-            </label>
+          <label *ngFor="let index of characteristicsEcoTypesDetailsOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsEcoTypesDetails.options[index].attrId"
+                  [checked]="shouldCheckItem(characteristicsEcoTypesDetails.options[index].title, 'ecoDetailType')"
+                  [value]="characteristicsEcoTypesDetails.options[index].attrValue"
+              />
+              <span [innerHTML]="characteristicsEcoTypesDetails.options[index].title"></span>
+          </label>
 
-            <label>
-                <input 
-                    type="checkbox"
-                    [attr.attrId]="characteristicsGears.other.attrId" 
-                    (click)="toggleOther($event)"
-                    [checked]="getOtherValue(characteristics['Main gear type(s):'], objectsToArray(characteristicsGears.options, 'title'))" 
-                    [value]="characteristicsGears.other.attrValue"
-                /> 
-                <span [innerHTML]="characteristicsGears.other.title"></span>
-            </label>
-                
-            <input 
-                type="text" 
-                class="does-toggle"
-                [attr.attrId]="characteristicsGears.other.attrId" 
-                [required]="getOtherValue(characteristics['Main gear type(s):'], objectsToArray(characteristicsGears.options, 'title'))"
-                placeholder="Please specify ..."
-                [value]="getOtherValue(characteristics['Main gear type(s):'], objectsToArray(characteristicsGears.options, 'title')) || ''"
-                [ngStyle]="{'display': getOtherValue(characteristics['Main gear type(s):'], objectsToArray(characteristicsGears.options, 'title')) ? 'block' : 'none' }"
-            />
-        </section>
-    </div> <!-- /characteristic-section -->
+          <label>
+              <input
+                  otherValueTrigger
+                  type="checkbox"
+                  [attr.attrId]="characteristicsEcoTypesDetails.other.attrId"
+                  (click)="toggleOther($event)"
+                  [checked]="getOtherValue(characteristicsEcoTypesDetails, 'ecoDetailType')"
+                  [value]="characteristicsEcoTypesDetails.other.attrValue"
+              />
+              <span [innerHTML]="characteristicsEcoTypesDetails.other.title"></span>
+          </label>
 
-    
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container">
-            <label class="header-label">
-                <span>SSF market and distribution channel(s) (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsMarketDistributionOptions">
-                <input 
-                    type="checkbox"
-                    [attr.attrId]="characteristicsMarketDistribution.options[index].attrId" 
-                    [checked]="inArray(characteristicsMarketDistribution.options[index].title, characteristics['SSF market and distribution channel(s):'])" 
-                    [value]="characteristicsMarketDistribution.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsMarketDistribution.options[index].title"></span>
-            </label>
+          <input
+              otherValue
+              type="text"
+              class="does-toggle"
+              [attr.attrId]="characteristicsEcoTypesDetails.other.attrId"
+              [required]="getOtherValue(characteristicsEcoTypesDetails, 'ecoDetailType')"
+              placeholder="Please specify ..."
+              [value]="getOtherValue(characteristicsEcoTypesDetails, 'ecoDetailType') || ''"
+              [ngStyle]="{'display': getOtherValue(characteristicsEcoTypesDetails, 'ecoDetailType') ? 'block' : 'none' }"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
 
-            <label>
-                <input 
-                    type="checkbox"
-                    (click)="toggleOther($event)"
-                    [attr.attrId]="characteristicsMarketDistribution.other.attrId" 
-                    [checked]="getOtherValue(characteristics['SSF market and distribution channel(s):'], objectsToArray(characteristicsMarketDistribution.options, 'title'))" 
-                    [value]="characteristicsMarketDistribution.other.attrValue"
-                /> 
-                <span [innerHTML]="characteristicsMarketDistribution.other.title"></span>
-            </label>
-                
-            <input 
-                type="text" 
-                class="does-toggle"
-                placeholder="Please specify ..."
-                [attr.attrId]="characteristicsMarketDistribution.other.attrId" 
-                [required]="getOtherValue(characteristics['SSF market and distribution channel(s):'], objectsToArray(characteristicsMarketDistribution.options, 'title'))"
-                [value]="getOtherValue(characteristics['SSF market and distribution channel(s):'], objectsToArray(characteristicsMarketDistribution.options, 'title')) || ''"
-                [ngStyle]="{'display': getOtherValue(characteristics['SSF market and distribution channel(s):'], objectsToArray(characteristicsMarketDistribution.options, 'title')) ? 'block' : 'none' }"
-            />
-        </section>
-    </div> <!-- /characteristic-section -->
 
-    
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container">
-            <label class="header-label">
-                <span>Governance mode(s) in SSF (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsGovernanceOptions">
-                <input 
-                    type="checkbox"
-                    [attr.attrId]="characteristicsGovernance.options[index].attrId" 
-                    [checked]="inArray(characteristicsGovernance.options[index].title, characteristics['Governance mode(s) in SSF:'])" 
-                    [value]="characteristicsGovernance.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsGovernance.options[index].title"></span>
-            </label>
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container" hasOtherValue>
+          <label class="header-label">
+              <span>Term(s) used to refer to SSF (select ALL that apply):</span>
+          </label>
 
-            <label>
-                <input 
-                    type="checkbox"
-                    (click)="toggleOther($event)"
-                    [attr.attrId]="characteristicsGovernance.other.attrId" 
-                    [checked]="getOtherValue(characteristics['Governance mode(s) in SSF:'], objectsToArray(characteristicsGovernance.options, 'title'))" 
-                    [value]="characteristicsGovernance.other.attrValue"
-                /> 
-                <span [innerHTML]="characteristicsGovernance.other.title"></span>
-            </label>
-                
-            <input 
-                type="text" 
-                class="does-toggle"
-                placeholder="Please specify ..."
-                [attr.attrId]="characteristicsGovernance.other.attrId" 
-                [required]="getOtherValue(characteristics['Governance mode(s) in SSF:'], objectsToArray(characteristicsGovernance.options, 'title'))"
-                [value]="getOtherValue(characteristics['Governance mode(s) in SSF:'], objectsToArray(characteristicsGovernance.options, 'title')) || ''"
-                [ngStyle]="{'display': getOtherValue(characteristics['Governance mode(s) in SSF:'], objectsToArray(characteristicsGovernance.options, 'title')) ? 'block' : 'none' }"
-            />
-        </section>
-    </div> <!-- /characteristic-section -->
+          <label *ngFor="let index of characteristicsTermsUsedOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsTermsUsed.options[index].attrId"
+                  [checked]="shouldCheckItem(characteristicsTermsUsed.options[index].title, 'ssfTerms')"
+                  [value]="characteristicsTermsUsed.options[index].attrValue"
+              />
+              <span [innerHTML]="characteristicsTermsUsed.options[index].title"></span>
+          </label>
 
-    
-    <div class="characteristic-section toggle-container">
-        <section class="form-input checkbox-container">
-            <label class="header-label">
-                <span>Key rules, regulations, instruments and measures used to manage SSF (select ALL that apply):</span>
-            </label>
-            
-            <label *ngFor="let index of characteristicsRegulationsOptions">
-                <input 
-                    type="checkbox"
-                    [attr.attrId]="characteristicsRegulations.options[index].attrId" 
-                    [checked]="inArray(characteristicsRegulations.options[index].title, characteristics['Key rules, regulations, instruments and measures used to manage SSF:'])" 
-                    [value]="characteristicsRegulations.options[index].attrValue" 
-                /> 
-                <span [innerHTML]="characteristicsRegulations.options[index].title"></span>
-            </label>
+          <label>
+              <input
+                  otherValueTrigger
+                  type="checkbox"
+                  [attr.attrId]="characteristicsTermsUsed.other.attrId"
+                  (click)="toggleOther($event)"
+                  [checked]="getOtherValue(characteristicsTermsUsed, 'ssfTerms')"
+                  [value]="characteristicsTermsUsed.other.attrValue"
+              />
+              <span [innerHTML]="characteristicsTermsUsed.other.title"></span>
+          </label>
 
-            <label>
-                <input 
-                    type="checkbox"
-                    (click)="toggleOther($event)"
-                    [attr.attrId]="characteristicsRegulations.other.attrId" 
-                    [checked]="getOtherValue(characteristics['Key rules, regulations, instruments and measures used to manage SSF:'], objectsToArray(characteristicsRegulations.options, 'title'))" 
-                    [value]="characteristicsRegulations.other.attrValue"
-                /> 
-                <span [innerHTML]="characteristicsRegulations.other.title"></span>
-            </label>
-                
-            <input 
-                type="text" 
-                class="does-toggle"
-                placeholder="Please specify ..."
-                [attr.attrId]="characteristicsRegulations.other.attrId" 
-                [required]="getOtherValue(characteristics['Key rules, regulations, instruments and measures used to manage SSF:'], objectsToArray(characteristicsRegulations.options, 'title'))"
-                [value]="getOtherValue(characteristics['Key rules, regulations, instruments and measures used to manage SSF:'], objectsToArray(characteristicsRegulations.options, 'title')) || ''"
-                [ngStyle]="{'display': getOtherValue(characteristics['Key rules, regulations, instruments and measures used to manage SSF:'], objectsToArray(characteristicsRegulations.options, 'title')) ? 'block' : 'none' }"
-            />
-        </section>
-    </div> <!-- /characteristic-section -->
-</div> <!-- /characteristic-issues-container -->
+          <input
+              otherValue
+              type="text"
+              class="does-toggle"
+              name="governance_other"
+              [attr.attrId]="characteristicsTermsUsed.other.attrId"
+              [required]="getOtherValue(characteristicsTermsUsed, 'ssfTerms')"
+              placeholder="Please specify ..."
+              [value]="getOtherValue(characteristicsTermsUsed, 'ssfTerms') || ''"
+              [ngStyle]="{'display': getOtherValue(characteristicsTermsUsed, 'ssfTerms') ? 'block' : 'none' }"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container" hasOtherValue>
+          <label class="header-label">
+              <span>Main gear type(s) (select ALL that apply):</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsGearsOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsGears.options[index].attrId"
+                  [checked]="shouldCheckItem(characteristicsGears.options[index].title, 'mainGears')"
+                  [value]="characteristicsGears.options[index].attrValue"
+              />
+              <span [innerHTML]="characteristicsGears.options[index].title"></span>
+          </label>
+
+          <label>
+              <input
+                  otherValueTrigger
+                  type="checkbox"
+                  [attr.attrId]="characteristicsGears.other.attrId"
+                  (click)="toggleOther($event)"
+                  [checked]="getOtherValue(characteristicsGears, 'mainGears')"
+                  [value]="characteristicsGears.other.attrValue"
+              />
+              <span [innerHTML]="characteristicsGears.other.title"></span>
+          </label>
+
+          <input
+              otherValue
+              type="text"
+              class="does-toggle"
+              [attr.attrId]="characteristicsGears.other.attrId"
+              [required]="getOtherValue(characteristicsGears, 'mainGears')"
+              placeholder="Please specify ..."
+              [value]="getOtherValue(characteristicsGears, 'mainGears') || ''"
+              [ngStyle]="{'display': getOtherValue(characteristicsGears, 'mainGears') ? 'block' : 'none' }"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Main SSF vessel type(s): (select ALL that apply)</span>
+          </label>
+
+          <table>
+              <tr>
+                  <th>Vessel type</th>
+                  <th>Number of vessels</th>
+              </tr>
+
+              <tr *ngFor="let index of characteristicsVesselsOptions" hasAdditionalValue>
+                  <td>
+                      <label>
+                          <input
+                              type="checkbox"
+                              [attr.attrId]="characteristicsVessels.options[index].attrId"
+                              [value]="characteristicsVessels.options[index].attrValue"
+                              [checked]="shouldCheckItem(characteristicsVessels.options[index].title, 'mainVesselType')"
+                          />
+                          <span [innerHTML]="characteristicsVessels.options[index].title"></span>
+                      </label>
+                  </td>
+
+                  <td>
+                      <input
+                          additionalField
+                          type="number"
+                          [attr.attrId]="characteristicsVessels.options[index].attrId"
+                          [value]="getAdditionalValue(characteristicsVessels.options[index].title, 'mainVesselType')"
+                      />
+                  </td>
+              </tr>
+
+              <tr hasOtherValue hasAdditionalValue>
+                  <td>
+                      <label>
+                          <input
+                              otherValueTrigger
+                              type="checkbox"
+                              (click)="toggleOther($event)"
+                              [attr.attrId]="characteristicsVessels.other.attrId"
+                              [value]="characteristicsVessels.other.attrValue"
+                              [checked]="getOtherValue(characteristicsVessels, 'mainVesselType')"
+                          />
+                          <span [innerHTML]="characteristicsVessels.other.title"></span>
+                      </label>
+
+                      <input
+                          otherValue
+                          type="text"
+                          class="does-toggle"
+                          placeholder="Please specify ..."
+                          [attr.attrId]="characteristicsVessels.other.attrId"
+                          [required]="getOtherValue(characteristicsVessels, 'mainVesselType')"
+                          [value]="getOtherValue(characteristicsVessels, 'mainVesselType') || ''"
+                          [ngStyle]="{'display': getOtherValue(characteristicsVessels, 'mainVesselType') ? 'block' : 'none' }"
+                      />
+                  </td>
+
+                  <td>
+                      <input
+                          additionalField
+                          type="number"
+                          [attr.attrId]="characteristicsVessels.other.attrId"
+                          [value]="getAdditionalValue(getOtherValue(characteristicsVessels, 'mainVesselType'), 'mainVesselType')"
+                      />
+                  </td>
+              </tr>
+          </table>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Average length of SSF vessel (in metres):	</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Average length in metres"
+              [attr.attrId]="characteristicsVesselsAvgLength.attrId"
+              [value]="findTextualValue('avgVehicleLength')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Typical engine size (HP):	</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Engine size in horsepower"
+              [attr.attrId]="characteristicsEngineSize.attrId"
+              [value]="findTextualValue('typicalEngineSize')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Typical number of crew:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Number of crew"
+              [attr.attrId]="characteristicsCrewNumber.attrId"
+              [value]="findTextualValue('typicalCrewSize')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Number of day fishing per year:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Number of day fishing per year"
+              [attr.attrId]="characteristicsFishingDayPerYear.attrId"
+              [value]="findTextualValue('fishingPerYear')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Total number of SS fishers:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Total number of SS fishers"
+              [attr.attrId]="characteristicsFishersNumber.attrId"
+              [value]="findTextualValue('totalSSFishers')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Percent of SS fishers full-time:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Percent of SS fishers full-time"
+              [attr.attrId]="characteristicsFullTimeFishersNumber.attrId"
+              [value]="findTextualValue('ssFishersPercentage')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Percent of SS fishers women:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Percent of SS fishers women"
+              [attr.attrId]="characteristicsWomenPercent.attrId"
+              [value]="findTextualValue('ssFishersPercentageWoman')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Total number of households in the location:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Total number of households in the location"
+              [attr.attrId]="characteristicsHouseholdsNumber.attrId"
+              [value]="findTextualValue('totalHouseholds')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Percent of households participating in SSF:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Percent of households participating in SSF"
+              [attr.attrId]="characteristicsHouseholdsPercent.attrId"
+              [value]="findTextualValue('ssfHouseholdsPercentage')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Percent of household income from SSF (harvest and post-harvest):</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Percent of household income"
+              [attr.attrId]="characteristicsHouseholdsIncomePercent.attrId"
+              [value]="findTextualValue('householdIncome')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Post-harvest activity(ies) in the location: (select ALL that apply)</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsPostHarvestOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsPostHarvest.options[index].attrId"
+                  [value]="characteristicsPostHarvest.options[index].attrValue"
+                  [checked]="shouldCheckItem(characteristicsPostHarvest.options[index].title, 'postHarvestActivities')"
+              />
+              <span [innerHTML]="characteristicsPostHarvest.options[index].title"></span>
+          </label>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Percent of women in post-harvest:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Percent of women in post-harvest"
+              [attr.attrId]="characteristicsWomenPostHarvestPercent.attrId"
+              [value]="findTextualValue('postHarvestWomen')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Percent of children in post-harvest:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Percent of children in post-harvest"
+              [attr.attrId]="characteristicsChildrenPostHarvestPercent.attrId"
+              [value]="findTextualValue('postHarvestChildren')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input">
+          <label class="header-label">
+              <span>Percent of total income or GDP in the location coming from SSF:</span>
+          </label>
+
+          <input
+              textOnly
+              type="text"
+              placeholder="Percent of total income or GDP in the location coming from SSF"
+              [attr.attrId]="characteristicsGDP.attrId"
+              [value]="findTextualValue('ssfGdp')"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Other non-fishing livelihood activities SS fishing people participate in: (select ALL that apply)</span>
+          </label>
+
+          <table>
+              <tr>
+                  <th>Non-fishing activities</th>
+                  <th>Percent of women involved (%)</th>
+              </tr>
+
+              <tr *ngFor="let index of characteristicsNonFishingOptions" hasAdditionalValue>
+                  <td>
+                      <label>
+                          <input
+                              type="checkbox"
+                              [attr.attrId]="characteristicsNonFishing.options[index].attrId"
+                              [value]="characteristicsNonFishing.options[index].attrValue"
+                              [checked]="shouldCheckItem(characteristicsNonFishing.options[index].title, 'otherNonFishingLivelihood')"
+                          />
+                          <span [innerHTML]="characteristicsNonFishing.options[index].title"></span>
+                      </label>
+                  </td>
+
+                  <td>
+                      <input
+                          additionalField
+                          type="number"
+                          [attr.attrId]="characteristicsNonFishing.options[index].attrId"
+                          [value]="getAdditionalValue(characteristicsNonFishing.options[index].title, 'otherNonFishingLivelihood')"
+                      />
+                  </td>
+              </tr>
+
+              <tr hasOtherValue hasAdditionalValue>
+                  <td>
+                      <label>
+                          <input
+                              otherValueTrigger
+                              type="checkbox"
+                              (click)="toggleOther($event)"
+                              [attr.attrId]="characteristicsNonFishing.other.attrId"
+                              [value]="characteristicsNonFishing.other.attrValue"
+                              [checked]="getOtherValue(characteristicsNonFishing, 'otherNonFishingLivelihood')"
+                          />
+                          <span [innerHTML]="characteristicsNonFishing.other.title"></span>
+                      </label>
+
+                      <input
+                          otherValue
+                          type="text"
+                          class="does-toggle"
+                          placeholder="Please specify ..."
+                          [attr.attrId]="characteristicsNonFishing.other.attrId"
+                          [required]="getOtherValue(characteristicsNonFishing, 'otherNonFishingLivelihood')"
+                          [value]="getOtherValue(characteristicsNonFishing, 'otherNonFishingLivelihood') || ''"
+                          [ngStyle]="{'display': getOtherValue(characteristicsNonFishing, 'otherNonFishingLivelihood') ? 'block' : 'none' }"
+                      />
+                  </td>
+
+                  <td>
+                      <input
+                          additionalField
+                          type="number"
+                          [attr.attrId]="characteristicsNonFishing.other.attrId"
+                          [value]="getAdditionalValue(getOtherValue(characteristicsNonFishing, 'otherNonFishingLivelihood'), 'otherNonFishingLivelihood')"
+                      />
+                  </td>
+              </tr>
+          </table>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>SSF market and distribution channel(s): (select ALL that apply)</span>
+          </label>
+
+          <table>
+              <tr>
+                  <th>Distribution channel</th>
+                  <th>Percent (%)</th>
+              </tr>
+
+              <tr *ngFor="let index of characteristicsMarketDistributionOptions" hasAdditionalValue>
+                  <td>
+                      <label>
+                          <input
+                              type="checkbox"
+                              [attr.attrId]="characteristicsMarketDistribution.options[index].attrId"
+                              [value]="characteristicsMarketDistribution.options[index].attrValue"
+                              [checked]="shouldCheckItem(characteristicsMarketDistribution.options[index].title, 'ssfMarket')"
+                          />
+                          <span [innerHTML]="characteristicsMarketDistribution.options[index].title"></span>
+                      </label>
+                  </td>
+
+                  <td>
+                      <input
+                          additionalField
+                          type="number"
+                          [attr.attrId]="characteristicsMarketDistribution.options[index].attrId"
+                          [value]="getAdditionalValue(characteristicsMarketDistribution.options[index].title, 'ssfMarket')"
+                      />
+                  </td>
+              </tr>
+
+              <tr hasOtherValue hasAdditionalValue>
+                  <td>
+                      <label>
+                          <input
+                              otherValueTrigger
+                              type="checkbox"
+                              (click)="toggleOther($event)"
+                              [attr.attrId]="characteristicsMarketDistribution.other.attrId"
+                              [value]="characteristicsMarketDistribution.other.attrValue"
+                              [checked]="getOtherValue(characteristicsMarketDistribution, 'ssfMarket')"
+                          />
+                          <span [innerHTML]="characteristicsMarketDistribution.other.title"></span>
+                      </label>
+
+                      <input
+                          otherValue
+                          type="text"
+                          class="does-toggle"
+                          placeholder="Please specify ..."
+                          [attr.attrId]="characteristicsMarketDistribution.other.attrId"
+                          [required]="getOtherValue(characteristicsMarketDistribution, 'ssfMarket')"
+                          [value]="getOtherValue(characteristicsMarketDistribution, 'ssfMarket') || ''"
+                          [ngStyle]="{'display': getOtherValue(characteristicsMarketDistribution, 'ssfMarket') ? 'block' : 'none' }"
+                      />
+                  </td>
+
+                  <td>
+                      <input
+                          additionalField
+                          type="number"
+                          [attr.attrId]="characteristicsMarketDistribution.other.attrId"
+                          [value]="getAdditionalValue(getOtherValue(characteristicsMarketDistribution, 'ssfMarket'), 'ssfMarket')"
+                      />
+                  </td>
+              </tr>
+          </table>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Number of years SSF have existed in the location: (select ONE that best applies)</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsNumberOfYearsOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsNumberOfYears.options[index].attrId"
+                  [value]="characteristicsNumberOfYears.options[index].attrValue"
+                  [checked]="shouldCheckItem(characteristicsNumberOfYears.options[index].title, 'ssfLength')"
+              />
+              <span [innerHTML]="characteristicsNumberOfYears.options[index].title"></span>
+          </label>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>How are SS fishers regarded by other members of society? (select ONE that best applies)</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsMembersOfSocietyOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsMembersOfSociety.options[index].attrId"
+                  [value]="characteristicsMembersOfSociety.options[index].attrValue"
+                  [checked]="shouldCheckItem(characteristicsMembersOfSociety.options[index].title, 'ssfFishersSociety')"
+              />
+              <span [innerHTML]="characteristicsMembersOfSociety.options[index].title"></span>
+          </label>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Is fishing considered (by SS fishers) an occupation of last resort? (select ONE that best applies)</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsFishingConsideredOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsFishingConsidered.options[index].attrId"
+                  [value]="characteristicsFishingConsidered.options[index].attrValue"
+                  [checked]="shouldCheckItem(characteristicsFishingConsidered.options[index].title, 'isSSFLastResort')"
+              />
+              <span [innerHTML]="characteristicsFishingConsidered.options[index].title"></span>
+          </label>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container" hasOtherValue>
+          <label class="header-label">
+              <span>Governance mode(s) in SSF (select ALL that apply):</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsGovernanceOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsGovernance.options[index].attrId"
+                  [checked]="shouldCheckItem(characteristicsGovernance.options[index].title, 'ssfGovModes')"
+                  [value]="characteristicsGovernance.options[index].attrValue"
+              />
+              <span [innerHTML]="characteristicsGovernance.options[index].title"></span>
+          </label>
+
+          <label>
+              <input
+                  otherValueTrigger
+                  type="checkbox"
+                  (click)="toggleOther($event)"
+                  [attr.attrId]="characteristicsGovernance.other.attrId"
+                  [checked]="getOtherValue(characteristicsGovernance, 'ssfGovModes')"
+                  [value]="characteristicsGovernance.other.attrValue"
+              />
+              <span [innerHTML]="characteristicsGovernance.other.title"></span>
+          </label>
+
+          <input
+              otherValue
+              type="text"
+              class="does-toggle"
+              placeholder="Please specify ..."
+              [attr.attrId]="characteristicsGovernance.other.attrId"
+              [required]="getOtherValue(characteristicsGovernance, 'ssfGovModes')"
+              [value]="getOtherValue(characteristicsGovernance, 'ssfGovModes') || ''"
+              [ngStyle]="{'display': getOtherValue(characteristicsGovernance, 'ssfGovModes') ? 'block' : 'none' }"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Property rights held by SS fishers: (select ONE that best applies)</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsPropertyRightsOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsPropertyRights.options[index].attrId"
+                  [value]="characteristicsPropertyRights.options[index].attrValue"
+                  [checked]="shouldCheckItem(characteristicsPropertyRights.options[index].title, 'fishersPropertyRights')"
+              />
+              <span [innerHTML]="characteristicsPropertyRights.options[index].title"></span>
+          </label>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section">
+      <section class="form-input checkbox-container">
+          <label class="header-label">
+              <span>Access held by SS fishers: (select ONE that best applies)</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsAccessOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsAccess.options[index].attrId"
+                  [value]="characteristicsAccess.options[index].attrValue"
+                  [checked]="shouldCheckItem(characteristicsAccess.options[index].title, 'ssFishersAccess')"
+              />
+              <span [innerHTML]="characteristicsAccess.options[index].title"></span>
+          </label>
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container" hasOtherValue>
+          <label class="header-label">
+              <span>Key rules, regulations, instruments and measures used to manage SSF (select ALL that apply):</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsRegulationsOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsRegulations.options[index].attrId"
+                  [checked]="shouldCheckItem(characteristicsRegulations.options[index].title, 'ssfKeyRules')"
+                  [value]="characteristicsRegulations.options[index].attrValue"
+              />
+              <span [innerHTML]="characteristicsRegulations.options[index].title"></span>
+          </label>
+
+          <label>
+              <input
+                  otherValueTrigger
+                  type="checkbox"
+                  (click)="toggleOther($event)"
+                  [attr.attrId]="characteristicsRegulations.other.attrId"
+                  [checked]="getOtherValue(characteristicsRegulations, 'ssfKeyRules')"
+                  [value]="characteristicsRegulations.other.attrValue"
+              />
+              <span [innerHTML]="characteristicsRegulations.other.title"></span>
+          </label>
+
+          <input
+              otherValue
+              type="text"
+              class="does-toggle"
+              placeholder="Please specify ..."
+              [attr.attrId]="characteristicsRegulations.other.attrId"
+              [required]="getOtherValue(characteristicsRegulations, 'ssfKeyRules')"
+              [value]="getOtherValue(characteristicsRegulations, 'ssfKeyRules') || ''"
+              [ngStyle]="{'display': getOtherValue(characteristicsRegulations, 'ssfKeyRules') ? 'block' : 'none' }"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+
+
+  <div class="characteristic-section toggle-container">
+      <section class="form-input checkbox-container" hasOtherValue>
+          <label class="header-label">
+              <span>Major concerns/issues affecting SSF (which make them vulnerable or threaten their viability): (select ALL that apply)</span>
+          </label>
+
+          <label *ngFor="let index of characteristicsMajorConcernsOptions">
+              <input
+                  type="checkbox"
+                  [attr.attrId]="characteristicsMajorConcerns.options[index].attrId"
+                  [value]="characteristicsMajorConcerns.options[index].attrValue"
+                  [checked]="shouldCheckItem(characteristicsMajorConcerns.options[index].title, 'ssfMajorConcerns')"
+              />
+              <span [innerHTML]="characteristicsMajorConcerns.options[index].title"></span>
+          </label>
+
+          <label>
+              <input
+                  otherValueTrigger
+                  type="checkbox"
+                  (click)="toggleOther($event)"
+                  [attr.attrId]="characteristicsMajorConcerns.other.attrId"
+                  [value]="characteristicsMajorConcerns.other.attrValue"
+                  [checked]="getOtherValue(characteristicsMajorConcerns, 'ssfMajorConcerns')"
+              />
+              <span [innerHTML]="characteristicsMajorConcerns.other.title"></span>
+          </label>
+
+          <input
+              otherValue
+              type="text"
+              class="does-toggle"
+              placeholder="Please specify ..."
+              [attr.attrId]="characteristicsMajorConcerns.other.attrId"
+              [required]="getOtherValue(characteristicsMajorConcerns, 'ssfMajorConcerns')"
+              [value]="getOtherValue(characteristicsMajorConcerns, 'ssfMajorConcerns') || ''"
+              [ngStyle]="{'display': getOtherValue(characteristicsMajorConcerns, 'ssfMajorConcerns') ? 'block' : 'none' }"
+          />
+      </section>
+  </div> <!-- /characteristic-section -->
+</div> <!-- /characteristics-section-container -->

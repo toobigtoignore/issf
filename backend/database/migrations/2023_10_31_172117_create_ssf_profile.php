@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('sources')->nullable();
             $table->integer('percent')->default(10);
             $table->text('img')->nullable();
+            $table->text('url')->nullable();
 
             $table->foreign('issf_core_id')->references('issf_core_id')->on('issf_core');
         });

@@ -38,15 +38,30 @@
     </section>
 
 
-    <section class="form-input">
-        <label>
-            <span>SSF Defined? <em class="required">*</em></span>
-            <select name="ssf_defined" required>
-                <option value="" disabled hidden selected>Is SSF Defined?</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Not explicitly">Not explicitly</option>
-            </select>
-        </label>
-    </section>
+    <div class="toggle-container" togglerContainer>
+        <section class="form-input">
+            <label>
+                <span>SSF Defined? <em class="required">*</em></span>
+                <select name="ssf_defined" (change)="toggler($event, definiteAns['YES'], true)">
+                    <option value="" disabled hidden selected>Is SSF Defined?</option>
+                    <option
+                        *ngFor="let value of definiteValues"
+                        [value]="value"
+                        [innerHTML]="value"
+                    ></option>
+                </select>
+            </label>
+        </section>
+
+
+        <section class="form-input"  [hidden]="true" toggleDisable>
+            <label>
+                <span>Provide SSF definition, if applicable: <em class="required">*</em></span>
+                <textarea
+                    name="ssf_definiton"
+                    toggleOnChange
+                ></textarea>
+            </label>
+        </section>
+    </div> <!-- /toggle-container -->
 </div> <!-- /profile-forms -->

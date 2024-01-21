@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { get } from '../../../helpers/apiCalls';
-import { getAllCountriesUrl, getAllOrganizationNamesUrl } from '../../../constants/api';
+import { getAllCountriesUrl, getAllOrganizationsUrl } from '../../../constants/api';
 
 
 @Component({
@@ -18,9 +18,9 @@ export class ContributeWhoComponent implements OnInit {
 
     constructor() { }
 
-    
-    async ngOnInit(): Promise<void> { 
+
+    async ngOnInit(): Promise<void> {
         this.countryList = await get(getAllCountriesUrl);
-        this.organizationList = await get(getAllOrganizationNamesUrl);
+        this.organizationList = await get(getAllOrganizationsUrl);
     }
 }

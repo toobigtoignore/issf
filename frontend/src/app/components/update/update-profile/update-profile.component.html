@@ -1,30 +1,30 @@
 <div class="update-profile">
-    <form 
+    <form
         [hidden]="activeTab != tabLabels[0]"
-        class="profile-update-form basic" 
+        class="profile-update-form basic"
         #basicForm
         (ngSubmit)="onProfileUpdate()"
     >
         <section class="form-input no-margin-top">
             <label>
                 <span>Name of Fishery: <em class="required">*</em></span>
-                <input 
-                    type="text" 
-                    name="ssf_name" 
-                    placeholder="Name of Fishery" 
-                    [value]="record.profile_name"
-                    required 
+                <input
+                    type="text"
+                    name="ssf_name"
+                    placeholder="Name of Fishery"
+                    [value]="record.ssf_name"
+                    required
                 />
             </label>
         </section>
-        
-        
+
+
         <section class="form-input">
             <label>
                 <span>Time Frame - Begin Year: <em class="required">*</em></span>
-                <select name="data_year" required>
+                <select name="start_year" required>
                     <option value="" disabled hidden selected>Select Start Year</option>
-                    <option 
+                    <option
                         *ngFor="let year of years"
                         [value]="year"
                         [innerHTML]="year"
@@ -33,15 +33,15 @@
                 </select>
             </label>
         </section>
-        
-        
+
+
         <section class="form-input">
             <label>
                 <span>Time Frame - End Year: <em class="required">*</em></span>
-                <select name="data_end_year" required>
+                <select name="end_year" required>
                     <option value="" disabled hidden selected>Select End Year</option>
-                    <option value="0" [selected]="record.end_year === 0">Ongoing</option>
-                    <option 
+                    <option value="0" [selected]="record.ongoing">Ongoing</option>
+                    <option
                         *ngFor="let year of years"
                         [value]="year"
                         [innerHTML]="year"
@@ -50,72 +50,108 @@
                 </select>
             </label>
         </section>
-        
+
 
         <div class="toggle-container" togglerContainer>
             <section class="form-input">
                 <label>
                     <span>SSF Defined? <em class="required">*</em></span>
-                    <select 
-                        name="ssf_defined" 
-                        [value]="record.ssf_defined" 
-                        (change)="toggleOnOther($event, 'Yes')"
+                    <select
+                        name="ssf_defined"
+                        [value]="record.ssf_defined"
+                        (change)="toggler($event, definiteAns['YES'], true)"
                         required
                     >
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                        <option value="Not explicitly">Not explicitly</option>
+                        <option
+                            *ngFor="let value of definiteValues"
+                            [value]="value"
+                            [innerHTML]="value"
+                            [selected]="value == record.ssf_defined"
+                        ></option>
                     </select>
                 </label>
             </section>
-        
-            
-            
-            <section class="form-input" [hidden]="record.ssf_defined != 'Yes'" toggleDisable>
+
+
+
+            <section class="form-input" [hidden]="record.ssf_defined != definiteAns['YES']" toggleDisable>
                 <label class="header-label">
-                    <span>SSF Definition (if applicable):</span>
-                    <textarea 
-                        name="ssf_definition" 
-                        placeholder="Please profile a SSF definition" 
+                    <span>SSF Definition (if applicable): <em class="required">*</em></span>
+                    <textarea
+                        name="ssf_definition"
+                        placeholder="Please profile a SSF definition"
                         [value]="record.ssf_definition"
-                        toggleOnChange 
+                        toggleOnChange
+                        [required]="record.ssf_defined === definiteAns['YES']"
                     ></textarea>
                 </label>
             </section>
         </div>
 
-    
+
         <section class="form-input">
             <label>
-                <span>Image URL (direct links only):</span>
-                <input 
-                    type="text" 
-                    name="img_url" 
-                    placeholder="Name of Fishery" 
-                    [value]="record.img_url"
-                />
+                <span>Any URLs that might be relevant (direct links only):</span>
+                <textarea
+                    name="url"
+                    placeholder="Separate each link by putting them in a new line ..."
+                    [value]="record.url"
+                ></textarea>
             </label>
         </section>
+
+
+        <section class="form-input image-section">
+            <label>
+                <span>Upload a {{record.img_url ? 'new' : '' }} photo (Max 10MB):</span>
+                <input
+                    #imageInput
+                    type="file"
+                    name="image_file"
+                    (change)="processImage($event)"
+                />
+
+                <input
+                    #imageAction
+                    hidden="true"
+                    type="hidden"
+                    name="image_action"
+                    [value]="imageActionKey"
+                />
+            </label>
+
+
+            <div [ngStyle]="{'display': showImage ? 'inline-block' : 'none'}" class="image-container">
+                <img
+                    #previewImage
+                    [src]="imageUrl + '/' + record.img"
+                    alt="Record Image"
+                />
+                <span (click)="removeImage()">X</span>
+            </div> <!-- image-container -->
+
+            <p *ngIf="fileTooBigError" class="error">File size is too big. Maximum allowed size is 10MB</p>
+        </section>
+
         <br><button type="submit" class="no-margin-left">Submit</button>
     </form>
 
 
-    <form 
+    <form
         [hidden]="activeTab != tabLabels[1]"
         class="profile-update-form characteristics"
-        #characteristicsForm        
+        #characteristicsForm
         (ngSubmit)="onProfileUpdate()"
         togglerContainer
     >
-        <app-profile-characteristics 
-            [characteristicsLabels]="record.characteristics_label_list"
-            [characteristicsValues]="record.characteristics_value_list"
-        ></app-profile-characteristics>
+        <app-characteristics
+            [characteristics]="record.attributes"
+        ></app-characteristics>
         <br><button type="submit" class="no-margin-left">Submit</button>
     </form>
 
 
-    <form 
+    <form
         [hidden]="activeTab != tabLabels[2]"
         class="profile-update-form species"
         #speciesForm
@@ -134,145 +170,143 @@
     </form>
 
 
-    <form 
+    <form
         [hidden]="activeTab != tabLabels[3]"
-        class="profile-update-form profile-organization" 
+        class="profile-update-form profile-organization"
         #profileOrganizationForm
         (ngSubmit)="onProfileUpdate()"
     >
         <div class="profile-organization-section-container">
-            <div 
+            <div
                 *ngFor="let organization of profileOrganizations"
-                class="profile-organization-section" 
+                class="profile-organization-section"
                 profileOrganizationSection
             >
                 <div class="profile-organization-type-trigger">
-                    <p 
-                        trigger 
-                        organizationFromList 
-                        class="organization-from-list" 
+                    <p
+                        trigger
+                        organizationFromList
+                        class="organization-from-list"
                         (click)="onOrganizationTypeSelect($event, 'true')"
                     >
-                        <mat-icon unchecked [ngClass]="{'hidden': organization[0] != null}">radio_button_unchecked</mat-icon> 
-                        <mat-icon checked [ngClass]="{'hidden': organization[0] == null}">radio_button_checked</mat-icon>
+                        <mat-icon unchecked [ngClass]="{'hidden': organization.enlisted}">radio_button_unchecked</mat-icon>
+                        <mat-icon checked [ngClass]="{'hidden': !organization.enlisted}">radio_button_checked</mat-icon>
                         Select organization from SSF organization list
                     </p>
-                    
-                    <p 
-                        trigger 
+
+                    <p
+                        trigger
                         addNewOrganization
-                        class="add-new-organization" 
+                        class="add-new-organization"
                         (click)="onOrganizationTypeSelect($event, 'false')"
                     >
-                        <mat-icon unchecked [ngClass]="{'hidden': organization[0] == null}">radio_button_unchecked</mat-icon> 
-                        <mat-icon checked [ngClass]="{'hidden': organization[0] != null}">radio_button_checked</mat-icon>
+                        <mat-icon unchecked [ngClass]="{'hidden': !organization.enlisted}">radio_button_unchecked</mat-icon>
+                        <mat-icon checked [ngClass]="{'hidden': organization.enlisted}">radio_button_checked</mat-icon>
                         Add an organization not found in the list
                     </p>
                 </div> <!-- /profile-organization-type-trigger -->
-    
-        
-                <section 
-                    class="form-input no-margin-top" 
-                    [ngClass]="{'hidden': organization[0] == null}"
-                    [attr.isActive]="organization[0] != null" 
+
+
+                <section
+                    class="form-input no-margin-top"
+                    [ngClass]="{'hidden': !organization.enlisted}"
+                    [attr.isActive]="organization.enlisted"
                     organizationExist="true"
                 >
                     <label class="input-spinner-holder">
                         <span>SSF Organization already in ISSF: <em class="required">*</em></span>
-                        <img 
-                            *ngIf="!organizationList" 
+                        <img
+                            *ngIf="!organizationList"
                             class="input-spinner"
-                            src="../../../../assets/img/icons/loader/loading.gif" 
+                            src="../../../../assets/img/icons/loader/loading.gif"
                             alt="spinner"
                         />
-                        <select name="ssforganization" mayRequireInput [required]="organization[0] != null">
+                        <select name="ssforganization_id" mayRequireInput [required]="organization.enlisted">
                             <option value="">-----------------</option>
-                            <option 
-                                *ngFor="let org of organizationList" 
+                            <option
+                                *ngFor="let org of organizationList"
                                 [value]="org.issf_core_id"
                                 [innerHTML]="org.organization_name"
-                                [selected]="org.issf_core_id == organization[0]"
+                                [selected]="org.issf_core_id == organization.organization_id"
                             ></option>
                         </select>
                     </label>
                 </section>
-    
-    
-                <fieldset 
-                    class="other-organization-section" 
-                    [ngClass]="{'hidden': organization[0] != null}"
-                    [attr.isActive]="organization[0] == null" 
+
+
+                <fieldset
+                    class="other-organization-section"
+                    [ngClass]="{'hidden': organization.enlisted}"
+                    [attr.isActive]="!organization.enlisted"
                     organizationExist="false"
                 >
                     <legend>Other organization:</legend>
                     <section class="form-input">
                         <label>
                             <span>Organization name: <em class="required">*</em></span>
-                            <input 
-                                type="text" 
-                                name="organization_name" 
-                                placeholder="Other organization name" 
-                                [required]="organization[0] == null"
-                                [value]="organization[1]"
+                            <input
+                                type="text"
+                                name="organization_name"
+                                placeholder="Other organization name"
+                                [required]="!organization.enlisted"
+                                [value]="organization.name"
                                 mayRequireInput
                             />
                         </label>
                     </section>
-                    
-                    
+
+
                     <div class="toggle-container" togglerContainer>
                         <section class="form-input">
                             <label>
                                 <span>Organization type: <em class="required">*</em></span>
-                                <select 
-                                    name="organization_type"  
-                                    (change)="toggleOnOther($event, 'Other')" 
-                                    [required]="organization[0] == null"
+                                <select
+                                    name="organization_type"
+                                    (change)="toggler($event, 'Other', true)"
+                                    [required]="!organization.enlisted"
                                     mayRequireInput
                                     otherOrganizationTrigger
                                 >
-                                    <option value="">---------</option>
-                                    <option 
-                                        *ngFor="let org of organizationTypes"
-                                        [value]="org"
-                                        [innerHTML]="org"
-                                        [selected]="org == organization[2]"
+                                    <option
+                                        *ngFor="let orgType of organizationTypes"
+                                        [value]="orgType"
+                                        [innerHTML]="orgType"
+                                        [selected]="orgType == organization.type"
                                     ></option>
-                                    <option [selected]="organization[2]" value="Other">Other</option>
+                                    <option [selected]="organization.type?.toLowerCase() === 'other'" value="Other">Other</option>
                                 </select>
                             </label>
                         </section>
-                        
-                        
-                        <section class="form-input" [hidden]="organization[4] == ''" toggleDisable>
+
+                        <section class="form-input" [hidden]="organization.type?.toLowerCase() !== 'other'" toggleDisable>
                             <label>
-                                <span>Please specify other organization type:</span>
-                                <input 
-                                    type="text" 
-                                    name="organization_type_other_text" 
-                                    placeholder="Please specify other organization type" 
-                                    [value]="organization[4]"
-                                    [required]="organization[4] != ''"
-                                    toggleOnChange 
+                                <span>Please specify other organization type: <em class="required">*</em></span>
+                                <input
+                                    type="text"
+                                    name="organization_type_other_text"
+                                    placeholder="Please specify other organization type"
+                                    [value]="organization.other"
+                                    [required]="organization.type?.toLowerCase() === 'other'"
+                                    toggleOnChange
                                 />
                             </label>
                         </section>
                     </div> <!-- /toggle-container -->
-                    
-                    
+
+
                     <section class="form-input">
                         <label>
                             <span>Organization geographic scope: <em class="required">*</em></span>
-                            <select 
-                                name="geographic_scope" 
-                                mayRequireInput 
-                                [required]="organization[0] == null"
+                            <select
+                                name="geographic_scope"
+                                [required]="!organization.enlisted"
+                                mayRequireInput
                             >
-                                <option 
+                                <option
                                     *ngFor="let gsOption of gsOptions"
                                     [value]="gsOption"
                                     [innerHTML]="gsOption"
-                                    [selected]="org == organization[3]"
+                                    [selected]="gsOption == organization.geoscope"
                                 ></option>
                             </select>
                         </label>
@@ -280,18 +314,18 @@
                 </fieldset>
 
 
-                <button 
+                <button
                     sectionRemover
-                    type="button" 
-                    class="remove-section" 
+                    type="button"
+                    class="remove-section"
                     (click)="removeSection($event)"
                 >Remove Section</button>
             </div> <!-- /profile-organization-section -->
         </div> <!-- /profile-organization-section-container -->
-        
 
-        <span 
-            class="add-more" 
+
+        <span
+            class="add-more"
             (click)="onAddAnother($event)"
         >
             <mat-icon>add_circle_outline</mat-icon>
@@ -302,7 +336,7 @@
     </form>
 
 
-    <form 
+    <form
         [hidden]="activeTab != tabLabels[4]"
         class="profile-update-form links"
         #linksForm
@@ -321,30 +355,30 @@
     </form>
 
 
-    <form 
+    <form
         [hidden]="activeTab != tabLabels[5]"
-        class="profile-update-form sources" 
+        class="profile-update-form sources"
         #sourcesForm
         (ngSubmit)="onProfileUpdate()"
     >
         <section class="form-input no-margin-top">
             <label>
                 <span>Sources: </span>
-                <textarea 
-                    name="sources" 
-                    placeholder="Please provide any sources you have ..." 
+                <textarea
+                    name="sources"
+                    placeholder="Please provide any sources you have ..."
                     [value]="record.sources"
                 ></textarea>
             </label>
         </section>
 
-    
+
         <section class="form-input">
             <label>
                 <span>Comments: </span>
-                <textarea 
-                    name="comments" 
-                    placeholder="Please provide any comments you have ..." 
+                <textarea
+                    name="comments"
+                    placeholder="Please provide any comments you have ..."
                     [value]="record.comments"
                 ></textarea>
             </label>

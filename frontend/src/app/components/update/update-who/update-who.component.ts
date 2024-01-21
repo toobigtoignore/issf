@@ -11,7 +11,7 @@ import {
 } from '../../../constants/constants';
 import {
     getAllCountriesUrl,
-    getAllOrganizationNamesUrl,
+    getAllOrganizationsUrl,
     updateWhoBasicUrl,
     updateWhoResearcherUrl,
     updateThemeUrl,
@@ -57,7 +57,7 @@ export class UpdateWhoComponent implements OnInit {
         this.tabLabels = Array.from(DETAILS_ACCORDIONS_LABELS['WHO']);
         this.isOtherEducationLevel = this.isEducationLevelOther();
         this.countryList = await get(getAllCountriesUrl);
-        this.organizationList = await get(getAllOrganizationNamesUrl);
+        this.organizationList = await get(getAllOrganizationsUrl);
     }
 
 

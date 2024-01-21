@@ -18,11 +18,11 @@ export class SpeciesLinkComponent implements OnInit {
     @Input() field1Type: string;
     optionValues: string[] = URL_OPTIONS;
     types: SPECIES_LINKS_TYPES = SPECIES_LINKS_TYPES;
-    
+
 
     constructor() { }
 
-    
+
     ngOnInit(): void {
         if(this.values?.length === 0){
             if(this.field1Type === this.types['SELECT']){
@@ -33,9 +33,9 @@ export class SpeciesLinkComponent implements OnInit {
             if(this.field1Type === this.types['INPUT']){
                 // Species type
                 // expects the values to be received in this format
-                this.values = [['', '']]
+                this.values = [{species_common: '', species_scientific: ''}]
             }
-            
+
         }
     }
 

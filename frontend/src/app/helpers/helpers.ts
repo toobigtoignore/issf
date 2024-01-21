@@ -14,6 +14,18 @@ import { COUNTRIES_LIST, DETAILS_ACCORDIONS_LABELS, GS_LABELS, GS_OPTIONS, PANEL
 import { loggedInUserType } from '../../assets/js/types';
 
 
+export const adjustValueWithUnit = (item: {value: string, unit: string|null, additional: number|null}): string => {
+    let result = item.value || '';
+    if(item.additional){
+        result += ' - ' + item.additional;
+    }
+    if(item.unit){
+        result += ' ' + item.unit;
+    }
+    return result;
+}
+
+
 export const capitalize = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
@@ -169,7 +181,7 @@ export const getLoggedInUser = (token: string): loggedInUserType => {
 }
 
 
-export const getYears = (startYear:number = 2010)=> {
+export const getYears = (startYear:number = 1900)=> {
     const currentYear = new Date().getFullYear();
     const years = [];
     for(let year=currentYear; year>=startYear; year--){

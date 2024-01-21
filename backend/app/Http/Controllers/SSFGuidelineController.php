@@ -118,9 +118,9 @@ class SSFGuidelineController extends Controller
                 'start_year' => ['required', 'integer'],
                 'start_month' => ['required', 'integer'],
                 'start_day' => ['required', 'integer'],
-                'end_year' => ['required_if:ongoing,No', 'integer', 'nullable'],
-                'end_month' => ['required_if:ongoing,No', 'integer', 'nullable'],
-                'end_day' => ['required_if:ongoing,No', 'integer', 'nullable']
+                'end_year' => ['required_if:ongoing,' . config('constants.DEFINED_ANSWERS.NO'), 'integer', 'nullable'],
+                'end_month' => ['required_if:ongoing,' . config('constants.DEFINED_ANSWERS.NO'), 'integer', 'nullable'],
+                'end_day' => ['required_if:ongoing,' . config('constants.DEFINED_ANSWERS.NO'), 'integer', 'nullable']
             ]
         );
 

@@ -194,27 +194,27 @@
 
 
     <div *ngIf="accordion === accordionList[3]" class="accordion-details record-image">
-        <h3 *ngIf="!bluejusticeData.img_url || bluejusticeData.img_url === ''">No image provided</h3>
-        <section *ngIf="bluejusticeData.img_url && bluejusticeData.img_url !== ''" class="image-container">
+        <h3 *ngIf="!bluejusticeData.uploaded_img || bluejusticeData.uploaded_img === ''">No image provided</h3>
+        <section *ngIf="bluejusticeData.uploaded_img && bluejusticeData.uploaded_img !== ''" class="image-container">
             <img
-                src="https://www.campbellrivermirror.com/wp-content/uploads/2021/04/24883656_web1_CP121738206.jpg"
+                [src]="imageUrl + '/' + record.uploaded_img"
                 alt="Record Image"
             />
 
             <table>
                 <tr>
                     <th>Where this photo was taken</th>
-                    <td [innerHTML]="bluejusticeData.photo_location"></td>
+                    <td [innerHTML]="bluejusticeData.photo_location || 'N/A'"></td>
                 </tr>
 
                 <tr>
                     <th>When this photo was taken</th>
-                    <td [innerHTML]="bluejusticeData.date_of_photo"></td>
+                    <td [innerHTML]="bluejusticeData.date_of_photo || 'N/A'"></td>
                 </tr>
 
                 <tr>
                     <th>Name of the photographer</th>
-                    <td [innerHTML]="bluejusticeData.photographer"></td>
+                    <td [innerHTML]="bluejusticeData.photographer || 'N/A'"></td>
                 </tr>
             </table>
         </section>
