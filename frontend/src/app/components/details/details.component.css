@@ -124,7 +124,12 @@
 }
 
 
-.details-accordion li:first-child .accordion-content {
+/* .details-accordion li:first-child .accordion-content {
+    max-height: 100%;
+} */
+
+
+.details-accordion li .accordion-content {
     max-height: 100%;
 }
 

@@ -8,6 +8,7 @@ export const environment =
     API_URL: 'http://127.0.0.1:8000',
     BLUEJUSTICE_IMAGE_URL: 'http://127.0.0.1:8000/images/bluejustice',
     SSF_PROFILE_IMAGE_URL: 'http://127.0.0.1:8000/images/ssf-profiles',
+    SSF_PERSON_IMAGE_URL: 'http://127.0.0.1:8000/images/people'
 };
 
 /*

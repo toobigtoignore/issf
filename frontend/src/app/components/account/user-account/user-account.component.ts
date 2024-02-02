@@ -2,7 +2,8 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { get } from '../../../helpers/apiCalls';
 import { getLoggedInUser } from '../../../helpers/helpers';
 import { getAllCountriesUrl, getUserUrl, updateUserUrl } from '../../../constants/api';
-import { STORAGE_TOKENS, PANEL_VALUES, RESPONSE_CODES } from '../../../constants/constants';
+import { STORAGE_TOKENS, PANEL_VALUES, MONTHS, RESPONSE_CODES } from '../../../constants/constants';
+import { parseDateElements } from '../../../helpers/helpers';
 import { PostServices } from '../../../services/post.service';
 import { CommonServices } from '../../../services/common.service';
 import { Subscription } from 'rxjs';
@@ -44,13 +45,13 @@ export class UserAccountComponent implements OnInit {
                     message: updateResponse.message
                 };
                 if(updateResponse.status_code === RESPONSE_CODES.HTTP_200_OK){
-                    const selectEl = this.accountForm.nativeElement.querySelector('[name=country]');
+                    const selectEl = this.accountForm.nativeElement.querySelector('[name=country_id]');
                     const countryName = selectEl.options[selectEl.selectedIndex].innerText;
                     this.userInfo.first_name = this.accountForm.nativeElement.querySelector('[name=first_name]').value;
                     this.userInfo.initials = this.accountForm.nativeElement.querySelector('[name=initials]').value;
                     this.userInfo.last_name = this.accountForm.nativeElement.querySelector('[name=last_name]').value;
                     this.userInfo.country_id = selectEl.value;
-                    this.userInfo.country_name = countryName;
+                    this.userInfo.country.short_name = countryName;
                     this.showForm = false;
                 }
         });
@@ -62,6 +63,19 @@ export class UserAccountComponent implements OnInit {
         this.userInfo = await get(getUserUrl(this.userId));
         this.countryList = await get(getAllCountriesUrl);
         this.prepareNumberOfContributionsByType();
+    }
+
+
+    getFormattedDate(){
+        const date = this.userInfo.date_joined.split(' ')[0];
+        const parsedDate: {year: number, month: number, day: number} = parseDateElements(date, '-');
+        const monthName = MONTHS.filter((month: {num: number, name: string, maxDay: number}) => parsedDate.month == month.num)[0].name;
+        return parsedDate.day + ' ' + monthName + ', ' + parsedDate.year;
+    }
+
+
+    getFullName(){
+        return this.userInfo.first_name + ' ' + (this.userInfo.initials || '') + ' ' + this.userInfo.last_name;
     }
 
 

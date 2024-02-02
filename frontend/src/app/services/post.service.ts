@@ -45,13 +45,6 @@ export class PostServices {
     }
 
 
-    setHeaders(token: string) {
-        return new HttpHeaders({
-            'Authorization': "Bearer " + token
-        });
-    }
-
-
     createRecord(panelCode: string, payload: Object): Observable<any> {
         const apiUrl = this.getApiUrlFromPanelCode(panelCode);
         return this.http.post(

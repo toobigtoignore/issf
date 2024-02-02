@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { get } from '../../../helpers/apiCalls';
-import { getLoggedInUser } from '../../../helpers/helpers';
+import { createSSFPersonIfNotExist, getLoggedInUser } from '../../../helpers/helpers';
 import { getPersonLinkForUserUrl } from '../../../constants/api';
 import { GS_OPTIONS, STORAGE_TOKENS, PANEL_CODES, PANEL_VALUES, RESPONSE_CODES } from '../../../constants/constants';
 import { AuthServices } from '../../../services/auth.service';
@@ -32,30 +32,6 @@ export class UserProfileComponent implements OnInit {
 
     ngOnInit(): void {
         this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
-        get(getPersonLinkForUserUrl(this.userId)).then(async (issf_core_id: number) => {
-            if(issf_core_id) {
-                this.router.navigate(['/details', PANEL_CODES.WHO, issf_core_id]);
-            }
-            else await this.createSSFPersonForUser();
-        });
-    }
-
-
-    async createSSFPersonForUser(){
-        const dataToSubmit = {
-            basic_info: {
-                contributor_id: this.userId,
-                geographic_scope_type: GS_OPTIONS.NOT_SPECIFIC,
-                record_type: PANEL_VALUES.WHO
-            }
-        }
-
-        this.postServices
-            .createRecord(PANEL_CODES.WHO, dataToSubmit)
-            .subscribe(response => {
-                if(response.status_code === RESPONSE_CODES.HTTP_200_OK){
-                    window.location.reload();
-                }
-            });
+        createSSFPersonIfNotExist(this.userId, this.router, this.postServices, 'details');
     }
 }

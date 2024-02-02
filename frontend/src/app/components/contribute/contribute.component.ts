@@ -39,7 +39,7 @@ export class ContributeComponent implements OnInit {
     paramsSubscription: any;
     scopeSubscription: any;
     sigininSubscription: any;
-    userId: number;
+    user: any;
 
 
     constructor(
@@ -55,6 +55,25 @@ export class ContributeComponent implements OnInit {
             return;
         }
 
+        this.paramsSubscription = this.route.paramMap.subscribe(params => {
+            this.activePanel = params.get("panelID");
+        });
+        this.panelCodesObj = PANEL_CODES;
+        this.user = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS));
+        if(!this.activePanel){
+            this.activePanel = this.user.isStaff ? this.panelCodesObj.WHO : this.panelCodesObj.SOTA;
+        }
+
+        /*
+            show error page if
+            the active panel is not any of the allowed panels or
+            if the active panel is Who's who but the user is not staff
+        */
+        if((!this.user.isStaff && this.activePanel === this.panelCodesObj.WHO) || !Object.values(this.panelCodesObj).includes(this.activePanel)){
+            this.router.navigate(['/404'], { skipLocationChange: true });
+            return;
+        }
+
         this.scopeSubscription = this.commonServices.scopeEmitter.subscribe((scope: string) => this.selectedGeoScope = scope);
         this.sigininSubscription = this.authServices.signinEmitter.subscribe((response: {message: string, status_code: number}) => {
             if(response.status_code === RESPONSE_CODES.HTTP_200_OK){
@@ -65,14 +84,8 @@ export class ContributeComponent implements OnInit {
 
 
     async ngOnInit(): Promise<void> {
-        this.paramsSubscription = this.route.paramMap.subscribe(params => {
-            this.activePanel = params.get("panelID");
-        });
-        this.panelCodesObj = PANEL_CODES;
-        this.activePanel = !this.activePanel ? this.panelCodesObj.SOTA : this.activePanel;
-        this.userId = getLoggedInUser(localStorage.getItem(STORAGE_TOKENS.ACCESS)).userId;
-        this.panelCodes = Object.values(PANEL_CODES).slice(1);
-        this.panelValues = Object.values(PANEL_VALUES).slice(1);
+        this.panelCodes = this.user.isStaff ? Object.values(PANEL_CODES) : Object.values(PANEL_CODES).slice(1);
+        this.panelValues = this.user.isStaff ? Object.values(PANEL_VALUES): Object.values(PANEL_VALUES).slice(1);
         this.formSeq = 1;
         this.countryList = await get(getAllCountriesUrl);
         this.contributorsList = await get(getAllContributorsUrl);
@@ -96,14 +109,14 @@ export class ContributeComponent implements OnInit {
 
     getPanelIcon(panel: string):string {
         switch(panel) {
-            case PANEL_CODES.WHO: return '../../../assets/img/map-controller-icons/icon-who.png';
-            case PANEL_CODES.SOTA: return '../../../assets/img/map-controller-icons/icon-sota.png';
-            case PANEL_CODES.PROFILE: return '../../../assets/img/map-controller-icons/icon-profile.png';
-            case PANEL_CODES.ORGANIZATION: return '../../../assets/img/map-controller-icons/icon-organization.png';
-            case PANEL_CODES.CASESTUDY: return '../../../assets/img/map-controller-icons/icon-case.png';
-            case PANEL_CODES.GOVERNANCE: return '../../../assets/img/map-controller-icons/icon-governance.png';
-            case PANEL_CODES.BLUEJUSTICE: return '../../../assets/img/map-controller-icons/icon-bluejustice.png';
-            case PANEL_CODES.GUIDELINES: return '../../../assets/img/map-controller-icons/icon-guidelines.png';
+            case PANEL_CODES.WHO: return '/assets/img/map-controller-icons/icon-who.png';
+            case PANEL_CODES.SOTA: return '/assets/img/map-controller-icons/icon-sota.png';
+            case PANEL_CODES.PROFILE: return '/assets/img/map-controller-icons/icon-profile.png';
+            case PANEL_CODES.ORGANIZATION: return '/assets/img/map-controller-icons/icon-organization.png';
+            case PANEL_CODES.CASESTUDY: return '/assets/img/map-controller-icons/icon-case.png';
+            case PANEL_CODES.GOVERNANCE: return '/assets/img/map-controller-icons/icon-governance.png';
+            case PANEL_CODES.BLUEJUSTICE: return '/assets/img/map-controller-icons/icon-bluejustice.png';
+            case PANEL_CODES.GUIDELINES: return '/assets/img/map-controller-icons/icon-guidelines.png';
         }
     }
 
@@ -208,7 +221,7 @@ export class ContributeComponent implements OnInit {
 
         submitData.basic_info['geographic_scope_type'] = this.selectedGeoScope;
         submitData.basic_info['record_type'] = PANEL_VALUES[this.activePanel.toUpperCase()];
-        submitData.basic_info['contributor_id'] = this.userId;
+        submitData.basic_info['contributor_id'] = this.user.userId;
 
         if(this.selectedGeoScope === GS_OPTIONS.GLOBAL || this.selectedGeoScope === GS_OPTIONS.NOT_SPECIFIC){
             submitData.geo_scope['gs_global_notspecific'] = this.selectedGeoScope;

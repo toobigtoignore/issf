@@ -94,7 +94,7 @@
                 ></app-contribute-guidelines>
 
 
-                <section class="form-input">
+                <section class="form-input" *ngIf="activePanel !== panelCodesObj.WHO">
                     <label>
                         <span>Editor (note: If you choose someone here, you authorize this person to edit this record. You, ISSF Staff and this person will be able to edit the content of this record.): </span>
                         <select name="editor_id">
@@ -115,7 +115,7 @@
             </div> <!-- /geographic-form -->
 
 
-            <div class="buttons" *ngIf="formSeq != 3">
+            <div class="buttons" *ngIf="formSeq != 3 && activePanel !== panelCodesObj.WHO">
                 <span class="button" *ngIf="formSeq === 2" (click)="formSeq=1">Previous</span>
                 <span class="button" *ngIf="formSeq === 1" (click)="validateBasicForm()">Next</span>
                 <span class="button" *ngIf="formSeq === 2" (click)="submitRecord()">Submit</span>

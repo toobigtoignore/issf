@@ -54,3 +54,10 @@
 .update-organization .checkbox-container input[type="text"] {
     max-width: 400px;
 }
+
+
+.update-organization form button {
+    color: #fff;
+    background: #ed5fa9 !important;
+    border: 1px solid #ed5fa9;
+}

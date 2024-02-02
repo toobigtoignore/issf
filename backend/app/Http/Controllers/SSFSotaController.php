@@ -8,6 +8,8 @@ use App\Http\Controllers\HelperController;
 use App\Http\Controllers\ValidationController;
 use App\Models\ISSFCore;
 use App\Models\SSFSota;
+use App\Models\PublicationType;
+
 
 class SSFSotaController extends Controller
 {
@@ -38,14 +40,14 @@ class SSFSotaController extends Controller
         }
 
         $sota_id = SSFSota::latest('id')->first()->id + 1;
-        $issf_core_id = HelperController::createCoreRecord($payload);
+        $issf_core_id = HelperController::create_core_record($payload);
         if(!$issf_core_id){
             return [
                 'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
             ];
         }
 
-        $new_geo_scope = HelperController::createGeoscope($payload, $issf_core_id);
+        $new_geo_scope = HelperController::create_geo_scope($payload, $issf_core_id);
         if(!$new_geo_scope){
             return [
                 'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
@@ -127,6 +129,19 @@ class SSFSotaController extends Controller
         $updated = $record->update($formatted_payload);
 
         if($updated){
+            $publication_type = $payload['other_publication_type'] ?: PublicationType::find($payload['publication_type_id'])->publication_type;
+            HelperController::update_record_summary(
+                config('constants.RECORD_TYPES.SOTA'),
+                $record->issf_core_id,
+                [
+                    'level1_title' => $payload['level1_title'],
+                    'level2_title' => $payload['level2_title'],
+                    'author_names' => $payload['author_names'],
+                    'year' => $payload['year'],
+                    'publication_type' => $publication_type
+                ]
+            );
+
             return [
                 'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
             ];

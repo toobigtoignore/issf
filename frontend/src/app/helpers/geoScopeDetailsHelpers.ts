@@ -58,7 +58,7 @@ export const getGeographicInfo = (geoScopeParams: getGeoScopeDetailsInfo, geoSco
         const coordinates = blockData.region?.region_point?.coordinates;
         let countries = '';
         blockData.countries?.map((country:any) => {
-            countries += getCountryNameFromCode(country.country_id) + ', ';
+            countries += getCountryNameFromCode(parseInt(country.country_id)) + ', ';
         });
         geoScopeDetailsLabels = data.map((scopeInfo: any) => scopeInfo.region_name_other || scopeInfo.region?.region_name);
         geoScopeValues = [

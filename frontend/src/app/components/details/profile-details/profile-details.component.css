@@ -23,6 +23,11 @@
 }
 
 
+.profile-accordions .characteristics-accordion ul {
+    padding: 10px 35px;
+}
+
+
 .profile-accordions .organization-accordion ul,
 .profile-accordions .accordion-species ul,
 .profile-accordions .links-accordion ul {

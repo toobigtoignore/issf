@@ -22,7 +22,31 @@
                 <td [innerHTML]="whoData.core?.contributor?.country?.short_name"></td>
             </tr>
 
-            <tr>
+            <tr *ngIf="primaryAffiliation || notRegisteredAffiliation">
+                <th>Primary institutional/organizational affiliation</th>
+                <td>
+                    <a
+                        *ngIf="primaryAffiliation"
+                        [routerLink]="['/details', 'organization', primaryAffiliation?.organization_id]"
+                        [innerHTML]="primaryAffiliation?.organization_name"
+                    ></a>
+
+                    <span *ngIf="!primaryAffiliation" [innerHTML]="notRegisteredAffiliation"></span>
+                </td>
+            </tr>
+
+            <tr *ngIf="affiliatedOrganizations && affiliatedOrganizations.length > 0">
+                <th>Other SSF Organizations {{ formulateFullName(whoData.core?.contributor) }} is a member of</th>
+                <td>
+                    <ul>
+                        <li *ngFor="let org of affiliatedOrganizations">
+                            <a [routerLink]="['/details', 'organization', org.organization_id]" [innerHTML]="org.organization_name"></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+
+            <!-- <tr>
                 <th>Primary institutional/organizational affiliation</th>
                 <td [innerHTML]="whoData.affiliation"></td>
             </tr>
@@ -60,7 +84,7 @@
             <tr>
                 <th>Link to homepage or online profile (Google Scholar, LinkedIn, etc.):</th>
                 <td [innerHTML]="whoData.url"></td>
-            </tr>
+            </tr> -->
 
             <tr>
                 <th>Date created</th>
@@ -84,7 +108,7 @@
 
             <tr>
                 <th>Highest level of education</th>
-                <td [innerHTML]="whoData.education_level"></td>
+                <td [innerHTML]="whoData.other_education_level || whoData.education_level"></td>
             </tr>
 
             <tr>

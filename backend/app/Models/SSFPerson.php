@@ -17,7 +17,7 @@ class SSFPerson extends Model
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $table = 'ssf_person';
-    protected $with = ['core', 'ssf_country'];
+    protected $with = ['core', 'affiliated_organization_country'];
     public $timestamps = false;
 
     protected $casts = [
@@ -32,7 +32,7 @@ class SSFPerson extends Model
         return $this->hasMany(PersonOrganization::class);
     }
 
-    public function ssf_country(){
+    public function affiliated_organization_country(){
         return $this->belongsTo(Country::class, 'country_id');
     }
 }

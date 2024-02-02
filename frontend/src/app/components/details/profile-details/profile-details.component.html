@@ -51,17 +51,26 @@
     </div>
 
 
-    <div *ngIf="accordion === accordionList[1]" class="accordion-details">
-        <table>
-            <tr *ngFor="let category of profileData.attributes?.categories; let i = index">
-                <th [innerHTML]="category"></th>
-                <td>
-                    <ul>
-                        <li *ngFor="let values of profileData.attributes.values[i]" [innerHTML]="adjustValueWithUnit(values)"></li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
+    <div *ngIf="accordion === accordionList[1]" class="accordion-details characteristics-accordion">
+        <ng-container *ngIf="profileData.attributes; else emptyAttributes">
+            <table>
+                <tr *ngFor="let category of profileData.attributes?.categories; let i = index">
+                    <th [innerHTML]="category"></th>
+                    <td>
+                        <ul>
+                            <li *ngFor="let values of profileData.attributes.values[i]" [innerHTML]="adjustValueWithUnit(values)"></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </ng-container>
+
+
+        <ng-template #emptyAttributes>
+            <ul>
+                <li>No characteristic was listed for this record.</li>
+            </ul>
+        </ng-template>
     </div>
 
 

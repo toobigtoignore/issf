@@ -31,13 +31,13 @@
                 <li *ngFor="let accordion of accordions; let i = index">
                     <span
                         (click)="toggleAccordion($event)"
-                        [ngClass]="{'active': i === 0}"
-                        [ngStyle]="{'background': i === 0 ? getPanelColor(panel) : 'transparent'}"
+                        class="active"
+                        [ngStyle]="{'background': getPanelColor(panel)}"
                         [innerHTML]="accordion">
                     </span>
 
 
-                    <div class="accordion-content" [ngClass]="{'active-accordion': i === 0}">
+                    <div class="accordion-content active-accordion">
                         <app-who-details
                             *ngIf="panel===panelsList['WHO'] && recordData != undefined"
                             [record]="recordData"
@@ -93,7 +93,11 @@
 
         <div class="right-block">
             <app-panel-based-component
-                *ngIf="(panel===panelsList['PROFILE'] || panel===panelsList['BLUEJUSTICE']) && recordData != undefined"
+                *ngIf="(
+                    panel===panelsList['WHO'] ||
+                    panel===panelsList['PROFILE'] ||
+                    panel===panelsList['BLUEJUSTICE']
+                ) && recordData != undefined"
                 [panel]="panel"
                 [panelColor]="getPanelColor(panel)"
                 [data]="recordData"

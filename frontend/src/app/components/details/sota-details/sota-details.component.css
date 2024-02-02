@@ -22,6 +22,11 @@
 }
 
 
+.sota-accordions .characteristics-accordion ul {
+    padding: 10px 35px;
+}
+
+
 .sota-accordions .accordion-species ul,
 .sota-accordions .links-accordion ul {
     padding-left: 25px;

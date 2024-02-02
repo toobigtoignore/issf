@@ -30,7 +30,7 @@ return new class extends Migration
             $table->text('postal_code')->nullable();
             $table->point('person_point')->nullable();
             $table->boolean('is_researcher')->default(false);
-            $table->text('img_url')->nullable();
+            $table->text('img')->nullable();
 
             $table->foreign('issf_core_id')->references('issf_core_id')->on('issf_core');
         });

@@ -38,14 +38,14 @@ class SSFProfileController extends Controller
         }
 
         $profile_id = SSFProfile::latest('id')->first()->id + 1;
-        $issf_core_id = HelperController::createCoreRecord($payload);
+        $issf_core_id = HelperController::create_core_record($payload);
         if(!$issf_core_id){
             return [
                 'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
             ];
         }
 
-        $new_geo_scope = HelperController::createGeoscope($payload, $issf_core_id);
+        $new_geo_scope = HelperController::create_geo_scope($payload, $issf_core_id);
         if(!$new_geo_scope){
             return [
                 'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
@@ -146,6 +146,7 @@ class SSFProfileController extends Controller
             ];
         }
 
+        $payload['ongoing'] = $payload['end_year'] === 0;
         $payload['img'] = $record->img;
         $image_action = $payload['image_action'];
         $image_file = $payload['image_file'];
@@ -172,6 +173,16 @@ class SSFProfileController extends Controller
         $updated = $record->update($formatted_payload);
 
         if($updated){
+            HelperController::update_record_summary(
+                config('constants.RECORD_TYPES.PROFILE'),
+                $record->issf_core_id,
+                [
+                    'ongoing' => $payload['ongoing'],
+                    'start_year' => $payload['start_year'],
+                    'end_year' => $payload['end_year'],
+                    'ssf_name' => $payload['ssf_name']
+                ]
+            );
             return [
                 'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
             ];

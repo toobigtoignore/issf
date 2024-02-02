@@ -15,7 +15,17 @@
     </div> <!-- /page-loading -->
 
 
-    <h1 class="panel-title" [ngStyle]="{'color': getPanelColor()}">{{ panelTitle }}</h1>
+    <div class="panel-title" >
+        <h1 [innerHTML]="panelTitle" [ngStyle]="{'color': getPanelColor()}"></h1>
+        <a
+            class="back-to-details"
+            [routerLink]="['/details', selectedPanel, recordId]"
+            [ngStyle]="{'color': getPanelColor()}"
+        >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Back to details
+        </a>
+    </div> <!-- /panel-title -->
 
 
     <ul class="triggers">
@@ -121,6 +131,11 @@
 
             <br>
             <button
+                [ngStyle]="{
+                    'background': getPanelColor(),
+                    'border-width': '1px',
+                    'border-color': getPanelColor()
+                }"
                 type="submit"
                 class="no-margin-left"
                 (click)="onGeoscopeUpdate()"

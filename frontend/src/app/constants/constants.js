@@ -533,6 +533,22 @@ export const GUIDELINES_ACTIVITY_COVERAGE = [
 export const INITIAL_CONTRIBUTION = 'Initial Contribution';
 
 
+export const MONTHS = [
+    { num: 1, name: 'January', maxDay: 31 },
+    { num: 2, name: 'February', maxDay: 29 },
+    { num: 3, name: 'March', maxDay: 31 },
+    { num: 4, name: 'April', maxDay: 30 },
+    { num: 5, name: 'May', maxDay: 31 },
+    { num: 6, name: 'June', maxDay: 30 },
+    { num: 7, name: 'July', maxDay: 31 },
+    { num: 8, name: 'August', maxDay: 31 },
+    { num: 9, name: 'September', maxDay: 30 },
+    { num: 10, name: 'October', maxDay: 31 },
+    { num: 11, name: 'November', maxDay: 30 },
+    { num: 12, name: 'December', maxDay: 31 }
+];
+
+
 export const PANEL_CODES = {
     WHO: 'who',
     SOTA: 'sota',

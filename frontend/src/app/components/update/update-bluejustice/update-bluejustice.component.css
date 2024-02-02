@@ -129,3 +129,10 @@
 .update-bluejustice .bluejustice-pdf {
     margin-top: 30px;
 }
+
+
+.update-bluejustice form button {
+    color: #fff;
+    background: #4d9de0 !important;
+    border: 1px solid #4d9de0;
+}

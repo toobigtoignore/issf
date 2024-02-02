@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
 
         this.countries = await get(getAllCountriesUrl);
         this.choroplethData = await get(getRecordsByCountryUrl);
-        this.records = await get(getAllContributionsUrl);
+        this.records = Object.values(await get(getAllContributionsUrl));
 
         this.countryList = this.countries.map((country: any) => country.short_name);
         this.filteredChoropleth = this.choroplethData;

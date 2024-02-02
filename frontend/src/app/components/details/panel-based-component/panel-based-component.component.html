@@ -1,5 +1,17 @@
 
 <!-- Content for right block of profile panel -->
+<div *ngIf="showPersonPanel" class="block-container">
+    <section class="person-image">
+        <h3 [ngStyle]="{'background': panelColor}">Image</h3>
+        <img
+            [src]="ssfPersonImageUrl + '/' + data.img"
+            alt="Record Image"
+        />
+    </section> <!-- /person-image -->
+</div>
+
+
+<!-- Content for right block of profile panel -->
 <div *ngIf="showProfilePanel" class="block-container">
     <!-- <div class="progress-bar-container">
         <div class="progress-bar" [ngStyle]="{'border': '1px solid ' + panelColor}">

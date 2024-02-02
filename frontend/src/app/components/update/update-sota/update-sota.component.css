@@ -54,3 +54,10 @@
 .update-sota .checkbox-container input[type="text"] {
     max-width: 400px;
 }
+
+
+.update-sota form button {
+    color: #fff;
+    background: #2bbb5f !important;
+    border: 1px solid #2bbb5f;
+}

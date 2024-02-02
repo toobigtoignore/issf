@@ -59,7 +59,7 @@
 
                 <tr>
                     <th>Name</th>
-                    <td [innerHTML]="userInfo.first_name + ' ' + userInfo.initials + ' ' + userInfo.last_name"></td>
+                    <td [innerHTML]="getFullName()"></td>
                 </tr>
 
                 <tr>
@@ -79,7 +79,7 @@
 
                 <tr>
                     <th>Date Joined</th>
-                    <td [innerHTML]="userInfo.date_joined.split(' ')[0]"></td>
+                    <td [innerHTML]="getFormattedDate()"></td>
                 </tr>
             </table>
 

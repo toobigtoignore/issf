@@ -3,3 +3,30 @@
     line-height: 25px;
     margin: 10px 0px;
 }
+
+
+.who-forms button {
+    width: auto;
+    padding: 0px 20px;
+    margin-left: 0;
+    margin-top: 20px;
+}
+
+
+.who-forms .filterable-select-box {
+    height: 320px;
+    margin-top: 10px;
+}
+
+
+.who-forms .filterable-select-box .select-option {
+    font-size: 14px !important;
+    padding: 1px 10px;
+    margin: 0 !important;
+}
+
+
+.who-forms .filterable-select-box .select-option.selected {
+    color: #fff;
+    background: #2699fb;
+}
