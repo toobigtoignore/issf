@@ -17,3 +17,10 @@
 .update-casestudies .form-input textarea {
     height: 150px;
 }
+
+
+.update-casestudies form button {
+    color: #fff;
+    background: #bcd745 !important;
+    border: 1px solid #bcd745;
+}

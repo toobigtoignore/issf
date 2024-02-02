@@ -1,75 +1,34 @@
 <div class="who-forms">
     <p>
-        <strong>Note:</strong> If you are directly involved in SSF please provide your basic details here. 
-        Name, email, and country of residence are provided on the User Profile form. 
-        Additional details, including researcher information, can be provided on the Who's Who page after you Submit this page. 
-        You can only contribute Who's Who information about yourself.
+        If you cannot find the person you are looking for in the list below, that means they have not created any account or verified their account yet. Please ask them to register to ISSF. Once they are registered, a confirmation email will be sent to them. Please ask them to verify their account by clicking the link from the email they provided. Once they have registered and verified their account, reload this page and their name should appear in the list.
     </p>
-    
+
+
     <section class="form-input">
         <label>
-            <span>First Name: <em class="required">*</em></span>
-            <input type="text" name="first-name" placeholder="First Name" required />
+            <span>Choose the person you want to create the profile for:</span>
         </label>
-    </section>
-    
-    <section class="form-input">
-        <label>
-            <span>Middle Initial(s):</span>
-            <input type="text" name="middle-name" placeholder="Middle Initial(s)" />
-        </label>
-    </section>
-    
-    <section class="form-input">
-        <label>
-            <span>Last Name: <em class="required">*</em></span>
-            <input type="text" name="last-name" placeholder="Last Name" required />
-        </label>
-    </section>
-    
-    <section class="form-input">
-        <label>
-            <span>Primary Institutional/Organizational Affiliation:</span>
-            <input type="text" name="primary-institution" placeholder="Primary institution that you are affiliated with" />
-        </label>
-    </section>
-    
-    <section class="form-input">
-        <label class="input-spinner-holder">
-            <span>Choose the Country of Residence:</span>
-            <img 
-                *ngIf="!countryList" 
-                class="input-spinner"
-                src="../../../../assets/img/icons/loader/loading.gif" 
+
+
+        <div class="filterable-select-box input-spinner-holder">
+            <input class="filterable-select-filterer" type="text" placeholder="Search users ..." (keyup)="filterUsers($event)"/>
+            <img
+                *ngIf="!users"
+                class="input-spinner filterable-select-spinner"
+                src="/assets/img/icons/loader/loading.gif"
                 alt="spinner"
             />
-            <select name="selected-country">
-                <option value="" selected>Select a Country</option>
-                <option 
-                    *ngFor="let country of countryList" 
-                    [value]="country.country_id"
-                    [innerHTML]="country.short_name"
-                ></option>
-            </select>
-        </label>
+            <div class="filterable-select-options">
+                <p
+                    *ngFor="let user of users"
+                    class="select-option"
+                    (click)="onUserSelect($event)"
+                    [attr.value]="user.id"
+                    [innerHTML]="getUserName(user)"
+                ></p>
+            </div>
+        </div> <!-- /filterable-select-box -->
     </section>
-    
-    <section class="form-input">
-        <label class="input-spinner-holder">
-            <span>Select all SSF Organizations/Networks/Associations that you are a member of (use Contribute to add) :</span>
-            <img 
-                *ngIf="!organizationList" 
-                class="input-spinner multi-select-input-spinner"
-                src="../../../../assets/img/icons/loader/loading.gif" 
-                alt="spinner"
-            />
-            <select name="organizations" class="multi-select-box" multiple>
-                <option 
-                    *ngFor="let organization of organizationList" 
-                    [value]="organization.issf_core_id"
-                    [innerHTML]="organization.organization_name"
-                ></option>
-            </select>
-        </label>
-    </section>
+
+    <button class="button" (click)="createWhoRecord()">Save & Next</button>
 </div> <!-- /who-forms -->

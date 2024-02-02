@@ -8,9 +8,9 @@ import { getContributionsByUserIdUrl } from '../../constants/api';
 
 
 @Component({
-	selector: 'app-account',
-	templateUrl: './account.component.html',
-	styleUrls: ['./account.component.css']
+    selector: 'app-account',
+    templateUrl: './account.component.html',
+    styleUrls: ['./account.component.css']
 })
 
 

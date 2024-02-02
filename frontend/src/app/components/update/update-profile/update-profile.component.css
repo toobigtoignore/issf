@@ -116,3 +116,10 @@
     margin-right: 7px;
     margin-top: -3.5px;
 }
+
+
+.update-profile form button {
+    color: #fff;
+    background: #ffd132 !important;
+    border: 1px solid #ffd132;
+}

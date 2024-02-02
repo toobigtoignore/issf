@@ -1,18 +1,24 @@
 .update-container .panel-title {
-    font-size: 30px;
-    font-weight: 550;
+    position: relative;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 
-.update-container .title-jumbo p {
-    font-size: 23px;
-    background: rgba(255,255,255,.15);
-    box-sizing: border-box;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 0;
+.update-container .panel-title h1 {
+    font-size: 30px;
+    font-weight: 550;
+    margin-bottom: 15px;
+}
+
+
+.update-container .panel-title .back-to-details {
+    font-size: 18px;
+}
+
+
+.update-container .back-to-details .fa {
+    margin-right: 5px;
 }
 
 
@@ -133,22 +139,20 @@
 
 @media only screen and (max-width: 1023px){
     .update-container .panel-title {
-        font-size: 22px;
         margin: 10px 0px 25px;
+    }
+
+
+    .update-container .panel-title h1 {
+        font-size: 22px;
+        margin-bottom: 5px;
     }
 }
 
 
 @media only screen and (max-width: 767px){
-    .update-container .panel-title {
+    .update-container .panel-title h1 {
         font-size: 20px;
-        margin: 5px 0px 20px;
-    }
-
-
-    .update-container .panel-title {
-        font-size: 20px;
-        margin: 5px 0px 20px;
     }
 
 

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\RecentContributionsController;
 use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\PersonController;
+use App\Http\Controllers\SSFPersonController;
 use App\Http\Controllers\SSFSotaController;
 use App\Http\Controllers\SSFProfileController;
 use App\Http\Controllers\SSFOrganizationController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\SSFCaseStudyController;
 use App\Http\Controllers\SSFBluejusticeController;
 use App\Http\Controllers\SSFGuidelineController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UserProfileController;
 
 use App\Models\UserProfile;
 use App\Models\Country;
@@ -40,11 +41,12 @@ Route::get('/', function () {
 */
 Route::get('/issf-base/get-all-contributors', fn() => UserProfile::orderBy('first_name', 'ASC')->get());
 Route::get('/issf-base/get-all-countries', fn() => Cache::rememberForever('country-list', fn() => Country::all()));
+Route::get('/issf-base/get-users-without-person-profile', [UserProfileController::class, 'get_users_without_person_profile']);
 Route::get('/issf-base/get-recent-contributions', [RecentContributionsController::class, 'get_recent_contributions']);
 Route::get('/issf-base/get-records-by-country', [HelperController::class, 'get_record_by_country']);
 Route::get('/issf-base/get-theme-issues/{issf_core_id}', [HelperController::class, 'get_theme_issues']);
 Route::get('/issf-base/get-country-name-from-id/{country:country_id}', [HelperController::class, 'get_country_name']);
-Route::get('/issf-base/get-person-link-for-user/{id}', [PersonController::class, 'get_person_for_user']);
+Route::get('/issf-base/get-person-link-for-user/{id}', [SSFPersonController::class, 'get_person_for_user']);
 Route::get('/issf-base/get-user/{user:id}', fn(UserProfile $user) => $user);
 Route::get('/issf-base/search/{title}/{record_type}/{contributor_ids}/{countries}/{startYear}/{endYear}', [SearchController::class, 'search']);
 Route::get('/issf-base/get-users-contributions/{contributor_id}', [HelperController::class, 'get_users_contributions']);
@@ -66,13 +68,14 @@ Route::get('/authentication/activate/{token}/{user_id}', [RegistrationController
 Route::post('/authentication/resend-activation-link/', [RegistrationController::class, 'resend_activation_link']);
 Route::post('/authentication/forgot-password', [RegistrationController::class, 'generate_password_verification_code']);
 Route::post('/authentication/reset-password', [RegistrationController::class, 'reset_password']);
+Route::post('/authentication/change-password', [RegistrationController::class, 'change_password']);
 
 /*
 |--------------------------------------------------------------------------
 | SSF DETAILS ROUTES
 |--------------------------------------------------------------------------
 */
-Route::get('/details/person/{person:issf_core_id}', [PersonController::class, 'get_details']);
+Route::get('/details/person/{person:issf_core_id}', [SSFPersonController::class, 'get_details']);
 Route::get('/details/sota/{sota:issf_core_id}', [SSFSotaController::class, 'get_details']);
 Route::get('/details/profile/{profile:issf_core_id}', [SSFProfileController::class, 'get_details']);
 Route::get('/details/organization/{organization:issf_core_id}', [SSFOrganizationController::class, 'get_details']);
@@ -85,7 +88,7 @@ Route::get('/details/bluejustice/{bluejustice:issf_core_id}', [SSFBluejusticeCon
 | DATA CREATION ROUTES
 |--------------------------------------------------------------------------
 */
-Route::post('/person/create', [PersonController::class, 'create']);
+Route::post('/person/create', [SSFPersonController::class, 'create']);
 Route::post('/sota/create', [SSFSotaController::class, 'create']);
 Route::post('/profile/create', [SSFProfileController::class, 'create']);
 Route::post('/organization/create', [SSFOrganizationController::class, 'create']);
@@ -99,17 +102,23 @@ Route::post('/guidelines/create', [SSFGuidelineController::class, 'create']);
 | DATA UPDATE ROUTES
 |--------------------------------------------------------------------------
 */
+Route::post('/user/update', [UserProfileController::class, 'update_user']);
+
 Route::post('/issf-base/update/characteristics/{issf_core_id}', [HelperController::class, 'update_characteristics']);
+Route::post('/issf-base/update/geo-scope/{issf_core_id}', [HelperController::class, 'update_geoscope']);
 Route::post('/issf-base/update/species/{issf_core_id}', [HelperController::class, 'update_species']);
 Route::post('/issf-base/update/theme-issues/{issf_core_id}', [HelperController::class, 'update_theme_issues']);
 Route::post('/issf-base/update/external-links/{issf_core_id}', [HelperController::class, 'update_external_link']);
 
-Route::post('/profile/update/details/{record:issf_core_id}', [SSFProfileController::class, 'update_details']);
-Route::post('/profile/update/organizations/{record:issf_core_id}', [SSFProfileController::class, 'update_organizations']);
-Route::post('/profile/update/sources/{record:issf_core_id}', [SSFProfileController::class, 'update_sources']);
+Route::post('/who/update/basic/{record:issf_core_id}', [SSFPersonController::class, 'update_basic']);
+Route::post('/who/update/researcher/{record:issf_core_id}', [SSFPersonController::class, 'update_researcher']);
 
 Route::post('/sota/update/basic/{record:issf_core_id}', [SSFSotaController::class, 'update_basic']);
 Route::post('/sota/update/additional-details/{record:issf_core_id}', [SSFSotaController::class, 'update_additional_details']);
+
+Route::post('/profile/update/details/{record:issf_core_id}', [SSFProfileController::class, 'update_details']);
+Route::post('/profile/update/organizations/{record:issf_core_id}', [SSFProfileController::class, 'update_organizations']);
+Route::post('/profile/update/sources/{record:issf_core_id}', [SSFProfileController::class, 'update_sources']);
 
 Route::post('/organization/update/details/{record:issf_core_id}', [SSFOrganizationController::class, 'update_details']);
 

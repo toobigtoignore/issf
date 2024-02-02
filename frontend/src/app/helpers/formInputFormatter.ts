@@ -200,10 +200,13 @@ export const formatGeoScopeForm = (geoScopeElement: ElementRef, selectedGeoScope
                 const fieldValue = inputEl.value || '';
 
                 if(inputEl.hasAttribute('latlong')){
-                    currentFormData[fieldName] = {
-                        lat: fieldValue === '' ? 0 : fieldValue.split(',')[0],
-                        long: fieldValue === '' ? 0 : fieldValue.split(',')[1]
-                    };
+                    if(fieldValue === '') currentFormData[fieldName] = null;
+                    else {
+                        currentFormData[fieldName] = {
+                            long: fieldValue.split(',')[0],
+                            lat: fieldValue.split(',')[1]
+                        };
+                    }
                 }
                 else if(inputEl.hasAttribute('delimiter')){
                     const delimiter = inputEl.getAttribute('delimiter');
@@ -293,21 +296,24 @@ export const whoFormsFormatter = (formType: string, inputElementsList: Array<HTM
 
 
 export const formatWhoBasicInfo = (inputElementsList: Array<HTMLFormElement>) => {
-    const formattedData: Object = {};
+    const formData = new FormData();
     for(const inputEl of inputElementsList){
         if(inputEl.getAttribute('name')){
             const fieldName = inputEl.getAttribute('name');
-            if(inputEl.nodeName.toLowerCase() === 'select' && inputEl.hasAttribute('multiple')){
-                const inputArr = [];
-                for(const option of inputEl.options){
-                    if(option.selected) inputArr.push(option.value);
+            const fieldType = inputEl.getAttribute('type');
+
+            if(fieldType === 'file'){
+                if(inputEl.files[0]){
+                    const file = inputEl.files[0];
+                    const fileName = file ? file.name : '';
+                    formData.append(fieldName, file, fileName);
                 }
-                formattedData[fieldName] = inputArr;
+                else formData.append(fieldName, '');
             }
-            else formattedData[fieldName] = inputEl.value || '';
+            else formData.append(fieldName, inputEl.value);
         }
     }
-    return { data: formattedData, errorMsg: null };
+    return { data: formData, errorMsg: null };
 }
 
 
@@ -317,16 +323,13 @@ export const formatWhoResearchInfo = (inputElementsList: Array<HTMLFormElement>)
         if(inputEl.getAttribute('name')){
             const fieldName = inputEl.getAttribute('name');
             if(inputEl.hasAttribute('disabled')) formattedData[fieldName] = '';
-            else formattedData[fieldName] = inputEl.value || '';
+            else formattedData[fieldName] = inputEl.value || null;
 
             if(formattedData[fieldName] == 'true') formattedData[fieldName] = true;
             if(formattedData[fieldName] == 'false') formattedData[fieldName] = false;
-
-            if(formattedData[fieldName] == '' && isNullable(inputEl.name, PANEL_CODES.WHO)){
-                formattedData[fieldName] = null;
-            }
         }
     }
+    console.log(formattedData);
     return { data: formattedData, errorMsg: null };
 }
 

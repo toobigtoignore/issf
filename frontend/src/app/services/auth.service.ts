@@ -97,18 +97,6 @@ export class AuthServices {
     }
 
 
-    changePassword(payload: Object, token: string): Observable<any> {
-        return this.http.post(
-            changePasswordUrl, payload, {
-                headers: new HttpHeaders({
-                    'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + token
-                 })
-            }
-        );
-    }
-
-
     async getToken(): Promise<string> {
         const accessToken = localStorage.getItem(STORAGE_TOKENS.ACCESS);
         const refreshToken = localStorage.getItem(STORAGE_TOKENS.REFRESH);

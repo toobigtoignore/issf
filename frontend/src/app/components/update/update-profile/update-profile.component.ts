@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { formatFormValues } from '../../../helpers/formInputFormatter';
 import { get } from '../../../helpers/apiCalls';
-import { Contents } from '../../../services/contents.service';
-import { AuthServices } from '../../../services/auth.service';
 import { CommonServices } from '../../../services/common.service';
 import { PostServices } from '../../../services/post.service';
 import {
@@ -15,11 +13,9 @@ import {
 } from '../../../constants/constants';
 import {
     getAllOrganizationsUrl,
-    getProfileRecordUrl,
     updateCharacteristicsUrl,
     updateProfileBasicUrl,
     updateProfileOrganizationUrl,
-    updateProfilePercentage,
     updateExternalLinksUrl,
     updateSpeciesUrl,
     updateProfileSourcesCommentsUrl
@@ -81,9 +77,7 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
 
 
     constructor(
-        private authServices: AuthServices,
         private commonServices: CommonServices,
-        private contents: Contents,
         private postServices: PostServices
     ) {
         this.updateSubscription = this.commonServices.updateEmitter.subscribe(
@@ -114,7 +108,7 @@ export class UpdateProfileComponent implements OnInit, AfterViewInit {
             }];
         }
         this.organizationList = await get(getAllOrganizationsUrl);
-        this.showImage = this.record.img !== null;
+        this.showImage = this.record.img !== null && this.record.img !== '';
     }
 
 

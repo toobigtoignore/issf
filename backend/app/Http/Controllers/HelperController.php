@@ -38,7 +38,9 @@ class HelperController extends Controller
         switch($request['basic_info']['record_type']){
             case $record_types['WHO']: {
                 $user = UserProfile::find($request['basic_info']['contributor_id']);
-                $organization_name = '';
+                $country_name = $organization_name = '';
+
+                if(isset($user->country->short_name)) $country_name = $user->country->short_name;
                 if(isset($request['organization_core_id'])){
                     $organization = SSFOrganization::find($request['organization_core_id']);
                     if($organization) $organization_name = $organization->organization_name;
@@ -47,7 +49,7 @@ class HelperController extends Controller
 
                 $summary = "<strong>Name: </strong>" . $user->first_name. ' ' . $user->initial . ' ' . $user->last_name .
                            "<strong>Primary Affiliation: </strong>" . $organization_name .
-                           "<strong>Country of Residence: </strong>" . $user->country->short_name;
+                           "<strong>Country of Residence: </strong>" . $country_name;
 
                 return $summary;
             }
@@ -59,7 +61,7 @@ class HelperController extends Controller
                 }
 
                 $summary = "<strong>Author: </strong>" . $request['basic_info']['author_names'] .
-                           "<strong>Title: </strong>" . $request['basic_info']['level1_title'] . '; ' . $request['basic_info']['level2_title'] .
+                           "<strong>Address: </strong>" . $request['basic_info']['level1_title'] . '; ' . $request['basic_info']['level2_title'] .
                            "<strong>Year: </strong>" . $request['basic_info']['year'] .
                            "<strong>Publication Type: </strong>" . $publication_type;
 
@@ -67,10 +69,13 @@ class HelperController extends Controller
             }
 
             case $record_types['PROFILE']: {
-                $end_timeframe = $request['basic_info']['end_year'] ?: 'Ongoing';
+                $end_year = $request['basic_info']['end_year'];
+                if($end_year == 0) $end_timeframe = ' - Ongoing';
+                else if($end_year != 0 && !is_null($end_year)) $end_timeframe = ' - ' . $end_year;
+                else $end_timeframe = '';
+
                 $summary = "<strong>Fishery name: </strong>" . $request['basic_info']['ssf_name'] .
-                           "<strong>Timeframe: </strong>" . $request['basic_info']['start_year'] . ' - ' . $end_timeframe .
-                           "<strong>Percent completed: </strong>" . 10;
+                           "<strong>Timeframe: </strong>" . $request['basic_info']['start_year'] . $end_timeframe;
 
                 return $summary;
             }
@@ -137,7 +142,7 @@ class HelperController extends Controller
     }
 
 
-    public static function createCoreRecord($request){
+    public static function create_core_record($request){
         $issf_core_id = ISSFCore::latest('issf_core_id')->first()->issf_core_id + 1;
         $editor_id = $request['basic_info']['contributor_id'];
 
@@ -158,19 +163,28 @@ class HelperController extends Controller
             return false;
         }
 
+        Cache::forget('map-records');
         Cache::forget('records-number-by-country');
         return $issf_core_id;
     }
 
 
-    public static function createGeoscope($request, $issf_core_id){
-        switch($request['basic_info']['geographic_scope_type']){
+    public static function create_geo_scope($payload, $issf_core_id){
+        $geo_scope_type = isset($payload['basic_info'])
+                            ? $payload['basic_info']['geographic_scope_type']
+                            : $payload['geographic_scope_type'];
+
+        switch($geo_scope_type){
             case config('constants.GEO_SCOPES.GLOBAL'):
             case config('constants.GEO_SCOPES.NS'):
                 return true;
 
             case config('constants.GEO_SCOPES.LOCAL'): {
-                foreach($request['geo_scope']['gs_local_list'] as $local){
+                foreach($payload['geo_scope']['gs_local_list'] as $local){
+                    $area_point = isset($local['area_point'])
+                                    ? \DB::raw("GeomFromText('POINT(" . $local['area_point']['long'] . ' ' . $local['area_point']['lat'] . ")')")
+                                    : null;
+
                     GSLocal::create([
                         'issf_core_id' => $issf_core_id,
                         'area_name' => $local['area_name'],
@@ -178,39 +192,39 @@ class HelperController extends Controller
                         'country_id' => $local['country_id'],
                         'setting' => $local['setting'],
                         'setting_other' => $local['setting_other'],
-                        'area_point' => \DB::raw("GeomFromText('POINT(" . $local['area_point']['long'] . ' ' . $local['area_point']['lat'] . ")')")
+                        'area_point' => $area_point
                     ]);
                 }
-                Cache::forget('map-records');
                 return true;
             }
 
             case config('constants.GEO_SCOPES.SUBNATIONAL'): {
-                foreach($request['geo_scope']['gs_subnation_list'] as $subnation){
+                foreach($payload['geo_scope']['gs_subnation_list'] as $subnation){
+                    $subnation_point = isset($subnation['subnation_point'])
+                                    ? \DB::raw("GeomFromText('POINT(" . $subnation['subnation_point']['long'] . ' ' . $subnation['subnation_point']['lat'] . ")')")
+                                    : null;
                     GSSubnation::create([
                         'issf_core_id' => $issf_core_id,
                         'name' => $subnation['name'],
                         'country_id' => $subnation['country_id'],
                         'type' => $subnation['type'],
                         'type_other' => $subnation['type_other'],
-                        'subnation_point' => \DB::raw("GeomFromText('POINT(" . $subnation['subnation_point']['long'] . ' ' . $subnation['subnation_point']['lat'] . ")')")
+                        'subnation_point' => $subnation_point
                     ]);
                 }
-                Cache::forget('map-records');
                 return true;
             }
 
             case config('constants.GEO_SCOPES.NATIONAL'): {
                 GSNational::create([
                     'issf_core_id' => $issf_core_id,
-                    'country_id' => $request['geo_scope']['gs_nation']
+                    'country_id' => $payload['geo_scope']['gs_nation']
                 ]);
-                Cache::forget('map-records');
                 return true;
             }
 
             case config('constants.GEO_SCOPES.REGIONAL'): {
-                foreach($request['geo_scope']['gs_region_list'] as $region){
+                foreach($payload['geo_scope']['gs_region_list'] as $region){
                     $gs_region = GSRegion::create([
                         'issf_core_id' => $issf_core_id,
                         'region_name_other' => $region['region_name_other'],
@@ -223,7 +237,6 @@ class HelperController extends Controller
                         ]);
                     }
                 }
-                Cache::forget('map-records');
                 return true;
             }
 
@@ -370,7 +383,7 @@ class HelperController extends Controller
                 }
 
                 if(empty($contributor_name)) $contributor_name = $contributor->username;
-                array_push($results, [
+                $results[$record->issf_core_id] = [
                     'issf_core_id' => $record->issf_core_id,
                     'core_record_type' => $record->core_record_type,
                     'core_record_summary' => $record->core_record_summary,
@@ -379,7 +392,7 @@ class HelperController extends Controller
                     'contribution_date' => $record->contribution_date,
                     'countries' => $countries,
                     'point' => $coordinates
-                ]);
+                ];
             };
 
             return $results;
@@ -465,6 +478,8 @@ class HelperController extends Controller
         $categories = $values = [];
         $attributes = SelectedAttribute::where('issf_core_id', $issf_core_id)->get();
 
+        if($attributes->count() === 0) return null;
+
         foreach($attributes as $attr) {
             $attr_category = $attr->category->attribute_label;
             $attr_value = [
@@ -518,9 +533,9 @@ class HelperController extends Controller
 
     public static function get_theme_issues($issf_core_id){
         $economic = $ecological = $social = $governance = [];
-        $selectedThemeIssues = SelectedThemeIssue::where('issf_core_id', $issf_core_id)->get();
+        $selected_theme_issues = SelectedThemeIssue::where('issf_core_id', $issf_core_id)->get();
         $categories = config('constants.THEME_ISSUES_CATEGORY');
-        foreach($selectedThemeIssues as $sti){
+        foreach($selected_theme_issues as $sti){
             $value = $sti->theme_issue_values->label;
             $category = $sti->theme_issue_values->category->category;
 
@@ -582,6 +597,36 @@ class HelperController extends Controller
     }
 
 
+    public static function update_geoscope($issf_core_id){
+        $payload = request()->all();
+        $core_record = ISSFCore::find($issf_core_id);
+
+        switch($core_record->geographic_scope_type){
+            case config('constants.GEO_SCOPES.LOCAL'): GSLocal::where('issf_core_id', $issf_core_id)->delete(); break;
+            case config('constants.GEO_SCOPES.SUBNATIONAL'): GSSubnation::where('issf_core_id', $issf_core_id)->delete(); break;
+            case config('constants.GEO_SCOPES.NATIONAL'): GSNational::where('issf_core_id', $issf_core_id)->delete(); break;
+            case config('constants.GEO_SCOPES.REGIONAL'): {
+                $gs_regions = GSRegion::where('issf_core_id', $issf_core_id);
+                foreach($gs_regions->get() as $region){
+                    RegionCountry::where('region_id', $region->id)->delete();
+                }
+                $gs_regions->delete();
+                break;
+            }
+            default: break;
+        }
+
+        self::create_geo_scope($payload, $issf_core_id);
+
+        $core_record->geographic_scope_type = $payload['geographic_scope_type'];
+        $core_record->save();
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
+        ];
+    }
+
+
     public static function update_external_link($issf_core_id){
         $payload = request()->all();
         $links = ExternalLink::where('issf_core_id', $issf_core_id);
@@ -633,6 +678,78 @@ class HelperController extends Controller
         return [
             'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
         ];
+    }
+
+
+    public static function update_record_summary($record_type, $issf_core_id, $payload){
+        $record_types = config('constants.RECORD_TYPES');
+
+        switch($record_type){
+            case $record_types['WHO']: {
+                $initials = $payload['initials'] ?: '';
+                $updated_name = $payload['first_name'] . ' ' . $initials . ' ' . $payload['last_name'];
+                $summary = "<strong>Name: </strong>" . $updated_name .
+                           "<strong>Primary Affiliation: </strong>" . $payload['affiliation'] .
+                           "<strong>Country of Residence: </strong>" . $payload['country'];
+                break;
+            }
+
+            case $record_types['SOTA']: {
+                $address = $payload['level1_title'] . '; ' . $payload['level2_title'];
+                $summary = "<strong>Author: </strong>" . $payload['author_names'] .
+                           "<strong>Address: </strong>" . $address  .
+                           "<strong>Year: </strong>" . $payload['year'] .
+                           "<strong>Publication Type: </strong>" . $payload['publication_type'];
+                break;
+            }
+
+            case $record_types['PROFILE']: {
+                if($payload['ongoing'] || $payload['end_year'] == 0) $end_timeframe =  '- Ongoing';
+                else if(!is_null($payload['end_year']) && $payload['end_year'] != 0) $end_timeframe =  ' - ' . $payload['end_year'];
+                else $end_timeframe = '';
+                $summary = "<strong>Fishery name: </strong>" . $payload['ssf_name'] .
+                           "<strong>Timeframe: </strong>" . $payload['start_year'] . $end_timeframe;
+                break;
+            }
+
+            case $record_types['ORGANIZATION']: {
+                $country = Country::find($payload['country_id'])->short_name;
+                $summary = "<strong>Organization name: </strong>" . $payload['organization_name'] .
+                           "<strong>Established in: </strong>" . $payload['year_established'] .
+                           "<strong>Country: </strong>" . $country;
+                break;
+            }
+
+            case $record_types['CASESTUDY']: {
+                $summary = "<strong>Name: </strong>" . $payload['name'] . "<strong>Role: </strong>" . $payload['role'];
+                break;
+            }
+
+            case $record_types['BLUEJUSTICE']: {
+                $country = Country::find($payload['ssf_country'])->short_name;
+                $summary = "<strong>Name: </strong>" . $payload['ssf_name'] . "<strong>Country: </strong>" . $country;
+                break;
+            }
+
+            case $record_types['GUIDELINES']: {
+                $start_time = $payload['start_month'] . ', ' . $payload['start_year'];
+                if($payload['ongoing'] === 'Yes') $timeframe = $start_time . ' - Ongoing';
+                else $timeframe = $start_time . ' - ' . $payload['end_month'] . ', ' . $payload['end_year'];
+                $summary = "<strong>Title: </strong>" . $payload['title'] . "<strong>Timeframe: </strong>" . $timeframe;
+                break;
+            }
+
+            default: break;
+        }
+
+        $core_record = ISSFCore::find($issf_core_id);
+        $core_record->core_record_summary = $summary;
+        $update_core_summary = $core_record->save();
+        if($update_core_summary){
+            $cached_records = Cache::get('map-records');
+            $cached_records[$issf_core_id]['core_record_summary'] = $summary;
+            Cache::set('map-records', $cached_records);
+        }
     }
 
 

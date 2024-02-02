@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('ssfperson_id');
             $table->integer('ssforganization_id');
+            $table->boolean('is_primary_affiliation')->default(false);
         });
     }
 

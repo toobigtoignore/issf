@@ -12,7 +12,6 @@ import {
     PANEL_CODES,
     RESPONSE_CODES
 } from '../../constants/constants';
-import { getUserUrl } from '../../constants/api';
 import { PostServices } from '../../services/post.service';
 
 

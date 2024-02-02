@@ -36,14 +36,14 @@ class SSFOrganizationController extends Controller
         }
 
         $org_id = SSFOrganization::latest('id')->first()->id + 1;
-        $issf_core_id = HelperController::createCoreRecord($payload);
+        $issf_core_id = HelperController::create_core_record($payload);
         if(!$issf_core_id){
             return [
                 'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
             ];
         }
 
-        $new_geo_scope = HelperController::createGeoscope($payload, $issf_core_id);
+        $new_geo_scope = HelperController::create_geo_scope($payload, $issf_core_id);
         if(!$new_geo_scope){
             return [
                 'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR')
@@ -122,6 +122,15 @@ class SSFOrganizationController extends Controller
         $updated = $record->update($formatted_payload);
 
         if($updated){
+            HelperController::update_record_summary(
+                config('constants.RECORD_TYPES.ORGANIZATION'),
+                $record->issf_core_id,
+                [
+                    'organization_name' => $payload['organization_name'],
+                    'year_established' => $payload['year_established'],
+                    'country_id' => $payload['country_id']
+                ]
+            );
             return [
                 'status_code' => config('constants.RESPONSE_CODES.SUCCESS')
             ];

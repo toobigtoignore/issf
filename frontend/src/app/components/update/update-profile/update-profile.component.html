@@ -73,7 +73,6 @@
             </section>
 
 
-
             <section class="form-input" [hidden]="record.ssf_defined != definiteAns['YES']" toggleDisable>
                 <label class="header-label">
                     <span>SSF Definition (if applicable): <em class="required">*</em></span>
@@ -103,37 +102,24 @@
 
         <section class="form-input image-section">
             <label>
-                <span>Upload a {{record.img_url ? 'new' : '' }} photo (Max 10MB):</span>
-                <input
-                    #imageInput
-                    type="file"
-                    name="image_file"
-                    (change)="processImage($event)"
-                />
-
-                <input
-                    #imageAction
-                    hidden="true"
-                    type="hidden"
-                    name="image_action"
-                    [value]="imageActionKey"
-                />
+                <span>Upload a {{record.img ? 'new' : '' }} photo (Max 10MB):</span>
+                <input #imageInput type="file" name="image_file" (change)="processImage($event)" />
+                <input #imageAction hidden="true" type="hidden" name="image_action" [value]="imageActionKey" />
             </label>
 
 
-            <div [ngStyle]="{'display': showImage ? 'inline-block' : 'none'}" class="image-container">
-                <img
-                    #previewImage
-                    [src]="imageUrl + '/' + record.img"
-                    alt="Record Image"
-                />
+            <div [ngStyle]="{'display': showImage ? 'block' : 'none'}" class="image-container">
+                <img #previewImage [src]="imageUrl + '/' + record.img" alt="Record Image" />
                 <span (click)="removeImage()">X</span>
             </div> <!-- image-container -->
+
 
             <p *ngIf="fileTooBigError" class="error">File size is too big. Maximum allowed size is 10MB</p>
         </section>
 
-        <br><button type="submit" class="no-margin-left">Submit</button>
+
+        <br>
+        <button type="submit" class="no-margin-left">Submit</button>
     </form>
 
 

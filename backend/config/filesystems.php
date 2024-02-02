@@ -48,6 +48,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'ssf_person_images' => [
+            'driver' => 'local',
+            'root' => public_path('images/people'),
+            'url' => env('APP_URL').'/images/people',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
         'ssf_profile_images' => [
             'driver' => 'local',
             'root' => public_path('images/ssf-profiles'),

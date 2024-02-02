@@ -9,7 +9,7 @@ import {
     getLoggedInUser
 } from '../../helpers/helpers';
 import { get } from '../../helpers/apiCalls';
-import { getAllCountriesUrl, getUserUrl } from '../../constants/api';
+import { getAllCountriesUrl } from '../../constants/api';
 import {
     countryList,
     globalAndNotSpecificType,
@@ -32,7 +32,6 @@ import { GeoscopeComponent } from '../../components/contribute/geoscope/geoscope
 import { AuthServices } from '../../services/auth.service';
 import { CommonServices } from '../../services/common.service';
 import { PostServices } from '../../services/post.service';
-import { FormattedGeoData } from '../../models/formatted-geo-data.model';
 import { formatGeoScopeForm } from '../../helpers/formInputFormatter';
 
 
@@ -158,42 +157,38 @@ export class UpdateComponent implements OnInit {
     }
 
 
-    async onGeoscopeUpdate() {
-        let form: ElementRef;
-        let shouldSkipRequiredFieldCheck = true;
-        const formattedGeoData = new FormattedGeoData;
-        const geoFormData = formattedGeoData.getGeoScopeDefaultData();
-        geoFormData.gs_type = this.selectedGeoScope;
-        if(
-            this.selectedGeoScope !== GS_OPTIONS.NOT_SPECIFIC &&
-            this.selectedGeoScope !== GS_OPTIONS.GLOBAL
-        ){
-            shouldSkipRequiredFieldCheck = false;
-            switch(this.selectedGeoScope){
-                case GS_OPTIONS.LOCAL: {
-                    geoFormData.gs_local_list = formatGeoScopeForm(this.geoScope.scopeDetails, this.selectedGeoScope);
-                    form = this.geoScope.localFormRef;
-                    break;
-                }
-                case GS_OPTIONS.SUB_NATIONAL: {
-                    geoFormData.gs_subnation_list = formatGeoScopeForm(this.geoScope.scopeDetails, this.selectedGeoScope);
-                    form = this.geoScope.subnationalFormRef;
-                    break;
-                }
-                case GS_OPTIONS.REGIONAL: {
-                    geoFormData.gs_region_list = formatGeoScopeForm(this.geoScope.scopeDetails, this.selectedGeoScope);
-                    form = this.geoScope.regionalFormRef;
-                    break;
-                }
-                case GS_OPTIONS.NATIONAL: {
-                    geoFormData.gs_nation.country = parseInt(Object.values(formatGeoScopeForm(this.geoScope.scopeDetails, this.selectedGeoScope)[0])[0].toString());
-                    form = this.geoScope.nationalFormRef;
-                    break;
-                }
-                default: break;
-            }
+    scopeTypeToFormMapping(selectedGeoScope: string): {form: ElementRef, keyName: string} {
+        switch(selectedGeoScope){
+            case GS_OPTIONS.LOCAL: return { form: this.geoScope.localFormRef, keyName: 'gs_local_list' };
+            case GS_OPTIONS.SUB_NATIONAL: return { form: this.geoScope.subnationalFormRef, keyName: 'gs_subnation_list' };
+            case GS_OPTIONS.REGIONAL: return { form: this.geoScope.regionalFormRef, keyName: 'gs_region_list' };
+            case GS_OPTIONS.NATIONAL: return { form: this.geoScope.nationalFormRef, keyName: 'gs_nation' };
+            default: return;
         }
-        await this.postServices.update(form, geoFormData, updateGeoscopeUrl(this.recordId), shouldSkipRequiredFieldCheck);
+    }
+
+
+    async onGeoscopeUpdate() {
+        let formType: ElementRef|null;
+        let skipRequiredCheck: boolean = true;
+        const geoFormData = {geo_scope: {}};
+
+        geoFormData['geographic_scope_type'] = this.selectedGeoScope;
+        if(this.selectedGeoScope !== GS_OPTIONS.GLOBAL && this.selectedGeoScope !== GS_OPTIONS.NOT_SPECIFIC){
+            skipRequiredCheck = false;
+            const { form, keyName } = this.scopeTypeToFormMapping(this.selectedGeoScope);
+            formType = form;
+            geoFormData.geo_scope[keyName] = this.selectedGeoScope === GS_OPTIONS.NATIONAL
+                ? parseInt(Object.values(formatGeoScopeForm(this.geoScope.scopeDetails, this.selectedGeoScope)[0])[0].toString())
+                : formatGeoScopeForm(this.geoScope.scopeDetails, this.selectedGeoScope);
+        }
+
+        await this.postServices.update(
+            formType,
+            geoFormData,
+            updateGeoscopeUrl(this.recordId),
+            skipRequiredCheck
+        );
     }
 
 
@@ -219,7 +214,7 @@ export class UpdateComponent implements OnInit {
                     alternateNames: geoscopeData.map((gs: any) => gs.alternate_name),
                     countryCodes: geoscopeData.map((gs: any) => gs.country_id),
                     areaSettings: geoscopeData.map((gs: any) => gs.setting_other || gs.setting),
-                    mapPoints: geoscopeData.map((gs: any) => gs.area_point.coordinates),
+                    mapPoints: geoscopeData.map((gs: any) => gs.area_point?.coordinates),
                     numberOfScope: geoscopeData.length
                 };
                 break;
@@ -230,7 +225,7 @@ export class UpdateComponent implements OnInit {
                     subnationNames: geoscopeData.map((gs: any) => gs.name),
                     subnationCountries: geoscopeData.map((gs: any) => gs.country_id),
                     subnationTypes: geoscopeData.map((gs: any) => gs.type_other || gs.type),
-                    mapPoints: geoscopeData.map((gs: any) => gs.subnation_point.coordinates),
+                    mapPoints: geoscopeData.map((gs: any) => gs.subnation_point?.coordinates),
                     numberOfScope: geoscopeData.length
                 };
                 break;

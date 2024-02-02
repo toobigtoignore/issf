@@ -162,6 +162,7 @@
                         (change)="toggleOnOther($event, definiteAns['YES'])"
                         required
                     >
+                        <option value="">Select one that applies</option>
                         <option
                             *ngFor="let value of definiteValues"
                             [value]="value"

@@ -188,7 +188,6 @@ export class GeoscopeComponent implements AfterViewInit, OnInit {
 
 
     getLatLong(coordinates: number[]) {
-        // const coordinates = JSON.parse(latLongStr).coordinates;
         const long = coordinates[0];
         const lat = coordinates[1];
         return { long, lat }
@@ -260,8 +259,8 @@ export class GeoscopeComponent implements AfterViewInit, OnInit {
     }
 
 
-    pointsToValue(points: number[]){
-        if(points.length === 0 || !points) {
+    pointsToValue(points: number[]|null){
+        if(!points || points?.length === 0) {
             return '';
         }
         const { long, lat } = this.getLatLong(points);
@@ -311,14 +310,16 @@ export class GeoscopeComponent implements AfterViewInit, OnInit {
             });
 
             if(this.geoScopeInfo?.mapPoints && this.geoScopeInfo?.type === formType && !duplicateMap){
-                const { lat, long } = this.getLatLong(this.geoScopeInfo.mapPoints[i]);
-                const mapMarker = new L.LatLng(lat, long);
-                marker = L.marker(mapMarker, {
-                    icon: L.icon({
-                        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png'
-                    })
-                });
-                map.addLayer(marker);
+                if(this.geoScopeInfo.mapPoints[i] && this.geoScopeInfo.mapPoints[i] !== ''){
+                    const { long, lat } = this.getLatLong(this.geoScopeInfo.mapPoints[i]);
+                    const mapMarker = new L.LatLng(lat, long);
+                    marker = L.marker(mapMarker, {
+                        icon: L.icon({
+                            iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png'
+                        })
+                    });
+                    map.addLayer(marker);
+                }
             }
 
             // TOOLBAR

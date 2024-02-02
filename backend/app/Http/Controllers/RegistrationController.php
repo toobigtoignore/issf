@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\JWTController;
 use App\Models\ActivationToken;
 use App\Models\UserProfile;
@@ -31,6 +32,7 @@ class RegistrationController extends Controller
          if($validator->fails()) {
             return [
                 'success' => false,
+                'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR'),
                 'errors' => [
                     'validation' => $validator->messages()
                 ]
@@ -51,7 +53,10 @@ class RegistrationController extends Controller
         ]);
 
         $email_sent = $this->sendVerificationEmail($id, $token['id']);
-        if($email_sent) return [ 'success' => true ];
+        if($email_sent) return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS'),
+            'success' => true
+        ];
 
         return false;
     }
@@ -81,6 +86,7 @@ class RegistrationController extends Controller
         $user = UserProfile::where('email', '=', $email)->first();
         if(!$user) {
             return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
                 'errors' => [
                     'invalid_email' => true
                 ]
@@ -89,6 +95,7 @@ class RegistrationController extends Controller
 
         if($user->is_active){
             return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
                 'errors' => [
                     'already_activated' => true
                 ]
@@ -104,7 +111,10 @@ class RegistrationController extends Controller
         ]);
 
         $email_sent = $this->sendVerificationEmail($user->id, $new_token['id']);
-        if($email_sent) return [ 'success' => true ];
+        if($email_sent) return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS'),
+            'success' => true
+        ];
 
         return false;
     }
@@ -119,6 +129,7 @@ class RegistrationController extends Controller
 
          if($validator->fails()) {
             return [
+                'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR'),
                 'errors' => [
                     'validation_failed' => $validator->messages()
                 ]
@@ -128,6 +139,7 @@ class RegistrationController extends Controller
         $user = UserProfile::where('username', '=', $credentials['username'])->first();
         if(!$user->is_active) {
             return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
                 'errors' => [
                     'user_not_active' => true
                 ]
@@ -137,6 +149,7 @@ class RegistrationController extends Controller
         // FOR LEGACY PASSWORD - FORCE USER TO RESET PASSWORD
         if(substr($user->password, 0, 7) === 'pbkdf2_'){
             return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
                 'errors' => [
                     'password_expired' => true
                 ]
@@ -150,6 +163,7 @@ class RegistrationController extends Controller
 
         if (!$authentication) {
             return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
                 'errors' => [
                     'wrong_credentials' => true
                 ]
@@ -164,20 +178,8 @@ class RegistrationController extends Controller
             'jti' => $token_id
         ]);
 
-        // $jti_tokens = LoginToken::where('user_id', '=', $user->id)->get();
-        // if($jti_tokens){
-        //     foreach($jti_tokens as $token){
-        //         $token->delete();
-        //     }
-        // }
-
-        // LoginToken::create([
-        //     'jti' => $token_id,
-        //     'expiry_timestamp' => strtotime('+5 minutes'),
-        //     'user_id' => $user->id
-        // ]);
-
         return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS'),
             'success' => true,
             'token' => $access_token
         ];
@@ -216,10 +218,14 @@ class RegistrationController extends Controller
 
         if($user){
             \Mail::to($user->email)->send(new ResendUsernameEmail($user->username));
-            return [ 'success' => true ];
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.SUCCESS'),
+                'success' => true
+            ];
         }
 
         return [
+            'status_code' => config('constants.RESPONSE_CODES.NOT_FOUND'),
             'errors' => [
                 'not_found' => true
             ]
@@ -231,6 +237,7 @@ class RegistrationController extends Controller
         $user = UserProfile::where('email', '=', request('email'))->first();
         if(!$user){
             return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
                 'errors' => [
                     'invalid_email' => true
                 ]
@@ -256,6 +263,7 @@ class RegistrationController extends Controller
 
          if($validator->fails()) {
             return [
+                'status_code' => config('constants.RESPONSE_CODES.INTERNAL_SERVER_ERROR'),
                 'errors' => [
                     'validation' => $validator->messages()
                 ]
@@ -266,7 +274,47 @@ class RegistrationController extends Controller
         $user->password = request('password');
         $user->save();
 
-        return ['success' => true];
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS'),
+            'success' => true
+        ];
+    }
+
+
+    public function change_password(){
+        $payload = request()->all();
+        $validator = Validator::make($payload, [
+            'email' => 'exists:user_profile,email',
+            'current_password' => 'required|min:8|max:512',
+            'new_password' => 'required|min:8|max:512',
+            'confirm_password' => 'required|min:8|max:512'
+         ]);
+
+         if($validator->fails()) {
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'errors' => [
+                    'validation' => $validator->messages()
+                ]
+            ];
+        }
+
+        $user = UserProfile::where('email', request('email'))->first();
+        if(!Hash::check($payload['current_password'], $user->password)){
+            return [
+                'status_code' => config('constants.RESPONSE_CODES.BAD_REQUEST'),
+                'message' => "Your current password does not match with your account!"
+            ];
+        }
+
+        $user->update([
+            'password' => $payload['new_password']
+        ]);
+
+        return [
+            'status_code' => config('constants.RESPONSE_CODES.SUCCESS'),
+            'message' => "Your password has been updated successfully."
+        ];
     }
 
 

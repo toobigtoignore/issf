@@ -60,6 +60,11 @@ return [
         'NO' => "No",
         'NOT_EXPLICITLY' => "Not explicitly"
     ],
+    'EDUCATION_LEVEL' => [
+        'BACHELOR' => "Bachelor",
+        'MASTER' => "Master",
+        'PHD' => "PhD"
+    ],
     'IMAGE_ACTIONS' => [
         'KEEP_IMAGE_KEY' => 'keep-image',
         'REMOVE_IMAGE_KEY' => 'remove-image',
@@ -124,6 +129,7 @@ return [
     'RESPONSE_CODES' => [
         'SUCCESS' => 200,
         'BAD_REQUEST' => 400,
+        'NOT_FOUND' => 404,
         'INTERNAL_SERVER_ERROR' => 500
     ],
     'SOTA_DEMOGRAPHIC_FACTORS' => [

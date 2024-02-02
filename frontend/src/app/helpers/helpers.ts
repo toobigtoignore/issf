@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatTableDataSource } from "@angular/material/table";
 import {
@@ -10,8 +11,20 @@ import {
     getBluejusticeRecordUrl,
     getGuidelinesRecordUrl
 } from '../constants/api';
-import { COUNTRIES_LIST, DETAILS_ACCORDIONS_LABELS, GS_LABELS, GS_OPTIONS, PANEL_CODES, PANELS_LIST } from '../constants/constants';
+import {
+    COUNTRIES_LIST,
+    DETAILS_ACCORDIONS_LABELS,
+    GS_LABELS,
+    GS_OPTIONS,
+    PANEL_CODES,
+    PANELS_LIST,
+    PANEL_VALUES,
+    RESPONSE_CODES
+} from '../constants/constants';
+import { get } from '../helpers/apiCalls';
+import { getPersonLinkForUserUrl } from '../constants/api';
 import { loggedInUserType } from '../../assets/js/types';
+import { PostServices } from '../services/post.service';
 
 
 export const adjustValueWithUnit = (item: {value: string, unit: string|null, additional: number|null}): string => {
@@ -28,6 +41,40 @@ export const adjustValueWithUnit = (item: {value: string, unit: string|null, add
 
 export const capitalize = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+
+export const createSSFPersonIfNotExist = (personId: number, router: Router, postServices: PostServices, action: string) => {
+    if(action !== 'details' && action !== 'update') {
+        alert('Something went wrong. Please contact support');
+        return;
+    }
+
+    get(getPersonLinkForUserUrl(personId)).then(async (issf_core_id: number) => {
+        if(issf_core_id) {
+            router.navigate([`/${action}`, PANEL_CODES.WHO, issf_core_id]);
+        }
+        else await createSSFPersonForUser(personId, router, postServices, action);
+    });
+}
+
+
+export const createSSFPersonForUser = async(personId: number, router: Router, postServices: PostServices, action: string) => {
+    const dataToSubmit = {
+        basic_info: {
+            contributor_id: personId,
+            geographic_scope_type: GS_OPTIONS.NOT_SPECIFIC,
+            record_type: PANEL_VALUES.WHO
+        }
+    }
+
+    postServices
+        .createRecord(PANEL_CODES.WHO, dataToSubmit)
+        .subscribe(response => {
+            if(response.status_code === RESPONSE_CODES.HTTP_200_OK){
+                router.navigate([`/${action}`, PANEL_CODES.WHO, response.record_id]);
+            }
+        });
 }
 
 
@@ -145,7 +192,8 @@ export const getRecordName = (data: any, panel: string) => {
         };
         case PANEL_CODES.PROFILE: {
             let recordName = data.ssf_name + " | " + data.start_year;
-            recordName += data.end_year ? ' - ' + data.end_year : '';
+            if(data.ongoing || data.end_year === 0) recordName += ' - ' + 'Ongoing';
+            else if(data.end_year && data.end_year !== 0) recordName += ' - ' + data.end_year;
             return recordName;
         }
         case PANEL_CODES.ORGANIZATION: return data.organization_name + " | " + data.organization_country?.short_name;
