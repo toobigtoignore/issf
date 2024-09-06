@@ -1,5 +1,5 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PANEL_CODES, RESPONSE_CODES, STORAGE_TOKENS } from '../constants/constants';
 import { checkRequiredFields } from '../helpers/formInputFormatter';

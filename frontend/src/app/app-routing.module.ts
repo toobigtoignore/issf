@@ -13,6 +13,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { UpdateComponent } from './components/update/update.component';
 import { UserProfileComponent } from './components/account/user-profile/user-profile.component';
+import { TestComponent } from './components/test/test.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
     { path: 'registration', component: RegistrationComponent },
     { path: 'registration/:action', component: RegistrationComponent },
     { path: 'privacy-policy', component: PrivacyPolicyComponent },
+    { path: 'test', component: TestComponent },
     { path: 'faqs', component: FAQComponent },
     { path: '404', component: Error404Component },
     { path: '**', component: Error404Component }

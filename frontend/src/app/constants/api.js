@@ -32,6 +32,7 @@ export const getRecordsByCountryUrl = `${baseurl}/issf-base/get-records-by-count
 export const getSearchResultsUrl = (title, panels, contributor_ids, countries, startYear, endYear) => `${baseurl}/issf-base/search/${title}/${panels}/${contributor_ids}/${countries}/${startYear}/${endYear}`;
 export const getUserUrl = userId => `${baseurl}/issf-base/get-user/${userId}`;
 export const getAllOrganizationsUrl = `${baseurl}/issf-base/get-all-organizations`;
+export const getLatestRecordUrl = `${baseurl}/issf_base/getLatestRecord`;
 
 
 // GET RECORD DETAILS URL
@@ -54,9 +55,6 @@ export const createCasestudyRecordUrl = `${baseurl}/casestudy/create`;
 export const createGovernanceRecordUrl = `${baseurl}/governance/create`;
 export const createBluejusticeRecordUrl = `${baseurl}/bluejustice/create`;
 export const createGuidelinesRecordUrl = `${baseurl}/guidelines/create`;
-
-
-export const getLatestRecordUrl = `${baseurl}/issf_base/getLatestRecord`;
 
 
 // UPDATE RECORD API
@@ -89,3 +87,13 @@ export const updateBluejusticeGeneralInfoUrl = recordId =>`${baseurl}/bluejustic
 export const updateBluejusticeSocialIssuesUrl = recordId =>`${baseurl}/bluejustice/update/social-issues/${recordId}`;
 
 export const updateGuidelinesRecordUrl = recordId =>`${baseurl}/guidelines/update/${recordId}`;
+
+
+// ISSF VISUALIZATIONS API
+export const getBluejusticeVisualizationUrl =`${baseurl}/visualizations/bluejustice/`;
+export const getGearVisualizationUrl =`${baseurl}/visualizations/gear_vessel/`;
+export const getGovernanceVisualizationUrl =`${baseurl}/visualizations/governance/`;
+export const getSotaVisualizationUrl =`${baseurl}/visualizations/sota/`;
+export const getMarketShareVisualizationUrl =`${baseurl}/visualizations/mshare/`;
+export const getResearchVisualizationUrl =`${baseurl}/visualizations/researcher/`;
+export const getWiwVisualizationUrl =`${baseurl}/visualizations/wiw/`;

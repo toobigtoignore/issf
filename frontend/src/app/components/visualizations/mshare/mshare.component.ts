@@ -15,7 +15,7 @@ export class MshareComponent implements OnInit {
     public screenWidth: number;
     @Input() data : any;
 
-    
+
     constructor() { }
 
 
@@ -33,52 +33,49 @@ export class MshareComponent implements OnInit {
         // set the dimensions and margins of the graph
         var margin = {top: 0, right: 0, bottom: 0, left: 10},
             svgWidth = 920,
-            svgHeight = this.screenWidth > 1199 ? 380 : 650,
+            svgHeight = this.screenWidth > 1199 ? 380 : 560,
             width = svgWidth - margin.left - margin.right,
             height = svgHeight - margin.top - margin.bottom;
 
 
         // append the svg object to the body of the page
-        var svg = d3.select("#mshare-svg")
+        var svg = d3.select("#map-svg")
                     .append("svg")
                     .attr("class", "svgmap")
                     .attr("viewBox", "0 0 " + svgWidth + " " + svgHeight)
-                    .attr("preserveAspectRatio", "xMinYMin meet")
+                    .attr("preserveAspectRatio", "xMinYMin meet");
 
-
-        var g_scroll =	
+        var g_scroll =
             svg.call(d3.zoom().scaleExtent([1, 20]).on("zoom", function () {
                 g_scroll.attr("transform", d3.event.transform);
             }))
             .append("g")
             .attr("id","scroll_group");
-            
-
-        //for tooltip 
-        var offsetL = document.getElementById('visual-mshare').offsetLeft+10;
-        var offsetT = document.getElementById('visual-mshare').offsetTop+10;
 
 
-        var tooltip = 
+        //for tooltip
+        var offsetL = document.getElementById('visual-mshare').offsetLeft+100;
+        var offsetT = document.getElementById('visual-mshare').offsetTop+50;
+
+
+        var tooltip =
             d3.select("#visual-mshare")
               .append("div")
-              .attr("class", "tooltip");
+              .attr("class", "tooltip")
+              .style("left", offsetL)
+              .style("left", offsetT);
 
 
         // Map and projection
-        var projection = 
+        var projection =
             d3_geo.geoRobinson() //geoMercator  geoRobinson
                   .scale(170) //.scale(100)
                   .center([0,0])  //.center([0,60])
-                  .translate([width / 2, (height / 2) + 30]);
-
-        var path = d3.geoPath().projection(projection)
-
+                  .translate([(width / 2) - 35, (height / 2) + 40]);
 
         // Load external datas
         d3.queue()
           .defer(d3.json, "/assets/vis/world.geojson")
-          // .defer(d3.csv, "/assets/vis/mshare.csv")
           .await(ready);
 
 
@@ -91,7 +88,7 @@ export class MshareComponent implements OnInit {
 
             var data = self.data
             d3.select("#reset-button").on("click", reset);
-            
+
             function reset() {
                 d3.selectAll("#map").style("stroke-width", 0.5);
                 g_scroll.attr("transform", "translate(0,0)scale(1)")
@@ -101,7 +98,7 @@ export class MshareComponent implements OnInit {
             }
 
             var unselected = function(d) {
-                if (d3.event.defaultPrevented) return; 
+                if (d3.event.defaultPrevented) return;
                 localname = d3.event.target.localName;
                 if (localname == "svg") {
                     d3.select('.selected').classed('selected', false);
@@ -116,20 +113,20 @@ export class MshareComponent implements OnInit {
             var priority_order = ['Retained for household consumption and given to family/friends', 'Sold in local markets', 'Sold to outside markets', 'Going to non-food uses', 'Other'];
 
 
-            var priority_scale = 
+            var priority_scale =
                 d3.scaleOrdinal()
                   .domain(priority_order)
                   .range(["mapRetained", "mapSoldin", "mapSoldout", "mapGoing", "mapOther"]);
 
 
-            data_market = 
+            data_market =
                 d3.nest()
                   .key(function(d) { return d.country; })
                   .key(function(d) { return d.market_share; }).sortKeys(function(a,b) { return priority_order.indexOf(a) - priority_order.indexOf(b); })
-                  .rollup(function(v) { 
+                  .rollup(function(v) {
                       return {
                         total: d3.sum(v, function(d) { return d.additional; })
-                      }; 
+                      };
                   })
                  .entries(data);
 
@@ -143,13 +140,13 @@ export class MshareComponent implements OnInit {
             })
 
 
-            data_world = 
+            data_world =
                 d3.nest()
                   .key(function(d) { return d.market_share; }).sortKeys(function(a,b) { return priority_order.indexOf(a) - priority_order.indexOf(b); })
-                  .rollup(function(v) { 
+                  .rollup(function(v) {
                       return {
                         total: d3.sum(v, function(d) { return d.additional; })
-                    }; 
+                    };
                   })
                   .entries(data);
 
@@ -175,12 +172,12 @@ export class MshareComponent implements OnInit {
                 .append("path")
                 // draw each country
                 .attr("d", d3.geoPath().projection(projection))
-                .attr("fill","#f2efe9")  //f2efe9 //DEB887
+                .attr("fill","#f2efe9")
                 .style("stroke", "#666")
                 .style("stroke-width", "0.5px")
                 .style("cursor", "pointer")
                 .attr("id", "map" )
-                .attr("class", 
+                .attr("class",
                     d => ((d3.map(data.filter(function(s){return s.country == d.properties.name;}), function(v){return(v.market_share)}).keys().indexOf("Retained for household consumption and given to family/friends") !== -1) ? "mapRetained" : "none")
                         + " "
                         + ((d3.map(data.filter(function(s){return s.country == d.properties.name;}), function(v){return(v.market_share)}).keys().indexOf("Sold in local markets") !== -1) ? "mapSoldin" : "none")
@@ -198,9 +195,8 @@ export class MshareComponent implements OnInit {
                     tooltip.attr("class", "hidden");
                 })
 
-
                 function selected(d) {
-                    if (d3.event.defaultPrevented) return; 
+                    if (d3.event.defaultPrevented) return;
                     d3.select('.selected').classed('selected', false);
                     d3.select(this).classed('selected', true);
                     var country_name = d["properties"]["name"];
@@ -208,12 +204,12 @@ export class MshareComponent implements OnInit {
 
                     if (nD == "") {
                         nD.push({
-                            key : country_name, 
-                            records :0, 
+                            key : country_name,
+                            records :0,
                             values : []
-                        }); 
+                        });
                         for(var j =0;j<priority_order.length;j++) {
-                            nD[0].values.push({key : priority_order[j], std :0});   
+                            nD[0].values.push({key : priority_order[j], std :0});
                         }
                     }
 
@@ -226,9 +222,9 @@ export class MshareComponent implements OnInit {
                     for(var j =0;j<priority_order.length;j++){
                         if(marketshare.indexOf(priority_order[j])===-1){
                             sD.push({
-                                key : priority_order[j], 
+                                key : priority_order[j],
                                 std :0
-                            }); 
+                            });
                         }
                     }
 
@@ -241,9 +237,8 @@ export class MshareComponent implements OnInit {
 
                 function showTooltip(d) {
                     label = d.properties.name;
-                    var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
                     tooltip.attr("class", "tooltip")
-                           .attr("style", "left:"+(d3.event.pageX - 100)+"px;top:"+(d3.event.pageY - 120)+"px")
+                           .attr("style", "left:"+(d3.event.pageX - 50)+"px;top:"+(d3.event.pageY - 120)+"px")
                            .html("<span class='arrow'></span>" + label );
                 }
 
@@ -252,7 +247,7 @@ export class MshareComponent implements OnInit {
                 var piediv = d3.select(id).append("div").attr("class", "row")
 
 
-                var colorChart = 
+                var colorChart =
                     d3.scaleOrdinal()
                       .domain(priority_order)
                       //.range(["#0000FF", "#FF4500", "#008000", "#e823d1", "#696969"]);
@@ -266,16 +261,16 @@ export class MshareComponent implements OnInit {
 
                 // function to handle pieChart.
                 function pieChart(pD) {
-                    var pC ={update: null}, 
+                    var pC ={update: null},
                     pieDim = {
-                        w: 300, 
+                        w: 300,
                         h: 250,
                         r: null
                     };
                     pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
 
                     // create svg for pie chart.
-                    var piesvg = 
+                    var piesvg =
                         piediv.append("div")
                               .attr("class", "pie-chart-container") //d3.select(id).append("div") //.style("display","inline-block").style("width","100px")
                               .append("svg")
@@ -305,7 +300,7 @@ export class MshareComponent implements OnInit {
                           .duration(200)
                           .style("opacity", 1)
                           .style("stroke", "black")
-                        
+
                         d3.selectAll("#map") //all map
                           .transition()
                           .duration(200)
@@ -324,7 +319,7 @@ export class MshareComponent implements OnInit {
                           .duration(200)
                           .style("opacity", 1)
                           .style("stroke", "transparent")
-                        
+
                         d3.selectAll("#map") //all map
                           .transition()
                           .duration(200)
@@ -348,16 +343,16 @@ export class MshareComponent implements OnInit {
                     pC.update = function(nD){
                         piesvg.selectAll("path").data(pie(nD)).transition().duration(700)
                         .attrTween("d", arcTween);
-                    }        
+                    }
 
                     // Animating the pie-slice requiring a custom function which specifies
                     function arcTween(a) {
                         var i = d3.interpolate(this._current, a);
                         this._current = i(0);
-                        return function(t) { 
-                            return arc(i(t));    
+                        return function(t) {
+                            return arc(i(t));
                         };
-                    }    
+                    }
                 return pC;
             }
 
@@ -368,7 +363,7 @@ export class MshareComponent implements OnInit {
 
                 var records = lD[0].records
                 // create table for legend.
-                var legend = 
+                var legend =
                     piediv.append("div")
                           .attr("class", "table-info") //d3.select(id).append("span") //.style("display","inline-block").style("float","right")
                           .append("table")
@@ -385,7 +380,7 @@ export class MshareComponent implements OnInit {
                     .text(function(d) { return d+" ("+records+" records)"; });
 
 
-                var tr = 
+                var tr =
                     legend
                         .append("tbody")
                         .selectAll("tr")
@@ -431,20 +426,20 @@ export class MshareComponent implements OnInit {
                     l.select(".legendMarket").text(function(d){ return d.key;});
 
                     // update the percentage column.
-                    l.select(".legendPerc").text(function(d){ return getLegend(d,nD);});        
+                    l.select(".legendPerc").text(function(d){ return getLegend(d,nD);});
                 }
 
-                
+
                 // Utility function to compute percentage.
-                function getLegend(d,aD) { 
+                function getLegend(d,aD) {
                     if (d3.sum(aD.map(function(v){ return v.std; })) == 0){
                         return d3.format(".2%")("0");
                     }
                     else {
                         return d3.format(".2%")(d.std/d3.sum(
-                                aD.map(function(v){ 
-                                    return v.std; 
-                                }) 
+                                aD.map(function(v){
+                                    return v.std;
+                                })
                             ));
                         }
                 }

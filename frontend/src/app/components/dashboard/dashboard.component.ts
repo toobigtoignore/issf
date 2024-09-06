@@ -16,7 +16,7 @@ import 'leaflet.markercluster';
 
 
 export class DashboardComponent implements OnInit {
-    @ViewChild('visualFullGallery') visualFullGallery: ElementRef;
+    @ViewChild('counterHolder') counterHolder: ElementRef;
     allTypes: string = 'all';
     choroplethData: any;
     countries: any;
@@ -41,8 +41,8 @@ export class DashboardComponent implements OnInit {
     selectedMapIcon: string = this.mapOptions[0]['icon'];
     selectedMapType: string = this.mapOptions[0]['type'];
     showNoResults: boolean = false;
-    showSideGallery: boolean = true;
     showSocialMedia: string = 'twitter';
+    showCounter: boolean = false;
     userId: number;
     viewTypes: Object = {
         map: 'map',
@@ -50,6 +50,7 @@ export class DashboardComponent implements OnInit {
     }
     viewType: string = this.viewTypes['map'];
     visualsLoaded: boolean = false;
+    gearData: any;
 
 
 	  constructor(
@@ -72,17 +73,19 @@ export class DashboardComponent implements OnInit {
         this.renderMap();
         this.setRecordTypeCounts();
         this.adjustSideVisualsHeight();
-
-        /*
-            // get visualization data
-            const self = this;
-            d3.csv("/assets/vis/country.csv", function(data){self.choroplethData = data});
-        */
 	  }
 
 
     @HostListener('window:resize', ['$event']) onResize() {
         this.adjustSideVisualsHeight();
+    }
+
+
+    @HostListener('window:scroll', ['$event']) onScroll() {
+        const counterOffset = this.counterHolder.nativeElement.offsetTop + 400;
+        if(window.scrollY > counterOffset){
+            this.showCounter = true;
+        }
     }
 
 
@@ -113,16 +116,16 @@ export class DashboardComponent implements OnInit {
     adjustSideVisualsHeight(){
         const self = this;
         setTimeout(() => {
-            const sideVisualsElement = document.getElementById('side-visuals');
+            const recentContributionElement = document.getElementById('recent-contribution-view');
             const windowWidth = window.innerWidth;
             if(windowWidth >= 1024 && windowWidth <= 1360){
                 if(self.viewType === self.viewTypes['map']){
                     const mapSectionHeight = document.getElementById('map-section').offsetHeight;
-                    sideVisualsElement.style.height = `${mapSectionHeight}px`;
+                    recentContributionElement.style.height = `${mapSectionHeight}px`;
                 }
             }
             else {
-                sideVisualsElement.style.height = '100%';
+                recentContributionElement.style.height = '100%';
             }
         },100);
     }
@@ -236,20 +239,26 @@ export class DashboardComponent implements OnInit {
 
         for (const record of this.filteredData) {
             let coordinates: any;
-            if(record['point']){
+            if(record['points'] && record['points'].length > 0){
                 const href = `/details/${this.contents.getPanelCodeFromLabel(record.core_record_type)}/${record.issf_core_id}`;
                 const summary = record['core_record_summary'];
-                coordinates = record['point']['coordinates'];
-                const marker = L.marker(
-                    new L.LatLng(coordinates[1], coordinates[0]), {
-                    icon: L.icon({
-                        iconUrl: this.contents.getPanelIconFromLabel(record['core_record_type'])
-                    })
-                });
-                marker.bindPopup(
-                    `<a target='_blank' href="${href}">${this.adjustLineBreak(summary)}</a>`
-                );
-                markers.addLayer(marker);
+                for(const point of record['points']){
+                    if(point && point['coordinates']){
+                        coordinates = point['coordinates'];
+                        const lat = coordinates[1];
+                        const long = coordinates[0];
+                        const marker = L.marker(
+                            new L.LatLng(lat, long), {
+                            icon: L.icon({
+                                iconUrl: this.contents.getPanelIconFromLabel(record['core_record_type'])
+                            })
+                        });
+                        marker.bindPopup(
+                            `<a target='_blank' href="${href}">${this.adjustLineBreak(summary)}</a>`
+                        );
+                        markers.addLayer(marker);
+                    }
+                }
             }
         }
 
@@ -271,15 +280,15 @@ export class DashboardComponent implements OnInit {
                 ...this.numberOfRecordsPerType,
                 [recordType]: 0
             }
-        };
+        }
 
         for(const record of this.records){
             this.numberOfRecordsPerType[record['core_record_type']] += 1;
-        };
+        }
 
-        const filterIconElements = document.querySelectorAll('[recordType]') as any;
+        const filterIconElements = document.querySelectorAll('[recordType]');
 
-        for(const element of filterIconElements){
+        for(const element of Array.from(filterIconElements)){
             const recordType = element.getAttribute('recordType');
             const innerParagraph = this.renderer.createElement('p');
             let recordColor: string, html: string;

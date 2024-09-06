@@ -3,13 +3,13 @@ import { PANEL_CODES, PANEL_VALUES } from '../constants/constants';
 
 export class Contents {
 	private visThumbContent = [
-        { id: 1, vis: "governance", description: "This visualisation shows various governance types by country based on the contributed records." },
-        { id: 2, vis: "gear", description: "This visualisation shows vessel or gear types information by country or region." },
-        { id: 3, vis: "bluejustice", description: "This visualisation shows different types of injustice to small-scale fisheries in various locations." },
-        { id: 4, vis: "state-of-the-art-research", description: "This visualization shows top 12 countries with the highest number of total themes." },
-        { id: 5, vis: "mshare", description: "Distribution of SSF products in the market chain, based on contributed records in ISSF" },
-        { id: 6, vis: "wiw", description: "This visualisation shows the number of researchers in different countries." },
-        { id: 7, vis: "state-of-the-art-research-2", description: "This visualization shows themes covered in SSF research in various countries." }
+        { id: 1, vis: "governance", description: "Various types of governance grouped together by countries." },
+        { id: 2, vis: "gear", description: "Vessel or gear types used in different parts of the world." },
+        { id: 3, vis: "bluejustice", description: "Reported injustice related to small-scale fisheries across the globe." },
+        { id: 4, vis: "reported-issues", description: "Top 12 countries with the highest number of reported issues." },
+        { id: 5, vis: "mshare", description: "Distribution of SSF products in the market chain, based on ISSF database" },
+        { id: 6, vis: "researchers", description: "The number of researchers contributing from different countries." },
+        { id: 7, vis: "themes-covered", description: "Themes covered in SSF research on different locations." }
 	];
 
 

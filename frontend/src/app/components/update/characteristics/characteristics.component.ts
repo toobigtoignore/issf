@@ -105,30 +105,39 @@ export class CharacteristicsComponent implements OnInit {
 
     findTextualValue(key: string): string{
         const label = this.characteristicsLabels[key];
-        const index = this.characteristics.categories.indexOf(label);
-        if(index === -1) return '';
-        const targetValueObj = this.characteristics.values[index][0];
-        return targetValueObj ? targetValueObj.value : '';
+        if(this.characteristics?.categories){
+            const index = this.characteristics.categories.indexOf(label) || -1;
+            if(index === -1) return '';
+            const targetValueObj = this.characteristics.values[index][0];
+            return targetValueObj ? targetValueObj.value : '';
+        }
+        return '';
     }
 
 
     getAdditionalValue(value: string, lookUpKey: string): string {
-      const indexOfLookUpArr = this.characteristics.categories.indexOf(this.characteristicsLabels[lookUpKey]);
-      if(indexOfLookUpArr === -1) return '';
+        if(this.characteristics?.categories){
+            const indexOfLookUpArr = this.characteristics.categories.indexOf(this.characteristicsLabels[lookUpKey]);
+            if(indexOfLookUpArr === -1) return '';
 
-      const valueArr = this.characteristics.values[indexOfLookUpArr];
-      return valueArr.filter(item => item.value === value)[0]?.additional || '';
+            const valueArr = this.characteristics.values[indexOfLookUpArr];
+            return valueArr.filter(item => item.value === value)[0]?.additional || '';
+        }
+        return '';
     }
 
 
     getOtherValue(types: Object, lookUpKey: string): string|null {
         const lookUpArr: string[] = objectsToArray(types['options'], 'title');
-        const indexOfLookUpArr = this.characteristics.categories.indexOf(this.characteristicsLabels[lookUpKey]);
-        if(indexOfLookUpArr === -1) return null;
+        if(this.characteristics?.categories){
+            const indexOfLookUpArr = this.characteristics.categories.indexOf(this.characteristicsLabels[lookUpKey]);
+            if(indexOfLookUpArr === -1) return null;
 
-        const valueArr = this.characteristics.values[indexOfLookUpArr].map(item => item.value);
-        const otherValues = valueArr.filter((value: string) => lookUpArr.indexOf(value) === -1);
-        if(otherValues.length > 0) return otherValues[0];
+            const valueArr = this.characteristics.values[indexOfLookUpArr].map(item => item.value);
+            const otherValues = valueArr.filter((value: string) => lookUpArr.indexOf(value) === -1);
+            if(otherValues.length > 0) return otherValues[0];
+            return null;
+        }
         return null;
     }
 
@@ -146,10 +155,13 @@ export class CharacteristicsComponent implements OnInit {
 
     shouldCheckItem(item: string, key: string): boolean {
         const lookUpKey = this.characteristicsLabels[key];
-        const indexOfLookUpArr = this.characteristics.categories.indexOf(lookUpKey);
-        if(indexOfLookUpArr === -1) return false;
-        const lookUpArr = this.characteristics.values[indexOfLookUpArr].map(item => item.value);
-        return lookUpArr.includes(item);
+        if(this.characteristics?.categories){
+            const indexOfLookUpArr = this.characteristics.categories.indexOf(lookUpKey);
+            if(indexOfLookUpArr === -1) return false;
+            const lookUpArr = this.characteristics.values[indexOfLookUpArr].map(item => item.value);
+            return lookUpArr.includes(item);
+        }
+        return false;
     }
 
 

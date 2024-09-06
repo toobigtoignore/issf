@@ -13,45 +13,46 @@ import * as d3 from 'd3';
 export class WiwComponent implements OnInit {
     @Input() data : any
 
-    
+
     constructor() { }
 
-    
+
     ngOnInit(): void {
         this.drawConsole(this.data)
+        console.log("data: ", this.data);
     }
- 
+
 
     private drawConsole(data): void {
-	    var visualWIWwidth = 700, visualWIWheight = 700, visualWIWwidthTable = 250	
+	    var visualWIWwidth = 700, visualWIWheight = 700, visualWIWwidthTable = 250
 		var visualWIWsvg = d3.select("#visual-wiw #chartDiv").append("svg")
 			.attr("preserveAspectRatio", "xMinYMin meet")
 			.attr("viewBox", "0 0 "+visualWIWwidth+" "+visualWIWheight)
 			.classed("svg-content", true)
 			// .attr("width", visualWIWwidth)
 			// .attr("height", visualWIWheight)
-			
-        
+
+
         d3.select("#visual-wiw #tableDiv")
           .style("height", "77vh") //visualWIWheight-70+"px")
           .style("width", "101%") //visualWIWwidthTable+"px")
           .style("border", "1px solid #e3e3e3");
-    
-    
+
+
         var Duration = 500;
 		var worldY = 80;
 		const forceStrengthInitial = 0.03;
 		const forceStrength = 0.2;
-		
-        
+
+
         // charge depends on size of the bubble, so bigger towards the middle
 		function charge(d) {
 			return Math.pow(d.radius, 2.0) * 0.01
 		}
-		
-        
+
+
         // create a force simulation and add forces to it
-        const simulation = 
+        const simulation =
             d3.forceSimulation()
 			  .force('charge', d3.forceManyBody().strength(charge))
 			  .force('x', d3.forceX().strength(forceStrengthInitial).x(visualWIWwidth * .5))
@@ -62,35 +63,35 @@ export class WiwComponent implements OnInit {
 
 		// force simulation starts up automatically, which we don't want as there aren't any nodes yet
 		simulation.stop();
-		
 
-        var color = d3.scaleOrdinal(["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#c9fdff"]); //, "#e5c494", "#b3b3b3"]);	
-        
-        data = data.filter(function(d){return d.country__short_name != ''});		
+
+        var color = d3.scaleOrdinal(["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#c9fdff"]); //, "#e5c494", "#b3b3b3"]);
+
+        data = data.filter(function(d){return d.country_name != ''});
         var data_who_country = d3.nest()
-            .key(function(d) { return d.country__short_name})
+            .key(function(d) { return d.country_name})
             .rollup(function(v) { return {
                 length: v.length
             }; })
             .entries(data);
-        
+
 
         var new_data = []
-        data_who_country.forEach(function (d) {				
-            var data_country_filtered = data.filter(m => (m.country__short_name == d.key))
+        data_who_country.forEach(function (d) {
+            var data_country_filtered = data.filter(m => (m.country_name == d.key))
             var region = d3.map(data_country_filtered, function(c){return c.region;}).keys()[0]
             new_data.push({Name: d.key, radius: d.value.length, group: region})
         })
 
 
-        var Regions1 = ["Latin America & the Caribbean", "Europe"] //, "North America & Canada"
+        var Regions1 = ["Latin America & the Caribbean", "Europe"] //, "North America"
         var Regions2 = [ "Africa", "Asia & Oceania" ]
         new_data.forEach(function (d) {
             d.vert = ((Regions1.indexOf(d.group) === -1) ? 2 : 1)
             d.count = +d.radius
         })
-                
-        
+
+
         var nodes = new_data
         var min = d3.min(nodes, d=>d.radius)
         var max = d3.max(nodes, d=>d.radius)
@@ -98,16 +99,16 @@ export class WiwComponent implements OnInit {
         var groups = d3.map(nodes, d=>d.group).keys()
         nodes.push({Name: "World", group: "World", radius: 70, vert: 1})
         var groupClass = d3.scaleOrdinal()
-            .domain(["Africa", "Europe", "North America & Canada", "Latin America & the Caribbean", "Asia & Oceania", "World"])
+            .domain(["Africa", "Europe", "North America", "Latin America & the Caribbean", "Asia & Oceania", "World"])
             .range(["Africa", "Europe", "America", "Latin", "Asia", "World"]);
-        
+
         var worldRadius = (visualWIWheight/2)*.85
         var radiusScale = d3.scaleLinear()
             .domain([min, max, sum])
             .range([26, 70, worldRadius]);
 		var visualWIWsvg = d3.select('#visual-wiw svg');
-				
-        
+
+
         ///////////////////////////////////////////REGION LEGENDS///////////////////////////////////////////
         groups.sort(d3.ascending).push("World")
         var barMargin = 270
@@ -123,7 +124,7 @@ export class WiwComponent implements OnInit {
             .attr('x', (d,i)=> 20)
             .attr('y', (d,i)=> (i <= 2) ? 5 : 30)
             .attr("fill", d=> color(d))
-            .on("mouseover", function(d) { 
+            .on("mouseover", function(d) {
                 if (d!="World"){
                     circles.attr("opacity", d=> d.group == "World" ? 0 : 0.2)
                     lables.attr("opacity", d=> d.group == "World" ? 0 : 0.2)
@@ -131,8 +132,8 @@ export class WiwComponent implements OnInit {
                     d3.selectAll("."+groupClass(d))
                         .attr("opacity", d=> d.group == "World" ? 0 : 1)
                 }
-            }) 
-            .on("mouseout", function() { 
+            })
+            .on("mouseout", function() {
                 circles.attr("opacity", d=> d.group == "World" ? 0 : 1)
                 lables.attr("opacity", d=> d.group == "World" ? 0 : 1)
                 countLables.attr("opacity", d=> d.group == "World" ? 0 : 1)
@@ -153,8 +154,8 @@ export class WiwComponent implements OnInit {
             .delay(0)
             .duration(1000)
             .attr('x', (d,i)=> (i <= 2) ? i*barMargin + 20 : i*barMargin - barMargin*3 + 20)
-                
-            
+
+
         var titles = visualWIWsvg.selectAll('.title').data(groups);
         titles.enter()
               .append('text')
@@ -171,20 +172,20 @@ export class WiwComponent implements OnInit {
               .delay(500)
               .duration(2000)
               .style('opacity', 1.0)
-                
-                
+
+
          /////////////////////////////////////////// WORLD CIRCLE ///////////////////////////////////////////
         d3.selection.prototype.moveToBack = function() {
-            return this.each(function() { 
-                var firstChild = this.parentNode.firstChild; 
-                if (firstChild) { 
-                    this.parentNode.insertBefore(this, firstChild); 
-                } 
+            return this.each(function() {
+                var firstChild = this.parentNode.firstChild;
+                if (firstChild) {
+                    this.parentNode.insertBefore(this, firstChild);
+                }
             });
         };
-            
 
-        var world = 
+
+        var world =
             visualWIWsvg
                 .append("g")
                 .attr("transform", function(d) {
@@ -192,14 +193,14 @@ export class WiwComponent implements OnInit {
                 })
                 .attr("class", "world circle")
                 .data(["World"])
-        
+
         world.append("circle")
              .attr("id", "World")
              .attr("r", radiusScale(sum))
              .attr("fill", "#c9fdff")
              .on("click", mouseClick)
-            
-        var worldText = 
+
+        var worldText =
             world.append("text")
                  .attr("id", "World")
                  .attr("text-anchor", "middle")
@@ -211,9 +212,9 @@ export class WiwComponent implements OnInit {
                  .attr('x', 0)
                  .attr('y', 30-worldRadius)
                  .on("click", mouseClick);
-            
-                        
-        var worldCount = 
+
+
+        var worldCount =
             world.append("text")
                  .attr("id", "World")
                  .attr("text-anchor", "middle")
@@ -223,10 +224,10 @@ export class WiwComponent implements OnInit {
                  .attr('x', 0)
                  .attr('y', 50-worldRadius)
                  .on("click", mouseClick);
-            
+
             world.moveToBack();
-                
-                    
+
+
 			///////////////////////////////////////////COUNTRY CIRCLES///////////////////////////////////////////
             function createNodes(rawData) {
                 // use map() to convert raw data into node data
@@ -240,17 +241,17 @@ export class WiwComponent implements OnInit {
             }
 
 
-            nodes = createNodes(nodes);			
-            var node = 
+            nodes = createNodes(nodes);
+            var node =
                 visualWIWsvg.append("g")
                             .attr("class", "nodes circle")
                             .selectAll("g")
                             .data(nodes)
                             .enter()
                             .append("g")
-        
-                            
-            var circles = 
+
+
+            var circles =
                 node.append("circle")
                     .attr("class", d=> groupClass(d.group))
                     .attr("id", d=> d.Name)
@@ -260,8 +261,8 @@ export class WiwComponent implements OnInit {
                     .attr("fill", d=> color(d.group))
                     .on("click", mouseClick)
 
-                    
-            var lables = 
+
+            var lables =
                 node.append("text")
                     .attr("class", d=> groupClass(d.group))
                     .attr("id", d=> d.Name)
@@ -270,15 +271,15 @@ export class WiwComponent implements OnInit {
                     .attr("text-anchor", "middle")
                     .attr("font-family", "sans-serif")
                     .text(function(d) { return d.Name; })
-                    .attr("font-size", function(d){ 
-                        return (d.Name == "United Kingdom") ? d.radius/4 : d.radius/3; 
+                    .attr("font-size", function(d){
+                        return (d.Name == "United Kingdom") ? d.radius/4 : d.radius/3;
                     })
                     .attr('x', 0)
                     .attr('y', 0)
                     .on("click", mouseClick);
-        
 
-            var countLables = 
+
+            var countLables =
                 node.append("text")
                     .attr("class", d=> groupClass(d.group))
                     .attr("id", d=> d.Name)
@@ -291,37 +292,37 @@ export class WiwComponent implements OnInit {
                     .attr('x', 0)
                     .attr('y', d=>d.radius/2)
                     .on("click", mouseClick);
-            
-                    
+
+
             function mouseClick(d) {
                 var country = d3.select(this).attr("id")
                 if (country == "World"){
                     var tableData = data
                     .sort((a,b) => b.number_publications - a.number_publications)
                 } else {
-                    var tableData = data.filter(d => d.country__short_name == country)
+                    var tableData = data.filter(d => d.country_name == country)
                         .sort((a,b) => b.number_publications - a.number_publications)
                 }
                 updateTable(tableData, country)
             }
-            
-            
+
+
             simulation
                 .nodes(nodes)
                 .on('tick', ticked)
                 .restart();
-                    
+
 
             ///////////////////////////////////////////PUBLICATIONS TABLE///////////////////////////////////////////
-            var legend = 
+            var legend =
                 d3.select("#tableDiv")
                     .append("table")
                     .attr('id','publications')
                     .attr("width", "100%");
-					
+
 
             var header = legend.append("thead");
-            var headerCountry = 
+            var headerCountry =
                 header.append("tr")
                         .selectAll("th")
                         .data(["World ("+sum+")"])
@@ -333,7 +334,7 @@ export class WiwComponent implements OnInit {
                         .attr("align", "center")
                         .attr("colspan", 3)
                         .text(d=>d);
-            
+
             header.append("tr")
                     .selectAll("th")
                     .data(["Researchers"])
@@ -344,10 +345,10 @@ export class WiwComponent implements OnInit {
                     .style("font-size", "15px")
                     .attr("colspan", 2)
                     .text(d=>d);
-            
-            
+
+
             var tableData = data.sort((a,b) => b.number_publications - a.number_publications)
-            var tr = 
+            var tr =
                 legend.append("tbody")
                         .selectAll("tr")
                         .data(tableData)
@@ -372,9 +373,9 @@ export class WiwComponent implements OnInit {
                 .attr("font-family", "sans-serif")
                 .style("font-size", "15px")
                 .style("width", "10px")
-                .text(d=> d["core_record_summary"]);
+                .text(d=> d["researcher_name"]);
 
-                
+
             function updateTable(tableData, country) {
                 headerCountry.text(country+" ("+tableData.length+")")
                 var tr = legend.select("tbody").selectAll("tr")
@@ -390,15 +391,15 @@ export class WiwComponent implements OnInit {
                     .attr("width", '15px')
                     .attr("height", '15px')
                     .attr("fill",d=> color(d.region))
-                        
+
                 trEnter
                     .append("td")
-                    .attr("class",'legendPublisher')	
+                    .attr("class",'legendPublisher')
                     .attr("font-family", "sans-serif")
                     .style("font-size", "15px")
                     .style("width", "10px")
-                    .text(d=> d["core_record_summary"])
-                        
+                    .text(d=> d["researcher_name"])
+
                 trEnter
                     .style('opacity', 0.0)
                     .transition()
@@ -406,34 +407,34 @@ export class WiwComponent implements OnInit {
                     .duration(0)
                     .style('opacity', 1.0);
             }
-                
-                
+
+
             ///////////////////////////////////////////SIMULATIONS///////////////////////////////////////////
             function ticked() {
                 node.attr("transform", function(d) {
                     return "translate(" + d.x + "," + (d.y + 40) + ")";
                 })
             }
-            
+
 
             var padding = .4
-            var paddingY = .6				
+            var paddingY = .6
             var centerScaleX1 = d3.scalePoint().padding(padding).range([0, visualWIWwidth]);
             var centerScaleX2 = d3.scalePoint().padding(padding).range([0, visualWIWwidth]);
             var centerScaleY = d3.scalePoint().padding(paddingY).range([0, visualWIWheight]);
-                
-                
+
+
             function splitBubbles(byVar) {
                 centerScaleX1.domain(Regions1);
                 centerScaleX2.domain(Regions2);
                 centerScaleY.domain([1,2]);
-                
+
                 lables.attr("opacity", d=>d.group == "World" ? 0 : 1)
                 countLables.attr("opacity", d=>d.group == "World" ? 0 : 1)
                 worldText.attr("opacity", 1)
                 worldCount.attr("opacity", 1)
-                
-                if(byVar == "all"){	
+
+                if(byVar == "all"){
                     simulation
                         .force('forceX', d3.forceX().strength(forceStrengthInitial).x(visualWIWwidth/2))
                         .force("forceY", d3.forceY().strength(forceStrengthInitial)
@@ -442,16 +443,16 @@ export class WiwComponent implements OnInit {
                 } else {
                     simulation
                         .force('forceX', d3.forceX().strength(forceStrength)
-                            .x(d=> (d.group == "North America & Canada" || d.group == "World") ? visualWIWwidth * .5 : (d.vert == 1) ? centerScaleX1(d.group) : centerScaleX2(d.group))
+                            .x(d=> (d.group == "North America" || d.group == "World") ? visualWIWwidth * .5 : (d.vert == 1) ? centerScaleX1(d.group) : centerScaleX2(d.group))
                         )
                         .force('forceY', d3.forceY().strength(forceStrength)
-                                .y(d=> (d.group == "World") ? worldY : (d.group == "North America & Canada") ? visualWIWheight * .5 : centerScaleY(d.vert))
+                                .y(d=> (d.group == "World") ? worldY : (d.group == "North America") ? visualWIWheight * .5 : centerScaleY(d.vert))
                         )
                         .alpha(1).restart();
                 }
             }
-                
-                
+
+
 			function setupButtons() {
                 d3.selectAll('.button')
                   .on('click', function () {

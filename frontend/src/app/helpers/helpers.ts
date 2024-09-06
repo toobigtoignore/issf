@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+// import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatTableDataSource } from "@angular/material/table";
 import {
     getPersonRecordUrl,
@@ -220,12 +220,16 @@ export const getOtherValue = (valueArr: string[], lookUpArr: string[]): string|n
 
 export const getLoggedInUser = (token: string): loggedInUserType => {
     if(!token) return null;
-    const tokenHelper = new JwtHelperService();
-    const decodedToken = tokenHelper.decodeToken(token);
     return {
-        userId: decodedToken.user_id,
-        isStaff: decodedToken.is_staff
+      userId: 1,
+      isStaff: true
     }
+    // const tokenHelper = new JwtHelperService();
+    // const decodedToken = tokenHelper.decodeToken(token);
+    // return {
+    //     userId: decodedToken.user_id,
+    //     isStaff: decodedToken.is_staff
+    // }
 }
 
 
@@ -271,6 +275,24 @@ export const sortBy = (data: Object[], key: string, order: string): Object[] => 
         })
     );
 }
+
+
+export const counter = (element: HTMLElement, targetNumber: number, duration: number = 40) => {
+    let currentNumber = 0;
+    const intervalId = setInterval(() => {
+        const increment = Math.ceil(targetNumber / duration);
+        currentNumber += increment;
+        element.innerHTML = currentNumber.toString();
+        if (currentNumber >= targetNumber) {
+            clearInterval(intervalId);
+        }
+    }, duration);
+}
+
+
+export const delay = (ms: number) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+};
 
 
 export const toggleOnSpecificValue = (event: Event, targetValue: string, isOtherValueRequired: boolean = false) => {

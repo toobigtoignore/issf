@@ -14,12 +14,13 @@ import * as d3s from 'd3-scale-chromatic';
 export class ResearchComponent implements OnInit {
 	@Input() data : any
 
-    
+
     constructor() { }
 
-  
+
     ngOnInit(): void {
-	    this.drawConsole(this.data)
+      console.log(this.data);
+	    this.drawConsole(this.data);
     }
 
 
@@ -30,9 +31,9 @@ export class ResearchComponent implements OnInit {
 		var marginV = 20;
 		var marginH = 30;
 		var duration = 250;
-		
+
 		var pieDim = {
-            w: 200, 
+            w: 200,
             h: 400,
             r: null
         };
@@ -53,41 +54,41 @@ export class ResearchComponent implements OnInit {
 		var yTick = 3;
         var lock = d3.select("#visual7-lockCheckbox").property("checked") ? 1 : 0;
         var form_val = "total";
-			
-        
+
+
         /////////////////////////////////////////// DATA ///////////////////////////////////////////
 		sota = sota.filter(function(d){return d.country != '' && d.country != '0' && d.year>=1000});
         var uniqueCountryArray = d3.map(sota, d => d.country).keys().sort(d3.ascending)
-        var type = d3.map(sota, d => d.theme_issue_category).keys().sort(d3.ascending)
+        var type = d3.map(sota, d => d.category).keys().sort(d3.ascending)
         var regions = d3.map(sota, d => d.region).keys()
-        var data_sota_country = 
+        var data_sota_country =
             d3.nest()
               .key(function(d) { return d.country}).sortKeys(d3.ascending)
               .key(function(d) { return d.year}).sortKeys(d3.ascending)
-              .rollup(function(v) { 
+              .rollup(function(v) {
                     return {
                         total: v.length
-                    }; 
+                    };
                 })
               .entries(sota);
-			
-        var data_sota_region = 
+
+        var data_sota_region =
             d3.nest()
               .key(function(d) { return d.region}).sortKeys(d3.ascending)
-              .rollup(function(v) { 
+              .rollup(function(v) {
                   return {
                       total: v.length
-                  }; 
+                  };
               })
               .object(sota);
-            
-              
+
+
         regions.forEach (function(d) {
             var data_regions_filtered = sota.filter(m => (m.region == d))
             var records = d3.map(data_regions_filtered, m=> m.issf_core_id).keys().length
             data_sota_region[d].record = records
         })
-			
+
         var Global = "Global Data";
         var new_data = [];
         data_sota_country.forEach(function (d,i) {
@@ -102,20 +103,20 @@ export class ResearchComponent implements OnInit {
         })
 
         var pD = d3.nest()
-                    .key(function(d) { return d.theme_issue_category}).sortKeys(d3.ascending)
-                    .rollup(function(v) { 
+                    .key(function(d) { return d.category}).sortKeys(d3.ascending)
+                    .rollup(function(v) {
                         return {
                             total: v.length
-                        }; 
+                        };
                     })
                     .entries(sota);
 
         pD.forEach(function(d){
-            var sota_filtered = sota.filter(m => (m.theme_issue_category == d.key))
+            var sota_filtered = sota.filter(m => (m.category == d.key))
             var count_issf = d3.map(sota_filtered, d => d.issf_core_id).keys().length
             d.value.record = count_issf
         })
-		
+
         var data: any = new_data;
         var maxValue = d3.max(data, d => d3.max(d.values, v => v[form_val]));
         var minValue = d3.min(data, d => d3.min(d.values, v => v[form_val]));
@@ -125,20 +126,20 @@ export class ResearchComponent implements OnInit {
         var xScale = d3.scaleLinear()
                         .domain(d3.extent(sota, d => d.year))
                         .range([0, visual7Width-marginH]);
-        
+
         if (form_val=="total"){
             var yScale = d3.scaleLog()
                             .domain([1, maxValue])
                             .range([visual7Height-marginV, 0])
         } else {
-            var yScale = 
+            var yScale =
                 d3.scaleLinear()
                   .domain([0, maxValue])
                   .range([visual7Height-marginV, 0]);
         }
 
 		var color = d3.scaleOrdinal(d3s.schemeTableau10);
-        var svg = 
+        var svg =
             d3.select("#visual7-chart")
                 .append("svg")
                 .classed("svg-content", true)
@@ -148,7 +149,7 @@ export class ResearchComponent implements OnInit {
                 .attr("viewBox", "0 0 " + (visual7Width + marginH) + " " + (visual7Height + marginV))
                 .append('g')
                 .attr("transform", `translate(${marginH}, ${marginV})`);
-            
+
         svg.append("text")
             .attr("class", "title-text")
             .style("font-size", "18px")
@@ -170,9 +171,9 @@ export class ResearchComponent implements OnInit {
             .style("cursor", "pointer")
             .on("mouseover", function(d, i) {
                 var selected_init = d3.select('#visual7-dropdown option:checked').text()
-                if (lock == 0 || (d.name == selected_init) || (regions.indexOf(selected_init) != -1)){  
+                if (lock == 0 || (d.name == selected_init) || (regions.indexOf(selected_init) != -1)){
                     var total = d3.sum(d.values, t => t[form_val])
-                    var record = d3.sum(d.values, t => t.record)                  
+                    var record = d3.sum(d.values, t => t.record)
                     svg.select("#visual7 .title-text").remove();
                     svg.append("text")
                     .attr("class", "title-text")
@@ -193,25 +194,25 @@ export class ResearchComponent implements OnInit {
             .on("mouseover", function(d) {
                 var selected_init = d3.select('#visual7-dropdown option:checked').text()
                 var selected = d3.select('#visual7-dropdown').property('value')
-                if (regions.indexOf(selected_init) != -1 && lock ==1){                 
+                if (regions.indexOf(selected_init) != -1 && lock ==1){
                     d3.selectAll("#visual7 ."+selected)
                         .style('opacity', otherLinesOpacityHoverRegion)
                         .style("stroke-width", lineStrokeHover)
-                            
+
                     d3.selectAll("#visual7 .c"+selected).style('opacity', otherLinesOpacityHoverRegion)
                     d3.select(this)
                         .transition()
                         .duration(duration)
                         .style('stroke-width', "3.5")
                         .style('opacity', 1)
-    
+
                     d3.selectAll("#visual7 #c"+this.id).style('opacity', 1)
-                }	
+                }
                 if (lock == 0 || (d.name == selected_init)){onchange(this.id, "all", null)}
                 if (regions.indexOf(selected_init) != -1) {onchangeinregion(this.id, "all", null)}
             })
             .on("click", clicked)
-					
+
         function clicked() {
             if (lock == 0) {
                 lock = 1;
@@ -222,7 +223,7 @@ export class ResearchComponent implements OnInit {
             }
             onlockChange()
         }
-			
+
         var circles = svg.append('g').attr('class', 'circles');
         circles
             .selectAll("#visual7 .circle-group")
@@ -239,13 +240,13 @@ export class ResearchComponent implements OnInit {
             .on("mouseover", function(d) {
                 var selected_init = d3.select('#visual7-dropdown option:checked').text()
                 if (lock == 0 || (d.name == selected_init) || (regions.indexOf(selected_init) != -1)){
-                    d3.select(this) 
+                    d3.select(this)
                         .append("text")
                         .attr("class", "text")
                         .text(`${d[form_val]}`)
                         .attr("x", d => xScale(d.date) + 5)
                         .attr("y", d => yScale(d[form_val]) - 10);
-                                
+
                     svg.select("#visual7 .title-text").remove();
                     svg.append("text")
                     .attr("class", "title-text")
@@ -281,18 +282,18 @@ export class ResearchComponent implements OnInit {
                     d3.selectAll("#visual7 ."+selected)
                         .style('opacity', otherLinesOpacityHoverRegion)
                         .style("stroke-width", lineStrokeHover)
-                        
+
                     d3.selectAll("#visual7 .c"+selected).style('opacity', otherLinesOpacityHoverRegion)
-                
+
                     d3.select("#visual7 #"+this.id.slice(1))
                         .transition()
                         .duration(duration)
                         .style('stroke-width', "3.5")
                         .style('opacity', 1)
-                        
+
                     d3.selectAll("#visual7 #c"+this.id.slice(1)).style('opacity', 1)
                 }
-						
+
                 if (lock == 0 || (d.name == selected_init) || (regions.indexOf(selected_init) != -1)){
                     if (regions.indexOf(selected_init) === -1) {onchange(this.id.slice(1), d.date, null)}
                     if (regions.indexOf(selected_init) != -1) {onchangeinregion(this.id.slice(1), d.date, null)}
@@ -304,13 +305,13 @@ export class ResearchComponent implements OnInit {
             })
             .on("mouseout", function(d) {
                 var selected_init = d3.select('#visual7-dropdown option:checked').text();
-                d3.select(this) 
+                d3.select(this)
                 .transition()
                 .duration(duration)
-                .attr("r", circleRadius);  
+                .attr("r", circleRadius);
             })
             .on("click", clicked)
-            
+
         var xAxis = d3.axisBottom(xScale).ticks(xTick).tickFormat(d3.format(".0f"));
         var yAxis = d3.axisLeft(yScale).ticks(yTick).tickFormat(d3.format(".0f"));
         svg.append("g")
@@ -332,15 +333,15 @@ export class ResearchComponent implements OnInit {
             .attr("transform", "rotate(-90)")
             .attr("fill", "#000")
             .text("Total themes");
-                    
-            
+
+
         /////////////////////////////////////////// PIE CHART ///////////////////////////////////////////
         var colorChart = d3.scaleOrdinal()
-            // .range(["#0000FF", "#FF4500", "#008000", "#e823d1", "#696969"]);	
+            // .range(["#0000FF", "#FF4500", "#008000", "#e823d1", "#696969"]);
 			.range(["#3f51b5", "#d81b60", "#4caf50", "#964b00", "#000000"]);
-                    
+
         // create svg for pie chart.
-        var piesvg = 
+        var piesvg =
             d3.select("#visual7-pieChart")
                 .append("svg")
                 .attr("preserveAspectRatio", "xMinYMin meet")
@@ -348,20 +349,20 @@ export class ResearchComponent implements OnInit {
                 .classed("svg-content", true)
                 // .attr("width",pieDim.w)
                 // .attr("height", pieDim.h)
-                    
+
         // create function to draw the arcs of the pie slices.
         var arc = d3.arc().outerRadius(pieDim.r).innerRadius(pieDim.r/2);
 
         // create a function to compute the pie slice angles.
-        var pie = 
+        var pie =
             d3.pie().sort(null).value(function(d) {
-                return d.value[form_val]; 
+                return d.value[form_val];
             });
 
         var pieg = piesvg.append("g")
                 .attr("transform", "translate("+pieDim.w/2+","+(pieDim.h/4 + 25)+")")
                 .attr("id", "pie")
-            
+
         pieg.selectAll("#visual7 path")
             .data(pie(pD))
             .enter()
@@ -375,7 +376,7 @@ export class ResearchComponent implements OnInit {
             .data(pie(pD))
             .enter().append("text")
             .attr("class", "pieText")
-            .attr("transform", d=> "translate(" + arc.centroid(d) + ")") 
+            .attr("transform", d=> "translate(" + arc.centroid(d) + ")")
             .attr('dy', "0.3em")
             .style("text-anchor", "middle")
             .style("font-size", "16px")
@@ -388,28 +389,28 @@ export class ResearchComponent implements OnInit {
                 .transition()
                 .duration(700)
                 .attrTween("d", arcTween);
-                    
+
             pieg.selectAll("#visual7 .pieText").data(pie(nD)).transition().duration(700)
                 .attr("transform", d=> (single == 1) ? "translate("+0+","+0+")" : "translate(" + arc.centroid(d) + ")")
                 .attr("opacity", d=> (d.data.value[form_val] == 0) ? 0 : 1)
                 .text(function(d) { return d.data.value[form_val]; });
-                    
+
             // Animating the pie-slice requiring a custom function which specifies
             function arcTween(a) {
                 var i = d3.interpolate(this._current, a);
                 this._current = i(0);
-                return function(t) { 
-                    return arc(i(t));   
+                return function(t) {
+                    return arc(i(t));
                 };
-            } 
+            }
         }
-			
+
         ///////////////////////////////////////////TYPE LEGENDS///////////////////////////////////////////
-        var typeg = 
+        var typeg =
             piesvg.append("g")
                     .attr("id", "typeBars")
                     .attr("transform", "translate("+pieDim.w/2+","+(pieDim.h/2 + 50)+")")
-                
+
         typeg.selectAll("#visual7 rect")
             .data(type).enter().append("rect")
             .attr("id", d => d)
@@ -422,7 +423,7 @@ export class ResearchComponent implements OnInit {
             .ease(d3.easeLinear)
             .delay(0)
             .duration(700);
-                
+
         typeg.selectAll('#visual7 .title')
             .data(type)
             .enter()
@@ -439,9 +440,9 @@ export class ResearchComponent implements OnInit {
             .delay(500)
             .duration(700)
             .style('opacity', 1.0)
-                    
+
         /////////////////////////////////////////// DROPDOWN ///////////////////////////////////////////
-        var selector = 
+        var selector =
             d3.select("#visual7_dropdown")
                 .append("select")
                 .attr("id","visual7-dropdown")
@@ -450,11 +451,11 @@ export class ResearchComponent implements OnInit {
                 .style("padding", "7px")
                 .style("margin-bottom", "15px")
                 .on("change", function(d) {
-                    var selected_init = d3.select('#visual7-dropdown option:checked').text() 
+                    var selected_init = d3.select('#visual7-dropdown option:checked').text()
                     var selected = d3.select('#visual7-dropdown').property('value')
                     svg.select("#visual7 .title-text").remove();
                     if (selected_init == Global) {
-                        var total = sota.length	
+                        var total = sota.length
                         var record = d3.map(sota,d=> d.issf_core_id).keys().length
                     } else if (regions.indexOf(selected_init) != -1){
                         var total = data_sota_region[selected_init].total
@@ -472,48 +473,48 @@ export class ResearchComponent implements OnInit {
                         .attr("text-anchor", "middle")
                         .attr("x", (visual7Width-marginH)/2)
                         .attr("y", 20);
-                        
+
                     onlockChange();
                     onchange(selected, "all", selected_init);
                 })
-						
+
         function onchangeinregion(selected, year, selected_init) {
             if (year == "all") {
                 var sotaFiltered = sota.filter(c => c.country.replace(/ /g, "_").replace(/\(/g, "_").replace(/\)/g, "_").replace(/'/g, "_").replace(/\./g, "_") == selected)
             } else {
                 var sotaFiltered = sota.filter(c => c.year == year && c.country.replace(/ /g, "_").replace(/\(/g, "_").replace(/\)/g, "_").replace(/'/g, "_").replace(/\./g, "_") == selected)
             }
-            var nD = 
+            var nD =
                 d3.nest()
-                    .key(function(d) { return d.theme_issue_category}).sortKeys(d3.ascending)
-                    .rollup(function(v) { 
+                    .key(function(d) { return d.category}).sortKeys(d3.ascending)
+                    .rollup(function(v) {
                         return {
                         total: v.length
                     };
                 })
                 .entries(sotaFiltered);
-                        
+
             nD.forEach(function(d){
-                var sota_filtered = sota.filter(m => (m.theme_issue_category == d.key && m.country == selected_init))
+                var sota_filtered = sota.filter(m => (m.category == d.key && m.country == selected_init))
                 var count_issf = d3.map(sota_filtered, d => d.issf_core_id).keys().length
                 d.value.record = count_issf
             })
-            
+
             var type_current = d3.map(nD, d => d.key).keys()
             var single = type_current.length
-                        
+
             //Adding nonExist Types to Country
             for(var j =0;j<type.length;j++){
                 if (type_current.indexOf(type[j]) === -1){
-                    nD.push({key : type[j], value: {total :0, record:0}}); 
+                    nD.push({key : type[j], value: {total :0, record:0}});
                 }
             }
 
             nD.sort(d3.ascending);
             pieUpdate(nD,single)
         }
-					
-                
+
+
         function onchange(selected, year, selected_init) {
             if (selected == Global.replace(/ /g, "_")) {
                 d3.selectAll('#visual7 .line').style('opacity', lineOpacity);
@@ -529,79 +530,79 @@ export class ResearchComponent implements OnInit {
                     .style("stroke-width", lineStrokeHover)
                 d3.selectAll("#visual7 .c"+selected).style('opacity', 1)
                 var sotaFiltered = sota.filter(c => c.region == selected_init)
-                var nD = 
+                var nD =
                     d3.nest()
-                        .key(function(d) { return d.theme_issue_category}).sortKeys(d3.ascending)
-                        .rollup(function(v) { 
+                        .key(function(d) { return d.category}).sortKeys(d3.ascending)
+                        .rollup(function(v) {
                             return {
                             total: v.length
                         };
                         })
                     .entries(sotaFiltered);
-                
+
                 nD.forEach(function(d){
-                    var sota_filtered = sota.filter(m => (m.theme_issue_category == d.key && m.region == selected_init))
+                    var sota_filtered = sota.filter(m => (m.category == d.key && m.region == selected_init))
                     var count_issf = d3.map(sota_filtered, d => d.issf_core_id).keys().length
                     d.value.record = count_issf
                 })
-                    
+
                 var type_current = d3.map(nD, d => d.key).keys()
                 var single = type_current.length
-                        
+
                 //Adding nonExist Types to Country
                 for(var j =0;j<type.length;j++){
                     if (type_current.indexOf(type[j]) === -1){
-                        nD.push({key : type[j], value: {total :0, record:0}}); 
+                        nD.push({key : type[j], value: {total :0, record:0}});
                     }
                 }
 
                 nD.sort(d3.ascending);
                 pieUpdate(nD,single)
             }
-            else {	
+            else {
                 d3.select('#visual7-dropdown').property('value', selected)
                 d3.selectAll('#visual7 .line')
                     .style('opacity', otherLinesOpacityHover)
                     .style("stroke-width", lineStroke)
-                        
+
                 d3.selectAll('#visual7 circle')
                     .style('opacity', circleOpacityOnLineHover)
-                    
+
                 d3.select("#visual7 #"+selected)
                     .style('opacity', lineOpacityHover)
                     .style("stroke-width", lineStrokeHover)
-                        
+
                 d3.selectAll("#visual7 #c"+selected).style('opacity', 1)
-                    
+
                 if (year == "all") {
                     var sotaFiltered = sota.filter(c => c.country.replace(/ /g, "_").replace(/\(/g, "_").replace(/\)/g, "_").replace(/'/g, "_").replace(/\./g, "_") == selected)
                 } else {
                     var sotaFiltered = sota.filter(c => c.year == year && c.country.replace(/ /g, "_").replace(/\(/g, "_").replace(/\)/g, "_").replace(/'/g, "_").replace(/\./g, "_") == selected)
                 }
-                    
-                var nD = 
+
+                var nD =
                     d3.nest()
-                        .key(function(d) { return d.theme_issue_category}).sortKeys(d3.ascending)
-                        .rollup(function(v) { 
+                        .key(function(d) { return d.category}).sortKeys(d3.ascending)
+                        .rollup(function(v) {
                             return {
                                 total: v.length
-                        }; 
+                        };
                     })
                     .entries(sotaFiltered);
-                        
+
                 nD.forEach(function(d){
-                    var sota_filtered = sota.filter(m => (m.theme_issue_category == d.key && m.country == selected_init))
+                    var sota_filtered = sota.filter(m => (m.category == d.key && m.country == selected_init))
                     var count_issf = d3.map(sota_filtered, d => d.issf_core_id).keys().length
                     d.value.record = count_issf
                 })
-                    
+
                 var type_current = d3.map(nD, d => d.key).keys()
                 var single = type_current.length
-                        
+
                 //Adding nonExist Types to Country
                 for(var j =0;j<type.length;j++){
                     if (type_current.indexOf(type[j]) === -1){
-                        nD.push({key : type[j], value: {total :0, record:0}}); 
+                        nD.push({key : type[j], value: {total :0, record:0}});
                     }
                 }
 
@@ -609,8 +610,8 @@ export class ResearchComponent implements OnInit {
                 pieUpdate(nD,single)
             }
         }
-            
-        selector 
+
+        selector
             .append("optgroup")
             .attr("label", "Global")
             .attr("value", "Global")
@@ -621,7 +622,7 @@ export class ResearchComponent implements OnInit {
             .text(function(d){
                 return Global;
             })
-					
+
         selector
             .append("optgroup")
             .attr("label", "Regions")
@@ -651,11 +652,11 @@ export class ResearchComponent implements OnInit {
             .text(function(d){
                 return d;
             })
-            
-                    
+
+
         /////////////////////////////////////////// lockCheckbox ///////////////////////////////////////////
         d3.select("#visual7-lockCheckbox").on("change", onlockChange)
-			
+
         function onlockChange(){
             var selected = d3.select('#visual7-dropdown').property('value')
             var selected_init = d3.select('#visual7-dropdown option:checked').text()
@@ -664,18 +665,18 @@ export class ResearchComponent implements OnInit {
                 lock = 1
                 d3.selectAll('#visual7 .line').style("pointer-events", "none")
                 d3.selectAll('#visual7 circle').style("pointer-events", "none")
-                
+
                 if (regions.indexOf(selected_init) != -1){
                     d3.selectAll("#visual7 ."+selected).style("pointer-events", "");
                     d3.selectAll("#visual7 .c"+selected).style("pointer-events", "")
-                } else{		
+                } else{
                     d3.select("#visual7 #"+selected).style("pointer-events", "");
                     d3.selectAll("#visual7 #c"+selected).style("pointer-events", "")
                 }
             } else {
                 d3.selectAll('#visual7 .line').style("pointer-events", "")
                 d3.selectAll('#visual7 circle').style("pointer-events", "")
-            }				
+            }
         };
         onlockChange()
     }

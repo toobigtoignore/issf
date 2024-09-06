@@ -40,7 +40,7 @@
 }
 
 
-.map-visualization {
+.dashboard-top-section {
     float: left;
     width: 100%;
     height: 100%;
@@ -51,7 +51,7 @@
 
 .record-views {
     float: left;
-    width: 60%;
+    width: 73%;
     background: #fff;
     border-radius: 5px;
     padding: 0px 1.25%;
@@ -370,18 +370,13 @@
 }
 
 
-.side-visuals {
+#recent-contribution-view {
 	  float: right;
-	  width: 39%;
+	  width: 25.5%;
 	  box-sizing: border-box;
-	  margin-left: 1%;
 	  height: 100%;
+    min-height: 598px;
 	  overflow: hidden;
-}
-
-
-.visualization-side-gallery {
-    height: 100%;
 }
 
 
@@ -392,16 +387,50 @@
     background: #f5f8ff;
     box-sizing: border-box;
     padding-top: 10px;
+    margin-top: 20px;
 }
 
 
-.info-container .visual-full-gallery {
-    display: none;
+.record-counter {
+    clear: both;
+    position: relative;
+    background: url('../../../assets/img/counter-bg2.jpg');
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-size: auto;
+    background-attachment: fixed;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.record-counter .counter-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .6);
+    padding: 50px 5%;
+    border-radius: 10px;
+}
+
+
+.record-counter .counter-overlay h2 {
+    text-align: center;
+    color: #fff;
+    font-size: 35px;
+    margin-bottom: 50px;
+}
+
+
+#visualization-gallery {
     float: left;
     width: 100%;
     height: auto;
     background: #fff;
-    margin-bottom: 30px;
+    margin-top: 20px;
 }
 
 
@@ -471,7 +500,7 @@
     }
 
 
-    .side-visuals {
+    #recent-contribution-view {
         height: 685px;
     }
 }
@@ -545,12 +574,7 @@
     }
 
 
-    .side-visuals {
-        display: none;
-    }
-
-
-    .info-container .visual-full-gallery {
+    #visualization-gallery {
         display: block;
     }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Contents } from '../../services/contents.service';
+import { get } from '../../helpers/apiCalls';
+import { getBluejusticeVisualizationUrl, getGearVisualizationUrl, getGovernanceVisualizationUrl, getMarketShareVisualizationUrl, getResearchVisualizationUrl, getSotaVisualizationUrl, getWiwVisualizationUrl } from '../../constants/api';
 import * as d3 from 'd3';
 
 
@@ -21,7 +23,7 @@ export class ExploreComponent implements OnInit {
     wiwData: any;
     researchData: any;
     slides: Object[];
-    
+
 
     constructor(
         private route: ActivatedRoute,
@@ -29,7 +31,7 @@ export class ExploreComponent implements OnInit {
     ) { }
 
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         let self = this;
         this.route.paramMap.subscribe(params => {
             this.id = parseInt(params.get("visID"));
@@ -38,13 +40,14 @@ export class ExploreComponent implements OnInit {
 
         this.slides = this.visThumbContent.getVisContent();
 
-        d3.csv("/assets/vis/govmodes.csv", function(data){self.govmodesData = data;})
-        d3.csv("/assets/vis/gear.csv", function(data){self.gearData = data})
-        d3.csv("/assets/vis/bluejustice.csv", function(data){self.bluejusticeData = data})
-        d3.csv("/assets/vis/sota.csv", function(data){self.sotaData = data})
-        d3.csv("/assets/vis/mshare.csv", function(data){self.mshareData = data})
-        d3.csv("/assets/vis/wiw.csv", function(data){self.wiwData = data})
-        d3.csv("/assets/vis/research.csv", function(data){self.researchData = data})
+        self.govmodesData = await get(getGovernanceVisualizationUrl);
+        // d3.csv("/assets/vis/gear.csv", function(data){self.gearData = data})
+        self.gearData = await get(getGearVisualizationUrl);
+        self.bluejusticeData = await get(getBluejusticeVisualizationUrl);
+        self.sotaData = await get(getSotaVisualizationUrl);
+        self.mshareData = await get(getMarketShareVisualizationUrl);
+        self.wiwData = await get(getWiwVisualizationUrl);
+        self.researchData = await get(getResearchVisualizationUrl);
     }
 
 

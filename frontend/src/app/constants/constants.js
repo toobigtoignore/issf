@@ -2,7 +2,7 @@ export const BLUEJUSTICE_ECOSYSTEM_DETAILED = {
     ecosystem_detailed_archipelago: "Archipelago",
     ecosystem_detailed_beach: "Beach",
     ecosystem_detailed_coastal: "Coastal",
-    ecosystem_detailed_coral_reef: "Cora Reef",
+    ecosystem_detailed_coral_reef: "Coral Reef",
     ecosystem_detailed_deep_sea: "Deep Sea",
     ecosystem_detailed_estuary: "Estuary",
     ecosystem_detailed_fjord: "Fjord",
@@ -64,13 +64,13 @@ export const BLUEJUSTICE_JUSTICE_TYPES = {
 
 
 export const BLUEJUSTICE_MAINGEARS_TYPE = {
+  // main_gears_poison: "Gears Poison",
+  // main_gears_gillnet: "Gears Gillnet",
+  // main_gears_gleaning: "Gears Gleaning",
     main_gears_dredge: "Dredge",
     main_gears_lift_net: "Lift Net",
     main_gears_cast_net: "Cast Net",
-    main_gears_poison: "Gears Poison",
-    main_gears_gillnet: "Gears Gillnet",
     main_gears_recreational_fishing_gears: "Recreational Fishing Gears",
-    main_gears_gleaning: "Gears Gleaning",
     main_gears_seine_net: "Seine Net",
     main_gears_harpoon: "Harpoon",
     main_gears_surrounding_net: "Sorrounding Net",

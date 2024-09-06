@@ -15,18 +15,22 @@ export class BluejusticeComponent implements OnInit {
 	@Input() data : any
 
 	constructor() {}
-  
+
 	ngOnInit(): void {
-		this.drawConsole(this.data)	
+		this.drawConsole(this.data)
 	}
-  
+
   	private drawConsole(data): void {
 		var index,csv
-		var data_types = data.columns.slice(3);
-		var data_country = d3.map(data, function(d) { return d.ssf_country; }).keys().sort(d3.ascending)
-		var data_array = []
+		var data_types = Object.keys(data[0]).slice(3)
 
-		for(var i =0;i<data_country.length;i++){	
+		var data_country = data.map(row => {
+      if(row.ssf_country){
+        return row.ssf_country
+      }
+    })
+		var data_array = []
+		for(var i =0;i<data_country.length;i++){
 			var data_country_filtered = data.filter(m => (m.ssf_country == data_country[i]))
 			var count_issf = d3.map(data_country_filtered, function(c){return c.issf_core_id;}).keys().length
 			data_array.push({country: data_country[i], total: 0, record: count_issf})
@@ -34,8 +38,7 @@ export class BluejusticeComponent implements OnInit {
 				 data_array[i][data_types[j]] = 0
 			}
 		}
-			
-	
+
 		for(var i =0;i<data.length;i++){
 			index = data_array.findIndex(x => x.country === data[i].ssf_country)
 			for(var j =0;j<data_types.length;j++){
@@ -45,16 +48,16 @@ export class BluejusticeComponent implements OnInit {
 				}
 			}
 		}
-		
-	
+
+
 		csv = data_array
 		var keys = data_types
 		// Define 'div' for tooltips
 		var div = d3.select("#visual3")
-			.append("div")  
-			.attr("class", "bluejustice-tooltip")             
-			.style("opacity", 0);                
-		
+			.append("div")
+			.attr("class", "bluejustice-tooltip")
+			.style("opacity", 0);
+
 		//SVG elements
         var svg = d3.select("#chart"),
             svgWidth = 900,
@@ -62,11 +65,11 @@ export class BluejusticeComponent implements OnInit {
 			margin = {top: 75, left: 40, bottom: 0, right: 0},
 			width = svgWidth - margin.left - margin.right,
 			height = svgHeight - margin.top - margin.bottom
-        
+
         svg
             .attr("preserveAspectRatio", "xMinYMin meet")
             .attr("viewBox", "0 0 " + svgWidth + " " + svgHeight);
-        
+
         var x = d3.scaleBand()
 			.range([margin.left, width - margin.right])
 			.padding(0.1)
@@ -90,7 +93,7 @@ export class BluejusticeComponent implements OnInit {
 			.data(data_types)
 			.enter()
 			.append("g")
-					
+
 		legend.append("rect")
 			.attr("fill", function (d) {
 				return z(d);
@@ -152,23 +155,23 @@ export class BluejusticeComponent implements OnInit {
 
 		var bars = svg.selectAll("g.layer").selectAll("rect")
 			.data(d => d, e => e.data.country)
-		  
+
 		bars.exit().remove()
-			
+
 		bars.enter().append("rect")
 			.attr("width", x.bandwidth())
 			.on("mouseover", function() { div.style("visibility", "visible");}) //.style("width", "100px")
-			.on("mousemove", function(d) {	
-				var typeName = d3.select(this.parentNode).datum().key; 
+			.on("mousemove", function(d) {
+				var typeName = d3.select(this.parentNode).datum().key;
 				var typeValue = d.data[typeName];
 				var total = d.data.total;
 				div.style("opacity", .9);
-				
+
 				div.html(
-					 "<b>" + typeName + " : "  + typeValue +                 
+					 "<b>" + typeName + " : "  + typeValue +
 					"</b><br>" + d.data.country + " : "  + total)
-					
-					.style("left", (d3.event.pageX + 15) + "px")			 
+
+					.style("left", (d3.event.pageX + 15) + "px")
 					.style("top", (d3.event.pageY - margin.top - 50) + "px");
 				})
 			.on("mouseout", function() { div.style("visibility", "hidden"); })
@@ -177,9 +180,9 @@ export class BluejusticeComponent implements OnInit {
 				.attr("x", d => x(d.data.country))
 				.attr("y", d => y(0))
 				.attr("height", d => 0)
-			  
-		
-		//Max Count  
+
+
+		//Max Count
 		var text = svg.selectAll(".text")
 			.data(data, d => d.country);
 
@@ -212,7 +215,7 @@ export class BluejusticeComponent implements OnInit {
 			x.domain(data.map(d => d.country));
 
 			svg.selectAll(".x-axis").transition().duration(speed)
-				.call(d3.axisBottom(x).tickSizeOuter(0)).selectAll("text")	
+				.call(d3.axisBottom(x).tickSizeOuter(0)).selectAll("text")
 			.style("text-anchor", "end")
 			.attr("dx", "-.8em")
 			.attr("dy", ".15em")
@@ -229,22 +232,22 @@ export class BluejusticeComponent implements OnInit {
 
 			var bars = svg.selectAll("g.layer").selectAll("rect")
 				.data(d => d, e => e.data.country)
-			  
+
 			bars.exit().remove()
-			
+
 			bars.enter().append("rect")
 				.attr("width", x.bandwidth())
 				.on("mouseover", function() { div.style("visibility", "visible");}) //.style("width", "100px")
-				.on("mousemove", function(d) {	
-					var typeName = d3.select(this.parentNode).datum().key; 
+				.on("mousemove", function(d) {
+					var typeName = d3.select(this.parentNode).datum().key;
 					var typeValue = d.data[typeName];
 					var total = d.data.total;
 					div.style("opacity", .9);
 					div.html(
-						 "<b>" + typeName + " : "  + typeValue +                 
+						 "<b>" + typeName + " : "  + typeValue +
 						"</b><br>" + d.data.country + " : "  + total)
-						
-						.style("left", (d3.event.pageX) + "px")			 
+
+						.style("left", (d3.event.pageX) + "px")
 						.style("top", (d3.event.pageY - 45) + "px");
 					})
 				.on("mouseout", function() { div.style("visibility", "hidden"); })
@@ -253,8 +256,8 @@ export class BluejusticeComponent implements OnInit {
 					.attr("x", d => x(d.data.country))
 					.attr("y", d => y(d[1]))
 					.attr("height", d => y(d[0]) - y(d[1]))
-				  
-			//Max Count  
+
+			//Max Count
 			var text = svg.selectAll(".text")
 				.data(data, d => d.country);
 
@@ -268,8 +271,8 @@ export class BluejusticeComponent implements OnInit {
 				.attr("x", d => x(d.country) + x.bandwidth() / 2)
 				.attr("y", d => y(d.total) - 5)
 				.text(d => d.record)
-		  
-		} 
+
+		}
 
 		var checkbox = d3.select("#sort").on("click", function() {
 			update(750)

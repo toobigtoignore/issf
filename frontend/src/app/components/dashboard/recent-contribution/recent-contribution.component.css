@@ -1,26 +1,27 @@
 
 .recent-contributions {
-	float: left;
-	width: 100%;
+    float: left;
+    width: 100%;
 }
 
 
 .recent-contributions h2 {
-    font-size: 30px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    font-size: 25px;
+    margin-bottom: 10px;
 }
 
 
 .contribution-panels-container {
+    position: relative;
     float: left;
     width: 100%;
+    height: 756px;
     background: #fff;
 }
 
 
 .contribution-panel {
-    max-height: 600px;
+    height: 690px;
     overflow: auto;
     border-radius: 0px 0px 5px 5px;
     border-bottom: 2px solid #e3e3e3e3;
@@ -31,30 +32,32 @@
     color: #fff;
     background: #2699fb;
     list-style: none;
-    height: 60px;
+    height: 55px;
     border-bottom: 5px solid #6ab6f8;
     margin-top: 0;
-    margin-bottom: 0;
-    padding-left: 10px;
-    border-radius: 5px 5px 0px 0px;
+    padding: 15px 5px;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 
 .contribution-panels-container li {
     float: left;
-    display: inline;
-    margin-right: 30px;
     box-sizing: border-box;
-    margin-top: 8px;
-    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    transition: all .3s;
 }
 
 
 .contribution-panels-container li span {
     float: left;
     box-sizing: border-box;
-    padding: 10px 15px;
+    padding: 6px 10px;
     border-radius: 3px;
+    cursor: pointer;
 
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -90,9 +93,9 @@
     float: left;
     width: 100%;
     box-sizing: border-box;
-    padding: 20px 3%;
+    padding: 16px 3%;
     border-bottom: 2px solid #e3e3e3;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 
@@ -101,10 +104,102 @@
 }
 
 
+.contribution-panels-overlay {
+    position: absolute;
+    left: 0;
+    top: 55px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.hide-skeletons {
+    opacity: 0;
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+
+
+.contribution-panels-overlay .skeleton {
+    width: 100%;
+    height: 100px;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 20px;
+    overflow: hidden;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+
+.contribution-panels-overlay .skeleton .thumb {
+    float: left;
+    background: #e3e3e3;
+    width: 35px;
+    height: 35px;
+    border-radius: 35px;
+    margin-right: 10px;
+    animation: skeleton-thumb-animation 0.5s infinite alternate;
+}
+
+
+.contribution-panels-overlay .skeleton .content {
+    float: right;
+    width: calc(100% - 55px);
+}
+
+
+.contribution-panels-overlay .skeleton .content p {
+    position: relative;
+    width: 80%;
+    height: 10px;
+    background: #f1f2f3;
+    border-radius: 15px;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+
+.contribution-panels-overlay .skeleton .content p span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #e6e6e6;
+    border-radius: 15px;
+    animation: skeleton-animation 1.5s infinite alternate;
+}
+
+
+.contribution-panels-overlay .skeleton .content p:first-child {
+    width: 100%;
+}
+
+
+.contribution-panels-overlay .skeleton .content p:last-child {
+    width: 90%;
+}
+
+
+@keyframes skeleton-animation {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+
+@keyframes skeleton-thumb-animation {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+
 .contribution-panels-container h3 {
     font-size: 20px;
     font-weight: 500;
-    padding: 20px 3%;
+    padding: 5px 3% 10px;
     margin: 0;
 }
 
@@ -121,7 +216,7 @@
     float: left;
     width: calc(100% - 55px);
     margin: -5px 0px !important;
-    line-height: 25px;
+    line-height: 22px;
 }
 
 

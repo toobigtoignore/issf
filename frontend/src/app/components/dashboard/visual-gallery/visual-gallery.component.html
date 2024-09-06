@@ -1,17 +1,44 @@
 
 <div class="visual-full-gallery-content">
-	<h2>Checkout Our Latest Visualizations</h2>
+    <h2>Generate New Knowledge with Data Visualization</h2>
 
-	<div class="visual-thumbs-container">
-        <ng-container *ngFor="let slide of allSlides">
-            <div class="visual-thumb shadowed-box">
-                <a [routerLink]="['/explore', slide.id]" target="_blank">
-                    <div class="thumb-img">
-                        <img src="/assets/img/visualizations/gifs/{{ slide.vis }}.gif" alt="{{slide.vis}}">
-                        <h3>{{ slide.description }}</h3>
+    <div class="visual-thumbs-container">
+        <section class="top-section">
+            <div class="featured-visual">
+                <p>
+                    A few of the latest records from our database by our contributors from across the world. Use the <a [routerLink]="['/search']">search option</a> to view all of them with multiple options to filter results based on your requirement.
+                </p>
+                <img *ngIf="!records" class="placeholder-map" src="/assets/img/map/ESRI-placeholder.png" alt="placeholder-map">
+                <app-blinking-map *ngIf="records !== undefined" [records]="records"></app-blinking-map>
+            </div> <!-- /featured-visual -->
+
+
+            <div class="side-thumbs">
+                <ng-container *ngFor="let slide of allSlides; let i = index">
+                    <div [hidden]="i >= 3" class="visual-thumb shadowed-box">
+                        <a [routerLink]="['/explore', slide.id]" target="_blank">
+                            <div class="thumb-img">
+                                <img src="/assets/img/visualizations/gifs/{{ slide.vis }}.gif" alt="{{ slide.vis }}">
+                                <h3>{{ slide.description }}</h3>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div> 
-        </ng-container>
-	</div> <!-- /visual-thumbs-container -->
+                </ng-container>
+            </div> <!-- /side-thumbs -->
+        </section> <!-- /top-section -->
+
+
+        <section class="bottom-section">
+            <ng-container *ngFor="let slide of allSlides; let i = index">
+                <div [hidden]="i <= 2" class="visual-thumb shadowed-box">
+                    <a [routerLink]="['/explore', slide.id]" target="_blank">
+                        <div class="thumb-img">
+                            <img src="/assets/img/visualizations/gifs/{{ slide.vis }}.gif" alt="{{ slide.vis }}">
+                            <h3>{{ slide.description }}</h3>
+                        </div>
+                    </a>
+                </div>
+            </ng-container>
+        </section> <!-- /bottom-section -->
+    </div> <!-- /visual-thumbs-container -->
 </div> <!-- /visual-full-gallery-content -->

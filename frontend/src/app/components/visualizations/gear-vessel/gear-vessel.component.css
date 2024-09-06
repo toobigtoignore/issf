@@ -1,157 +1,70 @@
-
-#visual2 .Row,
-#visual2 .Row2 { 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0px;
-}
-
-
-#visual2 .svgmap { 
+#visual2 #svg-container {
     max-width: 650px;
     overflow: visible;
     border: 0px solid black;
-    margin-bottom: 20%;
 }
 
 
-#visual2 .svgdiv { 
-    width: auto;
-	text-align: center; 
+#visual2 .visual2-controller {
+    margin-top: 30px;
 }
 
 
-#visual2 .hidden { 
-	display: none; 
+#visual2 .visual2-controller section {
+    float: left;
 }
 
 
-#visual2 .axis { 
-	font: 10px sans-serif; 
+#visual2 .visual2-controller section button {
+    margin: 0;
+    border-radius: 0;
+    color: #666;
+    background: #e6e6e6;
+    border: 1px solid #ccc;
 }
 
 
-#visual2 .axis path, .axis line { 
-	fill: none; 
-	stroke: #000; 
-	shape-rendering: crispEdges; 
-}
-
-
-#visual2 .chart-button { 
-	background: white; 
-	border-radius: 2; 
-	margin-top: -0.5px; 
-	margin-right: 0px; 
-	margin-bottom: -0.5px; 
-	margin-left: 0px; 
-	padding: 4px 6px; 
-	cursor: pointer; 
-	border-radius: 1px; 
-	font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; 
-}
-
-
-#visual2 #std {
-    width: auto;
-}
-
-
-#visual2 .button-on { 
-	background: #2699FB !important; 
-	color: #fff; 
-	border: 1px solid #555; 
-}
-
-
-#visual2 .button-off { 
-	background: #f3f3f3; 
-	color: #555; 
-	border: 1px solid #555; 
-}
-
-
-#visual2 .second-button { 
-	background: #fafcd2; 
-	border-radius: 2; 
-	padding: 4px 6px; 
-	cursor: pointer; 
-	border-radius: 1px; 
-	font-family: 'CTVSans-Regular', 'CTV Sans', Arial, Helvetica, sans-serif; 
-}
-
-
-#visual2 .Column { 
-	margin-top: 0px; 
-	margin-right: 8px; 
-	margin-left: 0px; 
-	display: inline-block; 
-}
-
-
-#visual2 #drop select { 
-    padding: 5px;
-    margin-left: 15px; 
-	border-radius: 5px; 
-}
-
-
-#visual2 input#myCheckbox { 
-	width: 18px; 
-	height: 18px; 
-}
-
-
-#visual2 #dimensions label { 
-	display: inline-block; 
-	margin-right: 10px; 
-	font-weight: normal; 
-}
-
-
-#visual2 #dimensions label input { 
-	margin-right: 4px; 
-	height: 18px; 
-	width: 18px; 
-	margin-bottom: 0; 
-}
-
-
-#visual2 #dimensions label span { 
-    float: right;
-    margin-top: 3px;
-}
-
-
-#visual2 label#myCheckboxLabel { 
-	display: inline-block; 
-	margin-left: -5px; 
-}
-
-
-#visual2 #myCheckboxLabel span { 
-    float: right; 
-    margin-top: 3px;
-	margin-left: 6px; 
-}
-
-
-#visual2 .vis-description p { 
-    font-size: 18px;
+#visual2 .visual2-controller section button.active {
     font-weight: 500;
-    text-align: center;
+    color: #fff;
+    background: #2699fd;
+    border: 1px solid #2699fd;
 }
 
 
-#visual2 .vis-description ul { 
-	margin-top: 25px;
+#visual2 .visual2-controller #attribute-type {
+    width: 50%;
+    text-align: right;
 }
 
 
-#visual2 .vis-description ul li { 
+#visual2 .visual2-controller #count-type {
+    width: calc(50% - 20px);
+    text-align: left;
+    margin-left: 20px;
+}
+
+
+#visual2 .visual2-controller select {
+    width: 300px;
+    padding: 10px;
+    font-size: 15px;
+    border: 2px solid #2699fd;
+    border-radius: 4px;
+    margin-left: calc(calc(100% - 300px)/2);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+#visual2 .vis-description {
     font-size: 16px;
-    margin-top: 8px; 
+    margin-top: 25px;
+}
+
+
+#visual2 .vis-description li {
+    padding-bottom: 5px;
 }
 
 
@@ -162,8 +75,8 @@
         margin-left: 15px;
     }
 
-    
-    #visual2 .Row, 
+
+    #visual2 .Row,
     #visual2 .Row2 {
         display: block;
         text-align: center;
