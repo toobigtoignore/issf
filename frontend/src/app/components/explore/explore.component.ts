@@ -41,7 +41,6 @@ export class ExploreComponent implements OnInit {
         this.slides = this.visThumbContent.getVisContent();
 
         self.govmodesData = await get(getGovernanceVisualizationUrl);
-        // d3.csv("/assets/vis/gear.csv", function(data){self.gearData = data})
         self.gearData = await get(getGearVisualizationUrl);
         self.bluejusticeData = await get(getBluejusticeVisualizationUrl);
         self.sotaData = await get(getSotaVisualizationUrl);
