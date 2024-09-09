@@ -344,38 +344,49 @@ class HelperController extends Controller
             foreach($issf_records as $record){
                 $contributor = UserProfile::find($record->contributor_id);
                 $contributor_name = $contributor->first_name . ' ' . $contributor->last_name;
-                $coordinates = null;
+                $coordinates = $countries = [];
 
                 switch($record->geographic_scope_type){
                     case config('constants.GEO_SCOPES.LOCAL'): {
-                        $point = GSLocal::where('issf_core_id', $record->issf_core_id)->get(['area_point', 'country_id'])->first();
-                        if($point) {
-                            $countries = [$point->country->short_name];
-                            $coordinates = $point->area_point;
+                        $points = GSLocal::where('issf_core_id', $record->issf_core_id)->get(['area_point', 'country_id']);
+                        if($points->count() > 0){
+                            foreach($points as $point){
+                                array_push($countries, $point->country->short_name);
+                                array_push($coordinates, $point->area_point);
+                            }
                         }
                         break;
                     }
 
                     case config('constants.GEO_SCOPES.SUBNATIONAL'): {
-                        $point = GSSubnation::where('issf_core_id', $record->issf_core_id)->get(['subnation_point', 'country_id'])->first();
-                        if($point) {
-                            $countries = [$point->country->short_name];
-                            $coordinates = $point->subnation_point;
+                        $points = GSSubnation::where('issf_core_id', $record->issf_core_id)->get(['subnation_point', 'country_id']);
+                        if($points->count() > 0){
+                            foreach($points as $point){
+                                array_push($countries, $point->country->short_name);
+                                array_push($coordinates, $point->subnation_point);
+                            }
                         }
                         break;
                     }
 
                     case config('constants.GEO_SCOPES.NATIONAL'): {
                         $national = GSNational::where('issf_core_id', $record->issf_core_id)->first();
-                        $countries = [$national->country->short_name];
-                        $coordinates = Country::find($national->country_id)->country_point;
+                        array_push($countries, $national->country->short_name);
+                        array_push($coordinates, Country::find($national->country_id)->country_point);
                         break;
                     }
 
                     case config('constants.GEO_SCOPES.REGIONAL'): {
-                        $region = GSRegion::where('issf_core_id', $record->issf_core_id)->first();
-                        $countries = $region->countries->map(fn($country) => Country::find($country->country_id)->short_name);
-                        $coordinates = Region::find($region->region_id)->region_point;
+                        $regions = GSRegion::where('issf_core_id', $record->issf_core_id)->get();
+                        if($regions->count() > 0){
+                            foreach($regions as $region){
+                                foreach($region->countries as $region_country){
+                                    $country = Country::find($region_country->country_id);
+                                    array_push($countries, $country->short_name);
+                                    array_push($coordinates, $country->country_point);
+                                }
+                            }
+                        }
                         break;
                     }
 
@@ -391,7 +402,7 @@ class HelperController extends Controller
                     'geographic_scope_type' => $record->geographic_scope_type,
                     'contribution_date' => $record->contribution_date,
                     'countries' => $countries,
-                    'point' => $coordinates
+                    'points' => $coordinates
                 ];
             };
 

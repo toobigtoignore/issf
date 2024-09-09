@@ -1,0 +1,19 @@
+#blinking-map {
+    width: 100%;
+    height: 790px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 1px 1px 6px 1px rgba(0,0,0,.3);
+}
+
+
+#blinking-map .visual-content {
+    width: 100%;
+    height: 100%;
+}
+
+
+#blinking-map #map-holder {
+    width: 100%;
+    height: 100%;
+}

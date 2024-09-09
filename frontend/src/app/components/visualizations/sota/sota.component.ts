@@ -16,20 +16,21 @@ export class SotaComponent implements OnInit {
 
     constructor() { }
 
-    
+
     ngOnInit(): void {
         this.drawConsole(this.data)
     }
 
-    
+
     private drawConsole(data): void {
         var data_nested,new_country,value;
         var Global = "Global Data";
+        var years = data.map(item => item.year);
         var tickDuration = 2000;
         var init = 0;
         var clear = false;
-        let year = 2000;
-        var lastYear = 2020;
+        let year = Math.min(...years);
+        var lastYear = Math.max(...years);
         var rangeYear = lastYear - year;
 		var top_n = 12;
 		var height = 490;
@@ -40,14 +41,14 @@ export class SotaComponent implements OnInit {
 		    bottom: 0,
 		    left: 20
 		};
-        var svg = 
+        var svg =
             d3.select("#barSvg")
 			  .attr("preserveAspectRatio", "xMinYMin meet")
 			  .attr("viewBox", "0 0 "+(width)+" "+(height))
 			  .classed("svg-content", true)
 			  .append("g")
 
-        var legendDiv = 
+        var legendDiv =
             svg.append("foreignObject")
                .attr("x", width/2-50)
                .attr("y", (height-85)+'px')
@@ -58,19 +59,19 @@ export class SotaComponent implements OnInit {
                .append("div")
                .attr('id','buttonDiv')
                .attr('class','buttonDiv')
-	
-		
+
+
 	    // Button
-        var buttonDiv = 
+        var buttonDiv =
             legendDiv.append("div")
                     .attr('id','buttonDiv')
                     .attr('class','buttonDiv')
                     .attr('align','center');
 
         var button = buttonDiv.append("button").attr("class", "button");
-		
+
 	    // Info
-        let subTitle = 
+        let subTitle =
              svg.append("text")
 		        .attr("class", "title")
 		        .attr('x', width - margin.right - 60)
@@ -82,11 +83,11 @@ export class SotaComponent implements OnInit {
 		var country = d3.map(data, d => d.country).keys();
         country.push(Global);
         var category = d3.map(data, d => d.category).keys();
-            
-        
+
+
 	    //  DATA MANIPULATION
-		var total = {} 
-		var totalStd = {} 
+		var total = {}
+		var totalStd = {}
 		var totalCategory = {}
 		var totalRecord = {}
 		var totalStdCategory = {}
@@ -96,27 +97,27 @@ export class SotaComponent implements OnInit {
 			totalCategory[d] = []
 			totalRecord[d] = 0
 			totalStdCategory[d] = []
-			
+
 			category.forEach(function (cat) {
 				totalCategory[d][cat] = 0
 				totalStdCategory[d][cat] = 0
 			});
 		});
-        
-        
+
+
 		//Grouping by year and country
-        data_nested = 
+        data_nested =
             d3.nest()
               .key(function(d) { return d.year; })
               .sortKeys(d3.ascending)
 			  .key(function(d) { return d.country; })
-			  .rollup(function(v) { 
+			  .rollup(function(v) {
                     return {
                         length: v.length
-                    }; 
+                    };
                 })
 			  .entries(data);
-		
+
 		var new_data = []
 		var i = 0
 		data_nested.forEach(function (d) {
@@ -132,7 +133,7 @@ export class SotaComponent implements OnInit {
 					}
 				}
 			});
-			
+
             var data_year_filtered = data.filter(m => (m.year == d.key));
             //Create new array
             d.values.forEach(function (v) {
@@ -169,9 +170,9 @@ export class SotaComponent implements OnInit {
 		});
 
 	    // Legend
-		var z = d3.scaleOrdinal(["#ffca3a","#8ac926","#1982c4","#6a4c93"]); 
+		var z = d3.scaleOrdinal(["#ffca3a","#8ac926","#1982c4","#6a4c93"]);
 		var legsize = 20;
-        var legendCat = 
+        var legendCat =
             svg.selectAll(".legend")
                 .data(category)
                 .enter()
@@ -213,7 +214,7 @@ export class SotaComponent implements OnInit {
         } else {
             value = "value"
         }
-		  
+
         //  Checkbox
 		d3.select("#selectedCountries").on("change",update_checkbox);
         function update_checkbox() {
@@ -225,11 +226,11 @@ export class SotaComponent implements OnInit {
         }
         update_checkbox()
 
-        //  DROPDOWN 
-        yearSlice = 
+        //  DROPDOWN
+        yearSlice =
             data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
 				.sort((a,b) => b[value] - a[value]);
-			
+
 		country = yearSlice.map(d => d.name);
 		var countryAlph = yearSlice.map(d => d.name).sort(d3.ascending)
 		var dropDiv = d3.select("#dropDiv")
@@ -252,7 +253,7 @@ export class SotaComponent implements OnInit {
 				.text(function(d){
 					return d;
 				})
-						
+
             selector
                 .selectAll("option")
                 .data(countryAlph)
@@ -269,7 +270,7 @@ export class SotaComponent implements OnInit {
 		}
         dropDiv.append("br");
         dropDiv.append("br");
-			
+
 		// Top / Clear Buttons
 		var yearSliceReal = yearSlice.slice(0,top_n);
         dropDiv
@@ -287,7 +288,7 @@ export class SotaComponent implements OnInit {
 					movingStart()
 				}
 			})
-					  
+
 		dropDiv
             .append("button")
             .attr("class", "myButton")
@@ -302,43 +303,43 @@ export class SotaComponent implements OnInit {
                     update(xx.invert(currentValue)-1)
                 }
             })
-				
+
 		if (d3.select("#selectedCountries").property("checked")){
 			selectedCountries = []
             for(var i=0; i<top_n; i++) {
                 selectedCountries.push(d3.select("#dropdown"+i).property("value"))
             }
-            yearSlice = 
+            yearSlice =
                 data.filter(d => d.year == year && !isNaN(d[value]) && !(selectedCountries.indexOf(d.name)===-1))
                     .sort((a,b) => b[value] - a[value])
                     .slice(0,top_n);
 		} else {
-            yearSlice = 
+            yearSlice =
                 data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
                     .sort((a,b) => b[value] - a[value])
                     .slice(0,top_n);
 		}
         yearSlice.forEach((d,i) => d.rank = i);
         var ySt = d3.scaleBand().range([height-margin.bottom, margin.top]);
-        ySt.domain(yearSlice.map(d => d.name)).padding(0.1)	  
-	 
-        let x = 
+        ySt.domain(yearSlice.map(d => d.name)).padding(0.1)
+
+        let x =
             d3.scaleLinear()
                 .domain([0, d3.max(yearSlice, d => d[value])])
                 .range([margin.left, width-margin.right]);
-    
-        let y = 
+
+        let y =
             d3.scaleLinear()
                 .domain([top_n, 0])
                 .range([height-margin.bottom, margin.top]);
-    
-        let xAxis = 
+
+        let xAxis =
             d3.axisTop()
                 .scale(x)
                 .ticks(width > 500 ? 5:2)
                 .tickSize(-(height-margin.top-margin.bottom))
                 .tickFormat(d => d);
-    
+
         svg
             .append('g')
             .attr('class', 'axis xAxis')
@@ -346,9 +347,9 @@ export class SotaComponent implements OnInit {
             .call(xAxis)
             .selectAll('.tick line')
             .classed('origin', d => d == 0);
-        
+
         //  Stacked Bars
-        var group = 
+        var group =
             svg.selectAll("g.layer")
 			   .data(d3.stack().keys(category)(yearSlice), d => d.key);
 
@@ -359,12 +360,12 @@ export class SotaComponent implements OnInit {
 			.classed("layer", true)
 			.attr("id", d => d.key)
 			.attr("fill", d => z(d.key));
-				
-        var bars = 
+
+        var bars =
             svg.selectAll("g.layer")
                 .selectAll("rect")
 				.data(d => d, e => e.data.name)
-				
+
 		bars.exit().remove()
         bars
             .enter()
@@ -375,8 +376,8 @@ export class SotaComponent implements OnInit {
             .attr("x", d => x(d[0]))
 			.attr('y', d => y(d.data.rank)+5)
 			.attr("width", d => x(d[1]) - x(d[0]))
-                    
-            
+
+
 		//  Bars Labels
 		svg.selectAll('text.valueLabel')
 		    .data(yearSlice, d => d.name)
@@ -385,30 +386,30 @@ export class SotaComponent implements OnInit {
 		    .attr('class', 'label')
 			.attr('x', d => x(d[value])+5)
 		    .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
-		    .text(d => d.name + " | " + d[value] + " | " + d.totalRecord); 
+		    .text(d => d.name + " | " + d[value] + " | " + d.totalRecord);
 
-        let yearText = 
+        let yearText =
             svg.append('text')
 		       .attr('class', 'yearText')
                .attr('x', width-margin.right)
                .attr('y', height-50)
                .style('text-anchor', 'end')
                .html(~~year);
-          
-               
+
+
         //  SLIDER
 		var startDate = year;
 		var endDate = lastYear;
 		var marginSlider = {top:40, right:50, bottom:0, left:30},
 			widthSlider = width - marginSlider.left - marginSlider.right,
-			heightSlider = 60 - marginSlider.top - marginSlider.bottom;
+			heightSlider = marginSlider.top - marginSlider.bottom;
 
-        var svgSlider = 
+        var svgSlider =
             d3.select("#sliderSvg")
               .attr("preserveAspectRatio", "xMinYMin meet")
               .attr("viewBox", "0 0 "+(widthSlider + marginSlider.left + marginSlider.right)+" "+(heightSlider + marginSlider.top + marginSlider.bottom))
               .classed("svg-content", true);
-		
+
 		var moving = false;
 		var currentValue = 0;
 		var targetValue = widthSlider;
@@ -431,24 +432,24 @@ export class SotaComponent implements OnInit {
             timer = setInterval(step, tickDuration);
             init = 1;
 		}
-        
-        
+
+
 		function movingStop() {
             playButton.classed("paused", false);
             moving = false;
-            if (init == 1) { 
+            if (init == 1) {
                 clearInterval(timer);
             }
 		}
-		
-        
-        var xx = 
+
+
+        var xx =
             d3.scaleLinear()
 			  .domain([startDate, endDate])
 			  .range([0, targetValue])
 			  .clamp(true);
-			
-        var slider = 
+
+        var slider =
             svgSlider.append("g")
 			         .attr("class", "slider")
 			         .attr("transform", "translate(" + marginSlider.left + "," + heightSlider + ")");
@@ -467,11 +468,11 @@ export class SotaComponent implements OnInit {
 				.on("start.interrupt", function() { slider.interrupt(); })
 				.on("start drag", function() {
 				    currentValue = d3.event.x;
-				    update(xx.invert(currentValue)); 
+				    update(xx.invert(currentValue));
 				})
 			);
 
-        
+
         slider
             .insert("g", ".track-overlay")
 			.attr("class", "ticks")
@@ -485,14 +486,14 @@ export class SotaComponent implements OnInit {
 			.attr("text-anchor", "middle")
 			.text(function(d) { return d; });
 
-        var handle = 
+        var handle =
             slider.insert("circle", ".track-overlay")
 			      .attr("transform", "translate(0," + 15 + ")")
 			      .attr("class", "handle")
 			      .attr("r", 9);
 
-        var label = 
-            slider.append("text")  
+        var label =
+            slider.append("text")
 			      .attr("class", "label")
 			      .attr("text-anchor", "middle")
 			      .text(startDate)
@@ -510,8 +511,8 @@ export class SotaComponent implements OnInit {
 			    currentValue = currentValue + (targetValue/rangeYear);
 			}
 		}
-		
-		
+
+
 	    //  UPDATE
 		function update(h) {
 			var a = 0;
@@ -519,7 +520,7 @@ export class SotaComponent implements OnInit {
 				if (d3.select("#dropdown"+i).property("value") !== " ") {a = 1}
 			}
 			if (a == 0) { movingStop() }
-			if (a == a) { 
+			if (a == a) {
 				clear = false
 				h = d3.format(".0f")(h)
 				handle.attr("cx", xx(h));
@@ -529,8 +530,8 @@ export class SotaComponent implements OnInit {
 					value = "std"
 				} else {
 				    value = "value"
-				}  
-                yearSliceReal = 
+				}
+                yearSliceReal =
                     data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
 					    .sort((a,b) => b[value] - a[value])
 					    .slice(0,top_n);
@@ -540,12 +541,12 @@ export class SotaComponent implements OnInit {
                     for(var i=0; i<top_n; i++){
                         selectedCountries.push(d3.select("#dropdown"+i).property("value"))
                     }
-                    yearSlice = 
+                    yearSlice =
                         data.filter(d => d.year == year && !isNaN(d[value]) && !(selectedCountries.indexOf(d.name)===-1))
 						    .sort((a,b) => b[value] - a[value])
 						    .slice(0,top_n);
 				} else {
-                  yearSlice = 
+                  yearSlice =
                     data.filter(d => d.year == year && !isNaN(d[value]) && d.name != Global)
 					    .sort((a,b) => b[value] - a[value])
 					    .slice(0,top_n);
@@ -553,25 +554,25 @@ export class SotaComponent implements OnInit {
 
 			    yearSlice.forEach((d,i) => d.rank = i);
 
-			    x.domain([0, d3.max(yearSlice, d => d[value])]); 
+			    x.domain([0, d3.max(yearSlice, d => d[value])]);
 
                 svg.select('.xAxis')
                     .transition()
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .call(xAxis);
-                    
+
                 var group = svg.selectAll("g.layer")
                         .data(d3.stack().keys(category)(yearSlice), d => d.key);
-                        
+
 				group.exit().remove();
 				group.enter().append("g")
 					.classed("layer", true)
 					.attr("id", "d => d.key")
 					.attr("fill", d => z(d.key));
-					
+
 			    var bars = svg.selectAll("g.layer").selectAll("rect").data(d => d, e => e.data.name);
-		
+
                 bars //adding
                     .enter()
                     .append('rect')
@@ -585,7 +586,7 @@ export class SotaComponent implements OnInit {
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attr('y', d => y(d.data.rank)+5);
-                
+
     		    bars //changing
 			        .transition()
                     .duration(tickDuration)
@@ -593,7 +594,7 @@ export class SotaComponent implements OnInit {
                     .attr("x", d => x(d[0]))
 			        .attr("width", d => x(d[1]) - x(d[0]))
 			        .attr('y', d => y(d.data.rank)+5);
-				
+
 		        bars  //removing
 			        .exit()
 			        .transition()
@@ -601,9 +602,9 @@ export class SotaComponent implements OnInit {
 			        .ease(d3.easeLinear)
 			        .attr('y', d => y(top_n+1)+5)
 			        .remove();
-			 
+
 		        let valueLabels = svg.selectAll('.label').data(yearSlice, d => d.name);
-		
+
 		        valueLabels
 			        .enter()
 			        .append('text')
@@ -615,7 +616,7 @@ export class SotaComponent implements OnInit {
 				    .duration(tickDuration)
 				    .ease(d3.easeLinear)
 				    .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
-				
+
 		        valueLabels
 			        .transition()
 				    .duration(tickDuration)
@@ -631,7 +632,7 @@ export class SotaComponent implements OnInit {
 					        node.textContent = text[0] + " | " + i(t) + " | " + j(t); //d3.format(',')(i(t))
 				        };
 				    });
-                
+
                 valueLabels
 			        .exit()
 			        .transition()
@@ -639,7 +640,7 @@ export class SotaComponent implements OnInit {
 			        .ease(d3.easeLinear)
 			        .attr('y', d => y(top_n+1)+5)
 			        .remove();
-		
+
 		        yearText.html(~~year);
 	        }
 	    }

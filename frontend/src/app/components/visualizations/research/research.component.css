@@ -43,7 +43,7 @@
 
 
 #visual7 .line {
-    stroke-width: 2;	
+    stroke-width: 2;
     fill: none;
 }
 
@@ -63,23 +63,28 @@
 }
 
 
-#visual7-info li { 
-    display: inline; 
+#visual7-info {
+    padding: 0;
+}
+
+
+#visual7-info li {
+    display: inline;
     font-size: 13px;
 }
 
 
-#visual7-info li:after { 
-    content: "|"; 
-    font-weight: bold; 
-    margin-left: 13px; 
-    margin-right: 13px; 
+#visual7-info li:after {
+    content: "|";
+    font-weight: bold;
+    margin-left: 13px;
+    margin-right: 13px;
 }
 
 
-#visual7-info li:last-child:after { 
-    content: ""; 
-    margin-right: 0; 
+#visual7-info li:last-child:after {
+    content: "";
+    margin-right: 0;
 }
 
 
@@ -115,17 +120,17 @@
 }
 
 
-#visual7-footerDiv li:nth-child(1) { 
+#visual7-footerDiv li:nth-child(1) {
  	color: #3f51b5;
 }
 
 
-#visual7-footerDiv li:nth-child(2) { 
+#visual7-footerDiv li:nth-child(2) {
  	color: #d81b60;
 }
 
 
-#visual7-footerDiv li:nth-child(3) { 
+#visual7-footerDiv li:nth-child(3) {
  	color: #4caf50;
 }
 
@@ -137,7 +142,7 @@
         font-size: 17px;
     }
 
-    
+
     #visual7-footerDiv p {
         font-size: 17px;
         line-height: 23px;
@@ -170,8 +175,8 @@
     #visual7 .row:first-child {
        display: block;
     }
-    
-    
+
+
     #visual7-chart .svg-content {
         width: calc(100vw - 5px);
         margin-left: -7px;

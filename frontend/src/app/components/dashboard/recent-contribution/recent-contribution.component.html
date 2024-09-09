@@ -1,15 +1,25 @@
 
 <div class="recent-contributions">
-	<h2>Most Recent Contributions</h2>
-	<div class="contribution-panels-container shadowed-box">
-		<ul>
+    <h2>Most Recent Contributions</h2>
+	  <div class="contribution-panels-container shadowed-box">
+		    <ul>
             <li *ngFor="let tab of tabs">
                 <span [ngClass]="{active: currentTab === tab.key}"
                       (click)="onTabTriggerClicked(tab.key)">
                       {{ tab.title }}
                 </span>
             </li>
-		</ul>
+		    </ul>
+
+
+        <div [ngClass]="{'hide-skeletons': tabsContent}" class="contribution-panels-overlay">
+            <div *ngFor="let skeleton of totalSkeletons" class="skeleton">
+                <div class="thumb"></div>
+                <div class="content">
+                    <p *ngFor="let item of itemsPerSkeleton"><span></span></p>
+                </div> <!-- /content-->
+            </div> <!-- /skeleton -->
+        </div> <!-- recent-contributions-overlay -->
 
 
         <ng-container *ngIf="tabsContent">
@@ -72,5 +82,5 @@
                 </ng-container>
             </div> <!-- /contribution-panel -->
         </ng-container>
-	</div> <!-- /contribution-panels -->
+    </div> <!-- /contribution-panels -->
 </div> <!--/ recent-contributions -->

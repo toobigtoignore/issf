@@ -1,4 +1,3 @@
-
 .visual-full-gallery-content {
     float: left;
     width: 100%;
@@ -8,12 +7,12 @@
 
 
 .visual-full-gallery-content h2 {
-    width: 90%;
+    width: 97%;
     font-size: 28px;
     border-bottom: 1px solid #e3e3e3;
     padding-bottom: 10px;
-    margin-bottom: 10px;
-    margin-left: 5%;
+    margin-bottom: 20px;
+    margin-left: 1.5%;
 }
 
 
@@ -21,19 +20,55 @@
     float: left;
     width: 100%;
     box-sizing: border-box;
-    padding: 0px 2.5%;
+    padding: 0px 1.5%;
+}
+
+
+.visual-thumbs-container .top-section {
+    overflow: hidden;
+}
+
+
+.visual-thumbs-container .featured-visual {
+    float: left;
+    width: 74.5%;
+    margin-bottom: 20px;
+}
+
+
+.visual-thumbs-container .featured-visual p {
+    font-size: 19px;
+    line-height: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    font-weight: 500;
+}
+
+
+.visual-thumbs-container .featured-visual .placeholder-map {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, .3);
+}
+
+
+.visual-thumbs-container .side-thumbs {
+    float: right;
+    width: 22.5%;
 }
 
 
 .visual-thumbs-container .visual-thumb {
     position: relative;
     float: left;
-    width: 20%;
-    height: 280px;
+    width: 100%;
+    height: 275px;
     background: #fff;
-    margin: 10px 2.5%;
+    margin-bottom: 20px;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #e3e3e3;
     border-radius: 5px;
     overflow: hidden;
@@ -44,33 +79,34 @@
     display: flex;
     width: 100%;
     height: 175px;
-    margin-bottom: 5px;
     justify-content: center;
     align-items: center;
+    margin-top: 5px;
 }
 
 
 .visual-thumbs-container .visual-thumb .thumb-img img {
-    max-width: 95%;
-    max-height: 95%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 
 .visual-thumbs-container .visual-thumb h3 {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      left: 0;
-      bottom: -15px;
-      width: 100%;
-      height: 75px;
-      color: #0C79d6;
-      font-size: 15px;
-      font-weight: 400;
-      border-top: 1px solid #e3e3e3;
-      box-sizing: border-box;
-      line-height: 20px;
-      padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: -15px;
+    width: 100%;
+    height: 75px;
+    color: #0C79d6;
+    font-size: 16px;
+    font-weight: 400;
+    border-top: 1px solid #e3e3e3;
+    box-sizing: border-box;
+    line-height: 21px;
+    text-align: center;
+    padding: 10px 10px;
 
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -82,6 +118,20 @@
 
 .visual-thumbs-container .visual-thumb:hover h3 {
 	  text-decoration: underline;
+}
+
+
+.visual-thumbs-container .bottom-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.visual-thumbs-container .bottom-section .visual-thumb {
+    width: 22.5%;
+    height: 270px;
+    margin-bottom: 0;
 }
 
 

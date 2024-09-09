@@ -190,7 +190,7 @@ export class GeoscopeComponent implements AfterViewInit, OnInit {
     getLatLong(coordinates: number[]) {
         const long = coordinates[0];
         const lat = coordinates[1];
-        return { long, lat }
+        return { lat, long }
     }
 
 
@@ -263,7 +263,7 @@ export class GeoscopeComponent implements AfterViewInit, OnInit {
         if(!points || points?.length === 0) {
             return '';
         }
-        const { long, lat } = this.getLatLong(points);
+        const { lat, long } = this.getLatLong(points);
         return long + "," + lat;
     }
 
@@ -311,7 +311,7 @@ export class GeoscopeComponent implements AfterViewInit, OnInit {
 
             if(this.geoScopeInfo?.mapPoints && this.geoScopeInfo?.type === formType && !duplicateMap){
                 if(this.geoScopeInfo.mapPoints[i] && this.geoScopeInfo.mapPoints[i] !== ''){
-                    const { long, lat } = this.getLatLong(this.geoScopeInfo.mapPoints[i]);
+                    const { lat, long } = this.getLatLong(this.geoScopeInfo.mapPoints[i]);
                     const mapMarker = new L.LatLng(lat, long);
                     marker = L.marker(mapMarker, {
                         icon: L.icon({
@@ -355,7 +355,7 @@ export class GeoscopeComponent implements AfterViewInit, OnInit {
                 const latLng = e.layer.getLatLng();
                 drawnItems.eachLayer(layer => map.removeLayer(layer));
                 drawnItems.addLayer(e.layer);
-                latLngInputEl.value = latLng.lat + "," + latLng.lng;
+                latLngInputEl.value = latLng.lng + "," + latLng.lat;
             });
 
             map.on('draw:deleted', function (e) {

@@ -19,6 +19,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table'
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TestComponent } from './components/test/test.component';
 
 // COMMON
 import { CommonModule } from '@angular/common';
@@ -99,13 +100,14 @@ import { UpdateWhoComponent } from './components/update/update-who/update-who.co
 import { UpdateSotaComponent } from './components/update/update-sota/update-sota.component';
 import { UserAccountComponent } from './components/account/user-account/user-account.component';
 import { VisualGalleryComponent } from './components/dashboard/visual-gallery/visual-gallery.component';
-import { VisualSideGalleryComponent } from './components/dashboard/visual-side-gallery/visual-side-gallery.component';
+import { RecordCounterComponent } from './components/dashboard/record-counter/record-counter.component';
 import { WelcomeComponent } from './components/dashboard/welcome/welcome.component';
 import { WhoDetailsComponent } from './components/details/who-details/who-details.component';
 import { ThemeComponent } from './components/update/theme/theme.component';
 import { CharacteristicsComponent } from './components/update/characteristics/characteristics.component';
 import { SpeciesLinkComponent } from './components/update/species-link/species-link.component';
 import { CheckboxSelect } from './components/checkbox-select/checkbox-select.component';
+import { BlinkingMapComponent } from './components/visualizations/blinking-map/blinking-map.component';
 
 
 @NgModule({
@@ -113,6 +115,7 @@ import { CheckboxSelect } from './components/checkbox-select/checkbox-select.com
         AccountComponent,
         AppComponent,
         AuthenticationFormComponent,
+        BlinkingMapComponent,
         BluejusticeComponent,
         BluejusticeDetailsComponent,
         CasestudyDetailsComponent,
@@ -156,6 +159,7 @@ import { CheckboxSelect } from './components/checkbox-select/checkbox-select.com
         SearchBarComponent,
         SearchPageComponent,
         SelectBoxComponent,
+        RecordCounterComponent,
         SotaComponent,
         SotaDetailsComponent,
         UpdateComponent,
@@ -168,14 +172,14 @@ import { CheckboxSelect } from './components/checkbox-select/checkbox-select.com
         UpdateWhoComponent,
         UserAccountComponent,
         VisualGalleryComponent,
-        VisualSideGalleryComponent,
         WelcomeComponent,
         WhoDetailsComponent,
         WiwComponent,
         ThemeComponent,
         CharacteristicsComponent,
         ProfileCharacteristicsComponent,
-        SpeciesLinkComponent
+        SpeciesLinkComponent,
+        TestComponent
     ],
 
 

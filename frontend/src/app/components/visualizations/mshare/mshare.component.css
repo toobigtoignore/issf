@@ -17,18 +17,43 @@
 }
 
 
+#visual-mshare #mshare-svg {
+    position: relative;
+    margin-top: 20px;
+}
+
+
 #visual-mshare .svgmap  {
     width: 100%;
     background: #aad3df;
     border: 2px solid #e3e3e3;
+    border-top: none;
     cursor: grab;
-    margin: 25px 0px;
+    margin-bottom: 25px;
+}
+
+
+#visual-mshare #hovered-country {
+    display: none;
+    width: 100%;
+    padding: 30px 0px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    background: #abd3df;
+    border: 2px solid #e3e3e3;
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+#visual-mshare #hovered-country span {
+    color: #2699FB;
 }
 
 
 #visual-mshare div.tooltip {
     position: absolute;
-    left: -100px;
     color: #fff;
     background: #2699fb;
     border-radius: 3px;
@@ -48,7 +73,7 @@
     border: solid #2699fb;
     border-width: 0 5px 11px 0;
     padding: 3px;
-    
+
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
     -moz-transform: rotate(135deg);
@@ -131,7 +156,7 @@
         justify-content: center;
     }
 
-    
+
     #visual-mshare h3 {
         font-size: 17px;
         line-height: 23px;
@@ -143,7 +168,7 @@
     }
 
 
-    #visual-mshare .legend td, 
+    #visual-mshare .legend td,
     #visual-mshare .legend th {
         font-size: 17px
     }

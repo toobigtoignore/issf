@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('photographer', 150)->nullable();
             $table->text('ssf_location');
             $table->integer('ssf_country');
-            $table->string('ssf_main_species', 100)->nullable();
+            $table->text('ssf_main_species')->nullable();
             $table->string('ssf_type_aquaculture', 100)->nullable();
             $table->string('ssf_type_recreational', 100)->nullable();
             $table->string('ssf_type_commercial', 100)->nullable();
@@ -61,7 +61,7 @@ return new class extends Migration
             $table->string('ssf_terms_traditional', 100)->nullable();
             $table->text('ssf_terms_others')->nullable();
             $table->string('ssf_terms_fisheries', 100)->nullable();
-            $table->string('ssf_terms_fisheries_definiton', 100)->nullable();
+            $table->text('ssf_terms_fisheries_definiton')->nullable();
             $table->string('main_gears_dredge', 100)->nullable();
             $table->string('main_gears_lift_net', 100)->nullable();
             $table->string('main_gears_cast_net', 100)->nullable();

@@ -17,8 +17,8 @@ export class ComboBoxComponent implements OnChanges, OnInit {
     @Input() optionValue: string;
     @Input() iconKey: string;
     @Input() boxLabel: string;
-    @Output() comboBoxUpdated = new EventEmitter<any>(); 
-    @ViewChild('comboInput') comboInput: ElementRef; 
+    @Output() comboBoxUpdated = new EventEmitter<any>();
+    @ViewChild('comboInput') comboInput: ElementRef;
 
     initialPlaceholder: string;
     placeholderValue: string;
@@ -27,20 +27,20 @@ export class ComboBoxComponent implements OnChanges, OnInit {
     inputCtrl = new FormControl();
     filtered: Observable<any[]>;
 
-    
-    constructor() { 
-        this.filtered = 
+
+    constructor() {
+        this.filtered =
         this.inputCtrl
             .valueChanges
             .pipe(startWith(''), map(item => item ? this.filterItem(item) : this.list.slice()));
     }
 
-    
-    ngOnInit(): void { 
+
+    ngOnInit(): void {
         this.initialPlaceholder = this.boxLabel;
     }
 
-    
+
     ngOnChanges(): void {
         this.selectedOption = this.boxLabel;
         this.placeholderValue = this.boxLabel;
@@ -73,7 +73,7 @@ export class ComboBoxComponent implements OnChanges, OnInit {
 
         this.comboBoxUpdated.emit({
             label: this.selectedOption,
-            value: optionValue 
+            value: optionValue
         });
         this.selectedValues.push(this.selectedOption);
         this.onFocusOut();

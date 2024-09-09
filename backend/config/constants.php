@@ -4,7 +4,7 @@ return [
         'ecosystem_detailed_archipelago' => "Archipelago",
         'ecosystem_detailed_beach' => "Beach",
         'ecosystem_detailed_coastal' => "Coastal",
-        'ecosystem_detailed_coral_reef' => "Cora Reef",
+        'ecosystem_detailed_coral_reef' => "Coral Reef",
         'ecosystem_detailed_deep_sea' => "Deep Sea",
         'ecosystem_detailed_estuary' => "Estuary",
         'ecosystem_detailed_fjord' => "Fjord",

@@ -6,96 +6,91 @@
 }
 
 
-#visual1 .visual-content { 
+#visual1 .visual-content {
 	text-align: center;
 }
 
 
-#visual1 .visual-content p { 
-	font-size: 18px;
-	margin-top: 40px;
+#visual1 .visual-content p {
+	  font-size: 18px;
+	  margin-top: 40px;
     margin-bottom: 10px;
     line-height: 30px;
 }
 
 
-#visual1 .visual-content li { 
- 	display: inline;
+#visual1 .visual-content li {
+ 	  display: inline;
     font-size: 17px;
     font-weight: 500;
 }
 
 
-#visual1 .visual-content li:nth-child(1) { 
- 	color: #3f51b5;
+#visual1 .visual-content li:nth-child(1) {
+ 	  color: #3f51b5;
 }
 
 
-#visual1 .visual-content li:nth-child(2) { 
- 	color: #d81b60;
+#visual1 .visual-content li:nth-child(2) {
+ 	  color: #d81b60;
 }
 
 
-#visual1 .visual-content li:nth-child(3) { 
- 	color: #4caf50;
+#visual1 .visual-content li:nth-child(3) {
+ 	  color: #4caf50;
 }
 
 
-#visual1 .visual-content li:after { 
- 	content: "|";
-	font-weight: bold;
-	margin-left: 10px;
-	margin-right: 10px;
+#visual1 .visual-content li:after {
+    content: "|";
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 
-#visual1 .visual-content li:last-child:after { 
- 	content: "";
-	margin-right: 0;
+#visual1 .visual-content li:last-child:after {
+    content: "";
+    margin-right: 0;
 }
 
 
-#visual1 .visual1_tooltip { 
- 	position: absolute;
-	font-size: 14px;
-	width: auto;
-	height: auto;
-	pointer-events: none;
-	background-color: #feffeb;
-	box-sizing: border-box;
-	padding: 10px;
-	border: 1px solid #e3e3e3;
-	border-radius: 3px;
-	z-index: 999;
+#visual1 .visual1_tooltip {
+    position: absolute;
+    font-size: 14px;
+    width: auto;
+    height: auto;
+    pointer-events: none;
+    background-color: #feffeb;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+    z-index: 999;
 }
 
 
 #visual1 .svg-container {
-    display: inline-block;	
-    position: relative;	
-    width: 100%;	
+    display: inline-block;
+    position: relative;
+    width: 100%;
     max-width: 680px;
-}
-
-
-#visual1 .svg-content {
-	overflow: hidden;
 }
 
 
 
 
 @media screen and (max-width: 1199px) {
-    #visual1 .svg-container { 
+    #visual1 .svg-container {
     	overflow: visible;
     }
-    
-    
-    #visual1 .svg-content { 
+
+
+    #visual1 .svg-content {
     	padding: 0 !important;
     }
 
-    
+
     #visual1 .visual-content p {
         font-size: 17px;
         margin-top: 20px;

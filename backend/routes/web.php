@@ -14,6 +14,7 @@ use App\Http\Controllers\SSFBluejusticeController;
 use App\Http\Controllers\SSFGuidelineController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\VisualizationController;
 
 use App\Models\UserProfile;
 use App\Models\Country;
@@ -140,3 +141,17 @@ Route::post('/guidelines/update/{record:issf_core_id}', [SSFGuidelineController:
 |--------------------------------------------------------------------------
 */
 Route::delete('/issf-base/delete/{record:issf_core_id}', [HelperController::class, 'delete_record']);
+
+
+/*
+|--------------------------------------------------------------------------
+| DATA VISUALIZATION ROUTES
+|--------------------------------------------------------------------------
+*/
+Route::get('/visualizations/bluejustice/', [VisualizationController::class, 'get_bluejustice_data']);
+Route::get('/visualizations/gear_vessel/', [VisualizationController::class, 'get_gear_vesel_data']);
+Route::get('/visualizations/governance/', [VisualizationController::class, 'get_governance_modes']);
+Route::get('/visualizations/mshare/', [VisualizationController::class, 'get_mshare_data']);
+Route::get('/visualizations/researcher/', [VisualizationController::class, 'get_researcher_data']);
+Route::get('/visualizations/sota/', [VisualizationController::class, 'get_sota_data']);
+Route::get('/visualizations/wiw/', [VisualizationController::class, 'get_wiw_data']);

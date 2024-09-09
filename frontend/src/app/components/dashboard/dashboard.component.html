@@ -11,8 +11,7 @@
     </div> <!-- /dashboard-banner -->
 
 
-    <!-- Map and visualizations component goes here -->
-    <div class="map-visualization">
+    <div class="dashboard-top-section">
         <div id="map-section" class="record-views shadowed-box">
             <div class="intro">
                 <h2>Information System for Small-scale Fisheries</h2>
@@ -126,32 +125,36 @@
         </div> <!-- /record-views -->
 
 
-        <div id="side-visuals" class="side-visuals shadowed-box">
-            <div id="visualization-side-gallery" class="visualization-side-gallery" *ngIf="showSideGallery">
-                <app-visual-side-gallery></app-visual-side-gallery>
-            </div>
-            <!-- /visualization-side-gallery -->
-        </div> <!-- /side-visuals -->
-    </div> <!-- /map-visualization -->
+        <div id="recent-contribution-view" class="shadowed-box">
+            <app-recent-contribution></app-recent-contribution>
+        </div> <!-- /recent-contribution-view -->
+    </div> <!-- /dashboard-top-section -->
 
+
+    <div class="record-counter">
+        <div class="counter-overlay">
+            <h2>Checkout the Numbers</h2>
+            <div #counterHolder>
+                <app-record-counter *ngIf="showCounter"></app-record-counter>
+            </div>
+        </div> <!-- /counter-overlay -->
+    </div> <!-- /record-counter -->
+
+
+    <div id="visualization-gallery" class="visual-full-gallery shadowed-box">
+        <app-visual-gallery [records]="filteredData"></app-visual-gallery>
+    </div> <!-- /visual-full-gallery -->
 
 
     <div class="info-container">
-        <div #visualFullGallery id="visualization-gallery" class="visual-full-gallery shadowed-box">
-            <app-visual-gallery></app-visual-gallery>
-        </div>
-        <!-- /visual-full-gallery -->
-
-
         <div class="panel-left">
             <app-welcome></app-welcome>
-            <app-recent-contribution></app-recent-contribution>
         </div> <!-- /panel-left -->
 
 
         <div class="panel-right">
             <div class="social-media-container">
-                <h3>What's Happening on Our Social Media</h3>
+                <h3>Stay Connected on Our Social Media</h3>
                 <div class="trigger">
                     <span
                         [ngClass]="{'selected': showSocialMedia === 'twitter'}"

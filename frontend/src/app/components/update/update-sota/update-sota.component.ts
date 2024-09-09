@@ -76,7 +76,7 @@ export class UpdateSotaComponent implements OnInit {
         });
         this.tabLabels = Array.from(DETAILS_ACCORDIONS_LABELS['SOTA']);
         this.isOtherPublicationType = this.isPublicationOther();
-        this.years = getYears(1990);
+        this.years = getYears(1900);
     }
 
 

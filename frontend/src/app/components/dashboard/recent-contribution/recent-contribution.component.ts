@@ -2,20 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { get } from '../../../helpers/apiCalls';
 import { Contents } from '../../../services/contents.service';
 import { getRecentContributionsUrl } from '../../../constants/api';
+import { delay } from 'src/app/helpers/helpers';
 
 
 @Component({
-	selector: 'app-recent-contribution',
-	templateUrl: './recent-contribution.component.html',
-	styleUrls: ['./recent-contribution.component.css']
+    selector: 'app-recent-contribution',
+    templateUrl: './recent-contribution.component.html',
+    styleUrls: ['./recent-contribution.component.css']
 })
 
 
 export class RecentContributionComponent implements OnInit {
     currentTab: String = "recent_contributions";
+    totalSkeletons: Array<undefined> = Array.from({ length: 7 });
+    itemsPerSkeleton: Array<undefined> = Array.from({ length: 3 });
     tabs = [
-        { key: 'recent_contributions', title: 'Recent Contributions' },
-        { key: 'recent_contributions_by_type', title: 'Contributions By Type' },
+        { key: 'recent_contributions', title: 'Most Recent' },
+        { key: 'recent_contributions_by_type', title: 'By Type' },
         { key: 'top_contributors', title: 'Top Contributors' }
     ]
     tabsContent: any;
@@ -26,6 +29,10 @@ export class RecentContributionComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.tabsContent = await get(getRecentContributionsUrl);
+        if(this.tabsContent){
+            await delay(600);
+            document.getElementsByClassName('contribution-panels-overlay')[0].remove();
+        }
     }
 
 

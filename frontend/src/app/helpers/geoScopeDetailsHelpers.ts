@@ -106,6 +106,8 @@ export const setLatLong = (lat: number, long: number, geoScopeParams: getGeoScop
     const map = new L.Map('details-map' ,{
         center: mapCentered,
         zoom: 2,
+        minZoom: 2,
+        maxZoom: 8,
         layers: [tiles]
     });
 

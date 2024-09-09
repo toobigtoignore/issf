@@ -1,7 +1,7 @@
 #visual5 {
     color: #696969;
-    font-size: 12px; 
-    font-family:"avenir next", Arial, sans-serif; 
+    font-size: 12px;
+    font-family:"avenir next", Arial, sans-serif;
 }
 
 
@@ -17,10 +17,10 @@
 
 #visual5 #sota-header h3 {
     color: #000;
-    font-size: 20px; 
-    font-weight: 500; 
-    margin-bottom: 20px; 
-    margin-top: 0; 
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 0;
 }
 
 
@@ -30,13 +30,13 @@
 
 
 #visual5 #sota-header ul {
-    padding-left: 16px; 
+    padding-left: 16px;
 }
 
 
 #visual5 #sota-header li {
     color: #000;
-    font-size: 16px; 
+    font-size: 16px;
     margin-top: 8px;
 }
 
@@ -46,9 +46,9 @@
 }
 
 
-/* Chart */ 
+/* Chart */
 #visual5 text.subTitle {
-    font-size: 12px; 
+    font-size: 12px;
     font-weight: 500;
 }
 
@@ -59,8 +59,8 @@
 
 
 #visual5 text.yearText {
-    font-size: 64px; 
-    font-weight: 700; 
+    font-size: 64px;
+    font-weight: 700;
     opacity: 0.25;
 }
 
@@ -76,7 +76,7 @@
 
 
 #visual5 .tick line {
-    shape-rendering: CrispEdges; 
+    shape-rendering: CrispEdges;
     stroke: #dddddd;
 }
 
@@ -91,41 +91,41 @@
 }
 
 
-/* Buttons */ 
+/* Buttons */
 #visual5 .playpause {
-    position: absolute; 
-    cursor: pointer; 
-    border: 6px solid #000; 
-    border-radius:50%; 
-    height: 75px; 
-    width: 75px; 
-    text-align:center; 
-    background-color:#caddfa; 
+    position: absolute;
+    cursor: pointer;
+    border: 6px solid #000;
+    border-radius:50%;
+    height: 75px;
+    width: 75px;
+    text-align:center;
+    background-color:#caddfa;
     box-shadow: 0px 0px 0px 0px #000;
 }
 
 
 #visual5 .button {
-    position:absolute; 
-    left: 25%; 
-    top: 25%; 
-    border: 0; 
-    background: transparent; 
-    box-sizing: border-box; 
-    width: 20px; 
-    height: 20px; 
-    border-color: transparent transparent transparent #202020; 
-    transition: 100ms all ease; 
-    cursor: pointer; 
-    border-style: solid; 
+    position:absolute;
+    left: 25%;
+    top: 25%;
+    border: 0;
+    background: transparent;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border-color: transparent transparent transparent #202020;
+    transition: 100ms all ease;
+    cursor: pointer;
+    border-style: solid;
     border-width: 15px 0px 15px 25px;
 }
 
 
 #visual5 .button.paused {
-    border-style: double; 
-    border-width: 0px 0px 0px 2vw; 
-    left: 31%; 
+    border-style: double;
+    border-width: 0px 0px 0px 2vw;
+    left: 20%;
     top: 32%;
 }
 
@@ -144,18 +144,18 @@
 
 
 #visual5 .myButton:hover {
-    background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%); 
+    background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
     background-color:#ccc2a6;
 }
 
 
 #visual5 .myButton:active {
-    position: relative; 
+    position: relative;
     top: 1px;
 }
 
 
-/* Slider */ 
+/* Slider */
 #visual5 .track,
 .track-inset,
 .track-overlay {
@@ -164,30 +164,30 @@
 
 
 #visual5 .track {
-    stroke: #000; 
-    stroke-opacity: 0.3; 
+    stroke: #000;
+    stroke-opacity: 0.3;
     stroke-width: 10px;
 }
 
 
 #visual5 .track-inset {
-    stroke: #dcdcdc; 
+    stroke: #dcdcdc;
     stroke-width: 8px;
 }
 
 
 #visual5 .track-overlay {
-    pointer-events: stroke; 
-    stroke-width: 50px; 
-    stroke: transparent; 
+    pointer-events: stroke;
+    stroke-width: 50px;
+    stroke: transparent;
     cursor: crosshair;
 }
 
 
 #visual5 .handle {
-    fill: #fff; 
-    stroke: #000; 
-    stroke-opacity: 0.5; 
+    fill: #fff;
+    stroke: #000;
+    stroke-opacity: 0.5;
     stroke-width: 1.25px;
 }
 
@@ -230,7 +230,6 @@
     display: inline-block;
     position: relative;
     width: 100%;
-    padding-bottom: 1vw;
     vertical-align: top;
     overflow: hidden;
 }
